@@ -1,0 +1,77 @@
+{
+	"name": "ipl-overlay-controls",
+	"version": "0.0.0",
+	"description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
+	"homepage": "",
+	"author": {
+		"name": "inkfarer",
+		"email": "inkfarer@inkfarer.com",
+		"url": "https://inkfarer.com"
+	},
+	"files": [
+		"dashboard",
+		"extension"
+	],
+	"keywords": [
+		"",
+		"nodecg-bundle"
+	],
+	"nodecg": {
+		"compatibleRange": "^1.1.1",
+		"dashboardPanels": [
+			{
+				"name": "scoring",
+				"title": "Scoring",
+				"width": 2,
+				"file": "scoring.html",
+				"workspace": "testing grounds",
+				"headerColor": "#262F40"
+			},
+			{
+				"name": "music",
+				"title": "Music",
+				"width": 3,
+				"file": "music.html",
+				"workspace": "testing grounds",
+				"headerColor": "#262F40"
+			},
+			{
+				"name": "breakscreen",
+				"title": "Break Screen",
+				"width": 2,
+				"file": "breakScreen.html",
+				"workspace": "testing grounds",
+				"headerColor": "#262F40"
+			},
+			{
+				"name": "winners",
+				"title": "Map Winners",
+				"width": 4,
+				"file": "mapWinners.html",
+				"workspace": "testing grounds",
+				"headerColor": "#262F40"
+			},
+			{
+				"name": "battlefyimport",
+				"title": "Import tournament data",
+				"width": 2,
+				"file": "tourneyImport.html",
+				"workspace": "tg setup",
+				"headerColor": "#262F40"
+			},
+			{
+				"name": "maplist",
+				"title": "Map Lists",
+				"width": 6,
+				"file": "mapLists.html",
+				"workspace": "tg setup",
+				"headerColor": "#262F40"
+			}
+		]
+	},
+	"repository": "https://github.com/nodecg/nodecg.git",
+	"license": "MIT",
+	"dependencies": {
+		"lastfm": "^0.9.3"
+	}
+}

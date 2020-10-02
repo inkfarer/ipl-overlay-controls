@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.selectContainer {
+			margin: 0 2.5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="space showHideSpace layout horizontal">
+        <button id="showMusic" class="btnGreen">Show</button>
+        <button id="hideMusic" class="btnRed">Hide</button>
+    </div>
+    <div class="nowPlayingSpace space">
+        <div class="title">Now Playing (Last.fm)</div>
+        <div id="npText">song goes here...</div>
+    </div>
+    <div class="space">
+        <div class="title">Change song manually</div>
+        <input type="checkbox" id="checkManualSong" onchange="setReplicant('mSongEnabled', event)">Manual song input</input>
+        <div class="showHideSpace">
+            <div class="selectContainer">
+                <div class="inputLabel">Song Artist</div>
+                <input type="text" id="artistInput"></input>
+            </div>
+            <div class="selectContainer">
+                <div class="inputLabel">Song Name</div>
+                <input type="text" id="songInput"></input>
+            </div>
+        </div>
+        <button id="updateManual" class="maxWidthButton">Update</button>
+	</div>
+	
+	<script src="globalScripts.js"></script>
+	<script src="music.js"></script>
+</body>
+</html>

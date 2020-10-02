@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.scoreSpace {
+			align-items: center;
+		}
+
+		.scoreSpace .verticalLayout button {
+			width: 35px;
+		}
+
+		.scoreSpace input {
+			height: 55px;
+			font-size: 3em;
+			text-align: center;
+			margin: 0 5px;
+			width: 57px;
+
+			/*hide arrows*/
+			-moz-appearance: textfield;
+		}
+
+		.scoreSpace input::-webkit-outer-spin-button,
+		.scoreSpace input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+  			margin: 0;
+		}
+
+		.selectContainer {
+			margin: 0 2.5px;
+		}
+
+		.colorDisplay {
+			width: auto;
+			height: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="horizontalLayout space scoreSpace">
+		<div class="verticalLayout">
+			<button class="btnGreen" id="teamAPlus">+</button>
+			<button class="btnRed" id="teamAMinus">-</button>
+		</div>
+		<input type="number" id="teamAScoreInput" size="2">
+		<div style="font-size: 2.5em">:</div>
+		<input type="number" id="teamBScoreInput" size="2">
+		<div class="verticalLayout">
+			<button class="btnGreen" id="teamBPlus">+</button>
+			<button class="btnRed" id="teamBMinus">-</button>
+		</div>
+	</div>
+	<div class="space">
+		<div class="title">Scoreboard</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Team A</div>
+				<select id="teamASelect" class="teamSelector"></select>
+			</div>
+			<div class="selectContainer">
+				<div class="inputLabel">Team B</div>
+				<select id="teamBSelect" class="teamSelector"></select>
+			</div>
+		</div>
+		<div class="maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Colors</div>
+				<select id="colorSelect" class="newColorSelector"></select>
+			</div>
+		</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="colorDisplay" id="teamAColorDisplay" style="background-color: black;"></div>
+			<div class="colorDisplay" id="teamBColorDisplay" style="background-color: white;"></div>
+		</div>
+		<button id="clrOrderSwitch" class="btnBlue maxWidthButton">swap colors</button>
+		<div class="selectContainer">
+			<div class="inputLabel">Flavor Text</div>
+			<input type="text" id="flavorTextInput"></select>
+		</div>
+		<button id="SBUpdateBtn" class="btnBlue maxWidthButton">update</button>
+		<div class="horizontalLayout">
+			<button id="SBShow" class="btnGreen maxWidthButton">show</button>
+			<button id="SBHide" class="btnRed maxWidthButton">hide</button>
+		</div>
+	</div>
+	<div class="space">
+		<div class="title">Next Teams</div>
+		<div class="horizontalLayout maxWidth">
+			<div class="selectContainer">
+				<div class="inputLabel">Next Team A</div>
+				<select id="nextTeamASelect" class="teamSelector"></select>
+			</div>
+			<div class="selectContainer">
+				<div class="inputLabel">Next Team B</div>
+				<select id="nextTeamBSelect" class="teamSelector"></select>
+			</div>
+		</div>
+		<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
+		<button id="beginNextMatchBtn" class="btnRed maxWidthButton">begin next match</button>
+	</div>
+	<script src="globalScripts.js"></script>
+	<script src="scoring.js"></script>
+</body>
+</html>

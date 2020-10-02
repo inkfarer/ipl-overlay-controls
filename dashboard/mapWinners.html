@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		#nameSpace {
+			height: 40px;
+		}
+
+		#reset {
+			float: right;
+			background-color: var(--red);
+		}
+
+		#maplistName {
+			float: left;
+		}
+		
+		#toggles {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 5px;
+		}
+
+		.wbContainer {
+			width: 100%;
+			display: flex;
+			align-content: center;
+		}
+		
+		span.center {
+			display: block;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div id="nameSpace" class="space">
+        <div id="maplistName">List Name</div>
+        <button id="reset" raised>RESET</button>
+    </div>
+    <div class="space">
+		<input type="checkbox" id="checkAutoWinners" onchange="setReplicant('autoWinSet', event)">Try to determine winners automatically</input>
+    </div>
+    <div id="toggles" class="space">
+
+    </div>
+
+	<script src="globalScripts.js"></script>
+	<script src="mapWinners.js"></script>
+</body>
+</html>

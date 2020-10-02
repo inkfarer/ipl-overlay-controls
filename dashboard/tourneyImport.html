@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		div.statusDisplay {
+			background-color: #181E29;
+			display: block;
+			text-align: center;
+			margin: 2px;
+			margin-top: 5px;
+			border-radius: 2px;
+			padding: 5px 0px;
+		}
+
+		li {
+            word-break: break-all;
+        }
+	</style>
+</head>
+<body>
+	<div class="space">
+		<div class="inputLabel">Tournament Slug</div>
+		<input type="text" id="tourneyIdInput">
+		<button class="btnBlue maxWidthButton" id="submitId">submit</button>
+		<div id="submitStatus" class="statusDisplay">STATUS</div>
+        <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
+	</div>
+	<div class="space">
+        <div class="title">How to get a tournament ID</div>
+        <ul>
+            <li>Go to your tournament's Battlefy page</li>
+            <li>The ID can be found in the page's URL<br>(ex. https://battlefy.com/../<b>5e3d7c9c4174ff109642856f</b>/..)</li>
+        </ul>
+    </div>
+	<script src="tourneyImport.js"></script>
+</body>
+</html>

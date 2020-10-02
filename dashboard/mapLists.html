@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="globalStyles.css">
+	<style>
+		.importStatus {
+			height: 30px;
+			width: 30px;
+			background-color: #181E29;
+			border-radius: 10px;
+			margin-left: 5px;
+			align-self: center;
+		}
+
+		.separator {
+			width: 100%;
+			text-align: center;
+			border-bottom: 1px solid #fff;
+			line-height: 0.1em;
+			margin: 10px 0 20px;
+		}
+		
+		.separator span {
+			background: #262F40;
+			padding: 0 10px;
+		}
+
+		.createNewSpace {
+			display: flex;
+			justify-content: center;
+		}
+
+		.importInput {
+			height: 30px;
+			margin-left: 5px;
+		}
+
+		.mapsGrid {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 5px;
+		}
+
+		#submitFile {
+			margin-left: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="space createNewSpace">
+        <button class="btnBlue" id="create3Map">NEW 3-MAP</button>
+        <button class="btnBlue" id="create5Map">NEW 5-MAP</button>
+        <button class="btnBlue" id="create7Map">NEW 7-MAP</button>
+		<button id="removeAll" class="btnRed">REMOVE ALL</button>
+		<div class="importInput">
+			<div class="inputLabel">Import maps from file</div>
+			<input id="mapFileInput" type="text"></input>
+		</div>
+        <button class="btnBlue" id="submitFile">submit</button>
+        <div class="importStatus"></div>
+    </div>
+    <div class="mapsGrid" id="mapsGrid">
+
+    </div>
+
+	<script src="globalScripts.js"></script>
+	<script src="mapLists.js"></script>
+</body>
+</html>

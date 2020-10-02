@@ -1,0 +1,141 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+:root {
+	--blue: #3F51B5;
+	--red: #C9513E;
+	--green: #5BA664;
+	--yellow: #FDD835;
+}
+
+/* Layout classes */
+
+.horizontalLayout,
+.verticalLayout {
+	display: flex;
+}
+
+.horizontalLayout {
+	flex-direction: row;
+}
+
+.verticalLayout {
+	flex-direction: column;
+}
+
+/* "Space" class for creating sections of elements + related styles */
+
+.space {
+	background-color: #262F40;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.showHideSpace {
+	display: flex;
+	justify-content: center;
+}
+
+.title {
+	font-weight: bold;
+	margin-bottom: 5px;
+	text-align: center;
+	display: block;
+}
+
+/* Buttons */
+
+button {
+	background-color: var(--blue);
+	margin: 2px;
+	margin-top: 5px;
+	font-family: 'Roboto', sans-serif;
+	text-decoration: none;
+	border: none;
+	border-radius: 2px;
+	color: white;
+	text-transform: uppercase;
+	padding: 9px 9px;
+	box-shadow: inset 0 0 0 0px rgba(0,0,0,0.2);
+	transition-duration: 100ms;
+}
+
+.btnBlue {
+	background-color: var(--blue);
+}
+
+.btnRed {
+	background-color: var(--red);
+}
+
+.btnGreen {
+	background-color: var(--green);
+}
+
+button:hover {
+	box-shadow: inset 0 0 0 9999px rgba(0,0,0,0.2);
+}
+
+button[disabled],
+button[disabled]:hover {
+	color: #A9AAA9 !important;
+	background-color: #181E29 !important;
+	box-shadow: inset 0 0 0 0px rgba(0,0,0,0.2) !important;
+}
+
+button.maxWidthButton {
+	box-sizing: border-box;
+	/* an ugly hack: 100% - button margin
+	prevents button from getting too wide */
+	width: calc(100% - 4px);
+}
+
+/* Text input & select */
+
+select {
+	width: 100%;
+	font-size: 16px;
+	margin-bottom: 5px;
+	border: 0px;
+	border-bottom: 1px solid #737373;
+	outline: 0px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0);
+	padding: 4px;
+	font-family: 'Roboto', 'Noto', sans-serif;
+}
+
+input[type="text"],
+input[type="number"] {
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	border-bottom: 1px solid #737373;
+	color: white;
+	font-size: 1em;
+	font-family: 'Roboto';
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 3px;
+}
+
+.inputLabel {
+	color: #737373;
+	font-size: 0.75em;
+	margin-top: 5px;
+	font-family: 'Roboto', 'Noto', sans-serif;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+option {
+	color: black;
+}
+
+/* Misc. */
+
+.maxWidth > * {
+	flex-grow: 1;
+}
