@@ -1,0 +1,36 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "array",
+	"items": [
+		{
+			"type": "object",
+			"properties": {
+				"tourneyId": {
+					"type": "string"
+				}
+			}
+		}
+	],
+	"additionalItems": true,
+	"default": [
+		{
+			"tourneyId": "none"
+		},
+		{
+			"name": "Placeholder Team 1",
+			"players": [
+				{
+					"name": "Placeholder player 1"
+				}
+			]
+		},
+		{
+			"name": "Placeholder Team 2",
+			"players": [
+				{
+					"name": "Placeholder player 2"
+				}
+			]
+		}
+	]
+}
