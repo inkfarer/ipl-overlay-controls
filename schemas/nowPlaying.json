@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"properties": {
+		"artist": {
+			"type": "string"
+		},
+		"song": {
+			"type": "string"
+		},
+		"album": {
+			"type": "string"
+		},
+		"cover": {
+			"type": "string"
+		},
+		"artistSong": {
+			"type": "string"
+		}
+	},
+	"default": {
+		"artist": "Unknown Artist",
+		"song": "Unknown Song",
+		"album": "Unknown Album",
+		"cover": "",
+		"artistSong": "Unknown Artist - Unknown Song"
+	}
+}

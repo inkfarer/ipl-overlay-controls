@@ -1,0 +1,16 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"properties": {
+		"artist": {
+			"type": "string"
+		},
+		"song": {
+			"type": "string"
+		}
+	},
+	"default": {
+		"artist": "Unknown Artist",
+		"song": "Unknown Song"
+	}
+}

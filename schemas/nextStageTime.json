@@ -1,0 +1,24 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+	  "hour": {
+		"type": "number",
+		"default": 0
+	  },
+	  "minute": {
+		"type": "number",
+		"default": 0
+	  },
+	  "day": {
+		"type": "number",
+		"default": 1
+	  },
+	  "month": {
+		"type": "number",
+		"default": 0
+	  }
+	},
+	"required": ["hour", "minute", "day", "month"]
+  }

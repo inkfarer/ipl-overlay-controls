@@ -1,15 +1,6 @@
-const maplists = nodecg.Replicant('maplists', {
-    defaultValue: [
-        [
-            { id: 0, name: "Default map list" },
-            { map: "Ancho-V Games", mode: "Clam Blitz" },
-            { map: "Ancho-V Games", mode: "Tower Control" },
-            { map: "Wahoo World", mode: "Rainmaker" }
-        ]
-    ]
-});
+const maplists = nodecg.Replicant('maplists');
 
-const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: 0 });
+const currentMaplistID = nodecg.Replicant('currentMaplistID');
 
 const splatMaps = ["Ancho-V Games",
     "Arowana Mall",
