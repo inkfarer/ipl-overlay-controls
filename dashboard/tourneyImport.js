@@ -1,22 +1,4 @@
-const battlefyData = nodecg.Replicant('tourneyData', {
-	defaultValue: [
-		{tourneyId: "none"},
-		{
-			name: "Placeholder Team 1",
-			logoUrl: "",
-			players: [
-				{name:"You should fix this before going live.", username: "You should fix this before going live."}
-			]
-		},
-		{
-			name: "Placeholder Team 2",
-			logoUrl: "",
-			players: [
-				{name:"You should fix this before going live.", username: "You should fix this before going live."}
-			]
-		}
-	]
-});
+const battlefyData = nodecg.Replicant('tourneyData');
 
 const maxNameLength = 48;
 

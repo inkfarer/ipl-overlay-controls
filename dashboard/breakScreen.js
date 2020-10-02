@@ -1,7 +1,7 @@
 // Main Scene
 
-const mainFlavorText = nodecg.Replicant('mainFlavorText', { defaultValue: 'Be right back!' });
-const casterNames = nodecg.Replicant('casterNames', { defaultValue: "We don't know." });
+const mainFlavorText = nodecg.Replicant('mainFlavorText');
+const casterNames = nodecg.Replicant('casterNames');
 
 mainFlavorText.on('change', newValue => { breakFlavorInput.value = newValue; });
 casterNames.on('change', newValue => { casterInput.value = newValue; });
@@ -14,7 +14,7 @@ updateMainScene.onclick = () => {
 
 // Show Timer
 
-const NSTimerShown = nodecg.Replicant('NSTimerShown', {defaultValue: false});
+const NSTimerShown = nodecg.Replicant('NSTimerShown');
 
 NSTimerShown.on('change', newValue => {
     document.querySelector('#checkShowTimer').checked = newValue;
@@ -22,12 +22,7 @@ NSTimerShown.on('change', newValue => {
 
 // Next Stage Timer
 
-const nextStageTime = nodecg.Replicant('nextStageTime', {defaultValue: {
-    hour: 0,
-    minute: 0,
-    day: 1,
-    month: 0
-}});
+const nextStageTime = nodecg.Replicant('nextStageTime');
 
 nextStageTime.on('change', newValue => {
     document.querySelector('.minInput').value = newValue.minute;
@@ -63,8 +58,8 @@ function updateStageTime() {
     const daySelect = document.querySelector('.daySelect');
     const selText = daySelect.options[daySelect.selectedIndex];
     if (selText) {
-        const day = selText.dataset.day;
-        const month = selText.dataset.month;
+        const day = Number(selText.dataset.day);
+        const month = Number(selText.dataset.month);
 
         if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
             nextStageTime.value = {
@@ -84,23 +79,7 @@ addInputChangeReminder(['breakFlavorInput', 'casterInput', 'hourInput', 'minInpu
 
 // Next Teams
 
-const tourneyData = nodecg.Replicant('tourneyData', {
-	defaultValue: [
-		{tourneySlug: "none", tourneyName: 'none'},
-		{
-			name: "Placeholder Team 1",
-			players: [
-				{name:"You should fix this before going live."}
-			]
-		},
-		{
-			name: "Placeholder Team 2",
-			players: [
-				{name:"You should fix this before going live."}
-			]
-		}
-	]
-});
+const tourneyData = nodecg.Replicant('tourneyData');
 
 tourneyData.on('change', newValue => {
 	clearSelectors('teamSelector');
@@ -110,20 +89,7 @@ tourneyData.on('change', newValue => {
     }
 });
 
-const nextTeams = nodecg.Replicant('nextTeams', {defaultValue: {
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	}
-}});
+const nextTeams = nodecg.Replicant('nextTeams');
 
 nextTeams.on('change', newValue => {
 	nextTeamASelect.value = newValue.teamAInfo.name;
@@ -142,18 +108,9 @@ addSelectChangeReminder(['nextTeamASelect', 'nextTeamBSelect'], nextTeamUpdateBt
 
 // Maps
 
-const maplists = nodecg.Replicant('maplists', {
-    defaultValue: [
-        [
-            { id: 0, name: "Default map list" },
-            { map: "Ancho-V Games", mode: "Clam Blitz" },
-            { map: "Ancho-V Games", mode: "Tower Control" },
-            { map: "Wahoo World", mode: "Rainmaker" }
-        ]
-    ]
-});
+const maplists = nodecg.Replicant('maplists');
 
-const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
+const currentMaplistID = nodecg.Replicant('currentMaplistID');
 
 maplists.on('change', newValue => {
 	clearSelectors('mapSelector');
@@ -178,7 +135,7 @@ addSelectChangeReminder(['mapListSelect'], updateMaps);
 
 // Current scene
 
-const currentBreakScene = nodecg.Replicant('currenBreakScene', { defaultValue: 'mainScene' });
+const currentBreakScene = nodecg.Replicant('currenBreakScene');
 
 showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
 showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }

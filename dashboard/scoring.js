@@ -1,9 +1,6 @@
 // Handle team score edits
 
-const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
-    teamA: 0,
-    teamB: 0
-}});
+const teamScores = nodecg.Replicant('teamScores');
 
 teamScores.on('change', newValue => {
 	teamAScoreInput.value = newValue.teamA;
@@ -20,23 +17,7 @@ teamBScoreInput.oninput = event => { teamScores.value.teamB = event.target.value
 
 // Handle team data edits
 
-const tourneyData = nodecg.Replicant('tourneyData', {
-	defaultValue: [
-		{tourneySlug: "none", tourneyName: 'none'},
-		{
-			name: "Placeholder Team 1",
-			players: [
-				{name:"You should fix this before going live."}
-			]
-		},
-		{
-			name: "Placeholder Team 2",
-			players: [
-				{name:"You should fix this before going live."}
-			]
-		}
-	]
-});
+const tourneyData = nodecg.Replicant('tourneyData');
 
 tourneyData.on('change', newValue => {
 	clearSelectors('teamSelector');
@@ -99,30 +80,9 @@ for (let i = 0; i < colors.length; i++) {
 
 // Scoreboard data
 
-const SBData = nodecg.Replicant('SBData', {defaultValue: {
-	flavorText: 'Flavor Text',
-	colorInfo: {
-		index: 0,
-		title: 'Green vs Grape',
-		clrA: '#37FC00',
-		clrB: '#7D28FC'
-	},
-	swapColorOrder: false,
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	}
-}});
+const SBData = nodecg.Replicant('SBData');
 
-const SBShown = nodecg.Replicant('SBShown', {defaultValue: true});
+const SBShown = nodecg.Replicant('SBShown');
 
 SBData.on('change', newValue => {
 	flavorTextInput.value = newValue.flavorText;
@@ -166,20 +126,7 @@ clrOrderSwitch.onclick = () => {
 
 // Next Teams
 
-const nextTeams = nodecg.Replicant('nextTeams', {defaultValue: {
-	teamAInfo: {
-		name: "Placeholder Team 1",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	},
-	teamBInfo: {
-		name: "Placeholder Team 2",
-		players: [
-			{name:"You should fix this before going live."}
-		]
-	}
-}});
+const nextTeams = nodecg.Replicant('nextTeams');
 
 nextTeams.on('change', newValue => {
 	nextTeamASelect.value = newValue.teamAInfo.name;

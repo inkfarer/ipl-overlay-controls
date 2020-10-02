@@ -1,20 +1,8 @@
-const mapWinners = nodecg.Replicant('mapWinners', { defaultValue: [0, 0, 0, 0, 0, 0, 0] });
-const currentMaplistID = nodecg.Replicant('currentMaplistID', { defaultValue: '0' });
-const teamScores = nodecg.Replicant('teamScores', {defaultValue: {
-    teamA: 0,
-    teamB: 0
-}});
+const mapWinners = nodecg.Replicant('mapWinners');
+const currentMaplistID = nodecg.Replicant('currentMaplistID');
+const teamScores = nodecg.Replicant('teamScores');
 
-const maplists = nodecg.Replicant('maplists', {
-    defaultValue: [
-        [
-            { id: 0, name: "Default map list" },
-            { map: "Ancho-V Games", mode: "Clam Blitz" },
-            { map: "Ancho-V Games", mode: "Tower Control" },
-            { map: "Wahoo World", mode: "Rainmaker" }
-        ]
-    ]
-});
+const maplists = nodecg.Replicant('maplists');
 
 NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
     currentMaplistID.on('change', (newValue, oldValue) => {
@@ -162,7 +150,7 @@ function removeToggles() {
 
 // set wins automatically check box
 
-const autoWinSet = nodecg.Replicant('autoWinSet', {defaultValue: true});
+const autoWinSet = nodecg.Replicant('autoWinSet');
 
 autoWinSet.on('change', newValue => {
 	checkAutoWinners.checked = newValue;

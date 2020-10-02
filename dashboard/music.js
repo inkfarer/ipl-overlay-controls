@@ -1,12 +1,7 @@
 const nowPlaying = nodecg.Replicant('nowPlaying');
-const nowPlayingManual = nodecg.Replicant('nowPlayingManual', {
-    defaultValue: {
-        artist: '',
-        song: ''
-    }
-});
-const musicShown = nodecg.Replicant('musicShown', { defaultValue: true });
-const mSongEnabled = nodecg.Replicant('mSongEnabled', {defaultValue: false});
+const nowPlayingManual = nodecg.Replicant('nowPlayingManual');
+const musicShown = nodecg.Replicant('musicShown');
+const mSongEnabled = nodecg.Replicant('mSongEnabled');
 
 mSongEnabled.on('change', newValue => {
     document.querySelector('#checkManualSong').checked = newValue;

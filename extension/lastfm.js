@@ -14,7 +14,6 @@ module.exports = function (nodecg) {
 	const trackStream = lastfm.stream(nodecg.bundleConfig.lastfm.targetAccount);
 
 	const nowPlaying = nodecg.Replicant('nowPlaying', {
-		defaultValue: false,
 		persistent: false
 	});
 
