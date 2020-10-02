@@ -24,7 +24,7 @@
 				"title": "Scoring",
 				"width": 2,
 				"file": "scoring.html",
-				"workspace": "testing grounds",
+				"workspace": "ipl",
 				"headerColor": "#262F40"
 			},
 			{
@@ -32,7 +32,7 @@
 				"title": "Music",
 				"width": 3,
 				"file": "music.html",
-				"workspace": "testing grounds",
+				"workspace": "ipl",
 				"headerColor": "#262F40"
 			},
 			{
@@ -40,7 +40,7 @@
 				"title": "Break Screen",
 				"width": 2,
 				"file": "breakScreen.html",
-				"workspace": "testing grounds",
+				"workspace": "ipl",
 				"headerColor": "#262F40"
 			},
 			{
@@ -48,7 +48,7 @@
 				"title": "Map Winners",
 				"width": 4,
 				"file": "mapWinners.html",
-				"workspace": "testing grounds",
+				"workspace": "ipl",
 				"headerColor": "#262F40"
 			},
 			{
@@ -56,7 +56,7 @@
 				"title": "Import tournament data",
 				"width": 2,
 				"file": "tourneyImport.html",
-				"workspace": "tg setup",
+				"workspace": "ipl setup",
 				"headerColor": "#262F40"
 			},
 			{
@@ -64,7 +64,7 @@
 				"title": "Map Lists",
 				"width": 6,
 				"file": "mapLists.html",
-				"workspace": "tg setup",
+				"workspace": "ipl setup",
 				"headerColor": "#262F40"
 			}
 		]
