@@ -68,13 +68,13 @@ function removeAllMaps() {
     }
     maplists.value = [
         [
-            { id: 0, name: "Default map list" },
+            { id: "0", name: "Default map list" },
             { map: "Ancho-V Games", mode: "Clam Blitz" },
             { map: "Ancho-V Games", mode: "Tower Control" },
             { map: "Wahoo World", mode: "Rainmaker" }
         ]
 	];
-	currentMaplistID.value = 0;
+	currentMaplistID.value = "0";
 }
 
 function createMapList(numberOfMaps, id, remindToUpdate) {
