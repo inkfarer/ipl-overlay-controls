@@ -155,3 +155,20 @@ addSelectChangeReminder(['teamASelect', 'teamBSelect', 'colorSelect'], SBUpdateB
 addInputChangeReminder(['flavorTextInput'], SBUpdateBtn);
 
 addSelectChangeReminder(['nextTeamASelect', 'nextTeamBSelect'], nextTeamUpdateBtn);
+
+// Caster names
+
+const casterNames = nodecg.Replicant('casterNames');
+casterNames.on('change', newValue => {
+	casterInput.value = newValue;
+});
+
+addInputChangeReminder(['casterInput'], updateCasters);
+
+updateCasters.onclick = () => {
+	casterNames.value = casterInput.value;
+};
+
+showCasters.onclick = () => {
+	nodecg.sendMessage('mainShowCasters');
+};
