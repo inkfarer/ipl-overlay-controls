@@ -156,3 +156,20 @@ function disableSceneButtons(currentScene) {
         showMaps.disabled = true;
     }
 }
+
+// Show team image
+
+const teamImageHidden = nodecg.Replicant('teamImageHidden');
+
+teamImageHidden.on('change', newValue => {
+    checkSetTeamAImg.checked = newValue.teamA;
+    checkSetTeamBImg.checked = newValue.teamB;
+});
+
+checkSetTeamAImg.onclick = e => {
+    teamImageHidden.value.teamA = e.target.checked;
+};
+
+checkSetTeamBImg.onclick = e => {
+    teamImageHidden.value.teamB = e.target.checked;
+};

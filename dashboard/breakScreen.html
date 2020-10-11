@@ -47,6 +47,10 @@
 		.selectContainer {
 			margin: 0 2.5px;
 		}
+
+		.selectContainer > label {
+			font-size: 0.75em;
+		}
 	</style>
 </head>
 <body>
@@ -93,10 +97,14 @@
 			<div class="selectContainer">
 				<div class="inputLabel">Next Team A</div>
 				<select id="nextTeamASelect" class="teamSelector"></select>
+				<input type="checkbox" id="checkSetTeamAImg">
+				<label for="checkSetTeamAImg">Show image</label>
 			</div>
 			<div class="selectContainer">
 				<div class="inputLabel">Next Team B</div>
 				<select id="nextTeamBSelect" class="teamSelector"></select>
+				<input type="checkbox" id="checkSetTeamBImg">
+				<label for="checkSetTeamBImg">Show image</label>
 			</div>
 		</div>
 		<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
