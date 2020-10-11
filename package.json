@@ -72,6 +72,7 @@
 	"repository": "https://github.com/nodecg/nodecg.git",
 	"license": "MIT",
 	"dependencies": {
+		"axios": "^0.20.0",
 		"lastfm": "^0.9.3"
 	}
 }

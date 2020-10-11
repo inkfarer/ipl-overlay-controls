@@ -21,19 +21,17 @@
 </head>
 <body>
 	<div class="space">
-		<div class="inputLabel">Tournament Slug</div>
+		<div class="inputLabel" id="dataInputTitle">Tournament ID</div>
 		<input type="text" id="tourneyIdInput">
+		<div class="inputLabel">Import from</div>
+		<select id="methodSel">
+			<option value="battlefy" selected>Battlefy</option>
+			<option value="smashgg">Smash.gg</option>
+		</select>
 		<button class="btnBlue maxWidthButton" id="submitId">submit</button>
 		<div id="submitStatus" class="statusDisplay">STATUS</div>
-        <div id="loadedDisplay" class="statusDisplay">SAVED DATA ID<br><span id="nowLoaded">none</span></div>
+        <div id="loadedDisplay" class="statusDisplay">Saved data identifier<br><span id="tourneyIdDisplay">none</span></div>
 	</div>
-	<div class="space">
-        <div class="title">How to get a tournament ID</div>
-        <ul>
-            <li>Go to your tournament's Battlefy page</li>
-            <li>The ID can be found in the page's URL<br>(ex. https://battlefy.com/../<b>5e3d7c9c4174ff109642856f</b>/..)</li>
-        </ul>
-    </div>
 	<script src="tourneyImport.js"></script>
 </body>
 </html>
