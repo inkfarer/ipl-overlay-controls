@@ -19,6 +19,9 @@ const methodData = {
 	},
 	smashgg: {
 		dataTitle: 'Tournament Slug'
+	},
+	raw: {
+		dataTitle: 'Data URL'
 	}
 }
 

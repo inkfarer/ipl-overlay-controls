@@ -27,7 +27,7 @@ module.exports = function (nodecg) {
 		};
 	});
 
-	trackStream.on('error', () => {
+	trackStream.on('error', e => {
 		//nothing
 	});
 

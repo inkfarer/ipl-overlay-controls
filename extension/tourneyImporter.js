@@ -44,6 +44,16 @@ module.exports = async function (nodecg) {
 						ack(err);
 					});
 				return;
+			case 'raw':
+				getRaw(data.id)
+					.then(data => {
+						tourneyData.value = data;
+						ack(null, data.id);
+					})
+					.catch(err => {
+						ack(err);
+					});
+				return;
 		} 
 	});
 }
@@ -187,5 +197,20 @@ async function getSmashGGPage(page, slug, token, getRaw = false) {
 		.catch(e => {
 			reject(e);
 		});
+	});
+}
+
+async function getRaw(url) {
+	return new Promise((resolve, reject) => {
+		axios.get(url)
+			.then(response => {
+				response.data.unshift({
+					tourneyId: url
+				});
+				resolve(response.data);
+			})
+			.catch(err => {
+				reject(err);
+			});
 	});
 }
