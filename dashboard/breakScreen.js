@@ -135,7 +135,7 @@ addSelectChangeReminder(['mapListSelect'], updateMaps);
 
 // Current scene
 
-const currentBreakScene = nodecg.Replicant('currenBreakScene');
+const currentBreakScene = nodecg.Replicant('currentBreakScene');
 
 showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
 showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
