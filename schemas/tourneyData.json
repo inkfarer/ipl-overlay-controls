@@ -17,6 +17,7 @@
 			"tourneyId": "none"
 		},
 		{
+			"id": "AAAaaa",
 			"name": "Placeholder Team 1",
 			"players": [
 				{
@@ -25,6 +26,7 @@
 			]
 		},
 		{
+			"id": "BBBbbb",
 			"name": "Placeholder Team 2",
 			"players": [
 				{

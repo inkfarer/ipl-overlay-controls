@@ -314,7 +314,7 @@ submitFile.onclick = () => {
         })
         .then(data => {
             let maps = [];
-            console.log(data);
+            //console.log(data);
             for (let a = 0; a < data.length; a++) {
                 for (let i = 0; i < data[a].length; i++) {
                     for (let j = 0; j < data[a][i].length; j++) {

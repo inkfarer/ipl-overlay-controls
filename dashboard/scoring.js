@@ -23,7 +23,7 @@ tourneyData.on('change', newValue => {
 	clearSelectors('teamSelector');
     for (let i = 1; i < newValue.length; i++) {
         const element = newValue[i];
-        addSelector(element.name, 'teamSelector');
+        addSelector(element.name, 'teamSelector', element.id);
     }
 });
 
@@ -91,8 +91,8 @@ SBData.on('change', newValue => {
 	teamAColorDisplay.style.backgroundColor = (newValue.swapColorOrder) ? newValue.colorInfo.clrB : newValue.colorInfo.clrA;
 	teamBColorDisplay.style.backgroundColor = (newValue.swapColorOrder) ? newValue.colorInfo.clrA : newValue.colorInfo.clrB;
 
-	teamASelect.value = newValue.teamAInfo.name;
-	teamBSelect.value = newValue.teamBInfo.name;
+	teamASelect.value = newValue.teamAInfo.id;
+	teamBSelect.value = newValue.teamBInfo.id;
 });
 
 SBShown.on('change', newValue => {
@@ -100,8 +100,8 @@ SBShown.on('change', newValue => {
 });
 
 SBUpdateBtn.onclick = () => {
-	let teamAInfo = tourneyData.value.filter(team => team.name === teamASelect.value)[0];
-	let teamBInfo = tourneyData.value.filter(team => team.name === teamBSelect.value)[0];
+	let teamAInfo = tourneyData.value.filter(team => team.id === teamASelect.value)[0];
+	let teamBInfo = tourneyData.value.filter(team => team.id === teamBSelect.value)[0];
 	let clrInfo = colors.filter(clr => clr.index === Number(colorSelect.value))[0];
 
 	let dataValue = {
@@ -129,13 +129,13 @@ clrOrderSwitch.onclick = () => {
 const nextTeams = nodecg.Replicant('nextTeams');
 
 nextTeams.on('change', newValue => {
-	nextTeamASelect.value = newValue.teamAInfo.name;
-	nextTeamBSelect.value = newValue.teamBInfo.name;
+	nextTeamASelect.value = newValue.teamAInfo.id;
+	nextTeamBSelect.value = newValue.teamBInfo.id;
 });
 
 nextTeamUpdateBtn.onclick = () => {
-	let teamAInfo = tourneyData.value.filter(team => team.name === nextTeamASelect.value)[0];
-	let teamBInfo = tourneyData.value.filter(team => team.name === nextTeamBSelect.value)[0];
+	let teamAInfo = tourneyData.value.filter(team => team.id === nextTeamASelect.value)[0];
+	let teamBInfo = tourneyData.value.filter(team => team.id === nextTeamBSelect.value)[0];
 
 	nextTeams.value.teamAInfo = teamAInfo;
 	nextTeams.value.teamBInfo = teamBInfo;

@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { promises } = require('dns');
 
 module.exports = async function (nodecg) {
 	const tourneyData = nodecg.Replicant('tourneyData');
@@ -58,11 +57,18 @@ module.exports = async function (nodecg) {
 	});
 }
 
-const maxNameLength = 48;
+// For the future: It might be better to do this at the overlay side, not here.
 function addDots(string) {
+	var maxNameLength = 48;
+	const rolloff = '...';
+
 	if (!string) return string;
-	if (string.length >= maxNameLength) return string.substring(0, maxNameLength) + '...';
+	if (string.length > maxNameLength) return string.substring(0, (maxNameLength - rolloff.length)) + rolloff;
 	else return string;
+}
+
+function generateId() {
+    return '' + Math.random().toString(36).substr(2, 9);
 }
 
 async function getBattlefyData(id) {
@@ -80,6 +86,7 @@ async function getBattlefyData(id) {
 				for (let i = 0; i < data.length; i++) {
 					const element = data[i];
 					var teamInfo = {
+						id: generateId(),
 						name: addDots(element.name),
 						logoUrl: element.persistentTeam.logoUrl,
 						players: []
@@ -184,6 +191,7 @@ async function getSmashGGPage(page, slug, token, getRaw = false) {
 				}
 				let teamName = addDots(element.name);
 				pageInfo.push({
+					id: generateId(),
 					name: teamName,
 					players: teamPlayers,
 				});
@@ -204,6 +212,12 @@ async function getRaw(url) {
 	return new Promise((resolve, reject) => {
 		axios.get(url)
 			.then(response => {
+				// make an id for every team
+				for (let i = 0; i < response.data.length; i++) {
+					const element = response.data[i];
+					element.id = generateId();
+				}
+				// attach tournament identifier
 				response.data.unshift({
 					tourneyId: url
 				});
