@@ -71,6 +71,12 @@ const colors = [
 		title: 'Yellow vs Blue',
 		clrA: '#FEF232',
 		clrB: '#2ED2FE'
+	},
+	{
+		index: 7,
+		title: 'Yellow vs Blue (Color Lock)',
+		clrA: '#FEF232',
+		clrB: '#2F27CC'
 	}
 ];
 
