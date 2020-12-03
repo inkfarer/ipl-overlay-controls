@@ -30,12 +30,7 @@ methodSel.addEventListener('change', e => {
 });
 
 battlefyData.on('change', (newValue) => {
-	//console.log(newValue);
-	if (newValue[0].tourneyId) {
-		tourneyIdDisplay.innerText = newValue[0].tourneyId;
-	} else {
-		tourneyIdDisplay.innerText = "none";
-	}
+	tourneyIdDisplay.innerText = newValue.meta.id;
 })
 
 function setStatusLoading() {

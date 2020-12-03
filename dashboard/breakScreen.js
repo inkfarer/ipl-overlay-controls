@@ -83,8 +83,8 @@ const tourneyData = nodecg.Replicant('tourneyData');
 
 tourneyData.on('change', newValue => {
 	clearSelectors('teamSelector');
-    for (let i = 1; i < newValue.length; i++) {
-        const element = newValue[i];
+    for (let i = 0; i < newValue.data.length; i++) {
+        const element = newValue.data[i];
         addSelector(element.name, 'teamSelector', element.id);
     }
 });
@@ -97,8 +97,8 @@ nextTeams.on('change', newValue => {
 });
 
 nextTeamUpdateBtn.onclick = () => {
-	let teamAInfo = tourneyData.value.filter(team => team.id === nextTeamASelect.value)[0];
-	let teamBInfo = tourneyData.value.filter(team => team.id === nextTeamBSelect.value)[0];
+	let teamAInfo = tourneyData.value.data.filter(team => team.id === nextTeamASelect.value)[0];
+	let teamBInfo = tourneyData.value.data.filter(team => team.id === nextTeamBSelect.value)[0];
 
 	nextTeams.value.teamAInfo = teamAInfo;
 	nextTeams.value.teamBInfo = teamBInfo;

@@ -22,7 +22,7 @@ module.exports = async function (nodecg) {
 				getBattlefyData(data.id)
 					.then(data => {
 						tourneyData.value = data;
-						ack(null, data[0].tourneyId);
+						ack(null, data.meta.id);
 					})
 					.catch(err => {
 						ack(err);
@@ -37,7 +37,7 @@ module.exports = async function (nodecg) {
 				getSmashGGData(data.id, smashGGKey)
 					.then(data => {
 						tourneyData.value = data;
-						ack(null, data[0].tourneyId);
+						ack(null, data.meta.id);
 					})
 					.catch(err => {
 						ack(err);
@@ -82,7 +82,14 @@ async function getBattlefyData(id) {
 					reject(data.error);
 					return;
 				}
-				let teams = [{tourneyId: id}];
+				let teams = {
+					meta: {
+						id: id
+					},
+					data: [
+
+					]
+				};
 				for (let i = 0; i < data.length; i++) {
 					const element = data[i];
 					var teamInfo = {
@@ -99,7 +106,7 @@ async function getBattlefyData(id) {
 						};
 						teamInfo.players.push(playerInfo);
 					}
-					teams.push(teamInfo);
+					teams.data.push(teamInfo);
 				}
 				resolve(teams);
 			})
@@ -113,13 +120,20 @@ async function getSmashGGData(slug, token) {
 	return new Promise(async (resolve, reject) => {
 		getSmashGGPage('1', slug, token, true)
 		.then(async data => {
-			var tourneyInfo = [{tourneyId: slug}].concat(data.pageInfo);
-			
+			//var tourneyInfo = [{tourneyId: slug}].concat(data.pageInfo);
+			var tourneyInfo = {
+				meta: {
+					id: slug
+				},
+				data: []
+			};
+			tourneyInfo.data = tourneyInfo.data.concat(data.pageInfo);
+
 			// if there are more pages, add them to our data set
 			if (data.raw.data.tournament.teams.pageInfo.totalPages > 1) {
 				for (let i = 2; i <= data.raw.data.tournament.teams.pageInfo.totalPages; i++) {
 					let pageInfo = await getSmashGGPage(i, slug, token);
-					tourneyInfo = tourneyInfo.concat(pageInfo.pageInfo);
+					tourneyInfo.data = tourneyInfo.data.concat(pageInfo.pageInfo);
 				}
 			}
 
@@ -217,11 +231,14 @@ async function getRaw(url) {
 					const element = response.data[i];
 					element.id = generateId();
 				}
-				// attach tournament identifier
-				response.data.unshift({
-					tourneyId: url
-				});
-				resolve(response.data);
+
+				var finalResponse = {
+					meta: {
+						id: url
+					},
+					data: response.data
+				}
+				resolve(finalResponse);
 			})
 			.catch(err => {
 				reject(err);

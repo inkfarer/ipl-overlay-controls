@@ -1,38 +1,68 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "array",
-	"items": [
-		{
+	"type": "object",
+	"properties": {
+		"meta": {
 			"type": "object",
 			"properties": {
-				"tourneyId": {
+				"id": {
 					"type": "string"
 				}
 			}
+		},
+		"data": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"players": {
+						"type": "array",
+						"items": {
+							"name": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
 		}
-	],
+	},
 	"additionalItems": true,
-	"default": [
-		{
-			"tourneyId": "none"
+	"default": {
+		"meta": {
+			"id": "none"
 		},
-		{
-			"id": "AAAaaa",
-			"name": "Placeholder Team 1",
-			"players": [
-				{
-					"name": "Placeholder player 1"
-				}
-			]
-		},
-		{
-			"id": "BBBbbb",
-			"name": "Placeholder Team 2",
-			"players": [
-				{
-					"name": "Placeholder player 2"
-				}
-			]
-		}
-	]
+		"data": [
+			{
+				"id": "AAA",
+				"name": "Placeholder Team A",
+				"players": [
+					{
+						"name": "Player 1"
+					},
+					{
+						"name": "Player 2"
+					}
+				]
+			},
+			{
+				"id": "BBB",
+				"name": "Placeholder Team B",
+				"players": [
+					{
+						"name": "Player 3"
+					},
+					{
+						"name": "Player 4"
+					}
+				]
+			}
+		]
+	}
 }
