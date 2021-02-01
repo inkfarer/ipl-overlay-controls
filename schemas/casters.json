@@ -1,12 +1,9 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "array",
-	"items": {
+	"type": "object",
+	"additionalProperties": {
 		"type": "object",
 		"properties": {
-			"id": {
-				"type": "string"
-			},
 			"name": {
 				"type": "string"
 			},
@@ -18,19 +15,16 @@
 			}
 		}
 	},
-	"additionalItems": true,
-	"default": [
-		{
-			"id": "aAa",
+	"default": {
+		"aAa": {
 			"name": "First Caster",
 			"twitter": "@CasterFirst",
 			"pronouns": "he/him"
 		},
-		{
-			"id": "bBb",
+		"bBb": {
 			"name": "Second Caster",
 			"twitter": "@CasterSecond",
 			"pronouns": "she/her"
 		}
-	]
+	}
 }
