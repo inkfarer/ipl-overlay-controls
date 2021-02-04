@@ -19,18 +19,25 @@ casters.on('change', (newValue, oldValue) => {
 
 	if (Object.keys(newValue).length >= 3) {
 		btnCreateCaster.disabled = true;
+		setUncommittedButtonDisabled(true);
 	} else {
 		btnCreateCaster.disabled = false;
+		setUncommittedButtonDisabled(false);
 	}
 });
+
+btnCreateCaster.addEventListener('click', e => {
+	createCasterElem(generateId());
+	if (getCasterContainerCount() >= 3) e.target.disabled = true;
+});
+
+function setUncommittedButtonDisabled(disabled) {
+	document.querySelectorAll('.uncommitted').forEach(elem => { elem.disabled = disabled; });
+}
 
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
 }
-
-document.querySelector('#btnAddCaster').addEventListener('click', () => {
-	createCasterElem(generateId());
-});
 
 function deleteCasterElem(id) {
 	const container = document.querySelector(`#casterContainer_${id}`);
@@ -52,8 +59,12 @@ function updateCasterElem(id, data = {name: '', twitter: '', pronouns: ''}) {
 	document.querySelector(`#casterPronouns_${id}`).value = data.pronouns
 }
 
+function getCasterContainerCount() {
+	return document.querySelectorAll('.casterContainer').length;
+}
+
 function createCasterElem(id, data = {name: '', twitter: '', pronouns: ''}, newElem = true) {
-	if (newElem && document.querySelectorAll('.casterContainer').length >= 3) return;
+	if (newElem && getCasterContainerCount() >= 3) return;
 
 	var container = document.createElement('div');
 	container.classList.add('space');
@@ -76,16 +87,14 @@ function createCasterElem(id, data = {name: '', twitter: '', pronouns: ''}, newE
 		</div>
 	</div>
 	<div class="horizontalLayout">
-		<button class="btnBlue maxWidthButton" id="updateCaster_${id}" style="background-color: ${newElem ? 'var(--red)' : 'var(--blue)'}">update</button>
+		<button class="btnBlue maxWidthButton ${newElem ? 'uncommitted' : ''}" id="updateCaster_${id}" style="background-color: ${newElem ? 'var(--red)' : 'var(--blue)'}">update</button>
 		<button class="btnRed maxWidthButton" id="removeCaster_${id}">remove</button>
 	</div>`
 	container.innerHTML = elem;
 	document.querySelector('#castersContainer').appendChild(container);
 	
 	// add data
-	document.querySelector(`#casterName_${id}`).value = data.name;
-	document.querySelector(`#casterTwitter_${id}`).value = data.twitter;
-	document.querySelector(`#casterPronouns_${id}`).value = data.pronouns;
+	updateCasterElem(id, data);
 
 	// remind to update
 	addInputChangeReminder([`casterName_${id}`, `casterTwitter_${id}`, `casterPronouns_${id}`], document.querySelector(`#updateCaster_${id}`));
@@ -93,11 +102,17 @@ function createCasterElem(id, data = {name: '', twitter: '', pronouns: ''}, newE
 	// button click event
 	document.querySelector(`#updateCaster_${id}`).addEventListener('click', e => {
 		const id = e.target.id.split('_')[1];
-		casters.value[id] = {
-			name: document.querySelector(`#casterName_${id}`).value,
-			twitter: document.querySelector(`#casterTwitter_${id}`).value,
-			pronouns: document.querySelector(`#casterPronouns_${id}`).value
-		};
+		try {
+			casters.value[id] = {
+				name: document.querySelector(`#casterName_${id}`).value,
+				twitter: document.querySelector(`#casterTwitter_${id}`).value,
+				pronouns: document.querySelector(`#casterPronouns_${id}`).value
+			};
+		} catch (error) {
+			console.error(error);
+			return;
+		}
+		e.target.classList.remove('uncommitted');
 	});
 	document.querySelector(`#removeCaster_${id}`).addEventListener('click', e => {
 		const id = e.target.id.split('_')[1];
