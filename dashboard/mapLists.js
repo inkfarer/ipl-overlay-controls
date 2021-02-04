@@ -308,7 +308,17 @@ const IMPORT_STATUS_FAILURE = 2;
 submitFile.onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     let listsURL = mapFileInput.value;
-    fetch('https://cors-anywhere.herokuapp.com/' + listsURL)
+
+    nodecg.sendMessage('getMapList', {url: listsURL}, (e, result) => {
+        if (e) {
+            console.error(e);
+            setImportStatus(IMPORT_STATUS_FAILURE);
+            return;
+        }
+        setImportStatus(IMPORT_STATUS_SUCCESS);
+    });
+
+    /*fetch('https://cors-anywhere.herokuapp.com/' + listsURL)
         .then(response => {
             return response.json();
         })
@@ -341,7 +351,7 @@ submitFile.onclick = () => {
         .catch(err => {
             setImportStatus(IMPORT_STATUS_FAILURE);
             console.error(err);
-        });
+        });*/
 };
 
 function setImportStatus(status) {
