@@ -317,41 +317,6 @@ submitFile.onclick = () => {
         }
         setImportStatus(IMPORT_STATUS_SUCCESS);
     });
-
-    /*fetch('https://cors-anywhere.herokuapp.com/' + listsURL)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            let maps = [];
-            //console.log(data);
-            for (let a = 0; a < data.length; a++) {
-                for (let i = 0; i < data[a].length; i++) {
-                    for (let j = 0; j < data[a][i].length; j++) {
-                        // do these maps or modes actually exist?
-                        if (!splatMaps.includes(data[a][i][j].map)) {
-                            data[a][i][j].map = 'Unknown Map';
-                        }
-
-                        if (!splatModes.includes(data[a][i][j].mode)) {
-                            data[a][i][j].mode = 'Unknown Mode';
-                        }
-                    }
-
-                    // prepend meta info (name, id)
-                    data[a][i].unshift({id: generateId(), name: `Bracket ${a+1} Round ${i+1}`});
-                }
-                maps = maps.concat(data[a]);
-            }
-
-            maplists.value = maplists.value.concat(maps);
-
-            setImportStatus(IMPORT_STATUS_SUCCESS);
-        })
-        .catch(err => {
-            setImportStatus(IMPORT_STATUS_FAILURE);
-            console.error(err);
-        });*/
 };
 
 function setImportStatus(status) {
