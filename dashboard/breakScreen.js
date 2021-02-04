@@ -1,14 +1,11 @@
 // Main Scene
 
 const mainFlavorText = nodecg.Replicant('mainFlavorText');
-const casterNames = nodecg.Replicant('casterNames');
 
 mainFlavorText.on('change', newValue => { breakFlavorInput.value = newValue; });
-casterNames.on('change', newValue => { casterInput.value = newValue; });
 
 updateMainScene.onclick = () => {
     mainFlavorText.value = breakFlavorInput.value;
-    casterNames.value = casterInput.value;
     updateStageTime();
 };
 
@@ -75,7 +72,7 @@ function updateStageTime() {
 updateDaySelector();
 
 addSelectChangeReminder(['daySelect'], updateMainScene);
-addInputChangeReminder(['breakFlavorInput', 'casterInput', 'hourInput', 'minInput'], updateMainScene);
+addInputChangeReminder(['breakFlavorInput', 'hourInput', 'minInput'], updateMainScene);
 
 // Next Teams
 
