@@ -52,6 +52,14 @@
 				"headerColor": "#262F40"
 			},
 			{
+				"name": "casters",
+				"title": "Casters",
+				"width": 2,
+				"file": "casters.html",
+				"workspace": "ipl",
+				"headerColor": "#262F40"
+			},
+			{
 				"name": "battlefyimport",
 				"title": "Import tournament data",
 				"width": 2,

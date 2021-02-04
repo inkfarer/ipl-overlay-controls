@@ -1,0 +1,31 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"maxProperties": 3,
+	"additionalProperties": {
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string"
+			},
+			"twitter": {
+				"type": "string"
+			},
+			"pronouns": {
+				"type": "string"
+			}
+		}
+	},
+	"default": {
+		"aAa": {
+			"name": "First Caster",
+			"twitter": "@CasterFirst",
+			"pronouns": "he/him"
+		},
+		"bBb": {
+			"name": "Second Caster",
+			"twitter": "@CasterSecond",
+			"pronouns": "she/her"
+		}
+	}
+}
