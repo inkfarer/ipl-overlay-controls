@@ -1,7 +1,8 @@
 const casters = nodecg.Replicant('casters');
 
+const btnCreateCaster = document.querySelector('#btnAddCaster');
+
 casters.on('change', (newValue, oldValue) => {
-	console.log(newValue);
 	for (const id in newValue) {
 		const object = newValue[id];
 		updateOrCreateCreateCasterElem(id, object);
@@ -14,6 +15,12 @@ casters.on('change', (newValue, oldValue) => {
 				deleteCasterElem(id);
 			}
 		}
+	}
+
+	if (Object.keys(newValue).length >= 3) {
+		btnCreateCaster.disabled = true;
+	} else {
+		btnCreateCaster.disabled = false;
 	}
 });
 
@@ -46,8 +53,11 @@ function updateCasterElem(id, data = {name: '', twitter: '', pronouns: ''}) {
 }
 
 function createCasterElem(id, data = {name: '', twitter: '', pronouns: ''}, newElem = true) {
+	if (newElem && document.querySelectorAll('.casterContainer').length >= 3) return;
+
 	var container = document.createElement('div');
 	container.classList.add('space');
+	container.classList.add('casterContainer');
 	container.id = `casterContainer_${id}`;
 
 	var elem = `
