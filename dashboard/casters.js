@@ -31,6 +31,20 @@ btnCreateCaster.addEventListener('click', e => {
 	if (getCasterContainerCount() >= 3) e.target.disabled = true;
 });
 
+document.querySelector('#btnCopyCasters').addEventListener('click', () => {
+	var casterText = '';
+
+	Object.keys(casters.value).forEach((item, index, arr) => {
+		const element = casters.value[item];
+		casterText += `${element.name} (${element.pronouns}, ${element.twitter})`;
+		if (arr[index + 1]) casterText += ' & ';
+	});
+
+	navigator.clipboard.writeText(casterText).then(null, () => {
+		console.error('Error copying to clipboard.');
+	});
+});
+
 function setUncommittedButtonDisabled(disabled) {
 	document.querySelectorAll('.uncommitted').forEach(elem => { elem.disabled = disabled; });
 }
