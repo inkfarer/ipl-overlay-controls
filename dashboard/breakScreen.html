@@ -1,124 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="globalStyles.css">
-	<style>
-		.timerContainer {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-		}
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="globalStyles.css" />
+        <style>
+            .timerContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
 
-		.timerContainer > div {
-			margin-top: -3px;
-			margin-left: 5px;
-			text-align: center;
-		}
+            .timerContainer > div {
+                margin-top: -3px;
+                margin-left: 5px;
+                text-align: center;
+            }
 
-		.timerContainerNum {
-			width: 40px;
-		}
+            .timerContainerNum {
+                width: 40px;
+            }
 
-		.timerContainerDay {
-			width: 70px;
-		}
+            .timerContainerDay {
+                width: 70px;
+            }
 
-		.timerContainer > div > input {
-			height: 30px;
-		}
+            .timerContainer > div > input {
+                height: 30px;
+            }
 
-		.timerContainer > div > select {
-			height: 30px;
-			margin-top: 3px;
-		}
+            .timerContainer > div > select {
+                height: 30px;
+                margin-top: 3px;
+            }
 
-		.toggleContainer {
-			display: flex;
-			justify-content: center;
-			margin-bottom: 10px;
-			margin-top: 10px;
-		}
+            .toggleContainer {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
 
-		.NSTimerTitle {
-			margin-top: 10px;
-		}
+            .NSTimerTitle {
+                margin-top: 10px;
+            }
 
-		.selectContainer {
-			margin: 0 2.5px;
-		}
+            .selectContainer {
+                margin: 0 2.5px;
+            }
 
-		.selectContainer > label {
-			font-size: 0.75em;
-		}
-	</style>
-</head>
-<body>
-	<div class="space">
-        <div class="title">Main Scene</div>
-        <div class="showHideSpace">
-            <button id="showMain" class="btnGreen">Show</button>
-		</div>
-		<div>
-			<div class="inputLabel">Flavor Text</div>
-			<input id="breakFlavorInput" type="text">
-		</div>
-        <div class="title NSTimerTitle">Next Stage Timer</div>
-        <div class="timerContainer">
-			<div class="timerContainerNum">
-				<div class="inputLabel">Hour</div>
-				<input class="hourInput" id="hourInput" type="number" value="0">
-			</div>
-			<div class="timerContainerNum">
-				<div class="inputLabel">Minute</div>
-				<input class="minInput" id="minInput" type="number" value="0">
-			</div>
-            <div class="timerContainerDay">
-                <div class="inputLabel">Day</div>
-                <select class="daySelect" id="daySelect"></select>
+            .selectContainer > label {
+                font-size: 0.75em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="space">
+            <div class="title">Main Scene</div>
+            <div class="showHideSpace">
+                <button id="showMain" class="btnGreen">Show</button>
             </div>
+            <div>
+                <div class="inputLabel">Flavor Text</div>
+                <input id="breakFlavorInput" type="text" />
+            </div>
+            <div class="title NSTimerTitle">Next Stage Timer</div>
+            <div class="timerContainer">
+                <div class="timerContainerNum">
+                    <div class="inputLabel">Hour</div>
+                    <input
+                        class="hourInput"
+                        id="hourInput"
+                        type="number"
+                        value="0"
+                    />
+                </div>
+                <div class="timerContainerNum">
+                    <div class="inputLabel">Minute</div>
+                    <input
+                        class="minInput"
+                        id="minInput"
+                        type="number"
+                        value="0"
+                    />
+                </div>
+                <div class="timerContainerDay">
+                    <div class="inputLabel">Day</div>
+                    <select class="daySelect" id="daySelect"></select>
+                </div>
+            </div>
+            <div class="toggleContainer">
+                <input
+                    type="checkbox"
+                    id="checkShowTimer"
+                    onchange="setReplicant('NSTimerShown', event)"
+                />Show Timer
+            </div>
+            <button id="updateMainScene" class="btnBlue maxWidthButton">
+                Update
+            </button>
         </div>
-        <div class="toggleContainer">
-			<input type="checkbox" id="checkShowTimer" onchange="setReplicant('NSTimerShown', event)">Show Timer</input>
-        </div>
-        <button id="updateMainScene" class="btnBlue maxWidthButton">Update</button>
-	</div>
-	
-	<div class="space">
-		<div class="title">Next Teams</div>
-		<div class="showHideSpace">
-            <button id="showNextUp" class="btnGreen">Show</button>
-		</div>
-		<div class="horizontalLayout maxWidth">
-			<div class="selectContainer">
-				<div class="inputLabel">Next Team A</div>
-				<select id="nextTeamASelect" class="teamSelector"></select>
-				<input type="checkbox" id="checkSetTeamAImg">
-				<label for="checkSetTeamAImg">Show image</label>
-			</div>
-			<div class="selectContainer">
-				<div class="inputLabel">Next Team B</div>
-				<select id="nextTeamBSelect" class="teamSelector"></select>
-				<input type="checkbox" id="checkSetTeamBImg">
-				<label for="checkSetTeamBImg">Show image</label>
-			</div>
-		</div>
-		<button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">update</button>
-	</div>
 
-	<div class="space">
-        <div class="title">Upcoming Stages</div>
-        <div class="showHideSpace">
-            <button id="showMaps" class="btnGreen">Show</button>
+        <div class="space">
+            <div class="title">Next Teams</div>
+            <div class="showHideSpace">
+                <button id="showNextUp" class="btnGreen">Show</button>
+            </div>
+            <div class="horizontalLayout maxWidth">
+                <div class="selectContainer">
+                    <div class="inputLabel">Next Team A</div>
+                    <select id="nextTeamASelect" class="teamSelector"></select>
+                    <input type="checkbox" id="checkSetTeamAImg" />
+                    <label for="checkSetTeamAImg">Show image</label>
+                </div>
+                <div class="selectContainer">
+                    <div class="inputLabel">Next Team B</div>
+                    <select id="nextTeamBSelect" class="teamSelector"></select>
+                    <input type="checkbox" id="checkSetTeamBImg" />
+                    <label for="checkSetTeamBImg">Show image</label>
+                </div>
+            </div>
+            <button id="nextTeamUpdateBtn" class="btnBlue maxWidthButton">
+                update
+            </button>
         </div>
-        <div class="verticalLayout teamSelectBox">
-            <div class="inputLabel">Map list</div>
-            <select id="mapListSelect" class="mapSelector"></select>
-        </div>
-        <button id="updateMaps" class="maxWidthButton">Update</button>
-    </div>
 
-	<script src="globalScripts.js"></script>
-	<script src="breakScreen.js"></script>
-</body>
+        <div class="space">
+            <div class="title">Upcoming Stages</div>
+            <div class="showHideSpace">
+                <button id="showMaps" class="btnGreen">Show</button>
+            </div>
+            <div class="verticalLayout teamSelectBox">
+                <div class="inputLabel">Map list</div>
+                <select id="mapListSelect" class="mapSelector"></select>
+            </div>
+            <button id="updateMaps" class="maxWidthButton">Update</button>
+        </div>
+
+        <script src="globalScripts.js"></script>
+        <script src="breakScreen.js"></script>
+    </body>
 </html>

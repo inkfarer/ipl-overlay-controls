@@ -1,94 +1,94 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "object",
-	"additionalProperties": false,
-	"properties": {
-		"flavorText": {
-			"type": "string"
-		},
-		"colorInfo": {
-			"type": "object",
-			"properties": {
-				"index": {
-					"type": "number"
-				},
-				"title": {
-					"type": "string"
-				},
-				"clrA": {
-					"type": "string"
-				},
-				"clrB": {
-					"type": "string"
-				}
-			}
-		},
-		"swapColorOrder": {
-			"type": "boolean"
-		},
-		"teamAInfo": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"players": {
-					"type":"array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			}
-		},
-		"teamBInfo": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"players": {
-					"type":"array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"default": {
-		"flavorText": "Flavor Text!",
-		"colorInfo": {
-			"index": 0,
-			"title": "Green vs Grape",
-			"clrA": "#37FC00",
-			"clrB": "#7D28FC"
-		},
-		"swapColorOrder": false,
-		"teamAInfo": {
-			"name": "Placeholder Team 1",
-			"players": [
-				{
-					"name": "Placeholder Player 1"
-				}
-			]
-		},
-		"teamBInfo": {
-			"name": "Placeholder Team 2",
-			"players": [
-				{
-					"name": "Placeholder Player 2"
-				}
-			]
-		}
-	}
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "flavorText": {
+            "type": "string"
+        },
+        "colorInfo": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "clrA": {
+                    "type": "string"
+                },
+                "clrB": {
+                    "type": "string"
+                }
+            }
+        },
+        "swapColorOrder": {
+            "type": "boolean"
+        },
+        "teamAInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "teamBInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "default": {
+        "flavorText": "Flavor Text!",
+        "colorInfo": {
+            "index": 0,
+            "title": "Green vs Grape",
+            "clrA": "#37FC00",
+            "clrB": "#7D28FC"
+        },
+        "swapColorOrder": false,
+        "teamAInfo": {
+            "name": "Placeholder Team 1",
+            "players": [
+                {
+                    "name": "Placeholder Player 1"
+                }
+            ]
+        },
+        "teamBInfo": {
+            "name": "Placeholder Team 2",
+            "players": [
+                {
+                    "name": "Placeholder Player 2"
+                }
+            ]
+        }
+    }
 }

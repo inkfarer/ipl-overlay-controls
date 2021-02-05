@@ -1,44 +1,44 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "array",
-	"items": [
-		{
-			"type": "array",
-			"items": [
-				{
-					"type": "object",
-					"properties": {
-						"id": {
-							"type": "string"
-						},
-						"name": {
-							"type": "string"
-						}
-					}
-				}
-			],
-			"additionalItems": true
-		}
-	],
-	"additionalItems": true,
-	"default": [
-		[
-			{
-				"id": "0",
-				"name": "Default map list"
-			},
-			{
-				"map": "Ancho-V Games",
-				"mode": "Clam Blitz"
-			},
-			{
-				"map": "MakoMart",
-				"mode": "Tower Control"
-			},
-			{
-				"map": "Wahoo World",
-				"mode": "Rainmaker"
-			}
-		]
-	]
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "items": [
+        {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ],
+            "additionalItems": true
+        }
+    ],
+    "additionalItems": true,
+    "default": [
+        [
+            {
+                "id": "0",
+                "name": "Default map list"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "MakoMart",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Wahoo World",
+                "mode": "Rainmaker"
+            }
+        ]
+    ]
 }

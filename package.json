@@ -1,86 +1,89 @@
 {
-	"name": "ipl-overlay-controls",
-	"version": "0.0.0",
-	"description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
-	"homepage": "",
-	"author": {
-		"name": "inkfarer",
-		"email": "inkfarer@inkfarer.com",
-		"url": "https://inkfarer.com"
-	},
-	"files": [
-		"dashboard",
-		"extension"
-	],
-	"keywords": [
-		"",
-		"nodecg-bundle"
-	],
-	"nodecg": {
-		"compatibleRange": "^1.1.1",
-		"dashboardPanels": [
-			{
-				"name": "scoring",
-				"title": "Scoring",
-				"width": 2,
-				"file": "scoring.html",
-				"workspace": "ipl",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "music",
-				"title": "Music",
-				"width": 3,
-				"file": "music.html",
-				"workspace": "ipl",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "breakscreen",
-				"title": "Break Screen",
-				"width": 2,
-				"file": "breakScreen.html",
-				"workspace": "ipl",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "winners",
-				"title": "Map Winners",
-				"width": 4,
-				"file": "mapWinners.html",
-				"workspace": "ipl",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "casters",
-				"title": "Casters",
-				"width": 2,
-				"file": "casters.html",
-				"workspace": "ipl",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "battlefyimport",
-				"title": "Import tournament data",
-				"width": 2,
-				"file": "tourneyImport.html",
-				"workspace": "ipl setup",
-				"headerColor": "#262F40"
-			},
-			{
-				"name": "maplist",
-				"title": "Map Lists",
-				"width": 6,
-				"file": "mapLists.html",
-				"workspace": "ipl setup",
-				"headerColor": "#262F40"
-			}
-		]
-	},
-	"repository": "https://github.com/nodecg/nodecg.git",
-	"license": "MIT",
-	"dependencies": {
-		"axios": "^0.21.1",
-		"lastfm": "^0.9.3"
-	}
+    "name": "ipl-overlay-controls",
+    "version": "0.0.0",
+    "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
+    "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
+    "author": {
+        "name": "inkfarer",
+        "email": "inkfarer@inkfarer.com",
+        "url": "https://inkfarer.com"
+    },
+    "files": [
+        "dashboard",
+        "extension"
+    ],
+    "keywords": [
+        "",
+        "nodecg-bundle"
+    ],
+    "nodecg": {
+        "compatibleRange": "^1.7.0",
+        "dashboardPanels": [
+            {
+                "name": "scoring",
+                "title": "Scoring",
+                "width": 2,
+                "file": "scoring.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "music",
+                "title": "Music",
+                "width": 3,
+                "file": "music.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "breakscreen",
+                "title": "Break Screen",
+                "width": 2,
+                "file": "breakScreen.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "winners",
+                "title": "Map Winners",
+                "width": 4,
+                "file": "mapWinners.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "casters",
+                "title": "Casters",
+                "width": 2,
+                "file": "casters.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "battlefyimport",
+                "title": "Import tournament data",
+                "width": 2,
+                "file": "tourneyImport.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "maplist",
+                "title": "Map Lists",
+                "width": 6,
+                "file": "mapLists.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            }
+        ]
+    },
+    "repository": "https://github.com/nodecg/nodecg.git",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "lastfm": "^0.9.3"
+    },
+    "devDependencies": {
+        "prettier": "2.2.1"
+    }
 }

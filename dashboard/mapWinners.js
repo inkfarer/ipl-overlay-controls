@@ -6,10 +6,12 @@ const maplists = nodecg.Replicant('maplists');
 
 NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
     currentMaplistID.on('change', (newValue, oldValue) => {
-		var currentMaplist = maplists.value.filter(list => list[0].id == newValue)[0];
+        var currentMaplist = maplists.value.filter(
+            (list) => list[0].id == newValue
+        )[0];
 
-		if (currentMaplist) {
-			maplistName.innerText = currentMaplist[0].name;
+        if (currentMaplist) {
+            maplistName.innerText = currentMaplist[0].name;
             removeToggles();
             for (let i = 1; i < currentMaplist.length; i++) {
                 if (oldValue) {
@@ -19,16 +21,17 @@ NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
                 const element = currentMaplist[i];
                 addToggle(element, i - 1);
             }
-		} else {
-			removeToggles();
-            maplistName.innerText = 'Undefined (Map list might have been deleted...)'
-		}
+        } else {
+            removeToggles();
+            maplistName.innerText =
+                'Undefined (Map list might have been deleted...)';
+        }
     });
     teamScores.on('change', (newValue, oldValue) => {
         //const index = (newValue.teamA + newValue.teamB) - 1;
         disableWinButtons2(mapWinners.value);
     });
-    mapWinners.on('change', newValue => {
+    mapWinners.on('change', (newValue) => {
         /*for (let i = 0; i < newValue.length; i++) {
             const element = newValue[i];
             const buttons = getButtons(i);
@@ -46,49 +49,55 @@ function addToggle(maplistElement, mapIndex) {
     const mapModeDisplay = document.createElement('div');
     //i hate how this has to be a variable
     const mapIndexPlusOne = Number(mapIndex) + 1;
-    mapModeDisplay.innerHTML = '<span class="center">' + mapIndexPlusOne + '</span>' + maplistElement.map + '<br>' + maplistElement.mode;
+    mapModeDisplay.innerHTML =
+        '<span class="center">' +
+        mapIndexPlusOne +
+        '</span>' +
+        maplistElement.map +
+        '<br>' +
+        maplistElement.mode;
     toggleDiv.appendChild(mapModeDisplay);
 
     const noWinButton = document.createElement('button');
-	noWinButton.classList.add('noWinButton');
-	noWinButton.classList.add('btnBlue');
-	noWinButton.classList.add('maxWidthButton');
-    noWinButton.id = "noWin_" + mapIndex;
-    noWinButton.innerText = "NO WIN";
+    noWinButton.classList.add('noWinButton');
+    noWinButton.classList.add('btnBlue');
+    noWinButton.classList.add('maxWidthButton');
+    noWinButton.id = 'noWin_' + mapIndex;
+    noWinButton.innerText = 'NO WIN';
     toggleDiv.appendChild(noWinButton);
 
     const AWinButton = document.createElement('button');
     AWinButton.classList.add('AWinButton');
-	AWinButton.classList.add('btnGreen');
-	AWinButton.classList.add('maxWidthButton');
-    AWinButton.id = "AWin_" + mapIndex;
-    AWinButton.innerText = "A WIN";
+    AWinButton.classList.add('btnGreen');
+    AWinButton.classList.add('maxWidthButton');
+    AWinButton.id = 'AWin_' + mapIndex;
+    AWinButton.innerText = 'A WIN';
 
     const BWinButton = document.createElement('button');
     BWinButton.classList.add('BWinButton');
-	BWinButton.classList.add('btnRed');
-	BWinButton.classList.add('maxWidthButton');
-    BWinButton.id = "BWin_" + mapIndex;
-    BWinButton.innerText = "B WIN";
+    BWinButton.classList.add('btnRed');
+    BWinButton.classList.add('maxWidthButton');
+    BWinButton.id = 'BWin_' + mapIndex;
+    BWinButton.innerText = 'B WIN';
 
     noWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 0;
         const buttons = getButtons(mapIndex);
         //disableWinButtons(buttons[0], buttons[1], buttons[2], 0);
-    }
+    };
     AWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 1;
         const buttons = getButtons(mapIndex);
         //disableWinButtons(buttons[0], buttons[1], buttons[2], 1);
-    }
+    };
     BWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
         mapWinners.value[mapIndex] = 2;
         const buttons = getButtons(mapIndex);
         //disableWinButtons(buttons[0], buttons[1], buttons[2], 2);
-    }
+    };
 
     const winButtonContainer = document.createElement('div');
     winButtonContainer.classList.add('wbContainer');
@@ -103,7 +112,7 @@ function addToggle(maplistElement, mapIndex) {
 
 document.getElementById('reset').onclick = () => {
     resetToggles();
-}
+};
 
 function getButtons(id) {
     const noWinButton = document.querySelector('button#noWin_' + id);
@@ -126,32 +135,33 @@ function getButtons(id) {
 }*/
 
 function disableWinButtons2(mapWinnerValue) {
-	const scoreSum = teamScores.value.teamA + teamScores.value.teamB;
-	var currentMaplist = maplists.value.filter(list => list[0].id == currentMaplistID.value)[0];
+    const scoreSum = teamScores.value.teamA + teamScores.value.teamB;
+    var currentMaplist = maplists.value.filter(
+        (list) => list[0].id == currentMaplistID.value
+    )[0];
 
     for (let i = 1; i < currentMaplist.length; i++) {
-        const mapWinner = mapWinnerValue[i-1];
-        const buttons = getButtons(i-1);
+        const mapWinner = mapWinnerValue[i - 1];
+        const buttons = getButtons(i - 1);
         for (let y = 0; y < buttons.length; y++) {
             buttons[y].disabled = false;
         }
         buttons[mapWinner].disabled = true;
-        
     }
 }
 
 function resetToggles() {
     mapWinners.value = [0, 0, 0, 0, 0, 0, 0];
-};
+}
 
 function removeToggles() {
-    document.getElementById('toggles').innerHTML = "";
+    document.getElementById('toggles').innerHTML = '';
 }
 
 // set wins automatically check box
 
 const autoWinSet = nodecg.Replicant('autoWinSet');
 
-autoWinSet.on('change', newValue => {
-	checkAutoWinners.checked = newValue;
+autoWinSet.on('change', (newValue) => {
+    checkAutoWinners.checked = newValue;
 });

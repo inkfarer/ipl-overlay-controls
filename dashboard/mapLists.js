@@ -2,45 +2,47 @@ const maplists = nodecg.Replicant('maplists');
 
 const currentMaplistID = nodecg.Replicant('currentMaplistID');
 
-const splatMaps = ["Ancho-V Games",
-    "Arowana Mall",
-    "Blackbelly Skatepark",
-    "Camp Triggerfish",
-    "Goby Arena",
-    "Humpback Pump Track",
-    "Inkblot Art Academy",
-    "Kelp Dome",
-    "MakoMart",
-    "Manta Maria",
-    "Moray Towers",
-    "Musselforge Fitness",
-    "New Albacore Hotel",
-    "Piranha Pit",
-    "Port Mackerel",
-    "Shellendorf Institute",
-    "Shifty Station",
-    "Snapper Canal",
-    "Starfish Mainstage",
-    "Sturgeon Shipyard",
-    "The Reef",
-    "Wahoo World",
-    "Walleye Warehouse",
-    "Skipper Pavilion",
-    "Unknown Map"
+const splatMaps = [
+    'Ancho-V Games',
+    'Arowana Mall',
+    'Blackbelly Skatepark',
+    'Camp Triggerfish',
+    'Goby Arena',
+    'Humpback Pump Track',
+    'Inkblot Art Academy',
+    'Kelp Dome',
+    'MakoMart',
+    'Manta Maria',
+    'Moray Towers',
+    'Musselforge Fitness',
+    'New Albacore Hotel',
+    'Piranha Pit',
+    'Port Mackerel',
+    'Shellendorf Institute',
+    'Shifty Station',
+    'Snapper Canal',
+    'Starfish Mainstage',
+    'Sturgeon Shipyard',
+    'The Reef',
+    'Wahoo World',
+    'Walleye Warehouse',
+    'Skipper Pavilion',
+    'Unknown Map',
 ];
 splatMaps.sort();
 
-const splatModes = ["Clam Blitz",
-    "Tower Control",
-    "Rainmaker",
-    "Splat Zones",
-    "Turf War",
-    "Unknown Mode"
+const splatModes = [
+    'Clam Blitz',
+    'Tower Control',
+    'Rainmaker',
+    'Splat Zones',
+    'Turf War',
+    'Unknown Mode',
 ];
 splatModes.sort();
 
-const blue = "#3F51B5";
-const red = "#C9513E";
+const blue = '#3F51B5';
+const red = '#C9513E';
 
 //perhaps a little overcomplicated but it will do
 function generateId() {
@@ -49,118 +51,122 @@ function generateId() {
 
 create3Map.onclick = () => {
     createMapList(3, generateId(), true);
-}
+};
 
 create5Map.onclick = () => {
     createMapList(5, generateId(), true);
-}
+};
 
 create7Map.onclick = () => {
     createMapList(7, generateId(), true);
-}
+};
 
 removeAll.onclick = () => removeAllMaps();
 
 function removeAllMaps() {
-    var mapListElems = document.getElementsByClassName("mapListDiv");
+    var mapListElems = document.getElementsByClassName('mapListDiv');
     while (mapListElems[0]) {
         mapListElems[0].parentNode.removeChild(mapListElems[0]);
     }
     maplists.value = [
         [
-            { id: "0", name: "Default map list" },
-            { map: "Ancho-V Games", mode: "Clam Blitz" },
-            { map: "Ancho-V Games", mode: "Tower Control" },
-            { map: "Wahoo World", mode: "Rainmaker" }
-        ]
-	];
-	currentMaplistID.value = "0";
+            { id: '0', name: 'Default map list' },
+            { map: 'Ancho-V Games', mode: 'Clam Blitz' },
+            { map: 'Ancho-V Games', mode: 'Tower Control' },
+            { map: 'Wahoo World', mode: 'Rainmaker' },
+        ],
+    ];
+    currentMaplistID.value = '0';
 }
 
 function createMapList(numberOfMaps, id, remindToUpdate) {
     //support up to 7 maps for the time being
     //if you want me dead, host a tournament with 9 maps in the finals
-    if (typeof numberOfMaps !== "number" || numberOfMaps >= 8 || numberOfMaps <= 0) {
-        throw "this should not happen, ever";
-	}
-	
-	// map list editor div
-    var mapListDiv = document.createElement("div");
-    mapListDiv.classList.add("space");
-    mapListDiv.classList.add("mapListDiv");
-	mapListDiv.id = "mapListSpace_" + id;
-	
-	// map list name input
-    let nameInput = document.createElement("input");
-    let updateButton = document.createElement("button");
-    nameInput.id = "nameInput_" + id;
-	nameInput.label = "Map list name";
-	nameInput.addEventListener('input', () => {
+    if (
+        typeof numberOfMaps !== 'number' ||
+        numberOfMaps >= 8 ||
+        numberOfMaps <= 0
+    ) {
+        throw 'this should not happen, ever';
+    }
+
+    // map list editor div
+    var mapListDiv = document.createElement('div');
+    mapListDiv.classList.add('space');
+    mapListDiv.classList.add('mapListDiv');
+    mapListDiv.id = 'mapListSpace_' + id;
+
+    // map list name input
+    let nameInput = document.createElement('input');
+    let updateButton = document.createElement('button');
+    nameInput.id = 'nameInput_' + id;
+    nameInput.label = 'Map list name';
+    nameInput.addEventListener('input', () => {
         updateButton.style.backgroundColor = 'var(--red)';
-	});
-	nameInput.type = 'text';
+    });
+    nameInput.type = 'text';
 
-	let nameInputLabel = document.createElement('div');
-	nameInputLabel.innerText = 'Map list name';
-	nameInputLabel.classList.add('inputLabel');
+    let nameInputLabel = document.createElement('div');
+    nameInputLabel.innerText = 'Map list name';
+    nameInputLabel.classList.add('inputLabel');
 
-	mapListDiv.appendChild(nameInputLabel);
-	mapListDiv.appendChild(nameInput);
-	
+    mapListDiv.appendChild(nameInputLabel);
+    mapListDiv.appendChild(nameInput);
+
     for (let i = 0; i < numberOfMaps; i++) {
         //separator
-        let separator = document.createElement("div");
-        separator.classList.add("separator");
-        let separatorSpan = document.createElement("span");
+        let separator = document.createElement('div');
+        separator.classList.add('separator');
+        let separatorSpan = document.createElement('span');
         separatorSpan.innerText = i + 1;
         separator.appendChild(separatorSpan);
-		mapListDiv.appendChild(separator);
-		
+        mapListDiv.appendChild(separator);
+
         //map select
-        let mapSelect = document.createElement("select");
-        mapSelect.id = "mapSelect_" + id + "_" + i;
-        mapSelect.classList.add("mapSelect");
+        let mapSelect = document.createElement('select');
+        mapSelect.id = 'mapSelect_' + id + '_' + i;
+        mapSelect.classList.add('mapSelect');
         fillMapList(mapSelect);
-		mapListDiv.appendChild(mapSelect);
-		
+        mapListDiv.appendChild(mapSelect);
+
         //mode select
-        let modeSelect = document.createElement("select");
-        modeSelect.id = "modeSelect_" + id + "_" + i;
-        modeSelect.classList.add("modeSelect");
+        let modeSelect = document.createElement('select');
+        modeSelect.id = 'modeSelect_' + id + '_' + i;
+        modeSelect.classList.add('modeSelect');
         fillModeList(modeSelect);
         mapListDiv.appendChild(modeSelect);
         mapSelect.addEventListener('change', () => {
             updateButton.style.backgroundColor = red;
-        })
+        });
         modeSelect.addEventListener('change', () => {
             updateButton.style.backgroundColor = red;
-        })
-	}
-	
-	// update button
-    updateButton.innerText = "update"
-        //do i even have to do this?
-    updateButton.id = numberOfMaps + "&" + id;
+        });
+    }
+
+    // update button
+    updateButton.innerText = 'update';
+    //do i even have to do this?
+    updateButton.id = numberOfMaps + '&' + id;
     if (remindToUpdate) {
         updateButton.style.backgroundColor = red;
     }
     updateButton.onclick = (event) => {
-        let splitId = event.target.id.split("&");
+        let splitId = event.target.id.split('&');
         const buttonNumberOfMaps = splitId[0];
         const buttonId = splitId[1];
-        let nameInput = document.querySelector("input#nameInput_" + buttonId);
+        let nameInput = document.querySelector('input#nameInput_' + buttonId);
         var selectedMaps = [{ id: buttonId, name: nameInput.value }];
         for (let i = 0; i < buttonNumberOfMaps; i++) {
             let currentMap = {
-                map: "",
-                mode: ""
+                map: '',
+                mode: '',
             };
-            let id = buttonId + "_" + i;
-            let mapId = "select#mapSelect_" + id;
+            let id = buttonId + '_' + i;
+            let mapId = 'select#mapSelect_' + id;
             let mapSelector = document.querySelector(mapId);
             currentMap.map = mapSelector.value;
 
-            let modeId = "select#modeSelect_" + id;
+            let modeId = 'select#modeSelect_' + id;
             let modeSelector = document.querySelector(modeId);
             currentMap.mode = modeSelector.value;
             selectedMaps.push(currentMap);
@@ -172,32 +178,34 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
             maplists.value[mapListIndex] = selectedMaps;
         }
         event.target.style.backgroundColor = blue;
-	}
-	updateButton.classList.add('maxWidthButton');
-	
-	// remove button
-    let removeButton = document.createElement("button");
+    };
+    updateButton.classList.add('maxWidthButton');
+
+    // remove button
+    let removeButton = document.createElement('button');
     removeButton.style.backgroundColor = red;
-    removeButton.id = "removeButton_" + id;
-	removeButton.innerText = "REMOVE"
-	removeButton.classList.add('maxWidthButton');
+    removeButton.id = 'removeButton_' + id;
+    removeButton.innerText = 'REMOVE';
+    removeButton.classList.add('maxWidthButton');
     removeButton.onclick = (event) => {
-        const buttonId = event.target.id.split("_")[1];
-        let mapListSpace = document.querySelector("div#mapListSpace_" + buttonId);
+        const buttonId = event.target.id.split('_')[1];
+        let mapListSpace = document.querySelector(
+            'div#mapListSpace_' + buttonId
+        );
         let mapIndex = findMapList(buttonId);
         if (mapIndex !== null) {
             maplists.value.splice(mapIndex, 1);
         }
         mapListSpace.parentNode.removeChild(mapListSpace);
-	}
+    };
 
-	let buttonContainer = document.createElement('div');
-	buttonContainer.classList.add('horizontalLayout');
+    let buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('horizontalLayout');
 
-	buttonContainer.appendChild(updateButton);
-	buttonContainer.appendChild(removeButton);
-	
-	mapListDiv.appendChild(buttonContainer);
+    buttonContainer.appendChild(updateButton);
+    buttonContainer.appendChild(removeButton);
+
+    mapListDiv.appendChild(buttonContainer);
 
     mapsGrid.prepend(mapListDiv);
 }
@@ -213,13 +221,17 @@ function findMapList(id) {
 }
 
 function setMapListValues(id, values) {
-    let listNameItem = document.querySelector("input#nameInput_" + id);
+    let listNameItem = document.querySelector('input#nameInput_' + id);
     listNameItem.value = values[0].name;
     for (let i = 1; i < values.length; i++) {
-        let selectorId = id + "_";
+        let selectorId = id + '_';
         selectorId += i - 1;
-        let mapSelectElem = document.querySelector("select#mapSelect_" + selectorId);
-        let modeSelectElem = document.querySelector("select#modeSelect_" + selectorId);
+        let mapSelectElem = document.querySelector(
+            'select#mapSelect_' + selectorId
+        );
+        let modeSelectElem = document.querySelector(
+            'select#modeSelect_' + selectorId
+        );
         mapSelectElem.value = values[i].map;
         modeSelectElem.value = values[i].mode;
     }
@@ -227,7 +239,7 @@ function setMapListValues(id, values) {
 
 function fillMapList(mapList) {
     for (i = 0; i < splatMaps.length; i++) {
-        var opt = document.createElement("option");
+        var opt = document.createElement('option');
         opt.value = splatMaps[i];
         opt.text = splatMaps[i];
         mapList.add(opt);
@@ -236,7 +248,7 @@ function fillMapList(mapList) {
 
 function fillModeList(modeList) {
     for (i = 0; i < splatModes.length; i++) {
-        var opt = document.createElement("option");
+        var opt = document.createElement('option');
         opt.value = splatModes[i];
         opt.text = splatModes[i];
         modeList.add(opt);
@@ -244,10 +256,12 @@ function fillModeList(modeList) {
 }
 
 function mapListElemExists(id) {
-    const mapListElem = document.querySelector("div#mapListSpace_" + id);
+    const mapListElem = document.querySelector('div#mapListSpace_' + id);
     if (mapListElem === null) {
         return false;
-    } else { return true; }
+    } else {
+        return true;
+    }
 }
 
 function checkIDExists(maplistsElem, id) {
@@ -276,7 +290,9 @@ maplists.on('change', (newValue, oldValue) => {
         // find map lists that are in the old value but not in the new value
         // then get rid of their corresponding elements
 
-        let deletedLists = oldValue.filter(x => !checkIDExists(newValue, x[0].id));
+        let deletedLists = oldValue.filter(
+            (x) => !checkIDExists(newValue, x[0].id)
+        );
         if (deletedLists[0]) {
             for (let i = 0; i < deletedLists.length; i++) {
                 removeMapListDiv(deletedLists[i][0].id);
@@ -286,18 +302,27 @@ maplists.on('change', (newValue, oldValue) => {
 });
 
 function checkMapObjectEqual(obj1, obj2) {
-    if (obj1.length !== obj2.length) { return false; }
+    if (obj1.length !== obj2.length) {
+        return false;
+    }
     for (let i = 0; i < obj1.length; i++) {
         const element = obj1[i];
         const element2 = obj2[i];
         if (i === 0) {
-            if (element.id != element2.id || element.name !== element2.name) { return false; }
+            if (element.id != element2.id || element.name !== element2.name) {
+                return false;
+            }
         } else {
-            if (element.map !== element2.map || element.mode !== element2.mode) { return false; }
+            if (
+                element.map !== element2.map ||
+                element.mode !== element2.mode
+            ) {
+                return false;
+            }
         }
     }
     return true;
-};
+}
 
 // importing map lists yehaw
 
@@ -309,7 +334,7 @@ submitFile.onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     let listsURL = mapFileInput.value;
 
-    nodecg.sendMessage('getMapList', {url: listsURL}, (e, result) => {
+    nodecg.sendMessage('getMapList', { url: listsURL }, (e, result) => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);
@@ -321,7 +346,7 @@ submitFile.onclick = () => {
 
 function setImportStatus(status) {
     let statusElem = document.querySelector('.importStatus');
-    switch(status) {
+    switch (status) {
         case IMPORT_STATUS_SUCCESS:
             statusElem.style.backgroundColor = 'var(--green)';
             return;

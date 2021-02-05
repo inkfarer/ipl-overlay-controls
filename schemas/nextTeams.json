@@ -1,63 +1,63 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "object",
-	"additionalProperties": false,
-	"properties": {
-		"teamAInfo": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"players": {
-					"type":"array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			}
-		},
-		"teamBInfo": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"players": {
-					"type":"array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"default": {
-		"teamAInfo": {
-			"name": "Placeholder Team 1",
-			"players": [
-				{
-					"name": "Placeholder Player 1"
-				}
-			]
-		},
-		"teamBInfo": {
-			"name": "Placeholder Team 2",
-			"players": [
-				{
-					"name": "Placeholder Player 2"
-				}
-			]
-		}
-	}
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "teamAInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "teamBInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "default": {
+        "teamAInfo": {
+            "name": "Placeholder Team 1",
+            "players": [
+                {
+                    "name": "Placeholder Player 1"
+                }
+            ]
+        },
+        "teamBInfo": {
+            "name": "Placeholder Team 2",
+            "players": [
+                {
+                    "name": "Placeholder Player 2"
+                }
+            ]
+        }
+    }
 }

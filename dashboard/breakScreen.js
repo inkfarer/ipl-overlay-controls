@@ -2,7 +2,9 @@
 
 const mainFlavorText = nodecg.Replicant('mainFlavorText');
 
-mainFlavorText.on('change', newValue => { breakFlavorInput.value = newValue; });
+mainFlavorText.on('change', (newValue) => {
+    breakFlavorInput.value = newValue;
+});
 
 updateMainScene.onclick = () => {
     mainFlavorText.value = breakFlavorInput.value;
@@ -13,7 +15,7 @@ updateMainScene.onclick = () => {
 
 const NSTimerShown = nodecg.Replicant('NSTimerShown');
 
-NSTimerShown.on('change', newValue => {
+NSTimerShown.on('change', (newValue) => {
     document.querySelector('#checkShowTimer').checked = newValue;
 });
 
@@ -21,10 +23,12 @@ NSTimerShown.on('change', newValue => {
 
 const nextStageTime = nodecg.Replicant('nextStageTime');
 
-nextStageTime.on('change', newValue => {
+nextStageTime.on('change', (newValue) => {
     document.querySelector('.minInput').value = newValue.minute;
-	document.querySelector('.hourInput').value = newValue.hour;
-	document.querySelector('.daySelect').value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
+    document.querySelector('.hourInput').value = newValue.hour;
+    document.querySelector('.daySelect').value = `${newValue.day}/${
+        parseInt(newValue.month) + 1
+    }`;
 });
 
 function updateDaySelector() {
@@ -63,7 +67,7 @@ function updateStageTime() {
                 hour: hour,
                 minute: min,
                 day: day,
-                month: month
+                month: month,
             };
         }
     }
@@ -72,14 +76,17 @@ function updateStageTime() {
 updateDaySelector();
 
 addSelectChangeReminder(['daySelect'], updateMainScene);
-addInputChangeReminder(['breakFlavorInput', 'hourInput', 'minInput'], updateMainScene);
+addInputChangeReminder(
+    ['breakFlavorInput', 'hourInput', 'minInput'],
+    updateMainScene
+);
 
 // Next Teams
 
 const tourneyData = nodecg.Replicant('tourneyData');
 
-tourneyData.on('change', newValue => {
-	clearSelectors('teamSelector');
+tourneyData.on('change', (newValue) => {
+    clearSelectors('teamSelector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
         addSelector(element.name, 'teamSelector', element.id);
@@ -88,20 +95,27 @@ tourneyData.on('change', newValue => {
 
 const nextTeams = nodecg.Replicant('nextTeams');
 
-nextTeams.on('change', newValue => {
-	nextTeamASelect.value = newValue.teamAInfo.id;
-	nextTeamBSelect.value = newValue.teamBInfo.id;
+nextTeams.on('change', (newValue) => {
+    nextTeamASelect.value = newValue.teamAInfo.id;
+    nextTeamBSelect.value = newValue.teamBInfo.id;
 });
 
 nextTeamUpdateBtn.onclick = () => {
-	let teamAInfo = tourneyData.value.data.filter(team => team.id === nextTeamASelect.value)[0];
-	let teamBInfo = tourneyData.value.data.filter(team => team.id === nextTeamBSelect.value)[0];
+    let teamAInfo = tourneyData.value.data.filter(
+        (team) => team.id === nextTeamASelect.value
+    )[0];
+    let teamBInfo = tourneyData.value.data.filter(
+        (team) => team.id === nextTeamBSelect.value
+    )[0];
 
-	nextTeams.value.teamAInfo = teamAInfo;
-	nextTeams.value.teamBInfo = teamBInfo;
+    nextTeams.value.teamAInfo = teamAInfo;
+    nextTeams.value.teamBInfo = teamBInfo;
 };
 
-addSelectChangeReminder(['nextTeamASelect', 'nextTeamBSelect'], nextTeamUpdateBtn);
+addSelectChangeReminder(
+    ['nextTeamASelect', 'nextTeamBSelect'],
+    nextTeamUpdateBtn
+);
 
 // Maps
 
@@ -109,23 +123,25 @@ const maplists = nodecg.Replicant('maplists');
 
 const currentMaplistID = nodecg.Replicant('currentMaplistID');
 
-maplists.on('change', newValue => {
-	clearSelectors('mapSelector');
-	for (let i = 0; i < newValue.length; i++) {
-		let opt = document.createElement("option");
+maplists.on('change', (newValue) => {
+    clearSelectors('mapSelector');
+    for (let i = 0; i < newValue.length; i++) {
+        let opt = document.createElement('option');
         opt.value = newValue[i][0].id;
         opt.text = newValue[i][0].name;
         mapListSelect.appendChild(opt);
-	}
+    }
 });
 
-currentMaplistID.on('change', newValue => {
-	let maplistID = maplists.value.filter(list => list[0].id == newValue)[0][0].id;
-	mapListSelect.value = maplistID;
+currentMaplistID.on('change', (newValue) => {
+    let maplistID = maplists.value.filter(
+        (list) => list[0].id == newValue
+    )[0][0].id;
+    mapListSelect.value = maplistID;
 });
 
 updateMaps.onclick = () => {
-	currentMaplistID.value = mapListSelect.value;
+    currentMaplistID.value = mapListSelect.value;
 };
 
 addSelectChangeReminder(['mapListSelect'], updateMaps);
@@ -134,22 +150,30 @@ addSelectChangeReminder(['mapListSelect'], updateMaps);
 
 const currentBreakScene = nodecg.Replicant('currentBreakScene');
 
-showMain.onclick = () => { currentBreakScene.value = "mainScene"; }
-showNextUp.onclick = () => { currentBreakScene.value = "nextUp"; }
-showMaps.onclick = () => { currentBreakScene.value = "maps"; }
+showMain.onclick = () => {
+    currentBreakScene.value = 'mainScene';
+};
+showNextUp.onclick = () => {
+    currentBreakScene.value = 'nextUp';
+};
+showMaps.onclick = () => {
+    currentBreakScene.value = 'maps';
+};
 
-currentBreakScene.on('change', newValue => {
+currentBreakScene.on('change', (newValue) => {
     disableSceneButtons(newValue);
 });
 
 function disableSceneButtons(currentScene) {
-    const elements = ["showMain", "showNextUp", "showMaps"];
-    elements.forEach(element => { document.getElementById(element).disabled = false; });
-    if (currentScene === "mainScene") {
+    const elements = ['showMain', 'showNextUp', 'showMaps'];
+    elements.forEach((element) => {
+        document.getElementById(element).disabled = false;
+    });
+    if (currentScene === 'mainScene') {
         showMain.disabled = true;
-    } else if (currentScene === "nextUp") {
+    } else if (currentScene === 'nextUp') {
         showNextUp.disabled = true;
-    } else if (currentScene === "maps") {
+    } else if (currentScene === 'maps') {
         showMaps.disabled = true;
     }
 }
@@ -158,15 +182,15 @@ function disableSceneButtons(currentScene) {
 
 const teamImageHidden = nodecg.Replicant('teamImageHidden');
 
-teamImageHidden.on('change', newValue => {
+teamImageHidden.on('change', (newValue) => {
     checkSetTeamAImg.checked = newValue.teamA;
     checkSetTeamBImg.checked = newValue.teamB;
 });
 
-checkSetTeamAImg.onclick = e => {
+checkSetTeamAImg.onclick = (e) => {
     teamImageHidden.value.teamA = e.target.checked;
 };
 
-checkSetTeamBImg.onclick = e => {
+checkSetTeamBImg.onclick = (e) => {
     teamImageHidden.value.teamB = e.target.checked;
 };
