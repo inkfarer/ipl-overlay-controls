@@ -1,9 +1,9 @@
 const nowPlaying = nodecg.Replicant('nowPlaying');
-const nowPlayingManual = nodecg.Replicant('nowPlayingManual');
+const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
 const musicShown = nodecg.Replicant('musicShown');
-const mSongEnabled = nodecg.Replicant('mSongEnabled');
+const manualSongInputEnabled = nodecg.Replicant('manualSongInputEnabled');
 
-mSongEnabled.on('change', (newValue) => {
+manualSongInputEnabled.on('change', (newValue) => {
     document.getElementById('manual-song-toggle').checked = newValue;
 });
 
@@ -19,7 +19,7 @@ nowPlaying.on('change', (newValue) => {
     }
 });
 
-nowPlayingManual.on('change', (newValue) => {
+manualNowPlaying.on('change', (newValue) => {
     document.getElementById('manual-song-name-input').value = newValue.song;
     document.getElementById('manual-song-artist-input').value = newValue.artist;
 });
@@ -30,10 +30,10 @@ addChangeReminder(
 );
 
 document.getElementById('update-manual-song').onclick = () => {
-    nowPlayingManual.value.song = document.getElementById(
+    manualNowPlaying.value.song = document.getElementById(
         'manual-song-name-input'
     ).value;
-    nowPlayingManual.value.artist = document.getElementById(
+    manualNowPlaying.value.artist = document.getElementById(
         'manual-song-artist-input'
     ).value;
 };

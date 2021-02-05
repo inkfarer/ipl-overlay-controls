@@ -15,20 +15,20 @@ mainSceneUpdateBtn.onclick = () => {
 
 // Show Timer
 
-const NSTimerShown = nodecg.Replicant('NSTimerShown');
+const nextRoundStartTimeShown = nodecg.Replicant('nextRoundStartTimeShown');
 
-NSTimerShown.on('change', (newValue) => {
+nextRoundStartTimeShown.on('change', (newValue) => {
     document.getElementById('next-stage-timer-toggle').checked = newValue;
 });
 
 // Next Stage Timer
 
-const nextStageTime = nodecg.Replicant('nextStageTime');
+const nextRoundStartTime = nodecg.Replicant('nextRoundStartTime');
 const minuteInput = document.getElementById('next-stage-minute-input');
 const hourInput = document.getElementById('next-stage-hour-input');
 const daySelect = document.getElementById('next-stage-day-select');
 
-nextStageTime.on('change', (newValue) => {
+nextRoundStartTime.on('change', (newValue) => {
     minuteInput.value = newValue.minute;
     hourInput.value = newValue.hour;
     daySelect.value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
@@ -65,7 +65,7 @@ function updateStageTime() {
         const month = Number(selText.dataset.month);
 
         if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
-            nextStageTime.value = {
+            nextRoundStartTime.value = {
                 hour: hour,
                 minute: min,
                 day: day,
@@ -84,9 +84,9 @@ addChangeReminder(
 
 // Next Teams
 
-const tourneyData = nodecg.Replicant('tourneyData');
+const tournamentData = nodecg.Replicant('tournamentData');
 
-tourneyData.on('change', (newValue) => {
+tournamentData.on('change', (newValue) => {
     clearSelectors('team-selector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
@@ -105,10 +105,10 @@ nextTeams.on('change', (newValue) => {
 });
 
 nextTeamUpdateBtn.onclick = () => {
-    let teamAInfo = tourneyData.value.data.filter(
+    let teamAInfo = tournamentData.value.data.filter(
         (team) => team.id === nextTeamASelector.value
     )[0];
-    let teamBInfo = tourneyData.value.data.filter(
+    let teamBInfo = tournamentData.value.data.filter(
         (team) => team.id === nextTeamBSelector.value
     )[0];
 
@@ -128,7 +128,7 @@ const currentMapsUpdateButton = document.getElementById(
     'current-map-list-update-btn'
 );
 const mapListSelector = document.getElementById('map-list-selector');
-const currentMaplistID = nodecg.Replicant('currentMaplistID');
+const activeMapListId = nodecg.Replicant('activeMapListId');
 
 maplists.on('change', (newValue) => {
     clearSelectors('mapSelector');
@@ -141,7 +141,7 @@ maplists.on('change', (newValue) => {
 });
 
 NodeCG.waitForReplicants(maplists).then(() => {
-    currentMaplistID.on('change', (newValue) => {
+    activeMapListId.on('change', (newValue) => {
         mapListSelector.value = maplists.value.filter(
             (list) => list[0].id == newValue
         )[0][0].id;
@@ -149,14 +149,14 @@ NodeCG.waitForReplicants(maplists).then(() => {
 });
 
 currentMapsUpdateButton.onclick = () => {
-    currentMaplistID.value = mapListSelector.value;
+    activeMapListId.value = mapListSelector.value;
 };
 
 addChangeReminder([mapListSelector], currentMapsUpdateButton);
 
 // Current scene
 
-const currentBreakScene = nodecg.Replicant('currentBreakScene');
+const activeBreakScene = nodecg.Replicant('activeBreakScene');
 const sceneSwitchButtons = {
     mainScene: document.getElementById('show-main-scene-btn'),
     nextUp: document.getElementById('show-teams-scene-btn'),
@@ -165,11 +165,11 @@ const sceneSwitchButtons = {
 
 for (const [key, value] of Object.entries(sceneSwitchButtons)) {
     value.addEventListener('click', () => {
-        currentBreakScene.value = key;
+        activeBreakScene.value = key;
     });
 }
 
-currentBreakScene.on('change', (newValue) => {
+activeBreakScene.on('change', (newValue) => {
     for (scene in sceneSwitchButtons) {
         sceneSwitchButtons[scene].disabled = false;
     }

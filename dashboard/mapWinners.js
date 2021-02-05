@@ -1,5 +1,5 @@
 const mapWinners = nodecg.Replicant('mapWinners');
-const currentMaplistID = nodecg.Replicant('currentMaplistID');
+const activeMapListId = nodecg.Replicant('activeMapListId');
 const teamScores = nodecg.Replicant('teamScores');
 
 const maplists = nodecg.Replicant('maplists');
@@ -7,7 +7,7 @@ const maplists = nodecg.Replicant('maplists');
 const mapListNameElem = document.getElementById('map-list-name');
 
 NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
-    currentMaplistID.on('change', (newValue, oldValue) => {
+    activeMapListId.on('change', (newValue, oldValue) => {
         var currentMaplist = maplists.value.filter(
             (list) => list[0].id == newValue
         )[0];
@@ -109,7 +109,7 @@ function getButtons(id) {
 
 function disableWinButtons(mapWinnerValue) {
     var currentMaplist = maplists.value.filter(
-        (list) => list[0].id == currentMaplistID.value
+        (list) => list[0].id == activeMapListId.value
     )[0];
 
     for (let i = 1; i < currentMaplist.length; i++) {
@@ -128,8 +128,8 @@ function removeToggles() {
 
 // set wins automatically check box
 
-const autoWinSet = nodecg.Replicant('autoWinSet');
+const setWinnersAutomatically = nodecg.Replicant('setWinnersAutomatically');
 
-autoWinSet.on('change', (newValue) => {
+setWinnersAutomatically.on('change', (newValue) => {
     document.getElementById('auto-winner-set-toggle').checked = newValue;
 });

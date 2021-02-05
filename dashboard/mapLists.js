@@ -1,6 +1,6 @@
 const maplists = nodecg.Replicant('maplists');
 
-const currentMaplistID = nodecg.Replicant('currentMaplistID');
+const activeMapListId = nodecg.Replicant('activeMapListId');
 
 const splatMaps = [
     'Ancho-V Games',
@@ -69,7 +69,7 @@ function resetMaps() {
             { map: 'Wahoo World', mode: 'Rainmaker' },
         ],
     ];
-    currentMaplistID.value = '0';
+    activeMapListId.value = '0';
 }
 
 function createMapList(numberOfMaps, id, remindToUpdate) {

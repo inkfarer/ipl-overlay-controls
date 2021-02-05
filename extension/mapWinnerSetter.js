@@ -1,9 +1,9 @@
 module.exports = function (nodecg) {
     const mapWinners = nodecg.Replicant('mapWinners');
     const teamScores = nodecg.Replicant('teamScores');
-    const autoWinSet = nodecg.Replicant('autoWinSet');
+    const setWinnersAutomatically = nodecg.Replicant('setWinnersAutomatically');
     teamScores.on('change', (newValue, oldValue) => {
-        if (!autoWinSet.value || !oldValue) return;
+        if (!setWinnersAutomatically.value || !oldValue) return;
         const scoreSum = newValue.teamA + newValue.teamB;
         if (scoreSum === 1) {
             if (newValue.teamA === 1) {

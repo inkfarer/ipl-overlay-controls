@@ -1,9 +1,9 @@
-const tournamentData = nodecg.Replicant('tourneyData');
+const tournamentData = nodecg.Replicant('tournamentData');
 
 document.getElementById('submit-import').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     nodecg.sendMessage(
-        'getTourneyData',
+        'getTournamentData',
         {
             method: document.getElementById('method-selector').value,
             id: document.getElementById('tournament-id-input').value,

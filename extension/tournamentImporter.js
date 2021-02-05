@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = async function (nodecg) {
-    const tourneyData = nodecg.Replicant('tourneyData');
+    const tournamentData = nodecg.Replicant('tournamentData');
     var smashGGKey;
 
     if (
@@ -16,7 +16,7 @@ module.exports = async function (nodecg) {
         smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
     }
 
-    nodecg.listenFor('getTourneyData', async (data, ack) => {
+    nodecg.listenFor('getTournamentData', async (data, ack) => {
         if (!data.id || !data.method) {
             ack(new Error('Missing arguments.'), null);
             return;
@@ -26,7 +26,7 @@ module.exports = async function (nodecg) {
             case 'battlefy':
                 getBattlefyData(data.id)
                     .then((data) => {
-                        tourneyData.value = data;
+                        tournamentData.value = data;
                         ack(null, data.meta.id);
                     })
                     .catch((err) => {
@@ -41,7 +41,7 @@ module.exports = async function (nodecg) {
 
                 getSmashGGData(data.id, smashGGKey)
                     .then((data) => {
-                        tourneyData.value = data;
+                        tournamentData.value = data;
                         ack(null, data.meta.id);
                     })
                     .catch((err) => {
@@ -51,7 +51,7 @@ module.exports = async function (nodecg) {
             case 'raw':
                 getRaw(data.id)
                     .then((data) => {
-                        tourneyData.value = data;
+                        tournamentData.value = data;
                         ack(null, data.id);
                     })
                     .catch((err) => {

@@ -29,9 +29,9 @@ document.getElementById('team-b-score-input').oninput = (event) => {
 
 // Handle team data edits
 
-const tourneyData = nodecg.Replicant('tourneyData');
+const tournamentData = nodecg.Replicant('tournamentData');
 
-tourneyData.on('change', (newValue) => {
+tournamentData.on('change', (newValue) => {
     clearSelectors('team-selector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
@@ -98,11 +98,11 @@ for (let i = 0; i < colors.length; i++) {
 
 // Scoreboard data
 
-const SBData = nodecg.Replicant('SBData');
+const scoreboardData = nodecg.Replicant('scoreboardData');
 
-const SBShown = nodecg.Replicant('SBShown');
+const scoreboardShown = nodecg.Replicant('scoreboardShown');
 
-SBData.on('change', (newValue) => {
+scoreboardData.on('change', (newValue) => {
     document.getElementById('flavor-text-input').value = newValue.flavorText;
 
     document.getElementById('color-selector').value = newValue.colorInfo.index;
@@ -121,7 +121,7 @@ SBData.on('change', (newValue) => {
     document.getElementById('team-b-selector').value = newValue.teamBInfo.id;
 });
 
-SBShown.on('change', (newValue) => {
+scoreboardShown.on('change', (newValue) => {
     setToggleButtonDisabled(
         document.getElementById('show-scoreboard-btn'),
         document.getElementById('hide-scoreboard-btn'),
@@ -130,10 +130,10 @@ SBShown.on('change', (newValue) => {
 });
 
 document.getElementById('update-scoreboard-btn').onclick = () => {
-    let teamAInfo = tourneyData.value.data.filter(
+    let teamAInfo = tournamentData.value.data.filter(
         (team) => team.id === document.getElementById('team-a-selector').value
     )[0];
-    let teamBInfo = tourneyData.value.data.filter(
+    let teamBInfo = tournamentData.value.data.filter(
         (team) => team.id === document.getElementById('team-b-selector').value
     )[0];
     let clrInfo = colors.filter(
@@ -145,25 +145,25 @@ document.getElementById('update-scoreboard-btn').onclick = () => {
     let dataValue = {
         flavorText: document.getElementById('flavor-text-input').value,
         colorInfo: clrInfo,
-        swapColorOrder: SBData.value.swapColorOrder,
+        swapColorOrder: scoreboardData.value.swapColorOrder,
         teamAInfo: teamAInfo,
         teamBInfo: teamBInfo,
     };
 
-    SBData.value = dataValue;
+    scoreboardData.value = dataValue;
 };
 
 document.getElementById('show-scoreboard-btn').onclick = () => {
-    SBShown.value = true;
+    scoreboardShown.value = true;
 };
 document.getElementById('hide-scoreboard-btn').onclick = () => {
-    SBShown.value = false;
+    scoreboardShown.value = false;
 };
 
 // Swap order of colors
 
 document.getElementById('swap-color-order-btn').onclick = () => {
-    SBData.value.swapColorOrder = !SBData.value.swapColorOrder;
+    scoreboardData.value.swapColorOrder = !scoreboardData.value.swapColorOrder;
 };
 
 // Next Teams
@@ -178,11 +178,11 @@ nextTeams.on('change', (newValue) => {
 });
 
 document.getElementById('update-next-teams-btn').onclick = () => {
-    let teamAInfo = tourneyData.value.data.filter(
+    let teamAInfo = tournamentData.value.data.filter(
         (team) =>
             team.id === document.getElementById('next-team-a-selector').value
     )[0];
-    let teamBInfo = tourneyData.value.data.filter(
+    let teamBInfo = tournamentData.value.data.filter(
         (team) =>
             team.id === document.getElementById('next-team-b-selector').value
     )[0];
@@ -192,8 +192,8 @@ document.getElementById('update-next-teams-btn').onclick = () => {
 };
 
 document.getElementById('begin-next-match-btn').onclick = () => {
-    SBData.value.teamAInfo = nextTeams.value.teamAInfo;
-    SBData.value.teamBInfo = nextTeams.value.teamBInfo;
+    scoreboardData.value.teamAInfo = nextTeams.value.teamAInfo;
+    scoreboardData.value.teamBInfo = nextTeams.value.teamBInfo;
 
     teamScores.value = {
         teamA: 0,
