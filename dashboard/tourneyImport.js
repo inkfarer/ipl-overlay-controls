@@ -53,12 +53,12 @@ function setImportStatus(status) {
             backgroundColor = 'var(--green)';
             textColor = 'white';
             text = 'SUCCESS';
-            return;
+            break;
         case IMPORT_STATUS_LOADING:
             backgroundColor = 'var(--yellow)';
             textColor = 'black';
             text = 'LOADING';
-            return;
+            break;
         case IMPORT_STATUS_FAILURE:
             backgroundColor = 'var(--red)';
             textColor = 'white';
