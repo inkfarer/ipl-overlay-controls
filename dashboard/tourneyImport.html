@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            div.statusDisplay {
+            div.status-display {
                 background-color: #181e29;
                 display: block;
                 text-align: center;
@@ -22,18 +22,23 @@
     </head>
     <body>
         <div class="space">
-            <div class="inputLabel" id="dataInputTitle">Tournament ID</div>
-            <input type="text" id="tourneyIdInput" />
-            <div class="inputLabel">Import from</div>
-            <select id="methodSel">
+            <div class="input-label" id="tournament-id-input-title">
+                Tournament ID
+            </div>
+            <input type="text" id="tournament-id-input" />
+
+            <div class="input-label">Import from</div>
+            <select id="method-selector">
                 <option value="battlefy" selected>Battlefy</option>
                 <option value="smashgg">Smash.gg</option>
                 <option value="raw">Raw JSON import</option>
             </select>
-            <button class="btnBlue maxWidthButton" id="submitId">submit</button>
-            <div id="submitStatus" class="statusDisplay">STATUS</div>
-            <div id="loadedDisplay" class="statusDisplay">
-                Saved data identifier<br /><span id="tourneyIdDisplay"
+
+            <button class="max-width" id="submit-import">submit</button>
+
+            <div id="submit-status" class="status-display">STATUS</div>
+            <div class="status-display">
+                Saved data identifier<br /><span id="tournament-id-display"
                     >none</span
                 >
             </div>

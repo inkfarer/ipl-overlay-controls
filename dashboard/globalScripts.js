@@ -21,35 +21,26 @@ function addSelector(text, className, value = '') {
 // For toggling show/hide buttons
 
 function setToggleButtonDisabled(toggleTrue, toggleFalse, state) {
-    toggleTrue.disabled = true;
-    toggleFalse.disabled = true;
-
-    if (state) {
-        toggleFalse.disabled = false;
-    } else {
-        toggleTrue.disabled = false;
-    }
+    toggleTrue.disabled = state;
+    toggleFalse.disabled = !state;
 }
 
 // Remind user to press 'update'
 
-function addSelectChangeReminder(elements, updateButton) {
-    elements.forEach((element) =>
-        document.getElementById(element).addEventListener('change', () => {
-            updateButton.style.backgroundColor = 'var(--red)';
-        })
-    );
-    updateButton.addEventListener('click', () => {
-        updateButton.style.backgroundColor = 'var(--blue)';
-    });
-}
+function addChangeReminder(elements, updateButton) {
+    elements.forEach((element) => {
+        if (!element.tagName) return;
 
-function addInputChangeReminder(elements, updateButton) {
-    elements.forEach((element) =>
-        document.getElementById(element).addEventListener('input', () => {
+        var event;
+        if (element.tagName.toLowerCase() == 'input') event = 'input';
+        else if (element.tagName.toLowerCase() == 'select') event = 'change';
+        else return;
+
+        element.addEventListener(event, () => {
             updateButton.style.backgroundColor = 'var(--red)';
-        })
-    );
+        });
+    });
+
     updateButton.addEventListener('click', () => {
         updateButton.style.backgroundColor = 'var(--blue)';
     });

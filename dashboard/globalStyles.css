@@ -11,16 +11,15 @@ body {
 
 /* Layout classes */
 
-.horizontalLayout,
-.verticalLayout {
+.layout {
     display: flex;
 }
 
-.horizontalLayout {
+.layout.horizontal {
     flex-direction: row;
 }
 
-.verticalLayout {
+.layout.vertical {
     flex-direction: column;
 }
 
@@ -33,7 +32,7 @@ body {
     margin-bottom: 5px;
 }
 
-.showHideSpace {
+.show-hide-space {
     display: flex;
     justify-content: center;
 }
@@ -62,15 +61,15 @@ button {
     transition-duration: 100ms;
 }
 
-.btnBlue {
+button.blue {
     background-color: var(--blue);
 }
 
-.btnRed {
+button.red {
     background-color: var(--red);
 }
 
-.btnGreen {
+button.green {
     background-color: var(--green);
 }
 
@@ -85,7 +84,7 @@ button[disabled]:hover {
     box-shadow: inset 0 0 0 0px rgba(0, 0, 0, 0.2) !important;
 }
 
-button.maxWidthButton {
+button.max-width {
     box-sizing: border-box;
     /* an ugly hack: 100% - button margin
 	prevents button from getting too wide */
@@ -121,11 +120,12 @@ input[type='number'] {
     margin-top: 3px;
 }
 
-.inputLabel {
+.input-label {
     color: #737373;
     font-size: 0.75em;
     margin-top: 5px;
     font-family: 'Roboto', 'Noto', sans-serif;
+    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
 }
@@ -136,6 +136,6 @@ option {
 
 /* Misc. */
 
-.maxWidth > * {
+.max-width > * {
     flex-grow: 1;
 }

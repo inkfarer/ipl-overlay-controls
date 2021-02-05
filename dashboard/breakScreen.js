@@ -1,13 +1,15 @@
 // Main Scene
 
 const mainFlavorText = nodecg.Replicant('mainFlavorText');
+const flavorTextInput = document.getElementById('flavor-text-input');
+const mainSceneUpdateBtn = document.getElementById('main-scene-update-btn');
 
 mainFlavorText.on('change', (newValue) => {
-    breakFlavorInput.value = newValue;
+    flavorTextInput.value = newValue;
 });
 
-updateMainScene.onclick = () => {
-    mainFlavorText.value = breakFlavorInput.value;
+mainSceneUpdateBtn.onclick = () => {
+    mainFlavorText.value = flavorTextInput.value;
     updateStageTime();
 };
 
@@ -16,19 +18,20 @@ updateMainScene.onclick = () => {
 const NSTimerShown = nodecg.Replicant('NSTimerShown');
 
 NSTimerShown.on('change', (newValue) => {
-    document.querySelector('#checkShowTimer').checked = newValue;
+    document.getElementById('next-stage-timer-toggle').checked = newValue;
 });
 
 // Next Stage Timer
 
 const nextStageTime = nodecg.Replicant('nextStageTime');
+const minuteInput = document.getElementById('next-stage-minute-input');
+const hourInput = document.getElementById('next-stage-hour-input');
+const daySelect = document.getElementById('next-stage-day-select');
 
 nextStageTime.on('change', (newValue) => {
-    document.querySelector('.minInput').value = newValue.minute;
-    document.querySelector('.hourInput').value = newValue.hour;
-    document.querySelector('.daySelect').value = `${newValue.day}/${
-        parseInt(newValue.month) + 1
-    }`;
+    minuteInput.value = newValue.minute;
+    hourInput.value = newValue.hour;
+    daySelect.value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
 });
 
 function updateDaySelector() {
@@ -36,27 +39,26 @@ function updateDaySelector() {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const daySelect = document.querySelector('.daySelect');
-
     const todayElem = getDayElem(today);
     daySelect.appendChild(todayElem);
 
-    const tomorElem = getDayElem(tomorrow);
-    daySelect.appendChild(tomorElem);
+    const tomorrowElem = getDayElem(tomorrow);
+    daySelect.appendChild(tomorrowElem);
 }
 
 function getDayElem(date) {
     const dayElem = document.createElement('option');
-    dayElem.innerText = `${date.getDate()}/${date.getMonth() + 1}`;
+    const dateText = `${date.getDate()}/${date.getMonth() + 1}`;
+    dayElem.innerText = dateText;
+    dayElem.value = dateText;
     dayElem.dataset.day = date.getDate();
     dayElem.dataset.month = date.getMonth();
     return dayElem;
 }
 
 function updateStageTime() {
-    const min = parseInt(document.querySelector('.minInput').value);
-    const hour = parseInt(document.querySelector('.hourInput').value);
-    const daySelect = document.querySelector('.daySelect');
+    const min = parseInt(minuteInput.value);
+    const hour = parseInt(hourInput.value);
     const selText = daySelect.options[daySelect.selectedIndex];
     if (selText) {
         const day = Number(selText.dataset.day);
@@ -75,10 +77,9 @@ function updateStageTime() {
 
 updateDaySelector();
 
-addSelectChangeReminder(['daySelect'], updateMainScene);
-addInputChangeReminder(
-    ['breakFlavorInput', 'hourInput', 'minInput'],
-    updateMainScene
+addChangeReminder(
+    document.querySelectorAll('.main-update-reminder'),
+    mainSceneUpdateBtn
 );
 
 // Next Teams
@@ -86,41 +87,47 @@ addInputChangeReminder(
 const tourneyData = nodecg.Replicant('tourneyData');
 
 tourneyData.on('change', (newValue) => {
-    clearSelectors('teamSelector');
+    clearSelectors('team-selector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
-        addSelector(element.name, 'teamSelector', element.id);
+        addSelector(element.name, 'team-selector', element.id);
     }
 });
 
 const nextTeams = nodecg.Replicant('nextTeams');
+const nextTeamASelector = document.getElementById('next-team-a-selector');
+const nextTeamBSelector = document.getElementById('next-team-b-selector');
+const nextTeamUpdateBtn = document.getElementById('update-next-teams-btn');
 
 nextTeams.on('change', (newValue) => {
-    nextTeamASelect.value = newValue.teamAInfo.id;
-    nextTeamBSelect.value = newValue.teamBInfo.id;
+    nextTeamASelector.value = newValue.teamAInfo.id;
+    nextTeamBSelector.value = newValue.teamBInfo.id;
 });
 
 nextTeamUpdateBtn.onclick = () => {
     let teamAInfo = tourneyData.value.data.filter(
-        (team) => team.id === nextTeamASelect.value
+        (team) => team.id === nextTeamASelector.value
     )[0];
     let teamBInfo = tourneyData.value.data.filter(
-        (team) => team.id === nextTeamBSelect.value
+        (team) => team.id === nextTeamBSelector.value
     )[0];
 
     nextTeams.value.teamAInfo = teamAInfo;
     nextTeams.value.teamBInfo = teamBInfo;
 };
 
-addSelectChangeReminder(
-    ['nextTeamASelect', 'nextTeamBSelect'],
+addChangeReminder(
+    document.querySelectorAll('.teams-update-reminder'),
     nextTeamUpdateBtn
 );
 
 // Maps
 
 const maplists = nodecg.Replicant('maplists');
-
+const currentMapsUpdateButton = document.getElementById(
+    'current-map-list-update-btn'
+);
+const mapListSelector = document.getElementById('map-list-selector');
 const currentMaplistID = nodecg.Replicant('currentMaplistID');
 
 maplists.on('change', (newValue) => {
@@ -129,68 +136,62 @@ maplists.on('change', (newValue) => {
         let opt = document.createElement('option');
         opt.value = newValue[i][0].id;
         opt.text = newValue[i][0].name;
-        mapListSelect.appendChild(opt);
+        mapListSelector.appendChild(opt);
     }
 });
 
-currentMaplistID.on('change', (newValue) => {
-    let maplistID = maplists.value.filter(
-        (list) => list[0].id == newValue
-    )[0][0].id;
-    mapListSelect.value = maplistID;
+NodeCG.waitForReplicants(maplists).then(() => {
+    currentMaplistID.on('change', (newValue) => {
+        mapListSelector.value = maplists.value.filter(
+            (list) => list[0].id == newValue
+        )[0][0].id;
+    });
 });
 
-updateMaps.onclick = () => {
-    currentMaplistID.value = mapListSelect.value;
+currentMapsUpdateButton.onclick = () => {
+    currentMaplistID.value = mapListSelector.value;
 };
 
-addSelectChangeReminder(['mapListSelect'], updateMaps);
+addChangeReminder([mapListSelector], currentMapsUpdateButton);
 
 // Current scene
 
 const currentBreakScene = nodecg.Replicant('currentBreakScene');
+const sceneSwitchButtons = {
+    mainScene: document.getElementById('show-main-scene-btn'),
+    nextUp: document.getElementById('show-teams-scene-btn'),
+    maps: document.getElementById('show-stages-scene-btn'),
+};
 
-showMain.onclick = () => {
-    currentBreakScene.value = 'mainScene';
-};
-showNextUp.onclick = () => {
-    currentBreakScene.value = 'nextUp';
-};
-showMaps.onclick = () => {
-    currentBreakScene.value = 'maps';
-};
+for (const [key, value] of Object.entries(sceneSwitchButtons)) {
+    value.addEventListener('click', () => {
+        currentBreakScene.value = key;
+    });
+}
 
 currentBreakScene.on('change', (newValue) => {
-    disableSceneButtons(newValue);
-});
-
-function disableSceneButtons(currentScene) {
-    const elements = ['showMain', 'showNextUp', 'showMaps'];
-    elements.forEach((element) => {
-        document.getElementById(element).disabled = false;
-    });
-    if (currentScene === 'mainScene') {
-        showMain.disabled = true;
-    } else if (currentScene === 'nextUp') {
-        showNextUp.disabled = true;
-    } else if (currentScene === 'maps') {
-        showMaps.disabled = true;
+    for (scene in sceneSwitchButtons) {
+        sceneSwitchButtons[scene].disabled = false;
     }
-}
+
+    sceneSwitchButtons[newValue].disabled = true;
+});
 
 // Show team image
 
 const teamImageHidden = nodecg.Replicant('teamImageHidden');
+const teamAImageToggle = document.getElementById('team-a-image-toggle');
+const teamBImageToggle = document.getElementById('team-b-image-toggle');
 
 teamImageHidden.on('change', (newValue) => {
-    checkSetTeamAImg.checked = newValue.teamA;
-    checkSetTeamBImg.checked = newValue.teamB;
+    teamAImageToggle.checked = newValue.teamA;
+    teamBImageToggle.checked = newValue.teamB;
 });
 
-checkSetTeamAImg.onclick = (e) => {
+teamAImageToggle.onclick = (e) => {
     teamImageHidden.value.teamA = e.target.checked;
 };
 
-checkSetTeamBImg.onclick = (e) => {
+teamBImageToggle.onclick = (e) => {
     teamImageHidden.value.teamB = e.target.checked;
 };

@@ -1,18 +1,20 @@
-const battlefyData = nodecg.Replicant('tourneyData');
+const tournamentData = nodecg.Replicant('tourneyData');
 
-submitId.onclick = () => {
-    setStatusLoading();
+document.getElementById('submit-import').onclick = () => {
+    setImportStatus(IMPORT_STATUS_LOADING);
     nodecg.sendMessage(
         'getTourneyData',
-        { method: methodSel.value, id: tourneyIdInput.value },
+        {
+            method: document.getElementById('method-selector').value,
+            id: document.getElementById('tournament-id-input').value,
+        },
         (e, result) => {
             if (e) {
                 console.error(e);
-                setStatusFailure();
+                setImportStatus(IMPORT_STATUS_FAILURE);
                 return;
             }
-            //console.log(result);
-            setStatusSuccess();
+            setImportStatus(IMPORT_STATUS_SUCCESS);
         }
     );
 };
@@ -29,28 +31,41 @@ const methodData = {
     },
 };
 
-methodSel.addEventListener('change', (e) => {
-    dataInputTitle.innerText = methodData[e.target.value].dataTitle;
+document.getElementById('method-selector').addEventListener('change', (e) => {
+    document.getElementById('tournament-id-input-title').innerText =
+        methodData[e.target.value].dataTitle;
 });
 
-battlefyData.on('change', (newValue) => {
-    tourneyIdDisplay.innerText = newValue.meta.id;
+tournamentData.on('change', (newValue) => {
+    document.getElementById('tournament-id-display').innerText =
+        newValue.meta.id;
 });
 
-function setStatusLoading() {
-    submitStatus.style.backgroundColor = 'var(--yellow)';
-    submitStatus.style.color = '#000';
-    submitStatus.innerText = 'LOADING';
-}
+const IMPORT_STATUS_SUCCESS = 0;
+const IMPORT_STATUS_LOADING = 1;
+const IMPORT_STATUS_FAILURE = 2;
 
-function setStatusSuccess() {
-    submitStatus.style.backgroundColor = 'var(--green)';
-    submitStatus.style.color = '#fff';
-    submitStatus.innerText = 'SUCCESS';
-}
+function setImportStatus(status) {
+    const statusElem = document.getElementById('submit-status');
+    var backgroundColor, textColor, text;
+    switch (status) {
+        case IMPORT_STATUS_SUCCESS:
+            backgroundColor = 'var(--green)';
+            textColor = 'white';
+            text = 'SUCCESS';
+            return;
+        case IMPORT_STATUS_LOADING:
+            backgroundColor = 'var(--yellow)';
+            textColor = 'black';
+            text = 'LOADING';
+            return;
+        case IMPORT_STATUS_FAILURE:
+            backgroundColor = 'var(--red)';
+            textColor = 'white';
+            text = 'FAIL';
+    }
 
-function setStatusFailure() {
-    submitStatus.style.backgroundColor = 'var(--red)';
-    submitStatus.style.color = '#fff';
-    submitStatus.innerText = 'FAIL';
+    statusElem.style.backgroundColor = backgroundColor;
+    statusElem.style.color = textColor;
+    statusElem.innerText = text;
 }

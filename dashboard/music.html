@@ -4,38 +4,47 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            .selectContainer {
+            .input-container {
                 margin: 0 2.5px;
             }
         </style>
     </head>
     <body>
-        <div class="space showHideSpace layout horizontal">
-            <button id="showMusic" class="btnGreen">Show</button>
-            <button id="hideMusic" class="btnRed">Hide</button>
+        <div class="space show-hide-space layout horizontal">
+            <button id="show-music-btn" class="green">Show</button>
+            <button id="hide-music-btn" class="red">Hide</button>
         </div>
-        <div class="nowPlayingSpace space">
+        <div class="space">
             <div class="title">Now Playing (Last.fm)</div>
-            <div id="npText">song goes here...</div>
+            <div id="lastfm-now-playing-text">song goes here...</div>
         </div>
         <div class="space">
             <div class="title">Change song manually</div>
             <input
                 type="checkbox"
-                id="checkManualSong"
+                id="manual-song-toggle"
                 onchange="setReplicant('mSongEnabled', event)"
             />Manual song input
-            <div class="showHideSpace">
-                <div class="selectContainer">
-                    <div class="inputLabel">Song Artist</div>
-                    <input type="text" id="artistInput" />
+
+            <div class="show-hide-space">
+                <div class="input-container">
+                    <div class="input-label">Artist</div>
+                    <input
+                        type="text"
+                        id="manual-song-artist-input"
+                        class="manual-song-change-reminder"
+                    />
                 </div>
-                <div class="selectContainer">
-                    <div class="inputLabel">Song Name</div>
-                    <input type="text" id="songInput" />
+                <div class="input-container">
+                    <div class="input-label">Name</div>
+                    <input
+                        type="text"
+                        id="manual-song-name-input"
+                        class="manual-song-change-reminder"
+                    />
                 </div>
             </div>
-            <button id="updateManual" class="maxWidthButton">Update</button>
+            <button id="update-manual-song" class="max-width">Update</button>
         </div>
 
         <script src="globalScripts.js"></script>

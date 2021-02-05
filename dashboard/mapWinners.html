@@ -4,17 +4,16 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            #nameSpace {
-                height: 40px;
+            #map-list-name-space {
+                min-height: 40px;
+                display: grid;
+                grid-template-columns: 1fr 60px;
+                align-items: center;
             }
 
-            #reset {
-                float: right;
+            #reset-btn {
                 background-color: var(--red);
-            }
-
-            #maplistName {
-                float: left;
+                max-height: 40px;
             }
 
             #toggles {
@@ -23,7 +22,7 @@
                 gap: 5px;
             }
 
-            .wbContainer {
+            .win-picker-container {
                 width: 100%;
                 display: flex;
                 align-content: center;
@@ -36,14 +35,14 @@
         </style>
     </head>
     <body>
-        <div id="nameSpace" class="space">
-            <div id="maplistName">List Name</div>
-            <button id="reset" raised>RESET</button>
+        <div id="map-list-name-space" class="space">
+            <div id="map-list-name">List Name</div>
+            <button id="reset-btn" raised>RESET</button>
         </div>
         <div class="space">
             <input
                 type="checkbox"
-                id="checkAutoWinners"
+                id="auto-winner-set-toggle"
                 onchange="setReplicant('autoWinSet', event)"
             />Try to determine winners automatically
         </div>

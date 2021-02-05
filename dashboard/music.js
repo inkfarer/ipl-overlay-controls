@@ -4,55 +4,51 @@ const musicShown = nodecg.Replicant('musicShown');
 const mSongEnabled = nodecg.Replicant('mSongEnabled');
 
 mSongEnabled.on('change', (newValue) => {
-    document.querySelector('#checkManualSong').checked = newValue;
+    document.getElementById('manual-song-toggle').checked = newValue;
 });
 
-const clrRed = '#C9513E';
-const clrBlue = '#3F51B5';
-
 nowPlaying.on('change', (newValue) => {
+    const lastfmNowPlayingElem = document.getElementById(
+        'lastfm-now-playing-text'
+    );
+
     if (newValue.artist !== undefined && newValue.song !== undefined) {
-        npText.innerText = newValue.artist + ' - ' + newValue.song;
+        lastfmNowPlayingElem.innerText = `${newValue.artist} - ${newValue.song}`;
     } else {
-        npText.innerText = 'No song is playing at the moment.';
+        lastfmNowPlayingElem.innerText = 'No song is playing at the moment.';
     }
 });
 
 nowPlayingManual.on('change', (newValue) => {
-    songInput.value = newValue.song;
-    artistInput.value = newValue.artist;
+    document.getElementById('manual-song-name-input').value = newValue.song;
+    document.getElementById('manual-song-artist-input').value = newValue.artist;
 });
 
-const toRed = ['songInput', 'artistInput'];
-toRed.forEach((element) => {
-    document.getElementById(element).addEventListener('input', () => {
-        updateManual.style.backgroundColor = clrRed;
-    });
-});
+addChangeReminder(
+    document.querySelectorAll('.manual-song-change-reminder'),
+    document.getElementById('update-manual-song')
+);
 
-updateManual.onclick = () => {
-    updateManual.style.backgroundColor = clrBlue;
-    nowPlayingManual.value.song = songInput.value;
-    nowPlayingManual.value.artist = artistInput.value;
+document.getElementById('update-manual-song').onclick = () => {
+    nowPlayingManual.value.song = document.getElementById(
+        'manual-song-name-input'
+    ).value;
+    nowPlayingManual.value.artist = document.getElementById(
+        'manual-song-artist-input'
+    ).value;
 };
 
-showMusic.onclick = () => {
+document.getElementById('show-music-btn').onclick = () => {
     musicShown.value = true;
 };
-hideMusic.onclick = () => {
+document.getElementById('hide-music-btn').onclick = () => {
     musicShown.value = false;
 };
 
-function disableShowHideButtons(value) {
-    if (value) {
-        document.getElementById('hideMusic').disabled = false;
-        document.getElementById('showMusic').disabled = true;
-    } else {
-        document.getElementById('showMusic').disabled = false;
-        document.getElementById('hideMusic').disabled = true;
-    }
-}
-
 musicShown.on('change', (newValue) => {
-    disableShowHideButtons(newValue);
+    setToggleButtonDisabled(
+        document.getElementById('show-music-btn'),
+        document.getElementById('hide-music-btn'),
+        newValue
+    );
 });

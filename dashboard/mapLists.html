@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            .importStatus {
+            .import-status {
                 height: 30px;
                 width: 30px;
                 background-color: #181e29;
@@ -26,41 +26,41 @@
                 padding: 0 10px;
             }
 
-            .createNewSpace {
+            .control-space {
                 display: flex;
                 justify-content: center;
             }
 
-            .importInput {
+            .map-import-input-wrapper {
                 height: 30px;
                 margin-left: 5px;
             }
 
-            .mapsGrid {
+            .map-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 5px;
             }
 
-            #submitFile {
+            #map-import-submit {
                 margin-left: 5px;
             }
         </style>
     </head>
     <body>
-        <div class="space createNewSpace">
-            <button class="btnBlue" id="create3Map">NEW 3-MAP</button>
-            <button class="btnBlue" id="create5Map">NEW 5-MAP</button>
-            <button class="btnBlue" id="create7Map">NEW 7-MAP</button>
-            <button id="removeAll" class="btnRed">REMOVE ALL</button>
-            <div class="importInput">
-                <div class="inputLabel">Import maps from file</div>
+        <div class="space control-space">
+            <button id="create-3-map">NEW 3-MAP</button>
+            <button id="create-5-map">NEW 5-MAP</button>
+            <button id="create-7-map">NEW 7-MAP</button>
+            <button id="reset-maps">reset</button>
+            <div class="map-import-input-wrapper">
+                <div class="input-label">Import maps from file</div>
                 <input id="mapFileInput" type="text" />
             </div>
-            <button class="btnBlue" id="submitFile">submit</button>
-            <div class="importStatus"></div>
+            <button id="map-import-submit">submit</button>
+            <div class="import-status"></div>
         </div>
-        <div class="mapsGrid" id="mapsGrid"></div>
+        <div class="map-grid" id="map-grid"></div>
 
         <script src="globalScripts.js"></script>
         <script src="mapLists.js"></script>
