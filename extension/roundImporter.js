@@ -11,7 +11,7 @@ module.exports = async function (nodecg) {
 
         getUrl(data.url)
             .then((data) => {
-                rounds.value = rounds.value.concat(data.maps);
+                rounds.value = rounds.value.concat(data.rounds);
                 ack(null, data.url);
             })
             .catch((err) => {
@@ -21,7 +21,7 @@ module.exports = async function (nodecg) {
     });
 };
 
-const splatMaps = [
+const splatStages = [
     'Ancho-V Games',
     'Arowana Mall',
     'Blackbelly Skatepark',
@@ -46,8 +46,10 @@ const splatMaps = [
     'Wahoo World',
     'Walleye Warehouse',
     'Skipper Pavilion',
-    'Unknown Map',
+    'Unknown Stage',
 ];
+
+const lowerCaseSplatStages = splatStages.map( stage => stage.toLowerCase() );
 
 const splatModes = [
     'Clam Blitz',
@@ -57,6 +59,8 @@ const splatModes = [
     'Turf War',
     'Unknown Mode',
 ];
+
+const lowerCaseSplatModes = splatModes.map( mode => mode.toLowerCase() );
 
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
@@ -70,17 +74,36 @@ async function getUrl(url) {
             })
             .then((response) => {
                 const data = response.data;
-                let maps = [];
+                let rounds = [];
                 for (let a = 0; a < data.length; a++) {
                     for (let i = 0; i < data[a].length; i++) {
                         for (let j = 0; j < data[a][i].length; j++) {
-                            // do these maps or modes actually exist?
-                            if (!splatMaps.includes(data[a][i][j].map)) {
-                                data[a][i][j].map = 'Unknown Map';
+                            const dataPoint = data[a][i][j];
+
+                            var stageName;
+                            if (!dataPoint.stage && !dataPoint.map) {
+                                dataPoint.stage = 'Unknown Stage';
+                            } else {
+                                if (!dataPoint.stage) stageName = dataPoint.map;
+                                else stageName = dataPoint.stage;
+
+                                const lowerCaseStage = stageName.toLowerCase()
+                                if (!lowerCaseSplatStages.includes(lowerCaseStage)) {
+                                    dataPoint.stage = 'Unknown Stage';
+                                } else {
+                                    dataPoint.stage = splatStages[lowerCaseSplatStages.indexOf(lowerCaseStage)];
+                                }
                             }
 
-                            if (!splatModes.includes(data[a][i][j].mode)) {
-                                data[a][i][j].mode = 'Unknown Mode';
+                            if (!dataPoint.mode) {
+                                dataPoint.mode = 'Unknown Mode';
+                            } else {
+                                const lowerCaseMode = dataPoint.mode.toLowerCase();
+                                if (!lowerCaseSplatModes.includes(lowerCaseMode)) {
+                                    dataPoint.mode = 'Unknown Mode';
+                                } else {
+                                    dataPoint.mode = splatModes[lowerCaseSplatModes.indexOf(lowerCaseMode)];
+                                }
                             }
                         }
 
@@ -90,11 +113,11 @@ async function getUrl(url) {
                             name: `Bracket ${a + 1} Round ${i + 1}`,
                         });
                     }
-                    maps = maps.concat(data[a]);
+                    rounds = rounds.concat(data[a]);
                 }
 
                 resolve({
-                    maps: maps,
+                    rounds: rounds,
                     url: url,
                 });
             })
