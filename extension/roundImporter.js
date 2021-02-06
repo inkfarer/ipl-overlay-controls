@@ -3,7 +3,7 @@ const axios = require('axios').default;
 module.exports = async function (nodecg) {
     const rounds = nodecg.Replicant('rounds');
 
-    nodecg.listenFor('getMaps', async (data, ack) => {
+    nodecg.listenFor('getRounds', async (data, ack) => {
         if (!data.url) {
             ack(new Error('Missing arguments.'), null);
             return;

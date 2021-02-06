@@ -4,5 +4,5 @@ module.exports = function (nodecg) {
     require('./lastfm')(nodecg);
     require('./gameWinnerSetter')(nodecg);
     require('./tournamentImporter')(nodecg);
-    require('./mapImporter')(nodecg);
+    require('./roundImporter')(nodecg);
 };

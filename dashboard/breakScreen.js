@@ -124,7 +124,7 @@ addChangeReminder(
 // Maps
 
 const rounds = nodecg.Replicant('rounds');
-const currentMapsUpdateButton = document.getElementById(
+const currentStageUpdateButton = document.getElementById(
     'current-round-update-btn'
 );
 const roundSelector = document.getElementById('round-selector');
@@ -149,11 +149,11 @@ NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
     });
 });
 
-currentMapsUpdateButton.onclick = () => {
+currentStageUpdateButton.onclick = () => {
     activeRoundId.value = roundSelector.value;
 };
 
-addChangeReminder([roundSelector], currentMapsUpdateButton);
+addChangeReminder([roundSelector], currentStageUpdateButton);
 
 // Current scene
 

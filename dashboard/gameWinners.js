@@ -22,7 +22,7 @@ NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
         } else {
             removeToggles();
             roundNameElem.innerText =
-                'Undefined (Map list might have been deleted...)';
+                'Undefined (Round might have been deleted...)';
         }
     });
     teamScores.on('change', (newValue, oldValue) => {
@@ -33,23 +33,23 @@ NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
     });
 });
 
-function addToggle(roundElement, mapIndex) {
+function addToggle(roundElement, stageIndex) {
     const toggleDiv = document.createElement('div');
     toggleDiv.classList.add('toggles');
-    const mapModeDisplay = document.createElement('div');
+    const stageModeDisplay = document.createElement('div');
 
-    mapModeDisplay.innerHTML = `
-        <span class="center">${Number(mapIndex) + 1}</span>
-        ${roundElement.map}
+    stageModeDisplay.innerHTML = `
+        <span class="center">${Number(stageIndex) + 1}</span>
+        ${roundElement.stage}
         <br>
         ${roundElement.mode}
     `;
-    toggleDiv.appendChild(mapModeDisplay);
+    toggleDiv.appendChild(stageModeDisplay);
 
     const noWinButton = document.createElement('button');
     noWinButton.classList.add('no-win-toggle');
     noWinButton.classList.add('max-width');
-    noWinButton.id = 'no-win-toggle_' + mapIndex;
+    noWinButton.id = 'no-win-toggle_' + stageIndex;
     noWinButton.innerText = 'NO WIN';
     noWinButton.disabled = true;
     toggleDiv.appendChild(noWinButton);
@@ -58,27 +58,27 @@ function addToggle(roundElement, mapIndex) {
     AWinButton.classList.add('team-a-win-toggle');
     AWinButton.classList.add('green');
     AWinButton.classList.add('max-width');
-    AWinButton.id = 'team-a-win-toggle_' + mapIndex;
+    AWinButton.id = 'team-a-win-toggle_' + stageIndex;
     AWinButton.innerText = 'A WIN';
 
     const BWinButton = document.createElement('button');
     BWinButton.classList.add('team-b-win-toggle');
     BWinButton.classList.add('red');
     BWinButton.classList.add('max-width');
-    BWinButton.id = 'team-b-win-toggle_' + mapIndex;
+    BWinButton.id = 'team-b-win-toggle_' + stageIndex;
     BWinButton.innerText = 'B WIN';
 
     noWinButton.onclick = (event) => {
-        const mapIndex = event.target.id.split('_')[1];
-        gameWinners.value[mapIndex] = 0;
+        const stageIndex = event.target.id.split('_')[1];
+        gameWinners.value[stageIndex] = 0;
     };
     AWinButton.onclick = (event) => {
-        const mapIndex = event.target.id.split('_')[1];
-        gameWinners.value[mapIndex] = 1;
+        const stageIndex = event.target.id.split('_')[1];
+        gameWinners.value[stageIndex] = 1;
     };
     BWinButton.onclick = (event) => {
-        const mapIndex = event.target.id.split('_')[1];
-        gameWinners.value[mapIndex] = 2;
+        const stageIndex = event.target.id.split('_')[1];
+        gameWinners.value[stageIndex] = 2;
     };
 
     const winButtonContainer = document.createElement('div');
@@ -86,8 +86,6 @@ function addToggle(roundElement, mapIndex) {
     winButtonContainer.appendChild(AWinButton);
     winButtonContainer.appendChild(BWinButton);
     toggleDiv.appendChild(winButtonContainer);
-
-    //disableWinButtons(noWinButton, AWinButton, BWinButton, gameWinners.value[mapIndex]);
 
     document.getElementById('toggles').appendChild(toggleDiv);
 }
@@ -103,18 +101,18 @@ function getButtons(id) {
     return [noWinButton, AWinButton, BWinButton];
 }
 
-function disableWinButtons(mapWinnerValue) {
+function disableWinButtons(gameWinnerValue) {
     var currentRound = rounds.value.filter(
         (list) => list[0].id == activeRoundId.value
     )[0];
 
     for (let i = 1; i < currentRound.length; i++) {
-        const mapWinner = mapWinnerValue[i - 1];
+        const gameWinner = gameWinnerValue[i - 1];
         const buttons = getButtons(i - 1);
         for (let y = 0; y < buttons.length; y++) {
             buttons[y].disabled = false;
         }
-        buttons[mapWinner].disabled = true;
+        buttons[gameWinner].disabled = true;
     }
 }
 

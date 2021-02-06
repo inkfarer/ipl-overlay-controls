@@ -28,15 +28,15 @@
                 "name": "Default round"
             },
             {
-                "map": "Ancho-V Games",
+                "stage": "Ancho-V Games",
                 "mode": "Clam Blitz"
             },
             {
-                "map": "MakoMart",
+                "stage": "MakoMart",
                 "mode": "Tower Control"
             },
             {
-                "map": "Wahoo World",
+                "stage": "Wahoo World",
                 "mode": "Rainmaker"
             }
         ]

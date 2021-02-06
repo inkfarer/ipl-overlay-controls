@@ -2,7 +2,7 @@ const rounds = nodecg.Replicant('rounds');
 
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
-const splatMaps = [
+const splatStages = [
     'Ancho-V Games',
     'Arowana Mall',
     'Blackbelly Skatepark',
@@ -27,9 +27,9 @@ const splatMaps = [
     'Wahoo World',
     'Walleye Warehouse',
     'Skipper Pavilion',
-    'Unknown Map',
+    'Unknown Stage',
 ];
-splatMaps.sort();
+splatStages.sort();
 
 const splatModes = [
     'Clam Blitz',
@@ -64,9 +64,9 @@ function resetRounds() {
     rounds.value = [
         [
             { id: '0', name: 'Default round' },
-            { map: 'Ancho-V Games', mode: 'Clam Blitz' },
-            { map: 'Ancho-V Games', mode: 'Tower Control' },
-            { map: 'Wahoo World', mode: 'Rainmaker' },
+            { stage: 'Ancho-V Games', mode: 'Clam Blitz' },
+            { stage: 'Ancho-V Games', mode: 'Tower Control' },
+            { stage: 'Wahoo World', mode: 'Rainmaker' },
         ],
     ];
     activeRoundId.value = '0';
@@ -80,7 +80,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         numberOfGames >= 8 ||
         numberOfGames <= 0
     ) {
-        throw 'Rounds with only up to 7 maps are supported.';
+        throw 'Rounds with only up to 7 stages are supported.';
     }
 
     const roundElem = document.createElement('div');
@@ -114,19 +114,19 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         separator.appendChild(separatorSpan);
         roundElem.appendChild(separator);
 
-        //map select
-        const mapSelect = document.createElement('select');
-        mapSelect.id = `map-select_${id}_${i}`;
-        mapSelect.classList.add('map-select');
-        fillList(mapSelect, splatMaps);
-        roundElem.appendChild(mapSelect);
-        mapSelect.addEventListener('change', () => {
+        //stage select
+        const stageSelector = document.createElement('select');
+        stageSelector.id = `stage-selector_${id}_${i}`;
+        stageSelector.classList.add('stage-selector');
+        fillList(stageSelector, splatStages);
+        roundElem.appendChild(stageSelector);
+        stageSelector.addEventListener('change', () => {
             updateButton.style.backgroundColor = 'var(--red)';
         });
 
         //mode select
         const modeSelect = document.createElement('select');
-        modeSelect.id = `mode-select_${id}_${i}`;
+        modeSelect.id = `mode-selector_${id}_${i}`;
         modeSelect.classList.add('mode-select');
         fillList(modeSelect, splatModes);
         roundElem.appendChild(modeSelect);
@@ -148,27 +148,25 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
                 .getElementById(`round_${buttonId}`)
                 .querySelectorAll('select').length / 2;
         const nameInput = document.getElementById('name-input_' + buttonId);
-        const selectedMaps = [{ id: buttonId, name: nameInput.value }];
+        const selectedGames = [{ id: buttonId, name: nameInput.value }];
         for (let i = 0; i < numberOfGames; i++) {
-            const currentMap = {
-                map: '',
+            const currentGame = {
+                stage: '',
                 mode: '',
             };
             const id = buttonId + '_' + i;
-            const mapId = 'select#map-select_' + id;
-            const mapSelector = document.querySelector(mapId);
-            currentMap.map = mapSelector.value;
+            const stageSelector = document.getElementById(`stage-selector_${id}`);
+            currentGame.stage = stageSelector.value;
 
-            const modeId = 'select#mode-select_' + id;
-            const modeSelector = document.querySelector(modeId);
-            currentMap.mode = modeSelector.value;
-            selectedMaps.push(currentMap);
+            const modeSelector = document.getElementById(`mode-selector_${id}`);
+            currentGame.mode = modeSelector.value;
+            selectedGames.push(currentGame);
         }
         const roundIndex = findRound(buttonId);
         if (roundIndex == null) {
-            rounds.value.push(selectedMaps);
+            rounds.value.push(selectedGames);
         } else {
-            rounds.value[roundIndex] = selectedMaps;
+            rounds.value[roundIndex] = selectedGames;
         }
         event.target.style.backgroundColor = 'var(--blue)';
     };
@@ -221,13 +219,9 @@ function setRoundInputValues(id, values) {
     for (let i = 1; i < values.length; i++) {
         var selectorId = id + '_';
         selectorId += i - 1;
-        const mapSelectElem = document.querySelector(
-            'select#map-select_' + selectorId
-        );
-        const modeSelectElem = document.querySelector(
-            'select#mode-select_' + selectorId
-        );
-        mapSelectElem.value = values[i].map;
+        const stageSelectElem = document.getElementById(`stage-selector_${selectorId}`);
+        const modeSelectElem = document.getElementById(`mode-selector_${selectorId}`);
+        stageSelectElem.value = values[i].stage;
         modeSelectElem.value = values[i].mode;
     }
 }
@@ -284,17 +278,17 @@ rounds.on('change', (newValue, oldValue) => {
     }
 });
 
-// importing maps
+// importing rounds
 
 const IMPORT_STATUS_SUCCESS = 0;
 const IMPORT_STATUS_LOADING = 1;
 const IMPORT_STATUS_FAILURE = 2;
 
-document.getElementById('map-import-submit').onclick = () => {
+document.getElementById('round-import-submit').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
-    const listsURL = document.getElementById('map-input-url-input').value;
+    const listsURL = document.getElementById('round-input-url-input').value;
 
-    nodecg.sendMessage('getMaps', { url: listsURL }, (e, result) => {
+    nodecg.sendMessage('getRounds', { url: listsURL }, (e, result) => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);
