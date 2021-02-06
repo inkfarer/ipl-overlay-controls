@@ -90,7 +90,7 @@ tournamentData.on('change', (newValue) => {
     clearSelectors('team-selector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
-        addSelector(element.name, 'team-selector', element.id);
+        addSelector(addDots(element.name), 'team-selector', element.id);
     }
 });
 

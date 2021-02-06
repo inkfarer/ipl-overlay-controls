@@ -62,17 +62,6 @@ module.exports = async function (nodecg) {
     });
 };
 
-// For the future: It might be better to do this at the overlay side, not here.
-function addDots(string) {
-    var maxNameLength = 48;
-    const rolloff = '...';
-
-    if (!string) return string;
-    if (string.length > maxNameLength)
-        return string.substring(0, maxNameLength - rolloff.length) + rolloff;
-    else return string;
-}
-
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
 }
@@ -100,15 +89,15 @@ async function getBattlefyData(id) {
                     const element = data[i];
                     var teamInfo = {
                         id: generateId(),
-                        name: addDots(element.name),
+                        name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
                         players: [],
                     };
                     for (let j = 0; j < element.players.length; j++) {
                         const elementPlayer = element.players[j];
                         let playerInfo = {
-                            name: addDots(elementPlayer.inGameName),
-                            username: addDots(elementPlayer.username),
+                            name: elementPlayer.inGameName,
+                            username: elementPlayer.username,
                         };
                         teamInfo.players.push(playerInfo);
                     }
@@ -222,12 +211,12 @@ async function getSmashGGPage(page, slug, token, getRaw = false) {
                         j++
                     ) {
                         const teamPlayer = element.entrant.participants[j];
-                        let name = addDots(teamPlayer.gamerTag);
+                        let name = teamPlayer.gamerTag;
                         teamPlayers.push({
                             name: name,
                         });
                     }
-                    let teamName = addDots(element.name);
+                    let teamName = element.name;
                     pageInfo.push({
                         id: generateId(),
                         name: teamName,

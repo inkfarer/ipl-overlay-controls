@@ -51,3 +51,13 @@ function addChangeReminder(elements, updateButton) {
 function setReplicant(name, e) {
     nodecg.Replicant(name).value = e.target.checked;
 }
+
+function addDots(string) {
+    const maxNameLength = 48;
+    const rolloff = '...';
+
+    if (!string) return string;
+    if (string.length > maxNameLength)
+        return string.substring(0, maxNameLength - rolloff.length) + rolloff;
+    else return string;
+}
