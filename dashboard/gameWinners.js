@@ -8,16 +8,14 @@ const roundNameElem = document.getElementById('round-name');
 
 NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
     activeRoundId.on('change', (newValue, oldValue) => {
-        var currentRound = rounds.value.filter(
-            (list) => list[0].id == newValue
-        )[0];
+        var currentRound = rounds.value[newValue];
 
         if (currentRound) {
-            roundNameElem.innerText = currentRound[0].name;
+            roundNameElem.innerText = currentRound.meta.name;
             removeToggles();
-            for (let i = 1; i < currentRound.length; i++) {
-                const element = currentRound[i];
-                addToggle(element, i - 1);
+            for (let i = 0; i < currentRound.games.length; i++) {
+                const element = currentRound.games[i];
+                addToggle(element, i);
             }
         } else {
             removeToggles();
@@ -102,11 +100,9 @@ function getButtons(id) {
 }
 
 function disableWinButtons(gameWinnerValue) {
-    var currentRound = rounds.value.filter(
-        (list) => list[0].id == activeRoundId.value
-    )[0];
+    var currentRound = rounds.value[activeRoundId.value];
 
-    for (let i = 1; i < currentRound.length; i++) {
+    for (let i = 1; i < currentRound.games.length; i++) {
         const gameWinner = gameWinnerValue[i - 1];
         const buttons = getButtons(i - 1);
         for (let y = 0; y < buttons.length; y++) {
