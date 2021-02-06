@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "string",
-    "pattern": "(mainScene|maps|nextUp|schedule)",
-    "default": "mainScene"
+    "pattern": "(main|stages|teams)",
+    "default": "main"
 }

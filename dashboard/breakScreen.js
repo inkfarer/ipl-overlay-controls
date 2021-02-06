@@ -159,9 +159,9 @@ addChangeReminder([roundSelector], currentStageUpdateButton);
 
 const activeBreakScene = nodecg.Replicant('activeBreakScene');
 const sceneSwitchButtons = {
-    mainScene: document.getElementById('show-main-scene-btn'),
-    nextUp: document.getElementById('show-teams-scene-btn'),
-    maps: document.getElementById('show-stages-scene-btn'),
+    main: document.getElementById('show-main-scene-btn'),
+    teams: document.getElementById('show-teams-scene-btn'),
+    stages: document.getElementById('show-stages-scene-btn'),
 };
 
 for (const [key, value] of Object.entries(sceneSwitchButtons)) {
@@ -175,7 +175,9 @@ activeBreakScene.on('change', (newValue) => {
         sceneSwitchButtons[scene].disabled = false;
     }
 
-    sceneSwitchButtons[newValue].disabled = true;
+    if (sceneSwitchButtons[newValue]) {
+        sceneSwitchButtons[newValue].disabled = true;
+    }
 });
 
 // Show team image
