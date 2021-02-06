@@ -20,4 +20,11 @@ module.exports = function (nodecg) {
             }
         }
     });
+
+    const activeRoundId = nodecg.Replicant('activeRoundId');
+    activeRoundId.on('change', (newValue, oldValue) => {
+        if (oldValue) {
+            gameWinners.value = [0, 0, 0, 0, 0, 0, 0];
+        }
+    });
 };

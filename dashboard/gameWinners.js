@@ -16,10 +16,6 @@ NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
             roundNameElem.innerText = currentRound[0].name;
             removeToggles();
             for (let i = 1; i < currentRound.length; i++) {
-                if (oldValue) {
-                    gameWinners.value[i - 1] = 0;
-                }
-
                 const element = currentRound[i];
                 addToggle(element, i - 1);
             }

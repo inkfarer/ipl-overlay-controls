@@ -182,6 +182,9 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     removeButton.classList.add('max-width');
     removeButton.onclick = (event) => {
         const buttonId = event.target.id.split('_')[1];
+        if (activeRoundId.value == buttonId) {
+            activeRoundId.value = rounds.value[0][0].id;
+        }
         const roundSpace = document.querySelector('div#round_' + buttonId);
         const roundIndex = findRound(buttonId);
         if (roundIndex !== null) {

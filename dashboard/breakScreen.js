@@ -130,21 +130,22 @@ const currentMapsUpdateButton = document.getElementById(
 const roundSelector = document.getElementById('round-selector');
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
-rounds.on('change', (newValue) => {
-    clearSelectors('round-selector');
-    for (let i = 0; i < newValue.length; i++) {
-        let opt = document.createElement('option');
-        opt.value = newValue[i][0].id;
-        opt.text = newValue[i][0].name;
-        roundSelector.appendChild(opt);
-    }
-});
-
-NodeCG.waitForReplicants(rounds).then(() => {
+NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
     activeRoundId.on('change', (newValue) => {
         roundSelector.value = rounds.value.filter(
             (list) => list[0].id == newValue
         )[0][0].id;
+    });
+    
+    rounds.on('change', (newValue) => {
+        clearSelectors('round-selector');
+        for (let i = 0; i < newValue.length; i++) {
+            let opt = document.createElement('option');
+            opt.value = newValue[i][0].id;
+            opt.text = newValue[i][0].name;
+            roundSelector.appendChild(opt);
+        }
+        roundSelector.value = activeRoundId.value;
     });
 });
 
