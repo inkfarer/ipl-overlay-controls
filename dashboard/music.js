@@ -1,4 +1,4 @@
-const nowPlaying = nodecg.Replicant('nowPlaying');
+const lastFmNowPlaying = nodecg.Replicant('lastFmNowPlaying');
 const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
 const musicShown = nodecg.Replicant('musicShown');
 const manualSongInputEnabled = nodecg.Replicant('manualSongInputEnabled');
@@ -7,7 +7,7 @@ manualSongInputEnabled.on('change', (newValue) => {
     document.getElementById('manual-song-toggle').checked = newValue;
 });
 
-nowPlaying.on('change', (newValue) => {
+lastFmNowPlaying.on('change', (newValue) => {
     const lastfmNowPlayingElem = document.getElementById(
         'lastfm-now-playing-text'
     );

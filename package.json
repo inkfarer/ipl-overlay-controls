@@ -30,7 +30,7 @@
             {
                 "name": "music",
                 "title": "Music",
-                "width": 3,
+                "width": 2,
                 "file": "music.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
@@ -72,6 +72,14 @@
                 "title": "Rounds",
                 "width": 6,
                 "file": "rounds.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "musicSetup",
+                "title": "Music settings",
+                "width": 2,
+                "file": "musicSetup.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             }

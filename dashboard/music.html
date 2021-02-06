@@ -3,11 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
-        <style>
-            .input-container {
-                margin: 0 2.5px;
-            }
-        </style>
     </head>
     <body>
         <div class="space show-hide-space layout horizontal">
@@ -26,23 +21,21 @@
                 onchange="setReplicant('manualSongInputEnabled', event)"
             />Manual song input
 
-            <div class="show-hide-space">
-                <div class="input-container">
-                    <div class="input-label">Artist</div>
-                    <input
-                        type="text"
-                        id="manual-song-artist-input"
-                        class="manual-song-change-reminder"
-                    />
-                </div>
-                <div class="input-container">
-                    <div class="input-label">Name</div>
-                    <input
-                        type="text"
-                        id="manual-song-name-input"
-                        class="manual-song-change-reminder"
-                    />
-                </div>
+            <div class="input-container">
+                <div class="input-label">Artist</div>
+                <input
+                    type="text"
+                    id="manual-song-artist-input"
+                    class="manual-song-change-reminder"
+                />
+            </div>
+            <div class="input-container">
+                <div class="input-label">Name</div>
+                <input
+                    type="text"
+                    id="manual-song-name-input"
+                    class="manual-song-change-reminder"
+                />
             </div>
             <button id="update-manual-song" class="max-width">Update</button>
         </div>
