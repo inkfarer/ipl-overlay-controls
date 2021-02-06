@@ -97,6 +97,7 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
     nameInput.addEventListener('input', () => {
         updateButton.style.backgroundColor = 'var(--red)';
     });
+    nameInput.value = `Map list ${id}`;
     nameInput.type = 'text';
 
     const nameInputLabel = document.createElement('div');
