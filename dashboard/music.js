@@ -1,10 +1,16 @@
 const lastFmNowPlaying = nodecg.Replicant('lastFmNowPlaying');
 const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
 const musicShown = nodecg.Replicant('musicShown');
-const manualSongInputEnabled = nodecg.Replicant('manualSongInputEnabled');
+const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
 
-manualSongInputEnabled.on('change', (newValue) => {
-    document.getElementById('manual-song-toggle').checked = newValue;
+const manualSongToggle = document.getElementById('manual-song-toggle');
+
+nowPlayingSource.on('change', (newValue) => {
+    manualSongToggle.checked = newValue === 'manual';
+});
+
+manualSongToggle.addEventListener('change', e => {
+    nowPlayingSource.value = e.target.checked ? 'manual' : 'lastfm';
 });
 
 lastFmNowPlaying.on('change', (newValue) => {
@@ -51,4 +57,10 @@ musicShown.on('change', (newValue) => {
         document.getElementById('hide-music-btn'),
         newValue
     );
+});
+
+const nowPlaying = nodecg.Replicant('nowPlaying');
+
+nowPlaying.on('change', newValue => {
+    document.getElementById('now-playing-text').innerText = `${newValue.artist} - ${newValue.song}`;
 });

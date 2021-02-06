@@ -1,8 +1,42 @@
 const lastFmNode = require('lastfm').LastFmNode;
+const clone = require('clone');
 
 module.exports = function (nodecg) {
     handleLastFm(nodecg);
+    handleNowPlaying(nodecg);
 };
+
+function handleNowPlaying(nodecg) {
+    const lastFmNowPlaying = nodecg.Replicant('lastFmNowPlaying');
+    const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
+
+    const replicantToSource = {
+        'lastfm': lastFmNowPlaying,
+        'manual': manualNowPlaying
+    }
+
+    const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
+    const nowPlaying = nodecg.Replicant('nowPlaying');
+
+    nowPlayingSource.on('change', (newValue) => {
+        switch (newValue) {
+            case 'manual':
+                nowPlaying.value = clone(manualNowPlaying.value);
+                break;
+            case 'lastfm':
+                nowPlaying.value = clone(lastFmNowPlaying.value);
+                break;
+        }
+    });
+
+    for (const [key, value] of Object.entries(replicantToSource)) {
+        value.on('change', newValue => {
+            if (nowPlayingSource.value === key) {
+                nowPlaying.value = clone(newValue);
+            }
+        });
+    }
+}
 
 function handleLastFm(nodecg) {
     if (
@@ -32,10 +66,8 @@ function handleLastFm(nodecg) {
         if (trackStream) {
             trackStream.stop();
         }
-        
-        trackStream = lastfm.stream(
-            newValue.username
-        );
+
+        trackStream = lastfm.stream(newValue.username);
 
         trackStream.on('nowPlaying', (track) => {
             nowPlaying.value = {
@@ -49,8 +81,10 @@ function handleLastFm(nodecg) {
 
         trackStream.on('error', (e) => {
             // Error 6 = "User not found"
-            if (e.error === 6) {                
-                nodecg.log.info(`Last.fm couldn't find user "${newValue.username}" - error message: "${e.message}"`);
+            if (e.error === 6) {
+                nodecg.log.info(
+                    `Last.fm couldn't find user "${newValue.username}" - error message: "${e.message}"`
+                );
 
                 trackStream.stop();
             }
