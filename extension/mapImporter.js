@@ -1,9 +1,9 @@
 const axios = require('axios').default;
 
 module.exports = async function (nodecg) {
-    const maplists = nodecg.Replicant('maplists');
+    const rounds = nodecg.Replicant('rounds');
 
-    nodecg.listenFor('getMapList', async (data, ack) => {
+    nodecg.listenFor('getMaps', async (data, ack) => {
         if (!data.url) {
             ack(new Error('Missing arguments.'), null);
             return;
@@ -11,7 +11,7 @@ module.exports = async function (nodecg) {
 
         getUrl(data.url)
             .then((data) => {
-                maplists.value = maplists.value.concat(data.maps);
+                rounds.value = rounds.value.concat(data.maps);
                 ack(null, data.url);
             })
             .catch((err) => {

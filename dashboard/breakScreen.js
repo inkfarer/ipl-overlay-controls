@@ -123,36 +123,36 @@ addChangeReminder(
 
 // Maps
 
-const maplists = nodecg.Replicant('maplists');
+const rounds = nodecg.Replicant('rounds');
 const currentMapsUpdateButton = document.getElementById(
-    'current-map-list-update-btn'
+    'current-round-update-btn'
 );
-const mapListSelector = document.getElementById('map-list-selector');
-const activeMapListId = nodecg.Replicant('activeMapListId');
+const roundSelector = document.getElementById('round-selector');
+const activeRoundId = nodecg.Replicant('activeRoundId');
 
-maplists.on('change', (newValue) => {
-    clearSelectors('mapSelector');
+rounds.on('change', (newValue) => {
+    clearSelectors('round-selector');
     for (let i = 0; i < newValue.length; i++) {
         let opt = document.createElement('option');
         opt.value = newValue[i][0].id;
         opt.text = newValue[i][0].name;
-        mapListSelector.appendChild(opt);
+        roundSelector.appendChild(opt);
     }
 });
 
-NodeCG.waitForReplicants(maplists).then(() => {
-    activeMapListId.on('change', (newValue) => {
-        mapListSelector.value = maplists.value.filter(
+NodeCG.waitForReplicants(rounds).then(() => {
+    activeRoundId.on('change', (newValue) => {
+        roundSelector.value = rounds.value.filter(
             (list) => list[0].id == newValue
         )[0][0].id;
     });
 });
 
 currentMapsUpdateButton.onclick = () => {
-    activeMapListId.value = mapListSelector.value;
+    activeRoundId.value = roundSelector.value;
 };
 
-addChangeReminder([mapListSelector], currentMapsUpdateButton);
+addChangeReminder([roundSelector], currentMapsUpdateButton);
 
 // Current scene
 

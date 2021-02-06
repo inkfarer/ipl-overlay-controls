@@ -1,52 +1,52 @@
-const mapWinners = nodecg.Replicant('mapWinners');
-const activeMapListId = nodecg.Replicant('activeMapListId');
+const gameWinners = nodecg.Replicant('gameWinners');
+const activeRoundId = nodecg.Replicant('activeRoundId');
 const teamScores = nodecg.Replicant('teamScores');
 
-const maplists = nodecg.Replicant('maplists');
+const rounds = nodecg.Replicant('rounds');
 
-const mapListNameElem = document.getElementById('map-list-name');
+const roundNameElem = document.getElementById('round-name');
 
-NodeCG.waitForReplicants(mapWinners, teamScores, maplists).then(() => {
-    activeMapListId.on('change', (newValue, oldValue) => {
-        var currentMaplist = maplists.value.filter(
+NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
+    activeRoundId.on('change', (newValue, oldValue) => {
+        var currentRound = rounds.value.filter(
             (list) => list[0].id == newValue
         )[0];
 
-        if (currentMaplist) {
-            mapListNameElem.innerText = currentMaplist[0].name;
+        if (currentRound) {
+            roundNameElem.innerText = currentRound[0].name;
             removeToggles();
-            for (let i = 1; i < currentMaplist.length; i++) {
+            for (let i = 1; i < currentRound.length; i++) {
                 if (oldValue) {
-                    mapWinners.value[i - 1] = 0;
+                    gameWinners.value[i - 1] = 0;
                 }
 
-                const element = currentMaplist[i];
+                const element = currentRound[i];
                 addToggle(element, i - 1);
             }
         } else {
             removeToggles();
-            mapListNameElem.innerText =
+            roundNameElem.innerText =
                 'Undefined (Map list might have been deleted...)';
         }
     });
     teamScores.on('change', (newValue, oldValue) => {
-        disableWinButtons(mapWinners.value);
+        disableWinButtons(gameWinners.value);
     });
-    mapWinners.on('change', (newValue) => {
+    gameWinners.on('change', (newValue) => {
         disableWinButtons(newValue);
     });
 });
 
-function addToggle(maplistElement, mapIndex) {
+function addToggle(roundElement, mapIndex) {
     const toggleDiv = document.createElement('div');
     toggleDiv.classList.add('toggles');
     const mapModeDisplay = document.createElement('div');
 
     mapModeDisplay.innerHTML = `
         <span class="center">${Number(mapIndex) + 1}</span>
-        ${maplistElement.map}
+        ${roundElement.map}
         <br>
-        ${maplistElement.mode}
+        ${roundElement.mode}
     `;
     toggleDiv.appendChild(mapModeDisplay);
 
@@ -74,15 +74,15 @@ function addToggle(maplistElement, mapIndex) {
 
     noWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
-        mapWinners.value[mapIndex] = 0;
+        gameWinners.value[mapIndex] = 0;
     };
     AWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
-        mapWinners.value[mapIndex] = 1;
+        gameWinners.value[mapIndex] = 1;
     };
     BWinButton.onclick = (event) => {
         const mapIndex = event.target.id.split('_')[1];
-        mapWinners.value[mapIndex] = 2;
+        gameWinners.value[mapIndex] = 2;
     };
 
     const winButtonContainer = document.createElement('div');
@@ -91,13 +91,13 @@ function addToggle(maplistElement, mapIndex) {
     winButtonContainer.appendChild(BWinButton);
     toggleDiv.appendChild(winButtonContainer);
 
-    //disableWinButtons(noWinButton, AWinButton, BWinButton, mapWinners.value[mapIndex]);
+    //disableWinButtons(noWinButton, AWinButton, BWinButton, gameWinners.value[mapIndex]);
 
     document.getElementById('toggles').appendChild(toggleDiv);
 }
 
 document.getElementById('reset-btn').onclick = () => {
-    mapWinners.value = [0, 0, 0, 0, 0, 0, 0];
+    gameWinners.value = [0, 0, 0, 0, 0, 0, 0];
 };
 
 function getButtons(id) {
@@ -108,11 +108,11 @@ function getButtons(id) {
 }
 
 function disableWinButtons(mapWinnerValue) {
-    var currentMaplist = maplists.value.filter(
-        (list) => list[0].id == activeMapListId.value
+    var currentRound = rounds.value.filter(
+        (list) => list[0].id == activeRoundId.value
     )[0];
 
-    for (let i = 1; i < currentMaplist.length; i++) {
+    for (let i = 1; i < currentRound.length; i++) {
         const mapWinner = mapWinnerValue[i - 1];
         const buttons = getButtons(i - 1);
         for (let y = 0; y < buttons.length; y++) {

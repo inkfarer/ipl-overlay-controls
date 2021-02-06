@@ -1,6 +1,6 @@
-const maplists = nodecg.Replicant('maplists');
+const rounds = nodecg.Replicant('rounds');
 
-const activeMapListId = nodecg.Replicant('activeMapListId');
+const activeRoundId = nodecg.Replicant('activeRoundId');
 
 const splatMaps = [
     'Ancho-V Games',
@@ -46,82 +46,80 @@ function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
 }
 
-document.getElementById('create-3-map').onclick = () => {
-    createMapList(3, generateId(), true);
+document.getElementById('create-3-game-round').onclick = () => {
+    createRoundElem(3, generateId(), true);
 };
 
-document.getElementById('create-5-map').onclick = () => {
-    createMapList(5, generateId(), true);
+document.getElementById('create-5-game-round').onclick = () => {
+    createRoundElem(5, generateId(), true);
 };
 
-document.getElementById('create-7-map').onclick = () => {
-    createMapList(7, generateId(), true);
+document.getElementById('create-7-game-round').onclick = () => {
+    createRoundElem(7, generateId(), true);
 };
 
-document.getElementById('reset-maps').onclick = () => resetMaps();
+document.getElementById('reset-rounds').onclick = () => resetRounds();
 
-function resetMaps() {
-    maplists.value = [
+function resetRounds() {
+    rounds.value = [
         [
-            { id: '0', name: 'Default map list' },
+            { id: '0', name: 'Default round' },
             { map: 'Ancho-V Games', mode: 'Clam Blitz' },
             { map: 'Ancho-V Games', mode: 'Tower Control' },
             { map: 'Wahoo World', mode: 'Rainmaker' },
         ],
     ];
-    activeMapListId.value = '0';
+    activeRoundId.value = '0';
 }
 
-function createMapList(numberOfMaps, id, remindToUpdate) {
-    //support up to 7 maps for the time being
-    //if you want me dead, host a tournament with 9 maps in the finals
+function createRoundElem(numberOfGames, id, remindToUpdate) {
+    //support up to 7 games for the time being
+    //if you want me dead, host a tournament with 9 games in the finals
     if (
-        typeof numberOfMaps !== 'number' ||
-        numberOfMaps >= 8 ||
-        numberOfMaps <= 0
+        typeof numberOfGames !== 'number' ||
+        numberOfGames >= 8 ||
+        numberOfGames <= 0
     ) {
-        throw 'Map lists with only up to 7 maps are supported.';
+        throw 'Rounds with only up to 7 maps are supported.';
     }
 
-    // map list editor div
-    const mapListElem = document.createElement('div');
-    mapListElem.classList.add('space');
-    mapListElem.classList.add('map-list');
-    mapListElem.id = `map-list_${id}`;
+    const roundElem = document.createElement('div');
+    roundElem.classList.add('space');
+    roundElem.classList.add('round');
+    roundElem.id = `round_${id}`;
 
-    // map list name input
+    // name input
     const nameInput = document.createElement('input');
     const updateButton = document.createElement('button');
     nameInput.id = `name-input_${id}`;
-    nameInput.label = 'Map list name';
     nameInput.addEventListener('input', () => {
         updateButton.style.backgroundColor = 'var(--red)';
     });
-    nameInput.value = `Map list ${id}`;
+    nameInput.value = `Round ${id}`;
     nameInput.type = 'text';
 
     const nameInputLabel = document.createElement('div');
-    nameInputLabel.innerText = 'Map list name';
+    nameInputLabel.innerText = 'Round name';
     nameInputLabel.classList.add('input-label');
 
-    mapListElem.appendChild(nameInputLabel);
-    mapListElem.appendChild(nameInput);
+    roundElem.appendChild(nameInputLabel);
+    roundElem.appendChild(nameInput);
 
-    for (let i = 0; i < numberOfMaps; i++) {
+    for (let i = 0; i < numberOfGames; i++) {
         //separator
         const separator = document.createElement('div');
         separator.classList.add('separator');
         const separatorSpan = document.createElement('span');
         separatorSpan.innerText = i + 1;
         separator.appendChild(separatorSpan);
-        mapListElem.appendChild(separator);
+        roundElem.appendChild(separator);
 
         //map select
         const mapSelect = document.createElement('select');
         mapSelect.id = `map-select_${id}_${i}`;
         mapSelect.classList.add('map-select');
         fillList(mapSelect, splatMaps);
-        mapListElem.appendChild(mapSelect);
+        roundElem.appendChild(mapSelect);
         mapSelect.addEventListener('change', () => {
             updateButton.style.backgroundColor = 'var(--red)';
         });
@@ -131,7 +129,7 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
         modeSelect.id = `mode-select_${id}_${i}`;
         modeSelect.classList.add('mode-select');
         fillList(modeSelect, splatModes);
-        mapListElem.appendChild(modeSelect);
+        roundElem.appendChild(modeSelect);
         modeSelect.addEventListener('change', () => {
             updateButton.style.backgroundColor = 'var(--red)';
         });
@@ -139,19 +137,19 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
 
     // update button
     updateButton.innerText = 'update';
-    updateButton.id = `update-maps_${id}`;
+    updateButton.id = `update-round_${id}`;
     if (remindToUpdate) {
         updateButton.style.backgroundColor = 'var(--red)';
     }
     updateButton.onclick = (event) => {
         const buttonId = event.target.id.split('_')[1];
-        const numberOfMaps =
+        const numberOfGames =
             document
-                .getElementById(`map-list_${buttonId}`)
+                .getElementById(`round_${buttonId}`)
                 .querySelectorAll('select').length / 2;
         const nameInput = document.getElementById('name-input_' + buttonId);
         const selectedMaps = [{ id: buttonId, name: nameInput.value }];
-        for (let i = 0; i < numberOfMaps; i++) {
+        for (let i = 0; i < numberOfGames; i++) {
             const currentMap = {
                 map: '',
                 mode: '',
@@ -166,11 +164,11 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
             currentMap.mode = modeSelector.value;
             selectedMaps.push(currentMap);
         }
-        const mapListIndex = findMapList(buttonId);
-        if (mapListIndex == null) {
-            maplists.value.push(selectedMaps);
+        const roundIndex = findRound(buttonId);
+        if (roundIndex == null) {
+            rounds.value.push(selectedMaps);
         } else {
-            maplists.value[mapListIndex] = selectedMaps;
+            rounds.value[roundIndex] = selectedMaps;
         }
         event.target.style.backgroundColor = 'var(--blue)';
     };
@@ -184,12 +182,12 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
     removeButton.classList.add('max-width');
     removeButton.onclick = (event) => {
         const buttonId = event.target.id.split('_')[1];
-        const mapListSpace = document.querySelector('div#map-list_' + buttonId);
-        const mapIndex = findMapList(buttonId);
-        if (mapIndex !== null) {
-            maplists.value.splice(mapIndex, 1);
+        const roundSpace = document.querySelector('div#round_' + buttonId);
+        const roundIndex = findRound(buttonId);
+        if (roundIndex !== null) {
+            rounds.value.splice(roundIndex, 1);
         }
-        mapListSpace.parentNode.removeChild(mapListSpace);
+        roundSpace.parentNode.removeChild(roundSpace);
     };
 
     const buttonContainer = document.createElement('div');
@@ -199,14 +197,14 @@ function createMapList(numberOfMaps, id, remindToUpdate) {
     buttonContainer.appendChild(updateButton);
     buttonContainer.appendChild(removeButton);
 
-    mapListElem.appendChild(buttonContainer);
+    roundElem.appendChild(buttonContainer);
 
-    document.getElementById('map-grid').prepend(mapListElem);
+    document.getElementById('round-grid').prepend(roundElem);
 }
 
-function findMapList(id) {
-    for (let i = 0; i < maplists.value.length; i++) {
-        const element = maplists.value[i];
+function findRound(id) {
+    for (let i = 0; i < rounds.value.length; i++) {
+        const element = rounds.value[i];
         if (element[0].id == id) {
             return i;
         }
@@ -214,7 +212,7 @@ function findMapList(id) {
     return null;
 }
 
-function setMapListValues(id, values) {
+function setRoundInputValues(id, values) {
     const listNameItem = document.querySelector('input#name-input_' + id);
     listNameItem.value = values[0].name;
     for (let i = 1; i < values.length; i++) {
@@ -241,76 +239,49 @@ function fillList(selectElem, data) {
     }
 }
 
-function mapListElemExists(id) {
-    const mapListElem = document.getElementById(`map-list_${id}`);
-    if (mapListElem === null) {
-        return false;
-    } else {
-        return true;
-    }
+function roundElementExists(id) {
+    const roundElement = document.getElementById(`round_${id}`);
+    return roundElement !== null;
 }
 
-function checkIDExists(maplistsElem, id) {
-    for (let i = 0; i < maplistsElem.length; i++) {
-        if (maplistsElem[i][0].id === id) return true;
+function checkIdExists(roundsList, id) {
+    for (let i = 0; i < roundsList.length; i++) {
+        if (roundsList[i][0].id === id) return true;
     }
     return false;
 }
 
-function removeMapListElem(id) {
-    const mapListSpace = document.getElementById(`map-list_${id}`);
-    if (mapListSpace) {
-        mapListSpace.parentNode.removeChild(mapListSpace);
+function removeRoundElem(id) {
+    const roundSpace = document.getElementById(`round_${id}`);
+    if (roundSpace) {
+        roundSpace.parentNode.removeChild(roundSpace);
     }
 }
 
-maplists.on('change', (newValue, oldValue) => {
+rounds.on('change', (newValue, oldValue) => {
     for (let i = 0; i < newValue.length; i++) {
         const element = newValue[i];
-        if (!mapListElemExists(element[0].id)) {
-            createMapList(element.length - 1, element[0].id, false);
+        if (!roundElementExists(element[0].id)) {
+            createRoundElem(element.length - 1, element[0].id, false);
         }
-        setMapListValues(element[0].id, element);
+        setRoundInputValues(element[0].id, element);
     }
     if (oldValue) {
-        // find map lists that are in the old value but not in the new value
+        // find rounds that are in the old value but not in the new value
         // then get rid of their corresponding elements
 
         const deletedLists = oldValue.filter(
-            (x) => !checkIDExists(newValue, x[0].id)
+            (x) => !checkIdExists(newValue, x[0].id)
         );
         if (deletedLists[0]) {
             for (let i = 0; i < deletedLists.length; i++) {
-                removeMapListElem(deletedLists[i][0].id);
+                removeRoundElem(deletedLists[i][0].id);
             }
         }
     }
 });
 
-function checkMapObjectEqual(obj1, obj2) {
-    if (obj1.length !== obj2.length) {
-        return false;
-    }
-    for (let i = 0; i < obj1.length; i++) {
-        const element = obj1[i];
-        const element2 = obj2[i];
-        if (i === 0) {
-            if (element.id != element2.id || element.name !== element2.name) {
-                return false;
-            }
-        } else {
-            if (
-                element.map !== element2.map ||
-                element.mode !== element2.mode
-            ) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-// importing map lists yehaw
+// importing maps
 
 const IMPORT_STATUS_SUCCESS = 0;
 const IMPORT_STATUS_LOADING = 1;
@@ -318,9 +289,9 @@ const IMPORT_STATUS_FAILURE = 2;
 
 document.getElementById('map-import-submit').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
-    const listsURL = mapFileInput.value;
+    const listsURL = document.getElementById('map-input-url-input').value;
 
-    nodecg.sendMessage('getMapList', { url: listsURL }, (e, result) => {
+    nodecg.sendMessage('getMaps', { url: listsURL }, (e, result) => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);
