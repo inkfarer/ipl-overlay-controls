@@ -1,12 +1,11 @@
 const gameWinners = nodecg.Replicant('gameWinners');
 const activeRoundId = nodecg.Replicant('activeRoundId');
-const teamScores = nodecg.Replicant('teamScores');
 
 const rounds = nodecg.Replicant('rounds');
 
 const roundNameElem = document.getElementById('round-name');
 
-NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
+NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
     activeRoundId.on('change', (newValue, oldValue) => {
         var currentRound = rounds.value[newValue];
 
