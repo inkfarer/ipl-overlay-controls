@@ -11,7 +11,7 @@ module.exports = async function (nodecg) {
 
         getUrl(data.url)
             .then((data) => {
-                rounds.value = rounds.value.concat(data.rounds);
+                rounds.value = {...rounds.value, ...data.rounds};
                 ack(null, data.url);
             })
             .catch((err) => {
@@ -74,46 +74,50 @@ async function getUrl(url) {
             })
             .then((response) => {
                 const data = response.data;
-                let rounds = [];
+                let rounds = {};
                 for (let a = 0; a < data.length; a++) {
                     for (let i = 0; i < data[a].length; i++) {
+                        const games = [];
                         for (let j = 0; j < data[a][i].length; j++) {
                             const dataPoint = data[a][i][j];
+                            const gameObject = {};
 
                             var stageName;
                             if (!dataPoint.stage && !dataPoint.map) {
-                                dataPoint.stage = 'Unknown Stage';
+                                gameObject.stage = 'Unknown Stage';
                             } else {
                                 if (!dataPoint.stage) stageName = dataPoint.map;
                                 else stageName = dataPoint.stage;
 
                                 const lowerCaseStage = stageName.toLowerCase()
                                 if (!lowerCaseSplatStages.includes(lowerCaseStage)) {
-                                    dataPoint.stage = 'Unknown Stage';
+                                    gameObject.stage = 'Unknown Stage';
                                 } else {
-                                    dataPoint.stage = splatStages[lowerCaseSplatStages.indexOf(lowerCaseStage)];
+                                    gameObject.stage = splatStages[lowerCaseSplatStages.indexOf(lowerCaseStage)];
                                 }
                             }
 
                             if (!dataPoint.mode) {
-                                dataPoint.mode = 'Unknown Mode';
+                                gameObject.mode = 'Unknown Mode';
                             } else {
                                 const lowerCaseMode = dataPoint.mode.toLowerCase();
                                 if (!lowerCaseSplatModes.includes(lowerCaseMode)) {
-                                    dataPoint.mode = 'Unknown Mode';
+                                    gameObject.mode = 'Unknown Mode';
                                 } else {
-                                    dataPoint.mode = splatModes[lowerCaseSplatModes.indexOf(lowerCaseMode)];
+                                    gameObject.mode = splatModes[lowerCaseSplatModes.indexOf(lowerCaseMode)];
                                 }
                             }
+
+                            games.push(gameObject);
                         }
 
-                        // prepend meta info (name, id)
-                        data[a][i].unshift({
-                            id: generateId(),
-                            name: `Bracket ${a + 1} Round ${i + 1}`,
-                        });
+                        rounds[generateId()] = {
+                            meta: {
+                                name: `Bracket ${a + 1} round ${i + 1}`
+                            },
+                            games: games
+                        };
                     }
-                    rounds = rounds.concat(data[a]);
                 }
 
                 resolve({

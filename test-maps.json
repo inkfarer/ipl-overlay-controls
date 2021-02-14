@@ -1,0 +1,64 @@
+[
+    [
+        [
+            {
+                "mode": "Rainmaker",
+                "stage": "Blackbelly Skatepark"
+            },
+            {
+                "mode": "Tower Control",
+                "map": "Wahoo World"
+            },
+            {
+                "mode": "Splat Zones",
+                "stage": "Humpback Pump Track"
+            },
+            {
+                "mode": "Clam Blitz",
+                "map": "Sturgeon Shipyard"
+            },
+            {
+                "mode": "Rainmaker",
+                "stage": "Inkblot Art Academy"
+            },
+            {
+                "mode": "Tower Control",
+                "map": "The Reef"
+            },
+            {
+                "mode": "Splat Zones",
+                "stage": "Skipper Pavilion"
+            }
+        ],
+        [
+            {
+                "mode": "Bingus Blitz",
+                "map": "New Albacore Hotel"
+            },
+            {
+                "mode": "Rainmaker",
+                "map": "Bingus Maria"
+            },
+            {
+                "mode": "Tower Control",
+                "map": "starfish mainstage"
+            },
+            {
+                "mode": "splat zones",
+                "map": "Ancho-V Games"
+            },
+            {
+                "mode": "CLAM BLITZ",
+                "map": "Wahoo World"
+            },
+            {
+                "mode": "Rainmaker",
+                "map": "STARFISH MAINSTAGE"
+            },
+            {
+                "mode": "Tower Control",
+                "map": "Sturgeon Shipyard"
+            }
+        ]
+    ]
+]
