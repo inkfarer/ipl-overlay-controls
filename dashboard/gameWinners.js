@@ -11,25 +11,51 @@ NodeCG.waitForReplicants(gameWinners, teamScores, rounds).then(() => {
         var currentRound = rounds.value[newValue];
 
         if (currentRound) {
-            roundNameElem.innerText = currentRound.meta.name;
-            removeToggles();
-            for (let i = 0; i < currentRound.games.length; i++) {
-                const element = currentRound.games[i];
-                addToggle(element, i);
-            }
+            
+            addRoundToggles(currentRound.games, currentRound.meta.name);
         } else {
             removeToggles();
             roundNameElem.innerText =
                 'Undefined (Round might have been deleted...)';
         }
     });
-    teamScores.on('change', (newValue, oldValue) => {
-        disableWinButtons(gameWinners.value);
-    });
+
     gameWinners.on('change', (newValue) => {
         disableWinButtons(newValue);
     });
+
+    rounds.on('change', (newValue, oldValue) => {
+        if (!oldValue) return;
+
+        const newCurrentRound = newValue[activeRoundId.value];
+        const oldCurrentRound = oldValue[activeRoundId.value];
+
+        if (!newCurrentRound) return;
+
+        if (newCurrentRound.meta.name != oldCurrentRound.meta.name) {
+            return addRoundToggles(newCurrentRound.games, newCurrentRound.meta.name);
+        }
+
+        for (let i = 0; i < newCurrentRound.games.length; i++) {
+            const newGame = newCurrentRound.games[i];
+            const oldGame = oldCurrentRound.games[i];
+
+            if (newGame.mode != oldGame.mode || oldGame.stage != newGame.stage) {
+                addRoundToggles(newCurrentRound.games, newCurrentRound.meta.name);
+                break;
+            }
+        }
+    });
 });
+
+function addRoundToggles(games, roundName) {
+    removeToggles();
+    roundNameElem.innerText = roundName;
+    for (let i = 0; i < games.length; i++) {
+        const element = games[i];
+        addToggle(element, i);
+    }
+}
 
 function addToggle(roundElement, stageIndex) {
     const toggleDiv = document.createElement('div');
