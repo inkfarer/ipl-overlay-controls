@@ -31,7 +31,7 @@ const daySelect = document.getElementById('next-stage-day-select');
 nextRoundStartTime.on('change', (newValue) => {
     minuteInput.value = newValue.minute;
     hourInput.value = newValue.hour;
-    daySelect.value = `${newValue.day}/${parseInt(newValue.month) + 1}`;
+    daySelect.value = `${newValue.day}/${parseInt(newValue.month)}`;
 });
 
 function updateDaySelector() {
@@ -52,7 +52,7 @@ function getDayElem(date) {
     dayElem.innerText = dateText;
     dayElem.value = dateText;
     dayElem.dataset.day = date.getDate();
-    dayElem.dataset.month = date.getMonth();
+    dayElem.dataset.month = date.getMonth() + 1;
     return dayElem;
 }
 
