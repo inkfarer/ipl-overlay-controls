@@ -117,7 +117,7 @@ function createCasterElem(
         }" id="update-caster_${id}" style="background-color: ${
         newElem ? 'var(--red)' : 'var(--blue)'
     }">update</button>
-		<button class="btnRed max-width" id="remove-caster_${id}">remove</button>
+		<button class="red max-width" id="remove-caster_${id}">remove</button>
 	</div>`;
     container.innerHTML = elem;
     document.getElementById('casters').appendChild(container);
