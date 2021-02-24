@@ -3,9 +3,7 @@ const casters = nodecg.Replicant('casters');
 const btnCreateCaster = document.getElementById('add-caster-btn');
 
 casters.on('change', (newValue, oldValue) => {
-	console.log(newValue);
-
-    for (const id in newValue) {
+	for (const id in newValue) {
         const object = newValue[id];
 
         if (oldValue) {
