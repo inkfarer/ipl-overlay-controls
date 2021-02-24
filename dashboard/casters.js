@@ -87,11 +87,13 @@ function updateOrCreateCreateCasterElem(
     }
 }
 
-function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }) {
+function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, resetColor = true) {
     document.getElementById(`caster-name-input_${id}`).value = data.name;
     document.getElementById(`caster-twitter-input_${id}`).value = data.twitter;
     document.getElementById(`caster-pronoun-input_${id}`).value = data.pronouns;
-    document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
+    if (resetColor) {
+		document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
+	}
 }
 
 function getCasterContainerCount() {
@@ -126,17 +128,18 @@ function createCasterElem(
 		</div>
 	</div>
 	<div class="layout horizontal">
-		<button class="max-width ${
-		newElem ? 'uncommitted' : ''
-	}" id="update-caster_${id}" style="background-color: ${
-		newElem ? 'var(--red)' : 'var(--blue)'
-	}">update</button>
+		<button
+			class="max-width${newElem ? ' uncommitted' : ''}"
+			id="update-caster_${id}"
+			style="background-color: ${newElem ? 'var(--red)' : 'var(--blue)'}">
+			update
+		</button>
 		<button class="red max-width" id="remove-caster_${id}">remove</button>
 	</div>`;
     document.getElementById('casters').appendChild(container);
 
     // add data
-    updateCasterElem(id, data);
+    updateCasterElem(id, data, !newElem);
 
     // remind to update
     addChangeReminder(
