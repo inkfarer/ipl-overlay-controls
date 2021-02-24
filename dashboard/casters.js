@@ -55,6 +55,8 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
 });
 
 function casterObjectsMatch(val1, val2) {
+	if (!val1 || !val2) return false;
+
 	return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
 }
 
