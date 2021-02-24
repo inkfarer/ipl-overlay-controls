@@ -3,9 +3,18 @@ const casters = nodecg.Replicant('casters');
 const btnCreateCaster = document.getElementById('add-caster-btn');
 
 casters.on('change', (newValue, oldValue) => {
+	console.log(newValue);
+
     for (const id in newValue) {
         const object = newValue[id];
-        updateOrCreateCreateCasterElem(id, object);
+
+        if (oldValue) {
+        	if (!casterObjectsMatch(object, oldValue[id])) {
+        		updateOrCreateCreateCasterElem(id, object);
+			}
+		} else {
+			updateOrCreateCreateCasterElem(id, object);
+		}
     }
 
     // Handle deletions
@@ -47,6 +56,10 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
     });
 });
 
+function casterObjectsMatch(val1, val2) {
+	return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
+}
+
 function setUncommittedButtonDisabled(disabled) {
     document.querySelectorAll('.uncommitted').forEach((elem) => {
         elem.disabled = disabled;
@@ -78,6 +91,7 @@ function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }) {
     document.getElementById(`caster-name-input_${id}`).value = data.name;
     document.getElementById(`caster-twitter-input_${id}`).value = data.twitter;
     document.getElementById(`caster-pronoun-input_${id}`).value = data.pronouns;
+    document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
 }
 
 function getCasterContainerCount() {
