@@ -253,7 +253,14 @@ function updateOrCreateCreateRoundElem(id, data) {
 rounds.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
         const object = newValue[id];
-        updateOrCreateCreateRoundElem(id, object);
+
+        if (oldValue) {
+        	if (!roundObjectsMatch(object, oldValue[id])) {
+				updateOrCreateCreateRoundElem(id, object);
+			}
+		} else {
+			updateOrCreateCreateRoundElem(id, object);
+		}
     }
 
     // Handle deletions
@@ -265,6 +272,22 @@ rounds.on('change', (newValue, oldValue) => {
         }
     }
 });
+
+function roundObjectsMatch(val1, val2) {
+	if (!val1 || !val2) return false;
+	if (val1.meta.name !== val2.meta.name) return false;
+	if (val1.games.length !== val2.games.length) return false;
+
+	for (let i = 0; i < val1.games.length; i++) {
+		const val1Game = val1.games[i];
+		const val2Game = val2.games[i];
+
+		if (val1Game.stage !== val2Game.stage) return false;
+		if (val1Game.mode !== val2Game.mode) return false;
+	}
+
+	return true;
+}
 
 // importing rounds
 
