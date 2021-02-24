@@ -206,23 +206,6 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     document.getElementById('round-grid').prepend(roundElem);
 }
 
-// function setRoundInputValues(id, values) {
-//     const listNameItem = document.querySelector('input#name-input_' + id);
-//     listNameItem.value = values[0].name;
-//     for (let i = 1; i < values.length; i++) {
-// 		let selectorId = id + '_';
-// 		selectorId += i - 1;
-//         const stageSelectElem = document.getElementById(
-//             `stage-selector_${selectorId}`
-//         );
-//         const modeSelectElem = document.getElementById(
-//             `mode-selector_${selectorId}`
-//         );
-//         stageSelectElem.value = values[i].stage;
-//         modeSelectElem.value = values[i].mode;
-//     }
-// }
-
 function fillList(selectElem, data) {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
