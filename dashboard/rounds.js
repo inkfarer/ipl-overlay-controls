@@ -76,7 +76,7 @@ function resetRounds() {
     activeRoundId.value = '0';
 }
 
-function createRoundElem(numberOfGames, id, remindToUpdate, data) {
+function createRoundElem(numberOfGames, id, remindToUpdate) {
     //support up to 7 games for the time being
     //if you want me dead, host a tournament with 9 games in the finals
     if (
@@ -166,12 +166,10 @@ function createRoundElem(numberOfGames, id, remindToUpdate, data) {
             games.push(currentGame);
         }
 
-        const round = {
-            meta: { name: nameInput.value },
-            games: games,
-        };
-
-        rounds.value[buttonId] = round;
+		rounds.value[buttonId] = {
+			meta: { name: nameInput.value },
+			games: games,
+		};
     };
     updateButton.classList.add('max-width');
 
@@ -185,7 +183,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate, data) {
     removeButton.classList.add('max-width');
     removeButton.onclick = (event) => {
         const buttonId = event.target.id.split('_')[1];
-        if (activeRoundId.value == buttonId) {
+        if (activeRoundId.value === buttonId) {
             activeRoundId.value = Object.keys(rounds.value)[0];
         }
 
@@ -208,22 +206,22 @@ function createRoundElem(numberOfGames, id, remindToUpdate, data) {
     document.getElementById('round-grid').prepend(roundElem);
 }
 
-function setRoundInputValues(id, values) {
-    const listNameItem = document.querySelector('input#name-input_' + id);
-    listNameItem.value = values[0].name;
-    for (let i = 1; i < values.length; i++) {
-        var selectorId = id + '_';
-        selectorId += i - 1;
-        const stageSelectElem = document.getElementById(
-            `stage-selector_${selectorId}`
-        );
-        const modeSelectElem = document.getElementById(
-            `mode-selector_${selectorId}`
-        );
-        stageSelectElem.value = values[i].stage;
-        modeSelectElem.value = values[i].mode;
-    }
-}
+// function setRoundInputValues(id, values) {
+//     const listNameItem = document.querySelector('input#name-input_' + id);
+//     listNameItem.value = values[0].name;
+//     for (let i = 1; i < values.length; i++) {
+// 		let selectorId = id + '_';
+// 		selectorId += i - 1;
+//         const stageSelectElem = document.getElementById(
+//             `stage-selector_${selectorId}`
+//         );
+//         const modeSelectElem = document.getElementById(
+//             `mode-selector_${selectorId}`
+//         );
+//         stageSelectElem.value = values[i].stage;
+//         modeSelectElem.value = values[i].mode;
+//     }
+// }
 
 function fillList(selectElem, data) {
     for (let i = 0; i < data.length; i++) {
@@ -295,7 +293,7 @@ document.getElementById('round-import-submit').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     const listsURL = document.getElementById('round-input-url-input').value;
 
-    nodecg.sendMessage('getRounds', { url: listsURL }, (e, result) => {
+    nodecg.sendMessage('getRounds', { url: listsURL }, e => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);

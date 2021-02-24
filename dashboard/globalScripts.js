@@ -31,9 +31,9 @@ function addChangeReminder(elements, updateButton) {
     elements.forEach((element) => {
         if (!element.tagName) return;
 
-        var event;
-        if (element.tagName.toLowerCase() == 'input') event = 'input';
-        else if (element.tagName.toLowerCase() == 'select') event = 'change';
+		let event;
+		if (element.tagName.toLowerCase() === 'input') event = 'input';
+        else if (element.tagName.toLowerCase() === 'select') event = 'change';
         else return;
 
         element.addEventListener(event, () => {

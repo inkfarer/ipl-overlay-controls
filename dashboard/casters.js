@@ -91,12 +91,12 @@ function createCasterElem(
 ) {
     if (newElem && getCasterContainerCount() >= 3) return;
 
-    var container = document.createElement('div');
-    container.classList.add('space');
+	let container = document.createElement('div');
+	container.classList.add('space');
     container.classList.add('caster-container');
     container.id = `caster-container_${id}`;
 
-    var elem = `
+	container.innerHTML = `
 	<div class="select-container">
 		<div class="input-label">Name</div>
 		<input type="text" id="caster-name-input_${id}">
@@ -113,13 +113,12 @@ function createCasterElem(
 	</div>
 	<div class="layout horizontal">
 		<button class="max-width ${
-            newElem ? 'uncommitted' : ''
-        }" id="update-caster_${id}" style="background-color: ${
-        newElem ? 'var(--red)' : 'var(--blue)'
-    }">update</button>
+		newElem ? 'uncommitted' : ''
+	}" id="update-caster_${id}" style="background-color: ${
+		newElem ? 'var(--red)' : 'var(--blue)'
+	}">update</button>
 		<button class="red max-width" id="remove-caster_${id}">remove</button>
 	</div>`;
-    container.innerHTML = elem;
     document.getElementById('casters').appendChild(container);
 
     // add data

@@ -6,11 +6,10 @@ const rounds = nodecg.Replicant('rounds');
 const roundNameElem = document.getElementById('round-name');
 
 NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
-    activeRoundId.on('change', (newValue, oldValue) => {
-        var currentRound = rounds.value[newValue];
+    activeRoundId.on('change', newValue => {
+		let currentRound = rounds.value[newValue];
 
-        if (currentRound) {
-            
+		if (currentRound) {
             addRoundToggles(currentRound.games, currentRound.meta.name);
         } else {
             removeToggles();
@@ -31,7 +30,7 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
 
         if (!newCurrentRound) return;
 
-        if (newCurrentRound.meta.name != oldCurrentRound.meta.name) {
+        if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
             return addRoundToggles(newCurrentRound.games, newCurrentRound.meta.name);
         }
 
@@ -39,7 +38,7 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
             const newGame = newCurrentRound.games[i];
             const oldGame = oldCurrentRound.games[i];
 
-            if (newGame.mode != oldGame.mode || oldGame.stage != newGame.stage) {
+            if (newGame.mode !== oldGame.mode || oldGame.stage !== newGame.stage) {
                 addRoundToggles(newCurrentRound.games, newCurrentRound.meta.name);
                 break;
             }
