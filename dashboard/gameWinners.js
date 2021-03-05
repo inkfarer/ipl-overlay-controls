@@ -126,7 +126,7 @@ function getButtons(id) {
 function disableWinButtons(gameWinnerValue) {
     var currentRound = rounds.value[activeRoundId.value];
 
-    for (let i = 1; i < currentRound.games.length; i++) {
+    for (let i = 1; i < currentRound.games.length + 1; i++) {
         const gameWinner = gameWinnerValue[i - 1];
         const buttons = getButtons(i - 1);
         for (let y = 0; y < buttons.length; y++) {
