@@ -43,9 +43,11 @@ A [NodeCG](https://github.com/nodecg/nodecg) bundle. Provides dashboard panels f
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-02-24:
+The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-03-12:
 
-[low-ink-overlays (rewrite)](https://github.com/inkfarer/low-ink-overlays/tree/rewrite)
+[low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
+
+[reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
 
 The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-02-09:
 
@@ -55,4 +57,4 @@ The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay
 
 [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
 
-[low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
+[low-ink-overlays (legacy)](https://github.com/inkfarer/low-ink-overlays/tree/legacy)
