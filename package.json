@@ -44,8 +44,8 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "currentgame",
-                "title": "Current Game",
+                "name": "currentround",
+                "title": "Current Round",
                 "width": 4,
                 "file": "currentGame.html",
                 "workspace": "ipl",
