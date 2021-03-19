@@ -82,6 +82,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         stageSelector.id = `stage-selector_${id}_${i}`;
         stageSelector.classList.add('stage-selector');
         fillList(stageSelector, splatStages);
+        stageSelector.value = 'Unknown Stage';
         roundElem.appendChild(stageSelector);
         reminderCreatingElements.push(stageSelector);
 
@@ -90,6 +91,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         modeSelector.id = `mode-selector_${id}_${i}`;
         modeSelector.classList.add('mode-selector');
         fillList(modeSelector, splatModes);
+        modeSelector.value = 'Unknown Mode';
         roundElem.appendChild(modeSelector);
         reminderCreatingElements.push(modeSelector);
     }
