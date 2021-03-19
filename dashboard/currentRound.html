@@ -7,7 +7,7 @@
             #round-name-space {
                 min-height: 40px;
                 display: grid;
-                grid-template-columns: 1fr 60px;
+                grid-template-columns: 1fr 169px;
                 align-items: center;
             }
 
@@ -50,7 +50,10 @@
     <body>
         <div id="round-name-space" class="space">
             <div id="round-name">Round Name</div>
-            <button id="reset-btn" class="red">RESET</button>
+			<div class="layout horizontal">
+            	<button id="reset-btn" class="red">reset wins</button>
+				<button id="update-round">update</button>
+			</div>
         </div>
         <div class="space">
             <input
