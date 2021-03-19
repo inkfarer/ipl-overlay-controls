@@ -61,7 +61,7 @@ function addToggle(roundElement, stageIndex) {
     const stageModeDisplay = document.createElement('div');
 
     stageModeDisplay.innerHTML = `
-        <span class="center">${Number(stageIndex) + 1}</span>
+		<div class="separator"><span>${Number(stageIndex) + 1}</span></div>
         ${roundElement.stage}
         <br>
         ${roundElement.mode}

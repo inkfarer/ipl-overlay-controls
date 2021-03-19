@@ -44,10 +44,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "winners",
-                "title": "Game Winners",
+                "name": "currentgame",
+                "title": "Current Game",
                 "width": 4,
-                "file": "gameWinners.html",
+                "file": "currentGame.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
