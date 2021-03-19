@@ -61,3 +61,13 @@ function addDots(string) {
         return string.substring(0, maxNameLength - rolloff.length) + rolloff;
     else return string;
 }
+
+function fillList(selectElem, data) {
+	for (let i = 0; i < data.length; i++) {
+		const element = data[i];
+		const option = document.createElement('option');
+		option.value = element;
+		option.text = element;
+		selectElem.add(option);
+	}
+}

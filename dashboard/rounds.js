@@ -206,16 +206,6 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     document.getElementById('round-grid').prepend(roundElem);
 }
 
-function fillList(selectElem, data) {
-    for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        const option = document.createElement('option');
-        option.value = element;
-        option.text = element;
-        selectElem.add(option);
-    }
-}
-
 function updateRoundElem(id, data) {
     const nameInput = document.getElementById(`name-input_${id}`);
     nameInput.value = data.meta.name;
