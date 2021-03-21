@@ -9,7 +9,7 @@ nowPlayingSource.on('change', (newValue) => {
     manualSongToggle.checked = newValue === 'manual';
 });
 
-manualSongToggle.addEventListener('change', e => {
+manualSongToggle.addEventListener('change', (e) => {
     nowPlayingSource.value = e.target.checked ? 'manual' : 'lastfm';
 });
 
@@ -61,6 +61,8 @@ musicShown.on('change', (newValue) => {
 
 const nowPlaying = nodecg.Replicant('nowPlaying');
 
-nowPlaying.on('change', newValue => {
-    document.getElementById('now-playing-text').innerText = `${newValue.artist} - ${newValue.song}`;
+nowPlaying.on('change', (newValue) => {
+    document.getElementById(
+        'now-playing-text'
+    ).innerText = `${newValue.artist} - ${newValue.song}`;
 });

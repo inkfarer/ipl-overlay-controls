@@ -7,7 +7,7 @@
             #round-name-space {
                 min-height: 40px;
                 display: grid;
-                grid-template-columns: 1fr 60px;
+                grid-template-columns: 1fr 169px;
                 align-items: center;
             }
 
@@ -32,12 +32,28 @@
                 display: block;
                 text-align: center;
             }
+
+            .separator {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #fff;
+                line-height: 0.1em;
+                margin: 10px 0 10px;
+            }
+
+            .separator span {
+                background: #262f40;
+                padding: 0 10px;
+            }
         </style>
     </head>
     <body>
         <div id="round-name-space" class="space">
             <div id="round-name">Round Name</div>
-            <button id="reset-btn" class="red">RESET</button>
+            <div class="layout horizontal">
+                <button id="reset-btn" class="red">reset wins</button>
+                <button id="update-round">update</button>
+            </div>
         </div>
         <div class="space">
             <input
@@ -49,6 +65,6 @@
         <div id="toggles" class="space"></div>
 
         <script src="globalScripts.js"></script>
-        <script src="gameWinners.js"></script>
+        <script src="currentRound.js"></script>
     </body>
 </html>

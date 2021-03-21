@@ -2,45 +2,6 @@ const rounds = nodecg.Replicant('rounds');
 
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
-const splatStages = [
-    'Ancho-V Games',
-    'Arowana Mall',
-    'Blackbelly Skatepark',
-    'Camp Triggerfish',
-    'Goby Arena',
-    'Humpback Pump Track',
-    'Inkblot Art Academy',
-    'Kelp Dome',
-    'MakoMart',
-    'Manta Maria',
-    'Moray Towers',
-    'Musselforge Fitness',
-    'New Albacore Hotel',
-    'Piranha Pit',
-    'Port Mackerel',
-    'Shellendorf Institute',
-    'Shifty Station',
-    'Snapper Canal',
-    'Starfish Mainstage',
-    'Sturgeon Shipyard',
-    'The Reef',
-    'Wahoo World',
-    'Walleye Warehouse',
-    'Skipper Pavilion',
-    'Unknown Stage',
-];
-splatStages.sort();
-
-const splatModes = [
-    'Clam Blitz',
-    'Tower Control',
-    'Rainmaker',
-    'Splat Zones',
-    'Turf War',
-    'Unknown Mode',
-];
-splatModes.sort();
-
 //perhaps a little overcomplicated but it will do
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
@@ -121,6 +82,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         stageSelector.id = `stage-selector_${id}_${i}`;
         stageSelector.classList.add('stage-selector');
         fillList(stageSelector, splatStages);
+        stageSelector.value = 'Unknown Stage';
         roundElem.appendChild(stageSelector);
         reminderCreatingElements.push(stageSelector);
 
@@ -129,6 +91,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         modeSelector.id = `mode-selector_${id}_${i}`;
         modeSelector.classList.add('mode-selector');
         fillList(modeSelector, splatModes);
+        modeSelector.value = 'Unknown Mode';
         roundElem.appendChild(modeSelector);
         reminderCreatingElements.push(modeSelector);
     }
@@ -166,10 +129,10 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
             games.push(currentGame);
         }
 
-		rounds.value[buttonId] = {
-			meta: { name: nameInput.value },
-			games: games,
-		};
+        rounds.value[buttonId] = {
+            meta: { name: nameInput.value },
+            games: games,
+        };
     };
     updateButton.classList.add('max-width');
 
@@ -206,16 +169,6 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     document.getElementById('round-grid').prepend(roundElem);
 }
 
-function fillList(selectElem, data) {
-    for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        const option = document.createElement('option');
-        option.value = element;
-        option.text = element;
-        selectElem.add(option);
-    }
-}
-
 function updateRoundElem(id, data) {
     const nameInput = document.getElementById(`name-input_${id}`);
     nameInput.value = data.meta.name;
@@ -225,8 +178,12 @@ function updateRoundElem(id, data) {
             .length / 2;
 
     for (let i = 0; i < numberOfGames; i++) {
-        const stageSelector = document.getElementById(`stage-selector_${id}_${i}`);
-        const modeSelector = document.getElementById(`mode-selector_${id}_${i}`);
+        const stageSelector = document.getElementById(
+            `stage-selector_${id}_${i}`
+        );
+        const modeSelector = document.getElementById(
+            `mode-selector_${id}_${i}`
+        );
 
         stageSelector.value = data.games[i].stage;
         modeSelector.value = data.games[i].mode;
@@ -255,12 +212,12 @@ rounds.on('change', (newValue, oldValue) => {
         const object = newValue[id];
 
         if (oldValue) {
-        	if (!roundObjectsMatch(object, oldValue[id])) {
-				updateOrCreateCreateRoundElem(id, object);
-			}
-		} else {
-			updateOrCreateCreateRoundElem(id, object);
-		}
+            if (!roundObjectsMatch(object, oldValue[id])) {
+                updateOrCreateCreateRoundElem(id, object);
+            }
+        } else {
+            updateOrCreateCreateRoundElem(id, object);
+        }
     }
 
     // Handle deletions
@@ -274,19 +231,19 @@ rounds.on('change', (newValue, oldValue) => {
 });
 
 function roundObjectsMatch(val1, val2) {
-	if (!val1 || !val2) return false;
-	if (val1.meta.name !== val2.meta.name) return false;
-	if (val1.games.length !== val2.games.length) return false;
+    if (!val1 || !val2) return false;
+    if (val1.meta.name !== val2.meta.name) return false;
+    if (val1.games.length !== val2.games.length) return false;
 
-	for (let i = 0; i < val1.games.length; i++) {
-		const val1Game = val1.games[i];
-		const val2Game = val2.games[i];
+    for (let i = 0; i < val1.games.length; i++) {
+        const val1Game = val1.games[i];
+        const val2Game = val2.games[i];
 
-		if (val1Game.stage !== val2Game.stage) return false;
-		if (val1Game.mode !== val2Game.mode) return false;
-	}
+        if (val1Game.stage !== val2Game.stage) return false;
+        if (val1Game.mode !== val2Game.mode) return false;
+    }
 
-	return true;
+    return true;
 }
 
 // importing rounds
@@ -299,7 +256,7 @@ document.getElementById('round-import-submit').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     const listsURL = document.getElementById('round-input-url-input').value;
 
-    nodecg.sendMessage('getRounds', { url: listsURL }, e => {
+    nodecg.sendMessage('getRounds', { url: listsURL }, (e) => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);

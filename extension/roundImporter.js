@@ -11,7 +11,7 @@ module.exports = async function (nodecg) {
 
         getUrl(data.url)
             .then((data) => {
-                rounds.value = {...rounds.value, ...data.rounds};
+                rounds.value = { ...rounds.value, ...data.rounds };
                 ack(null, data.url);
             })
             .catch((err) => {
@@ -49,7 +49,7 @@ const splatStages = [
     'Unknown Stage',
 ];
 
-const lowerCaseSplatStages = splatStages.map( stage => stage.toLowerCase() );
+const lowerCaseSplatStages = splatStages.map((stage) => stage.toLowerCase());
 
 const splatModes = [
     'Clam Blitz',
@@ -60,7 +60,7 @@ const splatModes = [
     'Unknown Mode',
 ];
 
-const lowerCaseSplatModes = splatModes.map( mode => mode.toLowerCase() );
+const lowerCaseSplatModes = splatModes.map((mode) => mode.toLowerCase());
 
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
@@ -89,11 +89,20 @@ async function getUrl(url) {
                                 if (!dataPoint.stage) stageName = dataPoint.map;
                                 else stageName = dataPoint.stage;
 
-                                const lowerCaseStage = stageName.toLowerCase()
-                                if (!lowerCaseSplatStages.includes(lowerCaseStage)) {
+                                const lowerCaseStage = stageName.toLowerCase();
+                                if (
+                                    !lowerCaseSplatStages.includes(
+                                        lowerCaseStage
+                                    )
+                                ) {
                                     gameObject.stage = 'Unknown Stage';
                                 } else {
-                                    gameObject.stage = splatStages[lowerCaseSplatStages.indexOf(lowerCaseStage)];
+                                    gameObject.stage =
+                                        splatStages[
+                                            lowerCaseSplatStages.indexOf(
+                                                lowerCaseStage
+                                            )
+                                        ];
                                 }
                             }
 
@@ -101,10 +110,17 @@ async function getUrl(url) {
                                 gameObject.mode = 'Unknown Mode';
                             } else {
                                 const lowerCaseMode = dataPoint.mode.toLowerCase();
-                                if (!lowerCaseSplatModes.includes(lowerCaseMode)) {
+                                if (
+                                    !lowerCaseSplatModes.includes(lowerCaseMode)
+                                ) {
                                     gameObject.mode = 'Unknown Mode';
                                 } else {
-                                    gameObject.mode = splatModes[lowerCaseSplatModes.indexOf(lowerCaseMode)];
+                                    gameObject.mode =
+                                        splatModes[
+                                            lowerCaseSplatModes.indexOf(
+                                                lowerCaseMode
+                                            )
+                                        ];
                                 }
                             }
 
@@ -113,9 +129,9 @@ async function getUrl(url) {
 
                         rounds[generateId()] = {
                             meta: {
-                                name: `Bracket ${a + 1} round ${i + 1}`
+                                name: `Bracket ${a + 1} round ${i + 1}`,
                             },
-                            games: games
+                            games: games,
                         };
                     }
                 }

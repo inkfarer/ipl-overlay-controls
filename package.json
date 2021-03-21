@@ -44,10 +44,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "winners",
-                "title": "Game Winners",
+                "name": "currentround",
+                "title": "Current Round",
                 "width": 4,
-                "file": "gameWinners.html",
+                "file": "currentRound.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },

@@ -1,22 +1,22 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
-	"additionalProperties": false,
+    "additionalProperties": false,
     "properties": {
         "lastfm": {
             "type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"apiKey": {"type": "string"},
-				"secret": {"type": "string"}
-			}
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": { "type": "string" },
+                "secret": { "type": "string" }
+            }
         },
-		"smashgg": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"apiKey": {"type": "string"}
-			}
-		}
+        "smashgg": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": { "type": "string" }
+            }
+        }
     }
 }
