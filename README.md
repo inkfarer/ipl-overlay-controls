@@ -6,6 +6,8 @@ A [NodeCG](https://github.com/nodecg/nodecg) bundle. Provides dashboard panels f
 
 1. Install [Node.js](https://nodejs.org/en/) - Using the LTS version (14.x as of writing) is recommended.
 
+1. Install [Git](https://git-scm.com/)
+
 1. Install [nodecg-cli](https://github.com/nodecg/nodecg-cli): `npm i -g nodecg-cli`
 
 1. Create a directory for NodeCG: `mkdir nodecg && cd nodecg`
@@ -43,11 +45,13 @@ A [NodeCG](https://github.com/nodecg/nodecg) bundle. Provides dashboard panels f
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-03-12:
+The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-03-21:
 
 [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
 
 [reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
+
+[kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 
 The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-02-09:
 
