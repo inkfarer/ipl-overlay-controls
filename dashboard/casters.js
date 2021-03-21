@@ -3,16 +3,16 @@ const casters = nodecg.Replicant('casters');
 const btnCreateCaster = document.getElementById('add-caster-btn');
 
 casters.on('change', (newValue, oldValue) => {
-	for (const id in newValue) {
+    for (const id in newValue) {
         const object = newValue[id];
 
         if (oldValue) {
-        	if (!casterObjectsMatch(object, oldValue[id])) {
-        		updateOrCreateCreateCasterElem(id, object);
-			}
-		} else {
-			updateOrCreateCreateCasterElem(id, object);
-		}
+            if (!casterObjectsMatch(object, oldValue[id])) {
+                updateOrCreateCreateCasterElem(id, object);
+            }
+        } else {
+            updateOrCreateCreateCasterElem(id, object);
+        }
     }
 
     // Handle deletions
@@ -55,9 +55,13 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
 });
 
 function casterObjectsMatch(val1, val2) {
-	if (!val1 || !val2) return false;
+    if (!val1 || !val2) return false;
 
-	return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
+    return !(
+        val1.name !== val2.name ||
+        val1.twitter !== val2.twitter ||
+        val1.pronouns !== val2.pronouns
+    );
 }
 
 function setUncommittedButtonDisabled(disabled) {
@@ -87,13 +91,18 @@ function updateOrCreateCreateCasterElem(
     }
 }
 
-function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, resetColor = true) {
+function updateCasterElem(
+    id,
+    data = { name: '', twitter: '', pronouns: '' },
+    resetColor = true
+) {
     document.getElementById(`caster-name-input_${id}`).value = data.name;
     document.getElementById(`caster-twitter-input_${id}`).value = data.twitter;
     document.getElementById(`caster-pronoun-input_${id}`).value = data.pronouns;
     if (resetColor) {
-		document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
-	}
+        document.getElementById(`update-caster_${id}`).style.backgroundColor =
+            'var(--blue)';
+    }
 }
 
 function getCasterContainerCount() {
@@ -107,12 +116,12 @@ function createCasterElem(
 ) {
     if (newElem && getCasterContainerCount() >= 3) return;
 
-	let container = document.createElement('div');
-	container.classList.add('space');
+    let container = document.createElement('div');
+    container.classList.add('space');
     container.classList.add('caster-container');
     container.id = `caster-container_${id}`;
 
-	container.innerHTML = `
+    container.innerHTML = `
 	<div class="select-container">
 		<div class="input-label">Name</div>
 		<input type="text" id="caster-name-input_${id}">

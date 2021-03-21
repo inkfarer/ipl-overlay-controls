@@ -31,8 +31,8 @@ function addChangeReminder(elements, updateButton) {
     elements.forEach((element) => {
         if (!element.tagName) return;
 
-		let event;
-		if (element.tagName.toLowerCase() === 'input') event = 'input';
+        let event;
+        if (element.tagName.toLowerCase() === 'input') event = 'input';
         else if (element.tagName.toLowerCase() === 'select') event = 'change';
         else return;
 
@@ -63,50 +63,50 @@ function addDots(string) {
 }
 
 function fillList(selectElem, data) {
-	for (let i = 0; i < data.length; i++) {
-		const element = data[i];
-		const option = document.createElement('option');
-		option.value = element;
-		option.text = element;
-		selectElem.add(option);
-	}
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        const option = document.createElement('option');
+        option.value = element;
+        option.text = element;
+        selectElem.add(option);
+    }
 }
 
 const splatStages = [
-	'Ancho-V Games',
-	'Arowana Mall',
-	'Blackbelly Skatepark',
-	'Camp Triggerfish',
-	'Goby Arena',
-	'Humpback Pump Track',
-	'Inkblot Art Academy',
-	'Kelp Dome',
-	'MakoMart',
-	'Manta Maria',
-	'Moray Towers',
-	'Musselforge Fitness',
-	'New Albacore Hotel',
-	'Piranha Pit',
-	'Port Mackerel',
-	'Shellendorf Institute',
-	'Shifty Station',
-	'Snapper Canal',
-	'Starfish Mainstage',
-	'Sturgeon Shipyard',
-	'The Reef',
-	'Wahoo World',
-	'Walleye Warehouse',
-	'Skipper Pavilion',
-	'Unknown Stage',
+    'Ancho-V Games',
+    'Arowana Mall',
+    'Blackbelly Skatepark',
+    'Camp Triggerfish',
+    'Goby Arena',
+    'Humpback Pump Track',
+    'Inkblot Art Academy',
+    'Kelp Dome',
+    'MakoMart',
+    'Manta Maria',
+    'Moray Towers',
+    'Musselforge Fitness',
+    'New Albacore Hotel',
+    'Piranha Pit',
+    'Port Mackerel',
+    'Shellendorf Institute',
+    'Shifty Station',
+    'Snapper Canal',
+    'Starfish Mainstage',
+    'Sturgeon Shipyard',
+    'The Reef',
+    'Wahoo World',
+    'Walleye Warehouse',
+    'Skipper Pavilion',
+    'Unknown Stage',
 ];
 splatStages.sort();
 
 const splatModes = [
-	'Clam Blitz',
-	'Tower Control',
-	'Rainmaker',
-	'Splat Zones',
-	'Turf War',
-	'Unknown Mode',
+    'Clam Blitz',
+    'Tower Control',
+    'Rainmaker',
+    'Splat Zones',
+    'Turf War',
+    'Unknown Mode',
 ];
 splatModes.sort();

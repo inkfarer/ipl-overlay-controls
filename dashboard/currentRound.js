@@ -7,10 +7,10 @@ const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round');
 
 NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
-    activeRoundId.on('change', newValue => {
-		let currentRound = rounds.value[newValue];
+    activeRoundId.on('change', (newValue) => {
+        let currentRound = rounds.value[newValue];
 
-		if (currentRound) {
+        if (currentRound) {
             addRoundToggles(currentRound.games, currentRound.meta.name);
         } else {
             removeToggles();
@@ -32,14 +32,17 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
         if (!newCurrentRound) return;
 
         if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
-			roundNameElem.innerText = newCurrentRound.meta.name;
+            roundNameElem.innerText = newCurrentRound.meta.name;
         }
 
         for (let i = 0; i < newCurrentRound.games.length; i++) {
             const newGame = newCurrentRound.games[i];
             const oldGame = oldCurrentRound.games[i];
 
-            if (newGame.mode !== oldGame.mode || oldGame.stage !== newGame.stage) {
+            if (
+                newGame.mode !== oldGame.mode ||
+                oldGame.stage !== newGame.stage
+            ) {
                 updateMapsModes(i, newGame);
                 break;
             }
@@ -48,11 +51,11 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
 });
 
 function updateMapsModes(index, data) {
-	const stageSelector = document.getElementById(`stage-selector_${index}`);
-	stageSelector.value = data.stage;
+    const stageSelector = document.getElementById(`stage-selector_${index}`);
+    stageSelector.value = data.stage;
 
-	const modeSelector = document.getElementById(`mode-selector_${index}`);
-	modeSelector.value = data.mode;
+    const modeSelector = document.getElementById(`mode-selector_${index}`);
+    modeSelector.value = data.mode;
 }
 
 function addRoundToggles(games, roundName) {
@@ -69,28 +72,29 @@ function addToggle(roundElement, stageIndex) {
     toggleDiv.classList.add('toggles');
     const stageModeDisplay = document.createElement('div');
 
-    stageModeDisplay.innerHTML =
-		`<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
+    stageModeDisplay.innerHTML = `<div class="separator"><span>${
+        Number(stageIndex) + 1
+    }</span></div>`;
     toggleDiv.appendChild(stageModeDisplay);
 
-	const reminderCreatingElements = [];
-	const stageSelector = document.createElement('select');
-	stageSelector.id = `stage-selector_${stageIndex}`;
-	stageSelector.classList.add('stage-selector');
-	fillList(stageSelector, splatStages);
-	stageSelector.value = roundElement.stage;
-	toggleDiv.appendChild(stageSelector);
-	reminderCreatingElements.push(stageSelector);
+    const reminderCreatingElements = [];
+    const stageSelector = document.createElement('select');
+    stageSelector.id = `stage-selector_${stageIndex}`;
+    stageSelector.classList.add('stage-selector');
+    fillList(stageSelector, splatStages);
+    stageSelector.value = roundElement.stage;
+    toggleDiv.appendChild(stageSelector);
+    reminderCreatingElements.push(stageSelector);
 
-	const modeSelector = document.createElement('select');
-	modeSelector.id = `mode-selector_${stageIndex}`;
-	modeSelector.classList.add('mode-selector');
-	fillList(modeSelector, splatModes);
-	modeSelector.value = roundElement.mode;
-	toggleDiv.appendChild(modeSelector);
-	reminderCreatingElements.push(modeSelector);
+    const modeSelector = document.createElement('select');
+    modeSelector.id = `mode-selector_${stageIndex}`;
+    modeSelector.classList.add('mode-selector');
+    fillList(modeSelector, splatModes);
+    modeSelector.value = roundElement.mode;
+    toggleDiv.appendChild(modeSelector);
+    reminderCreatingElements.push(modeSelector);
 
-	addChangeReminder(reminderCreatingElements, roundUpdateButton);
+    addChangeReminder(reminderCreatingElements, roundUpdateButton);
 
     const noWinButton = document.createElement('button');
     noWinButton.classList.add('no-win-toggle');
@@ -172,23 +176,21 @@ setWinnersAutomatically.on('change', (newValue) => {
 });
 
 roundUpdateButton.addEventListener('click', () => {
-	const numberOfGames = rounds.value[activeRoundId.value].games.length;
-	const games = [];
+    const numberOfGames = rounds.value[activeRoundId.value].games.length;
+    const games = [];
 
-	for (let i = 0; i < numberOfGames; i++) {
-		const currentGame = {
-			stage: '',
-			mode: '',
-		};
-		const stageSelector = document.getElementById(
-			`stage-selector_${i}`
-		);
-		currentGame.stage = stageSelector.value;
+    for (let i = 0; i < numberOfGames; i++) {
+        const currentGame = {
+            stage: '',
+            mode: '',
+        };
+        const stageSelector = document.getElementById(`stage-selector_${i}`);
+        currentGame.stage = stageSelector.value;
 
-		const modeSelector = document.getElementById(`mode-selector_${i}`);
-		currentGame.mode = modeSelector.value;
-		games.push(currentGame);
-	}
+        const modeSelector = document.getElementById(`mode-selector_${i}`);
+        currentGame.mode = modeSelector.value;
+        games.push(currentGame);
+    }
 
-	rounds.value[activeRoundId.value].games = games;
+    rounds.value[activeRoundId.value].games = games;
 });

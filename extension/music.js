@@ -11,9 +11,9 @@ function handleNowPlaying(nodecg) {
     const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
 
     const replicantToSource = {
-        'lastfm': lastFmNowPlaying,
-        'manual': manualNowPlaying
-    }
+        lastfm: lastFmNowPlaying,
+        manual: manualNowPlaying,
+    };
 
     const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
     const nowPlaying = nodecg.Replicant('nowPlaying');
@@ -30,7 +30,7 @@ function handleNowPlaying(nodecg) {
     });
 
     for (const [key, value] of Object.entries(replicantToSource)) {
-        value.on('change', newValue => {
+        value.on('change', (newValue) => {
             if (nowPlayingSource.value === key) {
                 nowPlaying.value = clone(newValue);
             }

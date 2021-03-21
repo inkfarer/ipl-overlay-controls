@@ -134,7 +134,7 @@ NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
     activeRoundId.on('change', (newValue) => {
         roundSelector.value = newValue;
     });
-    
+
     rounds.on('change', (newValue) => {
         clearSelectors('round-selector');
         for (const [key, value] of Object.entries(newValue)) {

@@ -142,13 +142,13 @@ document.getElementById('update-scoreboard-btn').onclick = () => {
             Number(document.getElementById('color-selector').value)
     )[0];
 
-	scoreboardData.value = {
-		flavorText: document.getElementById('flavor-text-input').value,
-		colorInfo: clrInfo,
-		swapColorOrder: scoreboardData.value.swapColorOrder,
-		teamAInfo: teamAInfo,
-		teamBInfo: teamBInfo,
-	};
+    scoreboardData.value = {
+        flavorText: document.getElementById('flavor-text-input').value,
+        colorInfo: clrInfo,
+        swapColorOrder: scoreboardData.value.swapColorOrder,
+        teamAInfo: teamAInfo,
+        teamBInfo: teamBInfo,
+    };
 };
 
 document.getElementById('show-scoreboard-btn').onclick = () => {

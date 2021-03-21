@@ -129,10 +129,10 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
             games.push(currentGame);
         }
 
-		rounds.value[buttonId] = {
-			meta: { name: nameInput.value },
-			games: games,
-		};
+        rounds.value[buttonId] = {
+            meta: { name: nameInput.value },
+            games: games,
+        };
     };
     updateButton.classList.add('max-width');
 
@@ -178,8 +178,12 @@ function updateRoundElem(id, data) {
             .length / 2;
 
     for (let i = 0; i < numberOfGames; i++) {
-        const stageSelector = document.getElementById(`stage-selector_${id}_${i}`);
-        const modeSelector = document.getElementById(`mode-selector_${id}_${i}`);
+        const stageSelector = document.getElementById(
+            `stage-selector_${id}_${i}`
+        );
+        const modeSelector = document.getElementById(
+            `mode-selector_${id}_${i}`
+        );
 
         stageSelector.value = data.games[i].stage;
         modeSelector.value = data.games[i].mode;
@@ -208,12 +212,12 @@ rounds.on('change', (newValue, oldValue) => {
         const object = newValue[id];
 
         if (oldValue) {
-        	if (!roundObjectsMatch(object, oldValue[id])) {
-				updateOrCreateCreateRoundElem(id, object);
-			}
-		} else {
-			updateOrCreateCreateRoundElem(id, object);
-		}
+            if (!roundObjectsMatch(object, oldValue[id])) {
+                updateOrCreateCreateRoundElem(id, object);
+            }
+        } else {
+            updateOrCreateCreateRoundElem(id, object);
+        }
     }
 
     // Handle deletions
@@ -227,19 +231,19 @@ rounds.on('change', (newValue, oldValue) => {
 });
 
 function roundObjectsMatch(val1, val2) {
-	if (!val1 || !val2) return false;
-	if (val1.meta.name !== val2.meta.name) return false;
-	if (val1.games.length !== val2.games.length) return false;
+    if (!val1 || !val2) return false;
+    if (val1.meta.name !== val2.meta.name) return false;
+    if (val1.games.length !== val2.games.length) return false;
 
-	for (let i = 0; i < val1.games.length; i++) {
-		const val1Game = val1.games[i];
-		const val2Game = val2.games[i];
+    for (let i = 0; i < val1.games.length; i++) {
+        const val1Game = val1.games[i];
+        const val2Game = val2.games[i];
 
-		if (val1Game.stage !== val2Game.stage) return false;
-		if (val1Game.mode !== val2Game.mode) return false;
-	}
+        if (val1Game.stage !== val2Game.stage) return false;
+        if (val1Game.mode !== val2Game.mode) return false;
+    }
 
-	return true;
+    return true;
 }
 
 // importing rounds
@@ -252,7 +256,7 @@ document.getElementById('round-import-submit').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING);
     const listsURL = document.getElementById('round-input-url-input').value;
 
-    nodecg.sendMessage('getRounds', { url: listsURL }, e => {
+    nodecg.sendMessage('getRounds', { url: listsURL }, (e) => {
         if (e) {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE);
