@@ -123,16 +123,16 @@ function createCasterElem(
 
     container.innerHTML = `
 	<div class="select-container">
-		<div class="input-label">Name</div>
+		<label for="caster-name-input_${id}">Name</label>
 		<input type="text" id="caster-name-input_${id}">
 	</div>
 	<div class="layout horizontal select-container">
 		<div class="select-container caster-twitter-input-container">
-			<div class="input-label">Twitter</div>
+			<label for="caster-twitter-input_${id}">Twitter</label>
 			<input type="text" id="caster-twitter-input_${id}">
 		</div>
 		<div class="select-container">
-			<div class="input-label">Pronouns</div>
+			<label for="caster-pronoun-input_${id}">Pronouns</label>
 			<input type="text" id="caster-pronoun-input_${id}">
 		</div>
 	</div>
