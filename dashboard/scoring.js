@@ -153,6 +153,19 @@ const colors = [
 				clrB: '#2F27CC'
 			}
 		]
+	},
+	{
+		meta: {
+			name: 'Custom Color'
+		},
+		colors: [
+			{
+				index: 999,
+				title: 'Custom Color',
+				clrA: '#000000',
+				clrB: '#FFFFFF'
+			}
+		]
 	}
 ];
 
@@ -170,6 +183,8 @@ for (let i = 0; i < colors.length; i++) {
 		option.text = color.title;
 		option.dataset.firstColor = color.clrA;
 		option.dataset.secondColor = color.clrB;
+		// make custom color unselectable by user
+		option.disabled = color.index === 999;
 
 		optGroup.appendChild(option);
 	}
@@ -180,27 +195,45 @@ for (let i = 0; i < colors.length; i++) {
 // Scoreboard data
 
 const scoreboardData = nodecg.Replicant('scoreboardData');
-
 const scoreboardShown = nodecg.Replicant('scoreboardShown');
+
+const customColorToggle = document.getElementById('custom-color-toggle');
 
 scoreboardData.on('change', (newValue) => {
 	document.getElementById('flavor-text-input').value = newValue.flavorText;
 
 	document.getElementById('color-selector').value = newValue.colorInfo.index;
-	document.getElementById(
-		'team-a-color-display'
-	).style.backgroundColor = newValue.swapColorOrder
-		? newValue.colorInfo.clrB
-		: newValue.colorInfo.clrA;
-	document.getElementById(
-		'team-b-color-display'
-	).style.backgroundColor = newValue.swapColorOrder
-		? newValue.colorInfo.clrA
-		: newValue.colorInfo.clrB;
+
+	updateColorDisplay(newValue.colorInfo, document.getElementById('team-a-color-display'), 'a', newValue.swapColorOrder);
+	updateColorDisplay(newValue.colorInfo, document.getElementById('team-b-color-display'), 'b', newValue.swapColorOrder);
+	updateColorDisplay(newValue.colorInfo, document.getElementById('team-a-custom-color'), 'a', newValue.swapColorOrder);
+	updateColorDisplay(newValue.colorInfo, document.getElementById('team-b-custom-color'), 'b', newValue.swapColorOrder);
+
+	const customColorEnabled = newValue.colorInfo.index === 999;
+	customColorToggle.checked = customColorEnabled;
+	updateCustomColorToggle(customColorEnabled);
 
 	document.getElementById('team-a-selector').value = newValue.teamAInfo.id;
 	document.getElementById('team-b-selector').value = newValue.teamBInfo.id;
 });
+
+function updateColorDisplay(colorInfo, elem, team, swapColors) {
+	let color;
+
+	if (team === 'a' && !swapColors) color = colorInfo.clrA;
+	else if (team === 'a' && swapColors) color = colorInfo.clrB;
+	else if (team === 'b' && !swapColors) color = colorInfo.clrB;
+	else if (team === 'b' && swapColors) color = colorInfo.clrA;
+	else color = '#000000';
+
+	switch (elem.tagName.toLowerCase()) {
+		case 'input':
+			elem.value = color;
+			break;
+		default:
+			elem.style.backgroundColor = color;
+	}
+}
 
 scoreboardShown.on('change', (newValue) => {
 	setToggleButtonDisabled(
@@ -219,19 +252,32 @@ document.getElementById('update-scoreboard-btn').onclick = () => {
 	)[0];
 
 	const colorSelector = document.getElementById('color-selector');
-	const colorSelect = colorSelector.options[colorSelector.selectedIndex];
+	const colorOption = colorSelector.options[colorSelector.selectedIndex];
 
-	const clrInfo = {
-		index: Number(colorSelect.value),
-		name: colorSelect.text,
-		clrA: colorSelect.dataset.firstColor,
-		clrB: colorSelect.dataset.secondColor
-	};
+	let clrInfo;
+	let swapColorOrder = scoreboardData.value.swapColorOrder;
+
+	if (customColorToggle.checked) {
+		clrInfo = {
+			index: 999,
+			name: 'Custom Color',
+			clrA: document.getElementById('team-a-custom-color').value,
+			clrB: document.getElementById('team-b-custom-color').value
+		};
+		swapColorOrder = false;
+	} else {
+		clrInfo = {
+			index: Number(colorOption.value),
+			name: colorOption.text,
+			clrA: colorOption.dataset.firstColor,
+			clrB: colorOption.dataset.secondColor
+		};
+	}
 
 	scoreboardData.value = {
 		flavorText: document.getElementById('flavor-text-input').value,
 		colorInfo: clrInfo,
-		swapColorOrder: scoreboardData.value.swapColorOrder,
+		swapColorOrder: swapColorOrder,
 		teamAInfo: teamAInfo,
 		teamBInfo: teamBInfo
 	};
@@ -302,3 +348,20 @@ addChangeReminder(
 document.getElementById('show-casters-btn').onclick = () => {
 	nodecg.sendMessage('mainShowCasters');
 };
+
+// custom color toggle
+
+customColorToggle.onchange = e => {updateCustomColorToggle(e.target.checked)}
+
+function updateCustomColorToggle(checked) {
+	const colorSelectContainer = document.getElementById('color-select-container');
+	const customColorContainer = document.getElementById('custom-color-select-container');
+
+	if (checked) {
+		colorSelectContainer.style.display = 'none';
+		customColorContainer.style.display = 'flex';
+	} else {
+		colorSelectContainer.style.display = 'unset';
+		customColorContainer.style.display = 'none';
+	}
+}

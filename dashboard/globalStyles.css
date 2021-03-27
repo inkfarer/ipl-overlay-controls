@@ -107,7 +107,8 @@ select {
 }
 
 input[type='text'],
-input[type='number'] {
+input[type='number'],
+input[type='color'] {
     background-color: rgba(0, 0, 0, 0);
     border: none;
     border-bottom: 1px solid #737373;
@@ -120,6 +121,14 @@ input[type='number'] {
     margin-top: 3px;
 }
 
+input[type='color'] {
+	border-bottom: unset;
+	background-color: #2F3A4F;
+	margin: 5px 2px;
+	padding: 5px;
+	height: 32px;
+}
+
 .input-label {
     color: #737373;
     font-size: 0.75em;
@@ -130,8 +139,13 @@ input[type='number'] {
     -webkit-user-select: none;
 }
 
-option {
+option, optgroup {
     color: black;
+}
+
+option[disabled] {
+	color: darkgray;
+	font-style: italic;
 }
 
 /* Misc. */
