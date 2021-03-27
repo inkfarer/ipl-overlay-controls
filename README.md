@@ -53,7 +53,9 @@ The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 
 
 [kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 
-The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-02-09:
+The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-03-25:
+
+[sue-overlays](https://github.com/IPLSplatoon/step-up-europe-overlays)
 
 [tg-overlays](https://github.com/inkfarer/tg-overlays) 
 
