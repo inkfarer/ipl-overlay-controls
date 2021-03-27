@@ -19,10 +19,13 @@
         </div>
         <div class="space">
             <div class="title">Change song manually</div>
-            <input type="checkbox" id="manual-song-toggle" />Manual song input
+			<div class="layout horizontal">
+				<input type="checkbox" id="manual-song-toggle" />
+				<label for="manual-song-toggle" class="white-label big-label">Manual song input</label>
+			</div>
 
             <div class="input-container">
-                <div class="input-label">Artist</div>
+                <label for="manual-song-artist-input">Artist</label>
                 <input
                     type="text"
                     id="manual-song-artist-input"
@@ -30,7 +33,7 @@
                 />
             </div>
             <div class="input-container">
-                <div class="input-label">Name</div>
+                <label for="manual-song-name-input">Name</label>
                 <input
                     type="text"
                     id="manual-song-name-input"

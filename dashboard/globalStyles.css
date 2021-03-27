@@ -129,14 +129,22 @@ input[type='color'] {
 	height: 32px;
 }
 
-.input-label {
+.input-label,
+label {
     color: #737373;
     font-size: 0.75em;
-    margin-top: 5px;
     font-family: 'Roboto', 'Noto', sans-serif;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+}
+
+label.white-label {
+	color: white;
+}
+
+label.big-label {
+	font-size: 1em;
 }
 
 option, optgroup {
