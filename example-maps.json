@@ -1,0 +1,380 @@
+[
+    {
+        "name": "Round 1",
+        "maps": [
+            {
+                "map": "sturgeon shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "WAHOO World",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Snapper Canal",
+                "mode": "Splat Zones"
+            }
+        ]
+    },
+    {
+        "name": "Round 2",
+        "maps": [
+            {
+                "map": "MakoMart",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Clam Blitz"
+            }
+        ]
+    },
+    {
+        "name": "Round 3",
+        "maps": [
+            {
+                "map": "New Albacore Hotel",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Manta Maria",
+                "mode": "Rainmaker"
+            }
+        ]
+    },
+    {
+        "name": "Round 4",
+        "maps": [
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Piranha Pit",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Wahoo World",
+                "mode": "Tower Control"
+            }
+        ]
+    },
+    {
+        "name": "Round 5",
+        "maps": [
+            {
+                "map": "Blackbelly Skatepark",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "The Reef",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Splat Zones"
+            }
+        ]
+    },
+    {
+        "name": "Round 6",
+        "maps": [
+            {
+                "map": "Shellendorf Institute",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "New Albacore Hotel",
+                "mode": "Clam Blitz"
+            }
+        ]
+    },
+    {
+        "name": "Winners Round 1",
+        "maps": [
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Snapper Canal",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Shellendorf Institute",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Rainmaker"
+            }
+        ]
+    },
+    {
+        "name": "Winners Round 2",
+        "maps": [
+            {
+                "map": "Wahoo World",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "The Reef",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Manta Maria",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Splat Zones"
+            }
+        ]
+    },
+    {
+        "name": "Winners Round 3",
+        "maps": [
+            {
+                "map": "Snapper Canal",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Piranha Pit",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "MakoMart",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Clam Blitz"
+            }
+        ]
+    },
+    {
+        "name": "Winners Round 4",
+        "maps": [
+            {
+                "map": "Wahoo World",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "New Albacore Hotel",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Manta Maria",
+                "mode": "Tower Control"
+            }
+        ]
+    },
+    {
+        "name": "Grand Finals",
+        "maps": [
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Snapper Canal",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "MakoMart",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "The Reef",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Piranha Pit",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Clam Blitz"
+            }
+        ]
+    },
+    {
+        "name": "Bracket Reset",
+        "maps": [
+            {
+                "map": "Shellendorf Institute",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Manta Maria",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "New Albacore Hotel",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Wahoo World",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Splat Zones"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 1",
+        "maps": [
+            {
+                "map": "Ancho-V Games",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Piranha Pit",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Rainmaker"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 2",
+        "maps": [
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Wahoo World",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Snapper Canal",
+                "mode": "Tower Control"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 3",
+        "maps": [
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Manta Maria",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "New Albacore Hotel",
+                "mode": "Clam Blitz"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 4",
+        "maps": [
+            {
+                "map": "Piranha Pit",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Inkblot Art Academy",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Wahoo World",
+                "mode": "Splat Zones"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 4",
+        "maps": [
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "The Reef",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Starfish Mainstage",
+                "mode": "Rainmaker"
+            }
+        ]
+    },
+    {
+        "name": "Losers Round 6",
+        "maps": [
+            {
+                "map": "MakoMart",
+                "mode": "Splat Zones"
+            },
+            {
+                "map": "Ancho-V Games",
+                "mode": "Clam Blitz"
+            },
+            {
+                "map": "Snapper Canal",
+                "mode": "Tower Control"
+            },
+            {
+                "map": "Sturgeon Shipyard",
+                "mode": "Rainmaker"
+            },
+            {
+                "map": "Humpback Pump Track",
+                "mode": "Splat Zones"
+            }
+        ]
+    }
+]
