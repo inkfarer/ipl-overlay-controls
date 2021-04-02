@@ -17,7 +17,6 @@ module.exports = async function (nodecg) {
             .catch((err) => {
                 ack(err);
             });
-        return;
     });
 };
 
@@ -75,67 +74,29 @@ async function getUrl(url) {
             .then((response) => {
                 const data = response.data;
                 let rounds = {};
-                for (let a = 0; a < data.length; a++) {
-                    for (let i = 0; i < data[a].length; i++) {
-                        const games = [];
-                        for (let j = 0; j < data[a][i].length; j++) {
-                            const dataPoint = data[a][i][j];
-                            const gameObject = {};
 
-                            var stageName;
-                            if (!dataPoint.stage && !dataPoint.map) {
-                                gameObject.stage = 'Unknown Stage';
-                            } else {
-                                if (!dataPoint.stage) stageName = dataPoint.map;
-                                else stageName = dataPoint.stage;
+                for (let i = 0; i < data.length; i++) {
+                    const round = data[i];
+                    const games = [];
+                    const roundGames = (round.games == null) ? round.maps : round.games;
 
-                                const lowerCaseStage = stageName.toLowerCase();
-                                if (
-                                    !lowerCaseSplatStages.includes(
-                                        lowerCaseStage
-                                    )
-                                ) {
-                                    gameObject.stage = 'Unknown Stage';
-                                } else {
-                                    gameObject.stage =
-                                        splatStages[
-                                            lowerCaseSplatStages.indexOf(
-                                                lowerCaseStage
-                                            )
-                                        ];
-                                }
-                            }
+                    for (let j = 0; j < roundGames.length; j++) {
+                        const game = roundGames[j];
+                        const stageName = (game.stage == null) ? game.map : game.stage;
 
-                            if (!dataPoint.mode) {
-                                gameObject.mode = 'Unknown Mode';
-                            } else {
-                                const lowerCaseMode = dataPoint.mode.toLowerCase();
-                                if (
-                                    !lowerCaseSplatModes.includes(lowerCaseMode)
-                                ) {
-                                    gameObject.mode = 'Unknown Mode';
-                                } else {
-                                    gameObject.mode =
-                                        splatModes[
-                                            lowerCaseSplatModes.indexOf(
-                                                lowerCaseMode
-                                            )
-                                        ];
-                                }
-                            }
-
-                            games.push(gameObject);
-                        }
-
-                        rounds[generateId()] = {
-                            meta: {
-                                name: `Bracket ${a + 1} round ${i + 1}`,
-                            },
-                            games: games,
-                        };
+                        games.push({
+                            stage: normalizeStageName(stageName),
+                            mode: normalizeModeName(game.mode)
+                        });
                     }
-                }
 
+                    rounds[generateId()] = {
+                        meta: {
+                            name: round.name,
+                        },
+                        games: games,
+                    };
+                }
                 resolve({
                     rounds: rounds,
                     url: url,
@@ -145,4 +106,24 @@ async function getUrl(url) {
                 reject(err);
             });
     });
+}
+
+function normalizeStageName(name) {
+    name = name.toLowerCase();
+
+    if (!lowerCaseSplatStages.includes(name)) {
+        return 'Unknown Stage';
+    } else {
+        return splatStages[lowerCaseSplatStages.indexOf(name)];
+    }
+}
+
+function normalizeModeName(name) {
+    name = name.toLowerCase();
+
+    if (!lowerCaseSplatModes.includes(name)) {
+        return 'Unknown Mode';
+    } else {
+        return splatModes[lowerCaseSplatModes.indexOf(name)];
+    }
 }
