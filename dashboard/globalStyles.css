@@ -1,5 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Noto', sans-serif;
 }
 
 :root {
@@ -48,9 +48,7 @@ body {
 
 button {
     background-color: var(--blue);
-    margin: 2px;
-    margin-top: 5px;
-    font-family: 'Roboto', sans-serif;
+    margin: 5px 2px 2px;
     text-decoration: none;
     border: none;
     border-radius: 2px;
@@ -59,6 +57,7 @@ button {
     padding: 9px 9px;
     box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.2);
     transition-duration: 100ms;
+    font-family: 'Roboto', sans-serif;
 }
 
 button.blue {
@@ -93,32 +92,38 @@ button.max-width {
 
 /* Text input & select */
 
-select {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 5px;
+select,
+input[type="text"],
+input[type="number"],
+input[type="color"] {
+    background-color: transparent;
     border: 0;
     border-bottom: 1px solid #737373;
-    outline: 0;
+    width: 100%;
     color: white;
-    background-color: rgba(0, 0, 0, 0);
-    padding: 4px;
-    font-family: 'Roboto', 'Noto', sans-serif;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+select {
+    margin-bottom: 5px;
+    outline: 0;
+    padding: 4px 20px 4px 2px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-size: 16px 12px;
+    background-repeat: no-repeat;
+    background-position: right 3px center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 input[type='text'],
 input[type='number'],
 input[type='color'] {
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    border-bottom: 1px solid #737373;
-    color: white;
-    font-size: 1em;
     display: block;
-    width: 100%;
     box-sizing: border-box;
     margin-top: 3px;
-	font-family: 'Roboto', sans-serif;
 }
 
 input[type='color'] {
@@ -133,10 +138,10 @@ input[type='color'] {
 label {
     color: #737373;
     font-size: 0.75em;
-    font-family: 'Roboto', 'Noto', sans-serif;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    margin-top: 4px;
 }
 
 label.white-label {
@@ -145,6 +150,7 @@ label.white-label {
 
 label.big-label {
 	font-size: 1em;
+    margin-top: 0;
 }
 
 option, optgroup {
