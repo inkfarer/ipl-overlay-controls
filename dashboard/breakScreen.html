@@ -4,16 +4,17 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            .timer-container {
+            .next-stage-timer-container {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
+                border-bottom: 1px solid #737373;
+                width: 150px;
+                margin: 0 auto;
             }
 
-            .timer-container > div {
+            .next-stage-timer-container > div {
                 margin-top: -3px;
-                margin-left: 5px;
-                text-align: center;
             }
 
             .timer-container-number {
@@ -24,13 +25,18 @@
                 width: 70px;
             }
 
-            .timer-container > div > input {
-                height: 30px;
+            .next-stage-timer-container > div > input {
+                border-bottom: unset;
+                text-align: center;
+                margin-top: 3px;
+                margin-bottom: 0;
             }
 
-            .timer-container > div > select {
-                height: 30px;
-                margin-top: 3px;
+            .next-stage-timer-container > div > select {
+                border-bottom: unset;
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 4px;
             }
 
             .toggle-container {
@@ -64,7 +70,7 @@
                 />
             </div>
             <div class="title next-stage-timer-title">Next Stage Timer</div>
-            <div class="timer-container">
+            <div class="next-stage-timer-container">
                 <div class="timer-container-number">
                     <label for="next-stage-hour-input">Hour</label>
                     <input
@@ -74,8 +80,9 @@
                         value="0"
                     />
                 </div>
+                <span style="margin-top: 20px;">:</span>
                 <div class="timer-container-number">
-                    <label for="next-stage-minute-input">Minute</label>
+                    <label for="next-stage-minute-input">Min</label>
                     <input
                         id="next-stage-minute-input"
                         class="main-update-reminder"

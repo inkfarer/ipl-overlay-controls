@@ -31,10 +31,13 @@ const daySelect = document.getElementById('next-stage-day-select');
 nextRoundStartTime.on('change', (newValue) => {
     minuteInput.value = newValue.minute;
     hourInput.value = newValue.hour;
+    updateDaySelector(newValue.month, newValue.day);
     daySelect.value = `${newValue.day}/${parseInt(newValue.month)}`;
 });
 
-function updateDaySelector() {
+function updateDaySelector(selectedMonth, selectedDayOfMonth) {
+    daySelect.innerHTML = '';
+
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -44,16 +47,30 @@ function updateDaySelector() {
 
     const tomorrowElem = getDayElem(tomorrow);
     daySelect.appendChild(tomorrowElem);
+
+    const selectedDay = `${selectedDayOfMonth}/${selectedMonth}`;
+    if (todayElem.value !== selectedDay && tomorrowElem.value !== selectedDay) {
+        const selectedDayElem = document.createElement('option');
+        selectedDayElem.innerText = selectedDay;
+        selectedDayElem.value = selectedDay;
+        selectedDayElem.dataset.day = selectedDayOfMonth;
+        selectedDayElem.dataset.month = selectedMonth;
+        daySelect.appendChild(selectedDayElem);
+    }
 }
 
 function getDayElem(date) {
     const dayElem = document.createElement('option');
-    const dateText = `${date.getDate()}/${date.getMonth() + 1}`;
+    const dateText = getDayText(date);
     dayElem.innerText = dateText;
     dayElem.value = dateText;
     dayElem.dataset.day = date.getDate();
-    dayElem.dataset.month = date.getMonth() + 1;
+    dayElem.dataset.month = String(date.getMonth() + 1);
     return dayElem;
+}
+
+function getDayText(date) {
+    return `${date.getDate()}/${date.getMonth() + 1}`;
 }
 
 function updateStageTime() {
@@ -74,8 +91,6 @@ function updateStageTime() {
         }
     }
 }
-
-updateDaySelector();
 
 addChangeReminder(
     document.querySelectorAll('.main-update-reminder'),
