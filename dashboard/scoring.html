@@ -68,41 +68,55 @@
                     ></select>
                 </div>
             </div>
-			<div id="color-select-container">
-				<div class="max-width">
-					<div class="select-container">
-						<label for="color-selector">Colors</label>
-						<select
-							id="color-selector"
-							class="color-selector scoreboard-update-warning"
-						></select>
-					</div>
-				</div>
-				<div class="layout horizontal max-width">
-					<div
-						class="color-display"
-						id="team-a-color-display"
-						style="background-color: black"
-					></div>
-					<div
-						class="color-display"
-						id="team-b-color-display"
-						style="background-color: white"
-					></div>
-				</div>
-			</div>
-			<div class="layout horizontal max-width" id="custom-color-select-container" style="display: none">
-				<input type="color" id="team-a-custom-color" class="scoreboard-update-warning">
-				<input type="color" id="team-b-custom-color" class="scoreboard-update-warning">
-			</div>
+            <div id="color-select-container">
+                <div class="max-width">
+                    <div class="select-container">
+                        <label for="color-selector">Colors</label>
+                        <select
+                            id="color-selector"
+                            class="color-selector scoreboard-update-warning"
+                        ></select>
+                    </div>
+                </div>
+                <div class="layout horizontal max-width">
+                    <div
+                        class="color-display"
+                        id="team-a-color-display"
+                        style="background-color: black"
+                    ></div>
+                    <div
+                        class="color-display"
+                        id="team-b-color-display"
+                        style="background-color: white"
+                    ></div>
+                </div>
+            </div>
+            <div
+                class="layout horizontal max-width"
+                id="custom-color-select-container"
+                style="display: none"
+            >
+                <input
+                    type="color"
+                    id="team-a-custom-color"
+                    class="scoreboard-update-warning"
+                />
+                <input
+                    type="color"
+                    id="team-b-custom-color"
+                    class="scoreboard-update-warning"
+                />
+            </div>
             <button id="swap-color-order-btn" class="blue max-width">
                 swap colors
             </button>
-			<div class="layout horizontal" style="justify-content: center">
-				<input id="custom-color-toggle" type="checkbox">
-				<label for="custom-color-toggle" class="white-label">Custom colors</label>
-			</div>
-			<div class="select-container">
+            <div class="layout horizontal" style="justify-content: center">
+                <input id="custom-color-toggle" type="checkbox" />
+                <label for="custom-color-toggle" class="white-label"
+                    >Custom colors</label
+                >
+            </div>
+            <div class="select-container">
                 <label for="flavor-text-input">Flavor Text</label>
                 <input
                     type="text"

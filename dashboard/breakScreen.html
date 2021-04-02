@@ -80,7 +80,7 @@
                         value="0"
                     />
                 </div>
-                <span style="margin-top: 20px;">:</span>
+                <span style="margin-top: 20px">:</span>
                 <div class="timer-container-number">
                     <label for="next-stage-minute-input">Min</label>
                     <input
@@ -104,7 +104,11 @@
                     id="next-stage-timer-toggle"
                     onchange="setReplicant('nextRoundStartTimeShown', event)"
                 />
-				<label for="next-stage-timer-toggle" class="white-label big-label">Show timer</label>
+                <label
+                    for="next-stage-timer-toggle"
+                    class="white-label big-label"
+                    >Show timer</label
+                >
             </div>
             <button id="main-scene-update-btn" class="blue max-width">
                 Update
@@ -123,10 +127,12 @@
                         id="next-team-a-selector"
                         class="team-selector teams-update-reminder"
                     ></select>
-					<div class="layout horizontal">
-						<input type="checkbox" id="team-a-image-toggle" />
-						<label for="team-a-image-toggle" class="white-label">Show image</label>
-					</div>
+                    <div class="layout horizontal">
+                        <input type="checkbox" id="team-a-image-toggle" />
+                        <label for="team-a-image-toggle" class="white-label"
+                            >Show image</label
+                        >
+                    </div>
                 </div>
                 <div class="select-container">
                     <label for="next-team-b-selector">Next Team B</label>
@@ -134,10 +140,12 @@
                         id="next-team-b-selector"
                         class="team-selector teams-update-reminder"
                     ></select>
-					<div class="layout horizontal">
-						<input type="checkbox" id="team-b-image-toggle" />
-						<label for="team-b-image-toggle" class="white-label">Show image</label>
-					</div>
+                    <div class="layout horizontal">
+                        <input type="checkbox" id="team-b-image-toggle" />
+                        <label for="team-b-image-toggle" class="white-label"
+                            >Show image</label
+                        >
+                    </div>
                 </div>
             </div>
             <button id="update-next-teams-btn" class="blue max-width">

@@ -93,9 +93,9 @@ button.max-width {
 /* Text input & select */
 
 select,
-input[type="text"],
-input[type="number"],
-input[type="color"] {
+input[type='text'],
+input[type='number'],
+input[type='color'] {
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid #737373;
@@ -127,11 +127,11 @@ input[type='color'] {
 }
 
 input[type='color'] {
-	border-bottom: unset;
-	background-color: #2F3A4F;
-	margin: 5px 2px;
-	padding: 5px;
-	height: 32px;
+    border-bottom: unset;
+    background-color: #2f3a4f;
+    margin: 5px 2px;
+    padding: 5px;
+    height: 32px;
 }
 
 input[type='number'] {
@@ -155,21 +155,22 @@ label {
 }
 
 label.white-label {
-	color: white;
+    color: white;
 }
 
 label.big-label {
-	font-size: 1em;
+    font-size: 1em;
     margin-top: 0;
 }
 
-option, optgroup {
+option,
+optgroup {
     color: black;
 }
 
 option[disabled] {
-	color: darkgray;
-	font-style: italic;
+    color: darkgray;
+    font-style: italic;
 }
 
 /* Misc. */

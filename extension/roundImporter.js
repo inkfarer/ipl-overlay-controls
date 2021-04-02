@@ -78,15 +78,17 @@ async function getUrl(url) {
                 for (let i = 0; i < data.length; i++) {
                     const round = data[i];
                     const games = [];
-                    const roundGames = (round.games == null) ? round.maps : round.games;
+                    const roundGames =
+                        round.games == null ? round.maps : round.games;
 
                     for (let j = 0; j < roundGames.length; j++) {
                         const game = roundGames[j];
-                        const stageName = (game.stage == null) ? game.map : game.stage;
+                        const stageName =
+                            game.stage == null ? game.map : game.stage;
 
                         games.push({
                             stage: normalizeStageName(stageName),
-                            mode: normalizeModeName(game.mode)
+                            mode: normalizeModeName(game.mode),
                         });
                     }
 
