@@ -2,6 +2,8 @@
 
 A [NodeCG](https://github.com/nodecg/nodecg) bundle. Provides dashboard panels for Inkling Performance Labs tournaments.
 
+Visit the [wiki](https://github.com/inkfarer/ipl-overlay-controls/wiki) if you are interested in using ipl-overlay-controls for your own graphics.
+
 ## Install
 
 1. Install [Node.js](https://nodejs.org/en/) - Using the LTS version (14.x as of writing) is recommended.
