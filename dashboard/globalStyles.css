@@ -19,6 +19,10 @@ body {
     flex-direction: row;
 }
 
+.layout.horizontal.center-content {
+    justify-content: center;
+}
+
 .layout.vertical {
     flex-direction: column;
 }
@@ -151,7 +155,7 @@ label {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 label.white-label {

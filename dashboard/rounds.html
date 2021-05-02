@@ -4,15 +4,6 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="globalStyles.css" />
         <style>
-            .import-status {
-                height: 30px;
-                width: 30px;
-                background-color: #181e29;
-                border-radius: 10px;
-                margin-left: 5px;
-                align-self: center;
-            }
-
             .separator {
                 width: 100%;
                 text-align: center;
@@ -31,19 +22,10 @@
                 justify-content: center;
             }
 
-            .round-import-input-wrapper {
-                height: 30px;
-                margin-left: 5px;
-            }
-
             .round-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 5px;
-            }
-
-            #round-import-submit {
-                margin-left: 5px;
             }
         </style>
     </head>
@@ -53,16 +35,10 @@
             <button id="create-5-game-round">NEW 5-game</button>
             <button id="create-7-game-round">NEW 7-game</button>
             <button id="reset-rounds" class="red">reset</button>
-            <div class="round-import-input-wrapper">
-                <div class="input-label">Import rounds from file</div>
-                <input id="round-input-url-input" type="text" />
-            </div>
-            <button id="round-import-submit">submit</button>
-            <div class="import-status"></div>
         </div>
         <div class="round-grid" id="round-grid"></div>
 
-        <script src='scripts/globalScripts.js'></script>
-        <script src='scripts/rounds.js'></script>
+        <script src="scripts/globalScripts.js"></script>
+        <script src="scripts/rounds.js"></script>
     </body>
 </html>

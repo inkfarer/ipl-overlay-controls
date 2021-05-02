@@ -61,9 +61,9 @@
             },
             {
                 "name": "battlefyimport",
-                "title": "Import tournament data",
+                "title": "Import data",
                 "width": 2,
-                "file": "tourneyImport.html",
+                "file": "dataImport.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             },
@@ -90,6 +90,7 @@
     "dependencies": {
         "axios": "^0.21.1",
         "clone": "^2.1.2",
+        "express-fileupload": "^1.2.1",
         "lastfm": "^0.9.3"
     },
     "devDependencies": {

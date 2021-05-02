@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-module.exports = async function (nodecg) {
+async function listen(nodecg) {
     const tournamentData = nodecg.Replicant('tournamentData');
     var smashGGKey;
 
@@ -60,7 +60,7 @@ module.exports = async function (nodecg) {
                 return;
         }
     });
-};
+}
 
 function generateId() {
     return '' + Math.random().toString(36).substr(2, 9);
@@ -240,18 +240,8 @@ async function getRaw(url) {
         axios
             .get(url)
             .then((response) => {
-                // make an id for every team
-                for (let i = 0; i < response.data.length; i++) {
-                    const element = response.data[i];
-                    element.id = generateId();
-                }
+                const finalResponse = handleRawData(response.data, url);
 
-                var finalResponse = {
-                    meta: {
-                        id: url,
-                    },
-                    data: response.data,
-                };
                 resolve(finalResponse);
             })
             .catch((err) => {
@@ -259,3 +249,22 @@ async function getRaw(url) {
             });
     });
 }
+
+function handleRawData(data, source) {
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        element.id = generateId();
+    }
+
+    return {
+        meta: {
+            id: source,
+        },
+        data: data,
+    };
+}
+
+module.exports = {
+    listen,
+    handleRawData,
+};

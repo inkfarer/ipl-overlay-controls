@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-module.exports = async function (nodecg) {
+async function listen(nodecg) {
     const rounds = nodecg.Replicant('rounds');
 
     nodecg.listenFor('getRounds', async (data, ack) => {
@@ -18,7 +18,7 @@ module.exports = async function (nodecg) {
                 ack(err);
             });
     });
-};
+}
 
 const splatStages = [
     'Ancho-V Games',
@@ -72,33 +72,8 @@ async function getUrl(url) {
                 Accept: 'application/json',
             })
             .then((response) => {
-                const data = response.data;
-                let rounds = {};
+                const rounds = handleRoundData(response.data);
 
-                for (let i = 0; i < data.length; i++) {
-                    const round = data[i];
-                    const games = [];
-                    const roundGames =
-                        round.games == null ? round.maps : round.games;
-
-                    for (let j = 0; j < roundGames.length; j++) {
-                        const game = roundGames[j];
-                        const stageName =
-                            game.stage == null ? game.map : game.stage;
-
-                        games.push({
-                            stage: normalizeStageName(stageName),
-                            mode: normalizeModeName(game.mode),
-                        });
-                    }
-
-                    rounds[generateId()] = {
-                        meta: {
-                            name: round.name,
-                        },
-                        games: games,
-                    };
-                }
                 resolve({
                     rounds: rounds,
                     url: url,
@@ -108,6 +83,37 @@ async function getUrl(url) {
                 reject(err);
             });
     });
+}
+
+function handleRoundData(rounds) {
+    let result = {};
+
+    for (let i = 0; i < rounds.length; i++) {
+        const round = rounds[i];
+        const games = [];
+        const roundGames = round.games == null ? round.maps : round.games;
+
+        if (!roundGames) continue;
+
+        for (let j = 0; j < roundGames.length; j++) {
+            const game = roundGames[j];
+            const stageName = game.stage == null ? game.map : game.stage;
+
+            games.push({
+                stage: normalizeStageName(stageName),
+                mode: normalizeModeName(game.mode),
+            });
+        }
+
+        result[generateId()] = {
+            meta: {
+                name: round.name,
+            },
+            games: games,
+        };
+    }
+
+    return result;
 }
 
 function normalizeStageName(name) {
@@ -129,3 +135,8 @@ function normalizeModeName(name) {
         return splatModes[lowerCaseSplatModes.indexOf(name)];
     }
 }
+
+module.exports = {
+    listen,
+    handleRoundData,
+};
