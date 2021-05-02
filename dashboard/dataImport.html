@@ -17,15 +17,37 @@
             li {
                 word-break: break-all;
             }
+
+            input[type="file"] {
+                margin: 5px 0;
+            }
+
+            input[type="text"] {
+                margin-bottom: 4px;
+            }
         </style>
     </head>
     <body>
         <div class="space">
             <div class="title">Team Data</div>
 
-            <label for="tournament-id-input" id="tournament-id-input-title">
-                Tournament ID</label>
-            <input type="text" id="tournament-id-input" />
+            <div id="web-tournament-import-wrapper">
+                <label for="tournament-id-input" id="tournament-id-input-title">
+                    Tournament ID</label>
+                <input type="text" id="tournament-id-input" />
+            </div>
+
+            <div id="local-team-input-wrapper" style="overflow: hidden; display: none">
+                <form id="local-team-form">
+                    <label for="team-input-file-input">Choose file</label>
+                    <input id="team-input-file-input" type="file" />
+                </form>
+            </div>
+
+            <div class="layout horizontal center-content" id="team-web-import-toggle-container" style="display: none">
+                <input type="checkbox" id="team-web-import-toggle">
+                <label for="team-web-import-toggle" class="white-label">Import from URL</label>
+            </div>
 
             <label for="method-selector">Import from</label>
             <select id="method-selector">
@@ -47,8 +69,23 @@
         <div class="space">
             <div class="title">Rounds</div>
 
-            <label for="round-input-url-input">Data URL</label>
-            <input id="round-input-url-input" type="text" />
+            <div id="web-file-input-wrapper" style="display: none">
+                <label for="round-input-url-input">Data URL</label>
+                <input id="round-input-url-input" type="text" />
+            </div>
+
+            <div id="local-round-input-wrapper" style="overflow: hidden">
+                <form id="local-round-form">
+                    <label for="round-input-file-input">Choose file</label>
+                    <input id="round-input-file-input" type="file" />
+                </form>
+            </div>
+
+            <div class="layout horizontal center-content">
+                <input type="checkbox" id="round-web-import-toggle">
+                <label for="round-web-import-toggle" class="white-label">Import from URL</label>
+            </div>
+
             <button id="round-import-submit" class="max-width">submit</button>
             <div id="round-data-submit-status" class="status-display">STATUS</div>
         </div>

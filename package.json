@@ -90,6 +90,7 @@
     "dependencies": {
         "axios": "^0.21.1",
         "clone": "^2.1.2",
+        "express-fileupload": "^1.2.1",
         "lastfm": "^0.9.3"
     },
     "devDependencies": {
