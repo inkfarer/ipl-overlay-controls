@@ -1,546 +1,465 @@
 [
-   {
-      "name":"Kalopsia",
-      "winDate":"Febuary 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5cf2b791f30aad03333f6da4%2F1580059400042.jpg?alt=media&token=8d620f25-f498-456d-9213-6439488779e1",
-      "players":[
-         {
-            "name":"Kaloseii",
-            "weapons":[
-               "Nautilus 79"
-            ]
-         },
-         {
-            "name":"Jonny",
-            "weapons":[
-               "Splattershot Jr.",
-               "N-ZAP '85"
-            ]
-         },
-         {
-            "name":"Isabel",
-            "weapons":[
-               "Dark Tetra Dualies"
-            ]
-         },
-         {
-            "name":"Vincent",
-            "weapons":[
-               "Splattershot Jr.",
-               "Foil Squeezer"
-            ]
-         },
-         {
-            "name":"Lidia",
-            "weapons":[
-               "Splat Charger",
-               "Bamboozler 14 Mk I"
-            ]
-         },
-         {
-            "name":"Flame",
-            "weapons":[
-               "Kensa Splattershot Pro",
-               "Soda Slosher"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"White Wolves",
-      "winDate":"April 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ea2f01013fcf275a46abda5%2F1587737401451.png?alt=media&token=61063809-3465-49f1-a8bc-107af8a5bca3",
-      "players":[
-         {
-            "name":"Le Festing",
-            "weapons":[
-               "Splat Charger"
-            ]
-         },
-         {
-            "name":"Wolf",
-            "weapons":[
-               "Kensa Splattershot Pro"
-            ]
-         },
-         {
-            "name":"Shooper",
-            "weapons":[
-               "Tentatek Splattershot"
-            ]
-         },
-         {
-            "name":"Tixi",
-            "weapons":[
-               "Octo Shot Replica"
-            ]
-         },
-         {
-            "name":"Mikey",
-            "weapons":[
-               "Splattershot Jr."
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Priority",
-      "winDate":"August 2019",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c993db21b2a9c0327ffe859%2F1602105288288.jpg?alt=media&token=31b902c9-59e0-4dcd-a100-87e8674b82d0",
-      "players":[
-         {
-            "name":"Jayy",
-            "weapons":[
-               "L-3 Nozzlenose D",
-               "Custom Dualie Squelchers",
-               "Splash-o-matic"
-            ]
-         },
-         {
-            "name":"Stalk",
-            "weapons":[
-               "Tentatek Splattershot",
-               "Kensa Splattershot",
-               "Kensa .52 Gal",
-               "L-3 Nozzlenose D"
-            ]
-         },
-         {
-            "name":"Axis",
-            "weapons":[
-               "H-3 Nozzlenose D",
-               "N-ZAP '85",
-               "Splattershot Jr."
-            ]
-         },
-         {
-            "name":"Domo",
-            "weapons":[
-               "Custom Jet Squelcher",
-               "Kensa Sloshing Machine",
-               "Nautilus 79"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Splat or Swim",
-      "winDate":"October 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5e320a51a134095e8e126578%2F1594672371720.jpg?alt=media&token=5adb54cb-0eb8-40a6-ae8f-57596fc2a50e",
-      "players":[
-         {
-            "name":"Kippu",
-            "weapons":[
-               "Hydra Splatling",
-               "Ballpoint Splatling",
-               "Heavy Splatling Deco"
-            ]
-         },
-         {
-            "name":"Mordo",
-            "weapons":[
-               "Tri-Slosher Nouveau",
-               "N-ZAP '85",
-               "Kensa .52 Gal",
-               ".96 Gal Deco"
-            ]
-         },
-         {
-            "name":"Kanan",
-            "weapons":[
-               "Kensa Sloshing Machine",
-               "Kensa .52 Gal",
-               "Flingza Roller"
-            ]
-         },
-         {
-            "name":"Omega",
-            "weapons":[
-               "Carbon Roller Deco",
-               "Kensa L-3 Nozzlenose",
-               "Nautilus 79"
-            ]
-         },
-         {
-            "name":"Keyper",
-            "weapons":[
-               "Splattershot Pro",
-               "Carbon Roller Deco",
-               "N-ZAP '85"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Xanadu",
-      "winDate":"September 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5cc8eb56e77efa035cb07069%2F1595653839184.jpg?alt=media&token=316324de-417d-4cfc-b522-3c2644813a32",
-      "players":[
-         {
-            "name":"Frosch",
-            "weapons":[
-               "Custom Dualie Squelchers",
-               "Tentatek Splattershot",
-               "Kensa Splattershot"
-            ]
-         },
-         {
-            "name":"Lekesky",
-            "weapons":[
-               "Dark Tetra Dualies",
-               "Nautilus 79",
-               "Kensa Sloshing Machine"
-            ]
-         },
-         {
-            "name":"Wiltzi",
-            "weapons":[
-               "Flingza Roller",
-               "Heavy Splatling",
-               "Custom Dualie Squelchers"
-            ]
-         },
-         {
-            "name":"Leon",
-            "weapons":[
-               "Bamboozler 14 Mk I",
-               "Explosher",
-               "Custom Dualie Squelchers",
-               "Kensa Luna Blaster",
-               "Classic Squiffer"
-            ]
-         },
-         {
-            "name":"Hayden",
-            "weapons":[
-               "Kensa Splattershot",
-               "Neo Splash-o-matic",
-               "Splat Brella",
-               "Splat Dualies"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"West Broadway Grillers",
-      "winDate":"July 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ab9b479973da2038ffe036a%2F1548994041448.png?alt=media&token=7a9a251b-4074-4c70-911a-5d441f1a6dc2",
-      "players":[
-         {
-            "name":"Devvy",
-            "weapons":[
-               "Heavy Splatling",
-               "Hydra Splatling"
-            ]
-         },
-         {
-            "name":"Gem",
-            "weapons":[
-               "Tentatek Splattershot",
-               "Kensa Splattershot",
-               "N-ZAP '85",
-               "Kensa Splattershot Pro"
-            ]
-         },
-         {
-            "name":"Cookie",
-            "weapons":[
-
-            ],
-            "quote":"I love all weapons equally"
-         },
-         {
-            "name":"Sam",
-            "weapons":[
-               "E-liter 4K"
-            ]
-         },
-         {
-            "name":"Toxic",
-            "weapons":[
-               "Slosher"
-            ]
-         },
-         {
-            "name":"Ninga",
-            "weapons":[
-               "Neo Sploosh-o-matic",
-               "Custom Dualie Squelchers",
-               "Forge Splattershot Pro",
-               "Kensa Splattershot Jr."
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Destiny Troops",
-      "winDate":"March 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5b53737a6b309903c2b5b5d9%2F1580494062365.png?alt=media&token=2c55923f-0a91-47fe-a08a-464a6b74f9b6",
-      "players":[
-         {
-            "name":"Popgun",
-            "weapons":[
-
-            ],
-            "position":"flex"
-         },
-         {
-            "name":"Turkey",
-            "weapons":[
-
-            ],
-            "position":"anchor"
-         },
-         {
-            "name":"Tof-U",
-            "weapons":[
-
-            ],
-            "position":"frontline"
-         },
-         {
-            "name":"Baki",
-            "weapons":[
-
-            ],
-            "position":"flex"
-         },
-         {
-            "name":"Clang",
-            "weapons":[
-
-            ],
-            "position":"support"
-         },
-         {
-            "name":"Zonink",
-            "weapons":[
-
-            ],
-            "position":"support"
-         }
-      ]
-   },
-   {
-      "name":"Assault and Pepper",
-      "winDate":"July 2019",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c54a65f073bec0319d09191%2F1604612056342.png?alt=media&token=c43af417-e6ab-4a50-9940-00cb73e3f3af",
-      "players":[
-         {
-            "name":"Nee",
-            "weapons":[
-               "Inkbrush",
-               "Inkbrush Nouveau",
-               "Permanent Inkbrush"
-            ]
-         },
-         {
-            "name":"Dan",
-            "weapons":[
-               "Forge Splattershot Pro",
-               "Custom Dualie Squelchers",
-               "Dark Tetra Dualies",
-               "Foil Flingza Roller"
-            ]
-         },
-         {
-            "name":"Jeff",
-            "weapons":[
-               "Kensa Sloshing Machine",
-               "Soda Slosher",
-               "Bamboozler 14 Mk I"
-            ]
-         },
-         {
-            "name":"Soren",
-            "weapons":[
-               "Tentatek Splattershot",
-               "Kensa Splattershot",
-               "L-3 Nozzlenose",
-               "Kensa Splattershot Pro"
-            ]
-         },
-         {
-            "name":"Clang",
-            "weapons":[
-
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Luau",
-      "winDate":"August 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ee4e5659ae8733fea096407%2F1595357290800.jpg?alt=media&token=31597abf-5d79-439e-90d2-887b6dc6fd99",
-      "players":[
-         {
-            "name":"coffee",
-            "weapons":[
-               "N-ZAP '85",
-               "Kensa Rapid Blaster",
-               "Rapid Blaster Pro",
-               "Splattershot Jr."
-            ]
-         },
-         {
-            "name":"SirSkit",
-            "weapons":[
-               "Tentatek Splattershot",
-               "Splash-o-matic",
-               "Custom Blaster",
-               "Carbon Roller"
-            ]
-         },
-         {
-            "name":"Katya",
-            "weapons":[
-               "Hero Roller Replica",
-               "Kensa Dynamo Roller"
-            ]
-         },
-         {
-            "name":"Kami",
-            "weapons":[
-               "Dark Tetra Dualies"
-            ]
-         },
-         {
-            "name":"Drift",
-            "weapons":[
-               "Kensa Splattershot Pro",
-               "Forge Splattershot Pro",
-               "N-ZAP '85",
-               "H-3 Nozzlenose D"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Blue-Ringed Kraken",
-      "winDate":"November 2020",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5df26b0d7ec1812b7d9b8913%2F1605268079239.jpg?alt=media&token=a4a67e90-c1a4-42b9-a707-5eff84d21bf0",
-      "players":[
-         {
-            "name":"NoodleS",
-            "weapons":[
-               "Dark Tetra Dualies",
-               "Enperry Splat Dualies"
-            ]
-         },
-         {
-            "name":"Ben",
-            "weapons":[
-               "Tentatek Splattershot",
-               "Kensa Splattershot"
-            ]
-         },
-         {
-            "name":"Gerry",
-            "weapons":[
-               "N-ZAP '85",
-               "H-3 Nozzlenose",
-               "Kensa Rapid Blaster"
-            ]
-         },
-         {
-            "name":"Thorboy",
-            "weapons":[
-               "Heavy Splatling Remix",
-               "Heavy Splatling",
-               "Mini Splatling"
-            ]
-         },
-         {
-            "name":"Milo",
-            "weapons":[
-               "Splattershot Jr.",
-               "N-ZAP '85"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Seishin Chitai",
-      "winDate":"October 2018",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F58133ed0b98a0b3f03e24a68%2F1586288872530.jpg?alt=media&token=dd7bbe90-7c39-4146-a82e-e6e1b254c9a4",
-      "players":[
-         {
-            "name":"swisherrrr",
-            "weapons":[
-               "Tenta Brella",
-               "Tenta Sorella Brella",
-               "Tenta Camo Brella"
-            ]
-         },
-         {
-            "name":"Mar$el",
-            "weapons":[
-               "Firefin Splat Charger",
-               "Firefin Splatterscope",
-               "E-liter 4K"
-            ]
-         },
-         {
-            "name":"Canard",
-            "weapons":[
-               "Soda Slosher",
-               "Tri-Slosher",
-               "Kensa Sloshing Machine"
-            ]
-         },
-         {
-            "name":"SPECTATOR",
-            "weapons":[
-               "Kensa Rapid Blaster",
-               "Rapid Blaster",
-               "Rapid Blaster Deco",
-               "Rapid Blaster Pro"
-            ]
-         }
-      ]
-   },
-   {
-      "name":"Stargaze",
-      "logoUrl":"https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c3e2a9777fbdd03c4c78490%2F1584658580735.jpg?alt=media&token=3e499747-77dd-4577-b683-b5195a577d78",
-      "players":[
-         {
-            "name":"Squib",
-            "weapons":[
-              "N-ZAP '85",
-              "Kensa .52 Gal",
-              "Splattershot Jr."
-            ]
-         },
-         {
-            "name":"*^RDB",
-            "weapons":[
-              "Tenta Brella",
-              "Splattershot Pro"
-            ]
-         },
-         {
-            "name":"Skidoodle",
-            "weapons":[
-              "Heavy Splatling",
-              "Hydra Splatling",
-              "Explosher"
-            ]
-         },
-         {
-            "name":"JollyBird",
-            "weapons":[
-              "Tentatek Splattershot",
-              "Kensa Splattershot"
-            ]
-         },
-         {
-            "name":"Ÿéęł",
-            "weapons":[
-              "Glooga Dualies",
-              "Kensa Glooga Dualies",
-              "Kensa Splattershot Pro"
-            ]
-         }
-      ]
-   }
+    {
+        "name": "Kalopsia",
+        "winDate": "Febuary 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5cf2b791f30aad03333f6da4%2F1580059400042.jpg?alt=media&token=8d620f25-f498-456d-9213-6439488779e1",
+        "players": [
+            {
+                "name": "Kaloseii",
+                "weapons": ["Nautilus 79"]
+            },
+            {
+                "name": "Jonny",
+                "weapons": ["Splattershot Jr.", "N-ZAP '85"]
+            },
+            {
+                "name": "Isabel",
+                "weapons": ["Dark Tetra Dualies"]
+            },
+            {
+                "name": "Vincent",
+                "weapons": ["Splattershot Jr.", "Foil Squeezer"]
+            },
+            {
+                "name": "Lidia",
+                "weapons": ["Splat Charger", "Bamboozler 14 Mk I"]
+            },
+            {
+                "name": "Flame",
+                "weapons": ["Kensa Splattershot Pro", "Soda Slosher"]
+            }
+        ]
+    },
+    {
+        "name": "White Wolves",
+        "winDate": "April 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ea2f01013fcf275a46abda5%2F1587737401451.png?alt=media&token=61063809-3465-49f1-a8bc-107af8a5bca3",
+        "players": [
+            {
+                "name": "Le Festing",
+                "weapons": ["Splat Charger"]
+            },
+            {
+                "name": "Wolf",
+                "weapons": ["Kensa Splattershot Pro"]
+            },
+            {
+                "name": "Shooper",
+                "weapons": ["Tentatek Splattershot"]
+            },
+            {
+                "name": "Tixi",
+                "weapons": ["Octo Shot Replica"]
+            },
+            {
+                "name": "Mikey",
+                "weapons": ["Splattershot Jr."]
+            }
+        ]
+    },
+    {
+        "name": "Priority",
+        "winDate": "August 2019",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c993db21b2a9c0327ffe859%2F1602105288288.jpg?alt=media&token=31b902c9-59e0-4dcd-a100-87e8674b82d0",
+        "players": [
+            {
+                "name": "Jayy",
+                "weapons": [
+                    "L-3 Nozzlenose D",
+                    "Custom Dualie Squelchers",
+                    "Splash-o-matic"
+                ]
+            },
+            {
+                "name": "Stalk",
+                "weapons": [
+                    "Tentatek Splattershot",
+                    "Kensa Splattershot",
+                    "Kensa .52 Gal",
+                    "L-3 Nozzlenose D"
+                ]
+            },
+            {
+                "name": "Axis",
+                "weapons": ["H-3 Nozzlenose D", "N-ZAP '85", "Splattershot Jr."]
+            },
+            {
+                "name": "Domo",
+                "weapons": [
+                    "Custom Jet Squelcher",
+                    "Kensa Sloshing Machine",
+                    "Nautilus 79"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Splat or Swim",
+        "winDate": "October 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5e320a51a134095e8e126578%2F1594672371720.jpg?alt=media&token=5adb54cb-0eb8-40a6-ae8f-57596fc2a50e",
+        "players": [
+            {
+                "name": "Kippu",
+                "weapons": [
+                    "Hydra Splatling",
+                    "Ballpoint Splatling",
+                    "Heavy Splatling Deco"
+                ]
+            },
+            {
+                "name": "Mordo",
+                "weapons": [
+                    "Tri-Slosher Nouveau",
+                    "N-ZAP '85",
+                    "Kensa .52 Gal",
+                    ".96 Gal Deco"
+                ]
+            },
+            {
+                "name": "Kanan",
+                "weapons": [
+                    "Kensa Sloshing Machine",
+                    "Kensa .52 Gal",
+                    "Flingza Roller"
+                ]
+            },
+            {
+                "name": "Omega",
+                "weapons": [
+                    "Carbon Roller Deco",
+                    "Kensa L-3 Nozzlenose",
+                    "Nautilus 79"
+                ]
+            },
+            {
+                "name": "Keyper",
+                "weapons": [
+                    "Splattershot Pro",
+                    "Carbon Roller Deco",
+                    "N-ZAP '85"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Xanadu",
+        "winDate": "September 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5cc8eb56e77efa035cb07069%2F1595653839184.jpg?alt=media&token=316324de-417d-4cfc-b522-3c2644813a32",
+        "players": [
+            {
+                "name": "Frosch",
+                "weapons": [
+                    "Custom Dualie Squelchers",
+                    "Tentatek Splattershot",
+                    "Kensa Splattershot"
+                ]
+            },
+            {
+                "name": "Lekesky",
+                "weapons": [
+                    "Dark Tetra Dualies",
+                    "Nautilus 79",
+                    "Kensa Sloshing Machine"
+                ]
+            },
+            {
+                "name": "Wiltzi",
+                "weapons": [
+                    "Flingza Roller",
+                    "Heavy Splatling",
+                    "Custom Dualie Squelchers"
+                ]
+            },
+            {
+                "name": "Leon",
+                "weapons": [
+                    "Bamboozler 14 Mk I",
+                    "Explosher",
+                    "Custom Dualie Squelchers",
+                    "Kensa Luna Blaster",
+                    "Classic Squiffer"
+                ]
+            },
+            {
+                "name": "Hayden",
+                "weapons": [
+                    "Kensa Splattershot",
+                    "Neo Splash-o-matic",
+                    "Splat Brella",
+                    "Splat Dualies"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "West Broadway Grillers",
+        "winDate": "July 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ab9b479973da2038ffe036a%2F1548994041448.png?alt=media&token=7a9a251b-4074-4c70-911a-5d441f1a6dc2",
+        "players": [
+            {
+                "name": "Devvy",
+                "weapons": ["Heavy Splatling", "Hydra Splatling"]
+            },
+            {
+                "name": "Gem",
+                "weapons": [
+                    "Tentatek Splattershot",
+                    "Kensa Splattershot",
+                    "N-ZAP '85",
+                    "Kensa Splattershot Pro"
+                ]
+            },
+            {
+                "name": "Cookie",
+                "weapons": [],
+                "quote": "I love all weapons equally"
+            },
+            {
+                "name": "Sam",
+                "weapons": ["E-liter 4K"]
+            },
+            {
+                "name": "Toxic",
+                "weapons": ["Slosher"]
+            },
+            {
+                "name": "Ninga",
+                "weapons": [
+                    "Neo Sploosh-o-matic",
+                    "Custom Dualie Squelchers",
+                    "Forge Splattershot Pro",
+                    "Kensa Splattershot Jr."
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Destiny Troops",
+        "winDate": "March 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5b53737a6b309903c2b5b5d9%2F1580494062365.png?alt=media&token=2c55923f-0a91-47fe-a08a-464a6b74f9b6",
+        "players": [
+            {
+                "name": "Popgun",
+                "weapons": [],
+                "position": "flex"
+            },
+            {
+                "name": "Turkey",
+                "weapons": [],
+                "position": "anchor"
+            },
+            {
+                "name": "Tof-U",
+                "weapons": [],
+                "position": "frontline"
+            },
+            {
+                "name": "Baki",
+                "weapons": [],
+                "position": "flex"
+            },
+            {
+                "name": "Clang",
+                "weapons": [],
+                "position": "support"
+            },
+            {
+                "name": "Zonink",
+                "weapons": [],
+                "position": "support"
+            }
+        ]
+    },
+    {
+        "name": "Assault and Pepper",
+        "winDate": "July 2019",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c54a65f073bec0319d09191%2F1604612056342.png?alt=media&token=c43af417-e6ab-4a50-9940-00cb73e3f3af",
+        "players": [
+            {
+                "name": "Nee",
+                "weapons": [
+                    "Inkbrush",
+                    "Inkbrush Nouveau",
+                    "Permanent Inkbrush"
+                ]
+            },
+            {
+                "name": "Dan",
+                "weapons": [
+                    "Forge Splattershot Pro",
+                    "Custom Dualie Squelchers",
+                    "Dark Tetra Dualies",
+                    "Foil Flingza Roller"
+                ]
+            },
+            {
+                "name": "Jeff",
+                "weapons": [
+                    "Kensa Sloshing Machine",
+                    "Soda Slosher",
+                    "Bamboozler 14 Mk I"
+                ]
+            },
+            {
+                "name": "Soren",
+                "weapons": [
+                    "Tentatek Splattershot",
+                    "Kensa Splattershot",
+                    "L-3 Nozzlenose",
+                    "Kensa Splattershot Pro"
+                ]
+            },
+            {
+                "name": "Clang",
+                "weapons": []
+            }
+        ]
+    },
+    {
+        "name": "Luau",
+        "winDate": "August 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5ee4e5659ae8733fea096407%2F1595357290800.jpg?alt=media&token=31597abf-5d79-439e-90d2-887b6dc6fd99",
+        "players": [
+            {
+                "name": "coffee",
+                "weapons": [
+                    "N-ZAP '85",
+                    "Kensa Rapid Blaster",
+                    "Rapid Blaster Pro",
+                    "Splattershot Jr."
+                ]
+            },
+            {
+                "name": "SirSkit",
+                "weapons": [
+                    "Tentatek Splattershot",
+                    "Splash-o-matic",
+                    "Custom Blaster",
+                    "Carbon Roller"
+                ]
+            },
+            {
+                "name": "Katya",
+                "weapons": ["Hero Roller Replica", "Kensa Dynamo Roller"]
+            },
+            {
+                "name": "Kami",
+                "weapons": ["Dark Tetra Dualies"]
+            },
+            {
+                "name": "Drift",
+                "weapons": [
+                    "Kensa Splattershot Pro",
+                    "Forge Splattershot Pro",
+                    "N-ZAP '85",
+                    "H-3 Nozzlenose D"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Blue-Ringed Kraken",
+        "winDate": "November 2020",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5df26b0d7ec1812b7d9b8913%2F1605268079239.jpg?alt=media&token=a4a67e90-c1a4-42b9-a707-5eff84d21bf0",
+        "players": [
+            {
+                "name": "NoodleS",
+                "weapons": ["Dark Tetra Dualies", "Enperry Splat Dualies"]
+            },
+            {
+                "name": "Ben",
+                "weapons": ["Tentatek Splattershot", "Kensa Splattershot"]
+            },
+            {
+                "name": "Gerry",
+                "weapons": [
+                    "N-ZAP '85",
+                    "H-3 Nozzlenose",
+                    "Kensa Rapid Blaster"
+                ]
+            },
+            {
+                "name": "Thorboy",
+                "weapons": [
+                    "Heavy Splatling Remix",
+                    "Heavy Splatling",
+                    "Mini Splatling"
+                ]
+            },
+            {
+                "name": "Milo",
+                "weapons": ["Splattershot Jr.", "N-ZAP '85"]
+            }
+        ]
+    },
+    {
+        "name": "Seishin Chitai",
+        "winDate": "October 2018",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F58133ed0b98a0b3f03e24a68%2F1586288872530.jpg?alt=media&token=dd7bbe90-7c39-4146-a82e-e6e1b254c9a4",
+        "players": [
+            {
+                "name": "swisherrrr",
+                "weapons": [
+                    "Tenta Brella",
+                    "Tenta Sorella Brella",
+                    "Tenta Camo Brella"
+                ]
+            },
+            {
+                "name": "Mar$el",
+                "weapons": [
+                    "Firefin Splat Charger",
+                    "Firefin Splatterscope",
+                    "E-liter 4K"
+                ]
+            },
+            {
+                "name": "Canard",
+                "weapons": [
+                    "Soda Slosher",
+                    "Tri-Slosher",
+                    "Kensa Sloshing Machine"
+                ]
+            },
+            {
+                "name": "SPECTATOR",
+                "weapons": [
+                    "Kensa Rapid Blaster",
+                    "Rapid Blaster",
+                    "Rapid Blaster Deco",
+                    "Rapid Blaster Pro"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Stargaze",
+        "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F5c3e2a9777fbdd03c4c78490%2F1584658580735.jpg?alt=media&token=3e499747-77dd-4577-b683-b5195a577d78",
+        "players": [
+            {
+                "name": "Squib",
+                "weapons": ["N-ZAP '85", "Kensa .52 Gal", "Splattershot Jr."]
+            },
+            {
+                "name": "*^RDB",
+                "weapons": ["Tenta Brella", "Splattershot Pro"]
+            },
+            {
+                "name": "Skidoodle",
+                "weapons": ["Heavy Splatling", "Hydra Splatling", "Explosher"]
+            },
+            {
+                "name": "JollyBird",
+                "weapons": ["Tentatek Splattershot", "Kensa Splattershot"]
+            },
+            {
+                "name": "Ÿéęł",
+                "weapons": [
+                    "Glooga Dualies",
+                    "Kensa Glooga Dualies",
+                    "Kensa Splattershot Pro"
+                ]
+            }
+        ]
+    }
 ]
