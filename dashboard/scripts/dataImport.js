@@ -1,24 +1,29 @@
 const tournamentData = nodecg.Replicant('tournamentData');
 
 const teamWebImportToggle = document.getElementById('team-web-import-toggle');
+const methodSelector = document.getElementById('method-selector');
 
 document.getElementById('submit-import').onclick = () => {
     setImportStatus(IMPORT_STATUS_LOADING, teamDataStatusElem);
-    nodecg.sendMessage(
-        'getTournamentData',
-        {
-            method: document.getElementById('method-selector').value,
-            id: document.getElementById('tournament-id-input').value,
-        },
-        (e, result) => {
-            if (e) {
-                console.error(e);
-                setImportStatus(IMPORT_STATUS_FAILURE, teamDataStatusElem);
-                return;
+    if (!teamWebImportToggle.checked && methodSelector.value === 'raw') {
+        sendLocalFile('teams');
+    } else {
+        nodecg.sendMessage(
+            'getTournamentData',
+            {
+                method: methodSelector.value,
+                id: document.getElementById('tournament-id-input').value,
+            },
+            (e, result) => {
+                if (e) {
+                    console.error(e);
+                    setImportStatus(IMPORT_STATUS_FAILURE, teamDataStatusElem);
+                    return;
+                }
+                setImportStatus(IMPORT_STATUS_SUCCESS, teamDataStatusElem);
             }
-            setImportStatus(IMPORT_STATUS_SUCCESS, teamDataStatusElem);
-        }
-    );
+        );
+    }
 };
 
 const methodData = {
@@ -33,7 +38,7 @@ const methodData = {
     },
 };
 
-document.getElementById('method-selector').addEventListener('change', (e) => {
+methodSelector.addEventListener('change', (e) => {
     const method = e.target.value;
 
     document.getElementById('tournament-id-input-title').innerText =

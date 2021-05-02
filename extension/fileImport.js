@@ -13,7 +13,7 @@ module.exports = function (nodecg) {
                 !req.files ||
                 !req.files.file ||
                 !req.body.jsonType ||
-                !req.files.file.mimetype !== 'application/json'
+                req.files.file.mimetype !== 'application/json'
             ) {
                 return res.sendStatus(400);
             }
