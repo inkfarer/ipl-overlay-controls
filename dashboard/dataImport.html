@@ -8,10 +8,9 @@
                 background-color: #181e29;
                 display: block;
                 text-align: center;
-                margin: 2px;
-                margin-top: 5px;
+                margin: 5px 2px 2px;
                 border-radius: 2px;
-                padding: 5px 0px;
+                padding: 5px 0;
                 overflow-wrap: anywhere;
             }
 
@@ -22,12 +21,13 @@
     </head>
     <body>
         <div class="space">
-            <div class="input-label" id="tournament-id-input-title">
-                Tournament ID
-            </div>
+            <div class="title">Team Data</div>
+
+            <label for="tournament-id-input" id="tournament-id-input-title">
+                Tournament ID</label>
             <input type="text" id="tournament-id-input" />
 
-            <div class="input-label">Import from</div>
+            <label for="method-selector">Import from</label>
             <select id="method-selector">
                 <option value="battlefy" selected>Battlefy</option>
                 <option value="smashgg">Smash.gg</option>
@@ -36,13 +36,23 @@
 
             <button class="max-width" id="submit-import">submit</button>
 
-            <div id="submit-status" class="status-display">STATUS</div>
+            <div id="team-data-submit-status" class="status-display">STATUS</div>
             <div class="status-display">
-                Saved data identifier<br /><span id="tournament-id-display"
-                    >none</span
-                >
+                Saved data identifier
+                <br>
+                <span id="tournament-id-display">none</span>
             </div>
         </div>
-        <script src='scripts/tourneyImport.js'></script>
+
+        <div class="space">
+            <div class="title">Rounds</div>
+
+            <label for="round-input-url-input">Data URL</label>
+            <input id="round-input-url-input" type="text" />
+            <button id="round-import-submit" class="max-width">submit</button>
+            <div id="round-data-submit-status" class="status-display">STATUS</div>
+        </div>
+
+        <script src='scripts/dataImport.js'></script>
     </body>
 </html>

@@ -245,37 +245,3 @@ function roundObjectsMatch(val1, val2) {
 
     return true;
 }
-
-// importing rounds
-
-const IMPORT_STATUS_SUCCESS = 0;
-const IMPORT_STATUS_LOADING = 1;
-const IMPORT_STATUS_FAILURE = 2;
-
-document.getElementById('round-import-submit').onclick = () => {
-    setImportStatus(IMPORT_STATUS_LOADING);
-    const listsURL = document.getElementById('round-input-url-input').value;
-
-    nodecg.sendMessage('getRounds', { url: listsURL }, (e) => {
-        if (e) {
-            console.error(e);
-            setImportStatus(IMPORT_STATUS_FAILURE);
-            return;
-        }
-        setImportStatus(IMPORT_STATUS_SUCCESS);
-    });
-};
-
-function setImportStatus(status) {
-    const statusElem = document.querySelector('.import-status');
-    switch (status) {
-        case IMPORT_STATUS_SUCCESS:
-            statusElem.style.backgroundColor = 'var(--green)';
-            return;
-        case IMPORT_STATUS_LOADING:
-            statusElem.style.backgroundColor = 'var(--yellow)';
-            return;
-        case IMPORT_STATUS_FAILURE:
-            statusElem.style.backgroundColor = 'var(--red)';
-    }
-}

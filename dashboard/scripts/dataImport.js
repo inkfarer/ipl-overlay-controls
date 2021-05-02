@@ -1,7 +1,7 @@
 const tournamentData = nodecg.Replicant('tournamentData');
 
 document.getElementById('submit-import').onclick = () => {
-    setImportStatus(IMPORT_STATUS_LOADING);
+    setImportStatus(IMPORT_STATUS_LOADING, teamDataStatusElem);
     nodecg.sendMessage(
         'getTournamentData',
         {
@@ -11,10 +11,10 @@ document.getElementById('submit-import').onclick = () => {
         (e, result) => {
             if (e) {
                 console.error(e);
-                setImportStatus(IMPORT_STATUS_FAILURE);
+                setImportStatus(IMPORT_STATUS_FAILURE, teamDataStatusElem);
                 return;
             }
-            setImportStatus(IMPORT_STATUS_SUCCESS);
+            setImportStatus(IMPORT_STATUS_SUCCESS, teamDataStatusElem);
         }
     );
 };
@@ -41,12 +41,29 @@ tournamentData.on('change', (newValue) => {
         newValue.meta.id;
 });
 
+document.getElementById('round-import-submit').onclick = () => {
+    setImportStatus(IMPORT_STATUS_LOADING, roundDataStatusElem);
+    const listsURL = document.getElementById('round-input-url-input').value;
+
+    nodecg.sendMessage('getRounds', { url: listsURL }, (e) => {
+        if (e) {
+            console.error(e);
+            setImportStatus(IMPORT_STATUS_FAILURE, roundDataStatusElem);
+            return;
+        }
+        setImportStatus(IMPORT_STATUS_SUCCESS, roundDataStatusElem);
+    });
+};
+
 const IMPORT_STATUS_SUCCESS = 0;
 const IMPORT_STATUS_LOADING = 1;
 const IMPORT_STATUS_FAILURE = 2;
 
-function setImportStatus(status) {
-    const statusElem = document.getElementById('submit-status');
+const teamDataStatusElem = document.getElementById('team-data-submit-status');
+
+const roundDataStatusElem = document.getElementById('round-data-submit-status');
+
+function setImportStatus(status, elem) {
     var backgroundColor, textColor, text;
     switch (status) {
         case IMPORT_STATUS_SUCCESS:
@@ -65,7 +82,7 @@ function setImportStatus(status) {
             text = 'FAIL';
     }
 
-    statusElem.style.backgroundColor = backgroundColor;
-    statusElem.style.color = textColor;
-    statusElem.innerText = text;
+    elem.style.backgroundColor = backgroundColor;
+    elem.style.color = textColor;
+    elem.innerText = text;
 }

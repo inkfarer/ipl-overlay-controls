@@ -61,9 +61,9 @@
             },
             {
                 "name": "battlefyimport",
-                "title": "Import tournament data",
+                "title": "Import data",
                 "width": 2,
-                "file": "tourneyImport.html",
+                "file": "dataImport.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             },
