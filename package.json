@@ -76,18 +76,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "musicSetup",
-                "title": "Music settings",
+                "name": "Settings",
+                "title": "Settings",
                 "width": 2,
-                "file": "musicSetup.html",
-                "workspace": "ipl setup",
-                "headerColor": "#262F40"
-            },
-            {
-                "name": "Radia API",
-                "title": "API settings",
-                "width": 2,
-                "file": "radiaApi.html",
+                "file": "settings.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             }

@@ -11,20 +11,20 @@ async function listen(nodecg) {
 		typeof nodecg.bundleConfig.radia === 'undefined'
 	) {
 		nodecg.log.error(
-			`"radia" is not defined in cfg/${nodecg.bundleName}.json! ` +
-			'the ability to import data via the Radia Production API ' +
-			'is not possible'
+			`"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia
+			Production API is not possible`
 		);
+		radiaSettings.value.enabled = false;
 		return;  // Exit from extension as keys aren't available to use.
 	} else {
 		APIURL = nodecg.bundleConfig.radia.url;
 		Authentication = nodecg.bundleConfig.radia.Authentication;
+		radiaSettings.value.enabled = true;
 	}
 
 	nodecg.listenFor('getLiveCommentators', async (data, ack) => {
 		getLiveCasters(APIURL, Authentication, radiaSettings.value.guildID)
 			.then((data) => {
-				console.log(data)
 				// Clear all currently stored caster data
 				for (const [key, value] of Object.entries(casters.value)){
 					delete casters.value[key];
@@ -41,6 +41,10 @@ async function listen(nodecg) {
 				ack(null, data);  // We return any casters left in the array after taking our max of 3
 			})
 			.catch((err) => {
+				// If the API gives us a 404, just ignore it :)
+				if(err.response.status === 404){
+					ack(null, null);
+				}
 				ack(err);
 			});
 	});
@@ -69,7 +73,6 @@ async function getLiveCasters(url, Authorisation, guildID) {
 			}
 		}).then((response) => {
 			const data = response.data;
-			console.log(response);
 			if (data.error) {
 				reject(data.error);
 				return;

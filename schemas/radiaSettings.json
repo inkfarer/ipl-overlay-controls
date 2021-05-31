@@ -4,9 +4,13 @@
 	"properties": {
 		"guildID": {
 			"type": "string"
+		},
+		"enabled": {
+			"type": "boolean"
 		}
 	},
 	"default": {
-		"guildID": ""
+		"guildID": "",
+		"enabled": false
 	}
 }
