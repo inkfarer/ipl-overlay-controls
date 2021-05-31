@@ -1,6 +1,8 @@
 const casters = nodecg.Replicant('casters');
+const radiaSettings = nodecg.Replicant('radiaSettings');
 
 const btnCreateCaster = document.getElementById('add-caster-btn');
+const btnLoadFromVC = document.getElementById('load-casters-btn');
 
 casters.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
@@ -52,6 +54,23 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
     navigator.clipboard.writeText(casterText).then(null, () => {
         console.error('Error copying to clipboard.');
     });
+});
+
+radiaSettings.on('change', (newValue, oldValue) => {
+	// If the api isn't enabled we disable the "load from vc" button
+	btnLoadFromVC.disabled = !newValue.enabled;
+});
+
+btnLoadFromVC.addEventListener('click', () => {
+	nodecg.sendMessage(
+		'getLiveCommentators', {},
+		(e, result) => {
+			console.log(result)
+			if (e) {
+				console.error(e);
+			}
+		}
+	);
 });
 
 function casterObjectsMatch(val1, val2) {
