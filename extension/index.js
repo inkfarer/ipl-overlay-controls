@@ -6,4 +6,5 @@ module.exports = function (nodecg) {
     require('./tournamentImporter').listen(nodecg);
     require('./roundImporter').listen(nodecg);
     require('./fileImport')(nodecg);
+	require('./radia').listen(nodecg);
 };
