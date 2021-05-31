@@ -60,8 +60,8 @@ async function getLiveCasters(url, Authorisation, guildID) {
 					twitter: `@${item["twitter"]}`,
 					pronouns: item["pronouns"]
 				})
-			})
-			return casters
+			});
+			resolve(casters);
 		}).catch((err) => {
 			reject(err);
 		});
