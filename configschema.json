@@ -17,6 +17,14 @@
             "properties": {
                 "apiKey": { "type": "string" }
             }
-        }
-    }
+        },
+		"radia": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"url": { "type": "string" },
+				"Authentication": { "type": "string" }
+			}
+		}
+	}
 }
