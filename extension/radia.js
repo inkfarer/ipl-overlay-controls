@@ -15,6 +15,7 @@ async function listen(nodecg) {
 			'the ability to import data via the Radia Production API ' +
 			'is not possible'
 		);
+		return;  // Exit from extension as keys aren't available to use.
 	} else {
 		APIURL = nodecg.bundleConfig.radia.url;
 		Authentication = nodecg.bundleConfig.radia.Authentication;
@@ -24,13 +25,33 @@ async function listen(nodecg) {
 		getLiveCasters(APIURL, Authentication, radiaSettings.value.guildID)
 			.then((data) => {
 				console.log(data)
-				ack(null, data);
+				// Clear all currently stored caster data
+				for (const [key, value] of Object.entries(casters.value)){
+					delete casters.value[key];
+				}
+				// Get how many casters we need to place into the replicant
+				var numberOfCaster = 3;
+				if(data.length < numberOfCaster){
+					numberOfCaster = data.length;
+				}
+				// Place data into replicant
+				for(var i = 0; i < numberOfCaster; i++){
+					casters.value[generateId()] = data.pop();
+				}
+				ack(null, data);  // We return any casters left in the array after taking our max of 3
 			})
 			.catch((err) => {
 				ack(err);
 			});
 	});
+}
 
+/**
+ * Generate a random ID
+ * @returns {string}
+ */
+function generateId() {
+	return '' + Math.random().toString(36).substr(2, 9);
 }
 
 /**
