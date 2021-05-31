@@ -58,7 +58,7 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
 
 radiaSettings.on('change', (newValue, oldValue) => {
 	// If the api isn't enabled we disable the "load from vc" button
-	btnLoadFromVC.disabled = !newValue.enabled;
+	btnLoadFromVC.disabled = !(!newValue.enabled || !newValue.guildID);
 });
 
 btnLoadFromVC.addEventListener('click', () => {
