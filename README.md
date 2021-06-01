@@ -9,15 +9,15 @@ ipl-overlay-controls for your own graphics.
 
 1. Install [Node.js](https://nodejs.org/en/) - Using the LTS version (14.x as of writing) is recommended.
 
-1. Install [Git](https://git-scm.com/)
+2. Install [Git](https://git-scm.com/)
 
-1. Install [nodecg-cli](https://github.com/nodecg/nodecg-cli): `npm i -g nodecg-cli`
+3. Install [nodecg-cli](https://github.com/nodecg/nodecg-cli): `npm i -g nodecg-cli`
 
-1. Create a directory for NodeCG: `mkdir nodecg && cd nodecg`
+4. Create a directory for NodeCG: `mkdir nodecg && cd nodecg`
 
-1. Install NodeCG: `nodecg setup`
+5. Install NodeCG: `nodecg setup`
 
-1. Install ipl-overlay-controls: `nodecg install inkfarer/ipl-overlay-controls`.
+6. Install ipl-overlay-controls: `nodecg install inkfarer/ipl-overlay-controls`.
 
   * To specify a version, append `#<tag>` after the repository name.
 
@@ -26,7 +26,7 @@ ipl-overlay-controls for your own graphics.
     Find a list of the repository's releases [here](https://github.com/inkfarer/ipl-overlay-controls/releases). You can
     see the tag name next to the commit hash, located on the left hand side of the page on desktop.
 
-1. Configure the bundle at `<nodecg>/cfg/ipl-overlay-controls.json`. It should contain the following info:
+7. Configure the bundle at `<nodecg>/cfg/ipl-overlay-controls.json`. It should contain the following info:
 
    ```json
   {
@@ -46,9 +46,9 @@ ipl-overlay-controls for your own graphics.
 
    The `"lastfm"`, `"smashgg"`, `"radia"` sections may be omitted, though functionality will be missing if that is done.
 
-1. In the NodeCG root, start NodeCG: `nodecg start`
+8. In the NodeCG root, start NodeCG: `nodecg start`
 
-1. Access the dashboard at `http://localhost:9090/` in your browser.
+9. Access the dashboard at `http://localhost:9090/` in your browser.
 
 ## Repositories that depend on ipl-overlay-controls
 
