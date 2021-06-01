@@ -19,32 +19,32 @@ ipl-overlay-controls for your own graphics.
 
 6. Install ipl-overlay-controls: `nodecg install inkfarer/ipl-overlay-controls`.
 
-  * To specify a version, append `#<tag>` after the repository name.
+* To specify a version, append `#<tag>` after the repository name.
 
-    Example: `nodecg install inkfarer/ipl-overlay-controls#1.3.2`
+  Example: `nodecg install inkfarer/ipl-overlay-controls#1.3.2`
 
-    Find a list of the repository's releases [here](https://github.com/inkfarer/ipl-overlay-controls/releases). You can
-    see the tag name next to the commit hash, located on the left hand side of the page on desktop.
+  Find a list of the repository's releases [here](https://github.com/inkfarer/ipl-overlay-controls/releases). You can
+  see the tag name next to the commit hash, located on the left hand side of the page on desktop.
 
 7. Configure the bundle at `<nodecg>/cfg/ipl-overlay-controls.json`. It should contain the following info:
 
-   ```json
-  {
-    "lastfm": {
-      "apiKey": "Your last.fm API key",
-      "secret": "Your last.fm API secret"
-    },
-    "smashgg": {
-      "apiKey": "Your smash.gg API key"
-    },
-    "radia": {
-      "url": "URL to Radia Production API ",
-      "Authentication": "Your Authentication Key"
-    }
+```json
+{
+  "lastfm": {
+    "apiKey": "Your last.fm API key",
+    "secret": "Your last.fm API secret"
+  },
+  "smashgg": {
+    "apiKey": "Your smash.gg API key"
+  },
+  "radia": {
+    "url": "URL to Radia Production API ",
+    "Authentication": "Your Authentication Key"
   }
-  ```
+}
+```
 
-  The "lastfm", "smashgg", "radia" sections may be omitted, though functionality will be missing if that is done.
+The "lastfm", "smashgg", "radia" sections may be omitted, though functionality will be missing if that is done.
 
 8. In the NodeCG root, start NodeCG: `nodecg start`
 
