@@ -65,7 +65,7 @@ btnLoadFromVC.addEventListener('click', () => {
 	nodecg.sendMessage(
 		'getLiveCommentators', {},
 		(e, result) => {
-			console.log(result)
+			// console.log(result)
 			if (e) {
 				console.error(e);
 			}

@@ -3,8 +3,8 @@ const axios = require('axios').default;
 async function listen(nodecg) {
 	const casters = nodecg.Replicant('casters');
 	const radiaSettings = nodecg.Replicant('radiaSettings');
-	var APIURL;
-	var Authentication;
+	var apiUrl;
+	var authentication;
 
 	if (
 		!nodecg.bundleConfig ||
@@ -17,28 +17,37 @@ async function listen(nodecg) {
 		radiaSettings.value.enabled = false;
 		return;  // Exit from extension as keys aren't available to use.
 	} else {
-		APIURL = nodecg.bundleConfig.radia.url;
-		Authentication = nodecg.bundleConfig.radia.Authentication;
+		apiUrl = nodecg.bundleConfig.radia.url;
+		authentication = nodecg.bundleConfig.radia.authentication;
 		radiaSettings.value.enabled = true;
 	}
 
 	nodecg.listenFor('getLiveCommentators', async (data, ack) => {
-		getLiveCasters(APIURL, Authentication, radiaSettings.value.guildID)
+		getLiveCasters(apiUrl, authentication, radiaSettings.value.guildID)
 			.then((data) => {
+				var addedCasters = []  // stores casters added to replicant
 				// Clear all currently stored caster data
-				for (const [key, value] of Object.entries(casters.value)){
-					delete casters.value[key];
-				}
+				casters.value = {}
 				// Get how many casters we need to place into the replicant
 				var numberOfCaster = 3;
+				// If the API hands back less than 3 casters that the number of casters to assign
 				if(data.length < numberOfCaster){
 					numberOfCaster = data.length;
 				}
 				// Place data into replicant
 				for(var i = 0; i < numberOfCaster; i++){
-					casters.value[generateId()] = data.pop();
+					const commentator = data.pop();
+					casters.value[commentator['discord_user_id']] = {
+						"twitter": commentator['twitter'],
+						"name": commentator['name'],
+						"pronouns": commentator['pronouns'],
+					};
+					addedCasters.push(commentator)
 				}
-				ack(null, data);  // We return any casters left in the array after taking our max of 3
+				// Returns object where:
+				// add: The casters that where added to the replicant
+				// extra: Casters that where not added to replicant as we already meet the max of 3 casters
+				ack(null, {add: addedCasters, extra: data});
 			})
 			.catch((err) => {
 				// If the API gives us a 404, just ignore it :)
@@ -48,14 +57,6 @@ async function listen(nodecg) {
 				ack(err);
 			});
 	});
-}
-
-/**
- * Generate a random ID
- * @returns {string}
- */
-function generateId() {
-	return '' + Math.random().toString(36).substr(2, 9);
 }
 
 /**

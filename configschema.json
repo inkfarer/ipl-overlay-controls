@@ -23,7 +23,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"url": { "type": "string" },
-				"Authentication": { "type": "string" }
+				"authentication": { "type": "string" }
 			}
 		}
 	}
