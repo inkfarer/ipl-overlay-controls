@@ -35,6 +35,7 @@ async function listen(nodecg) {
 					numberOfCaster = data.length;
 				}
 				// Place data into replicant
+				console.log(data)
 				for(var i = 0; i < numberOfCaster; i++){
 					const commentator = data.pop();
 					casters.value[commentator['discord_user_id']] = {
@@ -81,6 +82,7 @@ async function getLiveCasters(url, Authorisation, guildID) {
 			let casters = [];
 			data.forEach(function(item, index) {
 				casters.push({
+					discord_user_id: item['discord_user_id'],
 					name: item["name"],
 					twitter: `@${item["twitter"]}`,
 					pronouns: item["pronouns"]
