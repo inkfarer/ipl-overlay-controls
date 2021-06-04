@@ -35,7 +35,6 @@ async function listen(nodecg) {
 					numberOfCaster = data.length;
 				}
 				// Place data into replicant
-				console.log(data)
 				for(var i = 0; i < numberOfCaster; i++){
 					const commentator = data.pop();
 					casters.value[commentator['discord_user_id']] = {
