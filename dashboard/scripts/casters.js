@@ -27,17 +27,17 @@ casters.on('change', (newValue, oldValue) => {
     }
 
     if (Object.keys(newValue).length >= 3) {
-        btnCreateCaster.disabled = true;
         setUncommittedButtonDisabled(true);
     } else {
-        btnCreateCaster.disabled = false;
         setUncommittedButtonDisabled(false);
     }
+
+    disableCreateCasterButton();
 });
 
 btnCreateCaster.addEventListener('click', (e) => {
     createCasterElem(generateId());
-    if (getCasterContainerCount() >= 3) e.target.disabled = true;
+    disableCreateCasterButton();
 });
 
 document.getElementById('copy-casters-btn').addEventListener('click', () => {
@@ -182,6 +182,11 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
             delete casters.value[id];
         } else {
             deleteCasterElem(id);
+            disableCreateCasterButton();
         }
     });
+}
+
+function disableCreateCasterButton() {
+    btnCreateCaster.disabled = getCasterContainerCount() >= 3;
 }
