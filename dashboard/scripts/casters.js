@@ -1,6 +1,8 @@
 const casters = nodecg.Replicant('casters');
+const radiaSettings = nodecg.Replicant('radiaSettings');
 
 const btnCreateCaster = document.getElementById('add-caster-btn');
+const btnLoadFromVC = document.getElementById('load-casters-btn');
 
 casters.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
@@ -24,22 +26,17 @@ casters.on('change', (newValue, oldValue) => {
         }
     }
 
-    if (Object.keys(newValue).length >= 3) {
-        btnCreateCaster.disabled = true;
-        setUncommittedButtonDisabled(true);
-    } else {
-        btnCreateCaster.disabled = false;
-        setUncommittedButtonDisabled(false);
-    }
+    setUncommittedButtonDisabled(Object.keys(newValue).length >= 3);
+    disableCreateCasterButton();
 });
 
 btnCreateCaster.addEventListener('click', (e) => {
     createCasterElem(generateId());
-    if (getCasterContainerCount() >= 3) e.target.disabled = true;
+    disableCreateCasterButton();
 });
 
 document.getElementById('copy-casters-btn').addEventListener('click', () => {
-    var casterText = '';
+    let casterText = '';
 
     Object.keys(casters.value).forEach((item, index, arr) => {
         const element = casters.value[item];
@@ -54,18 +51,37 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
     });
 });
 
+radiaSettings.on('change', (newValue) => {
+    // If the api isn't enabled we disable the "load from vc" button
+    btnLoadFromVC.disabled = !(newValue.enabled && newValue.guildID);
+});
+
+btnLoadFromVC.addEventListener('click', () => {
+    nodecg.sendMessage('getLiveCommentators', {}, (e, result) => {
+        if (e) {
+            console.error(e);
+            return;
+        }
+        if (result.extra && result.extra.length > 0) {
+            for (let i = 0; i < result.extra.length; i++) {
+                const extraCaster = result.extra[i];
+                updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
+            }
+            setUncommittedButtonDisabled(true);
+        } else {
+            setUncommittedButtonDisabled(false);
+        }
+    });
+});
+
 function casterObjectsMatch(val1, val2) {
     if (!val1 || !val2) return false;
 
-    return !(
-        val1.name !== val2.name ||
-        val1.twitter !== val2.twitter ||
-        val1.pronouns !== val2.pronouns
-    );
+    return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
 }
 
 function setUncommittedButtonDisabled(disabled) {
-    document.querySelectorAll('.uncommitted').forEach((elem) => {
+    document.querySelectorAll('.update-button.uncommitted').forEach((elem) => {
         elem.disabled = disabled;
     });
 }
@@ -79,29 +95,21 @@ function deleteCasterElem(id) {
     container.parentNode.removeChild(container);
 }
 
-function updateOrCreateCreateCasterElem(
-    id,
-    data = { name: '', twitter: '', pronouns: '' }
-) {
+function updateOrCreateCreateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, isUncommitted = false) {
     const container = document.getElementById(`caster-container_${id}`);
     if (container) {
-        updateCasterElem(id, data);
+        updateCasterElem(id, data, !isUncommitted);
     } else {
-        createCasterElem(id, data, false);
+        createCasterElem(id, data, isUncommitted);
     }
 }
 
-function updateCasterElem(
-    id,
-    data = { name: '', twitter: '', pronouns: '' },
-    resetColor = true
-) {
+function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, resetColor = true) {
     document.getElementById(`caster-name-input_${id}`).value = data.name;
     document.getElementById(`caster-twitter-input_${id}`).value = data.twitter;
     document.getElementById(`caster-pronoun-input_${id}`).value = data.pronouns;
     if (resetColor) {
-        document.getElementById(`update-caster_${id}`).style.backgroundColor =
-            'var(--blue)';
+        document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
     }
 }
 
@@ -109,88 +117,76 @@ function getCasterContainerCount() {
     return document.querySelectorAll('.caster-container').length;
 }
 
-function createCasterElem(
-    id,
-    data = { name: '', twitter: '', pronouns: '' },
-    newElem = true
-) {
-    if (newElem && getCasterContainerCount() >= 3) return;
-
+function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, isUncommitted = true) {
     let container = document.createElement('div');
     container.classList.add('space');
     container.classList.add('caster-container');
     container.id = `caster-container_${id}`;
 
     container.innerHTML = `
-	<div class="select-container">
-		<label for="caster-name-input_${id}">Name</label>
-		<input type="text" id="caster-name-input_${id}">
+	<div class='select-container'>
+		<label for='caster-name-input_${id}'>Name</label>
+		<input type='text' id='caster-name-input_${id}'>
 	</div>
-	<div class="layout horizontal select-container">
-		<div class="select-container caster-twitter-input-container">
-			<label for="caster-twitter-input_${id}">Twitter</label>
-			<input type="text" id="caster-twitter-input_${id}">
+	<div class='layout horizontal select-container'>
+		<div class='select-container caster-twitter-input-container'>
+			<label for='caster-twitter-input_${id}'>Twitter</label>
+			<input type='text' id='caster-twitter-input_${id}'>
 		</div>
-		<div class="select-container">
-			<label for="caster-pronoun-input_${id}">Pronouns</label>
-			<input type="text" id="caster-pronoun-input_${id}">
+		<div class='select-container'>
+			<label for='caster-pronoun-input_${id}'>Pronouns</label>
+			<input type='text' id='caster-pronoun-input_${id}'>
 		</div>
 	</div>
-	<div class="layout horizontal">
+	<div class='layout horizontal'>
 		<button
-			class="max-width${newElem ? ' uncommitted' : ''}"
-			id="update-caster_${id}"
-			style="background-color: ${newElem ? 'var(--red)' : 'var(--blue)'}">
+			class='update-button max-width${isUncommitted ? ' uncommitted' : ''}'
+			id='update-caster_${id}'
+			style='background-color: ${isUncommitted ? 'var(--red)' : 'var(--blue)'}'>
 			update
 		</button>
-		<button class="red max-width" id="remove-caster_${id}">remove</button>
+		<button class='red max-width' id='remove-caster_${id}'>remove</button>
 	</div>`;
-    document.getElementById('casters').appendChild(container);
+    document.getElementById('casters').prepend(container);
 
     // add data
-    updateCasterElem(id, data, !newElem);
+    updateCasterElem(id, data, !isUncommitted);
 
     // remind to update
     addChangeReminder(
-        [
-            `caster-name-input_${id}`,
-            `caster-twitter-input_${id}`,
-            `caster-pronoun-input_${id}`,
-        ].map((elem) => document.getElementById(elem)),
+        [`caster-name-input_${id}`, `caster-twitter-input_${id}`, `caster-pronoun-input_${id}`].map((elem) =>
+            document.getElementById(elem)
+        ),
         document.getElementById(`update-caster_${id}`)
     );
 
     // button click event
-    document
-        .getElementById(`update-caster_${id}`)
-        .addEventListener('click', (e) => {
-            const id = e.target.id.split('_')[1];
-            try {
-                casters.value[id] = {
-                    name: document.getElementById(`caster-name-input_${id}`)
-                        .value,
-                    twitter: document.getElementById(
-                        `caster-twitter-input_${id}`
-                    ).value,
-                    pronouns: document.getElementById(
-                        `caster-pronoun-input_${id}`
-                    ).value,
-                };
-            } catch (error) {
-                console.error(error);
-                return;
-            }
-            e.target.classList.remove('uncommitted');
-        });
-    document
-        .getElementById(`remove-caster_${id}`)
-        .addEventListener('click', (e) => {
-            const id = e.target.id.split('_')[1];
+    document.getElementById(`update-caster_${id}`).addEventListener('click', (e) => {
+        const id = e.target.id.split('_')[1];
+        try {
+            casters.value[id] = {
+                name: document.getElementById(`caster-name-input_${id}`).value,
+                twitter: document.getElementById(`caster-twitter-input_${id}`).value,
+                pronouns: document.getElementById(`caster-pronoun-input_${id}`).value,
+            };
+        } catch (error) {
+            console.error(error);
+            return;
+        }
+        e.target.classList.remove('uncommitted');
+    });
+    document.getElementById(`remove-caster_${id}`).addEventListener('click', (e) => {
+        const id = e.target.id.split('_')[1];
 
-            if (casters.value[id]) {
-                delete casters.value[id];
-            } else {
-                deleteCasterElem(id);
-            }
-        });
+        if (casters.value[id]) {
+            delete casters.value[id];
+        } else {
+            deleteCasterElem(id);
+            disableCreateCasterButton();
+        }
+    });
+}
+
+function disableCreateCasterButton() {
+    btnCreateCaster.disabled = getCasterContainerCount() >= 3;
 }
