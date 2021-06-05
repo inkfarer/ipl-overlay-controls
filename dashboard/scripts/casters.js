@@ -26,12 +26,7 @@ casters.on('change', (newValue, oldValue) => {
         }
     }
 
-    if (Object.keys(newValue).length >= 3) {
-        setUncommittedButtonDisabled(true);
-    } else {
-        setUncommittedButtonDisabled(false);
-    }
-
+    setUncommittedButtonDisabled(Object.keys(newValue).length >= 3);
     disableCreateCasterButton();
 });
 
@@ -67,9 +62,14 @@ btnLoadFromVC.addEventListener('click', () => {
             console.error(e);
             return;
         }
-        for (let i = 0; i < result.extra.length; i++) {
-            const extraCaster = result.extra[i];
-            updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
+        if (result.extra && result.extra.length > 0) {
+            for (let i = 0; i < result.extra.length; i++) {
+                const extraCaster = result.extra[i];
+                updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
+            }
+            setUncommittedButtonDisabled(true);
+        } else {
+            setUncommittedButtonDisabled(false);
         }
     });
 });
