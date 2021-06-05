@@ -147,7 +147,7 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
 		</button>
 		<button class='red max-width' id='remove-caster_${id}'>remove</button>
 	</div>`;
-    document.getElementById('casters').appendChild(container);
+    document.getElementById('casters').prepend(container);
 
     // add data
     updateCasterElem(id, data, !isUncommitted);
