@@ -1,0 +1,49 @@
+.next-stage-timer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-bottom: 1px solid #737373;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.next-stage-timer-container > div {
+    margin-top: -3px;
+}
+
+.timer-container-number {
+    width: 40px;
+}
+
+.timer-container-day {
+    width: 70px;
+}
+
+.next-stage-timer-container > div > input {
+    border-bottom: unset;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.next-stage-timer-container > div > select {
+    border-bottom: unset;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 4px;
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.next-stage-timer-title {
+    margin-top: 10px;
+}
+
+.select-container {
+    margin: 0 2.5px;
+}

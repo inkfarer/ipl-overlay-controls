@@ -97,6 +97,7 @@ button.max-width {
 /* Text input & select */
 
 select,
+input:not([type]),
 input[type='text'],
 input[type='number'],
 input[type='color'] {
@@ -122,6 +123,7 @@ select {
     appearance: none;
 }
 
+input:not([type]),
 input[type='text'],
 input[type='number'],
 input[type='color'] {

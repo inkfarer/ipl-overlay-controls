@@ -1,0 +1,41 @@
+#round-name-space {
+    min-height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 169px;
+    align-items: center;
+}
+
+#reset-btn {
+    background-color: var(--red);
+    max-height: 40px;
+}
+
+#toggles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+}
+
+.win-picker-container {
+    width: 100%;
+    display: flex;
+    align-content: center;
+}
+
+span.center {
+    display: block;
+    text-align: center;
+}
+
+.separator {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    line-height: 0.1em;
+    margin: 10px 0 10px;
+}
+
+.separator span {
+    background: #262f40;
+    padding: 0 10px;
+}

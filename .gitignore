@@ -1,3 +1,6 @@
 node_modules
 coverage
 bower_components
+
+/dashboard
+/extension

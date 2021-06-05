@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const nodeExternals = require('webpack-node-externals');
 const globby = require('globby');
 const path = require('path');
 
@@ -56,6 +57,7 @@ function dashboardConfig() {
                 {
                     test: /\.css$/,
                     use: [
+                        'style-loader',
                         {
                             loader: 'css-loader',
                             options: {
@@ -63,6 +65,16 @@ function dashboardConfig() {
                             }
                         }
                     ]
+                },
+                {
+                    test: /\.js$/,
+                    exclude: '/node_modules',
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    }
                 }
             ]
         },
@@ -91,7 +103,9 @@ const extensionConfig = {
             type: 'commonjs2'
         }
     },
-    mode: isProd ? 'production' : 'development'
+    mode: isProd ? 'production' : 'development',
+    externals: [nodeExternals()],
+    externalsPresets: { node: true }
 }
 
 module.exports = [

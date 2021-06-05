@@ -1,3 +1,6 @@
+import '../globalStyles.css';
+import './dataImport.css';
+
 const tournamentData = nodecg.Replicant('tournamentData');
 
 const teamWebImportToggle = document.getElementById('team-web-import-toggle');

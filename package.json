@@ -10,17 +10,17 @@
     },
     "files": [
         "dashboard",
-        "extension"
+        "src/extension"
     ],
     "keywords": [
         "",
         "nodecg-bundle"
     ],
     "scripts": {
-        "build": "node_modules/.bin/cross-env NODE_ENV=production webpack",
-        "clean": "node_modules/.bin/trash node_modules/.cache && trash dashboard && trash extension",
+        "build": "cross-env NODE_ENV=production webpack",
+        "clean": "trash node_modules/.cache && trash dashboard && trash extension",
         "start": "node ../..",
-        "watch": "node_modules/.bin/webpack -w"
+        "watch": "webpack -w"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
@@ -97,13 +97,18 @@
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
-        "lastfm": "^0.9.3"
+        "lastfm": "^0.9.3",
+        "webpack-node-externals": "^3.0.0"
     },
     "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
+        "babel-loader": "^8.2.2",
         "cross-env": "^7.0.3",
         "css-loader": "^5.2.6",
         "globby": "^11.0.3",
         "html-webpack-plugin": "^5.3.1",
+        "style-loader": "^2.0.0",
         "trash-cli": "^4.0.0",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.0",

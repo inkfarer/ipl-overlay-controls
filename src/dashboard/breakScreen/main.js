@@ -1,3 +1,7 @@
+import { addChangeReminder, addDots, addSelector, clearSelectors } from '../globalScripts';
+import '../globalStyles.css';
+import './breakScreen.css';
+
 // Main Scene
 
 const mainFlavorText = nodecg.Replicant('mainFlavorText');
@@ -86,7 +90,7 @@ function updateStageTime() {
                 hour: hour,
                 minute: min,
                 day: day,
-                month: month,
+                month: month
             };
         }
     }
@@ -174,7 +178,7 @@ const activeBreakScene = nodecg.Replicant('activeBreakScene');
 const sceneSwitchButtons = {
     main: document.getElementById('show-main-scene-btn'),
     teams: document.getElementById('show-teams-scene-btn'),
-    stages: document.getElementById('show-stages-scene-btn'),
+    stages: document.getElementById('show-stages-scene-btn')
 };
 
 for (const [key, value] of Object.entries(sceneSwitchButtons)) {
@@ -184,7 +188,7 @@ for (const [key, value] of Object.entries(sceneSwitchButtons)) {
 }
 
 activeBreakScene.on('change', (newValue) => {
-    for (scene in sceneSwitchButtons) {
+    for (const scene in sceneSwitchButtons) {
         sceneSwitchButtons[scene].disabled = false;
     }
 

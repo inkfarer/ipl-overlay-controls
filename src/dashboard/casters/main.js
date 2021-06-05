@@ -1,3 +1,7 @@
+import { addChangeReminder } from '../globalScripts';
+import '../globalStyles.css';
+import './casters.css';
+
 const casters = nodecg.Replicant('casters');
 const radiaSettings = nodecg.Replicant('radiaSettings');
 

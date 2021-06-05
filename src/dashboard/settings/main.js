@@ -1,3 +1,6 @@
+import { addChangeReminder } from '../globalScripts';
+import '../globalStyles.css';
+
 const lastFmSettings = nodecg.Replicant('lastFmSettings');
 const radiaSettings = nodecg.Replicant('radiaSettings');
 

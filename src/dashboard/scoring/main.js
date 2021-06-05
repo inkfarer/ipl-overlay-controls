@@ -1,3 +1,7 @@
+import { addChangeReminder, addDots, addSelector, clearSelectors, setToggleButtonDisabled } from '../globalScripts';
+import '../globalStyles.css';
+import './scoring.css';
+
 // Handle team score edits
 
 const teamScores = nodecg.Replicant('teamScores');

@@ -110,3 +110,16 @@ const splatModes = [
     'Unknown Mode',
 ];
 splatModes.sort();
+
+module.exports = {
+    fillList,
+    addSelector,
+    clearSelectors,
+    setToggleButtonDisabled,
+    addChangeReminder,
+    addDots,
+    splatStages,
+    splatModes
+}
+
+window.setReplicant = setReplicant;

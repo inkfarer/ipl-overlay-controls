@@ -1,3 +1,7 @@
+import { addChangeReminder, fillList, splatModes, splatStages } from '../globalScripts';
+import '../globalStyles.css';
+import './currentRound.css';
+
 const gameWinners = nodecg.Replicant('gameWinners');
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
@@ -152,7 +156,7 @@ function getButtons(id) {
 }
 
 function disableWinButtons(gameWinnerValue) {
-    var currentRound = rounds.value[activeRoundId.value];
+    let currentRound = rounds.value[activeRoundId.value];
 
     for (let i = 1; i < currentRound.games.length + 1; i++) {
         const gameWinner = gameWinnerValue[i - 1];
