@@ -69,7 +69,6 @@ btnLoadFromVC.addEventListener('click', () => {
         }
         for (let i = 0; i < result.extra.length; i++) {
             const extraCaster = result.extra[i];
-            console.log(extraCaster);
             updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
         }
     });
