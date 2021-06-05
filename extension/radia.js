@@ -22,6 +22,8 @@ async function listen(nodecg) {
     nodecg.listenFor('getLiveCommentators', async (data, ack) => {
         getLiveCasters(apiUrl, authentication, radiaSettings.value.guildID)
             .then((data) => {
+                if (data.length <= 0) return ack('Got no commentators from API.');
+
                 const castersToAdd = data.slice(0, 3);
                 const extraCasters = data.slice(3);
 
