@@ -49,7 +49,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         numberOfGames >= 8 ||
         numberOfGames <= 0
     ) {
-        throw 'Rounds with only up to 7 stages are supported.';
+        throw new Error('Rounds with only up to 7 stages are supported.');
     }
 
     const reminderCreatingElements = [];
@@ -215,6 +215,8 @@ function updateOrCreateCreateRoundElem(id, data) {
 
 rounds.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
+        if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
+
         const object = newValue[id];
 
         if (oldValue) {
