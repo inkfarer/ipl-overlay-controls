@@ -43,6 +43,7 @@
             "arraysInObjects": false
         }],
         "curly": [1, "multi-line"],
-        "no-eq-null": "off"
+        "no-eq-null": "off",
+        "eqeqeq": ["error", "smart"]
     }
 }
