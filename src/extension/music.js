@@ -12,25 +12,25 @@ function handleNowPlaying(nodecg) {
 
     const replicantToSource = {
         lastfm: lastFmNowPlaying,
-        manual: manualNowPlaying,
+        manual: manualNowPlaying
     };
 
     const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
     const nowPlaying = nodecg.Replicant('nowPlaying');
 
-    nowPlayingSource.on('change', (newValue) => {
+    nowPlayingSource.on('change', newValue => {
         switch (newValue) {
-            case 'manual':
-                nowPlaying.value = clone(manualNowPlaying.value);
-                break;
-            case 'lastfm':
-                nowPlaying.value = clone(lastFmNowPlaying.value);
-                break;
+        case 'manual':
+            nowPlaying.value = clone(manualNowPlaying.value);
+            break;
+        case 'lastfm':
+            nowPlaying.value = clone(lastFmNowPlaying.value);
+            break;
         }
     });
 
     for (const [key, value] of Object.entries(replicantToSource)) {
-        value.on('change', (newValue) => {
+        value.on('change', newValue => {
             if (nowPlayingSource.value === key) {
                 nowPlaying.value = clone(newValue);
             }
@@ -52,34 +52,34 @@ function handleLastFm(nodecg) {
 
     const lastfm = new lastFmNode({
         api_key: nodecg.bundleConfig.lastfm.apiKey,
-        secret: nodecg.bundleConfig.lastfm.secret,
+        secret: nodecg.bundleConfig.lastfm.secret
     });
 
     const nowPlaying = nodecg.Replicant('lastFmNowPlaying', {
-        persistent: false,
+        persistent: false
     });
 
     const lastFmSettings = nodecg.Replicant('lastFmSettings');
-    var trackStream;
+    let trackStream;
 
-    lastFmSettings.on('change', (newValue) => {
+    lastFmSettings.on('change', newValue => {
         if (trackStream) {
             trackStream.stop();
         }
 
         trackStream = lastfm.stream(newValue.username);
 
-        trackStream.on('nowPlaying', (track) => {
+        trackStream.on('nowPlaying', track => {
             nowPlaying.value = {
                 artist: track.artist['#text'],
                 song: track.name,
                 album: track.album['#text'],
                 cover: track.image[2]['#text'],
-                artistSong: `${track.artist['#text']} - ${track.name}`,
+                artistSong: `${track.artist['#text']} - ${track.name}`
             };
         });
 
-        trackStream.on('error', (e) => {
+        trackStream.on('error', e => {
             // Error 6 = "User not found"
             if (e.error === 6) {
                 nodecg.log.info(

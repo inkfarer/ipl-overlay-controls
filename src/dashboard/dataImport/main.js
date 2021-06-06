@@ -15,7 +15,7 @@ document.getElementById('submit-import').onclick = () => {
             'getTournamentData',
             {
                 method: methodSelector.value,
-                id: document.getElementById('tournament-id-input').value,
+                id: document.getElementById('tournament-id-input').value
             },
             (e, result) => {
                 if (e) {
@@ -23,6 +23,7 @@ document.getElementById('submit-import').onclick = () => {
                     setImportStatus(IMPORT_STATUS_FAILURE, teamDataStatusElem);
                     return;
                 }
+
                 setImportStatus(IMPORT_STATUS_SUCCESS, teamDataStatusElem);
             }
         );
@@ -31,17 +32,17 @@ document.getElementById('submit-import').onclick = () => {
 
 const methodData = {
     battlefy: {
-        dataTitle: 'Tournament ID',
+        dataTitle: 'Tournament ID'
     },
     smashgg: {
-        dataTitle: 'Tournament Slug',
+        dataTitle: 'Tournament Slug'
     },
     raw: {
-        dataTitle: 'Data URL',
-    },
+        dataTitle: 'Data URL'
+    }
 };
 
-methodSelector.addEventListener('change', (e) => {
+methodSelector.addEventListener('change', e => {
     const method = e.target.value;
 
     document.getElementById('tournament-id-input-title').innerText =
@@ -70,7 +71,7 @@ methodSelector.addEventListener('change', (e) => {
     }
 });
 
-teamWebImportToggle.onclick = (e) => {
+teamWebImportToggle.onclick = e => {
     const fileInput = document.getElementById('local-team-input-wrapper');
     const urlInput = document.getElementById('web-tournament-import-wrapper');
 
@@ -81,7 +82,7 @@ teamWebImportToggle.onclick = (e) => {
     hiddenElem.style.display = 'none';
 };
 
-tournamentData.on('change', (newValue) => {
+tournamentData.on('change', newValue => {
     document.getElementById('tournament-id-display').innerText =
         newValue.meta.id;
 });
@@ -93,12 +94,13 @@ document.getElementById('round-import-submit').onclick = () => {
 
     if (roundWebImportToggle.checked) {
         const listsURL = document.getElementById('round-input-url-input').value;
-        nodecg.sendMessage('getRounds', { url: listsURL }, (e) => {
+        nodecg.sendMessage('getRounds', { url: listsURL }, e => {
             if (e) {
                 console.error(e);
                 setImportStatus(IMPORT_STATUS_FAILURE, roundDataStatusElem);
                 return;
             }
+
             setImportStatus(IMPORT_STATUS_SUCCESS, roundDataStatusElem);
         });
     } else {
@@ -106,7 +108,7 @@ document.getElementById('round-import-submit').onclick = () => {
     }
 };
 
-roundWebImportToggle.onclick = (e) => {
+roundWebImportToggle.onclick = e => {
     const fileInput = document.getElementById('local-round-input-wrapper');
     const urlInput = document.getElementById('web-file-input-wrapper');
 
@@ -136,15 +138,15 @@ function sendLocalFile(dataType) {
 
     if (!fileInput.files[0]) return;
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', fileInput.files[0]);
     formData.append('jsonType', dataType);
 
     fetch('/ipl-overlay-controls/upload-tournament-json', {
         method: 'POST',
-        body: formData,
+        body: formData
     })
-        .then((response) => {
+        .then(response => {
             if (response.status === 200) {
                 setImportStatus(IMPORT_STATUS_SUCCESS, importStatusElem);
             } else {
@@ -152,7 +154,7 @@ function sendLocalFile(dataType) {
                 setImportStatus(IMPORT_STATUS_FAILURE, importStatusElem);
             }
         })
-        .catch((e) => {
+        .catch(e => {
             console.error(e);
             setImportStatus(IMPORT_STATUS_FAILURE, importStatusElem);
         });
@@ -167,22 +169,22 @@ const teamDataStatusElem = document.getElementById('team-data-submit-status');
 const roundDataStatusElem = document.getElementById('round-data-submit-status');
 
 function setImportStatus(status, elem) {
-    var backgroundColor, textColor, text;
+    let backgroundColor; let textColor; let text;
     switch (status) {
-        case IMPORT_STATUS_SUCCESS:
-            backgroundColor = 'var(--green)';
-            textColor = 'white';
-            text = 'SUCCESS';
-            break;
-        case IMPORT_STATUS_LOADING:
-            backgroundColor = 'var(--yellow)';
-            textColor = 'black';
-            text = 'LOADING';
-            break;
-        case IMPORT_STATUS_FAILURE:
-            backgroundColor = 'var(--red)';
-            textColor = 'white';
-            text = 'FAIL';
+    case IMPORT_STATUS_SUCCESS:
+        backgroundColor = 'var(--green)';
+        textColor = 'white';
+        text = 'SUCCESS';
+        break;
+    case IMPORT_STATUS_LOADING:
+        backgroundColor = 'var(--yellow)';
+        textColor = 'black';
+        text = 'LOADING';
+        break;
+    case IMPORT_STATUS_FAILURE:
+        backgroundColor = 'var(--red)';
+        textColor = 'white';
+        text = 'FAIL';
     }
 
     elem.style.backgroundColor = backgroundColor;

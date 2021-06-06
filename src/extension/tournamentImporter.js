@@ -1,8 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const axios = require('axios');
 
 async function listen(nodecg) {
     const tournamentData = nodecg.Replicant('tournamentData');
-    var smashGGKey;
+    let smashGGKey;
 
     if (
         !nodecg.bundleConfig ||
@@ -10,7 +11,7 @@ async function listen(nodecg) {
     ) {
         nodecg.log.error(
             `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! ` +
-                'Importing tournament data from smash.gg will not be possible.'
+            'Importing tournament data from smash.gg will not be possible.'
         );
     } else {
         smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
@@ -23,47 +24,51 @@ async function listen(nodecg) {
         }
 
         switch (data.method) {
-            case 'battlefy':
-                getBattlefyData(data.id)
-                    .then((data) => {
-                        tournamentData.value = data;
-                        ack(null, data.meta.id);
-                    })
-                    .catch((err) => {
-                        ack(err);
-                    });
-                return;
-            case 'smashgg':
-                if (!smashGGKey) {
-                    ack(new Error('No smash.gg token provided.'));
-                    return;
-                }
+        case 'battlefy':
+            getBattlefyData(data.id)
+                .then(data => {
+                    tournamentData.value = data;
+                    ack(null, data.meta.id);
+                })
+                .catch(err => {
+                    ack(err);
+                });
+            break;
+        case 'smashgg':
+            if (!smashGGKey) {
+                ack(new Error('No smash.gg token provided.'));
+                break;
+            }
 
-                getSmashGGData(data.id, smashGGKey)
-                    .then((data) => {
-                        tournamentData.value = data;
-                        ack(null, data.meta.id);
-                    })
-                    .catch((err) => {
-                        ack(err);
-                    });
-                return;
-            case 'raw':
-                getRaw(data.id)
-                    .then((data) => {
-                        tournamentData.value = data;
-                        ack(null, data.id);
-                    })
-                    .catch((err) => {
-                        ack(err);
-                    });
-                return;
+            getSmashGGData(data.id, smashGGKey)
+                .then(data => {
+                    tournamentData.value = data;
+                    ack(null, data.meta.id);
+                })
+                .catch(err => {
+                    ack(err);
+                });
+            break;
+        case 'raw':
+            getRaw(data.id)
+                .then(data => {
+                    tournamentData.value = data;
+                    ack(null, data.id);
+                })
+                .catch(err => {
+                    ack(err);
+                });
+            break;
+        default:
+            ack(new Error('Invalid method given.'));
         }
     });
 }
 
 function generateId() {
-    return '' + Math.random().toString(36).substr(2, 9);
+    return String(Math.random()
+        .toString(36)
+        .substr(2, 9));
 }
 
 async function getBattlefyData(id) {
@@ -72,76 +77,79 @@ async function getBattlefyData(id) {
     return new Promise((resolve, reject) => {
         axios
             .get(requestURL)
-            .then((response) => {
-                const data = response.data;
-                //console.log(response);
+            .then(response => {
+                const { data } = response;
+                // Console.log(response);
                 if (data.error) {
                     reject(data.error);
                     return;
                 }
-                let teams = {
+
+                const teams = {
                     meta: {
-                        id: id,
+                        id
                     },
-                    data: [],
+                    data: []
                 };
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
-                    var teamInfo = {
+                    const teamInfo = {
                         id: generateId(),
                         name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
-                        players: [],
+                        players: []
                     };
                     for (let j = 0; j < element.players.length; j++) {
                         const elementPlayer = element.players[j];
-                        let playerInfo = {
+                        const playerInfo = {
                             name: elementPlayer.inGameName,
-                            username: elementPlayer.username,
+                            username: elementPlayer.username
                         };
                         teamInfo.players.push(playerInfo);
                     }
+
                     teams.data.push(teamInfo);
                 }
+
                 resolve(teams);
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     });
 }
 
 async function getSmashGGData(slug, token) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         getSmashGGPage('1', slug, token, true)
-            .then(async (data) => {
-                //var tourneyInfo = [{tourneyId: slug}].concat(data.pageInfo);
-                var tourneyInfo = {
+            .then(async data => {
+                // Var tourneyInfo = [{tourneyId: slug}].concat(data.pageInfo);
+                const tourneyInfo = {
                     meta: {
-                        id: slug,
+                        id: slug
                     },
-                    data: [],
+                    data: []
                 };
                 tourneyInfo.data = tourneyInfo.data.concat(data.pageInfo);
 
-                // if there are more pages, add them to our data set
+                // If there are more pages, add them to our data set
                 if (data.raw.data.tournament.teams.pageInfo.totalPages > 1) {
-                    for (
-                        let i = 2;
-                        i <= data.raw.data.tournament.teams.pageInfo.totalPages;
-                        i++
-                    ) {
-                        let pageInfo = await getSmashGGPage(i, slug, token);
-                        tourneyInfo.data = tourneyInfo.data.concat(
-                            pageInfo.pageInfo
-                        );
+                    const pagePromises = [];
+                    for (let i = 2; i <= data.raw.data.tournament.teams.pageInfo.totalPages; i++) {
+                        pagePromises.push(getSmashGGPage(i, slug, token));
                     }
+
+                    Promise.all(pagePromises).then(pages => {
+                        for (let i = 0; i < pages.length; i++) {
+                            tourneyInfo.data = tourneyInfo.data.concat(pages[i].pageInfo);
+                        }
+                    });
                 }
 
-                // we did it
+                // We did it
                 resolve(tourneyInfo);
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     });
@@ -182,25 +190,29 @@ async function getSmashGGPage(page, slug, token, getRaw = false) {
                 'https://api.smash.gg/gql/alpha',
                 JSON.stringify({
                     query,
-                    variables: { slug, page, perPage },
+                    variables: {
+                        slug,
+                        page,
+                        perPage
+                    }
                 }),
                 {
                     headers: {
                         'Content-Type': 'application/json',
                         Accept: 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             )
-            .then((response) => {
-                const data = response.data;
-                let pageInfo = [];
+            .then(response => {
+                const { data } = response;
+                const pageInfo = [];
                 for (
                     let i = 0;
                     i < data.data.tournament.teams.nodes.length;
                     i++
                 ) {
-                    let teamPlayers = [];
+                    const teamPlayers = [];
                     const element = data.data.tournament.teams.nodes[i];
 
                     if (!element.entrant) continue;
@@ -211,25 +223,30 @@ async function getSmashGGPage(page, slug, token, getRaw = false) {
                         j++
                     ) {
                         const teamPlayer = element.entrant.participants[j];
-                        let name = teamPlayer.gamerTag;
+                        const name = teamPlayer.gamerTag;
                         teamPlayers.push({
-                            name: name,
+                            name
                         });
                     }
-                    let teamName = element.name;
+
+                    const teamName = element.name;
                     pageInfo.push({
                         id: generateId(),
                         name: teamName,
-                        players: teamPlayers,
+                        players: teamPlayers
                     });
                 }
+
                 if (getRaw) {
-                    resolve({ pageInfo: pageInfo, raw: data });
+                    resolve({
+                        pageInfo,
+                        raw: data
+                    });
                 } else {
-                    resolve({ pageInfo: pageInfo });
+                    resolve({ pageInfo });
                 }
             })
-            .catch((e) => {
+            .catch(e => {
                 reject(e);
             });
     });
@@ -239,12 +256,12 @@ async function getRaw(url) {
     return new Promise((resolve, reject) => {
         axios
             .get(url)
-            .then((response) => {
+            .then(response => {
                 const finalResponse = handleRawData(response.data, url);
 
                 resolve(finalResponse);
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     });
@@ -258,13 +275,13 @@ function handleRawData(data, source) {
 
     return {
         meta: {
-            id: source,
+            id: source
         },
-        data: data,
+        data
     };
 }
 
 module.exports = {
     listen,
-    handleRawData,
+    handleRawData
 };

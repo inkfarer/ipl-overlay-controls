@@ -13,15 +13,15 @@ async function listen(nodecg) {
         );
         radiaSettings.value.enabled = false;
         return;
-    } else {
-        apiUrl = nodecg.bundleConfig.radia.url;
-        authentication = nodecg.bundleConfig.radia.authentication;
-        radiaSettings.value.enabled = true;
     }
+
+    apiUrl = nodecg.bundleConfig.radia.url;
+    authentication = nodecg.bundleConfig.radia.authentication;
+    radiaSettings.value.enabled = true;
 
     nodecg.listenFor('getLiveCommentators', async (data, ack) => {
         getLiveCasters(apiUrl, authentication, radiaSettings.value.guildID)
-            .then((data) => {
+            .then(data => {
                 if (data.length <= 0) return ack('Got no commentators from API.');
 
                 const castersToAdd = data.slice(0, 3);
@@ -40,11 +40,12 @@ async function listen(nodecg) {
                 // extra: Casters that where not added to replicant as we already meet the max of 3 casters
                 ack(null, { add: castersToAdd, extra: extraCasters });
             })
-            .catch((err) => {
+            .catch(err => {
                 // If the API gives us a 404, just ignore it :)
                 if (err.response.status === 404) {
                     ack(null, null);
                 }
+
                 ack(err);
             });
     });
@@ -62,32 +63,33 @@ async function getLiveCasters(url, Authorisation, guildID) {
         axios
             .get(`${url}/live/guild/${guildID}`, {
                 headers: {
-                    Authorization: Authorisation,
-                },
+                    Authorization: Authorisation
+                }
             })
-            .then((response) => {
-                const data = response.data;
+            .then(response => {
+                const { data } = response;
                 if (data.error) {
                     reject(data.error);
                     return;
                 }
-                let casters = [];
-                data.forEach(function (item, index) {
+
+                const casters = [];
+                data.forEach((item, index) => {
                     casters.push({
-                        discord_user_id: item['discord_user_id'],
-                        name: item['name'],
-                        twitter: `@${item['twitter']}`,
-                        pronouns: item['pronouns'],
+                        discord_user_id: item.discord_user_id,
+                        name: item.name,
+                        twitter: `@${item.twitter}`,
+                        pronouns: item.pronouns
                     });
                 });
                 resolve(casters);
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     });
 }
 
 module.exports = {
-    listen,
+    listen
 };

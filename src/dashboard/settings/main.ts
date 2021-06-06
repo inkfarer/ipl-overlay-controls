@@ -1,6 +1,6 @@
 import { addChangeReminder } from '../globalScripts';
 import '../globalStyles.css';
-import {NodeCGBrowser} from 'nodecg/browser';
+import { NodeCGBrowser } from 'nodecg/browser';
 import { LastFmSettings, RadiaSettings } from 'schemas';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
@@ -12,7 +12,7 @@ const lastFmUpdateBtn = <HTMLButtonElement>document.getElementById('update-lastf
 const radiaGuildIDInput = <HTMLInputElement>document.getElementById('radia-guild-input');
 const radiaUpdateBtn = <HTMLButtonElement>document.getElementById('update-radia-data-btn');
 
-lastFmSettings.on('change', (newValue) => {
+lastFmSettings.on('change', newValue => {
     lastFmUsernameInput.value = newValue.username;
 });
 
@@ -25,15 +25,15 @@ addChangeReminder(
     lastFmUpdateBtn
 );
 
-radiaSettings.on('change', (newValue) => {
-	radiaGuildIDInput.value = newValue.guildID;
+radiaSettings.on('change', newValue => {
+    radiaGuildIDInput.value = newValue.guildID;
 });
 
 radiaUpdateBtn.addEventListener('click', () => {
-	radiaSettings.value.guildID = radiaGuildIDInput.value;
+    radiaSettings.value.guildID = radiaGuildIDInput.value;
 });
 
 addChangeReminder(
-	document.querySelectorAll('.radia-update-reminder'),
-	radiaUpdateBtn
+    document.querySelectorAll('.radia-update-reminder'),
+    radiaUpdateBtn
 );

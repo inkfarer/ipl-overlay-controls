@@ -34,7 +34,7 @@ casters.on('change', (newValue, oldValue) => {
     disableCreateCasterButton();
 });
 
-btnCreateCaster.addEventListener('click', (e) => {
+btnCreateCaster.addEventListener('click', e => {
     createCasterElem(generateId());
     disableCreateCasterButton();
 });
@@ -55,7 +55,7 @@ document.getElementById('copy-casters-btn').addEventListener('click', () => {
     });
 });
 
-radiaSettings.on('change', (newValue) => {
+radiaSettings.on('change', newValue => {
     // If the api isn't enabled we disable the "load from vc" button
     btnLoadFromVC.disabled = !(newValue.enabled && newValue.guildID);
 });
@@ -66,11 +66,13 @@ btnLoadFromVC.addEventListener('click', () => {
             console.error(e);
             return;
         }
+
         if (result.extra && result.extra.length > 0) {
             for (let i = 0; i < result.extra.length; i++) {
                 const extraCaster = result.extra[i];
                 updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
             }
+
             setUncommittedButtonDisabled(true);
         } else {
             setUncommittedButtonDisabled(false);
@@ -85,13 +87,13 @@ function casterObjectsMatch(val1, val2) {
 }
 
 function setUncommittedButtonDisabled(disabled) {
-    document.querySelectorAll('.update-button.uncommitted').forEach((elem) => {
+    document.querySelectorAll('.update-button.uncommitted').forEach(elem => {
         elem.disabled = disabled;
     });
 }
 
 function generateId() {
-    return '' + Math.random().toString(36).substr(2, 9);
+    return String(Math.random().toString(36).substr(2, 9));
 }
 
 function deleteCasterElem(id) {
@@ -122,7 +124,7 @@ function getCasterContainerCount() {
 }
 
 function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, isUncommitted = true) {
-    let container = document.createElement('div');
+    const container = document.createElement('div');
     container.classList.add('space');
     container.classList.add('caster-container');
     container.id = `caster-container_${id}`;
@@ -153,33 +155,34 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
 	</div>`;
     document.getElementById('casters').prepend(container);
 
-    // add data
+    // Add data
     updateCasterElem(id, data, !isUncommitted);
 
-    // remind to update
+    // Remind to update
     addChangeReminder(
-        [`caster-name-input_${id}`, `caster-twitter-input_${id}`, `caster-pronoun-input_${id}`].map((elem) =>
+        [`caster-name-input_${id}`, `caster-twitter-input_${id}`, `caster-pronoun-input_${id}`].map(elem =>
             document.getElementById(elem)
         ),
         document.getElementById(`update-caster_${id}`)
     );
 
-    // button click event
-    document.getElementById(`update-caster_${id}`).addEventListener('click', (e) => {
+    // Button click event
+    document.getElementById(`update-caster_${id}`).addEventListener('click', e => {
         const id = e.target.id.split('_')[1];
         try {
             casters.value[id] = {
                 name: document.getElementById(`caster-name-input_${id}`).value,
                 twitter: document.getElementById(`caster-twitter-input_${id}`).value,
-                pronouns: document.getElementById(`caster-pronoun-input_${id}`).value,
+                pronouns: document.getElementById(`caster-pronoun-input_${id}`).value
             };
         } catch (error) {
             console.error(error);
             return;
         }
+
         e.target.classList.remove('uncommitted');
     });
-    document.getElementById(`remove-caster_${id}`).addEventListener('click', (e) => {
+    document.getElementById(`remove-caster_${id}`).addEventListener('click', e => {
         const id = e.target.id.split('_')[1];
 
         if (casters.value[id]) {

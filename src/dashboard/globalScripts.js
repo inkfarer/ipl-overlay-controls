@@ -1,7 +1,7 @@
 // For selectors
 
 function clearSelectors(className) {
-    let selectors = document.getElementsByClassName(className);
+    const selectors = document.getElementsByClassName(className);
     for (let i = 0; i < selectors.length; i++) {
         const element = selectors[i];
         element.innerHTML = '';
@@ -9,9 +9,9 @@ function clearSelectors(className) {
 }
 
 function addSelector(text, className, value = '') {
-    var elements = document.querySelectorAll(`.${className}`);
-    Array.from(elements).forEach(function (item) {
-        var opt = document.createElement('option');
+    const elements = document.querySelectorAll(`.${className}`);
+    Array.from(elements).forEach(item => {
+        const opt = document.createElement('option');
         opt.value = value !== '' ? value : text;
         opt.text = text;
         item.appendChild(opt);
@@ -28,7 +28,7 @@ function setToggleButtonDisabled(toggleTrue, toggleFalse, state) {
 // Remind user to press 'update'
 
 function addChangeReminder(elements, updateButton) {
-    elements.forEach((element) => {
+    elements.forEach(element => {
         if (!element.tagName) return;
 
         let event;
@@ -57,9 +57,11 @@ function addDots(string) {
     const rolloff = '...';
 
     if (!string) return string;
-    if (string.length > maxNameLength)
+    if (string.length > maxNameLength) {
         return string.substring(0, maxNameLength - rolloff.length) + rolloff;
-    else return string;
+    }
+
+    return string;
 }
 
 function fillList(selectElem, data) {
@@ -97,7 +99,7 @@ const splatStages = [
     'Wahoo World',
     'Walleye Warehouse',
     'Skipper Pavilion',
-    'Unknown Stage',
+    'Unknown Stage'
 ];
 splatStages.sort();
 
@@ -107,7 +109,7 @@ const splatModes = [
     'Rainmaker',
     'Splat Zones',
     'Turf War',
-    'Unknown Mode',
+    'Unknown Mode'
 ];
 splatModes.sort();
 
@@ -120,6 +122,6 @@ module.exports = {
     addDots,
     splatStages,
     splatModes
-}
+};
 
 window.setReplicant = setReplicant;

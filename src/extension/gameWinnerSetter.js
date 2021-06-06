@@ -10,12 +10,13 @@ module.exports = function (nodecg) {
                 gameWinners.value[0] = 1;
             } else gameWinners.value[0] = 2;
         }
+
         if (scoreSum >= 2 && gameWinners.value[0] !== 0) {
             if (newValue.teamA !== oldValue.teamA) {
-                //team a score has changed
+                // Team a score has changed
                 gameWinners.value[scoreSum - 1] = 1;
             } else {
-                //team b score has changed
+                // Team b score has changed
                 gameWinners.value[scoreSum - 1] = 2;
             }
         }
