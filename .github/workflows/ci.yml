@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pull:
+  lint-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout nodecg/nodecg
@@ -47,55 +47,10 @@ jobs:
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm ci
 
-      - name: Build
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          npm run clean
-          npm run build
-
-  lint:
-    runs-on: ubuntu-latest
-    needs: pull
-    steps:
       - name: Run ESLint on source
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm run lint
 
-  deploy:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs: [pull, lint]
-    steps:
-      - name: Set up GitHub for SSH access
-        uses: webfactory/ssh-agent@master
-        with:
-          ssh-private-key: ${{ secrets['GH_SSH'] }}
-
-      - name: Set git config
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-
-      - name: Merge master branch into build branch
-        continue-on-error: true
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          git checkout master
-          git checkout build
-          git merge master
-
-      - name: Commit built files
-        id: commit
-        continue-on-error: true
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          git add -f dashboard extension
-          git commit -m "Build result from master branch" -a
-
-          - name: Push built files to "build" branch
-            uses: ad-m/github-push-action@master
-            with:
-              github_token: ${{ secrets['GITHUB_TOKEN'] }}
-              branch: build
-              directory: ./nodecg/bundles/ipl-overlay-controls
+      - name: Update build branch
+        uses: actions/update-build-branch
+        if: github.ref == 'refs/heads/master'
