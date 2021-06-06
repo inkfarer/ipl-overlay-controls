@@ -58,11 +58,12 @@ The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 
 - [reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
 - [kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 - [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
+- [sos-overlays](https://github.com/inkfarer/sos-overlays/tree/legacy)
 
 The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-03-25:
 
 - [sue-overlays](https://github.com/IPLSplatoon/step-up-europe-overlays)
 - [tg-overlays](https://github.com/inkfarer/tg-overlays)
-- [sos-overlays](https://github.com/inkfarer/sos-overlays)
-- [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
+- [sos-overlays (Legacy)](https://github.com/inkfarer/sos-overlays/tree/legacy)
+- [checkpoint-overlays (Legacy)](https://github.com/inkfarer/checkpoint-overlays)
 - [low-ink-overlays (legacy)](https://github.com/inkfarer/low-ink-overlays/tree/legacy)
