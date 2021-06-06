@@ -21,7 +21,8 @@
         "clean": "trash node_modules/.cache && trash dashboard && trash extension",
         "start": "node ../..",
         "watch": "webpack -w",
-        "schema-types": "nodecg schema-types"
+        "schema-types": "nodecg schema-types",
+        "lint": "eslint ./src"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
