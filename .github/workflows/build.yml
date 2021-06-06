@@ -79,7 +79,7 @@ jobs:
         continue-on-error: true
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: |
-          git add -f dashboard graphics extension
+          git add -f dashboard extension
           git commit -m "Build result from master branch" -a
           
       - name: Push built files to "build" branch
