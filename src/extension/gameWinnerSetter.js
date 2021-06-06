@@ -12,12 +12,12 @@ module.exports = function (nodecg) {
         }
 
         if (scoreSum >= 2 && gameWinners.value[0] !== 0) {
-            if (newValue.teamA !== oldValue.teamA) {
-                // Team a score has changed
-                gameWinners.value[scoreSum - 1] = 1;
-            } else {
+            if (newValue.teamA === oldValue.teamA) {
                 // Team b score has changed
                 gameWinners.value[scoreSum - 1] = 2;
+            } else {
+                // Team a score has changed
+                gameWinners.value[scoreSum - 1] = 1;
             }
         }
     });
