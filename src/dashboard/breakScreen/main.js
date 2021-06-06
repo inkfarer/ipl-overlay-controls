@@ -190,7 +190,7 @@ for (const [key, value] of Object.entries(sceneSwitchButtons)) {
 
 activeBreakScene.on('change', newValue => {
     for (const scene in sceneSwitchButtons) {
-        if (!Object.prototype.hasOwnProperty.call(newValue, scene)) continue;
+        if (!Object.prototype.hasOwnProperty.call(sceneSwitchButtons, scene)) continue;
         sceneSwitchButtons[scene].disabled = false;
     }
 
