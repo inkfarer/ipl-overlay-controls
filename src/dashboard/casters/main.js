@@ -10,6 +10,8 @@ const btnLoadFromVC = document.getElementById('load-casters-btn');
 
 casters.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
+        if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
+
         const object = newValue[id];
 
         if (oldValue) {
@@ -34,7 +36,7 @@ casters.on('change', (newValue, oldValue) => {
     disableCreateCasterButton();
 });
 
-btnCreateCaster.addEventListener('click', e => {
+btnCreateCaster.addEventListener('click', () => {
     createCasterElem(generateId());
     disableCreateCasterButton();
 });
