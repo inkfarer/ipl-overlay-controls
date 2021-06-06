@@ -254,11 +254,11 @@ function updateColorDisplay(colorInfo, elem, team, swapColors) {
     else color = '#000000';
 
     switch (elem.tagName.toLowerCase()) {
-    case 'input':
-        elem.value = color;
-        break;
-    default:
-        elem.style.backgroundColor = color;
+        case 'input':
+            elem.value = color;
+            break;
+        default:
+            elem.style.backgroundColor = color;
     }
 }
 

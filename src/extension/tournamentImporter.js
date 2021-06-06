@@ -24,43 +24,43 @@ async function listen(nodecg) {
         }
 
         switch (data.method) {
-        case 'battlefy':
-            getBattlefyData(data.id)
-                .then(data => {
-                    tournamentData.value = data;
-                    ack(null, data.meta.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        case 'smashgg':
-            if (!smashGGKey) {
-                ack(new Error('No smash.gg token provided.'));
+            case 'battlefy':
+                getBattlefyData(data.id)
+                    .then(data => {
+                        tournamentData.value = data;
+                        ack(null, data.meta.id);
+                    })
+                    .catch(err => {
+                        ack(err);
+                    });
                 break;
-            }
+            case 'smashgg':
+                if (!smashGGKey) {
+                    ack(new Error('No smash.gg token provided.'));
+                    break;
+                }
 
-            getSmashGGData(data.id, smashGGKey)
-                .then(data => {
-                    tournamentData.value = data;
-                    ack(null, data.meta.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        case 'raw':
-            getRaw(data.id)
-                .then(data => {
-                    tournamentData.value = data;
-                    ack(null, data.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        default:
-            ack(new Error('Invalid method given.'));
+                getSmashGGData(data.id, smashGGKey)
+                    .then(data => {
+                        tournamentData.value = data;
+                        ack(null, data.meta.id);
+                    })
+                    .catch(err => {
+                        ack(err);
+                    });
+                break;
+            case 'raw':
+                getRaw(data.id)
+                    .then(data => {
+                        tournamentData.value = data;
+                        ack(null, data.id);
+                    })
+                    .catch(err => {
+                        ack(err);
+                    });
+                break;
+            default:
+                ack(new Error('Invalid method given.'));
         }
     });
 }

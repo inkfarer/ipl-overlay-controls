@@ -21,14 +21,14 @@ function handleNowPlaying(nodecg) {
 
     nowPlayingSource.on('change', newValue => {
         switch (newValue) {
-        case 'manual':
-            nowPlaying.value = clone(manualNowPlaying.value);
-            break;
-        case 'lastfm':
-            nowPlaying.value = clone(lastFmNowPlaying.value);
-            break;
-        default:
-            throw new Error('Invalid value for nowPlayingSource.');
+            case 'manual':
+                nowPlaying.value = clone(manualNowPlaying.value);
+                break;
+            case 'lastfm':
+                nowPlaying.value = clone(lastFmNowPlaying.value);
+                break;
+            default:
+                throw new Error('Invalid value for nowPlayingSource.');
         }
     });
 

@@ -171,20 +171,20 @@ const roundDataStatusElem = document.getElementById('round-data-submit-status');
 function setImportStatus(status, elem) {
     let backgroundColor; let textColor; let text;
     switch (status) {
-    case IMPORT_STATUS_SUCCESS:
-        backgroundColor = 'var(--green)';
-        textColor = 'white';
-        text = 'SUCCESS';
-        break;
-    case IMPORT_STATUS_LOADING:
-        backgroundColor = 'var(--yellow)';
-        textColor = 'black';
-        text = 'LOADING';
-        break;
-    case IMPORT_STATUS_FAILURE:
-        backgroundColor = 'var(--red)';
-        textColor = 'white';
-        text = 'FAIL';
+        case IMPORT_STATUS_SUCCESS:
+            backgroundColor = 'var(--green)';
+            textColor = 'white';
+            text = 'SUCCESS';
+            break;
+        case IMPORT_STATUS_LOADING:
+            backgroundColor = 'var(--yellow)';
+            textColor = 'black';
+            text = 'LOADING';
+            break;
+        case IMPORT_STATUS_FAILURE:
+            backgroundColor = 'var(--red)';
+            textColor = 'white';
+            text = 'FAIL';
     }
 
     elem.style.backgroundColor = backgroundColor;

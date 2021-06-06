@@ -34,7 +34,7 @@
     "rules": {
         "import/no-extraneous-dependencies": "off",
         "max-len": ["error", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }],
-        "indent": ["warn", 4],
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
         "linebreak-style": ["warn", "windows"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
@@ -44,6 +44,11 @@
         }],
         "curly": [1, "multi-line"],
         "no-eq-null": "off",
-        "eqeqeq": ["error", "smart"]
+        "eqeqeq": ["error", "smart"],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "never", "prev": "block-like", "next": "case" },
+            { "blankLine": "never", "prev": "block-like", "next": "default" }
+        ]
     }
 }

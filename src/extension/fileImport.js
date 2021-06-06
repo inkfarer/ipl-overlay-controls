@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const fileUpload = require('express-fileupload');
 const { handleRoundData } = require('./roundImporter');
 const { handleRawData } = require('./tournamentImporter');
 
 module.exports = function (nodecg) {
+    // eslint-disable-next-line new-cap
     const router = nodecg.Router();
 
     router.post(
@@ -21,21 +23,23 @@ module.exports = function (nodecg) {
             const content = JSON.parse(req.files.file.data.toString());
 
             switch (req.body.jsonType) {
-            case 'rounds':
-                const resolvedRounds = handleRoundData(content);
-                const rounds = nodecg.Replicant('rounds');
-                rounds.value = { ...rounds.value, ...resolvedRounds };
-                break;
-            case 'teams':
-                const resolvedTeams = handleRawData(
-                    content,
-                    `Uploaded file: ${req.files.file.name}`
-                );
-                const tournamentData = nodecg.Replicant('tournamentData');
-                tournamentData.value = resolvedTeams;
-                break;
-            default:
-                return res.sendStatus(400);
+                case 'rounds': {
+                    const resolvedRounds = handleRoundData(content);
+                    const rounds = nodecg.Replicant('rounds');
+                    rounds.value = { ...rounds.value, ...resolvedRounds };
+                    break;
+                }
+                case 'teams': {
+                    const resolvedTeams = handleRawData(
+                        content,
+                        `Uploaded file: ${req.files.file.name}`
+                    );
+                    const tournamentData = nodecg.Replicant('tournamentData');
+                    tournamentData.value = resolvedTeams;
+                    break;
+                }
+                default:
+                    return res.sendStatus(400);
             }
 
             res.sendStatus(200);
