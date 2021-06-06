@@ -1,4 +1,5 @@
-const lastFmNode = require('lastfm').LastFmNode;
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { LastFmNode } = require('lastfm');
 const clone = require('clone');
 
 module.exports = function (nodecg) {
@@ -26,6 +27,8 @@ function handleNowPlaying(nodecg) {
         case 'lastfm':
             nowPlaying.value = clone(lastFmNowPlaying.value);
             break;
+        default:
+            throw new Error('Invalid value for nowPlayingSource.');
         }
     });
 
@@ -50,7 +53,8 @@ function handleLastFm(nodecg) {
         return;
     }
 
-    const lastfm = new lastFmNode({
+    const lastfm = new LastFmNode({
+        // eslint-disable-next-line camelcase
         api_key: nodecg.bundleConfig.lastfm.apiKey,
         secret: nodecg.bundleConfig.lastfm.secret
     });
