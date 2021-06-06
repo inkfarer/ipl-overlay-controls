@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets['GITHUB_TOKEN'] }}
-          ref: master
+          ref: ${{ github.ref }}
           fetch-depth: 0
           path: ./nodecg/bundles/ipl-overlay-controls
 
@@ -58,6 +58,7 @@ jobs:
     needs: pull
     steps:
       - name: Run ESLint on source
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm run lint
 
   deploy:
