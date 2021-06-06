@@ -17,7 +17,7 @@ document.getElementById('submit-import').onclick = () => {
                 method: methodSelector.value,
                 id: document.getElementById('tournament-id-input').value
             },
-            (e, result) => {
+            e => {
                 if (e) {
                     console.error(e);
                     setImportStatus(IMPORT_STATUS_FAILURE, teamDataStatusElem);
@@ -169,7 +169,9 @@ const teamDataStatusElem = document.getElementById('team-data-submit-status');
 const roundDataStatusElem = document.getElementById('round-data-submit-status');
 
 function setImportStatus(status, elem) {
-    let backgroundColor; let textColor; let text;
+    let backgroundColor;
+    let textColor;
+    let text;
     switch (status) {
         case IMPORT_STATUS_SUCCESS:
             backgroundColor = 'var(--green)';
@@ -185,6 +187,11 @@ function setImportStatus(status, elem) {
             backgroundColor = 'var(--red)';
             textColor = 'white';
             text = 'FAIL';
+            break;
+        default:
+            backgroundColor = '#181e29';
+            textColor = 'white';
+            text = 'UNKNOWN';
     }
 
     elem.style.backgroundColor = backgroundColor;
