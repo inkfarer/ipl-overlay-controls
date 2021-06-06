@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const axios = require('axios').default;
 
 async function listen(nodecg) {
@@ -10,11 +11,11 @@ async function listen(nodecg) {
         }
 
         getUrl(data.url)
-            .then((data) => {
+            .then(data => {
                 rounds.value = { ...rounds.value, ...data.rounds };
                 ack(null, data.url);
             })
-            .catch((err) => {
+            .catch(err => {
                 ack(err);
             });
     });
@@ -45,10 +46,10 @@ const splatStages = [
     'Wahoo World',
     'Walleye Warehouse',
     'Skipper Pavilion',
-    'Unknown Stage',
+    'Unknown Stage'
 ];
 
-const lowerCaseSplatStages = splatStages.map((stage) => stage.toLowerCase());
+const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
 
 const splatModes = [
     'Clam Blitz',
@@ -56,37 +57,37 @@ const splatModes = [
     'Rainmaker',
     'Splat Zones',
     'Turf War',
-    'Unknown Mode',
+    'Unknown Mode'
 ];
 
-const lowerCaseSplatModes = splatModes.map((mode) => mode.toLowerCase());
+const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
 
 function generateId() {
-    return '' + Math.random().toString(36).substr(2, 9);
+    return String(Math.random().toString(36).substr(2, 9));
 }
 
 async function getUrl(url) {
     return new Promise((resolve, reject) => {
         axios
             .get(url, {
-                Accept: 'application/json',
+                Accept: 'application/json'
             })
-            .then((response) => {
+            .then(response => {
                 const rounds = handleRoundData(response.data);
 
                 resolve({
-                    rounds: rounds,
-                    url: url,
+                    rounds,
+                    url
                 });
             })
-            .catch((err) => {
+            .catch(err => {
                 reject(err);
             });
     });
 }
 
 function handleRoundData(rounds) {
-    let result = {};
+    const result = {};
 
     for (let i = 0; i < rounds.length; i++) {
         const round = rounds[i];
@@ -101,15 +102,15 @@ function handleRoundData(rounds) {
 
             games.push({
                 stage: normalizeStageName(stageName),
-                mode: normalizeModeName(game.mode),
+                mode: normalizeModeName(game.mode)
             });
         }
 
         result[generateId()] = {
             meta: {
-                name: round.name,
+                name: round.name
             },
-            games: games,
+            games
         };
     }
 
@@ -121,9 +122,9 @@ function normalizeStageName(name) {
 
     if (!lowerCaseSplatStages.includes(name)) {
         return 'Unknown Stage';
-    } else {
-        return splatStages[lowerCaseSplatStages.indexOf(name)];
     }
+
+    return splatStages[lowerCaseSplatStages.indexOf(name)];
 }
 
 function normalizeModeName(name) {
@@ -131,12 +132,12 @@ function normalizeModeName(name) {
 
     if (!lowerCaseSplatModes.includes(name)) {
         return 'Unknown Mode';
-    } else {
-        return splatModes[lowerCaseSplatModes.indexOf(name)];
     }
+
+    return splatModes[lowerCaseSplatModes.indexOf(name)];
 }
 
 module.exports = {
     listen,
-    handleRoundData,
+    handleRoundData
 };

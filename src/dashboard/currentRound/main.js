@@ -11,8 +11,8 @@ const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round');
 
 NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
-    activeRoundId.on('change', (newValue) => {
-        let currentRound = rounds.value[newValue];
+    activeRoundId.on('change', newValue => {
+        const currentRound = rounds.value[newValue];
 
         if (currentRound) {
             addRoundToggles(currentRound.games, currentRound.meta.name);
@@ -23,7 +23,7 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
         }
     });
 
-    gameWinners.on('change', (newValue) => {
+    gameWinners.on('change', newValue => {
         disableWinButtons(newValue);
     });
 
@@ -122,15 +122,17 @@ function addToggle(roundElement, stageIndex) {
     BWinButton.id = 'team-b-win-toggle_' + stageIndex;
     BWinButton.innerText = 'B WIN';
 
-    noWinButton.onclick = (event) => {
+    noWinButton.onclick = event => {
         const stageIndex = event.target.id.split('_')[1];
         gameWinners.value[stageIndex] = 0;
     };
-    AWinButton.onclick = (event) => {
+
+    AWinButton.onclick = event => {
         const stageIndex = event.target.id.split('_')[1];
         gameWinners.value[stageIndex] = 1;
     };
-    BWinButton.onclick = (event) => {
+
+    BWinButton.onclick = event => {
         const stageIndex = event.target.id.split('_')[1];
         gameWinners.value[stageIndex] = 2;
     };
@@ -156,7 +158,7 @@ function getButtons(id) {
 }
 
 function disableWinButtons(gameWinnerValue) {
-    let currentRound = rounds.value[activeRoundId.value];
+    const currentRound = rounds.value[activeRoundId.value];
 
     for (let i = 1; i < currentRound.games.length + 1; i++) {
         const gameWinner = gameWinnerValue[i - 1];
@@ -164,6 +166,7 @@ function disableWinButtons(gameWinnerValue) {
         for (let y = 0; y < buttons.length; y++) {
             buttons[y].disabled = false;
         }
+
         buttons[gameWinner].disabled = true;
     }
 }
@@ -172,10 +175,10 @@ function removeToggles() {
     document.getElementById('toggles').innerHTML = '';
 }
 
-// set wins automatically check box
+// Set wins automatically check box
 const setWinnersAutomatically = nodecg.Replicant('setWinnersAutomatically');
 
-setWinnersAutomatically.on('change', (newValue) => {
+setWinnersAutomatically.on('change', newValue => {
     document.getElementById('auto-winner-set-toggle').checked = newValue;
 });
 
@@ -186,7 +189,7 @@ roundUpdateButton.addEventListener('click', () => {
     for (let i = 0; i < numberOfGames; i++) {
         const currentGame = {
             stage: '',
-            mode: '',
+            mode: ''
         };
         const stageSelector = document.getElementById(`stage-selector_${i}`);
         currentGame.stage = stageSelector.value;

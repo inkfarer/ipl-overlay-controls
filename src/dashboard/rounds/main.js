@@ -6,9 +6,9 @@ const rounds = nodecg.Replicant('rounds');
 
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
-//perhaps a little overcomplicated but it will do
+// Perhaps a little overcomplicated but it will do
 function generateId() {
-    return '' + Math.random().toString(36).substr(2, 9);
+    return String(Math.random().toString(36).substr(2, 9));
 }
 
 document.getElementById('create-3-game-round').onclick = () => {
@@ -29,27 +29,27 @@ function resetRounds() {
     rounds.value = {
         0: {
             meta: {
-                name: 'Default round',
+                name: 'Default round'
             },
             games: [
                 { stage: 'MakoMart', mode: 'Clam Blitz' },
                 { stage: 'Ancho-V Games', mode: 'Tower Control' },
-                { stage: 'Wahoo World', mode: 'Rainmaker' },
-            ],
-        },
+                { stage: 'Wahoo World', mode: 'Rainmaker' }
+            ]
+        }
     };
     activeRoundId.value = '0';
 }
 
 function createRoundElem(numberOfGames, id, remindToUpdate) {
-    //support up to 7 games for the time being
-    //if you want me dead, host a tournament with 9 games in the finals
+    // Support up to 7 games for the time being
+    // if you want me dead, host a tournament with 9 games in the finals
     if (
         typeof numberOfGames !== 'number' ||
         numberOfGames >= 8 ||
         numberOfGames <= 0
     ) {
-        throw 'Rounds with only up to 7 stages are supported.';
+        throw new Error('Rounds with only up to 7 stages are supported.');
     }
 
     const reminderCreatingElements = [];
@@ -58,7 +58,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     roundElem.classList.add('round');
     roundElem.id = `round_${id}`;
 
-    // name input
+    // Name input
     const nameInput = document.createElement('input');
     nameInput.id = `name-input_${id}`;
     nameInput.value = `Round ${id}`;
@@ -73,7 +73,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     roundElem.appendChild(nameInput);
 
     for (let i = 0; i < numberOfGames; i++) {
-        //separator
+        // Separator
         const separator = document.createElement('div');
         separator.classList.add('separator');
         const separatorSpan = document.createElement('span');
@@ -81,7 +81,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         separator.appendChild(separatorSpan);
         roundElem.appendChild(separator);
 
-        //stage select
+        // Stage select
         const stageSelector = document.createElement('select');
         stageSelector.id = `stage-selector_${id}_${i}`;
         stageSelector.classList.add('stage-selector');
@@ -90,7 +90,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         roundElem.appendChild(stageSelector);
         reminderCreatingElements.push(stageSelector);
 
-        //mode select
+        // Mode select
         const modeSelector = document.createElement('select');
         modeSelector.id = `mode-selector_${id}_${i}`;
         modeSelector.classList.add('mode-selector');
@@ -100,14 +100,15 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         reminderCreatingElements.push(modeSelector);
     }
 
-    // update button
+    // Update button
     const updateButton = document.createElement('button');
     updateButton.innerText = 'update';
     updateButton.id = `update-round_${id}`;
     if (remindToUpdate) {
         updateButton.style.backgroundColor = 'var(--red)';
     }
-    updateButton.onclick = (event) => {
+
+    updateButton.onclick = event => {
         const buttonId = event.target.id.split('_')[1];
         const numberOfGames =
             document
@@ -120,7 +121,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         for (let i = 0; i < numberOfGames; i++) {
             const currentGame = {
                 stage: '',
-                mode: '',
+                mode: ''
             };
             const id = buttonId + '_' + i;
             const stageSelector = document.getElementById(
@@ -135,27 +136,31 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
 
         rounds.value[buttonId] = {
             meta: { name: nameInput.value },
-            games: games,
+            games
         };
     };
+
     updateButton.classList.add('max-width');
 
     addChangeReminder(reminderCreatingElements, updateButton);
 
-    // remove button
+    // Remove button
     const removeButton = document.createElement('button');
     removeButton.style.backgroundColor = 'var(--red)';
     removeButton.id = 'removeButton_' + id;
     removeButton.innerText = 'REMOVE';
     removeButton.classList.add('max-width');
-    removeButton.onclick = (event) => {
+    removeButton.onclick = event => {
         const buttonId = event.target.id.split('_')[1];
         if (activeRoundId.value === buttonId) {
             activeRoundId.value = Object.keys(rounds.value)[0];
         }
 
         if (rounds.value[buttonId]) {
-            delete rounds.value[buttonId];
+            // This creates an error, but works anyways.
+            try {
+                delete rounds.value[buttonId];
+            } catch {}
         } else {
             deleteRoundElem(buttonId);
         }
@@ -213,6 +218,8 @@ function updateOrCreateCreateRoundElem(id, data) {
 
 rounds.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
+        if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
+
         const object = newValue[id];
 
         if (oldValue) {

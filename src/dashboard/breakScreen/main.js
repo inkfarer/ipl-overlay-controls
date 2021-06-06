@@ -8,7 +8,7 @@ const mainFlavorText = nodecg.Replicant('mainFlavorText');
 const flavorTextInput = document.getElementById('flavor-text-input');
 const mainSceneUpdateBtn = document.getElementById('main-scene-update-btn');
 
-mainFlavorText.on('change', (newValue) => {
+mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
 });
 
@@ -21,7 +21,7 @@ mainSceneUpdateBtn.onclick = () => {
 
 const nextRoundStartTimeShown = nodecg.Replicant('nextRoundStartTimeShown');
 
-nextRoundStartTimeShown.on('change', (newValue) => {
+nextRoundStartTimeShown.on('change', newValue => {
     document.getElementById('next-stage-timer-toggle').checked = newValue;
 });
 
@@ -32,11 +32,11 @@ const minuteInput = document.getElementById('next-stage-minute-input');
 const hourInput = document.getElementById('next-stage-hour-input');
 const daySelect = document.getElementById('next-stage-day-select');
 
-nextRoundStartTime.on('change', (newValue) => {
+nextRoundStartTime.on('change', newValue => {
     minuteInput.value = newValue.minute;
     hourInput.value = newValue.hour;
     updateDaySelector(newValue.month, newValue.day);
-    daySelect.value = `${newValue.day}/${parseInt(newValue.month)}`;
+    daySelect.value = `${newValue.day}/${parseInt(newValue.month, 10)}`;
 });
 
 function updateDaySelector(selectedMonth, selectedDayOfMonth) {
@@ -78,8 +78,8 @@ function getDayText(date) {
 }
 
 function updateStageTime() {
-    const min = parseInt(minuteInput.value);
-    const hour = parseInt(hourInput.value);
+    const min = parseInt(minuteInput.value, 10);
+    const hour = parseInt(hourInput.value, 10);
     const selText = daySelect.options[daySelect.selectedIndex];
     if (selText) {
         const day = Number(selText.dataset.day);
@@ -87,10 +87,10 @@ function updateStageTime() {
 
         if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
             nextRoundStartTime.value = {
-                hour: hour,
+                hour,
                 minute: min,
-                day: day,
-                month: month
+                day,
+                month
             };
         }
     }
@@ -105,7 +105,7 @@ addChangeReminder(
 
 const tournamentData = nodecg.Replicant('tournamentData');
 
-tournamentData.on('change', (newValue) => {
+tournamentData.on('change', newValue => {
     clearSelectors('team-selector');
     for (let i = 0; i < newValue.data.length; i++) {
         const element = newValue.data[i];
@@ -118,17 +118,17 @@ const nextTeamASelector = document.getElementById('next-team-a-selector');
 const nextTeamBSelector = document.getElementById('next-team-b-selector');
 const nextTeamUpdateBtn = document.getElementById('update-next-teams-btn');
 
-nextTeams.on('change', (newValue) => {
+nextTeams.on('change', newValue => {
     nextTeamASelector.value = newValue.teamAInfo.id;
     nextTeamBSelector.value = newValue.teamBInfo.id;
 });
 
 nextTeamUpdateBtn.onclick = () => {
-    let teamAInfo = tournamentData.value.data.filter(
-        (team) => team.id === nextTeamASelector.value
+    const teamAInfo = tournamentData.value.data.filter(
+        team => team.id === nextTeamASelector.value
     )[0];
-    let teamBInfo = tournamentData.value.data.filter(
-        (team) => team.id === nextTeamBSelector.value
+    const teamBInfo = tournamentData.value.data.filter(
+        team => team.id === nextTeamBSelector.value
     )[0];
 
     nextTeams.value.teamAInfo = teamAInfo;
@@ -150,18 +150,19 @@ const roundSelector = document.getElementById('round-selector');
 const activeRoundId = nodecg.Replicant('activeRoundId');
 
 NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
-    activeRoundId.on('change', (newValue) => {
+    activeRoundId.on('change', newValue => {
         roundSelector.value = newValue;
     });
 
-    rounds.on('change', (newValue) => {
+    rounds.on('change', newValue => {
         clearSelectors('round-selector');
         for (const [key, value] of Object.entries(newValue)) {
-            let opt = document.createElement('option');
+            const opt = document.createElement('option');
             opt.value = key;
             opt.text = value.meta.name;
             roundSelector.appendChild(opt);
         }
+
         roundSelector.value = activeRoundId.value;
     });
 });
@@ -187,8 +188,9 @@ for (const [key, value] of Object.entries(sceneSwitchButtons)) {
     });
 }
 
-activeBreakScene.on('change', (newValue) => {
+activeBreakScene.on('change', newValue => {
     for (const scene in sceneSwitchButtons) {
+        if (!Object.prototype.hasOwnProperty.call(sceneSwitchButtons, scene)) continue;
         sceneSwitchButtons[scene].disabled = false;
     }
 
@@ -203,15 +205,15 @@ const teamImageHidden = nodecg.Replicant('teamImageHidden');
 const teamAImageToggle = document.getElementById('team-a-image-toggle');
 const teamBImageToggle = document.getElementById('team-b-image-toggle');
 
-teamImageHidden.on('change', (newValue) => {
+teamImageHidden.on('change', newValue => {
     teamAImageToggle.checked = newValue.teamA;
     teamBImageToggle.checked = newValue.teamB;
 });
 
-teamAImageToggle.onclick = (e) => {
+teamAImageToggle.onclick = e => {
     teamImageHidden.value.teamA = e.target.checked;
 };
 
-teamBImageToggle.onclick = (e) => {
+teamBImageToggle.onclick = e => {
     teamImageHidden.value.teamB = e.target.checked;
 };
