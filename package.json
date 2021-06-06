@@ -20,7 +20,8 @@
         "build": "cross-env NODE_ENV=production webpack",
         "clean": "trash node_modules/.cache && trash dashboard && trash extension",
         "start": "node ../..",
-        "watch": "webpack -w"
+        "watch": "webpack -w",
+        "schema-types": "nodecg schema-types"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
@@ -94,15 +95,20 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
+        "@babel/preset-typescript": "^7.13.0",
+        "@types/webpack": "^5.28.0",
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "lastfm": "^0.9.3",
+        "tsconfig-paths-webpack-plugin": "^3.5.1",
         "webpack-node-externals": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
+        "@types/node": "^15.12.1",
+        "@types/webpack-livereload-plugin": "^2.3.2",
         "babel-loader": "^8.2.2",
         "cross-env": "^7.0.3",
         "css-loader": "^5.2.6",
@@ -110,6 +116,8 @@
         "html-webpack-plugin": "^5.3.1",
         "style-loader": "^2.0.0",
         "trash-cli": "^4.0.0",
+        "ts-node": "^10.0.0",
+        "typescript": "^4.3.2",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.0",
         "webpack-livereload-plugin": "^3.0.1"

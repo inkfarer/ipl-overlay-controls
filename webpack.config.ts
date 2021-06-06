@@ -1,30 +1,24 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
-const nodeExternals = require('webpack-node-externals');
-const globby = require('globby');
-const path = require('path');
+// noinspection JSUnusedGlobalSymbols
+
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import LiveReloadPlugin from 'webpack-livereload-plugin';
+import nodeExternals from 'webpack-node-externals';
+import * as globby from 'globby';
+import * as path from 'path';
+import webpack from 'webpack';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-function dashboardConfig() {
-    // noinspection JSCheckFunctionSignatures
-    const entries = globby
-        .sync('*/main.js', { cwd: 'src/dashboard' })
+function dashboardConfig(): webpack.Configuration {
+    const entries: { [key: string]: string } = globby
+        .sync(['*/main.js', '*/main.ts'], { cwd: 'src/dashboard' })
         .reduce((prev, curr) => {
             prev[path.basename(path.dirname(curr))] = `./${curr}`;
             return prev;
         }, {});
 
     let plugins = [];
-
-    if (!isProd) {
-        plugins.push(
-            new LiveReloadPlugin({
-                port: 0,
-                appendScriptTag: true
-            })
-        );
-    }
 
     plugins = plugins.concat(
         [
@@ -40,6 +34,15 @@ function dashboardConfig() {
         ]
     );
 
+    if (!isProd) {
+        plugins.push(
+            new LiveReloadPlugin({
+                port: 0,
+                appendScriptTag: true
+            })
+        );
+    }
+
     return {
         context: path.resolve(__dirname, 'src/dashboard'),
         mode: isProd ? 'production' : 'development',
@@ -50,7 +53,12 @@ function dashboardConfig() {
             filename: 'js/[name].js'
         },
         resolve: {
-            extensions: ['.js', '.ts', '.json']
+            extensions: ['.js', '.ts', '.json'],
+            plugins: [
+                new TsconfigPathsPlugin({
+                    configFile: 'tsconfig-browser.json'
+                })
+            ]
         },
         module: {
             rules: [
@@ -75,6 +83,16 @@ function dashboardConfig() {
                             presets: ['@babel/preset-env']
                         }
                     }
+                },
+                {
+                    test: /\.ts$/,
+                    exclude: '/node_modules',
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [ '@babel/preset-env', '@babel/preset-typescript' ]
+                        }
+                    }
                 }
             ]
         },
@@ -94,8 +112,15 @@ function dashboardConfig() {
     };
 }
 
-const extensionConfig = {
+const extensionConfig: webpack.Configuration = {
     entry: './src/extension/index.js',
+    resolve: {
+        plugins: [
+            new TsconfigPathsPlugin({
+                configFile: 'tsconfig-extension.json'
+            })
+        ]
+    },
     output: {
         filename: 'index.js',
         path: path.join(__dirname, 'extension'),
@@ -108,7 +133,7 @@ const extensionConfig = {
     externalsPresets: { node: true }
 }
 
-module.exports = [
+export default [
     dashboardConfig(),
     extensionConfig
 ];

@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "noImplicitAny": true,
+        "module": "esnext",
+        "target": "es5",
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable"
+        ],
+        "types": [
+            "webpack-env"
+        ],
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "moduleResolution": "Node",
+        "baseUrl": ".",
+        "paths": {
+            "nodecg/*": [
+                "../../types/*"
+            ],
+            "schemas": [
+                "src/types/schemas"
+            ],
+            "bundle/*": [
+                "src/*",
+                "src/graphics/*",
+                "src/dashboard/*"
+            ]
+        }
+    }
+}

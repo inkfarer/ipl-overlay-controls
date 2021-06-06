@@ -1,14 +1,16 @@
 import { addChangeReminder } from '../globalScripts';
 import '../globalStyles.css';
+import {NodeCGBrowser} from 'nodecg/browser';
+import { LastFmSettings, RadiaSettings } from 'schemas';
 
-const lastFmSettings = nodecg.Replicant('lastFmSettings');
-const radiaSettings = nodecg.Replicant('radiaSettings');
+const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
+const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 
-const lastFmUsernameInput = document.getElementById('last-fm-username-input');
-const lastFmUpdateBtn = document.getElementById('update-lastfm-data-btn');
+const lastFmUsernameInput = <HTMLInputElement>document.getElementById('last-fm-username-input');
+const lastFmUpdateBtn = <HTMLButtonElement>document.getElementById('update-lastfm-data-btn');
 
-const radiaGuildIDInput = document.getElementById('radia-guild-input');
-const radiaUpdateBtn = document.getElementById('update-radia-data-btn');
+const radiaGuildIDInput = <HTMLInputElement>document.getElementById('radia-guild-input');
+const radiaUpdateBtn = <HTMLButtonElement>document.getElementById('update-radia-data-btn');
 
 lastFmSettings.on('change', (newValue) => {
     lastFmUsernameInput.value = newValue.username;
