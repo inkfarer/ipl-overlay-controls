@@ -95,19 +95,17 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
-        "@babel/preset-typescript": "^7.13.0",
-        "@types/webpack": "^5.28.0",
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
-        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
-        "tsconfig-paths-webpack-plugin": "^3.5.1",
-        "webpack-node-externals": "^3.0.0"
+        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
+        "@babel/preset-typescript": "^7.13.0",
         "@types/node": "^15.12.1",
+        "@types/webpack": "^5.28.0",
         "@types/webpack-livereload-plugin": "^2.3.2",
         "babel-loader": "^8.2.2",
         "cross-env": "^7.0.3",
@@ -117,9 +115,11 @@
         "style-loader": "^2.0.0",
         "trash-cli": "^4.0.0",
         "ts-node": "^10.0.0",
+        "tsconfig-paths-webpack-plugin": "^3.5.1",
         "typescript": "^4.3.2",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.0",
-        "webpack-livereload-plugin": "^3.0.1"
+        "webpack-livereload-plugin": "^3.0.1",
+        "webpack-node-externals": "^3.0.0"
     }
 }
