@@ -12,7 +12,7 @@ function addSelector(text, className, value = '') {
     const elements = document.querySelectorAll(`.${className}`);
     Array.from(elements).forEach(item => {
         const opt = document.createElement('option');
-        opt.value = value !== '' ? value : text;
+        opt.value = value === '' ? text : value;
         opt.text = text;
         item.appendChild(opt);
     });
