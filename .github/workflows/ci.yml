@@ -1,15 +1,13 @@
-name: Build
+name: CI
 
 on:
   push:
-    branches: [ master ]
-
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  build:
+  pull:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout nodecg/nodecg
         uses: actions/checkout@v2
@@ -17,10 +15,10 @@ jobs:
           token: ${{ secrets['GITHUB_TOKEN'] }}
           repository: nodecg/nodecg
           path: ./nodecg-temp
-          
+
       - name: Copy ./nodecg-temp > ./nodecg
         run: cp -r ./nodecg-temp ./nodecg
-      
+
       - name: Checkout this repository
         uses: actions/checkout@v2
         with:
@@ -28,26 +26,12 @@ jobs:
           ref: master
           fetch-depth: 0
           path: ./nodecg/bundles/ipl-overlay-controls
-          
-      - name: Set git config
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          
-      - name: Merge master branch into build branch
-        continue-on-error: true
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          git checkout master
-          git checkout build
-          git merge master
-          
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-          
+
       - name: Set up NPM cache
         uses: actions/cache@v2
         with:
@@ -55,25 +39,51 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            
+
       - name: Update NPM
         run: npm install -g npm@7.7.0
-        
+
       - name: Set up GitHub for SSH access
         uses: webfactory/ssh-agent@master
         with:
           ssh-private-key: ${{ secrets['GH_SSH'] }}
-          
+
       - name: Install NPM dependencies
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm ci
-        
+
       - name: Build
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: |
           npm run clean
           npm run build
-          
+
+  test:
+    runs-on: ubuntu-latest
+    needs: pull
+    steps:
+      - name: Run ESLint on source
+        run: eslint ./src
+
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: [pull, test]
+    steps:
+      - name: Set git config
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Merge master branch into build branch
+        continue-on-error: true
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        run: |
+          git checkout master
+          git checkout build
+          git merge master
+
       - name: Commit built files
         id: commit
         continue-on-error: true
@@ -81,11 +91,11 @@ jobs:
         run: |
           git add -f dashboard extension
           git commit -m "Build result from master branch" -a
-          
-      - name: Push built files to "build" branch
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets['GITHUB_TOKEN'] }}
-          branch: build
-          directory: ./nodecg/bundles/ipl-overlay-controls
-          
+
+          - name: Push built files to "build" branch
+            uses: ad-m/github-push-action@master
+            with:
+              github_token: ${{ secrets['GITHUB_TOKEN'] }}
+              branch: build
+              directory: ./nodecg/bundles/ipl-overlay-controls
+
