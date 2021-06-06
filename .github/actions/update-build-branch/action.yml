@@ -3,10 +3,10 @@ runs:
   using: "composite"
   steps:
     - name: Build
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          npm run clean
-          npm run build
+      working-directory: ./nodecg/bundles/ipl-overlay-controls
+      run: |
+        npm run clean
+        npm run build
 
     - name: Set up GitHub for SSH access
       uses: webfactory/ssh-agent@master
