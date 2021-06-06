@@ -51,13 +51,6 @@ jobs:
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm run lint
 
-      - name: Build
-        if: github.ref == 'refs/heads/master'
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
-        run: |
-          npm run clean
-          npm run build
-
       - name: Set up GitHub for SSH access
         if: github.ref == 'refs/heads/master'
         uses: webfactory/ssh-agent@master
@@ -79,6 +72,13 @@ jobs:
           git checkout master
           git checkout build
           git merge master
+
+      - name: Build
+        if: github.ref == 'refs/heads/master'
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        run: |
+          npm run clean
+          npm run build
 
       - name: Commit built files
         if: github.ref == 'refs/heads/master'
