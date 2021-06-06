@@ -36,7 +36,7 @@ nextRoundStartTime.on('change', newValue => {
     minuteInput.value = newValue.minute;
     hourInput.value = newValue.hour;
     updateDaySelector(newValue.month, newValue.day);
-    daySelect.value = `${newValue.day}/${parseInt(newValue.month)}`;
+    daySelect.value = `${newValue.day}/${parseInt(newValue.month, 10)}`;
 });
 
 function updateDaySelector(selectedMonth, selectedDayOfMonth) {
@@ -78,8 +78,8 @@ function getDayText(date) {
 }
 
 function updateStageTime() {
-    const min = parseInt(minuteInput.value);
-    const hour = parseInt(hourInput.value);
+    const min = parseInt(minuteInput.value, 10);
+    const hour = parseInt(hourInput.value, 10);
     const selText = daySelect.options[daySelect.selectedIndex];
     if (selText) {
         const day = Number(selText.dataset.day);
@@ -190,6 +190,7 @@ for (const [key, value] of Object.entries(sceneSwitchButtons)) {
 
 activeBreakScene.on('change', newValue => {
     for (const scene in sceneSwitchButtons) {
+        if (!Object.prototype.hasOwnProperty.call(newValue, scene)) continue;
         sceneSwitchButtons[scene].disabled = false;
     }
 
