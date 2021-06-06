@@ -1,10 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const axios = require('axios').default;
 
 async function listen(nodecg) {
     const casters = nodecg.Replicant('casters');
     const radiaSettings = nodecg.Replicant('radiaSettings');
-    let apiUrl;
-    let authentication;
 
     if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.radia === 'undefined') {
         nodecg.log.error(
@@ -15,8 +14,8 @@ async function listen(nodecg) {
         return;
     }
 
-    apiUrl = nodecg.bundleConfig.radia.url;
-    authentication = nodecg.bundleConfig.radia.authentication;
+    const apiUrl = nodecg.bundleConfig.radia.url;
+    const { authentication } = nodecg.bundleConfig.radia;
     radiaSettings.value.enabled = true;
 
     nodecg.listenFor('getLiveCommentators', async (data, ack) => {
@@ -29,8 +28,8 @@ async function listen(nodecg) {
 
                 // Format casters to the map format our replicant expects
                 casters.value = castersToAdd.reduce((map, obj) => {
-                    const id = obj.discord_user_id;
-                    delete obj.discord_user_id;
+                    const id = obj.discordId;
+                    delete obj.discordId;
                     map[id] = obj;
                     return map;
                 }, {});
@@ -53,9 +52,9 @@ async function listen(nodecg) {
 
 /**
  * Get the current live casters in vc from a guild
- * @param url Base API URL
- * @param Authorisation API jey for authentication
- * @param guildID Guild ID of discord server
+ * @param {string} url Base API URL
+ * @param {string} Authorisation API jey for authentication
+ * @param {string} guildID Guild ID of discord server
  * @returns {Promise<list>} List of live casters
  */
 async function getLiveCasters(url, Authorisation, guildID) {
@@ -74,9 +73,9 @@ async function getLiveCasters(url, Authorisation, guildID) {
                 }
 
                 const casters = [];
-                data.forEach((item, index) => {
+                data.forEach(item => {
                     casters.push({
-                        discord_user_id: item.discord_user_id,
+                        discordId: item.discord_user_id,
                         name: item.name,
                         twitter: `@${item.twitter}`,
                         pronouns: item.pronouns
