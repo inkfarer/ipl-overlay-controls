@@ -10,13 +10,14 @@ module.exports = function (nodecg) {
                 gameWinners.value[0] = 1;
             } else gameWinners.value[0] = 2;
         }
+
         if (scoreSum >= 2 && gameWinners.value[0] !== 0) {
-            if (newValue.teamA !== oldValue.teamA) {
-                //team a score has changed
-                gameWinners.value[scoreSum - 1] = 1;
-            } else {
-                //team b score has changed
+            if (newValue.teamA === oldValue.teamA) {
+                // Team b score has changed
                 gameWinners.value[scoreSum - 1] = 2;
+            } else {
+                // Team a score has changed
+                gameWinners.value[scoreSum - 1] = 1;
             }
         }
     });

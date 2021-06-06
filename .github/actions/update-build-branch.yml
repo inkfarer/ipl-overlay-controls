@@ -1,0 +1,43 @@
+name: 'Update build branch'
+runs:
+  using: "composite"
+  steps:
+    - name: Build
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        run: |
+          npm run clean
+          npm run build
+
+    - name: Set up GitHub for SSH access
+      uses: webfactory/ssh-agent@master
+      with:
+        ssh-private-key: ${{ secrets['GH_SSH'] }}
+
+    - name: Set git config
+      working-directory: ./nodecg/bundles/ipl-overlay-controls
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+    - name: Merge master branch into build branch
+      continue-on-error: true
+      working-directory: ./nodecg/bundles/ipl-overlay-controls
+      run: |
+        git checkout master
+        git checkout build
+        git merge master
+
+    - name: Commit built files
+      id: commit
+      continue-on-error: true
+      working-directory: ./nodecg/bundles/ipl-overlay-controls
+      run: |
+        git add -f dashboard extension
+        git commit -m "Build result from master branch" -a
+
+        - name: Push built files to "build" branch
+          uses: ad-m/github-push-action@master
+          with:
+            github_token: ${{ secrets['GITHUB_TOKEN'] }}
+            branch: build
+            directory: ./nodecg/bundles/ipl-overlay-controls

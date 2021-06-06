@@ -8,15 +8,15 @@ const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
 
 const manualSongToggle = document.getElementById('manual-song-toggle');
 
-nowPlayingSource.on('change', (newValue) => {
+nowPlayingSource.on('change', newValue => {
     manualSongToggle.checked = newValue === 'manual';
 });
 
-manualSongToggle.addEventListener('change', (e) => {
+manualSongToggle.addEventListener('change', e => {
     nowPlayingSource.value = e.target.checked ? 'manual' : 'lastfm';
 });
 
-lastFmNowPlaying.on('change', (newValue) => {
+lastFmNowPlaying.on('change', newValue => {
     const lastfmNowPlayingElem = document.getElementById(
         'lastfm-now-playing-text'
     );
@@ -28,7 +28,7 @@ lastFmNowPlaying.on('change', (newValue) => {
     }
 });
 
-manualNowPlaying.on('change', (newValue) => {
+manualNowPlaying.on('change', newValue => {
     document.getElementById('manual-song-name-input').value = newValue.song;
     document.getElementById('manual-song-artist-input').value = newValue.artist;
 });
@@ -50,11 +50,12 @@ document.getElementById('update-manual-song').onclick = () => {
 document.getElementById('show-music-btn').onclick = () => {
     musicShown.value = true;
 };
+
 document.getElementById('hide-music-btn').onclick = () => {
     musicShown.value = false;
 };
 
-musicShown.on('change', (newValue) => {
+musicShown.on('change', newValue => {
     setToggleButtonDisabled(
         document.getElementById('show-music-btn'),
         document.getElementById('hide-music-btn'),
@@ -64,7 +65,7 @@ musicShown.on('change', (newValue) => {
 
 const nowPlaying = nodecg.Replicant('nowPlaying');
 
-nowPlaying.on('change', (newValue) => {
+nowPlaying.on('change', newValue => {
     document.getElementById(
         'now-playing-text'
     ).innerText = `${newValue.artist} - ${newValue.song}`;

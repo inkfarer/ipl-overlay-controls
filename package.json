@@ -21,7 +21,8 @@
         "clean": "trash node_modules/.cache && trash dashboard && trash extension",
         "start": "node ../..",
         "watch": "webpack -w",
-        "schema-types": "nodecg schema-types"
+        "schema-types": "nodecg schema-types",
+        "lint": "eslint ./src"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
@@ -107,9 +108,15 @@
         "@types/node": "^15.12.1",
         "@types/webpack": "^5.28.0",
         "@types/webpack-livereload-plugin": "^2.3.2",
+        "@typescript-eslint/eslint-plugin": "^4.26.0",
+        "@typescript-eslint/parser": "^4.26.0",
         "babel-loader": "^8.2.2",
         "cross-env": "^7.0.3",
         "css-loader": "^5.2.6",
+        "eslint": "^7.28.0",
+        "eslint-import-resolver-typescript": "^2.4.0",
+        "eslint-import-resolver-webpack": "^0.13.1",
+        "eslint-plugin-import": "^2.23.4",
         "globby": "^11.0.3",
         "html-webpack-plugin": "^5.3.1",
         "style-loader": "^2.0.0",
