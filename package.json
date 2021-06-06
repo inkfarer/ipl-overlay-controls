@@ -100,7 +100,7 @@
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
-        "lastfm": "^0.9.3",
+        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
         "tsconfig-paths-webpack-plugin": "^3.5.1",
         "webpack-node-externals": "^3.0.0"
     },
