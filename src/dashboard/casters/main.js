@@ -188,7 +188,10 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
         const id = e.target.id.split('_')[1];
 
         if (casters.value[id]) {
-            delete casters.value[id];
+            // This creates an error, but works anyways.
+            try {
+                delete casters.value[id];
+            } catch {}
         } else {
             deleteCasterElem(id);
             disableCreateCasterButton();

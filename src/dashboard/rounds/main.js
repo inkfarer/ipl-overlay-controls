@@ -157,7 +157,10 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         }
 
         if (rounds.value[buttonId]) {
-            delete rounds.value[buttonId];
+            // This creates an error, but works anyways.
+            try {
+                delete rounds.value[buttonId];
+            } catch {}
         } else {
             deleteRoundElem(buttonId);
         }
