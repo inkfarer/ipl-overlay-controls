@@ -1,7 +1,8 @@
 {
     "root": true,
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
     },
     "globals": {
         "nodecg": "readonly",
@@ -36,7 +37,7 @@
         "import/no-extraneous-dependencies": "off",
         "max-len": ["error", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }],
         "indent": ["warn", 4, { "SwitchCase": 1 }],
-        "linebreak-style": ["warn", "windows"],
+        "linebreak-style": "off",
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "object-curly-spacing": ["warn", "always", {
@@ -54,6 +55,7 @@
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["error", {
             "varsIgnorePattern": "NodeCGBrowser"
-        }]
+        }],
+        "no-empty": ["error", { "allowEmptyCatch":  true }]
     }
 }
