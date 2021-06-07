@@ -1,4 +1,4 @@
-import { ColorGroup } from 'bundle/types/colorGroup';
+import { ColorGroup } from 'types/colorGroup';
 
 export const colors: ColorGroup[] = [
     {

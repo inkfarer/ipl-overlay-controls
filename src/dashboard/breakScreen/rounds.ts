@@ -1,5 +1,5 @@
 import { addChangeReminder, clearSelectors } from '../globalScripts';
-import { ActiveRoundId, Rounds } from 'schemas';
+import { ActiveRoundId, Rounds } from 'types/schemas';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');

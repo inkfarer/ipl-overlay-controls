@@ -1,5 +1,5 @@
-import { scoreboardData, scoreboardShown, tournamentData } from 'bundle/scoring/replicants';
 import { addChangeReminder, addDots, addSelector, clearSelectors, setToggleButtonDisabled } from '../globalScripts';
+import { scoreboardData, scoreboardShown, tournamentData } from './replicants';
 
 scoreboardData.on('change', newValue => {
     (document.getElementById('flavor-text-input') as HTMLInputElement).value = newValue.flavorText;

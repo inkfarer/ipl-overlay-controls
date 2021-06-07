@@ -1,4 +1,4 @@
-import { ScoreboardData, ScoreboardShown, TeamScores, TournamentData } from 'schemas';
+import { ScoreboardData, ScoreboardShown, TeamScores, TournamentData } from 'types/schemas';
 
 export const teamScores = nodecg.Replicant<TeamScores>('teamScores');
 export const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');

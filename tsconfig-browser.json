@@ -22,9 +22,6 @@
             "nodecg/*": [
                 "../../types/*"
             ],
-            "replicants/*": [
-                "src/types/schemas/*"
-            ],
             "types/*": [
                 "src/types/*"
             ]

@@ -1,7 +1,7 @@
-import { setImportStatus } from 'bundle/dataImport/importStatus';
-import { ImportStatus } from 'bundle/types/importStatus';
-import { sendLocalFile } from 'bundle/dataImport/postData';
-import { TournamentData } from 'schemas';
+import { TournamentData } from 'types/schemas';
+import { setImportStatus } from './importStatus';
+import { ImportStatus } from 'types/importStatus';
+import { sendLocalFile } from './postData';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 

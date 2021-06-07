@@ -1,6 +1,6 @@
-import { colors } from 'bundle/scoring/colors';
-import { scoreboardData } from 'bundle/scoring/replicants';
-import { ColorInfo } from 'bundle/types/colorInfo';
+import { colors } from './colors';
+import { scoreboardData } from './replicants';
+import { ColorInfo } from 'types/colorInfo';
 
 const customColorToggle = <HTMLInputElement> document.getElementById('custom-color-toggle');
 const colorSelector = <HTMLSelectElement> document.getElementById('color-selector');

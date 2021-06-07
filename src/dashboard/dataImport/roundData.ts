@@ -1,6 +1,6 @@
-import { setImportStatus } from 'bundle/dataImport/importStatus';
-import { ImportStatus } from 'bundle/types/importStatus';
-import { sendLocalFile } from 'bundle/dataImport/postData';
+import { setImportStatus } from './importStatus';
+import { sendLocalFile } from './postData';
+import { ImportStatus } from 'types/importStatus';
 
 const roundWebImportToggle = document.getElementById('round-web-import-toggle') as HTMLInputElement;
 const roundImportFileInput = document.getElementById('round-input-file-input') as HTMLInputElement;

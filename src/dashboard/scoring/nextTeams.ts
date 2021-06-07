@@ -1,5 +1,5 @@
-import { NextTeams } from 'schemas';
-import { scoreboardData, teamScores, tournamentData } from 'bundle/scoring/replicants';
+import { NextTeams } from 'types/schemas';
+import { scoreboardData, teamScores, tournamentData } from './replicants';
 import { addChangeReminder } from '../globalScripts';
 
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');

@@ -1,4 +1,4 @@
-import { ActiveBreakScene } from 'schemas';
+import { ActiveBreakScene } from 'types/schemas';
 
 const activeBreakScene = nodecg.Replicant<ActiveBreakScene>('activeBreakScene');
 

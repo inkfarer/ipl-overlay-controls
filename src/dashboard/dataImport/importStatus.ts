@@ -1,4 +1,4 @@
-import { ImportStatus } from 'bundle/types/importStatus';
+import { ImportStatus } from 'types/importStatus';
 
 export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
     let backgroundColor;

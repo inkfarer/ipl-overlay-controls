@@ -1,9 +1,9 @@
 import { addChangeReminder, fillList, splatModes, splatStages } from '../globalScripts';
-import { ActiveRoundId, Round, Rounds } from 'schemas';
-import { generateId } from 'bundle/helpers/generateId';
 
 import '../globalStyles.css';
 import './rounds.css';
+import { generateId } from '../../helpers/generateId';
+import { ActiveRoundId, Round, Rounds } from 'types/schemas';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');

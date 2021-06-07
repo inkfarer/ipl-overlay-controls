@@ -1,5 +1,5 @@
-import { setImportStatus } from 'bundle/dataImport/importStatus';
-import { ImportStatus } from 'bundle/types/importStatus';
+import { setImportStatus } from './importStatus';
+import { ImportStatus } from 'types/importStatus';
 
 export function sendLocalFile(
     dataType: 'teams' | 'rounds',
