@@ -1,14 +1,17 @@
 import { addChangeReminder, fillList, splatModes, splatStages } from '../globalScripts';
+import { ActiveRoundId, Game, GameWinners, Rounds } from 'types/schemas';
+
+import './setWinnersAutomatically';
+
 import '../globalStyles.css';
 import './currentRound.css';
 
-const gameWinners = nodecg.Replicant('gameWinners');
-const activeRoundId = nodecg.Replicant('activeRoundId');
-
-const rounds = nodecg.Replicant('rounds');
+const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
+const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
+const rounds = nodecg.Replicant<Rounds>('rounds');
 
 const roundNameElem = document.getElementById('round-name');
-const roundUpdateButton = document.getElementById('update-round');
+const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
 NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
     activeRoundId.on('change', newValue => {
@@ -54,15 +57,15 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
     });
 });
 
-function updateMapsModes(index, data) {
-    const stageSelector = document.getElementById(`stage-selector_${index}`);
+function updateMapsModes(index: number, data: Game) {
+    const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
     stageSelector.value = data.stage;
 
-    const modeSelector = document.getElementById(`mode-selector_${index}`);
+    const modeSelector = document.getElementById(`mode-selector_${index}`) as HTMLSelectElement;
     modeSelector.value = data.mode;
 }
 
-function addRoundToggles(games, roundName) {
+function addRoundToggles(games: Game[], roundName: string) {
     removeToggles();
     roundNameElem.innerText = roundName;
     for (let i = 0; i < games.length; i++) {
@@ -71,7 +74,7 @@ function addRoundToggles(games, roundName) {
     }
 }
 
-function addToggle(roundElement, stageIndex) {
+function addToggle(roundElement: Game, stageIndex: number) {
     const toggleDiv = document.createElement('div');
     toggleDiv.classList.add('toggles');
     const stageModeDisplay = document.createElement('div');
@@ -123,17 +126,17 @@ function addToggle(roundElement, stageIndex) {
     BWinButton.innerText = 'B WIN';
 
     noWinButton.onclick = event => {
-        const stageIndex = event.target.id.split('_')[1];
+        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
         gameWinners.value[stageIndex] = 0;
     };
 
     AWinButton.onclick = event => {
-        const stageIndex = event.target.id.split('_')[1];
+        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
         gameWinners.value[stageIndex] = 1;
     };
 
     BWinButton.onclick = event => {
-        const stageIndex = event.target.id.split('_')[1];
+        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
         gameWinners.value[stageIndex] = 2;
     };
 
@@ -150,14 +153,14 @@ document.getElementById('reset-btn').onclick = () => {
     gameWinners.value = [0, 0, 0, 0, 0, 0, 0];
 };
 
-function getButtons(id) {
-    const noWinButton = document.querySelector('#no-win-toggle_' + id);
-    const AWinButton = document.querySelector('#team-a-win-toggle_' + id);
-    const BWinButton = document.querySelector('#team-b-win-toggle_' + id);
+function getButtons(id: number): HTMLButtonElement[] {
+    const noWinButton = document.querySelector('#no-win-toggle_' + id) as HTMLButtonElement;
+    const AWinButton = document.querySelector('#team-a-win-toggle_' + id) as HTMLButtonElement;
+    const BWinButton = document.querySelector('#team-b-win-toggle_' + id) as HTMLButtonElement;
     return [noWinButton, AWinButton, BWinButton];
 }
 
-function disableWinButtons(gameWinnerValue) {
+function disableWinButtons(gameWinnerValue: number[]) {
     const currentRound = rounds.value[activeRoundId.value];
 
     for (let i = 1; i < currentRound.games.length + 1; i++) {
@@ -175,13 +178,6 @@ function removeToggles() {
     document.getElementById('toggles').innerHTML = '';
 }
 
-// Set wins automatically check box
-const setWinnersAutomatically = nodecg.Replicant('setWinnersAutomatically');
-
-setWinnersAutomatically.on('change', newValue => {
-    document.getElementById('auto-winner-set-toggle').checked = newValue;
-});
-
 roundUpdateButton.addEventListener('click', () => {
     const numberOfGames = rounds.value[activeRoundId.value].games.length;
     const games = [];
@@ -191,10 +187,10 @@ roundUpdateButton.addEventListener('click', () => {
             stage: '',
             mode: ''
         };
-        const stageSelector = document.getElementById(`stage-selector_${i}`);
+        const stageSelector = document.getElementById(`stage-selector_${i}`) as HTMLSelectElement;
         currentGame.stage = stageSelector.value;
 
-        const modeSelector = document.getElementById(`mode-selector_${i}`);
+        const modeSelector = document.getElementById(`mode-selector_${i}`) as HTMLSelectElement;
         currentGame.mode = modeSelector.value;
         games.push(currentGame);
     }
