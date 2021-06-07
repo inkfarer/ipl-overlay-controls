@@ -1,32 +1,42 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "type": "object",
-    "additionalProperties": {
-        "type": "object",
-        "properties": {
-            "meta": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            },
-            "games": {
-                "type": "array",
-                "items": {
+
+    "definitions": {
+        "round": {
+            "type": "object",
+            "properties": {
+                "meta": {
                     "type": "object",
                     "properties": {
-                        "stage": {
-                            "type": "string"
-                        },
-                        "mode": {
+                        "name": {
                             "type": "string"
                         }
                     }
+                },
+                "games": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/game"
+                    }
+                }
+            }
+        },
+        "game": {
+            "type": "object",
+            "properties": {
+                "stage": {
+                    "type": "string"
+                },
+                "mode": {
+                    "type": "string"
                 }
             }
         }
+    },
+
+    "type": "object",
+    "additionalProperties": {
+        "$ref": "#/definitions/round"
     },
     "additionalItems": true,
     "default": {

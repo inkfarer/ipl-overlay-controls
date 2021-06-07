@@ -1,15 +1,12 @@
 import { addChangeReminder, fillList, splatModes, splatStages } from '../globalScripts';
+import { ActiveRoundId, Round, Rounds } from 'schemas';
+import { generateId } from 'bundle/helpers/generateId';
+
 import '../globalStyles.css';
 import './rounds.css';
 
-const rounds = nodecg.Replicant('rounds');
-
-const activeRoundId = nodecg.Replicant('activeRoundId');
-
-// Perhaps a little overcomplicated but it will do
-function generateId() {
-    return String(Math.random().toString(36).substr(2, 9));
-}
+const rounds = nodecg.Replicant<Rounds>('rounds');
+const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 
 document.getElementById('create-3-game-round').onclick = () => {
     createRoundElem(3, generateId(), true);
@@ -27,28 +24,33 @@ document.getElementById('reset-rounds').onclick = () => resetRounds();
 
 function resetRounds() {
     rounds.value = {
-        0: {
+        '0': {
             meta: {
                 name: 'Default round'
             },
             games: [
-                { stage: 'MakoMart', mode: 'Clam Blitz' },
-                { stage: 'Ancho-V Games', mode: 'Tower Control' },
-                { stage: 'Wahoo World', mode: 'Rainmaker' }
+                {
+                    stage: 'MakoMart',
+                    mode: 'Clam Blitz'
+                },
+                {
+                    stage: 'Ancho-V Games',
+                    mode: 'Tower Control'
+                },
+                {
+                    stage: 'Wahoo World',
+                    mode: 'Rainmaker'
+                }
             ]
         }
     };
     activeRoundId.value = '0';
 }
 
-function createRoundElem(numberOfGames, id, remindToUpdate) {
-    // Support up to 7 games for the time being
-    // if you want me dead, host a tournament with 9 games in the finals
-    if (
-        typeof numberOfGames !== 'number' ||
+function createRoundElem(numberOfGames: number, id: string, remindToUpdate: boolean) {
+    if (typeof numberOfGames !== 'number' ||
         numberOfGames >= 8 ||
-        numberOfGames <= 0
-    ) {
+        numberOfGames <= 0) {
         throw new Error('Rounds with only up to 7 stages are supported.');
     }
 
@@ -58,7 +60,6 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     roundElem.classList.add('round');
     roundElem.id = `round_${id}`;
 
-    // Name input
     const nameInput = document.createElement('input');
     nameInput.id = `name-input_${id}`;
     nameInput.value = `Round ${id}`;
@@ -76,8 +77,8 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
         // Separator
         const separator = document.createElement('div');
         separator.classList.add('separator');
-        const separatorSpan = document.createElement('span');
-        separatorSpan.innerText = i + 1;
+        const separatorSpan = document.createElement('span') as HTMLSpanElement;
+        separatorSpan.innerText = String(i + 1);
         separator.appendChild(separatorSpan);
         roundElem.appendChild(separator);
 
@@ -109,13 +110,12 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     }
 
     updateButton.onclick = event => {
-        const buttonId = event.target.id.split('_')[1];
-        const numberOfGames =
-            document
-                .getElementById(`round_${buttonId}`)
-                .querySelectorAll('select').length / 2;
+        const buttonId = (event.target as HTMLButtonElement).id.split('_')[1];
+        const numberOfGames = document
+            .getElementById(`round_${buttonId}`)
+            .querySelectorAll('select').length / 2;
 
-        const nameInput = document.getElementById('name-input_' + buttonId);
+        const nameInput = document.getElementById('name-input_' + buttonId) as HTMLInputElement;
         const games = [];
 
         for (let i = 0; i < numberOfGames; i++) {
@@ -124,12 +124,10 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
                 mode: ''
             };
             const id = buttonId + '_' + i;
-            const stageSelector = document.getElementById(
-                `stage-selector_${id}`
-            );
+            const stageSelector = document.getElementById(`stage-selector_${id}`) as HTMLSelectElement;
             currentGame.stage = stageSelector.value;
 
-            const modeSelector = document.getElementById(`mode-selector_${id}`);
+            const modeSelector = document.getElementById(`mode-selector_${id}`) as HTMLSelectElement;
             currentGame.mode = modeSelector.value;
             games.push(currentGame);
         }
@@ -151,7 +149,7 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
     removeButton.innerText = 'REMOVE';
     removeButton.classList.add('max-width');
     removeButton.onclick = event => {
-        const buttonId = event.target.id.split('_')[1];
+        const buttonId = (event.target as HTMLButtonElement).id.split('_')[1];
         if (activeRoundId.value === buttonId) {
             activeRoundId.value = Object.keys(rounds.value)[0];
         }
@@ -175,38 +173,36 @@ function createRoundElem(numberOfGames, id, remindToUpdate) {
 
     roundElem.appendChild(buttonContainer);
 
-    document.getElementById('round-grid').prepend(roundElem);
+    document.getElementById('round-grid')
+        .prepend(roundElem);
 }
 
-function updateRoundElem(id, data) {
-    const nameInput = document.getElementById(`name-input_${id}`);
+function updateRoundElem(id: string, data: Round) {
+    const nameInput = document.getElementById(`name-input_${id}`) as HTMLInputElement;
     nameInput.value = data.meta.name;
 
-    const numberOfGames =
-        document.getElementById(`round_${id}`).querySelectorAll('select')
-            .length / 2;
+    const numberOfGames = document
+        .getElementById(`round_${id}`)
+        .querySelectorAll('select')
+        .length / 2;
 
     for (let i = 0; i < numberOfGames; i++) {
-        const stageSelector = document.getElementById(
-            `stage-selector_${id}_${i}`
-        );
-        const modeSelector = document.getElementById(
-            `mode-selector_${id}_${i}`
-        );
+        const stageSelector = document.getElementById(`stage-selector_${id}_${i}`) as HTMLSelectElement;
+        const modeSelector = document.getElementById(`mode-selector_${id}_${i}`) as HTMLSelectElement;
 
         stageSelector.value = data.games[i].stage;
         modeSelector.value = data.games[i].mode;
     }
 }
 
-function deleteRoundElem(id) {
+function deleteRoundElem(id: string) {
     const roundSpace = document.getElementById(`round_${id}`);
     if (roundSpace) {
         roundSpace.parentNode.removeChild(roundSpace);
     }
 }
 
-function updateOrCreateCreateRoundElem(id, data) {
+function updateOrCreateCreateRoundElem(id: string, data: Round) {
     const container = document.getElementById(`round_${id}`);
     if (container) {
         updateRoundElem(id, data);
@@ -234,6 +230,8 @@ rounds.on('change', (newValue, oldValue) => {
     // Handle deletions
     if (oldValue) {
         for (const id in oldValue) {
+            if (!Object.prototype.hasOwnProperty.call(oldValue, id)) continue;
+
             if (!newValue[id]) {
                 deleteRoundElem(id);
             }
@@ -241,7 +239,7 @@ rounds.on('change', (newValue, oldValue) => {
     }
 });
 
-function roundObjectsMatch(val1, val2) {
+function roundObjectsMatch(val1: Round, val2: Round) {
     if (!val1 || !val2) return false;
     if (val1.meta.name !== val2.meta.name) return false;
     if (val1.games.length !== val2.games.length) return false;
