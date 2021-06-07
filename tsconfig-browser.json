@@ -22,12 +22,11 @@
             "nodecg/*": [
                 "../../types/*"
             ],
-            "schemas": [
-                "src/types/schemas"
+            "replicants/*": [
+                "src/types/schemas/*"
             ],
-            "bundle/*": [
-                "src/*",
-                "src/dashboard/*"
+            "types/*": [
+                "src/types/*"
             ]
         }
     }
