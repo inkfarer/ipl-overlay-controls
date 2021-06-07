@@ -15,13 +15,14 @@ const nextStageTimerToggle = document.getElementById('next-stage-timer-toggle') 
 mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
 });
+
 mainSceneUpdateBtn.onclick = () => {
     mainFlavorText.value = flavorTextInput.value;
     updateStageTime();
 };
 
 nextStageTimerToggle.addEventListener('change', e => {
-    nextStageTimerToggle.checked = (e.target as HTMLInputElement).checked;
+    nextRoundStartTimeShown.value = (e.target as HTMLInputElement).checked;
 });
 
 nextRoundStartTimeShown.on('change', newValue => {
