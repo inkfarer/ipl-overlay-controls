@@ -1,6 +1,6 @@
 // For selectors
 
-function clearSelectors(className) {
+export function clearSelectors(className: string): void {
     const selectors = document.getElementsByClassName(className);
     for (let i = 0; i < selectors.length; i++) {
         const element = selectors[i];
@@ -8,7 +8,7 @@ function clearSelectors(className) {
     }
 }
 
-function addSelector(text, className, value = '') {
+export function addSelector(text: string, className: string, value: string): void {
     const elements = document.querySelectorAll(`.${className}`);
     Array.from(elements).forEach(item => {
         const opt = document.createElement('option');
@@ -20,14 +20,19 @@ function addSelector(text, className, value = '') {
 
 // For toggling show/hide buttons
 
-function setToggleButtonDisabled(toggleTrue, toggleFalse, state) {
+export function setToggleButtonDisabled(
+    toggleTrue: HTMLButtonElement,
+    toggleFalse: HTMLButtonElement,
+    state: boolean): void {
     toggleTrue.disabled = state;
     toggleFalse.disabled = !state;
 }
 
 // Remind user to press 'update'
 
-function addChangeReminder(elements, updateButton) {
+export function addChangeReminder(
+    elements: HTMLElement[] | NodeListOf<HTMLElement>,
+    updateButton: HTMLButtonElement): void {
     elements.forEach(element => {
         if (!element.tagName) return;
 
@@ -46,25 +51,19 @@ function addChangeReminder(elements, updateButton) {
     });
 }
 
-// For checkboxes to update replicants
-
-function setReplicant(name, e) {
-    nodecg.Replicant(name).value = e.target.checked;
-}
-
-function addDots(string) {
+export function addDots(value: string): string {
     const maxNameLength = 48;
     const rolloff = '...';
 
-    if (!string) return string;
-    if (string.length > maxNameLength) {
-        return string.substring(0, maxNameLength - rolloff.length) + rolloff;
+    if (!value) return value;
+    if (value.length > maxNameLength) {
+        return value.substring(0, maxNameLength - rolloff.length) + rolloff;
     }
 
-    return string;
+    return value;
 }
 
-function fillList(selectElem, data) {
+export function fillList(selectElem: HTMLSelectElement, data: Array<string>): void {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         const option = document.createElement('option');
@@ -74,7 +73,7 @@ function fillList(selectElem, data) {
     }
 }
 
-const splatStages = [
+export const splatStages = [
     'Ancho-V Games',
     'Arowana Mall',
     'Blackbelly Skatepark',
@@ -103,7 +102,7 @@ const splatStages = [
 ];
 splatStages.sort();
 
-const splatModes = [
+export const splatModes = [
     'Clam Blitz',
     'Tower Control',
     'Rainmaker',
@@ -112,16 +111,3 @@ const splatModes = [
     'Unknown Mode'
 ];
 splatModes.sort();
-
-module.exports = {
-    fillList,
-    addSelector,
-    clearSelectors,
-    setToggleButtonDisabled,
-    addChangeReminder,
-    addDots,
-    splatStages,
-    splatModes
-};
-
-window.setReplicant = setReplicant;

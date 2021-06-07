@@ -1,4 +1,4 @@
-import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'schemas';
+import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'types/schemas';
 import { addChangeReminder } from '../globalScripts';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
@@ -10,18 +10,22 @@ const mainSceneUpdateBtn = document.getElementById('main-scene-update-btn') as H
 const minuteInput = document.getElementById('next-stage-minute-input') as HTMLInputElement;
 const hourInput = document.getElementById('next-stage-hour-input') as HTMLInputElement;
 const daySelect = document.getElementById('next-stage-day-select') as HTMLSelectElement;
+const nextStageTimerToggle = document.getElementById('next-stage-timer-toggle') as HTMLInputElement;
 
 mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
 });
-
 mainSceneUpdateBtn.onclick = () => {
     mainFlavorText.value = flavorTextInput.value;
     updateStageTime();
 };
 
+nextStageTimerToggle.addEventListener('change', e => {
+    nextStageTimerToggle.checked = (e.target as HTMLInputElement).checked;
+});
+
 nextRoundStartTimeShown.on('change', newValue => {
-    (document.getElementById('next-stage-timer-toggle') as HTMLInputElement).checked = newValue;
+    nextStageTimerToggle.checked = newValue;
 });
 
 nextRoundStartTime.on('change', newValue => {
@@ -89,4 +93,3 @@ function updateStageTime() {
 }
 
 addChangeReminder(document.querySelectorAll('.main-update-reminder'), mainSceneUpdateBtn);
-
