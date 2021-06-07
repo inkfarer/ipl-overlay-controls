@@ -1,18 +1,15 @@
+import { Caster } from 'types/schemas';
+import { generateId } from '../../helpers/generateId';
 import { addChangeReminder } from '../globalScripts';
-import '../globalStyles.css';
-import './casters.css';
+import { casters } from './replicants';
 
-const casters = nodecg.Replicant('casters');
-const radiaSettings = nodecg.Replicant('radiaSettings');
-
-const btnCreateCaster = document.getElementById('add-caster-btn');
-const btnLoadFromVC = document.getElementById('load-casters-btn');
+const btnCreateCaster = document.getElementById('add-caster-btn') as HTMLButtonElement;
 
 casters.on('change', (newValue, oldValue) => {
     for (const id in newValue) {
         if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
 
-        const object = newValue[id];
+        const object: Caster = newValue[id];
 
         if (oldValue) {
             if (!casterObjectsMatch(object, oldValue[id])) {
@@ -26,6 +23,8 @@ casters.on('change', (newValue, oldValue) => {
     // Handle deletions
     if (oldValue) {
         for (const id in oldValue) {
+            if (!Object.prototype.hasOwnProperty.call(oldValue, id)) continue;
+
             if (!newValue[id]) {
                 deleteCasterElem(id);
             }
@@ -41,69 +40,7 @@ btnCreateCaster.addEventListener('click', () => {
     disableCreateCasterButton();
 });
 
-document.getElementById('copy-casters-btn').addEventListener('click', () => {
-    let casterText = '';
-
-    Object.keys(casters.value).forEach((item, index, arr) => {
-        const element = casters.value[item];
-        casterText += `${element.name} (${element.pronouns}, ${element.twitter})`;
-
-        if (arr[index + 2]) casterText += ', ';
-        else if (arr[index + 1]) casterText += ' & ';
-    });
-
-    navigator.clipboard.writeText(casterText).then(null, () => {
-        console.error('Error copying to clipboard.');
-    });
-});
-
-radiaSettings.on('change', newValue => {
-    // If the api isn't enabled we disable the "load from vc" button
-    btnLoadFromVC.disabled = !(newValue.enabled && newValue.guildID);
-});
-
-btnLoadFromVC.addEventListener('click', () => {
-    nodecg.sendMessage('getLiveCommentators', {}, (e, result) => {
-        if (e) {
-            console.error(e);
-            return;
-        }
-
-        if (result.extra && result.extra.length > 0) {
-            for (let i = 0; i < result.extra.length; i++) {
-                const extraCaster = result.extra[i];
-                updateOrCreateCreateCasterElem(extraCaster.discord_user_id, extraCaster, true);
-            }
-
-            setUncommittedButtonDisabled(true);
-        } else {
-            setUncommittedButtonDisabled(false);
-        }
-    });
-});
-
-function casterObjectsMatch(val1, val2) {
-    if (!val1 || !val2) return false;
-
-    return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
-}
-
-function setUncommittedButtonDisabled(disabled) {
-    document.querySelectorAll('.update-button.uncommitted').forEach(elem => {
-        elem.disabled = disabled;
-    });
-}
-
-function generateId() {
-    return String(Math.random().toString(36).substr(2, 9));
-}
-
-function deleteCasterElem(id) {
-    const container = document.getElementById(`caster-container_${id}`);
-    container.parentNode.removeChild(container);
-}
-
-function updateOrCreateCreateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, isUncommitted = false) {
+export function updateOrCreateCreateCasterElem(id: string, data: Caster, isUncommitted = false): void {
     const container = document.getElementById(`caster-container_${id}`);
     if (container) {
         updateCasterElem(id, data, !isUncommitted);
@@ -112,20 +49,16 @@ function updateOrCreateCreateCasterElem(id, data = { name: '', twitter: '', pron
     }
 }
 
-function updateCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, resetColor = true) {
-    document.getElementById(`caster-name-input_${id}`).value = data.name;
-    document.getElementById(`caster-twitter-input_${id}`).value = data.twitter;
-    document.getElementById(`caster-pronoun-input_${id}`).value = data.pronouns;
+function updateCasterElem(id: string, data: Caster, resetColor = true) {
+    (document.getElementById(`caster-name-input_${id}`) as HTMLInputElement).value = data.name || '';
+    (document.getElementById(`caster-twitter-input_${id}`) as HTMLInputElement).value = data.twitter || '';
+    (document.getElementById(`caster-pronoun-input_${id}`) as HTMLInputElement).value = data.pronouns || '';
     if (resetColor) {
         document.getElementById(`update-caster_${id}`).style.backgroundColor = 'var(--blue)';
     }
 }
 
-function getCasterContainerCount() {
-    return document.querySelectorAll('.caster-container').length;
-}
-
-function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, isUncommitted = true) {
+function createCasterElem(id: string, data: Caster = {}, isUncommitted = true) {
     const container = document.createElement('div');
     container.classList.add('space');
     container.classList.add('caster-container');
@@ -170,22 +103,22 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
 
     // Button click event
     document.getElementById(`update-caster_${id}`).addEventListener('click', e => {
-        const id = e.target.id.split('_')[1];
+        const id = (e.target as HTMLButtonElement).id.split('_')[1];
         try {
             casters.value[id] = {
-                name: document.getElementById(`caster-name-input_${id}`).value,
-                twitter: document.getElementById(`caster-twitter-input_${id}`).value,
-                pronouns: document.getElementById(`caster-pronoun-input_${id}`).value
+                name: (document.getElementById(`caster-name-input_${id}`) as HTMLInputElement).value,
+                twitter: (document.getElementById(`caster-twitter-input_${id}`) as HTMLInputElement).value,
+                pronouns: (document.getElementById(`caster-pronoun-input_${id}`) as HTMLInputElement).value
             };
         } catch (error) {
             console.error(error);
             return;
         }
 
-        e.target.classList.remove('uncommitted');
+        (e.target as HTMLButtonElement).classList.remove('uncommitted');
     });
     document.getElementById(`remove-caster_${id}`).addEventListener('click', e => {
-        const id = e.target.id.split('_')[1];
+        const id = (e.target as HTMLButtonElement).id.split('_')[1];
 
         if (casters.value[id]) {
             // This creates an error, but works anyways.
@@ -201,4 +134,25 @@ function createCasterElem(id, data = { name: '', twitter: '', pronouns: '' }, is
 
 function disableCreateCasterButton() {
     btnCreateCaster.disabled = getCasterContainerCount() >= 3;
+}
+
+function getCasterContainerCount() {
+    return document.querySelectorAll('.caster-container').length;
+}
+
+function casterObjectsMatch(val1: Caster, val2: Caster) {
+    if (!val1 || !val2) return false;
+
+    return !(val1.name !== val2.name || val1.twitter !== val2.twitter || val1.pronouns !== val2.pronouns);
+}
+
+function deleteCasterElem(id: string) {
+    const container = document.getElementById(`caster-container_${id}`);
+    container.parentNode.removeChild(container);
+}
+
+export function setUncommittedButtonDisabled(disabled: boolean): void {
+    document.querySelectorAll('.update-button.uncommitted').forEach(elem => {
+        (elem as HTMLButtonElement).disabled = disabled;
+    });
 }
