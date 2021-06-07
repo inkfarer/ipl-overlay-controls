@@ -84,12 +84,8 @@ customColorToggle.onchange = e => {
 };
 
 function updateCustomColorToggle(checked: boolean) {
-    const colorSelectContainer = document.getElementById(
-        'color-select-container'
-    );
-    const customColorContainer = document.getElementById(
-        'custom-color-select-container'
-    );
+    const colorSelectContainer = document.getElementById('color-select-container');
+    const customColorContainer = document.getElementById('custom-color-select-container');
 
     if (checked) {
         colorSelectContainer.style.display = 'none';

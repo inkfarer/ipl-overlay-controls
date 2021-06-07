@@ -2,7 +2,7 @@ import { NodeCGBrowser } from 'nodecg/browser';
 
 import './scores';
 import './scoreboardData';
-import './colorData';
+import './colorEditor';
 import './nextTeams';
 
 import '../globalStyles.css';
