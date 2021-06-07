@@ -27,7 +27,6 @@
             ],
             "bundle/*": [
                 "src/*",
-                "src/graphics/*",
                 "src/dashboard/*"
             ]
         }
