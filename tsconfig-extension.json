@@ -14,13 +14,11 @@
             "types/*": [
                 "src/types/*"
             ]
-        }
+        },
+        "types": [
+            "webpack-env"
+        ]
     },
-    "include": [
-        "src/extension/**/*.ts",
-        "src/types/**/*.d.ts",
-        "../../types/server.d.ts"
-    ],
     "exclude": [
         "node_modules"
     ]

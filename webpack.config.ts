@@ -115,6 +115,7 @@ function dashboardConfig(): webpack.Configuration {
 const extensionConfig: webpack.Configuration = {
     entry: './src/extension/index.ts',
     resolve: {
+        extensions: ['.js', '.ts', '.json'],
         plugins: [
             new TsconfigPathsPlugin({
                 configFile: 'tsconfig-extension.json'
@@ -127,6 +128,30 @@ const extensionConfig: webpack.Configuration = {
         library: {
             type: 'commonjs2'
         }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: '/node_modules',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+            {
+                test: /\.ts$/,
+                exclude: '/node_modules',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [ '@babel/preset-env', '@babel/preset-typescript' ]
+                    }
+                }
+            }
+        ]
     },
     mode: isProd ? 'production' : 'development',
     externals: [nodeExternals()],
