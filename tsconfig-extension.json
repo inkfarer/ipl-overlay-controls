@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "noImplicitAny": true,
-        "module": "es6",
-        "target": "es5",
+        "module": "commonjs",
+        "target": "es2015",
         "allowJs": true,
         "esModuleInterop": true,
         "moduleResolution": "Node",
@@ -15,5 +15,13 @@
                 "src/types/*"
             ]
         }
-    }
+    },
+    "include": [
+        "src/extension/**/*.ts",
+        "src/types/**/*.d.ts",
+        "../../types/server.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
