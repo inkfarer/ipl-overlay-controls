@@ -8,10 +8,10 @@
         "baseUrl": ".",
         "paths": {
             "nodecg/*": [
-                "../../*"
+                "../../types/*"
             ],
-            "schemas": [
-                "src/types/schemas"
+            "types/*": [
+                "src/types/*"
             ]
         }
     }
