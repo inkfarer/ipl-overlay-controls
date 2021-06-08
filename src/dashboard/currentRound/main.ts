@@ -1,10 +1,11 @@
-import { addChangeReminder, fillList, splatModes, splatStages } from '../globalScripts';
+import { addChangeReminder, fillList } from '../globalScripts';
 import { ActiveRoundId, Game, GameWinners, Rounds } from 'types/schemas';
 
 import './setWinnersAutomatically';
 
 import '../globalStyles.css';
 import './currentRound.css';
+import { splatModes, splatStages } from '../../helpers/splatoonData';
 
 const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');

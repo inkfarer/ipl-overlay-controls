@@ -5,11 +5,12 @@ import { RadiaSettings } from 'types/schemas';
 /* eslint-disable @typescript-eslint/no-var-requires */
 export default (nodecg: NodeCG): void => {
     nodecgContext.set(nodecg);
+
     require('./music');
-    require('./gameWinnerSetter')(nodecg);
-    require('./tournamentImporter').listen(nodecg);
-    require('./roundImporter').listen(nodecg);
-    require('./fileImport')(nodecg);
+    require('./gameWinnerSetter');
+    require('./tournamentImporter');
+    require('./roundImporter');
+    require('./fileImport');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 
@@ -21,6 +22,6 @@ export default (nodecg: NodeCG): void => {
         radiaSettings.value.enabled = false;
     } else {
         radiaSettings.value.enabled = true;
-        require('./radia').listen(nodecg);
+        require('./radia');
     }
 };
