@@ -113,7 +113,7 @@ function dashboardConfig(): webpack.Configuration {
 }
 
 const extensionConfig: webpack.Configuration = {
-    entry: './src/extension/index.js',
+    entry: './src/extension/index.ts',
     resolve: {
         plugins: [
             new TsconfigPathsPlugin({
@@ -122,7 +122,7 @@ const extensionConfig: webpack.Configuration = {
         ]
     },
     output: {
-        filename: 'index.js',
+        filename: 'index.ts',
         path: path.join(__dirname, 'extension'),
         library: {
             type: 'commonjs2'
