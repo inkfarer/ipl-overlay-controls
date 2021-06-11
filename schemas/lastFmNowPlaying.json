@@ -19,7 +19,6 @@
             }
         }
     ],
-    "additionalProperties": false,
     "default": {
         "artist": "Unknown Artist",
         "song": "Unknown Song",
