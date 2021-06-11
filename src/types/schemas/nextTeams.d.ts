@@ -7,7 +7,9 @@
 
 export interface NextTeams {
 	teamAInfo?: {
+		id?: string;
 		name?: string;
+		logoUrl?: string;
 		players?: {
 			name?: string;
 			[k: string]: any;
@@ -15,7 +17,9 @@ export interface NextTeams {
 		[k: string]: any;
 	};
 	teamBInfo?: {
+		id?: string;
 		name?: string;
+		logoUrl?: string;
 		players?: {
 			name?: string;
 			[k: string]: any;

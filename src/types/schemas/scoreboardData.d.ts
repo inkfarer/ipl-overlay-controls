@@ -16,7 +16,9 @@ export interface ScoreboardData {
 	};
 	swapColorOrder?: boolean;
 	teamAInfo?: {
+		id?: string;
 		name?: string;
+		logoUrl?: string;
 		players?: {
 			name?: string;
 			[k: string]: any;
@@ -24,7 +26,9 @@ export interface ScoreboardData {
 		[k: string]: any;
 	};
 	teamBInfo?: {
+		id?: string;
 		name?: string;
+		logoUrl?: string;
 		players?: {
 			name?: string;
 			[k: string]: any;

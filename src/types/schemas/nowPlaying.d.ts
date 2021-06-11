@@ -8,8 +8,5 @@
 export interface NowPlaying {
 	artist?: string;
 	song?: string;
-	album?: string;
-	cover?: string;
-	artistSong?: string;
 	[k: string]: any;
 }

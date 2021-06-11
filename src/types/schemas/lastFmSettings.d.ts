@@ -7,5 +7,4 @@
 
 export interface LastFmSettings {
 	username?: string;
-	[k: string]: any;
 }

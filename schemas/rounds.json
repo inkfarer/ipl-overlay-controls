@@ -38,7 +38,6 @@
     "additionalProperties": {
         "$ref": "#/definitions/round"
     },
-    "additionalItems": true,
     "default": {
         "0": {
             "meta": { "name": "Default round" },

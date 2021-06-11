@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "string",
-    "pattern": "(main|stages|teams)",
+    "enum": ["main", "stages", "teams"],
     "default": "main"
 }

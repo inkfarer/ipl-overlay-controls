@@ -1,39 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
 
-    "definitions": {
-        "player": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": true
-        },
-        "team": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "logoUrl": {
-                    "type": "string"
-                },
-                "players": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/player"
-                    }
-                }
-            },
-            "additionalProperties": true
-        }
-    },
-
     "type": "object",
     "properties": {
         "meta": {
@@ -47,7 +14,7 @@
         "data": {
             "type": "array",
             "items": {
-                "$ref": "#/definitions/team"
+                "$ref": "defs/team.json#/team"
             }
         }
     },

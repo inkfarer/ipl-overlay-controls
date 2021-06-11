@@ -10,17 +10,15 @@ export interface TournamentData {
 		id?: string;
 		[k: string]: any;
 	};
-	data?: Team[];
-	[k: string]: any;
-}
-export interface Team {
-	id?: string;
-	name?: string;
-	logoUrl?: string;
-	players?: Player[];
-	[k: string]: any;
-}
-export interface Player {
-	name?: string;
+	data?: {
+		id?: string;
+		name?: string;
+		logoUrl?: string;
+		players?: {
+			name?: string;
+			[k: string]: any;
+		}[];
+		[k: string]: any;
+	}[];
 	[k: string]: any;
 }
