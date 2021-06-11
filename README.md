@@ -52,15 +52,16 @@ The "lastfm", "smashgg", "radia" sections may be omitted, though functionality w
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-03-21:
+The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-06-11:
 
 - [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
 - [reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
 - [kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 - [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
-- [sos-overlays](https://github.com/inkfarer/sos-overlays/tree/legacy)
+- [sos-overlays](https://github.com/inkfarer/sos-overlays)
+- [ut-overlays](https://github.com/inkfarer/ut-overlays)
 
-The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-03-25:
+The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-06-11:
 
 - [sue-overlays](https://github.com/IPLSplatoon/step-up-europe-overlays)
 - [tg-overlays](https://github.com/inkfarer/tg-overlays)
