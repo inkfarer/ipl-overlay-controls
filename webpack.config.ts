@@ -22,15 +22,16 @@ function dashboardConfig(): webpack.Configuration {
 
     plugins = plugins.concat(
         [
-            ...Object.keys(entries).map(
-                (entryName) =>
-                    new HtmlWebpackPlugin({
-                        filename: `${entryName}.html`,
-                        chunks: [entryName],
-                        title: entryName,
-                        template: `./${entryName}/${entryName}.html`
-                    })
-            )
+            ...Object.keys(entries)
+                .map(
+                    (entryName) =>
+                        new HtmlWebpackPlugin({
+                            filename: `${entryName}.html`,
+                            chunks: [entryName],
+                            title: entryName,
+                            template: `./${entryName}/${entryName}.html`
+                        })
+                )
         ]
     );
 
@@ -90,7 +91,7 @@ function dashboardConfig(): webpack.Configuration {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            presets: [ '@babel/preset-env', '@babel/preset-typescript' ]
+                            presets: ['@babel/preset-env', '@babel/preset-typescript']
                         }
                     }
                 }
@@ -123,7 +124,7 @@ const extensionConfig: webpack.Configuration = {
         ]
     },
     output: {
-        filename: 'index.ts',
+        filename: 'index.js',
         path: path.join(__dirname, 'extension'),
         library: {
             type: 'commonjs2'
@@ -137,7 +138,8 @@ const extensionConfig: webpack.Configuration = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: [['@babel/preset-env', { modules: 'commonjs' }]],
+                        plugins: ['add-module-exports']
                     }
                 }
             },
@@ -147,7 +149,8 @@ const extensionConfig: webpack.Configuration = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [ '@babel/preset-env', '@babel/preset-typescript' ]
+                        presets: [['@babel/preset-env', { modules: 'commonjs' }], '@babel/preset-typescript'],
+                        plugins: ['add-module-exports']
                     }
                 }
             }
@@ -156,7 +159,7 @@ const extensionConfig: webpack.Configuration = {
     mode: isProd ? 'production' : 'development',
     externals: [nodeExternals()],
     externalsPresets: { node: true }
-}
+};
 
 export default [
     dashboardConfig(),

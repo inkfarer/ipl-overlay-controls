@@ -18,7 +18,9 @@ export interface Team {
 	name?: string;
 	logoUrl?: string;
 	players?: Player[];
+	[k: string]: any;
 }
 export interface Player {
 	name?: string;
+	[k: string]: any;
 }
