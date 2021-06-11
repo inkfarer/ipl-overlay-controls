@@ -132,15 +132,13 @@ async function getSmashGGData(slug: string, token: string): Promise<TournamentDa
                         pagePromises.push(getSmashGGPage(i, slug, token));
                     }
 
-                    Promise.all(pagePromises)
-                        .then(pages => {
-                            for (let i = 0; i < pages.length; i++) {
-                                tourneyInfo.data = tourneyInfo.data.concat(pages[i].pageInfo);
-                            }
-                        });
+                    const pages = await Promise.all(pagePromises);
+
+                    for (let i = 0; i < pages.length; i++) {
+                        tourneyInfo.data = tourneyInfo.data.concat(pages[i].pageInfo);
+                    }
                 }
 
-                // We did it
                 resolve(tourneyInfo);
             })
             .catch(err => {
