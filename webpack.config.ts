@@ -157,7 +157,7 @@ const extensionConfig: webpack.Configuration = {
         ]
     },
     mode: isProd ? 'production' : 'development',
-    devtool: isProd ? null : 'source-map',
+    devtool: isProd ? false : 'source-map',
     externals: [nodeExternals()],
     externalsPresets: { node: true }
 };
