@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
+
     "type": "object",
     "properties": {
         "meta": {
@@ -13,23 +14,7 @@
         "data": {
             "type": "array",
             "items": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "players": {
-                        "type": "array",
-                        "items": {
-                            "name": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
+                "$ref": "defs/team.json#/team"
             }
         }
     },

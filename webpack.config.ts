@@ -22,15 +22,16 @@ function dashboardConfig(): webpack.Configuration {
 
     plugins = plugins.concat(
         [
-            ...Object.keys(entries).map(
-                (entryName) =>
-                    new HtmlWebpackPlugin({
-                        filename: `${entryName}.html`,
-                        chunks: [entryName],
-                        title: entryName,
-                        template: `./${entryName}/${entryName}.html`
-                    })
-            )
+            ...Object.keys(entries)
+                .map(
+                    (entryName) =>
+                        new HtmlWebpackPlugin({
+                            filename: `${entryName}.html`,
+                            chunks: [entryName],
+                            title: entryName,
+                            template: `./${entryName}/${entryName}.html`
+                        })
+                )
         ]
     );
 
@@ -90,7 +91,7 @@ function dashboardConfig(): webpack.Configuration {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            presets: [ '@babel/preset-env', '@babel/preset-typescript' ]
+                            presets: ['@babel/preset-env', '@babel/preset-typescript']
                         }
                     }
                 }
@@ -113,8 +114,9 @@ function dashboardConfig(): webpack.Configuration {
 }
 
 const extensionConfig: webpack.Configuration = {
-    entry: './src/extension/index.js',
+    entry: './src/extension/index.ts',
     resolve: {
+        extensions: ['.js', '.ts', '.json'],
         plugins: [
             new TsconfigPathsPlugin({
                 configFile: 'tsconfig-extension.json'
@@ -128,10 +130,37 @@ const extensionConfig: webpack.Configuration = {
             type: 'commonjs2'
         }
     },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: '/node_modules',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [['@babel/preset-env', { modules: 'commonjs' }]],
+                        plugins: ['add-module-exports']
+                    }
+                }
+            },
+            {
+                test: /\.ts$/,
+                exclude: '/node_modules',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [['@babel/preset-env', { modules: 'commonjs' }], '@babel/preset-typescript'],
+                        plugins: ['add-module-exports']
+                    }
+                }
+            }
+        ]
+    },
     mode: isProd ? 'production' : 'development',
+    devtool: isProd ? false : 'source-map',
     externals: [nodeExternals()],
     externalsPresets: { node: true }
-}
+};
 
 export default [
     dashboardConfig(),

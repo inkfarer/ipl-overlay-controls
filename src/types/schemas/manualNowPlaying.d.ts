@@ -8,5 +8,4 @@
 export interface ManualNowPlaying {
 	artist?: string;
 	song?: string;
-	[k: string]: any;
 }

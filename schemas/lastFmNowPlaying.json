@@ -1,23 +1,24 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
-    "properties": {
-        "artist": {
-            "type": "string"
+    "allOf": [
+        {
+            "$ref": "defs/songInfo.json#/songInfo"
         },
-        "song": {
-            "type": "string"
-        },
-        "album": {
-            "type": "string"
-        },
-        "cover": {
-            "type": "string"
-        },
-        "artistSong": {
-            "type": "string"
+        {
+            "properties": {
+                "album": {
+                    "type": "string"
+                },
+                "cover": {
+                    "type": "string"
+                },
+                "artistSong": {
+                    "type": "string"
+                }
+            }
         }
-    },
+    ],
     "default": {
         "artist": "Unknown Artist",
         "song": "Unknown Song",

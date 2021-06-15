@@ -6,7 +6,6 @@
  */
 
 export interface RadiaSettings {
-	guildID?: string;
-	enabled?: boolean;
-	[k: string]: any;
+	guildID: string;
+	enabled: boolean;
 }

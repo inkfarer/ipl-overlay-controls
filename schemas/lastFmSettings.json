@@ -6,6 +6,7 @@
             "type": "string"
         }
     },
+    "additionalProperties": false,
     "default": {
         "username": ""
     }

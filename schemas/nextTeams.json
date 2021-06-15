@@ -5,41 +5,11 @@
     "properties": {
         "teamAInfo": {
             "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "players": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
+            "$ref": "defs/team.json#/team"
         },
         "teamBInfo": {
             "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "players": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
+            "$ref": "defs/team.json#/team"
         }
     },
     "default": {

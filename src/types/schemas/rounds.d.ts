@@ -6,16 +6,18 @@
  */
 
 export interface Rounds {
-	[k: string]: {
-		meta?: {
-			name?: string;
-			[k: string]: any;
-		};
-		games?: {
-			stage?: string;
-			mode?: string;
-			[k: string]: any;
-		}[];
+	[k: string]: Round;
+}
+export interface Round {
+	meta?: {
+		name?: string;
 		[k: string]: any;
 	};
+	games?: Game[];
+	[k: string]: any;
+}
+export interface Game {
+	stage?: string;
+	mode?: string;
+	[k: string]: any;
 }

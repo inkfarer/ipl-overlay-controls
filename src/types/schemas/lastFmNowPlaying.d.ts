@@ -5,11 +5,13 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface LastFmNowPlaying {
+export type LastFmNowPlaying = {
 	artist?: string;
-	song?: string;
+	song: string;
+	[k: string]: any;
+} & {
 	album?: string;
 	cover?: string;
 	artistSong?: string;
 	[k: string]: any;
-}
+};

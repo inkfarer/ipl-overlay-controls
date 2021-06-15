@@ -22,13 +22,8 @@
             "nodecg/*": [
                 "../../types/*"
             ],
-            "schemas": [
-                "src/types/schemas"
-            ],
-            "bundle/*": [
-                "src/*",
-                "src/graphics/*",
-                "src/dashboard/*"
+            "types/*": [
+                "src/types/*"
             ]
         }
     }
