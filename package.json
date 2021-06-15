@@ -19,6 +19,7 @@
     "scripts": {
         "build": "cross-env NODE_ENV=production webpack",
         "clean": "trash node_modules/.cache && trash dashboard && trash extension",
+        "cleanbuild": "npm run clean && npm run build",
         "start": "node ../..",
         "watch": "webpack -w",
         "schema-types": "nodecg schema-types",
@@ -97,6 +98,7 @@
     "license": "MIT",
     "dependencies": {
         "axios": "^0.21.1",
+        "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
@@ -105,6 +107,8 @@
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-typescript": "^7.13.0",
+        "@types/clone": "^2.1.0",
+        "@types/express-fileupload": "^1.1.6",
         "@types/node": "^15.12.1",
         "@types/webpack": "^5.28.0",
         "@types/webpack-livereload-plugin": "^2.3.2",

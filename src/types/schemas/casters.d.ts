@@ -6,10 +6,10 @@
  */
 
 export interface Casters {
-	[k: string]: {
-		name?: string;
-		twitter?: string;
-		pronouns?: string;
-		[k: string]: any;
-	};
+	[k: string]: Caster;
+}
+export interface Caster {
+	name?: string;
+	twitter?: string;
+	pronouns?: string;
 }

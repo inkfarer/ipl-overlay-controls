@@ -1,23 +1,24 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { LastFmNode } = require('lastfm');
-const clone = require('clone');
+// @ts-ignore: TODO: No type defs available, could be written on fork
+import { LastFmNode } from 'lastfm';
+import clone from 'clone';
+import * as nodecgContext from './util/nodecg';
+import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from '../types/schemas';
+import { ReplicantServer } from 'nodecg/lib/replicant';
+const nodecg = nodecgContext.get();
 
-module.exports = function (nodecg) {
-    handleLastFm(nodecg);
-    handleNowPlaying(nodecg);
-};
+handleLastFm();
+handleNowPlayingSource();
 
-function handleNowPlaying(nodecg) {
-    const lastFmNowPlaying = nodecg.Replicant('lastFmNowPlaying');
-    const manualNowPlaying = nodecg.Replicant('manualNowPlaying');
+function handleNowPlayingSource() {
+    const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
+    const manualNowPlaying = nodecg.Replicant<ManualNowPlaying>('manualNowPlaying');
+    const nowPlayingSource = nodecg.Replicant<NowPlayingSource>('nowPlayingSource');
+    const nowPlaying = nodecg.Replicant<NowPlaying>('nowPlaying');
 
-    const replicantToSource = {
+    const replicantToSource: {[key: string]: ReplicantServer<unknown>} = {
         lastfm: lastFmNowPlaying,
         manual: manualNowPlaying
     };
-
-    const nowPlayingSource = nodecg.Replicant('nowPlayingSource');
-    const nowPlaying = nodecg.Replicant('nowPlaying');
 
     nowPlayingSource.on('change', newValue => {
         switch (newValue) {
@@ -41,14 +42,11 @@ function handleNowPlaying(nodecg) {
     }
 }
 
-function handleLastFm(nodecg) {
-    if (
-        !nodecg.bundleConfig ||
-        typeof nodecg.bundleConfig.lastfm === 'undefined'
-    ) {
-        nodecg.log.error(
+function handleLastFm() {
+    if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.lastfm === 'undefined') {
+        nodecg.log.warn(
             `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! ` +
-                'Some graphics may not function as expected.'
+            'Getting music information automatically will not function.'
         );
         return;
     }
@@ -63,8 +61,9 @@ function handleLastFm(nodecg) {
         persistent: false
     });
 
-    const lastFmSettings = nodecg.Replicant('lastFmSettings');
-    let trackStream;
+    const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let trackStream: any;
 
     lastFmSettings.on('change', newValue => {
         if (trackStream) {
@@ -73,7 +72,8 @@ function handleLastFm(nodecg) {
 
         trackStream = lastfm.stream(newValue.username);
 
-        trackStream.on('nowPlaying', track => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        trackStream.on('nowPlaying', (track: any) => {
             nowPlaying.value = {
                 artist: track.artist['#text'],
                 song: track.name,
@@ -83,7 +83,8 @@ function handleLastFm(nodecg) {
             };
         });
 
-        trackStream.on('error', e => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        trackStream.on('error', (e: any) => {
             // Error 6 = "User not found"
             if (e.error === 6) {
                 nodecg.log.info(

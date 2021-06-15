@@ -5,4 +5,4 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ActiveBreakScene = string;
+export type ActiveBreakScene = 'main' | 'stages' | 'teams';

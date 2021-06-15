@@ -9,6 +9,8 @@
 			"type": "boolean"
 		}
 	},
+	"required": ["guildID", "enabled"],
+	"additionalProperties": false,
 	"default": {
 		"guildID": "",
 		"enabled": false

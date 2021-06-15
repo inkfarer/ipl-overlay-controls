@@ -13,7 +13,9 @@ export interface TournamentData {
 	data?: {
 		id?: string;
 		name?: string;
+		logoUrl?: string;
 		players?: {
+			name?: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;
