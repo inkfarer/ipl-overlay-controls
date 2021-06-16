@@ -1,13 +1,16 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { TournamentData } from 'schemas/tournamentData';
+import { TournamentData, ScoreboardData, NextTeams } from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
+import clone from 'clone';
 
 const nodecg = nodecgContext.get();
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
+const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
@@ -29,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         case 'battlefy':
             getBattlefyData(data.id)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
                 })
                 .catch(err => {
@@ -44,7 +47,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
 
             getSmashGGData(data.id, smashGGKey)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
                 })
                 .catch(err => {
@@ -54,7 +57,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         case 'raw':
             getRaw(data.id)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.id);
                 })
                 .catch(err => {
@@ -65,6 +68,23 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
             ack(new Error('Invalid method given.'));
     }
 });
+
+export function updateTeamDataReplicants(data: TournamentData): void {
+    if (data.data.length <= 0) {
+        throw new Error('Tournament has no teams.');
+    }
+
+    tournamentData.value = data;
+
+    const firstTeam = data.data[0];
+    const secondTeam = data.data[1] || data.data[0];
+
+    scoreboardData.value.teamAInfo = clone(firstTeam);
+    scoreboardData.value.teamBInfo = clone(secondTeam);
+
+    nextTeams.value.teamAInfo = clone(data.data[2] || firstTeam);
+    nextTeams.value.teamBInfo = clone(data.data[3] || secondTeam);
+}
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
     const requestURL =

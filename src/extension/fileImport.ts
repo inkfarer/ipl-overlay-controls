@@ -1,9 +1,9 @@
 import { handleRoundData } from './roundImporter';
 import * as nodecgContext from './util/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
-import { handleRawData } from './tournamentImporter';
+import { handleRawData, updateTeamDataReplicants } from './tournamentImporter';
 import * as express from 'express';
-import { Rounds, TournamentData } from 'schemas';
+import { Rounds } from 'schemas';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
@@ -36,8 +36,7 @@ const router = nodecg.Router();
                     content,
                     `Uploaded file: ${file.name}`
                 );
-                const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
-                tournamentData.value = resolvedTeams;
+                updateTeamDataReplicants(resolvedTeams);
                 break;
             }
             default:
