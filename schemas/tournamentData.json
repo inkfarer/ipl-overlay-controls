@@ -8,8 +8,15 @@
             "properties": {
                 "id": {
                     "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
-            }
+            },
+            "required": ["id", "source"]
         },
         "data": {
             "type": "array",
@@ -21,7 +28,9 @@
     "additionalItems": true,
     "default": {
         "meta": {
-            "id": "none"
+            "id": "No ID",
+            "source": "None",
+            "name": "No tournament"
         },
         "data": [
             {

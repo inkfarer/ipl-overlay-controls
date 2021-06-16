@@ -2,7 +2,7 @@
 import { LastFmNode } from 'lastfm';
 import clone from 'clone';
 import * as nodecgContext from './util/nodecg';
-import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from '../types/schemas';
+import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from 'schemas';
 import { ReplicantServer } from 'nodecg/lib/replicant';
 const nodecg = nodecgContext.get();
 

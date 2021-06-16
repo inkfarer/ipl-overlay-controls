@@ -1,4 +1,4 @@
-import { ActiveBreakScene } from 'types/schemas';
+import { ActiveBreakScene } from 'schemas';
 
 const activeBreakScene = nodecg.Replicant<ActiveBreakScene>('activeBreakScene');
 
@@ -10,7 +10,7 @@ const sceneSwitchButtons: {[key: string]: HTMLButtonElement} = {
 
 for (const [key, value] of Object.entries(sceneSwitchButtons)) {
     value.addEventListener('click', () => {
-        activeBreakScene.value = key;
+        activeBreakScene.value = key as ActiveBreakScene;
     });
 }
 

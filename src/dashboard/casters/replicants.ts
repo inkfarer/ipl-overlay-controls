@@ -1,3 +1,3 @@
-import { Casters } from 'types/schemas';
+import { Casters } from 'schemas';
 
 export const casters = nodecg.Replicant<Casters>('casters');

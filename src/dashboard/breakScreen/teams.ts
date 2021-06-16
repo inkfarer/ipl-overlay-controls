@@ -1,5 +1,5 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors } from '../globalScripts';
-import { NextTeams, TeamImageHidden, TournamentData } from 'types/schemas';
+import { NextTeams, TeamImageHidden, TournamentData } from 'schemas';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');

@@ -1,6 +1,6 @@
 import type { NodeCG } from 'nodecg/server';
 import * as nodecgContext from './util/nodecg';
-import { RadiaSettings } from 'types/schemas';
+import { RadiaSettings } from 'schemas';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export default (nodecg: NodeCG): void => {

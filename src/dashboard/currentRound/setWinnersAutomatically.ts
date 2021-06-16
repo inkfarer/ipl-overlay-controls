@@ -1,4 +1,4 @@
-import { SetWinnersAutomatically } from 'types/schemas';
+import { SetWinnersAutomatically } from 'schemas';
 
 const setWinnersAutomatically = nodecg.Replicant<SetWinnersAutomatically>('setWinnersAutomatically');
 

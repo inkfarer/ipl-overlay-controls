@@ -1,4 +1,4 @@
-import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'types/schemas';
+import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'schemas';
 import { addChangeReminder } from '../globalScripts';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');

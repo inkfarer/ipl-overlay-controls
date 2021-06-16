@@ -1,5 +1,5 @@
 import * as nodecgContext from './util/nodecg';
-import { ActiveRoundId, GameWinners, SetWinnersAutomatically, TeamScores } from 'types/schemas';
+import { ActiveRoundId, GameWinners, SetWinnersAutomatically, TeamScores } from 'schemas';
 
 const nodecg = nodecgContext.get();
 

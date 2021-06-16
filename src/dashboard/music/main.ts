@@ -38,7 +38,7 @@ manualNowPlaying.on('change', newValue => {
 
 addChangeReminder(
     document.querySelectorAll('.manual-song-change-reminder'),
-    document.getElementById('update-manual-song')
+    document.getElementById('update-manual-song') as HTMLButtonElement
 );
 
 document.getElementById('update-manual-song').onclick = () => {
@@ -52,8 +52,8 @@ document.getElementById('hide-music-btn').onclick = () => { musicShown.value = f
 
 musicShown.on('change', newValue => {
     setToggleButtonDisabled(
-        document.getElementById('show-music-btn'),
-        document.getElementById('hide-music-btn'),
+        document.getElementById('show-music-btn') as HTMLButtonElement,
+        document.getElementById('hide-music-btn') as HTMLButtonElement,
         newValue
     );
 });

@@ -1,12 +1,16 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { Team, TournamentData } from 'types/schemas';
+import { TournamentData, ScoreboardData, NextTeams } from 'schemas';
 import { generateId } from '../helpers/generateId';
+import { Team } from 'types/team';
+import clone from 'clone';
 
 const nodecg = nodecgContext.get();
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
+const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
@@ -28,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         case 'battlefy':
             getBattlefyData(data.id)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
                 })
                 .catch(err => {
@@ -43,7 +47,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
 
             getSmashGGData(data.id, smashGGKey)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
                 })
                 .catch(err => {
@@ -53,7 +57,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         case 'raw':
             getRaw(data.id)
                 .then(data => {
-                    tournamentData.value = data;
+                    updateTeamDataReplicants(data);
                     ack(null, data.id);
                 })
                 .catch(err => {
@@ -65,7 +69,26 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
     }
 });
 
+export function updateTeamDataReplicants(data: TournamentData): void {
+    if (data.data.length <= 0) {
+        throw new Error('Tournament has no teams.');
+    }
+
+    tournamentData.value = data;
+
+    const firstTeam = data.data[0];
+    const secondTeam = data.data[1] || data.data[0];
+
+    scoreboardData.value.teamAInfo = clone(firstTeam);
+    scoreboardData.value.teamBInfo = clone(secondTeam);
+
+    nextTeams.value.teamAInfo = clone(data.data[2] || firstTeam);
+    nextTeams.value.teamBInfo = clone(data.data[3] || secondTeam);
+}
+
 async function getBattlefyData(id: string): Promise<TournamentData> {
+    const name = await getBattlefyTournamentName(id);
+
     const requestURL =
         'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
@@ -73,7 +96,6 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
             .get(requestURL)
             .then(response => {
                 const { data } = response;
-                // Console.log(response);
                 if (data.error) {
                     reject(data.error);
                     return;
@@ -81,7 +103,9 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
 
                 const teams: TournamentData = {
                     meta: {
-                        id
+                        id,
+                        source: 'Battlefy',
+                        name
                     },
                     data: []
                 };
@@ -113,13 +137,21 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
     });
 }
 
+async function getBattlefyTournamentName(id: string): Promise<string> {
+    const url = `https://api.battlefy.com/tournaments/${id}`;
+    const response = await axios.get(url);
+    return response.data.name;
+}
+
 async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {
     return new Promise((resolve, reject) => {
         getSmashGGPage(1, slug, token, true)
             .then(async data => {
                 const tourneyInfo: TournamentData = {
                     meta: {
-                        id: slug
+                        id: slug,
+                        source: 'Smash.gg',
+                        name: data.raw.data.tournament.name
                     },
                     data: []
                 };
@@ -254,7 +286,7 @@ async function getRaw(url: string): Promise<TournamentData> {
     });
 }
 
-export function handleRawData(data: Team[], source: string): TournamentData {
+export function handleRawData(data: Team[], dataUrl: string): TournamentData {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         element.id = generateId();
@@ -262,7 +294,8 @@ export function handleRawData(data: Team[], source: string): TournamentData {
 
     return {
         meta: {
-            id: source
+            id: dataUrl,
+            source: 'Uploaded file'
         },
         data
     };

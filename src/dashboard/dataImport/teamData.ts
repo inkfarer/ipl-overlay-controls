@@ -1,4 +1,4 @@
-import { TournamentData } from 'types/schemas';
+import { TournamentData } from 'schemas';
 import { setImportStatus } from './importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { sendLocalFile } from './postData';
@@ -87,6 +87,6 @@ teamWebImportToggle.onclick = e => {
 };
 
 tournamentData.on('change', newValue => {
-    document.getElementById('tournament-id-display').innerText =
-        newValue.meta.id;
+    document.getElementById('tournament-name').innerText = newValue.meta.name || 'No Name';
+    document.getElementById('tournament-id').innerText = `${newValue.meta.id} (${newValue.meta.source})`;
 });
