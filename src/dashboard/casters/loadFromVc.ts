@@ -1,5 +1,5 @@
 import { setUncommittedButtonDisabled, updateOrCreateCreateCasterElem } from './casters';
-import { RadiaSettings } from 'types/schemas';
+import { RadiaSettings } from 'schemas';
 
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 

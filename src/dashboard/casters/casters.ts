@@ -1,4 +1,4 @@
-import { Caster } from 'types/schemas';
+import { Caster } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { addChangeReminder } from '../globalScripts';
 import { casters } from './replicants';
@@ -98,7 +98,7 @@ function createCasterElem(id: string, data: Caster = {}, isUncommitted = true) {
         [`caster-name-input_${id}`, `caster-twitter-input_${id}`, `caster-pronoun-input_${id}`].map(elem =>
             document.getElementById(elem)
         ),
-        document.getElementById(`update-caster_${id}`)
+        (document.getElementById(`update-caster_${id}`) as HTMLButtonElement)
     );
 
     // Button click event

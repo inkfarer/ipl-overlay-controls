@@ -22,7 +22,7 @@
         "cleanbuild": "npm run clean && npm run build",
         "start": "node ../..",
         "watch": "webpack -w",
-        "schema-types": "nodecg schema-types",
+        "schema-types": "nodecg schema-types -o ./schemas",
         "lint": "eslint ./src"
     },
     "nodecg": {
@@ -123,6 +123,7 @@
         "eslint-plugin-import": "^2.23.4",
         "globby": "^11.0.3",
         "html-webpack-plugin": "^5.3.1",
+        "json-schema-to-typescript": "^10.1.4",
         "style-loader": "^2.0.0",
         "trash-cli": "^4.0.0",
         "ts-node": "^10.0.0",

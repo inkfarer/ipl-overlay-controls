@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as nodecgContext from './util/nodecg';
-import { Caster, Casters, RadiaSettings } from 'types/schemas';
+import { Casters, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import { RadiaApiCaster } from './types/radiaApiCaster';
 
 const nodecg = nodecgContext.get();
 
@@ -19,9 +20,9 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
             const extraCasters = data.slice(3);
 
             // Format casters to the map format our replicant expects
-            casters.value = castersToAdd.reduce((map, obj) => {
-                const id = obj.discordId;
-                delete obj.discordId;
+            casters.value = castersToAdd.reduce((map: Casters, obj) => {
+                const id = obj.discord_user_id;
+                delete obj.discord_user_id;
                 map[id] = obj;
                 return map;
             }, {});
@@ -48,31 +49,20 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
  * @param {string} guildID Guild ID of discord server
  * @returns {Promise<list>} List of live casters
  */
-async function getLiveCasters(url: string, authorisation: string, guildID: string): Promise<Caster[]> {
+async function getLiveCasters(url: string, authorisation: string, guildID: string): Promise<RadiaApiCaster[]> {
     return new Promise((resolve, reject) => {
         axios
-            .get(`${url}/live/guild/${guildID}`, {
+            .get<RadiaApiCaster[]>(`${url}/live/guild/${guildID}`, {
                 headers: {
                     Authorization: authorisation
                 }
             })
             .then(response => {
-                const { data } = response;
-                if (data.error) {
-                    reject(data.error);
+                if (response.status !== 200) {
+                    reject(`Radia API call failed with response ${response.status.toString()}`);
                     return;
                 }
-
-                const casters: Caster[] = [];
-                data.forEach((item: Caster) => {
-                    casters.push({
-                        discordId: item.discord_user_id,
-                        name: item.name,
-                        twitter: `@${item.twitter}`,
-                        pronouns: item.pronouns
-                    });
-                });
-                resolve(casters);
+                resolve(response.data);
             })
             .catch(err => {
                 reject(err);

@@ -3,7 +3,7 @@ import * as nodecgContext from './util/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import { handleRawData } from './tournamentImporter';
 import * as express from 'express';
-import { Rounds, TournamentData } from 'types/schemas';
+import { Rounds, TournamentData } from 'schemas';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();

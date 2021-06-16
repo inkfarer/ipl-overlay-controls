@@ -1,5 +1,5 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameWinners, Rounds } from 'types/schemas';
+import { ActiveRoundId, Game, GameWinners, Rounds } from 'schemas';
 
 import './setWinnersAutomatically';
 

@@ -1,4 +1,4 @@
-import { NextTeams } from 'types/schemas';
+import { NextTeams } from 'schemas';
 import { scoreboardData, teamScores, tournamentData } from './replicants';
 import { addChangeReminder } from '../globalScripts';
 
@@ -37,5 +37,5 @@ document.getElementById('begin-next-match-btn').onclick = () => {
 
 addChangeReminder(
     document.querySelectorAll('.next-team-update-warning'),
-    document.getElementById('update-next-teams-btn')
+    document.getElementById('update-next-teams-btn') as HTMLButtonElement
 );

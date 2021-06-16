@@ -31,13 +31,13 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
 
 addChangeReminder(
     document.querySelectorAll('.scoreboard-update-warning'),
-    document.getElementById('update-scoreboard-btn')
+    document.getElementById('update-scoreboard-btn') as HTMLButtonElement
 );
 
 scoreboardShown.on('change', newValue => {
     setToggleButtonDisabled(
-        document.getElementById('show-scoreboard-btn'),
-        document.getElementById('hide-scoreboard-btn'),
+        document.getElementById('show-scoreboard-btn') as HTMLButtonElement,
+        document.getElementById('hide-scoreboard-btn') as HTMLButtonElement,
         newValue
     );
 });

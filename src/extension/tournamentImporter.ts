@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { Team, TournamentData } from 'types/schemas';
+import { TournamentData } from 'schemas/tournamentData';
 import { generateId } from '../helpers/generateId';
+import { Team } from 'types/team';
 
 const nodecg = nodecgContext.get();
 
