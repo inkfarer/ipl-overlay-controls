@@ -32,10 +32,7 @@ const router = nodecg.Router();
                 break;
             }
             case 'teams': {
-                const resolvedTeams = handleRawData(
-                    content,
-                    `Uploaded file: ${file.name}`
-                );
+                const resolvedTeams = handleRawData(content, file.name);
                 updateTeamDataReplicants(resolvedTeams);
                 break;
             }

@@ -7,7 +7,9 @@
 
 export interface TournamentData {
 	meta?: {
-		id?: string;
+		id: string;
+		source: string;
+		name?: string;
 		[k: string]: any;
 	};
 	data?: {

@@ -87,6 +87,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
+    const name = await getBattlefyTournamentName(id);
+
     const requestURL =
         'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
@@ -94,7 +96,6 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
             .get(requestURL)
             .then(response => {
                 const { data } = response;
-                // Console.log(response);
                 if (data.error) {
                     reject(data.error);
                     return;
@@ -102,7 +103,9 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
 
                 const teams: TournamentData = {
                     meta: {
-                        id
+                        id,
+                        source: 'Battlefy',
+                        name
                     },
                     data: []
                 };
@@ -134,13 +137,21 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
     });
 }
 
+async function getBattlefyTournamentName(id: string): Promise<string> {
+    const url = `https://api.battlefy.com/tournaments/${id}`;
+    const response = await axios.get(url);
+    return response.data.name;
+}
+
 async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {
     return new Promise((resolve, reject) => {
         getSmashGGPage(1, slug, token, true)
             .then(async data => {
                 const tourneyInfo: TournamentData = {
                     meta: {
-                        id: slug
+                        id: slug,
+                        source: 'Smash.gg',
+                        name: data.raw.data.tournament.name
                     },
                     data: []
                 };
@@ -275,7 +286,7 @@ async function getRaw(url: string): Promise<TournamentData> {
     });
 }
 
-export function handleRawData(data: Team[], source: string): TournamentData {
+export function handleRawData(data: Team[], dataUrl: string): TournamentData {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         element.id = generateId();
@@ -283,7 +294,8 @@ export function handleRawData(data: Team[], source: string): TournamentData {
 
     return {
         meta: {
-            id: source
+            id: dataUrl,
+            source: 'Uploaded file'
         },
         data
     };
