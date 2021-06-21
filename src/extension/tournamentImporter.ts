@@ -4,6 +4,7 @@ import * as nodecgContext from './util/nodecg';
 import { TournamentData, ScoreboardData, NextTeams } from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
+import { BattlefyTournamentData } from './types/tournamentData';
 import clone from 'clone';
 
 const nodecg = nodecgContext.get();
@@ -87,7 +88,7 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
-    const name = await getBattlefyTournamentName(id);
+    const tournamentInfo = await getBattlefyTournamentInfo(id);
 
     const requestURL =
         'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
@@ -105,7 +106,8 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                     meta: {
                         id,
                         source: 'Battlefy',
-                        name
+                        name: tournamentInfo.name,
+                        stages: tournamentInfo.stageIDs
                     },
                     data: []
                 };
@@ -137,10 +139,10 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
     });
 }
 
-async function getBattlefyTournamentName(id: string): Promise<string> {
+async function getBattlefyTournamentInfo(id: string): Promise<BattlefyTournamentData> {
     const url = `https://api.battlefy.com/tournaments/${id}`;
     const response = await axios.get(url);
-    return response.data.name;
+    return response.data;
 }
 
 async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {

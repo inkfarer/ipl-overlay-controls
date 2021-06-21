@@ -14,7 +14,15 @@
                 },
                 "name": {
                     "type": "string"
-                }
+                },
+				"stages": {
+					"description": "Stage/Bracket ID used by provider",
+					"type": ["array", "null"],
+					"items": {
+						"type": "string"
+					},
+					"default": null
+				}
             },
             "required": ["id", "source"]
         },

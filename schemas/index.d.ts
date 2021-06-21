@@ -20,4 +20,3 @@ export * from './setWinnersAutomatically';
 export * from './teamImageHidden';
 export * from './teamScores';
 export * from './tournamentData';
-export * from './tournamentDataSource';
