@@ -1,0 +1,27 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"description": "Used for storing tournament meta data such as IDs",
+	"properties": {
+		"dataProvider": {
+			"description": "Provider that tournament data is coming from",
+			"type": ["string", "null"],
+			"enum": ["battlefy", "smashgg", "radia"],
+			"default": null
+		},
+		"tournamentID": {
+			"description": "Tournament ID used by provider",
+			"type": ["string", "null"],
+			"default": null
+		},
+		"stageID": {
+			"description": "Stage ID used by provider",
+			"type": ["array", "null"],
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true,
+			"default": null
+		}
+	}
+}
