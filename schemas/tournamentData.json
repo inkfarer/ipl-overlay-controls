@@ -28,6 +28,10 @@
                             "id": {
                                 "type": "string",
                                 "description": "ID of stage/bracket"
+                            },
+                            "bracketType": {
+                                "type": "string",
+                                "description": "The bracket type, swiss|elimination etc"
                             }
                         }
                     },

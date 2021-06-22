@@ -22,6 +22,10 @@ export interface TournamentData {
 			 * ID of stage/bracket
 			 */
 			id?: string;
+			/**
+			 * The bracket type, swiss|elimination etc
+			 */
+			bracketType?: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;
