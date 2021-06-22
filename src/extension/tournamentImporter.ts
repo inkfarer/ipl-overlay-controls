@@ -124,7 +124,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     const teamInfo: Team = {
-                        id: generateId(),
+                        id: element.persistentTeamID,
                         name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
                         players: []
