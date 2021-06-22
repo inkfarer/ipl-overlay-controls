@@ -1,5 +1,5 @@
 import { TournamentData } from 'schemas';
-import { setImportStatus } from './importStatus';
+import { setImportStatus } from '../globalScripts';
 import { ImportStatus } from 'types/importStatus';
 import { sendLocalFile } from './postData';
 

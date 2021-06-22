@@ -69,6 +69,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "matchimport",
+                "title": "Highlighted Matches",
+                "width": 2,
+                "file": "highlightedMatch.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,

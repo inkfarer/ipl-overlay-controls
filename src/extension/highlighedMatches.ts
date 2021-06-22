@@ -20,8 +20,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
         ack(new Error('Missing arguments.'), null);
         return;
     }
-
-    switch (data.method) {
+    switch (data.provider) {
         case 'Battlefy':
             getBattlefyMatches(data.stages)
                 .then(data => {
@@ -42,6 +41,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
  * @param data Data handed back from data provider
  */
 export function updateMatchesReplicants(data: HighlightedMatch): void{
+    console.log(data);
     // Only assign the data to replicant if there is data
     if(data.length > 0){
         highlightedMatchData.value = data;
@@ -53,12 +53,13 @@ export function updateMatchesReplicants(data: HighlightedMatch): void{
  * @param stages StageID of the stages to get highlighted matches from
  */
 async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMatch> {
+
     return new Promise((resolve, reject) => {
         const matchData: HighlightedMatch = [];
-        stages.forEach(function (value: string) {
+        for(let i = 0; i < stages.length; i++){
             // eslint-disable-next-line max-len
-            const requestURL = `https://api.battlefy.com/stages/${value}?extend%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bteams%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true`;
-            axios.get(requestURL).then(response => {
+            const requestURL = `https://api.battlefy.com/stages/${stages[i]}?extend%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bteams%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true`;
+            axios.get(requestURL).then(async (response) => {
                 const { data } = response;
                 // If there's an error, reject
                 if (data.error) {
@@ -73,6 +74,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                         const match = battlefyData.matches[i];
                         // If match is marked on Battlefy
                         if ((match.isMarkedLive !== undefined) && (match.isMarkedLive === true)) {
+                            console.log(`true: ${match.matchNumber}`);
                             // Build TeamA's info
                             const teamAData: Team = {
                                 id: match.top.team.persistentTeamID,
@@ -80,13 +82,14 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                                 logoUrl: match.top.team.persistentTeam.logoUrl,
                                 players: []
                             };
-                            match.top.team.players.forEach(function (playerValue){
+                            for(let x = 0; x < match.top.team.players.length; x++){
+                                const playerValue = match.top.team.players[x];
                                 const playerInfo = {
                                     name: playerValue.inGameName,
                                     username: playerValue.user.username
                                 };
                                 teamAData.players.push(playerInfo);
-                            });
+                            }
                             // Build TeamB's info
                             const teamBData: Team = {
                                 id: match.bottom.team.persistentTeamID,
@@ -94,13 +97,14 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                                 logoUrl: match.bottom.team.persistentTeam.logoUrl,
                                 players: []
                             };
-                            match.bottom.team.players.forEach(function (playerValue){
+                            for(let x = 0; x < match.bottom.team.players.length; x++){
+                                const playerValue = match.bottom.team.players[x];
                                 const playerInfo = {
                                     name: playerValue.inGameName,
                                     username: playerValue.user.username
                                 };
                                 teamBData.players.push(playerInfo);
-                            });
+                            }
                             // Build MetaData for match
                             const metaData = {
                                 id: match._id,
@@ -121,11 +125,13 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                             });
                         }
                     }
+                    console.log(`in progress: ${matchData}`);
                 }
             }).catch(err => {
                 reject(err);
             });
-        });
+        }
+        console.log(`matchData: ${matchData}`);
         resolve(matchData);
     });
 }
