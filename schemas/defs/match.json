@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "match": {
+    "type": "object",
+    "properties": {
+      "meta": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "description": "ID of the match, for Battlefy use _id",
+            "type": "string"
+          },
+          "stageName": {
+            "type": "string",
+            "description": "Name of the stage match originates from"
+          },
+          "completeTime": {
+            "description": "The time the set was completed at, null if yet to be completed, Stored in ISO format",
+            "type": "string",
+            "default": "None"
+          },
+          "round": {
+            "description": "Round number from provider",
+            "type": "integer",
+            "default": -1
+          },
+          "match": {
+            "description": "Match number from provider",
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": ["name", "id"]
+      },
+      "teamA": {
+        "$ref": "team.json#/team"
+      },
+      "teamB": {
+        "$ref": "team.json#/team"
+      }
+    },
+    "required": ["teamA", "teamB", "meta"]
+  }
+}

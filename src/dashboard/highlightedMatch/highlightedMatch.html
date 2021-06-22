@@ -6,16 +6,32 @@
 </head>
 <body>
 <div class="space">
-    <div class="title">Match Data</div>
+    <div class="title">Load Match Data</div>
 
     <label for="stage-selector">Bracket</label>
-    <select id="stage-selector">
+    <select id="stage-selector" class="stage-selector">
         <option value="AllStages">All Brackets</option>
     </select>
 
     <button class="max-width" id="get-matches">Get Matches</button>
 
     <div id="match-data-status" class="status-display">STATUS</div>
+</div>
+
+<div class="space">
+    <div class="title">Select Match Data</div>
+
+    <label for="match-selector">Bracket</label>
+    <select id="match-selector" class="match-selector"></select>
+    <div>
+        <label for="team-a-name">Team A</label>
+        <div id="team-a-name">Team A</div>
+
+        <label for="team-b-name">Team B</label>
+        <div id="team-b-name">Team B</div>
+    </div>
+
+    <button id="set-next-match-btn" class="red max-width">Set next match</button>
 </div>
 </body>
 </html>

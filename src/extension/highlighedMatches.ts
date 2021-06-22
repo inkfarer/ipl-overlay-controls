@@ -6,7 +6,7 @@ import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
 import { HighlightedMatch } from 'schemas';
 import { Team } from 'types/team';
-import { BattlefyStage } from './types/battlefyStages';
+import { BattlefyStage, Match } from './types/battlefyStages';
 
 const nodecg = nodecgContext.get();
 
@@ -41,7 +41,6 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
  * @param data Data handed back from data provider
  */
 export function updateMatchesReplicants(data: HighlightedMatch): void {
-    console.log(data);
     // Only assign the data to replicant if there is data
     if (data.length > 0) {
         highlightedMatchData.value = data;
@@ -76,10 +75,9 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
         if (['swiss', 'elimination'].includes(battlefyData.bracket.type)) {
             // For each match
             for (let i = 0; i < battlefyData.matches.length; i++) {
-                const match = battlefyData.matches[i];
+                const match: Match= battlefyData.matches[i];
                 // If match is marked on Battlefy
                 if ((match.isMarkedLive !== undefined) && (match.isMarkedLive === true)) {
-                    console.log(`true: ${match.matchNumber}`);
                     // Build TeamA's info
                     const teamAData: Team = {
                         id: match.top.team.persistentTeamID,
@@ -116,7 +114,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                         stageName: battlefyData.name,
                         round: match.roundNumber,
                         match: match.matchNumber,
-                        name: `Round ${match.roundNumber} Match ${match.roundNumber}`,
+                        name: `Round ${match.roundNumber} Match ${match.matchNumber}`,
                         completeTime: 'None'
                     };
                     // If the completedAt exists then we add it to the metadata
@@ -130,10 +128,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                     });
                 }
             }
-            console.log(`in progress: ${matchData}`);
         }
     }
-
-    console.log(`matchData: ${matchData}`);
     return matchData;
 }
