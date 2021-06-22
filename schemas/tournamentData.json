@@ -19,8 +19,18 @@
 					"description": "Stage/Bracket ID used by provider",
 					"type": ["array", "null"],
 					"items": {
-						"type": "string"
-					},
+						"type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Name of stage/bracket"
+                            },
+                            "id": {
+                                "type": "string",
+                                "description": "ID of stage/bracket"
+                            }
+                        }
+                    },
 					"default": null
 				}
             },
