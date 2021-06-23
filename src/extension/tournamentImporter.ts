@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { TournamentData, ScoreboardData, NextTeams } from 'schemas';
+import {TournamentData, ScoreboardData, NextTeams, HighlightedMatch} from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
 import { BattlefyTournamentData } from './types/tournamentData';
@@ -12,6 +12,7 @@ const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
@@ -77,6 +78,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 
     tournamentData.value = data;
 
+    highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
+
     const firstTeam = data.data[0];
     const secondTeam = data.data[1] || data.data[0];
 
@@ -124,7 +127,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     const teamInfo: Team = {
-                        id: element.persistentTeamID,
+                        id: element._id,
                         name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
                         players: []

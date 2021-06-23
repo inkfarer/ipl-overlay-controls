@@ -80,7 +80,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                 if ((match.isMarkedLive !== undefined) && (match.isMarkedLive === true)) {
                     // Build TeamA's info
                     const teamAData: Team = {
-                        id: match.top.team.persistentTeamID,
+                        id: match.top.team._id,
                         name: match.top.team.name,
                         logoUrl: match.top.team.persistentTeam.logoUrl,
                         players: []
@@ -95,7 +95,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                     }
                     // Build TeamB's info
                     const teamBData: Team = {
-                        id: match.bottom.team.persistentTeamID,
+                        id: match.bottom.team._id,
                         name: match.bottom.team.name,
                         logoUrl: match.bottom.team.persistentTeam.logoUrl,
                         players: []
