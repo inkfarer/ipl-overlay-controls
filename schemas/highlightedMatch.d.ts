@@ -17,7 +17,7 @@ export type HighlightedMatch = {
 		 */
 		stageName?: string;
 		/**
-		 * The time the set was completed at, null if yet to to be completed, Stored in ISO format
+		 * The time the set was completed at, null if yet to be completed, Stored in ISO format
 		 */
 		completeTime?: string;
 		/**

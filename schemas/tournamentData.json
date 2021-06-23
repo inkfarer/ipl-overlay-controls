@@ -10,7 +10,8 @@
                     "type": "string"
                 },
                 "source": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "None"
                 },
                 "name": {
                     "type": "string"
