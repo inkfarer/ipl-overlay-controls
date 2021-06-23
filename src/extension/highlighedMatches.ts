@@ -72,7 +72,7 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
         }
         const battlefyData: BattlefyStage = data[0];
         // Make sure the type of bracket is supported and tested (i.e. Not Ladder)
-        if (['swiss', 'elimination'].includes(battlefyData.bracket.type)) {
+        if (['swiss', 'elimination', 'roundrobin'].includes(battlefyData.bracket.type)) {
             // For each match
             for (let i = 0; i < battlefyData.matches.length; i++) {
                 const match: Match= battlefyData.matches[i];

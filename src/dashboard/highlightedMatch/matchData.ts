@@ -76,7 +76,7 @@ tournamentData.on('change', newValue => {
     if(['Battlefy'].includes(newValue.meta.source)){
         for (let i = 0; i < newValue.meta.stages.length; i++) {
             const element = newValue.meta.stages[i];
-            if (['swiss', 'elimination'].includes(element.bracketType)) {  // if bracket type is supported
+            if (['swiss', 'elimination', 'roundrobin'].includes(element.bracketType)) {  // if bracket type is supported
                 // add to drop down
                 addSelector(addDots(element.name), 'stage-selector', element.id);
             }
