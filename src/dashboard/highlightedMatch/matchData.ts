@@ -1,7 +1,7 @@
 import { addDots, addSelector, clearSelectors, setImportStatus } from '../globalScripts';
 import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
-import { Match } from './Match';
+import { Match } from './types/Match';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -99,12 +99,12 @@ highlightedMatchData.on('change', newValue => {
             value.meta.id);
     });
     if (newValue.length < 1) {
-        teamAName.innerHTML = '';
-        teamBName.innerHTML = '';
+        teamAName.innerText = '';
+        teamBName.innerText = '';
         setNextMatchBtnElem.disabled = true;  // if no matches in array disable button
     } else {
-        teamAName.innerHTML = addDots(newValue[0].teamA.name);
-        teamBName.innerHTML = addDots(newValue[0].teamB.name);
+        teamAName.innerText = addDots(newValue[0].teamA.name);
+        teamBName.innerText = addDots(newValue[0].teamB.name);
         setNextMatchBtnElem.disabled = false;
     }
 });
@@ -112,12 +112,12 @@ highlightedMatchData.on('change', newValue => {
 matchSelectElem.oninput = function () {
     const selectedMatch = getMatchFromID(matchSelectElem.value);
     if (selectedMatch) {
-        teamAName.innerHTML = selectedMatch.teamA.name;
-        teamBName.innerHTML = selectedMatch.teamB.name;
+        teamAName.innerText = selectedMatch.teamA.name;
+        teamBName.innerText = selectedMatch.teamB.name;
         setNextMatchBtnElem.disabled = false;
     } else {
-        teamAName.innerHTML = '';
-        teamBName.innerHTML = '';
+        teamAName.innerText = '';
+        teamBName.innerText = '';
         setNextMatchBtnElem.disabled = true;
     }
 };

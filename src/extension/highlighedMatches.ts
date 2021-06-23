@@ -6,8 +6,7 @@ import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
 import { HighlightedMatch } from 'schemas';
 import { Team } from 'types/team';
-import { BattlefyStage, Match } from './types/battlefyStages';
-
+import { BattlefyStage, Match, MatchTeam } from './types/battlefyStage';
 const nodecg = nodecgContext.get();
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
@@ -24,7 +23,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
         case 'Battlefy':
             getBattlefyMatches(data.stages)
                 .then(data => {
-                    updateMatchesReplicants(data);
+                    updateMatchReplicant(data);
                     ack(null, data);
                 })
                 .catch(err => {
@@ -40,11 +39,33 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
  * Assigns data to highlighedMatch replicant
  * @param data Data handed back from data provider
  */
-export function updateMatchesReplicants(data: HighlightedMatch): void {
+export function updateMatchReplicant(data: HighlightedMatch): void {
     // Only assign the data to replicant if there is data
     if (data.length > 0) {
         highlightedMatchData.value = data;
     }
+}
+
+/**
+ * Build the team data when given a MatchTeam from Battlefy
+ * @param teamData data for a team in a match
+ */
+function teamDataBuilder(teamData: MatchTeam): Team{
+    const teamReturnObject: Team = {
+        id: teamData.team._id,
+        name: teamData.team.name,
+        logoUrl: teamData.team.persistentTeam.logoUrl,
+        players: []
+    };
+    for (let x = 0; x < teamData.team.players.length; x++) {
+        const playerValue = teamData.team.players[x];
+        const playerInfo = {
+            name: playerValue.inGameName,
+            username: playerValue.user?.username
+        };
+        teamReturnObject.players.push(playerInfo);
+    }
+    return teamReturnObject;
 }
 
 /**
@@ -78,36 +99,10 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                 const match: Match= battlefyData.matches[i];
                 // If match is marked on Battlefy
                 if ((match.isMarkedLive !== undefined) && (match.isMarkedLive === true)) {
-                    // Build TeamA's info
-                    const teamAData: Team = {
-                        id: match.top.team._id,
-                        name: match.top.team.name,
-                        logoUrl: match.top.team.persistentTeam.logoUrl,
-                        players: []
-                    };
-                    for (let x = 0; x < match.top.team.players.length; x++) {
-                        const playerValue = match.top.team.players[x];
-                        const playerInfo = {
-                            name: playerValue.inGameName,
-                            username: playerValue.user?.username
-                        };
-                        teamAData.players.push(playerInfo);
-                    }
-                    // Build TeamB's info
-                    const teamBData: Team = {
-                        id: match.bottom.team._id,
-                        name: match.bottom.team.name,
-                        logoUrl: match.bottom.team.persistentTeam.logoUrl,
-                        players: []
-                    };
-                    for (let x = 0; x < match.bottom.team.players.length; x++) {
-                        const playerValue = match.bottom.team.players[x];
-                        const playerInfo = {
-                            name: playerValue.inGameName,
-                            username: playerValue.user?.username
-                        };
-                        teamBData.players.push(playerInfo);
-                    }
+
+                    // Build Team info
+                    const teamAData = teamDataBuilder(match.top);
+                    const teamBData = teamDataBuilder(match.bottom);
                     // Build MetaData for match
                     const metaData = {
                         id: match._id,
@@ -115,11 +110,11 @@ async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMat
                         round: match.roundNumber,
                         match: match.matchNumber,
                         name: `Round ${match.roundNumber} Match ${match.matchNumber}`,
-                        completeTime: 'None'
+                        completionTime: 'None'
                     };
                     // If the completedAt exists then we add it to the metadata
                     if (match.completedAt !== undefined) {
-                        metaData.completeTime = match.completedAt;
+                        metaData.completionTime = match.completedAt;
                     }
                     matchData.push({  // Push match into array
                         meta: metaData,

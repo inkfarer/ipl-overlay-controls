@@ -114,11 +114,11 @@ export interface PersistentTeam {
     sponsorBannerUrl: string;
     createdAt: string;
     updatedAt: string;
-    teamIDs: any[];
+    teamIDs: string[];
     gameID: string;
     persistentPlayerIDs: string[];
     persistentCaptainID: string;
-    pendingPlayerIDs: any[];
+    pendingPlayerIDs: string[];
     ownerID: string;
     deletedAt?: string;
 }
@@ -139,16 +139,7 @@ export interface Team {
     persistentTeam: PersistentTeam;
 }
 
-export interface Top {
-    seedNumber: number;
-    winner: boolean;
-    disqualified: boolean;
-    teamID: string;
-    score: number;
-    team: Team;
-}
-
-export interface Bottom {
+export interface MatchTeam {
     seedNumber: number;
     winner: boolean;
     disqualified: boolean;
@@ -172,17 +163,13 @@ export interface Next {
     loser: Loser;
 }
 
-export interface Bottom2 {
-    winner: boolean;
-}
-
-export interface Top2 {
+export interface MatchWinner {
     winner: boolean;
 }
 
 export interface Stats {
-    bottom: Bottom2;
-    top: Top2;
+    bottom: MatchWinner;
+    top: MatchWinner;
     isComplete: boolean;
 }
 
@@ -200,8 +187,8 @@ export interface Stat {
 
 export interface Match {
     _id: string;
-    top: Top;
-    bottom: Bottom;
+    top: MatchTeam;
+    bottom: MatchTeam;
     matchType: string;
     matchNumber: number;
     roundNumber: number;
@@ -230,11 +217,11 @@ export interface BattlefyStage {
     updatedAt: string;
     hasStarted: boolean;
     teamIDs: string[];
-    groupIDs: any[];
+    groupIDs: string[];
     standingIDs: string[];
-    matchIDs: any[];
+    matchIDs: string[];
     startedAt: string;
     matches: Match[];
-    groups: any[];
+    groups: string[];
 }
 

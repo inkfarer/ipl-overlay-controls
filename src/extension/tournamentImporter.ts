@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import {TournamentData, ScoreboardData, NextTeams, HighlightedMatch} from 'schemas';
+import { TournamentData, ScoreboardData, NextTeams, HighlightedMatch } from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
-import { BattlefyTournamentData } from './types/tournamentData';
+import { BattlefyTournamentData } from './types/battlefyTournamentData';
 import clone from 'clone';
 
 const nodecg = nodecgContext.get();

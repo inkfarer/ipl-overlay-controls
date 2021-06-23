@@ -69,7 +69,7 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "matchimport",
+                "name": "highlightedMatches",
                 "title": "Highlighted Matches",
                 "width": 2,
                 "file": "highlightedMatch.html",

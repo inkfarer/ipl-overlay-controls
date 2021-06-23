@@ -19,7 +19,7 @@ export type HighlightedMatch = {
 		/**
 		 * The time the set was completed at, null if yet to be completed, Stored in ISO format
 		 */
-		completeTime?: string;
+		completionTime?: string;
 		/**
 		 * Round number from provider
 		 */
@@ -28,7 +28,6 @@ export type HighlightedMatch = {
 		 * Match number from provider
 		 */
 		match?: number;
-		[k: string]: any;
 	};
 	teamA: {
 		id?: string;
@@ -50,5 +49,4 @@ export type HighlightedMatch = {
 		}[];
 		[k: string]: any;
 	};
-	[k: string]: any;
 }[];

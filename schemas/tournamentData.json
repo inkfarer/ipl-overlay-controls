@@ -16,11 +16,11 @@
                 "name": {
                     "type": "string"
                 },
-				"stages": {
-					"description": "Stage/Bracket ID used by provider",
-					"type": ["array", "null"],
-					"items": {
-						"type": "object",
+                "stages": {
+                    "description": "Stage/Bracket ID used by provider",
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "object",
                         "properties": {
                             "name": {
                                 "type": "string",
@@ -36,8 +36,8 @@
                             }
                         }
                     },
-					"default": null
-				}
+                    "default": null
+                }
             },
             "required": ["id", "source"]
         },

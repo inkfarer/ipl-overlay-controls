@@ -17,9 +17,9 @@
             "type": "string",
             "description": "Name of the stage match originates from"
           },
-          "completeTime": {
+          "completionTime": {
             "description": "The time the set was completed at, null if yet to be completed, Stored in ISO format",
-            "type": "string",
+            "type": "date-time",
             "default": "None"
           },
           "round": {
@@ -33,7 +33,8 @@
             "default": -1
           }
         },
-        "required": ["name", "id"]
+        "required": ["name", "id"],
+        "additionalProperties": false
       },
       "teamA": {
         "$ref": "team.json#/team"
@@ -42,6 +43,7 @@
         "$ref": "team.json#/team"
       }
     },
+    "additionalProperties": false,
     "required": ["teamA", "teamB", "meta"]
   }
 }

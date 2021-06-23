@@ -6,7 +6,6 @@ export interface Match{
         completeTime?: string;
         round?: number;
         match?: number;
-        [k: string]: any;
     };
     teamA: {
         id?: string;
@@ -14,9 +13,7 @@ export interface Match{
         logoUrl?: string;
         players?: {
             name?: string;
-            [k: string]: any;
         }[];
-        [k: string]: any;
     };
     teamB: {
         id?: string;
@@ -24,9 +21,6 @@ export interface Match{
         logoUrl?: string;
         players?: {
             name?: string;
-            [k: string]: any;
         }[];
-        [k: string]: any;
     };
-    [k: string]: any;
 }
