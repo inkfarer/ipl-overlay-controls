@@ -1,4 +1,5 @@
-import { addDots, addSelector, clearSelectors, setImportStatus } from '../globalScripts';
+import { addDots, addSelector, clearSelectors } from '../globalScripts';
+import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
 import { Match } from './types/Match';
@@ -43,11 +44,8 @@ document.getElementById('get-matches').onclick = () => {
         stages.push(stageSelectElem.value);  // only add one stageId to the array if one stage is picked
     }
 
-    nodecg.sendMessage('getHighlightedMatches',  // Send message to extension
-        {
-            stages: stages,
-            provider: tournamentData.value.meta.source
-        },
+    // Send message to extension
+    nodecg.sendMessage('getHighlightedMatches', { stages: stages, provider: tournamentData.value.meta.source },
         e => {
             // If we get an error
             if (e) {
@@ -73,7 +71,7 @@ document.getElementById('set-next-match-btn').onclick = () => {
 
 tournamentData.on('change', newValue => {
     clearSelectors('stage-selector');
-    if(['Battlefy'].includes(newValue.meta.source)){
+    if (['Battlefy'].includes(newValue.meta.source)) {
         for (let i = 0; i < newValue.meta.stages.length; i++) {
             const element = newValue.meta.stages[i];
             if (['swiss', 'elimination', 'roundrobin'].includes(element.bracketType)) {  // if bracket type is supported

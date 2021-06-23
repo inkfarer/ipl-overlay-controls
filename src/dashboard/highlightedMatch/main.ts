@@ -1,4 +1,4 @@
 import '../globalStyles.css';
-import './highlightedMatch.css';
+import './highlightedMatches.css';
 
 import './matchData';

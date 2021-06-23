@@ -72,7 +72,7 @@
                 "name": "highlightedMatches",
                 "title": "Highlighted Matches",
                 "width": 2,
-                "file": "highlightedMatch.html",
+                "file": "highlightedMatches.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },

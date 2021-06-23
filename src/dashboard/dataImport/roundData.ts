@@ -1,4 +1,4 @@
-import { setImportStatus } from '../globalScripts';
+import { setImportStatus } from '../importStatus';
 import { sendLocalFile } from './postData';
 import { ImportStatus } from 'types/importStatus';
 
