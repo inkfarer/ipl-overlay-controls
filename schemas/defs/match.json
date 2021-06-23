@@ -19,7 +19,8 @@
           },
           "completionTime": {
             "description": "The time the set was completed at, null if yet to be completed, Stored in ISO format",
-            "type": "date-time",
+            "type": "string",
+            "format": "date-time",
             "default": "None"
           },
           "round": {

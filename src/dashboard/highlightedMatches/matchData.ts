@@ -1,4 +1,4 @@
-import { addDots, addSelector, clearSelectors } from '../globalScripts';
+import {addChangeReminder, addDots, addSelector, clearSelectors} from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
@@ -119,3 +119,9 @@ matchSelectElem.oninput = function () {
         setNextMatchBtnElem.disabled = true;
     }
 };
+
+addChangeReminder(
+    document.querySelectorAll('.next-match-update-warning'),
+    setNextMatchBtnElem
+);
+
