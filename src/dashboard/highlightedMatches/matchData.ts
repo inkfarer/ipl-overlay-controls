@@ -84,6 +84,7 @@ tournamentData.on('change', newValue => {
         getMatchesBtnElem.disabled = false;
     } else {
         // We the source is not supported then we disable the get matches button
+        addSelector('Unsupported Tournament Platform', 'stage-selector', 'n/a');
         getMatchesBtnElem.disabled = true;
     }
 });
@@ -97,6 +98,7 @@ highlightedMatchData.on('change', newValue => {
             value.meta.id);
     });
     if (newValue.length < 1) {
+        addSelector('No Matches','match-selector', 'n/a');
         teamAName.innerText = '';
         teamBName.innerText = '';
         setNextMatchBtnElem.disabled = true;  // if no matches in array disable button
