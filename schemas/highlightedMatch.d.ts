@@ -30,21 +30,21 @@ export type HighlightedMatch = {
 		match?: number;
 	};
 	teamA: {
-		id?: string;
-		name?: string;
+		id: string;
+		name: string;
 		logoUrl?: string;
-		players?: {
-			name?: string;
+		players: {
+			name: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;
 	};
 	teamB: {
-		id?: string;
-		name?: string;
+		id: string;
+		name: string;
 		logoUrl?: string;
-		players?: {
-			name?: string;
+		players: {
+			name: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;

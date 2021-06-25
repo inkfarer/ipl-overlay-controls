@@ -1,8 +1,8 @@
-import {addChangeReminder, addDots, addSelector, clearSelectors} from '../globalScripts';
+import { addChangeReminder, addDots, addSelector, clearSelectors } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
-import { Match } from './types/Match';
+import { Match } from 'types/match';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -21,7 +21,7 @@ const teamBName = document.getElementById('team-b-name');
  * Gets match from matchID
  * @param id the ID of the match
  */
-function getMatchFromID(id: string): Match | void {
+function getMatchFromID(id: string): Match | null {
     for (let x = 0; x < highlightedMatchData.value.length; x++) {
         const value = highlightedMatchData.value[x];
         if (value.meta.id === id) {
@@ -45,18 +45,16 @@ document.getElementById('get-matches').onclick = () => {
     }
 
     // Send message to extension
-    nodecg.sendMessage('getHighlightedMatches', { stages: stages, provider: tournamentData.value.meta.source },
-        e => {
-            // If we get an error
-            if (e) {
-                console.error(e);
-                setImportStatus(ImportStatus.Failure, matchDataStatusElem);
-                return;
-            }
-            // If we get success
-            setImportStatus(ImportStatus.Success, matchDataStatusElem);
+    nodecg.sendMessage('getHighlightedMatches', { stages: stages, provider: tournamentData.value.meta.source }, e => {
+        // If we get an error
+        if (e) {
+            console.error(e);
+            setImportStatus(ImportStatus.Failure, matchDataStatusElem);
+            return;
         }
-    );
+        // If we get success
+        setImportStatus(ImportStatus.Success, matchDataStatusElem);
+    });
 };
 
 // When set next match button is pressed
@@ -67,7 +65,6 @@ document.getElementById('set-next-match-btn').onclick = () => {
         nextTeams.value.teamBInfo = selectedMatch.teamB;
     }
 };
-
 
 tournamentData.on('change', newValue => {
     clearSelectors('stage-selector');

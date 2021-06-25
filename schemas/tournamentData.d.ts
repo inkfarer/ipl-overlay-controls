@@ -31,11 +31,11 @@ export interface TournamentData {
 		[k: string]: any;
 	};
 	data?: {
-		id?: string;
-		name?: string;
+		id: string;
+		name: string;
 		logoUrl?: string;
-		players?: {
-			name?: string;
+		players: {
+			name: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;
