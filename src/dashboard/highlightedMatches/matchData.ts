@@ -9,9 +9,10 @@ const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 
 const matchDataStatusElem = document.getElementById('match-data-status');
-const stageSelectElem = document.getElementById('stage-selector') as HTMLSelectElement;
+const stageSelectElem = document.getElementById('stage-selector') as MultiSelect;
 const matchSelectElem = document.getElementById('match-selector') as HTMLSelectElement;
 const setNextMatchBtnElem = document.getElementById('set-next-match-btn') as HTMLButtonElement;
+const getMatchesBtn = document.getElementById('get-matches') as HTMLButtonElement;
 
 const unsupportedPlatformWarning = document.getElementById('unsupported-service-message');
 const noLoadedMatchesMessage = document.getElementById('load-matches-hint');
@@ -35,17 +36,18 @@ function getMatchFromID(id: string): Match | null {
 }
 
 // When get match button is pressed
-document.getElementById('get-matches').onclick = () => {
+getMatchesBtn.onclick = () => {
     setImportStatus(ImportStatus.Loading, matchDataStatusElem);
+    const selectedValues: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
+    let stages: Array<string> = [];
 
-    const stages: Array<string> = [];  // Array to store stages
-    if (stageSelectElem.value === 'AllStages') {
+    if (selectedValues.includes('AllStages')) {
         // If all stages is selected add all the stage ID to the array
         tournamentData.value.meta.stages.forEach(function (value) {
             stages.push(value.id);
         });
     } else {
-        stages.push(stageSelectElem.value);  // only add one stageId to the array if one stage is picked
+        stages = selectedValues;
     }
 
     // Send message to extension
@@ -64,8 +66,12 @@ document.getElementById('get-matches').onclick = () => {
     });
 };
 
+stageSelectElem.addEventListener('change', event => {
+    getMatchesBtn.disabled = (event.target as MultiSelect).selectedOptions.length < 1;
+});
+
 // When set next match button is pressed
-document.getElementById('set-next-match-btn').onclick = () => {
+setNextMatchBtnElem.onclick = () => {
     const selectedMatch = getMatchFromID(matchSelectElem.value);
     if (selectedMatch) {  // if match exists then assign it to the next match rep
         nextTeams.value.teamAInfo = selectedMatch.teamA;

@@ -105,7 +105,6 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.3",
         "axios": "^0.21.1",
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
@@ -116,6 +115,8 @@
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-typescript": "^7.13.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/node": "^15.12.1",

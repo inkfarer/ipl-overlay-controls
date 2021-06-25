@@ -16,12 +16,12 @@
 <div class="space" id="load-matches-space">
     <div class="title">Load Matches</div>
 
-    <label for="stage-selector">Bracket</label>
-    <select id="stage-selector" class="stage-selector">
-        <option value="AllStages">All Brackets</option>
-    </select>
+    <label>Bracket</label>
+    <multi-select id="stage-selector">
+        <select class="stage-selector"></select>
+    </multi-select>
 
-    <button class="max-width" id="get-matches">Get Matches</button>
+    <button class="max-width" id="get-matches" disabled>Get Matches</button>
 
     <div id="match-data-status" class="status-display">STATUS</div>
 </div>
