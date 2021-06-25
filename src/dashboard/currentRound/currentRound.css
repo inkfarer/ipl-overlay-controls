@@ -1,3 +1,10 @@
+body {
+    --team-a-color: var(--green);
+    --team-b-color: var(--red);
+    --team-a-text-color: white;
+    --team-b-text-color: white;
+}
+
 #round-name-space {
     min-height: 40px;
     display: grid;
@@ -39,6 +46,22 @@ span.center {
     font-weight: bold;
     padding: 3px;
     margin: 0;
+    transition-duration: 100ms;
+}
+
+.win-button-container > button.team-a-win-toggle,
+.win-button-container > button.team-b-win-toggle {
+    filter: saturate(0.8) grayscale(5%);
+}
+
+.win-button-container > button.team-a-win-toggle {
+    background-color: var(--team-a-color);
+    color: var(--team-a-text-color);
+}
+
+.win-button-container > button.team-b-win-toggle {
+    background-color: var(--team-b-color);
+    color: var(--team-b-text-color);
 }
 
 .win-button-container > button:nth-child(1) {
