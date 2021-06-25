@@ -55,6 +55,18 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
  * @param data Data handed back from data provider
  */
 export function updateMatchReplicant(data: HighlightedMatch): void {
+    data.sort((a, b) => {
+        const keyA = `${a.meta.stageName} ${a.meta.name}`;
+        const keyB = `${b.meta.stageName} ${b.meta.name}`;
+
+        if (keyA < keyB) {
+            return -1;
+        }
+        if (keyA > keyB) {
+            return 1;
+        }
+        return 0;
+    });
     // Only assign the data to replicant if there is data
     if (data.length > 0) {
         highlightedMatchData.value = data;
