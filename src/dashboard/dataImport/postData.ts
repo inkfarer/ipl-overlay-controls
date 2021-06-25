@@ -1,4 +1,4 @@
-import { setImportStatus } from './importStatus';
+import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 
 export function sendLocalFile(

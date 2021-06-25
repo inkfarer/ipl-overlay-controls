@@ -2,6 +2,7 @@ export * from './activeBreakScene';
 export * from './activeRoundId';
 export * from './casters';
 export * from './gameWinners';
+export * from './highlightedMatch';
 export * from './lastFmNowPlaying';
 export * from './lastFmSettings';
 export * from './mainFlavorText';

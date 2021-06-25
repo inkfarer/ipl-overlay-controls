@@ -20,6 +20,11 @@ export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
             textColor = 'white';
             text = 'FAIL';
             break;
+        case ImportStatus.NoData:
+            backgroundColor = 'var(--yellow)';
+            textColor = 'black';
+            text = 'NO DATA';
+            break;
         default:
             backgroundColor = '#181e29';
             textColor = 'white';

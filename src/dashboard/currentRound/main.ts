@@ -3,7 +3,7 @@ import { ActiveRoundId, Game, GameWinners, Rounds } from 'schemas';
 
 import './setWinnersAutomatically';
 
-import '../globalStyles.css';
+import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 

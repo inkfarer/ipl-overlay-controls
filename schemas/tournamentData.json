@@ -10,10 +10,33 @@
                     "type": "string"
                 },
                 "source": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "None"
                 },
                 "name": {
                     "type": "string"
+                },
+                "stages": {
+                    "description": "Stage/Bracket ID used by provider",
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Name of stage/bracket"
+                            },
+                            "id": {
+                                "type": "string",
+                                "description": "ID of stage/bracket"
+                            },
+                            "bracketType": {
+                                "type": "string",
+                                "description": "The bracket type, swiss|elimination etc"
+                            }
+                        }
+                    },
+                    "default": null
                 }
             },
             "required": ["id", "source"]

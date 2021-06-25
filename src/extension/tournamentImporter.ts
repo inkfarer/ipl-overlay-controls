@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { TournamentData, ScoreboardData, NextTeams } from 'schemas';
+import { TournamentData, ScoreboardData, NextTeams, HighlightedMatch } from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
+import { BattlefyTournamentData } from './types/battlefyTournamentData';
 import clone from 'clone';
 
 const nodecg = nodecgContext.get();
@@ -11,6 +12,7 @@ const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
@@ -76,6 +78,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 
     tournamentData.value = data;
 
+    highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
+
     const firstTeam = data.data[0];
     const secondTeam = data.data[1] || data.data[0];
 
@@ -87,7 +91,7 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
-    const name = await getBattlefyTournamentName(id);
+    const tournamentInfo = await getBattlefyTournamentInfo(id);
 
     const requestURL =
         'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
@@ -101,18 +105,29 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                     return;
                 }
 
+                // Process the stages in a tournament for rep
+                const tournamentStages: { name: string; id: string; bracketType: string}[] = [];
+                tournamentInfo.stages.forEach(function (value){
+                    tournamentStages.push({
+                        name: value.name,
+                        id: value._id,
+                        bracketType: value.bracket.type
+                    });
+                });
+
                 const teams: TournamentData = {
                     meta: {
                         id,
                         source: 'Battlefy',
-                        name
+                        name: tournamentInfo.name,
+                        stages: tournamentStages
                     },
                     data: []
                 };
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     const teamInfo: Team = {
-                        id: generateId(),
+                        id: element._id,
                         name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
                         players: []
@@ -137,10 +152,12 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
     });
 }
 
-async function getBattlefyTournamentName(id: string): Promise<string> {
-    const url = `https://api.battlefy.com/tournaments/${id}`;
+async function getBattlefyTournamentInfo(id: string): Promise<BattlefyTournamentData> {
+    // API link gets all the details on a battlefy tournament
+    // eslint-disable-next-line max-len
+    const url = `https://api.battlefy.com/tournaments/${id}?extend%5Bcampaign%5D%5Bsponsor%5D=true&extend%5Bstages%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false&extend%5Bstages%5D%5B%24opts%5D%5Bname%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bbracket%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BstartTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BendTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bschedule%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BmatchCheckinDuration%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasCheckinTimer%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasStarted%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasMatchCheckin%5D=1&extend%5Borganization%5D%5Bowner%5D%5B%24opts%5D%5Btimezone%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bname%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bslug%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BownerID%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BlogoUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BbannerUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfeatures%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfollowers%5D=1&extend%5Bgame%5D=true&extend%5Bstreams%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false`;
     const response = await axios.get(url);
-    return response.data.name;
+    return response.data[0];  // This URL provides each tournament as an array of objects
 }
 
 async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {

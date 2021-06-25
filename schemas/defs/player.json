@@ -7,6 +7,7 @@
                 "type": "string"
             }
         },
-        "additionalProperties": true
+        "additionalProperties": true,
+        "required": ["name"]
     }
 }

@@ -13,8 +13,10 @@
                 <button class="green" id="team-a-score-plus-btn">+</button>
                 <button class="red" id="team-a-score-minus-btn">-</button>
             </div>
+            <!--suppress HtmlFormInputWithoutLabel -->
             <input type="number" id="team-a-score-input" size="2" />
             <div style="font-size: 2.5em">:</div>
+            <!--suppress HtmlFormInputWithoutLabel -->
             <input type="number" id="team-b-score-input" size="2" />
             <div class="layout vertical">
                 <button class="green" id="team-b-score-plus-btn">+</button>
@@ -67,11 +69,13 @@
                 id="custom-color-select-container"
                 style="display: none"
             >
+                <!--suppress HtmlFormInputWithoutLabel -->
                 <input
                     type="color"
                     id="team-a-custom-color"
                     class="scoreboard-update-warning"
                 />
+                <!--suppress HtmlFormInputWithoutLabel -->
                 <input
                     type="color"
                     id="team-b-custom-color"
@@ -81,7 +85,7 @@
             <button id="swap-color-order-btn" class="blue max-width">
                 swap colors
             </button>
-            <div class="layout horizontal center-content">
+            <div class="layout horizontal center-horizontal">
                 <input id="custom-color-toggle" type="checkbox" />
                 <label for="custom-color-toggle" class="white-label"
                     >Custom colors</label
