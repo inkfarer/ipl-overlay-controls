@@ -152,13 +152,25 @@ function mapBattlefyRoundData(stages: Stage[]): HighlightedMatch {
             // Build Team info
             const teamAData = teamDataBuilder(match.top);
             const teamBData = teamDataBuilder(match.bottom);
+
             // Build MetaData for match
+            let matchName = `Round ${match.roundNumber} Match `;
+            if (match.matchType && ['loser', 'winner'].includes(match.matchType)) {
+                if (match.matchType === 'loser') {
+                    matchName += `L${match.matchNumber}`;
+                } else if (match.matchType === 'winner') {
+                    matchName += `C${match.matchNumber}`;
+                }
+            } else {
+                matchName += match.matchNumber;
+            }
+
             const metaData = {
                 id: match._id,
                 stageName: stage.name,
                 round: match.roundNumber,
                 match: match.matchNumber,
-                name: `Round ${match.roundNumber} Match ${match.matchNumber}`,
+                name: matchName,
                 completionTime: 'None'
             };
             // If the completedAt exists then we add it to the metadata
