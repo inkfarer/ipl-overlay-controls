@@ -4,6 +4,8 @@ export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
     let backgroundColor;
     let textColor;
     let text;
+    let resetAfterTimeout = true;
+
     switch (status) {
         case ImportStatus.Success:
             backgroundColor = 'var(--green)';
@@ -14,6 +16,7 @@ export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
             backgroundColor = 'var(--yellow)';
             textColor = 'black';
             text = 'LOADING';
+            resetAfterTimeout = false;
             break;
         case ImportStatus.Failure:
             backgroundColor = 'var(--red)';
@@ -25,6 +28,12 @@ export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
             textColor = 'black';
             text = 'NO DATA';
             break;
+        case ImportStatus.NoStatus:
+            backgroundColor = '#181e29';
+            textColor = 'white';
+            text = 'STATUS';
+            resetAfterTimeout = false;
+            break;
         default:
             backgroundColor = '#181e29';
             textColor = 'white';
@@ -34,4 +43,10 @@ export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
     elem.style.backgroundColor = backgroundColor;
     elem.style.color = textColor;
     elem.innerText = text;
+
+    if (resetAfterTimeout) {
+        setTimeout(() => {
+            setImportStatus(ImportStatus.NoStatus, elem);
+        }, 10000);
+    }
 }
