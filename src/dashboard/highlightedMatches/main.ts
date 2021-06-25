@@ -1,4 +1,4 @@
-import '../globalStyles.css';
-import './highlightedMatches.css';
+import '../styles/globalStyles.css';
+import '../styles/statusDisplay.css';
 
 import './matchData';

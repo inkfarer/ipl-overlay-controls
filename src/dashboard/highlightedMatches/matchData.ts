@@ -45,7 +45,10 @@ document.getElementById('get-matches').onclick = () => {
     }
 
     // Send message to extension
-    nodecg.sendMessage('getHighlightedMatches', { stages: stages, provider: tournamentData.value.meta.source }, e => {
+    nodecg.sendMessage('getHighlightedMatches', {
+        stages: stages,
+        provider: tournamentData.value.meta.source
+    }, e => {
         // If we get an error
         if (e) {
             console.error(e);
@@ -89,14 +92,14 @@ tournamentData.on('change', newValue => {
 highlightedMatchData.on('change', newValue => {
     clearSelectors('match-selector');
     if (!newValue || newValue.length < 1) {
-        addSelector('No Matches','match-selector', 'n/a');
+        addSelector('No Matches', 'match-selector', 'n/a');
         teamAName.innerText = '';
         teamBName.innerText = '';
         setNextMatchBtnElem.disabled = true;  // if no matches in array disable button
     } else {
         // fill drop down with matches
         newValue.forEach(function (value) {
-            addSelector(addDots(`${value.meta.name}|${value.meta.stageName}`),
+            addSelector(addDots(`${value.meta.name} | ${value.meta.stageName}`),
                 'match-selector',
                 value.meta.id);
         });

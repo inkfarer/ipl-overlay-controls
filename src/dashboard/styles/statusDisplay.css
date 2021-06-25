@@ -7,7 +7,3 @@ div.status-display {
     padding: 5px 0;
     overflow-wrap: anywhere;
 }
-
-li {
-    word-break: break-all;
-}

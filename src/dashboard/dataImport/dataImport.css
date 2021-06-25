@@ -1,17 +1,3 @@
-div.status-display {
-    background-color: #181e29;
-    display: block;
-    text-align: center;
-    margin: 5px 2px 2px;
-    border-radius: 2px;
-    padding: 5px 0;
-    overflow-wrap: anywhere;
-}
-
-li {
-    word-break: break-all;
-}
-
 input[type='file'] {
     margin: 5px 0;
 }

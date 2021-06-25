@@ -2,5 +2,5 @@ import './casters';
 import './copyCasters';
 import './loadFromVc';
 
-import '../globalStyles.css';
+import '../styles/globalStyles.css';
 import './casters.css';
