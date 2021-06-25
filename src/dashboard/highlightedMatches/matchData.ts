@@ -105,9 +105,15 @@ highlightedMatchData.on('change', newValue => {
         hideElement(noLoadedMatchesMessage);
         showElement(selectMatchSpace);
 
+        const isSameBracket = newValue.every(value => {
+            return value.meta.stageName === newValue[0].meta.stageName;
+        });
+
         // fill drop down with matches
         newValue.forEach(function (value) {
-            addSelector(addDots(`${value.meta.name} | ${value.meta.stageName}`),
+            const matchName = isSameBracket ? value.meta.name : `${value.meta.name} | ${value.meta.stageName}`;
+            addSelector(
+                addDots(matchName),
                 'match-selector',
                 value.meta.id);
         });
@@ -129,10 +135,7 @@ matchSelectElem.oninput = function () {
     }
 };
 
-addChangeReminder(
-    document.querySelectorAll('.next-match-update-warning'),
-    setNextMatchBtnElem
-);
+addChangeReminder(document.querySelectorAll('.next-match-update-warning'), setNextMatchBtnElem);
 
 function isValidSource(source: string): boolean {
     return ['Battlefy'].includes(source);
