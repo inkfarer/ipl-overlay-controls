@@ -76,6 +76,19 @@ export function updateTeamDataReplicants(data: TournamentData): void {
         throw new Error('Tournament has no teams.');
     }
 
+    data.data.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+        return 0;
+    });
+
     tournamentData.value = data;
 
     highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
