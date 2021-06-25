@@ -1,3 +1,5 @@
+import { Match } from './battlefyStage';
+
 export interface Rules {
     complete: string;
     critical: string;
@@ -47,6 +49,7 @@ export interface Stage {
     hasStarted: boolean;
     hasMatchCheckin?: boolean;
     hasCheckinTimer?: boolean;
+    matches?: Match[];
 }
 
 export interface Features {
@@ -84,7 +87,6 @@ export interface Game {
     playersPerTeam: number;
     tournamentCreateOrder: number;
     defaultPlayersPerTeam: number;
-    aliases: any[];
     cloudSearchDocumentHash: string;
     cloudSearchDocumentLastGenerated: Date;
     searchScoreMultiplier: number;

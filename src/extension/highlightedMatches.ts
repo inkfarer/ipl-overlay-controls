@@ -1,13 +1,15 @@
 /*
 This file handles getting highlighted matches from different services
  */
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
 import { HighlightedMatch, TournamentData } from 'schemas';
 import { Team } from 'types/team';
-import { BattlefyStage, Match, MatchTeam } from './types/battlefyStage';
+import { MatchTeam } from './types/battlefyStage';
 import { ImportStatus } from 'types/importStatus';
+import { BattlefyTournamentData, Stage } from './types/battlefyTournamentData';
+
 const nodecg = nodecgContext.get();
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
@@ -22,13 +24,9 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
         return;
     }
 
-    if (data.getAllStages) {
-        data.stages = tournamentData.value.meta.stages.map(stage => { return stage.id; });
-    }
-
     switch (tournamentData.value.meta.source) {
         case 'Battlefy':
-            getBattlefyMatches(data.stages)
+            getBattlefyMatches(data.stages, data.getAllStages)
                 .then(data => {
                     if (data.length > 0) {
                         updateMatchReplicant(data);
@@ -67,7 +65,7 @@ export function updateMatchReplicant(data: HighlightedMatch): void {
  * Build the team data when given a MatchTeam from Battlefy
  * @param teamData data for a team in a match
  */
-function teamDataBuilder(teamData: MatchTeam): Team{
+function teamDataBuilder(teamData: MatchTeam): Team {
     const teamReturnObject: Team = {
         id: teamData.team._id,
         name: teamData.team.name,
@@ -77,8 +75,7 @@ function teamDataBuilder(teamData: MatchTeam): Team{
     for (let x = 0; x < teamData.team.players.length; x++) {
         const playerValue = teamData.team.players[x];
         const playerInfo = {
-            name: playerValue.inGameName,
-            username: playerValue.user?.username
+            name: playerValue.inGameName
         };
         teamReturnObject.players.push(playerInfo);
     }
@@ -87,60 +84,82 @@ function teamDataBuilder(teamData: MatchTeam): Team{
 
 /**
  * Returns the matches with isMarkedLive as true for a list of Battlefy Stages
- * @param stages StageID of the stages to get highlighted matches from
+ * @param stages StageIDs of the stages to get highlighted matches from
+ * @param getAllStages Get data for all stages
  */
-async function getBattlefyMatches(stages: Array<string>): Promise<HighlightedMatch> {
-    const matchData: HighlightedMatch = [];
-    const requestPromises: Promise<AxiosResponse>[] = [];
-    for (let i = 0; i < stages.length; i++) {
-        // eslint-disable-next-line max-len
-        const requestURL = `https://api.battlefy.com/stages/${stages[i]}?extend%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bteams%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Btop.team%5D%5BpersistentTeam%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5Bplayers%5D%5Buser%5D=true&extend%5Bgroups%5D%5Bmatches%5D%5Bbottom.team%5D%5BpersistentTeam%5D=true`;
+async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatch> {
+    const requestUrl = `https://api.battlefy.com/tournaments/${tournamentData.value.meta.id}` +
+        '?extend[stages][$query][deletedAt][$exists]=false' +
+        '&extend[stages][matches]=1' +
+        '&extend[stages][$opts][name]=1' +
+        '&extend[stages][$opts][matches][$elemMatch][isMarkedLive]=true' +
+        '&extend[stages.matches.top.team]=1' +
+        '&extend[stages.matches.bottom.team]=1' +
+        '&extend[stages][$opts][bracket]=1' +
+        '&extend[stages.matches.top.team.persistentTeam]=1' +
+        '&extend[stages.matches.bottom.team.persistentTeam]=1' +
+        '&extend[stages.matches.top.team.players]=1' +
+        '&extend[stages.matches.bottom.team.players]=1';
 
-        requestPromises.push(axios.get(requestURL));
+    const battlefyResponse = await axios.get(requestUrl);
+    const { data } = battlefyResponse;
+
+    if (data.error) {
+        throw new Error(`Got error from Battlefy: ${data.error}`);
+    } else if (!data[0]) {
+        throw new Error('Couldn\'t get tournament data from Battlefy.');
     }
 
-    const requests = await Promise.all(requestPromises);
+    const battlefyTournamentData: BattlefyTournamentData = data[0];
 
-    for (let i = 0; i < requests.length; i++) {
-        const response = requests[i];
-        const { data } = response;
-        // If there's an error, reject
-        if (data.error) {
-            throw new Error(`Got error from Battlefy: ${data.error}`);
-        }
-        const battlefyData: BattlefyStage = data[0];
-        // Make sure the type of bracket is supported and tested (i.e. Not Ladder)
-        if (['swiss', 'elimination', 'roundrobin'].includes(battlefyData.bracket.type)) {
-            // For each match
-            for (let i = 0; i < battlefyData.matches.length; i++) {
-                const match: Match= battlefyData.matches[i];
-                // If match is marked on Battlefy
-                if ((match.isMarkedLive !== undefined) && (match.isMarkedLive === true)) {
+    if (getAllStages) {
+        return mapBattlefyRoundData(battlefyTournamentData.stages);
+    } else {
+        return mapBattlefyRoundData(battlefyTournamentData.stages.filter(stage => {
+            return stages.includes(stage._id);
+        }));
+    }
+}
 
-                    // Build Team info
-                    const teamAData = teamDataBuilder(match.top);
-                    const teamBData = teamDataBuilder(match.bottom);
-                    // Build MetaData for match
-                    const metaData = {
-                        id: match._id,
-                        stageName: battlefyData.name,
-                        round: match.roundNumber,
-                        match: match.matchNumber,
-                        name: `Round ${match.roundNumber} Match ${match.matchNumber}`,
-                        completionTime: 'None'
-                    };
-                    // If the completedAt exists then we add it to the metadata
-                    if (match.completedAt !== undefined) {
-                        metaData.completionTime = match.completedAt;
-                    }
-                    matchData.push({  // Push match into array
-                        meta: metaData,
-                        teamA: teamAData,
-                        teamB: teamBData
-                    });
-                }
+function mapBattlefyRoundData(stages: Stage[]): HighlightedMatch {
+    const result: HighlightedMatch = [];
+
+    const validBracketStages = stages.filter(stage => {
+        return ['swiss', 'elimination', 'roundrobin'].includes(stage.bracket.type);
+    });
+
+    for (let i = 0; i < validBracketStages.length; i++) {
+        const stage = validBracketStages[i];
+
+        const liveMatches = stage.matches.filter(match => {
+            return match.isMarkedLive === true;
+        });
+
+        for (let j = 0; j < liveMatches.length; j++) {
+            const match = liveMatches[j];
+            // Build Team info
+            const teamAData = teamDataBuilder(match.top);
+            const teamBData = teamDataBuilder(match.bottom);
+            // Build MetaData for match
+            const metaData = {
+                id: match._id,
+                stageName: stage.name,
+                round: match.roundNumber,
+                match: match.matchNumber,
+                name: `Round ${match.roundNumber} Match ${match.matchNumber}`,
+                completionTime: 'None'
+            };
+            // If the completedAt exists then we add it to the metadata
+            if (match.completedAt !== undefined) {
+                metaData.completionTime = match.completedAt;
             }
+            result.push({
+                meta: metaData,
+                teamA: teamAData,
+                teamB: teamBData
+            });
         }
     }
-    return matchData;
+
+    return result;
 }
