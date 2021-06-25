@@ -7,6 +7,7 @@ import * as nodecgContext from './util/nodecg';
 import { HighlightedMatch } from 'schemas';
 import { Team } from 'types/team';
 import { BattlefyStage, Match, MatchTeam } from './types/battlefyStage';
+import { ImportStatus } from 'types/importStatus';
 const nodecg = nodecgContext.get();
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
@@ -23,8 +24,18 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
         case 'Battlefy':
             getBattlefyMatches(data.stages)
                 .then(data => {
-                    updateMatchReplicant(data);
-                    ack(null, data);
+                    if (data.length > 0) {
+                        updateMatchReplicant(data);
+                        ack(null, {
+                            status: ImportStatus.Success,
+                            data: data
+                        });
+                    } else {
+                        ack(null, {
+                            status: ImportStatus.NoData,
+                            data: data
+                        });
+                    }
                 })
                 .catch(err => {
                     ack(err);

@@ -52,7 +52,7 @@ document.getElementById('get-matches').onclick = () => {
     nodecg.sendMessage('getHighlightedMatches', {
         stages: stages,
         provider: tournamentData.value.meta.source
-    }, e => {
+    }, (e, result) => {
         // If we get an error
         if (e) {
             console.error(e);
@@ -60,7 +60,7 @@ document.getElementById('get-matches').onclick = () => {
             return;
         }
         // If we get success
-        setImportStatus(ImportStatus.Success, matchDataStatusElem);
+        setImportStatus(result.status, matchDataStatusElem);
     });
 };
 
