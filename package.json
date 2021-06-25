@@ -105,6 +105,7 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "axios": "^0.21.1",
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",

@@ -5,7 +5,15 @@
     <title>Highlighted Match Importer</title>
 </head>
 <body>
-<div class="space">
+
+<div class="space warning layout message" id="unsupported-service-message" style="display: none">
+    <i class="icon fas fa-exclamation-triangle"></i>
+    <p class="content">
+        Unsupported tournament service. Cannot import highlighted matches.
+    </p>
+</div>
+
+<div class="space" id="load-matches-space">
     <div class="title">Load Matches</div>
 
     <label for="stage-selector">Bracket</label>
@@ -18,7 +26,14 @@
     <div id="match-data-status" class="status-display">STATUS</div>
 </div>
 
-<div class="space">
+<div class="space info layout message" id="load-matches-hint" style="display: none">
+    <i class="icon fas fa-info-circle"></i>
+    <p class="content">
+        No matches loaded.
+    </p>
+</div>
+
+<div class="space" id="select-match-space">
     <div class="title">Select Match</div>
 
     <label for="match-selector">Match</label>

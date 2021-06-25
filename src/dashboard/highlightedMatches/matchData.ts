@@ -1,4 +1,4 @@
-import { addChangeReminder, addDots, addSelector, clearSelectors } from '../globalScripts';
+import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
@@ -11,8 +11,12 @@ const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 const matchDataStatusElem = document.getElementById('match-data-status');
 const stageSelectElem = document.getElementById('stage-selector') as HTMLSelectElement;
 const matchSelectElem = document.getElementById('match-selector') as HTMLSelectElement;
-const getMatchesBtnElem = document.getElementById('get-matches') as HTMLButtonElement;
 const setNextMatchBtnElem = document.getElementById('set-next-match-btn') as HTMLButtonElement;
+
+const unsupportedPlatformWarning = document.getElementById('unsupported-service-message');
+const noLoadedMatchesMessage = document.getElementById('load-matches-hint');
+const loadMatchesSpace = document.getElementById('load-matches-space');
+const selectMatchSpace = document.getElementById('select-match-space');
 
 const teamAName = document.getElementById('team-a-name');
 const teamBName = document.getElementById('team-b-name');
@@ -71,7 +75,10 @@ document.getElementById('set-next-match-btn').onclick = () => {
 
 tournamentData.on('change', newValue => {
     clearSelectors('stage-selector');
-    if (['Battlefy'].includes(newValue.meta.source)) {
+    if (isValidSource(newValue.meta.source)) {
+        showElement(loadMatchesSpace);
+        hideElement(unsupportedPlatformWarning);
+
         for (let i = 0; i < newValue.meta.stages.length; i++) {
             const element = newValue.meta.stages[i];
             if (['swiss', 'elimination', 'roundrobin'].includes(element.bracketType)) {  // if bracket type is supported
@@ -80,23 +87,24 @@ tournamentData.on('change', newValue => {
             }
         }
         addSelector('All Brackets', 'stage-selector', 'AllStages');
-        // Disable button if tournamentData from unsupported source
-        getMatchesBtnElem.disabled = false;
     } else {
-        // We the source is not supported then we disable the get matches button
-        addSelector('Unsupported Tournament Platform', 'stage-selector', 'n/a');
-        getMatchesBtnElem.disabled = true;
+        hideElement(loadMatchesSpace);
+        showElement(unsupportedPlatformWarning);
+        hideElement(noLoadedMatchesMessage);
     }
 });
 
 highlightedMatchData.on('change', newValue => {
     clearSelectors('match-selector');
     if (!newValue || newValue.length < 1) {
-        addSelector('No Matches', 'match-selector', 'n/a');
-        teamAName.innerText = '';
-        teamBName.innerText = '';
-        setNextMatchBtnElem.disabled = true;  // if no matches in array disable button
+        hideElement(selectMatchSpace);
+        if (isValidSource(tournamentData.value.meta.source)) {
+            showElement(noLoadedMatchesMessage);
+        }
     } else {
+        hideElement(noLoadedMatchesMessage);
+        showElement(selectMatchSpace);
+
         // fill drop down with matches
         newValue.forEach(function (value) {
             addSelector(addDots(`${value.meta.name} | ${value.meta.stageName}`),
@@ -105,7 +113,6 @@ highlightedMatchData.on('change', newValue => {
         });
         teamAName.innerText = addDots(newValue[0].teamA.name);
         teamBName.innerText = addDots(newValue[0].teamB.name);
-        setNextMatchBtnElem.disabled = false;
     }
 });
 
@@ -116,8 +123,8 @@ matchSelectElem.oninput = function () {
         teamBName.innerText = selectedMatch.teamB.name;
         setNextMatchBtnElem.disabled = false;
     } else {
-        teamAName.innerText = '';
-        teamBName.innerText = '';
+        teamAName.innerText = 'Unknown';
+        teamBName.innerText = 'Unknown';
         setNextMatchBtnElem.disabled = true;
     }
 };
@@ -127,3 +134,6 @@ addChangeReminder(
     setNextMatchBtnElem
 );
 
+function isValidSource(source: string): boolean {
+    return ['Battlefy'].includes(source);
+}
