@@ -1,5 +1,5 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameWinners, Rounds } from 'schemas';
+import { ActiveRoundId, Game, GameWinners, Rounds, ScoreboardData } from 'schemas';
 
 import './setWinnersAutomatically';
 
@@ -10,6 +10,7 @@ import { splatModes, splatStages } from '../../helpers/splatoonData';
 const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 const rounds = nodecg.Replicant<Rounds>('rounds');
+const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
@@ -57,6 +58,30 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
         }
     });
 });
+
+scoreboardData.on('change', newValue => {
+    document.body.style.setProperty(
+        '--team-a-color',
+        newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA);
+    document.body.style.setProperty(
+        '--team-b-color',
+        newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB);
+    document.body.style.setProperty(
+        '--team-a-text-color',
+        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA));
+    document.body.style.setProperty(
+        '--team-b-text-color',
+        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB));
+});
+
+function getTextColor(hex: string): string {
+    hex = hex.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    return (yiq >= 128) ? '#333' : 'white';
+}
 
 function updateMapsModes(index: number, data: Game) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
@@ -107,24 +132,22 @@ function addToggle(roundElement: Game, stageIndex: number) {
     const noWinButton = document.createElement('button');
     noWinButton.classList.add('no-win-toggle');
     noWinButton.classList.add('max-width');
+    noWinButton.classList.add('red');
     noWinButton.id = 'no-win-toggle_' + stageIndex;
-    noWinButton.innerText = 'NO WIN';
+    noWinButton.innerText = '✖';
     noWinButton.disabled = true;
-    toggleDiv.appendChild(noWinButton);
 
     const AWinButton = document.createElement('button');
     AWinButton.classList.add('team-a-win-toggle');
-    AWinButton.classList.add('green');
     AWinButton.classList.add('max-width');
     AWinButton.id = 'team-a-win-toggle_' + stageIndex;
-    AWinButton.innerText = 'A WIN';
+    AWinButton.innerText = 'A';
 
     const BWinButton = document.createElement('button');
     BWinButton.classList.add('team-b-win-toggle');
-    BWinButton.classList.add('red');
     BWinButton.classList.add('max-width');
     BWinButton.id = 'team-b-win-toggle_' + stageIndex;
-    BWinButton.innerText = 'B WIN';
+    BWinButton.innerText = 'B';
 
     noWinButton.onclick = event => {
         const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
@@ -142,12 +165,16 @@ function addToggle(roundElement: Game, stageIndex: number) {
     };
 
     const winButtonContainer = document.createElement('div');
-    winButtonContainer.classList.add('win-picker-container');
+    winButtonContainer.classList.add('layout');
+    winButtonContainer.classList.add('horizontal');
+    winButtonContainer.classList.add('win-button-container');
+    winButtonContainer.appendChild(noWinButton);
     winButtonContainer.appendChild(AWinButton);
     winButtonContainer.appendChild(BWinButton);
     toggleDiv.appendChild(winButtonContainer);
 
-    document.getElementById('toggles').appendChild(toggleDiv);
+    document.getElementById('toggles')
+        .appendChild(toggleDiv);
 }
 
 document.getElementById('reset-btn').onclick = () => {
