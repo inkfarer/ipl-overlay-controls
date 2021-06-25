@@ -16,12 +16,6 @@
     gap: 5px;
 }
 
-.win-picker-container {
-    width: 100%;
-    display: flex;
-    align-content: center;
-}
-
 span.center {
     display: block;
     text-align: center;
@@ -38,4 +32,23 @@ span.center {
 .separator span {
     background: #262f40;
     padding: 0 10px;
+}
+
+.win-button-container > button {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 3px;
+    margin: 0;
+}
+
+.win-button-container > button:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+}
+
+.win-button-container > button:nth-child(2) {
+    border-radius: 0;
+}
+
+.win-button-container > button:nth-child(3) {
+    border-radius: 0 5px 5px 0;
 }
