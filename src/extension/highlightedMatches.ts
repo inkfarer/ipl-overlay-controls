@@ -36,7 +36,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
 });
 
 /**
- * Assigns data to highlighedMatch replicant
+ * Assigns data to highlightedMatches replicant
  * @param data Data handed back from data provider
  */
 export function updateMatchReplicant(data: HighlightedMatch): void {

@@ -88,18 +88,18 @@ tournamentData.on('change', newValue => {
 
 highlightedMatchData.on('change', newValue => {
     clearSelectors('match-selector');
-    // fill drop down with matches
-    newValue.forEach(function (value) {
-        addSelector(addDots(`${value.meta.name}|${value.meta.stageName}`),
-            'match-selector',
-            value.meta.id);
-    });
-    if (newValue.length < 1) {
+    if (!newValue || newValue.length < 1) {
         addSelector('No Matches','match-selector', 'n/a');
         teamAName.innerText = '';
         teamBName.innerText = '';
         setNextMatchBtnElem.disabled = true;  // if no matches in array disable button
     } else {
+        // fill drop down with matches
+        newValue.forEach(function (value) {
+            addSelector(addDots(`${value.meta.name}|${value.meta.stageName}`),
+                'match-selector',
+                value.meta.id);
+        });
         teamAName.innerText = addDots(newValue[0].teamA.name);
         teamBName.innerText = addDots(newValue[0].teamB.name);
         setNextMatchBtnElem.disabled = false;
