@@ -38,22 +38,12 @@ function getMatchFromID(id: string): Match | null {
 // When get match button is pressed
 getMatchesBtn.onclick = () => {
     setImportStatus(ImportStatus.Loading, matchDataStatusElem);
-    const selectedValues: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
-    let stages: Array<string> = [];
-
-    if (selectedValues.includes('AllStages')) {
-        // If all stages is selected add all the stage ID to the array
-        tournamentData.value.meta.stages.forEach(function (value) {
-            stages.push(value.id);
-        });
-    } else {
-        stages = selectedValues;
-    }
+    const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
 
     // Send message to extension
     nodecg.sendMessage('getHighlightedMatches', {
-        stages: stages,
-        provider: tournamentData.value.meta.source
+        stages: selectedStages,
+        getAllStages: selectedStages.includes('AllStages')
     }, (e, result) => {
         // If we get an error
         if (e) {

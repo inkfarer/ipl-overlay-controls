@@ -4,23 +4,29 @@ This file handles getting highlighted matches from different services
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { HighlightedMatch } from 'schemas';
+import { HighlightedMatch, TournamentData } from 'schemas';
 import { Team } from 'types/team';
 import { BattlefyStage, Match, MatchTeam } from './types/battlefyStage';
 import { ImportStatus } from 'types/importStatus';
 const nodecg = nodecgContext.get();
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
+const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 /**
  * Handles the listener for when request is triggered
  */
 nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb) => {
-    if (!data.stages || !data.provider) {
+    if ((!data.stages && !data.getAllStages)) {
         ack(new Error('Missing arguments.'), null);
         return;
     }
-    switch (data.provider) {
+
+    if (data.getAllStages) {
+        data.stages = tournamentData.value.meta.stages.map(stage => { return stage.id; });
+    }
+
+    switch (tournamentData.value.meta.source) {
         case 'Battlefy':
             getBattlefyMatches(data.stages)
                 .then(data => {
