@@ -3,10 +3,13 @@ body {
 }
 
 :root {
-    --blue: #3f51b5;
+    --blue: rgb(63, 81, 181);
+    --info-blue: rgb(62, 98, 240);
+    --info-blue-a-10: rgba(62, 98, 240, 0.1);
     --red: #c9513e;
     --green: #5ba664;
-    --yellow: #fdd835;
+    --yellow: rgb(253, 216, 53);
+    --yellow-a-10: rgba(253, 216, 53, 0.1);
 }
 
 /* Layout classes */
@@ -19,12 +22,27 @@ body {
     flex-direction: row;
 }
 
-.layout.horizontal.center-content {
+.layout.horizontal.center-horizontal {
     justify-content: center;
 }
 
 .layout.vertical {
     flex-direction: column;
+}
+
+.layout.message {
+    flex-direction: row;
+    align-items: center;
+}
+
+.layout.message > .icon {
+    display: block;
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.layout.message > .content {
+    margin: 0;
 }
 
 /* "Space" class for creating sections of elements + related styles */
@@ -34,6 +52,16 @@ body {
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 5px;
+}
+
+.space.warning {
+    background-color: var(--yellow-a-10);
+    border: 2px solid var(--yellow);
+}
+
+.space.info {
+    background-color: var(--info-blue-a-10);
+    border: 2px solid var(--info-blue);
 }
 
 .show-hide-space {

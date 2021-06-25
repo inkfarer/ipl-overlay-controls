@@ -72,3 +72,11 @@ export function fillList(selectElem: HTMLSelectElement, data: Array<string>): vo
         selectElem.add(option);
     }
 }
+
+export function hideElement(element: HTMLElement): void {
+    element.style.display = 'none';
+}
+
+export function showElement(element: HTMLElement): void {
+    element.style.removeProperty('display');
+}

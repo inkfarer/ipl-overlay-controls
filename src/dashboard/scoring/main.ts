@@ -5,5 +5,5 @@ import './scoreboardData';
 import './colorEditor';
 import './nextTeams';
 
-import '../globalStyles.css';
+import '../styles/globalStyles.css';
 import './scoring.css';

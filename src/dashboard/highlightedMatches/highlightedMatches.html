@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Highlighted Match Importer</title>
+</head>
+<body>
+
+<div class="space warning layout message" id="unsupported-service-message" style="display: none">
+    <i class="icon fas fa-exclamation-triangle"></i>
+    <p class="content">
+        Unsupported tournament service. Cannot import highlighted matches.
+    </p>
+</div>
+
+<div class="space" id="load-matches-space">
+    <div class="title">Load Matches</div>
+
+    <label>Bracket</label>
+    <multi-select id="stage-selector">
+        <select class="stage-selector"></select>
+    </multi-select>
+
+    <button class="max-width" id="get-matches" disabled>Get Matches</button>
+
+    <div id="match-data-status" class="status-display">STATUS</div>
+</div>
+
+<div class="space info layout message" id="load-matches-hint" style="display: none">
+    <i class="icon fas fa-info-circle"></i>
+    <p class="content">
+        No matches loaded.
+    </p>
+</div>
+
+<div class="space" id="select-match-space">
+    <div class="title">Select Match</div>
+
+    <label for="match-selector">Match</label>
+    <select id="match-selector" class="match-selector next-match-update-warning"></select>
+    <div>
+        <label>Team A</label>
+        <div id="team-a-name">Team A</div>
+
+        <label>Team B</label>
+        <div id="team-b-name">Team B</div>
+    </div>
+
+    <button id="set-next-match-btn" class="blue max-width">Set next match</button>
+</div>
+</body>
+</html>

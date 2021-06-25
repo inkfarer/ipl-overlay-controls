@@ -5,17 +5,31 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface ScoreboardData {
-	flavorText?: string;
-	colorInfo?: {
-		index?: number;
-		title?: string;
-		clrA?: string;
-		clrB?: string;
-		[k: string]: any;
+export type HighlightedMatch = {
+	meta: {
+		name: string;
+		/**
+		 * ID of the match, for Battlefy use _id
+		 */
+		id: string;
+		/**
+		 * Name of the stage match originates from
+		 */
+		stageName?: string;
+		/**
+		 * The time the set was completed at, null if yet to be completed, Stored in ISO format
+		 */
+		completionTime?: string;
+		/**
+		 * Round number from provider
+		 */
+		round?: number;
+		/**
+		 * Match number from provider
+		 */
+		match?: number;
 	};
-	swapColorOrder?: boolean;
-	teamAInfo?: {
+	teamA: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -25,7 +39,7 @@ export interface ScoreboardData {
 		}[];
 		[k: string]: any;
 	};
-	teamBInfo?: {
+	teamB: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -35,4 +49,4 @@ export interface ScoreboardData {
 		}[];
 		[k: string]: any;
 	};
-}
+}[];

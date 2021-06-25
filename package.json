@@ -69,6 +69,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "highlightedMatches",
+                "title": "Highlighted Matches",
+                "width": 2,
+                "file": "highlightedMatches.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,
@@ -107,6 +115,8 @@
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-typescript": "^7.13.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/node": "^15.12.1",

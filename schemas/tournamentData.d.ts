@@ -10,14 +10,32 @@ export interface TournamentData {
 		id: string;
 		source: string;
 		name?: string;
+		/**
+		 * Stage/Bracket ID used by provider
+		 */
+		stages?: {
+			/**
+			 * Name of stage/bracket
+			 */
+			name?: string;
+			/**
+			 * ID of stage/bracket
+			 */
+			id?: string;
+			/**
+			 * The bracket type, swiss|elimination etc
+			 */
+			bracketType?: string;
+			[k: string]: any;
+		}[];
 		[k: string]: any;
 	};
 	data?: {
-		id?: string;
-		name?: string;
+		id: string;
+		name: string;
 		logoUrl?: string;
-		players?: {
-			name?: string;
+		players: {
+			name: string;
 			[k: string]: any;
 		}[];
 		[k: string]: any;
