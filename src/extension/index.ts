@@ -11,7 +11,7 @@ export default (nodecg: NodeCG): void => {
     require('./tournamentImporter');
     require('./roundImporter');
     require('./fileImport');
-    require('./highlighedMatches');
+    require('./highlightedMatches');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 

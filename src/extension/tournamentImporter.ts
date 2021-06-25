@@ -12,7 +12,7 @@ const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {

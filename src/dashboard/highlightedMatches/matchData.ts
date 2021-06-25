@@ -4,7 +4,7 @@ import { ImportStatus } from 'types/importStatus';
 import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
 import { Match } from 'types/match';
 
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 

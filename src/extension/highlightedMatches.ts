@@ -9,7 +9,7 @@ import { Team } from 'types/team';
 import { BattlefyStage, Match, MatchTeam } from './types/battlefyStage';
 const nodecg = nodecgContext.get();
 
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlighedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
 
 /**
  * Handles the listener for when request is triggered
