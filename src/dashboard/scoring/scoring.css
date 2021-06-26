@@ -40,6 +40,14 @@
     background-color: #1BBF0F;
 }
 
+.color-toggle:first-child {
+    margin-left: 2px;
+}
+
+.color-toggle:last-child {
+    margin-right: 2px;
+}
+
 .color-toggle {
     margin: 5px 3px 2px 3px;
     background-color: #2F3A4F;
