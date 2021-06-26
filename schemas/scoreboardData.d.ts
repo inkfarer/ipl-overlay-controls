@@ -8,11 +8,11 @@
 export interface ScoreboardData {
 	flavorText?: string;
 	colorInfo?: {
-		index?: number;
-		title?: string;
-		clrA?: string;
-		clrB?: string;
-		[k: string]: any;
+		index: number;
+		title: string;
+		clrA: string;
+		clrB: string;
+		categoryName: string;
 	};
 	swapColorOrder?: boolean;
 	teamAInfo?: {

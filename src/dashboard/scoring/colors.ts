@@ -56,43 +56,43 @@ export const colors: ColorGroup[] = [
         },
         colors: [
             {
-                index: 8,
+                index: 0,
                 title: 'Yellow vs Purple',
                 clrA: '#D1E004',
                 clrB: '#960CB2'
             },
             {
-                index: 9,
+                index: 1,
                 title: 'Pink vs Blue',
                 clrA: '#E61077',
                 clrB: '#361CB8'
             },
             {
-                index: 10,
+                index: 2,
                 title: 'Pink vs Yellow',
                 clrA: '#ED0C6A',
                 clrB: '#D5E802'
             },
             {
-                index: 11,
+                index: 3,
                 title: 'Purple vs Turquoise',
                 clrA: '#6B10CC',
                 clrB: '#08CC81'
             },
             {
-                index: 12,
+                index: 4,
                 title: 'Pink vs Light Blue',
                 clrA: '#E30960',
                 clrB: '#02ADCF'
             },
             {
-                index: 13,
+                index: 5,
                 title: 'Purple vs Orange',
                 clrA: '#5617C2',
                 clrB: '#FF5F03'
             },
             {
-                index: 14,
+                index: 6,
                 title: 'Pink vs Green',
                 clrA: '#E60572',
                 clrB: '#1BBF0F'
@@ -105,7 +105,7 @@ export const colors: ColorGroup[] = [
         },
         colors: [
             {
-                index: 7,
+                index: 0,
                 title: 'Yellow vs Blue (Color Lock)',
                 clrA: '#FEF232',
                 clrB: '#2F27CC'

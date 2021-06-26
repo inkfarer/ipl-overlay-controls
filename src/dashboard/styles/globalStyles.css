@@ -26,6 +26,10 @@ body {
     justify-content: center;
 }
 
+.layout.horizontal.center-vertical {
+    align-items: center;
+}
+
 .layout.vertical {
     flex-direction: column;
 }

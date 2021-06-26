@@ -53,7 +53,19 @@
         <!--suppress HtmlFormInputWithoutLabel -->
         <input type="color" id="team-b-custom-color" class="scoreboard-update-warning" />
     </div>
-    <button id="swap-color-order-btn" class="blue max-width">swap colors</button>
+    <div class="layout horizontal">
+        <div class="layout horizontal color-toggle center-vertical" id="color-toggle-prev">
+            <i class="fas fa-chevron-left"></i>
+            <div class="color-toggle-display a" id="prev-color-a-display"></div>
+            <div class="color-toggle-display b" id="prev-color-b-display"></div>
+        </div>
+        <button id="swap-color-order-btn" class="blue max-width">swap</button>
+        <div class="layout horizontal color-toggle center-vertical" id="color-toggle-next">
+            <div class="color-toggle-display a" id="next-color-a-display"></div>
+            <div class="color-toggle-display b" id="next-color-b-display"></div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
     <div class="layout horizontal center-horizontal">
         <input id="custom-color-toggle" type="checkbox" />
         <label for="custom-color-toggle" class="white-label">Custom colors</label>
