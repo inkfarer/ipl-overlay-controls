@@ -15,10 +15,12 @@ for (let i = 0; i < colors.length; i++) {
         const color = element.colors[j];
 
         const option = document.createElement('option');
-        option.value = color.index.toString();
+        option.value = `${formatCategoryName(element.meta.name)}_${color.index}`;
         option.text = color.title;
+        option.dataset.index = String(color.index);
         option.dataset.firstColor = color.clrA;
         option.dataset.secondColor = color.clrB;
+        option.dataset.categoryName = element.meta.name;
         // Make custom color unselectable by user
         option.disabled = color.index === 999;
 
@@ -29,7 +31,7 @@ for (let i = 0; i < colors.length; i++) {
 }
 
 scoreboardData.on('change', newValue => {
-    colorSelector.value = newValue.colorInfo.index.toString();
+    colorSelector.value = `${formatCategoryName(newValue.colorInfo.categoryName)}_${newValue.colorInfo.index}`;
 
     updateColorDisplay(
         (newValue.colorInfo as ColorInfo),
@@ -111,18 +113,25 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
             index: 999,
             title: 'Custom Color',
             clrA: (document.getElementById('team-a-custom-color') as HTMLInputElement).value,
-            clrB: (document.getElementById('team-b-custom-color') as HTMLInputElement).value
+            clrB: (document.getElementById('team-b-custom-color') as HTMLInputElement).value,
         };
         swapColorOrder = false;
     } else {
         clrInfo = {
-            index: Number(colorOption.value),
+            index: Number(colorOption.dataset.index),
             title: colorOption.text,
             clrA: colorOption.dataset.firstColor,
-            clrB: colorOption.dataset.secondColor
+            clrB: colorOption.dataset.secondColor,
         };
     }
 
-    scoreboardData.value.colorInfo = clrInfo;
+    scoreboardData.value.colorInfo = {
+        ...clrInfo,
+        categoryName: colorOption.dataset.categoryName
+    };
     scoreboardData.value.swapColorOrder = swapColorOrder;
 });
+
+function formatCategoryName(name: string): string {
+    return name.replace(' ', '-').toLowerCase();
+}

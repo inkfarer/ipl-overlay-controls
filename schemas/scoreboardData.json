@@ -8,6 +8,7 @@
         },
         "colorInfo": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "index": {
                     "type": "number"
@@ -20,8 +21,12 @@
                 },
                 "clrB": {
                     "type": "string"
+                },
+                "categoryName": {
+                    "type": "string"
                 }
-            }
+            },
+            "required": ["index", "title", "clrA", "clrB", "categoryName"]
         },
         "swapColorOrder": {
             "type": "boolean"
@@ -41,7 +46,8 @@
             "index": 0,
             "title": "Green vs Grape",
             "clrA": "#37FC00",
-            "clrB": "#7D28FC"
+            "clrB": "#7D28FC",
+            "categoryName": "Ranked Modes"
         },
         "swapColorOrder": false,
         "teamAInfo": {
