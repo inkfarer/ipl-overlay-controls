@@ -81,7 +81,7 @@ function teamDataBuilder(teamData: MatchTeam): Team {
     const teamReturnObject: Team = {
         id: teamData.team._id,
         name: teamData.team.name,
-        logoUrl: teamData.team.persistentTeam.logoUrl,
+        logoUrl: teamData.team.persistentTeam?.logoUrl,
         players: []
     };
     for (let x = 0; x < teamData.team.players.length; x++) {
@@ -149,6 +149,8 @@ function mapBattlefyRoundData(stages: Stage[]): HighlightedMatch {
 
         for (let j = 0; j < liveMatches.length; j++) {
             const match = liveMatches[j];
+            if (!match.top.team || !match.bottom.team) continue;
+
             // Build Team info
             const teamAData = teamDataBuilder(match.top);
             const teamBData = teamDataBuilder(match.bottom);
