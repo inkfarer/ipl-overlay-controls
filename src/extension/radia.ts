@@ -23,6 +23,7 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
             casters.value = castersToAdd.reduce((map: Casters, obj) => {
                 const id = obj.discord_user_id;
                 delete obj.discord_user_id;
+                obj.twitter = '@' + obj.twitter;
                 map[id] = obj;
                 return map;
             }, {});
