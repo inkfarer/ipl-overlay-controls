@@ -14,18 +14,26 @@
     },
     "default": {
         "teamAInfo": {
-            "name": "Placeholder Team 1",
+            "id": "AAA",
+            "name": "Placeholder Team A",
             "players": [
                 {
-                    "name": "Placeholder Player 1"
+                    "name": "Player 1"
+                },
+                {
+                    "name": "Player 2"
                 }
             ]
         },
         "teamBInfo": {
-            "name": "Placeholder Team 2",
+            "id": "BBB",
+            "name": "Placeholder Team B",
             "players": [
                 {
-                    "name": "Placeholder Player 2"
+                    "name": "Player 3"
+                },
+                {
+                    "name": "Player 4"
                 }
             ]
         }
