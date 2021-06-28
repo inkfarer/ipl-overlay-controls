@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type HighlightedMatch = {
+export type HighlightedMatches = {
 	meta: {
 		name: string;
 		/**

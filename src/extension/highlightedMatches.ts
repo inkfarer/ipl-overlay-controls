@@ -4,7 +4,7 @@ This file handles getting highlighted matches from different services
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { HighlightedMatch, TournamentData } from 'schemas';
+import { HighlightedMatches, TournamentData } from 'schemas';
 import { Team } from 'types/team';
 import { MatchTeam } from './types/battlefyStage';
 import { ImportStatus } from 'types/importStatus';
@@ -12,7 +12,7 @@ import { BattlefyTournamentData, Stage } from './types/battlefyTournamentData';
 
 const nodecg = nodecgContext.get();
 
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 /**
@@ -54,7 +54,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
  * Assigns data to highlightedMatches replicant
  * @param data Data handed back from data provider
  */
-export function updateMatchReplicant(data: HighlightedMatch): void {
+export function updateMatchReplicant(data: HighlightedMatches): void {
     data.sort((a, b) => {
         const keyA = `${a.meta.stageName} ${a.meta.name}`;
         const keyB = `${b.meta.stageName} ${b.meta.name}`;
@@ -99,7 +99,7 @@ function teamDataBuilder(teamData: MatchTeam): Team {
  * @param stages StageIDs of the stages to get highlighted matches from
  * @param getAllStages Get data for all stages
  */
-async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatch> {
+async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatches> {
     const requestUrl = `https://api.battlefy.com/tournaments/${tournamentData.value.meta.id}` +
         '?extend[stages][$query][deletedAt][$exists]=false' +
         '&extend[stages][matches]=1' +
@@ -133,8 +133,8 @@ async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean
     }
 }
 
-function mapBattlefyRoundData(stages: Stage[]): HighlightedMatch {
-    const result: HighlightedMatch = [];
+function mapBattlefyRoundData(stages: Stage[]): HighlightedMatches {
+    const result: HighlightedMatches = [];
 
     const validBracketStages = stages.filter(stage => {
         return ['swiss', 'elimination', 'roundrobin'].includes(stage.bracket.type);

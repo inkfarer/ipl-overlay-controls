@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from './util/nodecg';
-import { TournamentData, ScoreboardData, NextTeams, HighlightedMatch } from 'schemas';
+import { TournamentData, ScoreboardData, NextTeams, HighlightedMatches } from 'schemas';
 import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
 import { BattlefyTournamentData } from './types/battlefyTournamentData';
@@ -12,7 +12,7 @@ const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {

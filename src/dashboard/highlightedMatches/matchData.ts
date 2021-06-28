@@ -1,10 +1,10 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
-import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
+import { HighlightedMatches, NextTeams, TournamentData } from 'schemas';
 import { Match } from 'types/match';
 
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 
