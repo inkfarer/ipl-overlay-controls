@@ -13,7 +13,6 @@ export * from './nextRoundStartTimeShown';
 export * from './nextTeams';
 export * from './nowPlaying';
 export * from './nowPlayingSource';
-export * from './predictionStore';
 export * from './radiaSettings';
 export * from './rounds';
 export * from './scoreboardData';
