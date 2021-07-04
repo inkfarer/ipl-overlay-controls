@@ -53,7 +53,7 @@ nodecg.listenFor('getPredictions', async (data, ack: UnhandledListenForCb) => {
         .then(data => {
             if(data.length > 0){
                 assignPredictionData(data[0]);
-                ack(data);
+                ack(null,data);
             }
         }).catch(err => {
             ack(err.data as ErrorDetails);
@@ -64,7 +64,7 @@ nodecg.listenFor('postPrediction', async  (data: CreatePrediction, ack: Unhandle
     postGuildPrediction(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID, data)
         .then(response => {
             assignPredictionData(response);
-            ack(response);
+            ack(null, response);
         }).catch(err => {
             ack(err.data as ErrorDetails);
         });
@@ -74,7 +74,7 @@ nodecg.listenFor('patchPrediction', async  (data: PatchPrediction, ack: Unhandle
     patchGuildPrediction(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID, data)
         .then(response => {
             assignPredictionData(response);
-            ack(response);
+            ack(null,response);
         }).catch(err => {
             ack(err.data as ErrorDetails);
         });

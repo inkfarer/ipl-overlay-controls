@@ -1,6 +1,9 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { PredictionStore } from 'schemas';
+import { setImportStatus } from '../importStatus';
+import { ImportStatus } from 'types/importStatus';
 
+const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionABarElem = document.getElementById('option-a-bar');
 const optionBBarElem = document.getElementById('option-b-bar');
 const optionATitleElem = document.getElementById('option-a-title');
@@ -12,6 +15,9 @@ const predictionStatusElem = document.getElementById('prediction-status');
 const unsupportedGuildWarning = document.getElementById('unsupported-service-message');
 const currentPredictionSpace = document.getElementById('current-prediction-space');
 const predictionOptionsSpace = document.getElementById('prediction-options-space');
+const predictionGetSpace = document.getElementById('prediction-get-space');
+
+const getPredictionsBtn = document.getElementById('get-predictions-btn');
 
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
@@ -20,6 +26,7 @@ predictionStore.on('change', newValue => {
         hideElement(unsupportedGuildWarning);
         showElement(currentPredictionSpace);
         showElement(predictionOptionsSpace);
+        showElement(predictionGetSpace);
         // Display info on current prediction
         if(newValue.currentPrediction){
             const prediction = newValue.currentPrediction;
@@ -40,5 +47,20 @@ predictionStore.on('change', newValue => {
         showElement(unsupportedGuildWarning);
         hideElement(currentPredictionSpace);
         hideElement(predictionOptionsSpace);
+        hideElement(predictionGetSpace);
     }
 });
+
+getPredictionsBtn.onclick = () => {
+    setImportStatus(ImportStatus.Loading, predictionDataStatusElem);
+    nodecg.sendMessage('getPredictions', {}, (e) => {
+        // If we get an error
+        if (e) {
+            console.error(e);
+            setImportStatus(ImportStatus.Failure, predictionDataStatusElem);
+            return;
+        }
+        // If we get success
+        setImportStatus(ImportStatus.Success, predictionDataStatusElem);
+    });
+};
