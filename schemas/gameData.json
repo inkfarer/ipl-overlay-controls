@@ -15,5 +15,37 @@
             }
         },
         "required": ["winner", "color"]
-    }
+    },
+    "default": [
+        {
+            "winner": "none",
+            "color": {
+                "index": 0,
+                "title": "Green vs Grape",
+                "clrA": "#37FC00",
+                "clrB": "#7D28FC",
+                "categoryName": "Ranked Modes"
+            }
+        },
+        {
+            "winner": "none",
+            "color": {
+                "index": 1,
+                "title": "Green vs Magenta",
+                "clrA": "#04D976",
+                "clrB": "#D600AB",
+                "categoryName": "Ranked Modes"
+            }
+        },
+        {
+            "winner": "none",
+            "color": {
+                "index": 2,
+                "title": "Turquoise vs Orange",
+                "clrA": "#10E38F",
+                "clrB": "#FB7B08",
+                "categoryName": "Ranked Modes"
+            }
+        }
+    ]
 }
