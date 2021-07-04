@@ -310,22 +310,18 @@ function addToggle(roundElement: Game, stageIndex: number) {
     addChangeReminder(reminderCreatingElements, roundUpdateButton);
 
     const noWinButton = document.createElement('button');
-    noWinButton.classList.add('no-win-toggle');
-    noWinButton.classList.add('max-width');
-    noWinButton.classList.add('red');
+    addClasses(noWinButton, 'no-win-toggle', 'max-width', 'red');
     noWinButton.id = `no-win-toggle_${stageIndex}`;
     noWinButton.innerText = '✖';
     noWinButton.disabled = true;
 
     const AWinButton = document.createElement('button');
-    AWinButton.classList.add('team-a-win-toggle');
-    AWinButton.classList.add('max-width');
+    addClasses(AWinButton, 'team-a-win-toggle', 'max-width');
     AWinButton.id = `team-a-win-toggle_${stageIndex}`;
     AWinButton.innerText = 'A';
 
     const BWinButton = document.createElement('button');
-    BWinButton.classList.add('team-b-win-toggle');
-    BWinButton.classList.add('max-width');
+    addClasses(BWinButton, 'team-b-win-toggle', 'max-width');
     BWinButton.id = `team-b-win-toggle_${stageIndex}`;
     BWinButton.innerText = 'B';
 
@@ -345,9 +341,7 @@ function addToggle(roundElement: Game, stageIndex: number) {
     };
 
     const winButtonContainer = document.createElement('div');
-    winButtonContainer.classList.add('layout');
-    winButtonContainer.classList.add('horizontal');
-    winButtonContainer.classList.add('win-button-container');
+    addClasses(winButtonContainer, 'layout', 'horizontal', 'win-button-container');
     winButtonContainer.appendChild(noWinButton);
     winButtonContainer.appendChild(AWinButton);
     winButtonContainer.appendChild(BWinButton);
