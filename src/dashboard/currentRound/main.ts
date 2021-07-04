@@ -93,16 +93,14 @@ function updateColorData(gameData: GameData) {
         const colorSelect = gameEditor.querySelector('.color-selector') as HTMLSelectElement;
         const colorSwapToggle = gameEditor.querySelector('.color-swap-toggle') as HTMLInputElement;
 
-        if (dataElem.color) {
-            if (colorSelect.dataset.source !== 'gameInfo-edited') {
+        if (colorSelect.dataset.source !== 'gameInfo-edited') {
+            if (dataElem.color) {
                 updateButtonColors(i, dataElem.color.clrA, dataElem.color.clrB);
                 colorSelect.value = getColorOptionName(dataElem.color, dataElem.color.categoryName);
                 colorSelect.dataset.source = 'gameInfo';
                 colorSwapToggle.checked = dataElem.color.colorsSwapped;
                 colorSwapToggle.dataset.source = 'gameInfo';
-            }
-        } else {
-            if (colorSelect.dataset.source !== 'gameInfo-edited') {
+            } else {
                 removeCustomButtonColors(i);
                 colorSelect.value = getColorOptionName(scoreboardData.value.colorInfo,
                     scoreboardData.value.colorInfo.categoryName);
