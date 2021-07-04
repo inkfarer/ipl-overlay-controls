@@ -1,4 +1,4 @@
-import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
+import { addDots, hideElement, showElement } from '../globalScripts';
 import { PredictionStore } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
@@ -14,7 +14,6 @@ const predictionStatusElem = document.getElementById('prediction-status');
 
 const unsupportedGuildWarning = document.getElementById('unsupported-service-message');
 const currentPredictionSpace = document.getElementById('current-prediction-space');
-const predictionOptionsSpace = document.getElementById('prediction-options-space');
 const predictionGetSpace = document.getElementById('prediction-get-space');
 
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
@@ -25,7 +24,6 @@ predictionStore.on('change', newValue => {
     if(newValue.enablePrediction){
         hideElement(unsupportedGuildWarning);
         showElement(currentPredictionSpace);
-        showElement(predictionOptionsSpace);
         showElement(predictionGetSpace);
         // Display info on current prediction
         if(newValue.currentPrediction){
@@ -46,7 +44,6 @@ predictionStore.on('change', newValue => {
     }else{
         showElement(unsupportedGuildWarning);
         hideElement(currentPredictionSpace);
-        hideElement(predictionOptionsSpace);
         hideElement(predictionGetSpace);
     }
 });

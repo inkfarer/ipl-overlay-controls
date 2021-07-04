@@ -78,6 +78,21 @@
                 "headerColor": "#262F40"
             },
             {
+              "name": "predictions",
+              "title": "Predictions",
+              "width": 2,
+              "file": "predictions.html",
+              "workspace": "ipl",
+              "headerColor": "#262F40"
+            },
+            {
+              "name": "createPredictionDialog",
+              "title": "",
+              "width": 4,
+              "file": "createPredictionDialog.html",
+              "dialog": true
+            },
+            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,
