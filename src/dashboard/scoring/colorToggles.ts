@@ -1,7 +1,7 @@
 import { scoreboardData, swapColorsInternally } from './replicants';
-import { colors } from './colors';
 import { ColorGroup } from 'types/colorGroup';
 import { ColorInfo } from 'types/colorInfo';
+import { colors } from '../../helpers/splatoonData';
 
 const colorToggleNext = document.getElementById('color-toggle-next');
 const colorTogglePrevious = document.getElementById('color-toggle-prev');

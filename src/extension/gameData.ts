@@ -1,5 +1,13 @@
 import * as nodecgContext from './util/nodecg';
-import { ActiveRoundId, GameData, SetWinnersAutomatically, TeamScores, Rounds, ScoreboardData } from 'schemas';
+import {
+    ActiveRoundId,
+    GameData,
+    SetWinnersAutomatically,
+    TeamScores,
+    Rounds,
+    ScoreboardData,
+    SwapColorsInternally
+} from 'schemas';
 import { GameWinner } from 'types/gameWinner';
 import { createEmptyGameData } from '../helpers/gameDataHelper';
 import clone from 'clone';
@@ -12,13 +20,18 @@ const setWinnersAutomatically = nodecg.Replicant<SetWinnersAutomatically>('setWi
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 
 teamScores.on('change', (newValue, oldValue) => {
     if (!oldValue) return;
     const scoreSum = newValue.teamA + newValue.teamB;
-    const newGameData = gameData.value[Math.max(scoreSum - 1, 0)];
+    const gameDataIndex = Math.max(scoreSum - 1, 0);
+    const newGameData = clone(gameData.value[gameDataIndex]);
 
-    newGameData.color = clone(scoreboardData.value.colorInfo);
+    newGameData.color = {
+        ...scoreboardData.value.colorInfo,
+        colorsSwapped: swapColorsInternally.value
+    };
 
     if (setWinnersAutomatically.value) {
         if (scoreSum === 1) {
@@ -38,7 +51,7 @@ teamScores.on('change', (newValue, oldValue) => {
         }
     }
 
-    gameData.value[scoreSum - 1] = newGameData;
+    gameData.value[gameDataIndex] = newGameData;
 });
 
 activeRoundId.on('change', (newValue, oldValue) => {

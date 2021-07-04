@@ -13,6 +13,10 @@ export type GameData = {
 		clrA: string;
 		clrB: string;
 		categoryName: string;
+		[k: string]: any;
+	} & {
+		colorsSwapped: boolean;
+		[k: string]: any;
 	};
 	[k: string]: any;
 }[];

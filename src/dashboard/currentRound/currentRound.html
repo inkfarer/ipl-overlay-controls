@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
-        <div id="round-name-space" class="space">
-            <div id="round-name">Round Name</div>
-            <div class="layout horizontal">
-                <button id="btn-reset-winners" class="red">reset wins</button>
-                <button id="update-round">update</button>
-            </div>
-        </div>
-        <div class="space">
-            <input
-                type="checkbox"
-                id="auto-winner-set-toggle"
-            />
-            <label for="auto-winner-set-toggle" class="white-label big-label"
-                >Try to determine winners automatically</label
-            >
-        </div>
-        <div id="toggles" class="space"></div>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div id="round-name-space" class="space">
+    <div id="round-name">Round Name</div>
+    <div class="layout horizontal">
+        <button id="btn-reset" class="red">reset</button>
+        <button id="update-round">update</button>
+    </div>
+</div>
+<div class="space layout vertical">
+    <div>
+        <input type="checkbox" id="auto-winner-set-toggle" />
+        <label for="auto-winner-set-toggle" class="white-label big-label">
+            Try to determine winners automatically
+        </label>
+    </div>
+    <div style="margin-top: 5px">
+        <input type="checkbox" id="enable-color-edit-toggle" />
+        <label for="enable-color-edit-toggle" class="white-label big-label">
+            Edit colors
+        </label>
+    </div>
+</div>
+<div id="toggles" class="space"></div>
+</body>
 </html>

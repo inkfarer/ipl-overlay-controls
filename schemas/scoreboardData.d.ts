@@ -13,6 +13,7 @@ export interface ScoreboardData {
 		clrA: string;
 		clrB: string;
 		categoryName: string;
+		[k: string]: any;
 	};
 	teamAInfo: {
 		id: string;

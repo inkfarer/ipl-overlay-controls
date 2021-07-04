@@ -8,11 +8,11 @@ body {
 #round-name-space {
     min-height: 40px;
     display: grid;
-    grid-template-columns: 1fr 169px;
+    grid-template-columns: 1fr max-content;
     align-items: center;
 }
 
-#btn-reset-winners {
+#btn-reset {
     background-color: var(--red);
     max-height: 40px;
 }
@@ -74,4 +74,8 @@ span.center {
 
 .win-button-container > button:nth-child(3) {
     border-radius: 0 5px 5px 0;
+}
+
+.color-swap-toggle-container {
+    margin-bottom: 5px;
 }

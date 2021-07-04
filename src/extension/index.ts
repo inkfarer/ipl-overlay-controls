@@ -12,6 +12,7 @@ export default (nodecg: NodeCG): void => {
     require('./roundImporter');
     require('./fileImport');
     require('./highlightedMatches');
+    require('./colorData');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 
