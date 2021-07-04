@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as nodecgContext from './util/nodecg';
 import { Casters, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { RadiaApiCaster } from './types/radiaApiCaster';
+import { RadiaApi } from './types/radiaApi';
 
 const nodecg = nodecgContext.get();
 
@@ -50,10 +50,10 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
  * @param {string} guildID Guild ID of discord server
  * @returns {Promise<list>} List of live casters
  */
-async function getLiveCasters(url: string, authorisation: string, guildID: string): Promise<RadiaApiCaster[]> {
+async function getLiveCasters(url: string, authorisation: string, guildID: string): Promise<RadiaApi[]> {
     return new Promise((resolve, reject) => {
         axios
-            .get<RadiaApiCaster[]>(`${url}/live/guild/${guildID}`, {
+            .get<RadiaApi[]>(`${url}/live/guild/${guildID}`, {
                 headers: {
                     Authorization: authorisation
                 }
