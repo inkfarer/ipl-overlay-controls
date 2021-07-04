@@ -28,9 +28,6 @@
             },
             "required": ["index", "title", "clrA", "clrB", "categoryName"]
         },
-        "swapColorOrder": {
-            "type": "boolean"
-        },
         "teamAInfo": {
             "type": "object",
             "$ref": "defs/team.json#/team"
@@ -40,6 +37,7 @@
             "$ref": "defs/team.json#/team"
         }
     },
+    "required": ["flavorText", "colorInfo", "teamAInfo", "teamBInfo"],
     "default": {
         "flavorText": "Flavor Text!",
         "colorInfo": {
@@ -49,7 +47,6 @@
             "clrB": "#7D28FC",
             "categoryName": "Ranked Modes"
         },
-        "swapColorOrder": false,
         "teamAInfo": {
             "id": "AAA",
             "name": "Placeholder Team A",

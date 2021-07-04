@@ -1,5 +1,5 @@
 import { colors } from './colors';
-import { scoreboardData } from './replicants';
+import { scoreboardData, swapColorsInternally } from './replicants';
 import { ColorInfo } from 'types/colorInfo';
 
 const customColorToggle = <HTMLInputElement> document.getElementById('custom-color-toggle');
@@ -33,53 +33,15 @@ for (let i = 0; i < colors.length; i++) {
 scoreboardData.on('change', newValue => {
     colorSelector.value = `${formatCategoryName(newValue.colorInfo.categoryName)}_${newValue.colorInfo.index}`;
 
-    updateColorDisplay(
-        (newValue.colorInfo as ColorInfo),
-        document.getElementById('team-a-color-display'),
-        'a',
-        newValue.swapColorOrder
-    );
-    updateColorDisplay(
-        (newValue.colorInfo as ColorInfo),
-        document.getElementById('team-b-color-display'),
-        'b',
-        newValue.swapColorOrder
-    );
-    updateColorDisplay(
-        (newValue.colorInfo as ColorInfo),
-        document.getElementById('team-a-custom-color'),
-        'a',
-        newValue.swapColorOrder
-    );
-    updateColorDisplay(
-        (newValue.colorInfo as ColorInfo),
-        document.getElementById('team-b-custom-color'),
-        'b',
-        newValue.swapColorOrder
-    );
+    document.getElementById('team-a-color-display').style.backgroundColor = newValue.colorInfo.clrA;
+    document.getElementById('team-b-color-display').style.backgroundColor = newValue.colorInfo.clrB;
+    (document.getElementById('team-a-custom-color') as HTMLInputElement).value = newValue.colorInfo.clrA;
+    (document.getElementById('team-b-custom-color') as HTMLInputElement).value = newValue.colorInfo.clrB;
 
     const customColorEnabled = newValue.colorInfo.index === 999;
     customColorToggle.checked = customColorEnabled;
     updateCustomColorToggle(customColorEnabled);
 });
-
-function updateColorDisplay(colorInfo: ColorInfo, elem: HTMLElement, team: 'a' | 'b', swapColors: boolean) {
-    let color;
-
-    if (team === 'a' && !swapColors) color = colorInfo.clrA;
-    else if (team === 'a' && swapColors) color = colorInfo.clrB;
-    else if (team === 'b' && !swapColors) color = colorInfo.clrB;
-    else if (team === 'b' && swapColors) color = colorInfo.clrA;
-    else color = '#000000';
-
-    switch (elem.tagName.toLowerCase()) {
-        case 'input':
-            (elem as HTMLInputElement).value = color;
-            break;
-        default:
-            elem.style.backgroundColor = color;
-    }
-}
 
 customColorToggle.onchange = e => {
     updateCustomColorToggle((e.target as HTMLInputElement).checked);
@@ -98,38 +60,42 @@ function updateCustomColorToggle(checked: boolean) {
     }
 }
 
-document.getElementById('swap-color-order-btn').onclick = () => {
-    scoreboardData.value.swapColorOrder = !scoreboardData.value.swapColorOrder;
-};
+document.getElementById('swap-color-order-btn').addEventListener('click', () => {
+    console.log(swapColorsInternally.value);
+    swapColorsInternally.value = !swapColorsInternally.value;
+    const { colorInfo } = scoreboardData.value;
+    const teamAColor = colorInfo.clrA;
+    colorInfo.clrA = colorInfo.clrB;
+    colorInfo.clrB = teamAColor;
+});
 
 document.getElementById('update-scoreboard-btn').addEventListener('click', () => {
+    console.log(swapColorsInternally.value);
     const colorOption = <HTMLOptionElement> colorSelector.options[colorSelector.selectedIndex];
 
     let clrInfo: ColorInfo;
-    let { swapColorOrder } = scoreboardData.value;
+    const isCustomColor = customColorToggle.checked;
 
-    if (customColorToggle.checked) {
+    if (isCustomColor) {
         clrInfo = {
             index: 999,
             title: 'Custom Color',
             clrA: (document.getElementById('team-a-custom-color') as HTMLInputElement).value,
             clrB: (document.getElementById('team-b-custom-color') as HTMLInputElement).value,
         };
-        swapColorOrder = false;
     } else {
         clrInfo = {
             index: Number(colorOption.dataset.index),
             title: colorOption.text,
-            clrA: colorOption.dataset.firstColor,
-            clrB: colorOption.dataset.secondColor,
+            clrA: swapColorsInternally.value ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
+            clrB: swapColorsInternally.value ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
         };
     }
 
     scoreboardData.value.colorInfo = {
         ...clrInfo,
-        categoryName: colorOption.dataset.categoryName
+        categoryName: isCustomColor ? 'Custom Color' : colorOption.dataset.categoryName
     };
-    scoreboardData.value.swapColorOrder = swapColorOrder;
 });
 
 function formatCategoryName(name: string): string {

@@ -6,16 +6,15 @@
  */
 
 export interface ScoreboardData {
-	flavorText?: string;
-	colorInfo?: {
+	flavorText: string;
+	colorInfo: {
 		index: number;
 		title: string;
 		clrA: string;
 		clrB: string;
 		categoryName: string;
 	};
-	swapColorOrder?: boolean;
-	teamAInfo?: {
+	teamAInfo: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -25,7 +24,7 @@ export interface ScoreboardData {
 		}[];
 		[k: string]: any;
 	};
-	teamBInfo?: {
+	teamBInfo: {
 		id: string;
 		name: string;
 		logoUrl?: string;

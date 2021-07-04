@@ -1,7 +1,8 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameWinners, Rounds, ScoreboardData } from 'schemas';
+import { ActiveRoundId, Game, GameWinners, Rounds } from 'schemas';
 
 import './setWinnersAutomatically';
+import './buttonColors';
 
 import '../styles/globalStyles.css';
 import './currentRound.css';
@@ -10,7 +11,6 @@ import { splatModes, splatStages } from '../../helpers/splatoonData';
 const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 const rounds = nodecg.Replicant<Rounds>('rounds');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
@@ -58,30 +58,6 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
         }
     });
 });
-
-scoreboardData.on('change', newValue => {
-    document.body.style.setProperty(
-        '--team-a-color',
-        newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA);
-    document.body.style.setProperty(
-        '--team-b-color',
-        newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB);
-    document.body.style.setProperty(
-        '--team-a-text-color',
-        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA));
-    document.body.style.setProperty(
-        '--team-b-text-color',
-        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB));
-});
-
-function getTextColor(hex: string): string {
-    hex = hex.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-    return (yiq >= 128) ? '#333' : 'white';
-}
 
 function updateMapsModes(index: number, data: Game) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;

@@ -57,6 +57,18 @@
     transition-duration: 100ms;
 }
 
+.color-toggle[data-disabled],
+.color-toggle[data-disabled]:hover,
+.color-toggle[data-disabled]:active {
+    background-color: #181e29;
+    pointer-events: none;
+    color: #a9aaa9;
+}
+
+.color-toggle[data-disabled] > .color-toggle-display {
+    filter: contrast(0.25);
+}
+
 .color-toggle:hover {
     background-color: #3C4B66;
 }
