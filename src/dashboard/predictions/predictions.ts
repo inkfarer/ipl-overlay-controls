@@ -32,13 +32,13 @@ predictionStore.on('change', newValue => {
             const optionAPercentage = Math.round((prediction.outcomes[0].channel_points / totalChannelPoints) * 100);
             const optionBPercentage = Math.round((prediction.outcomes[1].channel_points / totalChannelPoints) * 100);
             // Set bar width
-            optionABarElem.style.width = (isNaN(optionAPercentage) ? '50%' : `${optionAPercentage}%`);
-            optionBBarElem.style.width = (isNaN(optionBPercentage) ? '50%' : `${optionBPercentage}%`);
+            optionABarElem.style.width = (isNaN(optionAPercentage) ? '0%' : `${optionAPercentage}%`);
+            optionBBarElem.style.width = (isNaN(optionBPercentage) ? '0%' : `${optionBPercentage}%`);
             // Set text
             optionATitleElem.innerText = prediction.outcomes[0].title;
             optionBTitleElem.innerText = prediction.outcomes[1].title;
-            optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '0%' : `${optionAPercentage}%`);
-            optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '0%' : `${optionBPercentage}%`);
+            optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '' : `${optionAPercentage}%`);
+            optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '' : `${optionBPercentage}%`);
             predictionStatusElem.innerText = prediction.status.toLowerCase();
         }
     }else{
