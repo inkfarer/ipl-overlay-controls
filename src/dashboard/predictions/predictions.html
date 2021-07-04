@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Twitch Predictions</title>
+</head>
+<body>
+
+<div class="space warning layout message" id="unsupported-service-message" style="display: none">
+    <i class="icon fas fa-exclamation-triangle"></i>
+    <p class="content">
+        Unsupported Guild, unable to run predictions.
+    </p>
+</div>
+
+<div class="space" id="current-prediction-space">
+    <div class="title">Current Prediction</div>
+
+    <div>
+        <label>Option A</label>
+        <div id="option-a-title">Team A</div>
+
+        <label>Option B</label>
+        <div id="option-b-title">Team B</div>
+
+        <label>Status</label>
+        <div id="prediction-status">Resolved</div>
+    </div>
+    <br/>
+    <div class="score-bar">
+        <div class="leftBar" id="option-a-bar"><div class="leftBarPercent" id="option-a-percent">50%</div></div>
+        <div class="rightBar" id="option-b-bar"><div class="rightBarPercent" id="option-b-percent">50%</div></div>
+    </div>
+</div>
+
+<div class="space" id="prediction-options-space">
+    <div class="title">Options</div>
+
+
+
+</div>
+
+</body>
+</html>
