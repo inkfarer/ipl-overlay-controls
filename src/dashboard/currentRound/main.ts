@@ -91,22 +91,30 @@ function updateColorData(gameData: GameData) {
 
         const gameEditor = document.getElementById(`game-editor_${i}`);
         const colorSelect = gameEditor.querySelector('.color-selector') as HTMLSelectElement;
-        const colorSwapToggle = gameEditor.querySelector('.color-swap-toggle') as HTMLInputElement;
 
         if (colorSelect.dataset.source !== 'gameInfo-edited') {
+            const colorSwapToggle = gameEditor.querySelector('.color-swap-toggle') as HTMLInputElement;
+            const customColorToggle = gameEditor.querySelector('.custom-color-toggle') as HTMLInputElement;
+            const teamAColorInput = document.getElementById(`custom-color-selector_a_${i}`) as HTMLInputElement;
+            const teamBColorInput = document.getElementById(`custom-color-selector_b_${i}`) as HTMLInputElement;
+
+            const colorData = dataElem.color ? dataElem.color : scoreboardData.value.colorInfo;
+            const colorSource = dataElem.color ? 'gameInfo' : 'scoreboard';
+
+            colorSelect.value = getColorOptionName(colorData, colorData.categoryName);
+            colorSelect.dataset.source = colorSource;
+            colorSwapToggle.dataset.source = colorSource;
+            colorSwapToggle.checked = dataElem.color ? dataElem.color.colorsSwapped : swapColorsInternally.value;
+            teamAColorInput.value = colorData.clrA;
+            teamBColorInput.value = colorData.clrB;
+            const isCustomColor = colorData.index === 999;
+            customColorToggle.checked = isCustomColor;
+            toggleCustomColorSelectorVisibility(i, isCustomColor);
+
             if (dataElem.color) {
                 updateButtonColors(i, dataElem.color.clrA, dataElem.color.clrB);
-                colorSelect.value = getColorOptionName(dataElem.color, dataElem.color.categoryName);
-                colorSelect.dataset.source = 'gameInfo';
-                colorSwapToggle.checked = dataElem.color.colorsSwapped;
-                colorSwapToggle.dataset.source = 'gameInfo';
             } else {
                 removeCustomButtonColors(i);
-                colorSelect.value = getColorOptionName(scoreboardData.value.colorInfo,
-                    scoreboardData.value.colorInfo.categoryName);
-                colorSelect.dataset.source = 'scoreboard';
-                colorSwapToggle.checked = swapColorsInternally.value;
-                colorSwapToggle.dataset.source = 'scoreboard';
             }
         }
     }
@@ -151,6 +159,8 @@ function addToggle(roundElement: Game, stageIndex: number) {
     toggleDiv.id = `game-editor_${stageIndex}`;
     const stageModeDisplay = document.createElement('div');
     const gameInfo = gameData.value[stageIndex];
+    const colorData = gameInfo.color ? gameInfo.color : scoreboardData.value.colorInfo;
+    const colorSource = gameInfo.color ? 'gameInfo' : 'scoreboard';
 
     stageModeDisplay.innerHTML = `<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
     toggleDiv.appendChild(stageModeDisplay);
@@ -178,18 +188,26 @@ function addToggle(roundElement: Game, stageIndex: number) {
     colorSelectorWrapper.classList.add('color-selector-wrapper');
     toggleDiv.appendChild(colorSelectorWrapper);
 
+    const customColorSelectorWrapper = document.createElement('div');
+    customColorSelectorWrapper.id = `custom-color-select-wrapper_${stageIndex}`;
+    addClasses(customColorSelectorWrapper, 'layout', 'horizontal');
+    customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
+    colorSelectorWrapper.appendChild(customColorSelectorWrapper);
+
+    const customColorSelectorA = createCustomColorSelector(stageIndex, 'a', colorData.clrA);
+    customColorSelectorWrapper.appendChild(customColorSelectorA);
+    reminderCreatingElements.push(customColorSelectorA);
+    const customColorSelectorB = createCustomColorSelector(stageIndex, 'b', colorData.clrB);
+    customColorSelectorWrapper.appendChild(customColorSelectorB);
+    reminderCreatingElements.push(customColorSelectorB);
+
     const colorSelector = document.createElement('select');
     colorSelector.id = `color-selector_${stageIndex}`;
     colorSelector.classList.add('color-selector');
     fillColorSelector(colorSelector);
-    if (gameInfo.color) {
-        colorSelector.dataset.source = 'gameInfo';
-        colorSelector.value =  getColorOptionName(gameInfo.color, gameInfo.color.categoryName);
-    } else {
-        const scoreboardColor = scoreboardData.value.colorInfo;
-        colorSelector.dataset.source = 'scoreboard';
-        colorSelector.value = getColorOptionName(scoreboardColor, scoreboardColor.categoryName);
-    }
+    colorSelector.dataset.source = colorSource;
+    colorSelector.value =  getColorOptionName(colorData, colorData.categoryName);
+    colorSelector.style.display = colorData.index === 999 ? 'none' : '';
     colorSelectorWrapper.appendChild(colorSelector);
     colorSelector.addEventListener('change', event => {
         const target = event.target as HTMLSelectElement;
@@ -207,27 +225,22 @@ function addToggle(roundElement: Game, stageIndex: number) {
     });
     reminderCreatingElements.push(colorSelector);
 
-    const colorSwapToggleContainer = document.createElement('div');
+    const colorDataToggleContainer = document.createElement('div');
     addClasses(
-        colorSwapToggleContainer,
+        colorDataToggleContainer,
         'layout',
         'horizontal',
         'center-horizontal',
         'color-swap-toggle-container');
-    colorSelectorWrapper.appendChild(colorSwapToggleContainer);
+    colorSelectorWrapper.appendChild(colorDataToggleContainer);
 
     const colorSwapToggle = document.createElement('input');
     const colorSwapToggleId = `color-swap-toggle_${stageIndex}`;
     colorSwapToggle.type = 'checkbox';
     colorSwapToggle.id = colorSwapToggleId;
     colorSwapToggle.classList.add('color-swap-toggle');
-    if (gameInfo.color) {
-        colorSwapToggle.dataset.source = 'gameInfo';
-        colorSwapToggle.checked = gameInfo.color.colorsSwapped;
-    } else {
-        colorSwapToggle.dataset.source = 'scoreboard';
-        colorSwapToggle.checked = swapColorsInternally.value;
-    }
+    colorSwapToggle.dataset.source = colorSource;
+    colorSwapToggle.checked = gameInfo.color ? gameInfo.color.colorsSwapped : swapColorsInternally.value;
     colorSwapToggle.addEventListener('change', event => {
         const target = event.target as HTMLInputElement;
         if (target.dataset.source === 'scoreboard') {
@@ -243,21 +256,56 @@ function addToggle(roundElement: Game, stageIndex: number) {
             };
         } else if (target.dataset.source === 'gameInfo-edited') {
             const toggleIndex = parseInt(target.id.split('_')[1], 10);
-            const colorSelector = document.getElementById(`color-selector_${toggleIndex}`) as HTMLSelectElement;
-            const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
-            updateButtonColors(
-                toggleIndex,
-                colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
-                colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
+            const customColorToggle =
+                document.getElementById(`custom-color-toggle_${toggleIndex}`) as HTMLInputElement ;
+
+            if (customColorToggle.checked) {
+                const teamAColorInput =
+                    document.getElementById(`custom-color-selector_a_${toggleIndex}`) as HTMLInputElement;
+                const teamBColorInput =
+                    document.getElementById(`custom-color-selector_b_${toggleIndex}`) as HTMLInputElement;
+
+                const teamAColor = teamAColorInput.value;
+                teamAColorInput.value = teamBColorInput.value;
+                teamBColorInput.value = teamAColor;
+                updateButtonColors(toggleIndex, teamAColorInput.value, teamBColorInput.value);
+            } else {
+                const colorSelector = document.getElementById(`color-selector_${toggleIndex}`) as HTMLSelectElement;
+                const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
+                updateButtonColors(
+                    toggleIndex,
+                    colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
+                    colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
+            }
         }
     });
-    colorSwapToggleContainer.appendChild(colorSwapToggle);
+    colorDataToggleContainer.appendChild(colorSwapToggle);
 
     const colorSwapToggleLabel = document.createElement('label');
     colorSwapToggleLabel.htmlFor = colorSwapToggleId;
     colorSwapToggleLabel.innerText = 'Swap colors';
     colorSwapToggleLabel.classList.add('white-label');
-    colorSwapToggleContainer.appendChild(colorSwapToggleLabel);
+    colorDataToggleContainer.appendChild(colorSwapToggleLabel);
+
+    const customColorToggle = document.createElement('input');
+    const customColorToggleId = `custom-color-toggle_${stageIndex}`;
+    customColorToggle.id = customColorToggleId;
+    customColorToggle.type = 'checkbox';
+    customColorToggle.classList.add('custom-color-toggle');
+    customColorToggle.checked = colorData.index === 999;
+    customColorToggle.addEventListener('change', event => {
+        const target = event.target as HTMLInputElement;
+        const index = parseInt(target.id.split('_')[1], 10);
+
+        toggleCustomColorSelectorVisibility(index, target.checked);
+    });
+    colorDataToggleContainer.appendChild(customColorToggle);
+
+    const customColorToggleLabel = document.createElement('label');
+    customColorToggleLabel.classList.add('white-label');
+    customColorToggleLabel.innerText = 'Custom';
+    customColorToggleLabel.htmlFor = customColorToggleId;
+    colorDataToggleContainer.appendChild(customColorToggleLabel);
 
     addChangeReminder(reminderCreatingElements, roundUpdateButton);
 
@@ -307,6 +355,37 @@ function addToggle(roundElement: Game, stageIndex: number) {
 
     document.getElementById('toggles')
         .appendChild(toggleDiv);
+}
+
+function toggleCustomColorSelectorVisibility(index: number, isCustomColor: boolean): void {
+    const customColorSelectWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
+    const colorSelect = document.getElementById(`color-selector_${index}`);
+
+    customColorSelectWrapper.style.display = isCustomColor ? '' : 'none';
+    colorSelect.style.display = isCustomColor ? 'none' : '';
+}
+
+function createCustomColorSelector(index: number, team: 'a' | 'b', value: string): HTMLInputElement {
+    const selector = document.createElement('input');
+    selector.type = 'color';
+    selector.id = `custom-color-selector_${team}_${index}`;
+    selector.classList.add(`team-${team}`);
+    selector.value = value;
+    selector.addEventListener('change', event => {
+        const index = parseInt((event.target as HTMLInputElement).id.split('_')[2], 10);
+
+        const teamColorSelector = document.getElementById(`color-selector_${index}`);
+        teamColorSelector.dataset.source = 'gameInfo-edited';
+        const colorSwapToggle = document.getElementById(`color-swap-toggle_${index}`) as HTMLInputElement;
+        colorSwapToggle.dataset.source = 'gameInfo-edited';
+
+        const customColorsWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
+        const teamASelector = customColorsWrapper.querySelector('.team-a') as HTMLInputElement;
+        const teamBSelector = customColorsWrapper.querySelector('.team-b') as HTMLInputElement;
+
+        updateButtonColors(index, teamASelector.value, teamBSelector.value);
+    });
+    return selector;
 }
 
 document.getElementById('btn-reset').onclick = () => {
@@ -359,19 +438,35 @@ roundUpdateButton.addEventListener('click', () => {
 
         if (colorSelector.dataset.source === 'gameInfo-edited') {
             const colorSwapToggle = document.getElementById(`color-swap-toggle_${i}`) as HTMLInputElement;
-            const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
+            const customColorToggle = document.getElementById(`custom-color-toggle_${i}`) as HTMLInputElement;
 
             colorSelector.dataset.source = 'gameInfo';
             colorSwapToggle.dataset.source = 'gameInfo';
 
-            gameData.value[i].color = {
-                index: Number(colorOption.dataset.index),
-                title: colorOption.text,
-                clrA: colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
-                clrB: colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
-                categoryName: colorOption.dataset.categoryName,
-                colorsSwapped: colorSwapToggle.checked
-            };
+            if (customColorToggle.checked) {
+                const teamAColorInput = document.getElementById(`custom-color-selector_a_${i}`) as HTMLInputElement;
+                const teamBColorInput = document.getElementById(`custom-color-selector_b_${i}`) as HTMLInputElement;
+
+                gameData.value[i].color = {
+                    index: 999,
+                    title: 'Custom Color',
+                    clrA: teamAColorInput.value,
+                    clrB: teamBColorInput.value,
+                    categoryName: 'Custom Color',
+                    colorsSwapped: colorSwapToggle.checked
+                };
+            } else {
+                const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
+
+                gameData.value[i].color = {
+                    index: Number(colorOption.dataset.index),
+                    title: colorOption.text,
+                    clrA: colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
+                    clrB: colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
+                    categoryName: colorOption.dataset.categoryName,
+                    colorsSwapped: colorSwapToggle.checked
+                };
+            }
         }
     }
 
