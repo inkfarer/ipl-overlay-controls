@@ -1,5 +1,5 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameWinners, Rounds } from 'schemas';
+import { ActiveRoundId, Game, GameData, Rounds } from 'schemas';
 
 import './setWinnersAutomatically';
 import './buttonColors';
@@ -7,57 +7,59 @@ import './buttonColors';
 import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
+import { GameWinner } from 'types/gameWinner';
 
-const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
+const gameData = nodecg.Replicant<GameData>('gameData');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 const rounds = nodecg.Replicant<Rounds>('rounds');
 
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
-NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
-    activeRoundId.on('change', newValue => {
-        const currentRound = rounds.value[newValue];
+NodeCG.waitForReplicants(gameData, rounds)
+    .then(() => {
+        activeRoundId.on('change', newValue => {
+            const currentRound = rounds.value[newValue];
 
-        if (currentRound) {
-            addRoundToggles(currentRound.games, currentRound.meta.name);
-        } else {
-            removeToggles();
-            roundNameElem.innerText =
-                'Undefined (Round might have been deleted...)';
-        }
-    });
-
-    gameWinners.on('change', newValue => {
-        disableWinButtons(newValue);
-    });
-
-    rounds.on('change', (newValue, oldValue) => {
-        if (!oldValue) return;
-
-        const newCurrentRound = newValue[activeRoundId.value];
-        const oldCurrentRound = oldValue[activeRoundId.value];
-
-        if (!newCurrentRound) return;
-
-        if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
-            roundNameElem.innerText = newCurrentRound.meta.name;
-        }
-
-        for (let i = 0; i < newCurrentRound.games.length; i++) {
-            const newGame = newCurrentRound.games[i];
-            const oldGame = oldCurrentRound.games[i];
-
-            if (
-                newGame.mode !== oldGame.mode ||
-                oldGame.stage !== newGame.stage
-            ) {
-                updateMapsModes(i, newGame);
-                break;
+            if (currentRound) {
+                addRoundToggles(currentRound.games, currentRound.meta.name);
+            } else {
+                removeToggles();
+                roundNameElem.innerText =
+                    'Undefined (Round might have been deleted...)';
             }
-        }
+        });
+
+        gameData.on('change', newValue => {
+            disableWinButtons(newValue);
+        });
+
+        rounds.on('change', (newValue, oldValue) => {
+            if (!oldValue) return;
+
+            const newCurrentRound = newValue[activeRoundId.value];
+            const oldCurrentRound = oldValue[activeRoundId.value];
+
+            if (!newCurrentRound) return;
+
+            if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
+                roundNameElem.innerText = newCurrentRound.meta.name;
+            }
+
+            for (let i = 0; i < newCurrentRound.games.length; i++) {
+                const newGame = newCurrentRound.games[i];
+                const oldGame = oldCurrentRound.games[i];
+
+                if (
+                    newGame.mode !== oldGame.mode ||
+                    oldGame.stage !== newGame.stage
+                ) {
+                    updateMapsModes(i, newGame);
+                    break;
+                }
+            }
+        });
     });
-});
 
 function updateMapsModes(index: number, data: Game) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
@@ -127,17 +129,17 @@ function addToggle(roundElement: Game, stageIndex: number) {
 
     noWinButton.onclick = event => {
         const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 0;
+        gameData.value[stageIndex].winner = GameWinner.NO_WINNER;
     };
 
     AWinButton.onclick = event => {
         const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 1;
+        gameData.value[stageIndex].winner = GameWinner.ALPHA;
     };
 
     BWinButton.onclick = event => {
         const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 2;
+        gameData.value[stageIndex].winner = GameWinner.BRAVO;
     };
 
     const winButtonContainer = document.createElement('div');
@@ -154,25 +156,28 @@ function addToggle(roundElement: Game, stageIndex: number) {
 }
 
 document.getElementById('reset-btn').onclick = () => {
-    gameWinners.value = [0, 0, 0, 0, 0, 0, 0];
+    gameData.value = Array(7).fill({ winner: GameWinner.NO_WINNER });
 };
 
-function getButtons(id: number): HTMLButtonElement[] {
+function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
     const noWinButton = document.querySelector('#no-win-toggle_' + id) as HTMLButtonElement;
     const AWinButton = document.querySelector('#team-a-win-toggle_' + id) as HTMLButtonElement;
     const BWinButton = document.querySelector('#team-b-win-toggle_' + id) as HTMLButtonElement;
-    return [noWinButton, AWinButton, BWinButton];
+    return {
+        [GameWinner.NO_WINNER]: noWinButton,
+        [GameWinner.ALPHA]: AWinButton,
+        [GameWinner.BRAVO]: BWinButton
+    };
 }
 
-function disableWinButtons(gameWinnerValue: number[]) {
-    const currentRound = rounds.value[activeRoundId.value];
-
-    for (let i = 1; i < currentRound.games.length + 1; i++) {
-        const gameWinner = gameWinnerValue[i - 1];
+function disableWinButtons(gameData: GameData) {
+    for (let i = 1; i < gameData.length + 1; i++) {
+        const gameWinner = gameData[i - 1].winner;
         const buttons = getButtons(i - 1);
-        for (let y = 0; y < buttons.length; y++) {
-            buttons[y].disabled = false;
-        }
+        Object.values(buttons)
+            .forEach(button => {
+                button.disabled = false;
+            });
 
         buttons[gameWinner].disabled = true;
     }
