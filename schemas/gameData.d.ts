@@ -7,7 +7,7 @@
 
 export type GameData = {
 	winner: 'none' | 'alpha' | 'bravo';
-	color: {
+	color?: {
 		index: number;
 		title: string;
 		clrA: string;

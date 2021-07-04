@@ -14,7 +14,7 @@
                 "$ref": "defs/color.json#/color"
             }
         },
-        "required": ["winner", "color"]
+        "required": ["winner"]
     },
     "default": [
         {
