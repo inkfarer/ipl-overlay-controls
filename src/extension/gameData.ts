@@ -16,7 +16,7 @@ const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 teamScores.on('change', (newValue, oldValue) => {
     if (!oldValue) return;
     const scoreSum = newValue.teamA + newValue.teamB;
-    const newGameData = gameData.value[scoreSum - 1];
+    const newGameData = gameData.value[Math.max(scoreSum - 1, 0)];
 
     newGameData.color = clone(scoreboardData.value.colorInfo);
 
