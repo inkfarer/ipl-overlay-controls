@@ -1,5 +1,5 @@
 import { ScoreboardData } from 'schemas';
-import { getContrastingTextColor } from './getContrastingTextColor';
+import { getContrastingTextColor } from './colorHelper';
 
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 

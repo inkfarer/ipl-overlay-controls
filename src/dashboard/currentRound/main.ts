@@ -8,7 +8,7 @@ import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
-import { getContrastingTextColor } from './getContrastingTextColor';
+import { getContrastingTextColor } from './colorHelper';
 
 const gameData = nodecg.Replicant<GameData>('gameData');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
