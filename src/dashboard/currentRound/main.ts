@@ -309,42 +309,11 @@ function addToggle(roundElement: Game, stageIndex: number) {
 
     addChangeReminder(reminderCreatingElements, roundUpdateButton);
 
-    const noWinButton = document.createElement('button');
-    addClasses(noWinButton, 'no-win-toggle', 'max-width', 'red');
-    noWinButton.id = `no-win-toggle_${stageIndex}`;
-    noWinButton.innerText = '✖';
-    noWinButton.disabled = true;
-
-    const AWinButton = document.createElement('button');
-    addClasses(AWinButton, 'team-a-win-toggle', 'max-width');
-    AWinButton.id = `team-a-win-toggle_${stageIndex}`;
-    AWinButton.innerText = 'A';
-
-    const BWinButton = document.createElement('button');
-    addClasses(BWinButton, 'team-b-win-toggle', 'max-width');
-    BWinButton.id = `team-b-win-toggle_${stageIndex}`;
-    BWinButton.innerText = 'B';
-
-    noWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameData.value[stageIndex].winner = GameWinner.NO_WINNER;
-    };
-
-    AWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameData.value[stageIndex].winner = GameWinner.ALPHA;
-    };
-
-    BWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameData.value[stageIndex].winner = GameWinner.BRAVO;
-    };
-
     const winButtonContainer = document.createElement('div');
     addClasses(winButtonContainer, 'layout', 'horizontal', 'win-button-container');
-    winButtonContainer.appendChild(noWinButton);
-    winButtonContainer.appendChild(AWinButton);
-    winButtonContainer.appendChild(BWinButton);
+    winButtonContainer.appendChild(createWinButton(GameWinner.NO_WINNER, stageIndex));
+    winButtonContainer.appendChild(createWinButton(GameWinner.ALPHA, stageIndex));
+    winButtonContainer.appendChild(createWinButton(GameWinner.BRAVO, stageIndex));
     toggleDiv.appendChild(winButtonContainer);
 
     document.getElementById('toggles')
@@ -357,6 +326,35 @@ function toggleCustomColorSelectorVisibility(index: number, isCustomColor: boole
 
     customColorSelectWrapper.style.display = isCustomColor ? '' : 'none';
     colorSelect.style.display = isCustomColor ? 'none' : '';
+}
+
+function createWinButton(toggleType: GameWinner, index: number): HTMLButtonElement {
+    const button = document.createElement('button');
+
+    const buttonClass = {
+        [GameWinner.NO_WINNER]: 'no-win-toggle',
+        [GameWinner.ALPHA]: 'team-a-win-toggle',
+        [GameWinner.BRAVO]: 'team-b-win-toggle'
+    }[toggleType];
+    addClasses(button, buttonClass, 'max-width');
+    if (toggleType === GameWinner.NO_WINNER) {
+        button.classList.add('red');
+        button.disabled = true;
+    }
+    button.id = `${buttonClass}_${index}`;
+
+    button.innerText = {
+        [GameWinner.NO_WINNER]: '✖',
+        [GameWinner.ALPHA]: 'A',
+        [GameWinner.BRAVO]: 'B'
+    }[toggleType];
+
+    button.addEventListener('click', event => {
+        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
+        gameData.value[stageIndex].winner = toggleType;
+    });
+
+    return button;
 }
 
 function createCustomColorSelector(index: number, team: 'a' | 'b', value: string): HTMLInputElement {
