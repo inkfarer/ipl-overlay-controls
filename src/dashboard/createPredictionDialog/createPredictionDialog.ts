@@ -108,9 +108,7 @@ createPredictionBtn.onclick = () => {
             { title: optionBInput.value }
         ],
         prediction_window: predictionWindowInput.value
-    }, (e, result) => {
-        console.log(e);
-        console.log(result)
+    }, (e) => {
         if(e){
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
