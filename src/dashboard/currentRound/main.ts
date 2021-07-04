@@ -8,6 +8,7 @@ import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
+import { createEmptyGameData } from '../../helpers/gameDataHelper';
 
 const gameData = nodecg.Replicant<GameData>('gameData');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
@@ -30,8 +31,10 @@ NodeCG.waitForReplicants(gameData, rounds)
             }
         });
 
-        gameData.on('change', newValue => {
-            disableWinButtons(newValue);
+        gameData.on('change', (newValue, oldValue) => {
+            if (!oldValue || newValue.length === oldValue.length) {
+                disableWinButtons(newValue);
+            }
         });
 
         rounds.on('change', (newValue, oldValue) => {
@@ -54,14 +57,14 @@ NodeCG.waitForReplicants(gameData, rounds)
                     newGame.mode !== oldGame.mode ||
                     oldGame.stage !== newGame.stage
                 ) {
-                    updateMapsModes(i, newGame);
+                    updateMapsAndModes(i, newGame);
                     break;
                 }
             }
         });
     });
 
-function updateMapsModes(index: number, data: Game) {
+function updateMapsAndModes(index: number, data: Game) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
     stageSelector.value = data.stage;
 
@@ -156,13 +159,13 @@ function addToggle(roundElement: Game, stageIndex: number) {
 }
 
 document.getElementById('reset-btn').onclick = () => {
-    gameData.value = Array(7).fill({ winner: GameWinner.NO_WINNER });
+    gameData.value = createEmptyGameData(rounds.value[activeRoundId.value].games.length);
 };
 
 function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
-    const noWinButton = document.querySelector('#no-win-toggle_' + id) as HTMLButtonElement;
-    const AWinButton = document.querySelector('#team-a-win-toggle_' + id) as HTMLButtonElement;
-    const BWinButton = document.querySelector('#team-b-win-toggle_' + id) as HTMLButtonElement;
+    const noWinButton = document.querySelector(`#no-win-toggle_${id}`) as HTMLButtonElement;
+    const AWinButton = document.querySelector(`#team-a-win-toggle_${id}`) as HTMLButtonElement;
+    const BWinButton = document.querySelector(`#team-b-win-toggle_${id}`) as HTMLButtonElement;
     return {
         [GameWinner.NO_WINNER]: noWinButton,
         [GameWinner.ALPHA]: AWinButton,
@@ -171,9 +174,9 @@ function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
 }
 
 function disableWinButtons(gameData: GameData) {
-    for (let i = 1; i < gameData.length + 1; i++) {
-        const gameWinner = gameData[i - 1].winner;
-        const buttons = getButtons(i - 1);
+    for (let i = 0; i < gameData.length; i++) {
+        const gameWinner = gameData[i].winner;
+        const buttons = getButtons(i);
         Object.values(buttons)
             .forEach(button => {
                 button.disabled = false;
