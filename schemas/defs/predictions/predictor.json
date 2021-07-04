@@ -25,7 +25,6 @@
 				"type": "integer"
 			}
 		},
-		"required": ["user_id", "user_login", "user_name", "channel_points_used", "channel_points_won"],
 		"additionalProperties": false
 	}
 }

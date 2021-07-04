@@ -17,6 +17,10 @@
 				"description": "Number of unique users that chose the outcome.",
 				"type": "integer"
 			},
+			"channel_points": {
+				"description": "Channel Points Spent on outcome",
+				"type": "integer"
+			},
 			"top_predictors": {
 				"description": "Users who were the top predictors",
 				"type": "array",
@@ -30,7 +34,6 @@
 				"enum": ["BLUE", "PINK"]
 			}
 		},
-		"required": ["id", "title", "users", "top_predictors", "color"],
 		"additionalProperties": false
 	}
 }
