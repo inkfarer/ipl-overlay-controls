@@ -56,7 +56,7 @@ nodecg.listenFor('getPredictions', async (data, ack: UnhandledListenForCb) => {
                 ack(null,data);
             }
         }).catch(err => {
-            ack(err.data as ErrorDetails);
+            ack(err.response.data as ErrorDetails);
         });
 });
 
@@ -66,7 +66,7 @@ nodecg.listenFor('postPrediction', async  (data: CreatePrediction, ack: Unhandle
             assignPredictionData(response);
             ack(null, response);
         }).catch(err => {
-            ack(err.data as ErrorDetails);
+            ack(err.response.data as ErrorDetails);
         });
 });
 
@@ -76,7 +76,7 @@ nodecg.listenFor('patchPrediction', async  (data: PatchPrediction, ack: Unhandle
             assignPredictionData(response);
             ack(null,response);
         }).catch(err => {
-            ack(err.data as ErrorDetails);
+            ack(err.response.data as ErrorDetails);
         });
 });
 

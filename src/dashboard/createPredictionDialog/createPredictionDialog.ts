@@ -1,4 +1,4 @@
-import { addChangeReminder, addDots, hideElement, showElement } from '../globalScripts';
+import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { FieldValidity } from './types/fieldValidity';
@@ -99,10 +99,28 @@ predictionWindowInput.addEventListener('input', function (event) {
     checkButtonValidity();
 });
 
-// createPredictionBtn.onclick = () => {
-//     setImportStatus(ImportStatus.Loading, predictionCreateStatusElem);
-//
-// };
+createPredictionBtn.onclick = () => {
+    setImportStatus(ImportStatus.Loading, predictionCreateStatusElem);
+    nodecg.sendMessage('postPrediction', {
+        title: predictionNameInput.value,
+        outcomes: [
+            { title: optionAInput.value },
+            { title: optionBInput.value }
+        ],
+        prediction_window: predictionWindowInput.value
+    }, (e, result) => {
+        console.log(e);
+        console.log(result)
+        if(e){
+            console.error(e);
+            setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
+            messageElem.innerText = e.detail.message;
+            showElement(warningElem);
+            return;
+        }
+        setImportStatus(ImportStatus.Success, predictionCreateStatusElem);
+    });
+};
 
 // Set team names
 nextTeams.on('change', newValue => {

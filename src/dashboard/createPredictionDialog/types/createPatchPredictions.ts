@@ -2,7 +2,7 @@ export interface CreatePrediction {
     title: string;
     outcomes: {
         title: string;
-    };
+    }[];
     prediction_window: number;
 }
 
