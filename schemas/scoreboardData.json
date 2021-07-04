@@ -8,25 +8,7 @@
         },
         "colorInfo": {
             "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "index": {
-                    "type": "number"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "clrA": {
-                    "type": "string"
-                },
-                "clrB": {
-                    "type": "string"
-                },
-                "categoryName": {
-                    "type": "string"
-                }
-            },
-            "required": ["index", "title", "clrA", "clrB", "categoryName"]
+            "$ref": "defs/color.json#/color"
         },
         "teamAInfo": {
             "type": "object",

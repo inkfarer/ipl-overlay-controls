@@ -5,4 +5,14 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type GameWinners = number[];
+export type GameData = {
+	winner: 'none' | 'alpha' | 'bravo';
+	color: {
+		index: number;
+		title: string;
+		clrA: string;
+		clrB: string;
+		categoryName: string;
+	};
+	[k: string]: any;
+}[];

@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "maxItems": 7,
+    "items": {
+        "type": "object",
+        "properties": {
+            "winner": {
+                "type": "string",
+                "enum": ["none", "alpha", "bravo"]
+            },
+            "color": {
+                "type": "object",
+                "$ref": "defs/color.json#/color"
+            }
+        },
+        "required": ["winner", "color"]
+    }
+}
