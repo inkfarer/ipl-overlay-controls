@@ -8,7 +8,6 @@ import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
-import { createEmptyGameData } from '../../helpers/gameDataHelper';
 import { getContrastingTextColor } from './getContrastingTextColor';
 
 const gameData = nodecg.Replicant<GameData>('gameData');
@@ -18,52 +17,53 @@ const rounds = nodecg.Replicant<Rounds>('rounds');
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
-NodeCG.waitForReplicants(gameData, rounds).then(() => {
-    activeRoundId.on('change', newValue => {
-        const currentRound = rounds.value[newValue];
+NodeCG.waitForReplicants(gameData, rounds)
+    .then(() => {
+        activeRoundId.on('change', newValue => {
+            const currentRound = rounds.value[newValue];
 
-        if (currentRound) {
-            addRoundToggles(currentRound.games, currentRound.meta.name);
-        } else {
-            removeToggles();
-            roundNameElem.innerText =
-                'Undefined (Round might have been deleted...)';
-        }
-    });
-
-    gameData.on('change', (newValue, oldValue) => {
-        setWinButtonColors(newValue);
-        if (!oldValue || newValue.length === oldValue.length) {
-            disableWinButtons(newValue);
-        }
-    });
-
-    rounds.on('change', (newValue, oldValue) => {
-        if (!oldValue) return;
-
-        const newCurrentRound = newValue[activeRoundId.value];
-        const oldCurrentRound = oldValue[activeRoundId.value];
-
-        if (!newCurrentRound) return;
-
-        if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
-            roundNameElem.innerText = newCurrentRound.meta.name;
-        }
-
-        for (let i = 0; i < newCurrentRound.games.length; i++) {
-            const newGame = newCurrentRound.games[i];
-            const oldGame = oldCurrentRound.games[i];
-
-            if (
-                newGame.mode !== oldGame.mode ||
-                oldGame.stage !== newGame.stage
-            ) {
-                updateMapsAndModes(i, newGame);
-                break;
+            if (currentRound) {
+                addRoundToggles(currentRound.games, currentRound.meta.name);
+            } else {
+                removeToggles();
+                roundNameElem.innerText =
+                    'Undefined (Round might have been deleted...)';
             }
-        }
+        });
+
+        gameData.on('change', (newValue, oldValue) => {
+            setWinButtonColors(newValue);
+            if (!oldValue || newValue.length === oldValue.length) {
+                disableWinButtons(newValue);
+            }
+        });
+
+        rounds.on('change', (newValue, oldValue) => {
+            if (!oldValue) return;
+
+            const newCurrentRound = newValue[activeRoundId.value];
+            const oldCurrentRound = oldValue[activeRoundId.value];
+
+            if (!newCurrentRound) return;
+
+            if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
+                roundNameElem.innerText = newCurrentRound.meta.name;
+            }
+
+            for (let i = 0; i < newCurrentRound.games.length; i++) {
+                const newGame = newCurrentRound.games[i];
+                const oldGame = oldCurrentRound.games[i];
+
+                if (
+                    newGame.mode !== oldGame.mode ||
+                    oldGame.stage !== newGame.stage
+                ) {
+                    updateMapsAndModes(i, newGame);
+                    break;
+                }
+            }
+        });
     });
-});
 
 function setWinButtonColors(gameData: GameData) {
     for (let i = 0; i < gameData.length; i++) {
@@ -177,8 +177,13 @@ function addToggle(roundElement: Game, stageIndex: number) {
         .appendChild(toggleDiv);
 }
 
-document.getElementById('reset-btn').onclick = () => {
-    gameData.value = createEmptyGameData(rounds.value[activeRoundId.value].games.length);
+document.getElementById('btn-reset-winners').onclick = () => {
+    const newGameDataValue = gameData.value;
+    newGameDataValue.forEach(data => {
+        data.winner = GameWinner.NO_WINNER;
+    });
+
+    gameData.value = newGameDataValue;
 };
 
 function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {

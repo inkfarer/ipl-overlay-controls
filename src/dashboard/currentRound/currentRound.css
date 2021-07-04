@@ -12,7 +12,7 @@ body {
     align-items: center;
 }
 
-#reset-btn {
+#btn-reset-winners {
     background-color: var(--red);
     max-height: 40px;
 }
