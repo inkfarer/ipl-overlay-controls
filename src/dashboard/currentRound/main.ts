@@ -8,8 +8,7 @@ import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
-import { getContrastingTextColor } from './colorHelper';
-import { fillColorSelector, getColorOptionName } from '../helpers/colorHelper';
+import { fillColorSelector, getColorOptionName, getContrastingTextColor } from '../helpers/colorHelper';
 import { addClasses, appendChildren } from '../helpers/elemHelper';
 import { createEmptyGameData } from '../../helpers/gameDataHelper';
 import {
@@ -126,6 +125,7 @@ export function updateButtonColors(index: number, clrA: string, clrB: string): v
     const buttons = getButtons(index);
     buttons[GameWinner.ALPHA].style.backgroundColor = clrA;
     buttons[GameWinner.ALPHA].style.color = getContrastingTextColor(clrA);
+
     buttons[GameWinner.BRAVO].style.backgroundColor = clrB;
     buttons[GameWinner.BRAVO].style.color = getContrastingTextColor(clrB);
 }
