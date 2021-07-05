@@ -100,6 +100,13 @@
         "dialog": true
       },
       {
+        "name": "lockPredictionDialog",
+        "title": "",
+        "width": 4,
+        "file": "lockPredictionDialog.html",
+        "dialog": true
+      },
+      {
         "name": "battlefyimport",
         "title": "Import data",
         "width": 2,

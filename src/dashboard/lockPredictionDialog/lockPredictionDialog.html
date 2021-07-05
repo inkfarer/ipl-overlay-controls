@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Twitch Predictions</title>
+</head>
+<body>
+
+<div class="space">
+  <div class="title">Lock Twitch Prediction</div>
+
+  <!-- Used to show any messages -->
+  <div class="space warning layout message" id="warning-message-box" style="">
+    <i class="icon fas fa-exclamation-triangle"></i>
+    <p class="content" id="message-warning">
+      Are you sure you want to lock this prediction!
+    </p>
+  </div>
+
+  <div class="space info layout message" id="info-message-box" style="display: none">
+    <i class="icon fas fa-info-circle"></i>
+    <p class="content" id="message-info">
+      Prediction is not in a state that can be locked
+    </p>
+  </div>
+
+  <button id="lock-predictions-btn" class="green max-width">Lock Prediction!</button>
+
+  <div id="prediction-patch-status" class="status-display">STATUS</div>
+</div>
+
+</body>
+</html>
