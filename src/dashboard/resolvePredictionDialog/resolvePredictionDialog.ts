@@ -76,17 +76,18 @@ function setUI(predictionValue:PredictionStore){
 function autoResolveWinner(teamScoresValue: TeamScores,
     scoreboardValue: ScoreboardData, predictionValue:PredictionStore){
     winningOption.validOption = false;
-
     let winningTeamName: string;
+    // Work out which team has higher score
     if(teamScoresValue.teamA > teamScoresValue.teamB){
         winningTeamName = scoreboardValue.teamAInfo.name;
     }else if(teamScoresValue.teamB > teamScoresValue.teamA){
         winningTeamName = scoreboardValue.teamBInfo.name;
-    }else{
+    }else{  // if neither team is in the lead
         setUI(predictionValue);
         return;
     }
-    for(let i = 0; i < 2; i++){
+    for(let i = 0; i < 2; i++){  // for each possible outcome
+        // If the name of the winning team matches one of the teams in the outcomes' titles
         if(winningTeamName.toUpperCase() === predictionValue.currentPrediction.outcomes[i].title.toUpperCase()){
             winningOption.optionTitle = predictionValue.currentPrediction.outcomes[i].title;
             winningOption.optionIndex = i;
@@ -104,9 +105,12 @@ function autoResolveWinner(teamScoresValue: TeamScores,
 function resolvePrediction(index: number){
     if(!predictionStore.value.currentPrediction.id || index > 1 || index < 0){
         // if no id (aka no prediction) don't event attempt to patch prediction
+        setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
+        warningMessageElem.innerText = 'No outcomes/prediction to resolve >.<';
+        showElement(warningElem);
         return;
     }
-    hideElement(warningElem);
+    hideElement(warningElem);  // Hide an errors if we're showing any
     setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
@@ -137,7 +141,7 @@ NodeCG.waitForReplicants(predictionStore, teamScores, scoreboardData).then(() =>
 
 });
 
-
+// Assign onclick functions to buttons
 autoResolveBtn.onclick = () => {resolvePrediction(winningOption.optionIndex);};
 resolveOptionABtn.onclick = () => {resolvePrediction(0);};
 resolveOptionBBtn.onclick = () => {resolvePrediction(1);};
