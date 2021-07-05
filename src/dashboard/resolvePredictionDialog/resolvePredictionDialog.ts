@@ -19,8 +19,11 @@ const autoResolveBtn = document.getElementById('auto-resolve-predictions-btn') a
 const resolveOptionABtn = document.getElementById('resolve-A-predictions-btn') as HTMLButtonElement;
 const resolveOptionBBtn = document.getElementById('resolve-B-predictions-btn') as HTMLButtonElement;
 
-const messageElem = document.getElementById('message');
-const warningElem = document.getElementById('warning-message');
+const warningMessageElem = document.getElementById('message-warning');
+const warningElem = document.getElementById('warning-message-box');
+
+const infoMessageElem = document.getElementById('message-info');
+const infoElem = document.getElementById('info-message-box');
 
 const predictionPatchStatusElem = document.getElementById('prediction-patch-status');
 
@@ -39,26 +42,27 @@ function setBtnDisable(disabled: boolean){
  * @param predictionValue value of predictionStore
  */
 function setUI(predictionValue:PredictionStore){
-    // hideElement(warningElem);
     setBtnDisable(false);
+    hideElement(warningElem);
+    hideElement(infoElem);
     // If auto resolve data is available
     if(winningOption.validOption){
         autoResolveBtn.innerText = `Auto Resolve: ${winningOption.optionTitle}`;
         autoResolveBtn.disabled = false;
-        hideElement(warningElem);
+        hideElement(infoElem);
     }else{
         autoResolveBtn.innerText = 'Auto Resolve: ?';
         autoResolveBtn.disabled = true;
-        showElement(warningElem);
-        messageElem.innerText = 'Unable to workout winning prediction option automatically';
+        showElement(infoElem);
+        infoMessageElem.innerText = 'Unable to workout winning prediction option automatically';
     }
     // Set manual resolve field text
     resolveOptionABtn.innerText = predictionValue.currentPrediction.outcomes[0].title;
     resolveOptionBBtn.innerText = predictionValue.currentPrediction.outcomes[1].title;
     // lock buttons if status is not LOCKED
     if(predictionValue.currentPrediction.status !== 'LOCKED'){
-        showElement(warningElem);
-        messageElem.innerText = 'Prediction is not in a state that can be resolved';
+        showElement(infoElem);
+        infoMessageElem.innerText = 'Prediction is not in a state that can be resolved';
         setBtnDisable(true);
     }
 }
@@ -102,6 +106,7 @@ function resolvePrediction(index: number){
         // if no id (aka no prediction) don't event attempt to patch prediction
         return;
     }
+    hideElement(warningElem);
     setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
@@ -111,7 +116,7 @@ function resolvePrediction(index: number){
         if(e){
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
-            messageElem.innerText = e.detail.message;
+            warningMessageElem.innerText = e.detail.message;
             showElement(warningElem);
             return;
         }
