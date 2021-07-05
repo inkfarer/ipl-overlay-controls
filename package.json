@@ -107,6 +107,13 @@
         "dialog": true
       },
       {
+        "name": "cancelPredictionDialog",
+        "title": "",
+        "width": 4,
+        "file": "cancelPredictionDialog.html",
+        "dialog": true
+      },
+      {
         "name": "battlefyimport",
         "title": "Import data",
         "width": 2,
