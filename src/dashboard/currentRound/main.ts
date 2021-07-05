@@ -1,5 +1,5 @@
-import { addChangeReminder, addClasses, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameData, Rounds, ScoreboardData, SwapColorsInternally } from 'schemas';
+import { addChangeReminder, fillList } from '../globalScripts';
+import { Game, GameData } from 'schemas';
 
 import './setWinnersAutomatically';
 import './buttonColors';
@@ -10,61 +10,63 @@ import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
 import { getContrastingTextColor } from './colorHelper';
 import { fillColorSelector, getColorOptionName } from '../helpers/colorHelper';
+import { addClasses, appendChildren } from '../helpers/elemHelper';
 import { createEmptyGameData } from '../../helpers/gameDataHelper';
-
-const gameData = nodecg.Replicant<GameData>('gameData');
-const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
-const rounds = nodecg.Replicant<Rounds>('rounds');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
-const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
+import {
+    handleColorSelectorChange,
+    handleColorSwapToggleChange,
+    handleCustomColorListenerChange
+} from './toggleEvents';
+import { activeRoundId, gameData, rounds, scoreboardData, swapColorsInternally } from './replicants';
 
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 const enableColorEditToggle = document.getElementById('enable-color-edit-toggle') as HTMLInputElement;
 
-NodeCG.waitForReplicants(gameData, rounds).then(() => {
-    activeRoundId.on('change', newValue => {
-        const currentRound = rounds.value[newValue];
+NodeCG.waitForReplicants(gameData, rounds)
+    .then(() => {
+        activeRoundId.on('change', newValue => {
+            const currentRound = rounds.value[newValue];
 
-        if (currentRound) {
-            addRoundToggles(currentRound.games, currentRound.meta.name);
-        } else {
-            removeToggles();
-            roundNameElem.innerText =
-                'Undefined (Round might have been deleted...)';
-        }
-    });
-
-    gameData.on('change', (newValue, oldValue) => {
-        updateColorData(newValue);
-        if (!oldValue || newValue.length === oldValue.length) {
-            disableWinButtons(newValue);
-        }
-    });
-
-    rounds.on('change', (newValue, oldValue) => {
-        if (!oldValue) return;
-
-        const newCurrentRound = newValue[activeRoundId.value];
-        const oldCurrentRound = oldValue[activeRoundId.value];
-
-        if (!newCurrentRound) return;
-
-        if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
-            roundNameElem.innerText = newCurrentRound.meta.name;
-        }
-
-        for (let i = 0; i < newCurrentRound.games.length; i++) {
-            const newGame = newCurrentRound.games[i];
-            const oldGame = oldCurrentRound.games[i];
-
-            if (newGame.mode !== oldGame.mode || oldGame.stage !== newGame.stage) {
-                updateMapsAndModes(i, newGame);
-                break;
+            if (currentRound) {
+                addRoundToggles(currentRound.games, currentRound.meta.name);
+            } else {
+                removeToggles();
+                roundNameElem.innerText =
+                    'Undefined (Round might have been deleted...)';
             }
-        }
+        });
+
+        gameData.on('change', (newValue, oldValue) => {
+            updateColorData(newValue);
+            if (!oldValue || newValue.length === oldValue.length) {
+                disableWinButtons(newValue);
+            }
+        });
+
+        rounds.on('change', (newValue, oldValue) => {
+            if (!oldValue) return;
+
+            const newCurrentRound = newValue[activeRoundId.value];
+            const oldCurrentRound = oldValue[activeRoundId.value];
+
+            if (!newCurrentRound) return;
+
+            if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
+                roundNameElem.innerText = newCurrentRound.meta.name;
+            }
+
+            for (let i = 0; i < newCurrentRound.games.length; i++) {
+                const newGame = newCurrentRound.games[i];
+                const oldGame = oldCurrentRound.games[i];
+
+                if (newGame.mode !== oldGame.mode || oldGame.stage !== newGame.stage) {
+                    updateMapsAndModes(i, newGame);
+                    break;
+                }
+            }
+        });
     });
-});
 
 enableColorEditToggle.addEventListener('change', e => {
     const colorSelectors = document.querySelectorAll('.color-selector-wrapper') as NodeListOf<HTMLDivElement>;
@@ -120,7 +122,7 @@ function updateColorData(gameData: GameData) {
     }
 }
 
-function updateButtonColors(index: number, clrA: string, clrB: string): void {
+export function updateButtonColors(index: number, clrA: string, clrB: string): void {
     const buttons = getButtons(index);
     buttons[GameWinner.ALPHA].style.backgroundColor = clrA;
     buttons[GameWinner.ALPHA].style.color = getContrastingTextColor(clrA);
@@ -154,176 +156,107 @@ function addRoundToggles(games: Game[], roundName: string) {
 }
 
 function addToggle(roundElement: Game, stageIndex: number) {
-    const toggleDiv = document.createElement('div');
-    toggleDiv.classList.add('toggles');
-    toggleDiv.id = `game-editor_${stageIndex}`;
-    const stageModeDisplay = document.createElement('div');
     const gameInfo = gameData.value[stageIndex];
     const colorData = gameInfo.color ? gameInfo.color : scoreboardData.value.colorInfo;
     const colorSource = gameInfo.color ? 'gameInfo' : 'scoreboard';
 
+    const stageModeDisplay = document.createElement('div');
     stageModeDisplay.innerHTML = `<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
-    toggleDiv.appendChild(stageModeDisplay);
-
-    const reminderCreatingElements = [];
 
     const stageSelector = document.createElement('select');
-    stageSelector.id = `stage-selector_${stageIndex}`;
-    stageSelector.classList.add('stage-selector');
+    setToggleElementIdAndClass(stageSelector, 'stage-selector', stageIndex);
     fillList(stageSelector, splatStages);
     stageSelector.value = roundElement.stage;
-    toggleDiv.appendChild(stageSelector);
-    reminderCreatingElements.push(stageSelector);
 
     const modeSelector = document.createElement('select');
-    modeSelector.id = `mode-selector_${stageIndex}`;
-    modeSelector.classList.add('mode-selector');
+    setToggleElementIdAndClass(modeSelector, 'mode-selector', stageIndex);
     fillList(modeSelector, splatModes);
     modeSelector.value = roundElement.mode;
-    toggleDiv.appendChild(modeSelector);
-    reminderCreatingElements.push(modeSelector);
-
-    const colorSelectorWrapper = document.createElement('div');
-    colorSelectorWrapper.style.display = enableColorEditToggle.checked ? '' : 'none';
-    colorSelectorWrapper.classList.add('color-selector-wrapper');
-    toggleDiv.appendChild(colorSelectorWrapper);
-
-    const customColorSelectorWrapper = document.createElement('div');
-    customColorSelectorWrapper.id = `custom-color-select-wrapper_${stageIndex}`;
-    addClasses(customColorSelectorWrapper, 'layout', 'horizontal');
-    customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
-    colorSelectorWrapper.appendChild(customColorSelectorWrapper);
 
     const customColorSelectorA = createCustomColorSelector(stageIndex, 'a', colorData.clrA);
-    customColorSelectorWrapper.appendChild(customColorSelectorA);
-    reminderCreatingElements.push(customColorSelectorA);
     const customColorSelectorB = createCustomColorSelector(stageIndex, 'b', colorData.clrB);
-    customColorSelectorWrapper.appendChild(customColorSelectorB);
-    reminderCreatingElements.push(customColorSelectorB);
 
     const colorSelector = document.createElement('select');
-    colorSelector.id = `color-selector_${stageIndex}`;
-    colorSelector.classList.add('color-selector');
+    setToggleElementIdAndClass(colorSelector, 'color-selector', stageIndex);
     fillColorSelector(colorSelector);
     colorSelector.dataset.source = colorSource;
-    colorSelector.value =  getColorOptionName(colorData, colorData.categoryName);
+    colorSelector.value = getColorOptionName(colorData, colorData.categoryName);
     colorSelector.style.display = colorData.index === 999 ? 'none' : '';
-    colorSelectorWrapper.appendChild(colorSelector);
-    colorSelector.addEventListener('change', event => {
-        const target = event.target as HTMLSelectElement;
-        const index = parseInt(target.id.split('_')[1], 10);
-        target.dataset.source = 'gameInfo-edited';
-
-        const colorSwapToggle = document.getElementById(`color-swap-toggle_${index}`) as HTMLInputElement;
-        colorSwapToggle.dataset.source = 'gameInfo-edited';
-
-        const colorOption = target.options[target.selectedIndex] as HTMLOptionElement;
-        updateButtonColors(
-            index,
-            colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
-            colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
-    });
-    reminderCreatingElements.push(colorSelector);
-
-    const colorDataToggleContainer = document.createElement('div');
-    addClasses(
-        colorDataToggleContainer,
-        'layout',
-        'horizontal',
-        'center-horizontal',
-        'color-swap-toggle-container');
-    colorSelectorWrapper.appendChild(colorDataToggleContainer);
+    colorSelector.addEventListener('change', handleColorSelectorChange);
 
     const colorSwapToggle = document.createElement('input');
-    const colorSwapToggleId = `color-swap-toggle_${stageIndex}`;
+    setToggleElementIdAndClass(colorSwapToggle, 'color-swap-toggle', stageIndex);
     colorSwapToggle.type = 'checkbox';
-    colorSwapToggle.id = colorSwapToggleId;
-    colorSwapToggle.classList.add('color-swap-toggle');
     colorSwapToggle.dataset.source = colorSource;
     colorSwapToggle.checked = gameInfo.color ? gameInfo.color.colorsSwapped : swapColorsInternally.value;
-    colorSwapToggle.addEventListener('change', event => {
-        const target = event.target as HTMLInputElement;
-        if (target.dataset.source === 'scoreboard') {
-            swapColorsInternally.value = target.checked;
-        } else if (target.dataset.source === 'gameInfo') {
-            const toggleIndex = parseInt(target.id.split('_')[1], 10);
-            const existingColor = gameData.value[toggleIndex].color;
-            gameData.value[toggleIndex].color = {
-                ...existingColor,
-                colorsSwapped: !existingColor.colorsSwapped,
-                clrA: existingColor.clrB,
-                clrB: existingColor.clrA
-            };
-        } else if (target.dataset.source === 'gameInfo-edited') {
-            const toggleIndex = parseInt(target.id.split('_')[1], 10);
-            const customColorToggle =
-                document.getElementById(`custom-color-toggle_${toggleIndex}`) as HTMLInputElement ;
-
-            if (customColorToggle.checked) {
-                const teamAColorInput =
-                    document.getElementById(`custom-color-selector_a_${toggleIndex}`) as HTMLInputElement;
-                const teamBColorInput =
-                    document.getElementById(`custom-color-selector_b_${toggleIndex}`) as HTMLInputElement;
-
-                const teamAColor = teamAColorInput.value;
-                teamAColorInput.value = teamBColorInput.value;
-                teamBColorInput.value = teamAColor;
-                updateButtonColors(toggleIndex, teamAColorInput.value, teamBColorInput.value);
-            } else {
-                const colorSelector = document.getElementById(`color-selector_${toggleIndex}`) as HTMLSelectElement;
-                const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
-                updateButtonColors(
-                    toggleIndex,
-                    colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
-                    colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
-            }
-        }
-    });
-    colorDataToggleContainer.appendChild(colorSwapToggle);
+    colorSwapToggle.addEventListener('change', handleColorSwapToggleChange);
 
     const colorSwapToggleLabel = document.createElement('label');
-    colorSwapToggleLabel.htmlFor = colorSwapToggleId;
+    colorSwapToggleLabel.htmlFor = `color-swap-toggle_${stageIndex}`;
     colorSwapToggleLabel.innerText = 'Swap colors';
     colorSwapToggleLabel.classList.add('white-label');
-    colorDataToggleContainer.appendChild(colorSwapToggleLabel);
 
     const customColorToggle = document.createElement('input');
-    const customColorToggleId = `custom-color-toggle_${stageIndex}`;
-    customColorToggle.id = customColorToggleId;
+    setToggleElementIdAndClass(customColorToggle, 'custom-color-toggle', stageIndex);
     customColorToggle.type = 'checkbox';
-    customColorToggle.classList.add('custom-color-toggle');
     customColorToggle.checked = colorData.index === 999;
     customColorToggle.addEventListener('change', event => {
-        const target = event.target as HTMLInputElement;
-        const index = parseInt(target.id.split('_')[1], 10);
-
-        toggleCustomColorSelectorVisibility(index, target.checked);
+        const index = parseInt((event.target as HTMLInputElement).id.split('_')[1], 10);
+        toggleCustomColorSelectorVisibility(index, (event.target as HTMLInputElement).checked);
     });
-    colorDataToggleContainer.appendChild(customColorToggle);
 
     const customColorToggleLabel = document.createElement('label');
     customColorToggleLabel.classList.add('white-label');
     customColorToggleLabel.innerText = 'Custom';
-    customColorToggleLabel.htmlFor = customColorToggleId;
-    colorDataToggleContainer.appendChild(customColorToggleLabel);
+    customColorToggleLabel.htmlFor = `custom-color-toggle_${stageIndex}`;
 
-    addChangeReminder(reminderCreatingElements, roundUpdateButton);
+    addChangeReminder(
+        [stageSelector, modeSelector, customColorSelectorA, customColorSelectorB, colorSelector],
+        roundUpdateButton);
+
+    const customColorSelectorWrapper = document.createElement('div');
+    setToggleElementIdAndClass(customColorSelectorWrapper, 'custom-color-select-wrapper', stageIndex);
+    addClasses(customColorSelectorWrapper, 'layout', 'horizontal');
+    appendChildren(customColorSelectorWrapper, customColorSelectorA, customColorSelectorB);
+    customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
+
+    const colorDataToggleContainer = document.createElement('div');
+    addClasses(colorDataToggleContainer,
+        'layout', 'horizontal', 'center-horizontal', 'color-swap-toggle-container');
+    appendChildren(colorDataToggleContainer,
+        colorSwapToggle, colorSwapToggleLabel, customColorToggle, customColorToggleLabel);
 
     const winButtonContainer = document.createElement('div');
     addClasses(winButtonContainer, 'layout', 'horizontal', 'win-button-container');
-    winButtonContainer.appendChild(createWinButton(GameWinner.NO_WINNER, stageIndex));
-    winButtonContainer.appendChild(createWinButton(GameWinner.ALPHA, stageIndex));
-    winButtonContainer.appendChild(createWinButton(GameWinner.BRAVO, stageIndex));
-    toggleDiv.appendChild(winButtonContainer);
+    appendChildren(winButtonContainer,
+        createWinButton(GameWinner.NO_WINNER, stageIndex),
+        createWinButton(GameWinner.ALPHA, stageIndex),
+        createWinButton(GameWinner.BRAVO, stageIndex));
 
-    document.getElementById('toggles')
-        .appendChild(toggleDiv);
+    const colorSelectorWrapper = document.createElement('div');
+    colorSelectorWrapper.style.display = enableColorEditToggle.checked ? '' : 'none';
+    colorSelectorWrapper.classList.add('color-selector-wrapper');
+    appendChildren(colorSelectorWrapper, colorSelector, customColorSelectorWrapper, colorDataToggleContainer);
+
+    const toggleDiv = document.createElement('div');
+    toggleDiv.classList.add('toggles');
+    toggleDiv.id = `game-editor_${stageIndex}`;
+    appendChildren(toggleDiv, stageModeDisplay, stageSelector, modeSelector, colorSelectorWrapper, winButtonContainer);
+
+    document.getElementById('toggles').appendChild(toggleDiv);
+}
+
+function setToggleElementIdAndClass(element: HTMLElement, className: string, index: number) {
+    element.classList.add(className);
+    element.id = `${className}_${index}`;
 }
 
 function toggleCustomColorSelectorVisibility(index: number, isCustomColor: boolean): void {
     const customColorSelectWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
     const colorSelect = document.getElementById(`color-selector_${index}`);
+    const toggle = document.getElementById(`custom-color-toggle_${index}`) as HTMLInputElement;
 
+    toggle.checked = isCustomColor;
     customColorSelectWrapper.style.display = isCustomColor ? '' : 'none';
     colorSelect.style.display = isCustomColor ? 'none' : '';
 }
@@ -363,20 +296,7 @@ function createCustomColorSelector(index: number, team: 'a' | 'b', value: string
     selector.id = `custom-color-selector_${team}_${index}`;
     selector.classList.add(`team-${team}`);
     selector.value = value;
-    selector.addEventListener('change', event => {
-        const index = parseInt((event.target as HTMLInputElement).id.split('_')[2], 10);
-
-        const teamColorSelector = document.getElementById(`color-selector_${index}`);
-        teamColorSelector.dataset.source = 'gameInfo-edited';
-        const colorSwapToggle = document.getElementById(`color-swap-toggle_${index}`) as HTMLInputElement;
-        colorSwapToggle.dataset.source = 'gameInfo-edited';
-
-        const customColorsWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
-        const teamASelector = customColorsWrapper.querySelector('.team-a') as HTMLInputElement;
-        const teamBSelector = customColorsWrapper.querySelector('.team-b') as HTMLInputElement;
-
-        updateButtonColors(index, teamASelector.value, teamBSelector.value);
-    });
+    selector.addEventListener('change', handleCustomColorListenerChange);
     return selector;
 }
 
