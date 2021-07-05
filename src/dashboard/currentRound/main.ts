@@ -22,7 +22,7 @@ const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 const enableColorEditToggle = document.getElementById('enable-color-edit-toggle') as HTMLInputElement;
 
-NodeCG.waitForReplicants(gameData, rounds)
+NodeCG.waitForReplicants(gameData, rounds, scoreboardData)
     .then(() => {
         activeRoundId.on('change', newValue => {
             const currentRound = rounds.value[newValue];
@@ -158,8 +158,8 @@ function addRoundToggles(games: Game[], roundName: string) {
 
 function addToggle(roundElement: Game, stageIndex: number) {
     const gameInfo = gameData.value[stageIndex];
-    const colorData = gameInfo.color ? gameInfo.color : scoreboardData.value.colorInfo;
-    const colorSource = gameInfo.color ? 'gameInfo' : 'scoreboard';
+    const colorData = gameInfo.color !== undefined ? gameInfo.color : scoreboardData.value.colorInfo;
+    const colorSource = gameInfo.color !== undefined ? 'gameInfo' : 'scoreboard';
 
     const stageModeDisplay = document.createElement('div');
     stageModeDisplay.innerHTML = `<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
@@ -189,7 +189,7 @@ function addToggle(roundElement: Game, stageIndex: number) {
     setToggleElementIdAndClass(colorSwapToggle, 'color-swap-toggle', stageIndex);
     colorSwapToggle.type = 'checkbox';
     colorSwapToggle.dataset.source = colorSource;
-    colorSwapToggle.checked = gameInfo.color ? gameInfo.color.colorsSwapped : swapColorsInternally.value;
+    colorSwapToggle.checked = gameInfo.color !== undefined ? gameInfo.color.colorsSwapped : swapColorsInternally.value;
     colorSwapToggle.addEventListener('change', handleColorSwapToggleChange);
 
     const colorSwapToggleLabel = document.createElement('label');
