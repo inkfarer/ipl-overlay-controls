@@ -80,6 +80,14 @@ body {
     display: block;
 }
 
+.subTitle {
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    display: block;
+}
+
 /* Buttons */
 
 button {

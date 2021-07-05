@@ -1,0 +1,4 @@
+.sideBySide {
+    display: flex;
+    justify-content: center;
+}
