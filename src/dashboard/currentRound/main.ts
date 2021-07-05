@@ -134,6 +134,7 @@ function removeCustomButtonColors(index: number): void {
     const buttons = getButtons(index);
     buttons[GameWinner.ALPHA].style.removeProperty('background-color');
     buttons[GameWinner.ALPHA].style.removeProperty('color');
+
     buttons[GameWinner.BRAVO].style.removeProperty('background-color');
     buttons[GameWinner.BRAVO].style.removeProperty('color');
 }
