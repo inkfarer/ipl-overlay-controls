@@ -1,4 +1,4 @@
-import { addDots, hideElement, showElement } from '../globalScripts';
+import { hideElement, showElement } from '../globalScripts';
 import { PredictionStore } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
@@ -16,6 +16,10 @@ const unsupportedGuildWarning = document.getElementById('unsupported-service-mes
 const currentPredictionSpace = document.getElementById('current-prediction-space');
 const predictionGetSpace = document.getElementById('prediction-get-space');
 
+const createPredictionBtn = document.getElementById('create-prediction-btn');
+const resolvePredictionBtn = document.getElementById('resolve-prediction-btn');
+const lockPredictionBtn = document.getElementById('lock-prediction-btn');
+const cancelPredictionBtn = document.getElementById('cancel-prediction-btn');
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
 
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
@@ -40,6 +44,27 @@ predictionStore.on('change', newValue => {
             optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '' : `${optionAPercentage}%`);
             optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '' : `${optionBPercentage}%`);
             predictionStatusElem.innerText = prediction.status.toLowerCase();
+            // Show/Hide necessary buttons
+            switch (newValue.currentPrediction.status) {
+                case 'ACTIVE':
+                    hideElement(createPredictionBtn);
+                    hideElement(resolvePredictionBtn);
+                    showElement(lockPredictionBtn);
+                    showElement(cancelPredictionBtn);
+                    break;
+                case 'LOCKED':
+                    hideElement(createPredictionBtn);
+                    hideElement(lockPredictionBtn);
+                    showElement(resolvePredictionBtn);
+                    showElement(cancelPredictionBtn);
+                    break;
+                default:
+                    hideElement(cancelPredictionBtn);
+                    hideElement(resolvePredictionBtn);
+                    hideElement(lockPredictionBtn);
+                    showElement(createPredictionBtn);
+                    break;
+            }
         }
     }else{
         showElement(unsupportedGuildWarning);
