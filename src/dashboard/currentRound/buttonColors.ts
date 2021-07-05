@@ -1,7 +1,5 @@
-import { ScoreboardData } from 'schemas';
 import { getContrastingTextColor } from '../helpers/colorHelper';
-
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+import { scoreboardData } from './replicants';
 
 scoreboardData.on('change', newValue => {
     document.body.style.setProperty('--team-a-color', newValue.colorInfo.clrA);
