@@ -8,5 +8,4 @@ dom.watch();
 import '../styles/globalStyles.css';
 import '../styles/statusDisplay.css';
 
-import './createPredictionDialog.css';
 import './createPredictionDialog';

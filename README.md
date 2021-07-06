@@ -57,12 +57,11 @@ For development, a number of npm scripts are provided:
 - `build` - Creates a production build of the bundle.
 - `clean` - Deletes generated build files and npm cache.
 - `cleanbuild` - Deletes generated files and runs a production build.
+- `devbuild` - Creates a development build of the bundle
 - `start` - Starts NodeCG.
 - `watch` - Runs a development build when code changes are detected.
 - `schema-types` - Generates TS type definitions for replicant schemas (Defined in the `/schemas` directory)
 - `lint` - Runs ESLint to check for code issues.
-
-To create a development build without listening for code changes, run the `webpack` command in the project root.
 
 This repository uses GitHub actions to automatically verify with ESLint and create builds from the master branch. 
 New releases should be created off the `build` branch, which contains the built files.
@@ -74,7 +73,7 @@ To help debug this bundle in JetBrains IDEs, create a Node.js build configuratio
 - **Working directory**: [nodecg]\bundles\ipl-overlay-controls 
 - **JavaScript file**: [nodecg]\index.js 
 
-To create a debuggable development build, run `npm run watch` or `webpack` in the project root.
+To create a debuggable development build, run `npm run watch` or `npm run devbuild` in the project root.
 
 ## Repositories that depend on ipl-overlay-controls
 
