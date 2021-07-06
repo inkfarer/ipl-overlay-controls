@@ -18,13 +18,13 @@
                 "apiKey": { "type": "string" }
             }
         },
-		"radia": {
-			"type": "object",
-			"additionalProperties": false,
-			"properties": {
-				"url": { "type": "string" },
-				"authentication": { "type": "string" }
-			}
-		}
-	}
+        "radia": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": { "type": "string" },
+                "authentication": { "type": "string" }
+            }
+        }
+    }
 }

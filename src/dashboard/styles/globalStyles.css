@@ -130,7 +130,7 @@ button[disabled]:hover {
 button.max-width {
     box-sizing: border-box;
     /* an ugly hack: 100% - button margin
-	prevents button from getting too wide */
+    prevents button from getting too wide */
     width: calc(100% - 4px);
 }
 
