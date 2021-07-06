@@ -31,7 +31,7 @@ const predictionPatchStatusElem = document.getElementById('prediction-patch-stat
  * Set disabled pram of all buttons
  * @param disabled
  */
-function setBtnDisable(disabled: boolean){
+function setBtnDisable(disabled: boolean) {
     autoResolveBtn.disabled = disabled;
     resolveOptionABtn.disabled = disabled;
     resolveOptionBBtn.disabled = disabled;
@@ -41,16 +41,16 @@ function setBtnDisable(disabled: boolean){
  * Sets the button UI
  * @param predictionValue value of predictionStore
  */
-function setUI(predictionValue:PredictionStore){
+function setUI(predictionValue:PredictionStore) {
     setBtnDisable(false);
     hideElement(warningElem);
     hideElement(infoElem);
     // If auto resolve data is available
-    if(winningOption.validOption){
+    if (winningOption.validOption) {
         autoResolveBtn.innerText = `Auto Resolve: ${winningOption.optionTitle}`;
         autoResolveBtn.disabled = false;
         hideElement(infoElem);
-    }else{
+    } else {
         autoResolveBtn.innerText = 'Auto Resolve: ?';
         autoResolveBtn.disabled = true;
         showElement(infoElem);
@@ -60,7 +60,7 @@ function setUI(predictionValue:PredictionStore){
     resolveOptionABtn.innerText = predictionValue.currentPrediction.outcomes[0].title;
     resolveOptionBBtn.innerText = predictionValue.currentPrediction.outcomes[1].title;
     // lock buttons if status is not LOCKED
-    if(predictionValue.currentPrediction.status !== 'LOCKED'){
+    if (predictionValue.currentPrediction.status !== 'LOCKED') {
         showElement(infoElem);
         infoMessageElem.innerText = 'Prediction is not in a state that can be resolved';
         setBtnDisable(true);
@@ -74,21 +74,21 @@ function setUI(predictionValue:PredictionStore){
  * @param predictionValue predictionStore replicant value
  */
 function autoResolveWinner(teamScoresValue: TeamScores,
-    scoreboardValue: ScoreboardData, predictionValue:PredictionStore){
+    scoreboardValue: ScoreboardData, predictionValue:PredictionStore) {
     winningOption.validOption = false;
     let winningTeamName: string;
     // Work out which team has higher score
-    if(teamScoresValue.teamA > teamScoresValue.teamB){
+    if (teamScoresValue.teamA > teamScoresValue.teamB) {
         winningTeamName = scoreboardValue.teamAInfo.name;
-    }else if(teamScoresValue.teamB > teamScoresValue.teamA){
+    } else if (teamScoresValue.teamB > teamScoresValue.teamA) {
         winningTeamName = scoreboardValue.teamBInfo.name;
-    }else{  // if neither team is in the lead
+    } else {  // if neither team is in the lead
         setUI(predictionValue);
         return;
     }
-    for(let i = 0; i < 2; i++){  // for each possible outcome
+    for (let i = 0; i < 2; i++) {  // for each possible outcome
         // If the name of the winning team matches one of the teams in the outcomes' titles
-        if(winningTeamName.toUpperCase() === predictionValue.currentPrediction.outcomes[i].title.toUpperCase()){
+        if (winningTeamName.toUpperCase() === predictionValue.currentPrediction.outcomes[i].title.toUpperCase()) {
             winningOption.optionTitle = predictionValue.currentPrediction.outcomes[i].title;
             winningOption.optionIndex = i;
             winningOption.validOption = true;
@@ -102,8 +102,8 @@ function autoResolveWinner(teamScoresValue: TeamScores,
  * Run prediction resolve
  * @param index index of winning outcome
  */
-function resolvePrediction(index: number){
-    if(!predictionStore.value.currentPrediction.id || index > 1 || index < 0){
+function resolvePrediction(index: number) {
+    if (!predictionStore.value.currentPrediction.id || index > 1 || index < 0) {
         // if no id (aka no prediction) don't event attempt to patch prediction
         setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
         warningMessageElem.innerText = 'No outcomes/prediction to resolve >.<';
@@ -117,7 +117,7 @@ function resolvePrediction(index: number){
         status: 'RESOLVED',
         winning_outcome_id: predictionStore.value.currentPrediction.outcomes[index].id
     }, (e) => {
-        if(e){
+        if (e) {
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
             warningMessageElem.innerText = e.detail.message;

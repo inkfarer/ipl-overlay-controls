@@ -216,31 +216,31 @@ async function getSmashGGPage(
     getRaw = false): Promise<{ pageInfo: Team[], raw?: AxiosResponse }> {
 
     const query = `query Entrants($slug: String!, $page: Int!, $perPage: Int!) {
-		tournament(slug: $slug) {
-		id
-		name
-		teams(query: {
-			page: $page
-			perPage: $perPage
-		}) {
-			pageInfo {
-			total
-			totalPages
-			}
-			nodes {
-			id
-			name
-			entrant {
-				id
-				participants {
-				id
-				gamerTag
-				}
-			}
-			}
-		}
-		}
-	}`;
+        tournament(slug: $slug) {
+        id
+        name
+        teams(query: {
+            page: $page
+            perPage: $perPage
+        }) {
+            pageInfo {
+            total
+            totalPages
+            }
+            nodes {
+            id
+            name
+            entrant {
+                id
+                participants {
+                id
+                gamerTag
+                }
+            }
+            }
+        }
+        }
+    }`;
     const perPage = '50';
 
     return new Promise((resolve, reject) => {

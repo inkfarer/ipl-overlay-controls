@@ -1,184 +1,185 @@
 {
-  "name": "ipl-overlay-controls",
-  "version": "0.0.0",
-  "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
-  "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
-  "author": {
-    "name": "inkfarer",
-    "email": "inkfarer@inkfarer.com",
-    "url": "https://inkfarer.com"
-  },
-  "files": [
-    "dashboard",
-    "src/extension"
-  ],
-  "keywords": [
-    "",
-    "nodecg-bundle"
-  ],
-  "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "clean": "trash node_modules/.cache && trash dashboard && trash extension",
-    "cleanbuild": "npm run clean && npm run build",
-    "start": "node ../..",
-    "watch": "webpack -w",
-    "schema-types": "nodecg schema-types -o ./schemas",
-    "lint": "eslint ./src",
-    "devbuild": "webpack"
-  },
-  "nodecg": {
-    "compatibleRange": "^1.7.0",
-    "dashboardPanels": [
-      {
-        "name": "scoring",
-        "title": "Scoring",
-        "width": 2,
-        "file": "scoring.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "music",
-        "title": "Music",
-        "width": 2,
-        "file": "music.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "breakscreen",
-        "title": "Break Screen",
-        "width": 2,
-        "file": "breakScreen.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "currentround",
-        "title": "Current Round",
-        "width": 4,
-        "file": "currentRound.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "casters",
-        "title": "Casters",
-        "width": 2,
-        "file": "casters.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "highlightedMatches",
-        "title": "Highlighted Matches",
-        "width": 2,
-        "file": "highlightedMatches.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "predictions",
-        "title": "Predictions",
-        "width": 2,
-        "file": "predictions.html",
-        "workspace": "ipl",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "createPredictionDialog",
-        "title": "",
-        "width": 4,
-        "file": "createPredictionDialog.html",
-        "dialog": true
-      },
-      {
-        "name": "resolvePredictionDialog",
-        "title": "",
-        "width": 4,
-        "file": "resolvePredictionDialog.html",
-        "dialog": true
-      },
-      {
-        "name": "lockPredictionDialog",
-        "title": "",
-        "width": 4,
-        "file": "lockPredictionDialog.html",
-        "dialog": true
-      },
-      {
-        "name": "cancelPredictionDialog",
-        "title": "",
-        "width": 4,
-        "file": "cancelPredictionDialog.html",
-        "dialog": true
-      },
-      {
-        "name": "battlefyimport",
-        "title": "Import data",
-        "width": 2,
-        "file": "dataImport.html",
-        "workspace": "ipl setup",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "rounds",
-        "title": "Rounds",
-        "width": 6,
-        "file": "rounds.html",
-        "workspace": "ipl setup",
-        "headerColor": "#262F40"
-      },
-      {
-        "name": "Settings",
-        "title": "Settings",
-        "width": 2,
-        "file": "settings.html",
-        "workspace": "ipl setup",
-        "headerColor": "#262F40"
-      }
-    ]
-  },
-  "repository": "https://github.com/nodecg/nodecg.git",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "babel-plugin-add-module-exports": "^1.0.4",
-    "clone": "^2.1.2",
-    "express-fileupload": "^1.2.1",
-    "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
-    "@babel/preset-typescript": "^7.13.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@types/clone": "^2.1.0",
-    "@types/express-fileupload": "^1.1.6",
-    "@types/node": "^15.12.1",
-    "@types/webpack": "^5.28.0",
-    "@types/webpack-livereload-plugin": "^2.3.2",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
-    "babel-loader": "^8.2.2",
-    "cross-env": "^7.0.3",
-    "css-loader": "^5.2.6",
-    "eslint": "^7.28.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-import-resolver-webpack": "^0.13.1",
-    "eslint-plugin-import": "^2.23.4",
-    "globby": "^11.0.3",
-    "html-webpack-plugin": "^5.3.1",
-    "json-schema-to-typescript": "^10.1.4",
-    "style-loader": "^2.0.0",
-    "trash-cli": "^4.0.0",
-    "ts-node": "^10.0.0",
-    "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "^4.3.2",
-    "webpack": "^5.42.0",
-    "webpack-cli": "^4.7.0",
-    "webpack-livereload-plugin": "^3.0.1",
-    "webpack-node-externals": "^3.0.0"
-  }
+    "name": "ipl-overlay-controls",
+    "version": "0.0.0",
+    "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
+    "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
+    "author": {
+        "name": "inkfarer",
+        "email": "inkfarer@inkfarer.com",
+        "url": "https://inkfarer.com"
+    },
+    "files": [
+        "dashboard",
+        "src/extension"
+    ],
+    "keywords": [
+        "",
+        "nodecg-bundle"
+    ],
+    "scripts": {
+        "build": "cross-env NODE_ENV=production webpack",
+        "clean": "trash node_modules/.cache && trash dashboard && trash extension",
+        "cleanbuild": "npm run clean && npm run build",
+        "start": "node ../..",
+        "watch": "webpack -w",
+        "schema-types": "nodecg schema-types -o ./schemas",
+        "lint": "eslint ./src",
+        "fix": "eslint ./src --fix",
+        "devbuild": "webpack"
+    },
+    "nodecg": {
+        "compatibleRange": "^1.7.0",
+        "dashboardPanels": [
+            {
+                "name": "scoring",
+                "title": "Scoring",
+                "width": 2,
+                "file": "scoring.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "music",
+                "title": "Music",
+                "width": 2,
+                "file": "music.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "breakscreen",
+                "title": "Break Screen",
+                "width": 2,
+                "file": "breakScreen.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "currentround",
+                "title": "Current Round",
+                "width": 4,
+                "file": "currentRound.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "casters",
+                "title": "Casters",
+                "width": 2,
+                "file": "casters.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "highlightedMatches",
+                "title": "Highlighted Matches",
+                "width": 2,
+                "file": "highlightedMatches.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "predictions",
+                "title": "Predictions",
+                "width": 2,
+                "file": "predictions.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "createPredictionDialog",
+                "title": "",
+                "width": 4,
+                "file": "createPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "resolvePredictionDialog",
+                "title": "",
+                "width": 4,
+                "file": "resolvePredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "lockPredictionDialog",
+                "title": "",
+                "width": 4,
+                "file": "lockPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "cancelPredictionDialog",
+                "title": "",
+                "width": 4,
+                "file": "cancelPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "battlefyimport",
+                "title": "Import data",
+                "width": 2,
+                "file": "dataImport.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "rounds",
+                "title": "Rounds",
+                "width": 6,
+                "file": "rounds.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "Settings",
+                "title": "Settings",
+                "width": 2,
+                "file": "settings.html",
+                "workspace": "ipl setup",
+                "headerColor": "#262F40"
+            }
+        ]
+    },
+    "repository": "https://github.com/nodecg/nodecg.git",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "babel-plugin-add-module-exports": "^1.0.4",
+        "clone": "^2.1.2",
+        "express-fileupload": "^1.2.1",
+        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
+        "@babel/preset-typescript": "^7.13.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@types/clone": "^2.1.0",
+        "@types/express-fileupload": "^1.1.6",
+        "@types/node": "^15.12.1",
+        "@types/webpack": "^5.28.0",
+        "@types/webpack-livereload-plugin": "^2.3.2",
+        "@typescript-eslint/eslint-plugin": "^4.26.0",
+        "@typescript-eslint/parser": "^4.26.0",
+        "babel-loader": "^8.2.2",
+        "cross-env": "^7.0.3",
+        "css-loader": "^5.2.6",
+        "eslint": "^7.28.0",
+        "eslint-import-resolver-typescript": "^2.4.0",
+        "eslint-import-resolver-webpack": "^0.13.1",
+        "eslint-plugin-import": "^2.23.4",
+        "globby": "^11.0.3",
+        "html-webpack-plugin": "^5.3.1",
+        "json-schema-to-typescript": "^10.1.4",
+        "style-loader": "^2.0.0",
+        "trash-cli": "^4.0.0",
+        "ts-node": "^10.0.0",
+        "tsconfig-paths-webpack-plugin": "^3.5.1",
+        "typescript": "^4.3.2",
+        "webpack": "^5.42.0",
+        "webpack-cli": "^4.7.0",
+        "webpack-livereload-plugin": "^3.0.1",
+        "webpack-node-externals": "^3.0.0"
+    }
 }

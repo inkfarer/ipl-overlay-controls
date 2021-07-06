@@ -80,7 +80,7 @@ body {
     display: block;
 }
 
-.subTitle {
+.subtitle {
     font-weight: 500;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -130,7 +130,7 @@ button[disabled]:hover {
 button.max-width {
     box-sizing: border-box;
     /* an ugly hack: 100% - button margin
-	prevents button from getting too wide */
+    prevents button from getting too wide */
     width: calc(100% - 4px);
 }
 

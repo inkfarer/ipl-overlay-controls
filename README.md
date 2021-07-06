@@ -57,7 +57,7 @@ For development, a number of npm scripts are provided:
 - `build` - Creates a production build of the bundle.
 - `clean` - Deletes generated build files and npm cache.
 - `cleanbuild` - Deletes generated files and runs a production build.
-- `devbuild` - Creates a development build of the bundle
+- `devbuild` - Creates a development build of the bundle.
 - `start` - Starts NodeCG.
 - `watch` - Runs a development build when code changes are detected.
 - `schema-types` - Generates TS type definitions for replicant schemas (Defined in the `/schemas` directory)
