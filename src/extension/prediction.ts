@@ -80,6 +80,19 @@ nodecg.listenFor('patchPrediction', async  (data: PatchPrediction, ack: Unhandle
         });
 });
 
+// This function runs every ~25 seconds
+setInterval(function(){
+    // While currently stored prediction is active we run a get the lastest prediction
+    if(predictionStore.value.currentPrediction.status === 'ACTIVE'){
+        getGuildPredictions(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID).then(
+            response => {
+                assignPredictionData(response[0]);
+            }).catch(err => {
+            nodecg.log.error(`Twitch Prediction Load Error: ${err}`);
+        });
+    }
+}, 25000);
+
 /**
  * Assigns data to prediction replicant
  * @param data Prediction Data
