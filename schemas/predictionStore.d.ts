@@ -9,7 +9,7 @@ export interface PredictionStore {
 	/**
 	 * If Predictions should be enabled for current settings
 	 */
-	enablePrediction?: boolean;
+	enablePrediction: boolean;
 	/**
 	 * Currently stored prediction in use
 	 */
@@ -17,96 +17,96 @@ export interface PredictionStore {
 		/**
 		 * Twitch ID of the Prediction.
 		 */
-		id?: string;
+		id: string;
 		/**
 		 * Twitch ID of the broadcaster
 		 */
-		broadcaster_id?: string;
+		broadcaster_id: string;
 		/**
 		 * Twitch User Login
 		 */
-		broadcaster_name?: string;
+		broadcaster_name: string;
 		/**
 		 * Twitch user Display Name
 		 */
-		broadcaster_login?: string;
+		broadcaster_login: string;
 		/**
 		 * Title of prediction
 		 */
-		title?: string;
+		title: string;
 		/**
 		 * ID of wining ID
 		 */
-		winning_outcome_id?: string | null;
+		winning_outcome_id: string | null;
 		/**
 		 * Array of possible outcomes for the Prediction
 		 */
-		outcomes?: {
+		outcomes: {
 			/**
 			 * Twitch ID of prediction Outcome
 			 */
-			id?: string;
+			id: string;
 			/**
 			 * Text displayed for outcome
 			 */
-			title?: string;
+			title: string;
 			/**
 			 * Number of unique users that chose the outcome.
 			 */
-			users?: number;
+			users: number;
 			/**
 			 * Channel Points Spent on outcome
 			 */
-			channel_points?: number;
+			channel_points: number;
 			/**
 			 * Users who were the top predictors
 			 */
-			top_predictors?: {
+			top_predictors: {
 				/**
 				 * Twitch User ID
 				 */
-				user_id?: string;
+				user_id: string;
 				/**
 				 * Twitch User Login
 				 */
-				user_login?: string;
+				user_login: string;
 				/**
 				 * Twitch user Display Name
 				 */
-				user_name?: string;
+				user_name: string;
 				/**
 				 * Channel Points used to make bet
 				 */
-				channel_points_used?: number;
+				channel_points_used: number;
 				/**
 				 * Channel points won from prediction
 				 */
-				channel_points_won?: number;
+				channel_points_won: number;
 			}[];
 			/**
 			 * Color for the outcome.
 			 */
-			color?: 'BLUE' | 'PINK';
+			color: 'BLUE' | 'PINK';
 		}[];
 		/**
 		 * Total duration for the Prediction (in seconds)
 		 */
-		prediction_window?: number;
+		prediction_window: number;
 		/**
 		 * Status of the Prediction
 		 */
-		status?: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
+		status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
 		/**
 		 * UTC timestamp for the Prediction’s start time
 		 */
-		created_at?: string;
+		created_at: string;
 		/**
 		 * UTC timestamp for when the Prediction ended, null if ACTIVE
 		 */
-		ended_at?: string | null;
+		ended_at: string | null;
 		/**
 		 * UTC timestamp for when the Prediction was locked, null if not LOCKED
 		 */
-		locked_at?: string | null;
+		locked_at: string | null;
 	};
 }

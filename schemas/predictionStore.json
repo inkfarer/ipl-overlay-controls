@@ -4,13 +4,18 @@
 	"properties": {
 		"enablePrediction": {
 			"description": "If Predictions should be enabled for current settings",
-			"type": "boolean",
-			"default": false
+			"type": "boolean"
 		},
 		"currentPrediction": {
 			"description": "Currently stored prediction in use",
 			"$ref": "defs/predictions/prediction.json#/prediction"
 		}
+	},
+	"required": [
+		"enablePrediction"
+	],
+	"default": {
+		"enablePrediction": false
 	},
 	"additionalProperties": false
 }

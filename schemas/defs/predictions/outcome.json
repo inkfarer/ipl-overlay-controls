@@ -34,6 +34,7 @@
 				"enum": ["BLUE", "PINK"]
 			}
 		},
+		"required": ["id", "title", "users", "channel_points", "top_predictors", "color"],
 		"additionalProperties": false
 	}
 }
