@@ -24,6 +24,7 @@
         "watch": "webpack -w",
         "schema-types": "nodecg schema-types -o ./schemas",
         "lint": "eslint ./src",
+        "fix": "eslint ./src --fix",
         "devbuild": "webpack"
     },
     "nodecg": {

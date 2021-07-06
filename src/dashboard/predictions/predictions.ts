@@ -25,12 +25,12 @@ const getPredictionsBtn = document.getElementById('get-predictions-btn');
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
 predictionStore.on('change', newValue => {
-    if(newValue.enablePrediction){
+    if (newValue.enablePrediction) {
         hideElement(unsupportedGuildWarning);
         showElement(currentPredictionSpace);
         showElement(predictionGetSpace);
         // Display info on current prediction
-        if(newValue.currentPrediction){
+        if (newValue.currentPrediction) {
             const prediction = newValue.currentPrediction;
             const totalChannelPoints = prediction.outcomes[0].channel_points + prediction.outcomes[1].channel_points;
             const optionAPercentage = Math.round((prediction.outcomes[0].channel_points / totalChannelPoints) * 100);
@@ -66,7 +66,7 @@ predictionStore.on('change', newValue => {
                     break;
             }
         }
-    }else{
+    } else {
         showElement(unsupportedGuildWarning);
         hideElement(currentPredictionSpace);
         hideElement(predictionGetSpace);

@@ -25,13 +25,13 @@ const createPredictionBtn = document.getElementById('create-predictions-btn') as
 /**
  * Does checks if the button should be enabled or disabled
  */
-function checkButtonValidity(){
+function checkButtonValidity() {
     const predictionWindow = parseInt(predictionWindowInput.value);
     if (Object.values(fieldValidity).includes(false)) {
         messageElem.innerText = 'Field(s) are too long!';
         showElement(warningElem);
         createPredictionBtn.disabled = true;
-    }else if(predictionWindow < 1 || predictionWindow > 1800 || isNaN(predictionWindow)) {
+    } else if (predictionWindow < 1 || predictionWindow > 1800 || isNaN(predictionWindow)) {
         messageElem.innerText = 'Prediction Window must be between 1-1800';
         showElement(warningElem);
         createPredictionBtn.disabled = true;
@@ -49,7 +49,7 @@ function checkButtonValidity(){
  * @param name The name of the Label
  * @param fieldLimit Field limit for input
  */
-function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number){
+function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
     input.addEventListener('input', function (event) {
         const target = event.target as HTMLInputElement;
         label.innerText = `${name} (${target.value.length}/${fieldLimit})`;
@@ -57,7 +57,7 @@ function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: 
             // if too long we turn txt red and add a false flag to the object
             input.style.color = 'red';
             fieldValidity[name] = false;
-        }else{
+        } else {
             input.style.color = 'white';
             fieldValidity[name] = true;
         }
@@ -73,14 +73,14 @@ function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: 
  * @param fieldLimit Field limit for input
  * @param value Value to set
  */
-function setInputField(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number, value: string){
+function setInputField(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number, value: string) {
     input.value = value;
     label.innerText = `${name} (${value.length}/${fieldLimit})`;
     if (value.length > fieldLimit || value.length < 1) {
         // if too long we turn txt red and add a false flag to the object
         input.style.color = 'red';
         fieldValidity[name] = false;
-    }else{
+    } else {
         input.style.color = 'white';
         fieldValidity[name] = true;
     }
@@ -91,9 +91,9 @@ function setInputField(input: HTMLInputElement, label: HTMLElement, name: string
 predictionWindowInput.addEventListener('input', function (event) {
     const target = event.target as HTMLInputElement;
     const predictionWindow = parseInt(target.value);
-    if(predictionWindow < 1 || predictionWindow > 1800 || isNaN(predictionWindow)){
+    if (predictionWindow < 1 || predictionWindow > 1800 || isNaN(predictionWindow)) {
         predictionWindowInput.style.color = 'red';
-    }else{
+    } else {
         predictionWindowInput.style.color = 'white';
     }
     checkButtonValidity();
@@ -109,7 +109,7 @@ createPredictionBtn.onclick = () => {
         ],
         prediction_window: predictionWindowInput.value
     }, (e) => {
-        if(e){
+        if (e) {
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
             messageElem.innerText = e.detail.message;
