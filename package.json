@@ -147,14 +147,14 @@
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
-        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
+        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-typescript": "^7.13.0",
-        "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/node": "^15.12.1",
