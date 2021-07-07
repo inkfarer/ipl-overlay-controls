@@ -89,28 +89,28 @@
             {
                 "name": "createPredictionDialog",
                 "title": "",
-                "width": 4,
+                "width": 3,
                 "file": "createPredictionDialog.html",
                 "dialog": true
             },
             {
                 "name": "resolvePredictionDialog",
                 "title": "",
-                "width": 4,
+                "width": 3,
                 "file": "resolvePredictionDialog.html",
                 "dialog": true
             },
             {
                 "name": "lockPredictionDialog",
                 "title": "",
-                "width": 4,
+                "width": 3,
                 "file": "lockPredictionDialog.html",
                 "dialog": true
             },
             {
                 "name": "cancelPredictionDialog",
                 "title": "",
-                "width": 4,
+                "width": 3,
                 "file": "cancelPredictionDialog.html",
                 "dialog": true
             },
