@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as nodecgContext from './util/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { ErrorDetails, Prediction } from './types/prediction';
+import { ErrorDetails, Prediction } from 'types/prediction';
 import { GuildServices } from './types/radiaApi';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 

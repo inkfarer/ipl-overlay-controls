@@ -3,14 +3,11 @@ import { PredictionStore } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { PredictionStatus } from 'types/predictionStatus';
+import { Outcome } from 'types/prediction';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
-const optionABarElem = document.getElementById('option-a-bar');
-const optionBBarElem = document.getElementById('option-b-bar');
-const optionATitleElem = document.getElementById('option-a-title');
-const optionBTitleElem = document.getElementById('option-b-title');
-const optionAPercentageElem = document.getElementById('option-a-percent');
-const optionBPercentageElem = document.getElementById('option-b-percent');
+const optionAWrapper = document.getElementById('option-wrapper-a');
+const optionBWrapper = document.getElementById('option-wrapper-b');
 const predictionStatusElem = document.getElementById('prediction-status');
 const predictionPointCountElem = document.getElementById('prediction-point-count');
 
@@ -47,21 +44,15 @@ predictionStore.on('change', newValue => {
         if (newValue.currentPrediction) {
             const prediction = newValue.currentPrediction;
             const totalChannelPoints = prediction.outcomes[0].channel_points + prediction.outcomes[1].channel_points;
-            const optionAPercentage = Math.round((prediction.outcomes[0].channel_points / totalChannelPoints) * 100);
-            const optionBPercentage = Math.round((prediction.outcomes[1].channel_points / totalChannelPoints) * 100);
-            // Set bar width
-            optionABarElem.style.width = (isNaN(optionAPercentage) ? '0%' : `${optionAPercentage}%`);
-            optionBBarElem.style.width = (isNaN(optionBPercentage) ? '0%' : `${optionBPercentage}%`);
-            // Set text
-            optionATitleElem.innerText = prediction.outcomes[0].title;
-            optionBTitleElem.innerText = prediction.outcomes[1].title;
-            optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '?%' : `${optionAPercentage}%`);
-            optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '?%' : `${optionBPercentage}%`);
+
+            updatePredictionDataDisplay(optionAWrapper, (prediction.outcomes[0] as Outcome), totalChannelPoints);
+            updatePredictionDataDisplay(optionBWrapper, (prediction.outcomes[1] as Outcome), totalChannelPoints);
             predictionStatusElem.innerText = prediction.status.toLowerCase();
             predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
+
             // Show/Hide necessary buttons
             const visibleButtons =
-                visibleButtonsForPredictionStatus[newValue.currentPrediction.status as PredictionStatus];
+                visibleButtonsForPredictionStatus[prediction.status as PredictionStatus];
             const hiddenButtons = getArrayDifference(predictionButtons, visibleButtons);
             hiddenButtons.forEach(btn => hideElement(btn));
             visibleButtons.forEach(btn => showElement(btn));
@@ -73,16 +64,30 @@ predictionStore.on('change', newValue => {
     }
 });
 
+function updatePredictionDataDisplay(optionWrapper: HTMLElement, outcome: Outcome, totalPointsPredicted: number): void {
+    if (!optionWrapper.classList.contains('option-wrapper')) {
+        throw new Error('updatePredictionDataDisplay called with improper element');
+    }
+
+    const titleElem = optionWrapper.querySelector('.option-title') as HTMLDivElement;
+    const percentTextElem = optionWrapper.querySelector('.percent') as HTMLSpanElement;
+    const barElem = optionWrapper.querySelector('.bar') as HTMLDivElement;
+
+    const optionPercentage = Math.round((outcome.channel_points / totalPointsPredicted) * 100);
+
+    titleElem.innerText = outcome.title;
+    percentTextElem.innerText = (isNaN(optionPercentage) ? '?%' : `${optionPercentage}%`);
+    barElem.style.width = (isNaN(optionPercentage) ? '0%' : `${optionPercentage}%`);
+}
+
 getPredictionsBtn.onclick = () => {
     setImportStatus(ImportStatus.Loading, predictionDataStatusElem);
     nodecg.sendMessage('getPredictions', {}, (e) => {
-        // If we get an error
         if (e) {
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionDataStatusElem);
             return;
         }
-        // If we get success
         setImportStatus(ImportStatus.Success, predictionDataStatusElem);
     });
 };
