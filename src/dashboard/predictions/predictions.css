@@ -1,37 +1,45 @@
-.score-bar-left {
+.option-wrapper {
+    background-color: #2F3A4F;
+    padding: 7px 3px 6px 6px;
+    margin-top: 2px;
+}
+
+.option-wrapper > .option-title {
+    margin-bottom: 3px;
+}
+
+.option-percent {
+    max-width: 100%;
+    border-radius: 2px;
+    padding: 2px 0;
+    margin: 0 2px;
+}
+
+.option-percent > .bar-wrapper > .bar {
+    width: 50%;
+    height: 8px;
+    border-radius: 2px;
+    min-width: 2%;
+}
+
+.option-percent > .bar-wrapper {
+    position: relative;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.bar-blue {
     background-color: #387AFF;
-    width: 50%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    float: left;
 }
 
-.left-bar-percent {
-    padding-left: 10px;
-    text-align: left;
-}
-
-.score-bar-right {
+.bar-pink {
     background-color: #F5009B;
-    width: 50%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    float: right;
-    text-align: right;
 }
 
-.right-bar-percent {
-    padding-right: 10px;
-    text-align: right;
-}
-
-.score-bar {
-    width: 100%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    border-radius: 20px;
-    border: solid #a9aaa9;
-    overflow: hidden;
-    margin: 5px 0;
+.option-percent > .percent {
+    min-width: 45px;
+    text-align: center;
+    background-color: #455675;
+    padding: 2px 4px;
+    border-radius: 2px;
 }
