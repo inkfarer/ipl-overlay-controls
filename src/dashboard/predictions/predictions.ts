@@ -11,6 +11,7 @@ const optionBTitleElem = document.getElementById('option-b-title');
 const optionAPercentageElem = document.getElementById('option-a-percent');
 const optionBPercentageElem = document.getElementById('option-b-percent');
 const predictionStatusElem = document.getElementById('prediction-status');
+const predictionPointCountElem = document.getElementById('prediction-point-count');
 
 const unsupportedGuildWarning = document.getElementById('unsupported-service-message');
 const currentPredictionSpace = document.getElementById('current-prediction-space');
@@ -44,6 +45,7 @@ predictionStore.on('change', newValue => {
             optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '?%' : `${optionAPercentage}%`);
             optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '?%' : `${optionBPercentage}%`);
             predictionStatusElem.innerText = prediction.status.toLowerCase();
+            predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
             // Show/Hide necessary buttons
             switch (newValue.currentPrediction.status) {
                 case 'ACTIVE':
