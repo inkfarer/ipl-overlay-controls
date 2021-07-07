@@ -41,8 +41,8 @@ predictionStore.on('change', newValue => {
             // Set text
             optionATitleElem.innerText = prediction.outcomes[0].title;
             optionBTitleElem.innerText = prediction.outcomes[1].title;
-            optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '' : `${optionAPercentage}%`);
-            optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '' : `${optionBPercentage}%`);
+            optionAPercentageElem.innerText = (isNaN(optionAPercentage) ? '?%' : `${optionAPercentage}%`);
+            optionBPercentageElem.innerText = (isNaN(optionBPercentage) ? '?%' : `${optionBPercentage}%`);
             predictionStatusElem.innerText = prediction.status.toLowerCase();
             // Show/Hide necessary buttons
             switch (newValue.currentPrediction.status) {

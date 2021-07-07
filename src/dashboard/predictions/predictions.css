@@ -1,7 +1,6 @@
 .option-wrapper {
     background-color: #2F3A4F;
-    padding: 7px 3px 6px 6px;
-    margin-top: 2px;
+    padding: 6px;
 }
 
 .option-wrapper > .option-title {
@@ -25,7 +24,7 @@
 .option-percent > .bar-wrapper {
     position: relative;
     flex: 1;
-    margin: 0 5px;
+    margin-left: 5px;
 }
 
 .bar-blue {
@@ -42,4 +41,8 @@
     background-color: #455675;
     padding: 2px 4px;
     border-radius: 2px;
+}
+
+#prediction-status {
+    text-transform: capitalize;
 }
