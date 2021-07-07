@@ -2,6 +2,7 @@ import { hideElement, showElement } from '../globalScripts';
 import { PredictionStore } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
+import { PredictionStatus } from 'types/predictionStatus';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionABarElem = document.getElementById('option-a-bar');
@@ -25,6 +26,18 @@ const getPredictionsBtn = document.getElementById('get-predictions-btn');
 
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
+const predictionButtons = [lockPredictionBtn, cancelPredictionBtn, resolvePredictionBtn, createPredictionBtn];
+const visibleButtonsForPredictionStatus: {[key in PredictionStatus]: HTMLElement[]} = {
+    [PredictionStatus.ACTIVE]: [lockPredictionBtn, cancelPredictionBtn],
+    [PredictionStatus.LOCKED]: [resolvePredictionBtn, cancelPredictionBtn],
+    [PredictionStatus.RESOLVED]: [createPredictionBtn],
+    [PredictionStatus.CANCELLED]: [createPredictionBtn],
+};
+
+function getArrayDifference<T>(arr1: T[], arr2: T[]): T[] {
+    return arr1.filter(elem => !arr2.includes(elem));
+}
+
 predictionStore.on('change', newValue => {
     if (newValue.enablePrediction) {
         hideElement(unsupportedGuildWarning);
@@ -47,26 +60,11 @@ predictionStore.on('change', newValue => {
             predictionStatusElem.innerText = prediction.status.toLowerCase();
             predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
             // Show/Hide necessary buttons
-            switch (newValue.currentPrediction.status) {
-                case 'ACTIVE':
-                    hideElement(createPredictionBtn);
-                    hideElement(resolvePredictionBtn);
-                    showElement(lockPredictionBtn);
-                    showElement(cancelPredictionBtn);
-                    break;
-                case 'LOCKED':
-                    hideElement(createPredictionBtn);
-                    hideElement(lockPredictionBtn);
-                    showElement(resolvePredictionBtn);
-                    showElement(cancelPredictionBtn);
-                    break;
-                default:
-                    hideElement(cancelPredictionBtn);
-                    hideElement(resolvePredictionBtn);
-                    hideElement(lockPredictionBtn);
-                    showElement(createPredictionBtn);
-                    break;
-            }
+            const visibleButtons =
+                visibleButtonsForPredictionStatus[newValue.currentPrediction.status as PredictionStatus];
+            const hiddenButtons = getArrayDifference(predictionButtons, visibleButtons);
+            hiddenButtons.forEach(btn => hideElement(btn));
+            visibleButtons.forEach(btn => showElement(btn));
         }
     } else {
         showElement(unsupportedGuildWarning);
