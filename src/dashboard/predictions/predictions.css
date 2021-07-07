@@ -1,34 +1,29 @@
-.leftBar {
+.score-bar-left {
     background-color: #387AFF;
     width: 50%;
     padding-top: 5px;
     padding-bottom: 5px;
     float: left;
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
 }
 
-.leftBarPercent {
+.left-bar-percent {
     padding-left: 10px;
     text-align: left;
 }
 
-.rightBar {
+.score-bar-right {
     background-color: #F5009B;
     width: 50%;
     padding-top: 5px;
     padding-bottom: 5px;
     float: right;
     text-align: right;
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
 }
 
-.rightBarPercent {
+.right-bar-percent {
     padding-right: 10px;
     text-align: right;
 }
-
 
 .score-bar {
     width: 100%;
@@ -37,4 +32,5 @@
     justify-content: center;
     border-radius: 20px;
     border: solid #a9aaa9;
+    overflow: hidden;
 }
