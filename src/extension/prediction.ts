@@ -15,12 +15,10 @@ const radiaConfig = nodecg.bundleConfig.radia;
 
 radiaSettings.on('change', newValue => {
     // Checks if the GuildID provided is enabled for Radia's prediction feature
-    axios.get<GuildServices>(`${radiaConfig.url}/predictions/check/${newValue.guildID}`,
-        {
-            headers: {
-                Authorization: radiaConfig.authentication
-            }
-        }).then(response => {
+    axios.get<GuildServices>(
+        `${radiaConfig.url}/predictions/check/${newValue.guildID}`,
+        { headers: { Authorization: radiaConfig.authentication } }
+    ).then(response => {
         if (response.status !== 200) {
             predictionStore.value.enablePrediction = false;
             nodecg.log.error(`Guild Check Auth Error: ${response.data.detail}`);
@@ -30,10 +28,9 @@ radiaSettings.on('change', newValue => {
             predictionStore.value.enablePrediction = response.data.twitch;
             if (response.data.twitch) {
                 // If the Twitch field is true we load the predictionStore with the latest Twitch Prediction Data
-                getGuildPredictions(radiaConfig.url, radiaConfig.authentication, newValue.guildID).then(
-                    response => {
-                        assignPredictionData(response[0]);
-                    }).catch(err => {
+                getGuildPredictions(radiaConfig.url, radiaConfig.authentication, newValue.guildID).then(response => {
+                    assignPredictionData(response[0]);
+                }).catch(err => {
                     nodecg.log.error(`Twitch Prediction Load Error: ${err}`);
                 });
             }
