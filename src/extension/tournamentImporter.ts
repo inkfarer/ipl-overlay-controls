@@ -120,7 +120,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
 
                 // Process the stages in a tournament for rep
                 const tournamentStages: { name: string; id: string; bracketType: string}[] = [];
-                tournamentInfo.stages.forEach(function (value){
+                tournamentInfo.stages.forEach(function (value) {
                     tournamentStages.push({
                         name: value.name,
                         id: value._id,

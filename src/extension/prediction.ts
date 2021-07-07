@@ -28,7 +28,7 @@ radiaSettings.on('change', newValue => {
         }
         if (typeof response.data.twitch === 'boolean') {
             predictionStore.value.enablePrediction = response.data.twitch;
-            if(response.data.twitch){
+            if (response.data.twitch) {
                 // If the Twitch field is true we load the predictionStore with the latest Twitch Prediction Data
                 getGuildPredictions(radiaConfig.url, radiaConfig.authentication, newValue.guildID).then(
                     response => {
@@ -51,7 +51,7 @@ radiaSettings.on('change', newValue => {
 nodecg.listenFor('getPredictions', async (data, ack: UnhandledListenForCb) => {
     getGuildPredictions(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID)
         .then(data => {
-            if(data.length > 0){
+            if (data.length > 0) {
                 assignPredictionData(data[0]);
                 ack(null,data);
             }
@@ -81,9 +81,9 @@ nodecg.listenFor('patchPrediction', async  (data: PatchPrediction, ack: Unhandle
 });
 
 // This function runs every ~25 seconds
-setInterval(function(){
+setInterval(function() {
     // While currently stored prediction is active we run a get the lastest prediction
-    if(predictionStore.value.currentPrediction.status === 'ACTIVE'){
+    if (predictionStore.value.currentPrediction.status === 'ACTIVE') {
         getGuildPredictions(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID).then(
             response => {
                 assignPredictionData(response[0]);
@@ -97,12 +97,12 @@ setInterval(function(){
  * Assigns data to prediction replicant
  * @param data Prediction Data
  */
-function assignPredictionData(data: Prediction){
+function assignPredictionData(data: Prediction) {
     // If outcome's top_predictors is null, change to empty array
-    if(data.outcomes[0].top_predictors === null){
+    if (data.outcomes[0].top_predictors === null) {
         data.outcomes[0].top_predictors = [];
     }
-    if(data.outcomes[1].top_predictors === null){
+    if (data.outcomes[1].top_predictors === null) {
         data.outcomes[1].top_predictors = [];
     }
     predictionStore.value.currentPrediction = data;
