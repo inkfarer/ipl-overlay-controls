@@ -1,10 +1,28 @@
-.option-wrapper {
-    background-color: #2F3A4F;
-    padding: 6px;
+.option-wrapper > label {
+    transition-duration: 250ms;
 }
 
-.option-wrapper > .option-title {
+.option-data-wrapper {
+    background-color: #2F3A4F;
+    padding: 6px;
+    transition-duration: 250ms;
+}
+
+.option-data-wrapper.winner {
+    background-color: var(--yellow-a-10);
+    border: 2px solid var(--yellow);
+    border-radius: 5px;
+}
+
+.option-wrapper > label.winner,
+.option-data-wrapper.winner > .option-title,
+.option-data-wrapper.winner > .option-percent {
+    color: var(--yellow);
+}
+
+.option-data-wrapper > .option-title {
     margin-bottom: 3px;
+    word-break: break-word;
 }
 
 .option-percent {
@@ -12,6 +30,7 @@
     border-radius: 2px;
     padding: 2px 0;
     margin: 0 2px;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .option-percent > .bar-wrapper > .bar {
@@ -27,18 +46,18 @@
     margin-left: 5px;
 }
 
-.bar-blue {
+.bar.blue {
     background-color: #387AFF;
 }
 
-.bar-pink {
+.bar.pink {
     background-color: #F5009B;
 }
 
 .option-percent > .percent {
     min-width: 45px;
     text-align: center;
-    background-color: #455675;
+    background-color: rgba(0, 0, 0, 0.15);
     padding: 2px 4px;
     border-radius: 2px;
 }
