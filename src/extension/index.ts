@@ -26,6 +26,6 @@ export default (nodecg: NodeCG): void => {
     } else {
         radiaSettings.value.enabled = true;
         require('./radia');
-        require('./prediction');
+        require('./predictions');
     }
 };
