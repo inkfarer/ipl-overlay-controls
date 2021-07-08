@@ -10,6 +10,7 @@ const optionAWrapper = document.getElementById('option-wrapper-a');
 const optionBWrapper = document.getElementById('option-wrapper-b');
 const predictionStatusElem = document.getElementById('prediction-status');
 const predictionPointCountElem = document.getElementById('prediction-point-count');
+const predictionTitleElem = document.getElementById('prediction-title');
 
 const unsupportedGuildWarning = document.getElementById('unsupported-service-message');
 const currentPredictionSpace = document.getElementById('current-prediction-space');
@@ -58,6 +59,7 @@ predictionStore.on('change', newValue => {
 
             predictionStatusElem.innerText = prediction.status.toLowerCase();
             predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
+            predictionTitleElem.innerText = prediction.title;
 
             // Show/Hide necessary buttons
             const visibleButtons =
