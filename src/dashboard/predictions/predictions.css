@@ -6,12 +6,12 @@
     background-color: #2F3A4F;
     padding: 6px;
     transition-duration: 250ms;
+    border-radius: 5px;
 }
 
 .option-data-wrapper.winner {
     background-color: var(--yellow-a-10);
     border: 2px solid var(--yellow);
-    border-radius: 5px;
 }
 
 .option-wrapper > label.winner,
