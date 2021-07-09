@@ -62,6 +62,7 @@
         }],
         "space-before-blocks": ["error"],
         "keyword-spacing": ["error"],
-        "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }]
+        "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }],
+        "operator-linebreak": ["error", "before"]
     }
 }
