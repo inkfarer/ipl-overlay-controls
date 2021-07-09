@@ -1,4 +1,4 @@
-import { hideElement, showElement } from '../globalScripts';
+import { addDots, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { FieldValidity } from './types/fieldValidity';
@@ -117,8 +117,8 @@ createPredictionBtn.onclick = () => {
 
 // Set team names
 nextTeams.on('change', newValue => {
-    setInputField(optionAInput, newValue.teamAInfo.name);
-    setInputField(optionBInput, newValue.teamBInfo.name);
+    setInputField(optionAInput, addDots(newValue.teamAInfo.name, 25));
+    setInputField(optionBInput, addDots(newValue.teamBInfo.name, 25));
 });
 
 addInputLengthLimit(predictionNameInput, predictionNameLabel, 'Name of Prediction', 45);

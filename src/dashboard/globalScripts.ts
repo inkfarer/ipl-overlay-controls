@@ -51,13 +51,12 @@ export function addChangeReminder(
     });
 }
 
-export function addDots(value: string): string {
-    const maxNameLength = 48;
+export function addDots(value: string, maxLength = 48): string {
     const rolloff = '...';
 
     if (!value) return value;
-    if (value.length > maxNameLength) {
-        return value.substring(0, maxNameLength - rolloff.length) + rolloff;
+    if (value.length > maxLength) {
+        return value.substring(0, maxLength - rolloff.length) + rolloff;
     }
 
     return value;
