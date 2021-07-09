@@ -124,7 +124,7 @@ function resolvePrediction(index: number) {
         if (e) {
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
-            warningMessageElem.innerText = e.detail.message;
+            warningMessageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }

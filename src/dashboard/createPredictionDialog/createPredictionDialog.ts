@@ -107,7 +107,7 @@ createPredictionBtn.onclick = () => {
         if (e) {
             console.error(e);
             setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
-            messageElem.innerText = e.detail.message;
+            messageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }

@@ -177,7 +177,15 @@ function handleAxiosError(e: AxiosError) {
     if ('response' in e) {
         let message = `Radia API call failed with response ${e.response.status}`;
         if (e.response.data?.detail) {
-            message += `: ${e.response.data.detail}`;
+            if (typeof e.response.data.detail === 'object') {
+                if (e.response.data.detail.message) {
+                    message += `: ${e.response.data.detail.message}`;
+                } else {
+                    message += `: ${JSON.stringify(e.response.data.detail)}`;
+                }
+            } else {
+                message += `: ${e.response.data.detail}`;
+            }
         }
 
         throw new Error(message);
