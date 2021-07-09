@@ -1,6 +1,6 @@
 export enum PredictionStatus {
     RESOLVED = 'RESOLVED',
     ACTIVE = 'ACTIVE',
-    CANCELLED = 'CANCELLED',
+    CANCELED = 'CANCELED',
     LOCKED = 'LOCKED'
 }

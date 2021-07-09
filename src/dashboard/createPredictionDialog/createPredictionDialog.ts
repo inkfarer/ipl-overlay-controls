@@ -28,11 +28,11 @@ const createPredictionBtn = document.getElementById('create-predictions-btn') as
 function checkButtonValidity() {
     const predictionWindow = parseInt(predictionWindowInput.value);
     if (Object.values(fieldValidity).includes(false)) {
-        messageElem.innerText = 'Field(s) are too long!';
+        messageElem.innerText = 'Field(s) are invalid!';
         showElement(warningElem);
         createPredictionBtn.disabled = true;
     } else if (predictionWindow < 1 || predictionWindow > 1800 || isNaN(predictionWindow)) {
-        messageElem.innerText = 'Prediction Window must be between 1-1800';
+        messageElem.innerText = 'Prediction Window must be between 1 - 1800 seconds';
         showElement(warningElem);
         createPredictionBtn.disabled = true;
     } else {

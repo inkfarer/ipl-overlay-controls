@@ -21,7 +21,7 @@ radiaSettings.on('change', async (newValue) => {
     const predictionsSupported = await checkGuildPredictionSupport(newValue.guildID);
     predictionStore.value.enablePrediction = predictionsSupported;
 
-    // If predictions are supported, fetch games
+    // If predictions are supported, fetch them
     if (predictionsSupported) {
         try {
             const guildPredictions = await getGuildPredictions(newValue.guildID);
@@ -129,7 +129,7 @@ async function getGuildPredictions(guildID: string): Promise<Prediction[]> {
     try {
         const result = await axios.get<Prediction[]>(
             `${radiaConfig.url}/predictions/${guildID}`,
-            { headers: { Authorization: 'oinky test :)' + radiaConfig.authentication } });
+            { headers: { Authorization: radiaConfig.authentication } });
 
         return result.data;
     } catch (e) {

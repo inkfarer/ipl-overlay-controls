@@ -13,7 +13,7 @@ const lockPredictionBtn = document.getElementById('lock-predictions-btn') as HTM
 const predictionPatchStatusElem = document.getElementById('prediction-patch-status');
 
 document.addEventListener('dialog-opened', function() {
-    warningMessageElem.innerText = 'Are you sure you want to cancel this prediction!';
+    warningMessageElem.innerText = 'Are you sure you want to cancel this prediction?';
 });
 
 NodeCG.waitForReplicants(predictionStore).then(() => {

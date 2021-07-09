@@ -29,7 +29,7 @@ const visibleButtonsForPredictionStatus: { [key in PredictionStatus]: HTMLElemen
     [PredictionStatus.ACTIVE]: [lockPredictionBtn, cancelPredictionBtn],
     [PredictionStatus.LOCKED]: [resolvePredictionBtn, cancelPredictionBtn],
     [PredictionStatus.RESOLVED]: [createPredictionBtn],
-    [PredictionStatus.CANCELLED]: [createPredictionBtn]
+    [PredictionStatus.CANCELED]: [createPredictionBtn]
 };
 
 function getArrayDifference<T>(arr1: T[], arr2: T[]): T[] {
