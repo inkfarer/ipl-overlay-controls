@@ -56,6 +56,7 @@
             "ts-ignore": "allow-with-description"
         }],
         "space-before-blocks": ["error"],
-        "keyword-spacing": ["error"]
+        "keyword-spacing": ["error"],
+        "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }]
     }
 }
