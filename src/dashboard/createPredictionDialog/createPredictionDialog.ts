@@ -50,38 +50,33 @@ function checkButtonValidity() {
  * @param fieldLimit Field limit for input
  */
 function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
+    validateFieldLength(input, label, name, fieldLimit);
+
     input.addEventListener('input', (event) => {
         const target = event.target as HTMLInputElement;
-        label.innerText = `${name} (${target.value.length}/${fieldLimit})`;
-        if (target.value.length > fieldLimit || target.value.length < 1) {
-            // if too long we turn txt red and add a false flag to the object
-            input.style.color = 'red';
-            fieldValidity[name] = false;
-        } else {
-            input.style.color = '';
-            fieldValidity[name] = true;
-        }
-        checkButtonValidity();
+        validateFieldLength(target, label, name, fieldLimit);
     });
 }
 
 /**
  * Set value for input field
  * @param input Input Element
- * @param label Label Element
- * @param name The name of the Label
- * @param fieldLimit Field limit for input
  * @param value Value to set
  */
-function setInputField(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number, value: string) {
+function setInputField(input: HTMLInputElement, value: string) {
     input.value = value;
-    label.innerText = `${name} (${value.length}/${fieldLimit})`;
-    if (value.length > fieldLimit || value.length < 1) {
-        // if too long we turn txt red and add a false flag to the object
+    input.dispatchEvent(new Event('input'));
+}
+
+function validateFieldLength(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
+    label.innerText = `${name} (${input.value.length}/${fieldLimit})`;
+    if (input.value.length > fieldLimit || input.value.length < 1) {
         input.style.color = 'red';
+        label.style.color = 'red';
         fieldValidity[name] = false;
     } else {
         input.style.color = '';
+        label.style.color = '';
         fieldValidity[name] = true;
     }
     checkButtonValidity();
@@ -122,8 +117,8 @@ createPredictionBtn.onclick = () => {
 
 // Set team names
 nextTeams.on('change', newValue => {
-    setInputField(optionAInput, optionALabel, 'Option A', 25, newValue.teamAInfo.name);
-    setInputField(optionBInput, optionBLabel, 'Option B', 25, newValue.teamBInfo.name);
+    setInputField(optionAInput, newValue.teamAInfo.name);
+    setInputField(optionBInput, newValue.teamBInfo.name);
 });
 
 addInputLengthLimit(predictionNameInput, predictionNameLabel, 'Name of Prediction', 45);
