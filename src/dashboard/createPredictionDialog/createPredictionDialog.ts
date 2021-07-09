@@ -50,7 +50,7 @@ function checkButtonValidity() {
  * @param fieldLimit Field limit for input
  */
 function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
-    input.addEventListener('input', function (event) {
+    input.addEventListener('input', (event) => {
         const target = event.target as HTMLInputElement;
         label.innerText = `${name} (${target.value.length}/${fieldLimit})`;
         if (target.value.length > fieldLimit || target.value.length < 1) {
@@ -58,7 +58,7 @@ function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: 
             input.style.color = 'red';
             fieldValidity[name] = false;
         } else {
-            input.style.color = 'white';
+            input.style.color = '';
             fieldValidity[name] = true;
         }
         checkButtonValidity();
@@ -81,7 +81,7 @@ function setInputField(input: HTMLInputElement, label: HTMLElement, name: string
         input.style.color = 'red';
         fieldValidity[name] = false;
     } else {
-        input.style.color = 'white';
+        input.style.color = '';
         fieldValidity[name] = true;
     }
     checkButtonValidity();
