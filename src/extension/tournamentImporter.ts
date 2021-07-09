@@ -17,8 +17,8 @@ let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
     nodecg.log.warn(
-        `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! ` +
-        'Importing tournament data from smash.gg will not be possible.'
+        `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! `
+        + 'Importing tournament data from smash.gg will not be possible.'
     );
 } else {
     smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
@@ -106,8 +106,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 async function getBattlefyData(id: string): Promise<TournamentData> {
     const tournamentInfo = await getBattlefyTournamentInfo(id);
 
-    const requestURL =
-        'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
+    const requestURL
+        = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
         axios
             .get(requestURL)
@@ -120,7 +120,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
 
                 // Process the stages in a tournament for rep
                 const tournamentStages: { name: string; id: string; bracketType: string}[] = [];
-                tournamentInfo.stages.forEach(function (value){
+                tournamentInfo.stages.forEach(function (value) {
                     tournamentStages.push({
                         name: value.name,
                         id: value._id,
@@ -216,31 +216,31 @@ async function getSmashGGPage(
     getRaw = false): Promise<{ pageInfo: Team[], raw?: AxiosResponse }> {
 
     const query = `query Entrants($slug: String!, $page: Int!, $perPage: Int!) {
-		tournament(slug: $slug) {
-		id
-		name
-		teams(query: {
-			page: $page
-			perPage: $perPage
-		}) {
-			pageInfo {
-			total
-			totalPages
-			}
-			nodes {
-			id
-			name
-			entrant {
-				id
-				participants {
-				id
-				gamerTag
-				}
-			}
-			}
-		}
-		}
-	}`;
+        tournament(slug: $slug) {
+        id
+        name
+        teams(query: {
+            page: $page
+            perPage: $perPage
+        }) {
+            pageInfo {
+            total
+            totalPages
+            }
+            nodes {
+            id
+            name
+            entrant {
+                id
+                participants {
+                id
+                gamerTag
+                }
+            }
+            }
+        }
+        }
+    }`;
     const perPage = '50';
 
     return new Promise((resolve, reject) => {

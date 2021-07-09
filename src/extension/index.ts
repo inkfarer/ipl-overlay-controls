@@ -1,6 +1,6 @@
 import type { NodeCG } from 'nodecg/server';
 import * as nodecgContext from './util/nodecg';
-import { RadiaSettings } from 'schemas';
+import { PredictionStore, RadiaSettings } from 'schemas';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export default (nodecg: NodeCG): void => {
@@ -16,6 +16,7 @@ export default (nodecg: NodeCG): void => {
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
+    const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
     if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.radia === 'undefined') {
         nodecg.log.warn(
@@ -23,8 +24,10 @@ export default (nodecg: NodeCG): void => {
             Production API won't be possible.`
         );
         radiaSettings.value.enabled = false;
+        predictionStore.value.enablePrediction = false;
     } else {
         radiaSettings.value.enabled = true;
         require('./radia');
+        require('./predictions');
     }
 };

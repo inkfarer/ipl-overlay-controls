@@ -45,8 +45,8 @@ function handleNowPlayingSource() {
 function handleLastFm() {
     if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.lastfm === 'undefined') {
         nodecg.log.warn(
-            `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! ` +
-            'Getting music information automatically will not function.'
+            `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! `
+            + 'Getting music information automatically will not function.'
         );
         return;
     }

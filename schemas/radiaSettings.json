@@ -1,18 +1,18 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "object",
-	"properties": {
-		"guildID": {
-			"type": "string"
-		},
-		"enabled": {
-			"type": "boolean"
-		}
-	},
-	"required": ["guildID", "enabled"],
-	"additionalProperties": false,
-	"default": {
-		"guildID": "",
-		"enabled": false
-	}
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "guildID": {
+            "type": "string"
+        },
+        "enabled": {
+            "type": "boolean"
+        }
+    },
+    "required": ["guildID", "enabled"],
+    "additionalProperties": false,
+    "default": {
+        "guildID": "",
+        "enabled": false
+    }
 }

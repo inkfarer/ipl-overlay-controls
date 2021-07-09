@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"properties": {
+		"enablePrediction": {
+			"description": "If Predictions should be enabled for current settings",
+			"type": "boolean"
+		},
+		"currentPrediction": {
+			"description": "Currently stored prediction in use",
+			"$ref": "defs/predictions/prediction.json#/prediction"
+		}
+	},
+	"required": [
+		"enablePrediction"
+	],
+	"default": {
+		"enablePrediction": false
+	},
+	"additionalProperties": false
+}

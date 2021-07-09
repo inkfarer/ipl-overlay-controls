@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Twitch Predictions</title>
+</head>
+<body>
+
+<div class="space warning layout message" id="unsupported-service-message" style="display: none">
+    <i class="icon fas fa-exclamation-triangle"></i>
+    <p class="content">
+        Unsupported Guild, unable to run predictions.
+    </p>
+</div>
+
+<div class="space info layout message" id="no-prediction-message" style="display: none">
+    <i class="icon fas fa-info-circle"></i>
+    <p class="content">
+        No prediction loaded.
+    </p>
+</div>
+
+<div class="space" id="current-prediction-space">
+    <div class="title">Current Prediction</div>
+    <div class="subtitle" id="prediction-title">Title</div>
+
+    <div>
+        <div id="option-wrapper-a" class="option-wrapper">
+            <label>Option A</label>
+            <div class="option-data-wrapper">
+                <div id="option-a-title" class="option-title">Team A</div>
+                <div class="option-percent layout horizontal center-vertical">
+                    <span id="option-a-percent" class="percent"></span>
+                    <div class="bar-wrapper">
+                        <div id="option-a-bar" class="bar blue"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="option-wrapper-b" class="option-wrapper">
+            <label>Option B</label>
+            <div class="option-data-wrapper">
+                <div id="option-b-title" class="option-title">Team B</div>
+                <div class="option-percent layout horizontal center-vertical">
+                    <span id="option-b-percent" class="percent"></span>
+                    <div class="bar-wrapper">
+                        <div id="option-b-bar" class="bar pink"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-small" id="prediction-point-count" style="margin-top: 5px">
+            ??? points predicted
+        </div>
+
+        <label>Status</label>
+        <div id="get-prediction-status">Resolved</div>
+    </div>
+
+    <button id="create-prediction-btn" class="max-width" nodecg-dialog="createPredictionDialog">
+        New Prediction
+    </button>
+    <button id="resolve-prediction-btn" class="max-width" nodecg-dialog="resolvePredictionDialog">
+        Resolve Prediction
+    </button>
+    <button id="lock-prediction-btn" class="max-width" data-requires-confirmation>
+        Lock Prediction
+    </button>
+    <button id="cancel-prediction-btn" class="max-width" data-requires-confirmation>
+        Cancel Prediction
+    </button>
+    <div id="prediction-request-status" class="status-display">STATUS</div>
+</div>
+
+
+<div class="space" id="prediction-get-space">
+    <button id="get-predictions-btn" class="max-width">get prediction data</button>
+    <div id="prediction-data-status" class="status-display">STATUS</div>
+</div>
+
+</body>
+</html>

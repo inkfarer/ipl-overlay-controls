@@ -49,9 +49,9 @@ function resetRounds() {
 }
 
 function createRoundElem(numberOfGames: number, id: string, remindToUpdate: boolean) {
-    if (typeof numberOfGames !== 'number' ||
-        numberOfGames >= 8 ||
-        numberOfGames <= 0) {
+    if (typeof numberOfGames !== 'number'
+        || numberOfGames >= 8
+        || numberOfGames <= 0) {
         throw new Error('Rounds with only up to 7 stages are supported.');
     }
 
