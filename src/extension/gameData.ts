@@ -25,13 +25,17 @@ const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsI
 teamScores.on('change', (newValue, oldValue) => {
     if (!oldValue) return;
     const scoreSum = newValue.teamA + newValue.teamB;
+    const oldScoreSum = oldValue.teamA + oldValue.teamB;
+
     const gameDataIndex = Math.max(scoreSum - 1, 0);
     const newGameData = clone(gameData.value[gameDataIndex]);
 
-    newGameData.color = {
-        ...scoreboardData.value.colorInfo,
-        colorsSwapped: swapColorsInternally.value
-    };
+    if (oldScoreSum < scoreSum) {
+        newGameData.color = {
+            ...scoreboardData.value.colorInfo,
+            colorsSwapped: swapColorsInternally.value
+        };
+    }
 
     if (setWinnersAutomatically.value) {
         if (scoreSum === 1) {
