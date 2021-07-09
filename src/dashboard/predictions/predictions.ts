@@ -24,8 +24,14 @@ const cancelPredictionBtn = document.getElementById('cancel-prediction-btn');
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
 const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 
-const predictionButtons = [lockPredictionBtn, cancelPredictionBtn, resolvePredictionBtn, createPredictionBtn];
-const visibleButtonsForPredictionStatus: { [key in PredictionStatus]: HTMLElement[] } = {
+const predictionElements = [
+    lockPredictionBtn,
+    cancelPredictionBtn,
+    resolvePredictionBtn,
+    createPredictionBtn,
+    predictionRequestStatusElem];
+
+const visibleElementsForPredictionStatus: { [key in PredictionStatus]: HTMLElement[] } = {
     [PredictionStatus.ACTIVE]: [lockPredictionBtn, cancelPredictionBtn, predictionRequestStatusElem],
     [PredictionStatus.LOCKED]: [resolvePredictionBtn, cancelPredictionBtn, predictionRequestStatusElem],
     [PredictionStatus.RESOLVED]: [createPredictionBtn],
@@ -63,8 +69,8 @@ predictionStore.on('change', newValue => {
             predictionTitleElem.innerText = prediction.title;
 
             // Show/Hide necessary buttons
-            const visibleButtons = visibleButtonsForPredictionStatus[prediction.status as PredictionStatus];
-            const hiddenButtons = getArrayDifference(predictionButtons, visibleButtons);
+            const visibleButtons = visibleElementsForPredictionStatus[prediction.status as PredictionStatus];
+            const hiddenButtons = getArrayDifference(predictionElements, visibleButtons);
             hiddenButtons.forEach(btn => hideElement(btn));
             visibleButtons.forEach(btn => showElement(btn));
         } else {
