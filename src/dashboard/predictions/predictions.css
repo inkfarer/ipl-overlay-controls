@@ -43,7 +43,7 @@
 .option-percent > .bar-wrapper {
     position: relative;
     flex: 1;
-    margin-left: 5px;
+    margin: 0 5px;
 }
 
 .bar.blue {
