@@ -14,8 +14,10 @@ bundles.forEach(bundle => {
     if (existsSync(bundlePackagePath)) {
         const parsedPackage = JSON.parse(readFileSync(bundlePackagePath, 'utf-8'));
 
-        if ('dashboardVersion' in parsedPackage && !semver.satisfies(version, parsedPackage.dashboardVersion)) {
-            nodecg.log.warn(`Bundle ${bundle.name} expects version ${parsedPackage.dashboardVersion} of `
+        if ('compatibleDashboardVersion' in parsedPackage
+            && !semver.satisfies(version, parsedPackage.compatibleDashboardVersion)) {
+
+            nodecg.log.warn(`Bundle ${bundle.name} expects version ${parsedPackage.compatibleDashboardVersion} of `
                 + `${nodecg.bundleName}! The installed version is ${version}.`);
         }
     }
