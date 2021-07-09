@@ -23,7 +23,9 @@
         "start": "node ../..",
         "watch": "webpack -w",
         "schema-types": "nodecg schema-types -o ./schemas",
-        "lint": "eslint ./src"
+        "lint": "eslint ./src",
+        "fix": "eslint ./src --fix",
+        "devbuild": "webpack"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
@@ -77,6 +79,28 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "predictions",
+                "title": "Predictions",
+                "width": 2,
+                "file": "predictions.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "createPredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "createPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "resolvePredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "resolvePredictionDialog.html",
+                "dialog": true
+            },
+            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,
@@ -109,14 +133,14 @@
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
-        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git"
+        "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "@babel/preset-typescript": "^7.13.0",
-        "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/node": "^15.12.1",
@@ -139,7 +163,7 @@
         "ts-node": "^10.0.0",
         "tsconfig-paths-webpack-plugin": "^3.5.1",
         "typescript": "^4.3.2",
-        "webpack": "^5.38.1",
+        "webpack": "^5.42.0",
         "webpack-cli": "^4.7.0",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-node-externals": "^3.0.0"

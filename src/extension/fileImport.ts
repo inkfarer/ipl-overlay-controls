@@ -13,10 +13,10 @@ const router = nodecg.Router();
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }),
     (req: express.Request, res: express.Response) => {
         if (
-            !req.files ||
-            !req.files.file ||
-            !req.body.jsonType ||
-            (req.files.file as UploadedFile).mimetype !== 'application/json'
+            !req.files
+            || !req.files.file
+            || !req.body.jsonType
+            || (req.files.file as UploadedFile).mimetype !== 'application/json'
         ) {
             return res.sendStatus(400);
         }

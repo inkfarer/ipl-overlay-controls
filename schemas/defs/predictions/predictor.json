@@ -1,0 +1,31 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"predictor": {
+		"description": "Info on a Twitch predictor",
+		"type": "object",
+		"properties": {
+			"user_id": {
+				"description": "Twitch User ID",
+				"type": "string"
+			},
+			"user_login": {
+				"description": "Twitch User Login",
+				"type": "string"
+			},
+			"user_name": {
+				"description": "Twitch user Display Name",
+				"type": "string"
+			},
+			"channel_points_used": {
+				"description": "Channel Points used to make bet",
+				"type": "integer"
+			},
+			"channel_points_won": {
+				"description": "Channel points won from prediction",
+				"type": "integer"
+			}
+		},
+		"required": ["user_id", "user_login", "user_name", "channel_points_used", "channel_points_won"],
+		"additionalProperties": false
+	}
+}

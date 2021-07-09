@@ -1,0 +1,67 @@
+.option-wrapper > label {
+    transition-duration: 250ms;
+}
+
+.option-data-wrapper {
+    background-color: #2F3A4F;
+    padding: 6px;
+    transition-duration: 250ms;
+    border-radius: 5px;
+}
+
+.option-data-wrapper.winner {
+    background-color: var(--yellow-a-10);
+    border: 2px solid var(--yellow);
+}
+
+.option-wrapper > label.winner,
+.option-data-wrapper.winner > .option-title,
+.option-data-wrapper.winner > .option-percent {
+    color: var(--yellow);
+}
+
+.option-data-wrapper > .option-title {
+    margin-bottom: 3px;
+    word-break: break-word;
+}
+
+.option-percent {
+    max-width: 100%;
+    border-radius: 2px;
+    padding: 2px 0;
+    margin: 0 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.option-percent > .bar-wrapper > .bar {
+    width: 50%;
+    height: 8px;
+    border-radius: 2px;
+    min-width: 2%;
+}
+
+.option-percent > .bar-wrapper {
+    position: relative;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.bar.blue {
+    background-color: #387AFF;
+}
+
+.bar.pink {
+    background-color: #F5009B;
+}
+
+.option-percent > .percent {
+    min-width: 45px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+#get-prediction-status {
+    text-transform: capitalize;
+}

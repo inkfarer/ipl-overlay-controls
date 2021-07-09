@@ -59,6 +59,10 @@
         "no-empty": ["error", { "allowEmptyCatch":  true }],
         "@typescript-eslint/ban-ts-comment": ["error", {
             "ts-ignore": "allow-with-description"
-        }]
+        }],
+        "space-before-blocks": ["error"],
+        "keyword-spacing": ["error"],
+        "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }],
+        "operator-linebreak": ["error", "before"]
     }
 }

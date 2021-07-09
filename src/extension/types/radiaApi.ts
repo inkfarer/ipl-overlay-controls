@@ -4,3 +4,8 @@ export interface RadiaApiCaster {
     twitter?: string;
     pronouns?: string;
 }
+
+export interface GuildServices {
+    detail?: string;
+    twitch?: boolean;
+}

@@ -1,0 +1,40 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"outcome": {
+		"description": "Info on a possible Twitch prediction Outcome",
+		"type": "object",
+		"properties": {
+			"id": {
+				"description": "Twitch ID of prediction Outcome",
+				"type": "string"
+			},
+			"title": {
+				"description": "Text displayed for outcome",
+				"type": "string",
+				"maxLength": 25
+			},
+			"users": {
+				"description": "Number of unique users that chose the outcome.",
+				"type": "integer"
+			},
+			"channel_points": {
+				"description": "Channel Points Spent on outcome",
+				"type": "integer"
+			},
+			"top_predictors": {
+				"description": "Users who were the top predictors",
+				"type": "array",
+				"items": {
+					"$ref": "predictor.json#/predictor"
+				}
+			},
+			"color": {
+				"description": "Color for the outcome.",
+				"type": "string",
+				"enum": ["BLUE", "PINK"]
+			}
+		},
+		"required": ["id", "title", "users", "channel_points", "top_predictors", "color"],
+		"additionalProperties": false
+	}
+}
