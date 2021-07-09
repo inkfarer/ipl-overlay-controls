@@ -1,14 +1,14 @@
 import { hideElement, showElement } from '../globalScripts';
-import { PredictionStore } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { PredictionStatus } from 'types/predictionStatus';
 import { Outcome } from 'types/prediction';
+import { predictionStore } from './replicants';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionAWrapper = document.getElementById('option-wrapper-a');
 const optionBWrapper = document.getElementById('option-wrapper-b');
-const predictionStatusElem = document.getElementById('prediction-status');
+const getPredictionStatusElem = document.getElementById('get-prediction-status');
 const predictionPointCountElem = document.getElementById('prediction-point-count');
 const predictionTitleElem = document.getElementById('prediction-title');
 
@@ -22,13 +22,12 @@ const resolvePredictionBtn = document.getElementById('resolve-prediction-btn');
 const lockPredictionBtn = document.getElementById('lock-prediction-btn');
 const cancelPredictionBtn = document.getElementById('cancel-prediction-btn');
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
-
-const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
+const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 
 const predictionButtons = [lockPredictionBtn, cancelPredictionBtn, resolvePredictionBtn, createPredictionBtn];
 const visibleButtonsForPredictionStatus: { [key in PredictionStatus]: HTMLElement[] } = {
-    [PredictionStatus.ACTIVE]: [lockPredictionBtn, cancelPredictionBtn],
-    [PredictionStatus.LOCKED]: [resolvePredictionBtn, cancelPredictionBtn],
+    [PredictionStatus.ACTIVE]: [lockPredictionBtn, cancelPredictionBtn, predictionRequestStatusElem],
+    [PredictionStatus.LOCKED]: [resolvePredictionBtn, cancelPredictionBtn, predictionRequestStatusElem],
     [PredictionStatus.RESOLVED]: [createPredictionBtn],
     [PredictionStatus.CANCELED]: [createPredictionBtn]
 };
@@ -59,13 +58,12 @@ predictionStore.on('change', newValue => {
                 totalChannelPoints,
                 prediction.winning_outcome_id);
 
-            predictionStatusElem.innerText = prediction.status.toLowerCase();
+            getPredictionStatusElem.innerText = prediction.status.toLowerCase();
             predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
             predictionTitleElem.innerText = prediction.title;
 
             // Show/Hide necessary buttons
-            const visibleButtons =
-                visibleButtonsForPredictionStatus[prediction.status as PredictionStatus];
+            const visibleButtons = visibleButtonsForPredictionStatus[prediction.status as PredictionStatus];
             const hiddenButtons = getArrayDifference(predictionButtons, visibleButtons);
             hiddenButtons.forEach(btn => hideElement(btn));
             visibleButtons.forEach(btn => showElement(btn));

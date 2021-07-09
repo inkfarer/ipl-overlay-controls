@@ -62,6 +62,6 @@
     border-radius: 2px;
 }
 
-#prediction-status {
+#get-prediction-status {
     text-transform: capitalize;
 }

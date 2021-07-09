@@ -56,21 +56,22 @@
         </div>
 
         <label>Status</label>
-        <div id="prediction-status">Resolved</div>
+        <div id="get-prediction-status">Resolved</div>
     </div>
 
-    <button id="create-prediction-btn" class="blue max-width" nodecg-dialog="createPredictionDialog">
+    <button id="create-prediction-btn" class="max-width" nodecg-dialog="createPredictionDialog">
         New Prediction
     </button>
-    <button id="resolve-prediction-btn" class="blue max-width" nodecg-dialog="resolvePredictionDialog">
+    <button id="resolve-prediction-btn" class="max-width" nodecg-dialog="resolvePredictionDialog">
         Resolve Prediction
     </button>
-    <button id="lock-prediction-btn" class="red max-width" nodecg-dialog="lockPredictionDialog">
+    <button id="lock-prediction-btn" class="max-width" data-requires-confirmation>
         Lock Prediction
     </button>
-    <button id="cancel-prediction-btn" class="red max-width" nodecg-dialog="cancelPredictionDialog">
+    <button id="cancel-prediction-btn" class="max-width" data-requires-confirmation>
         Cancel Prediction
     </button>
+    <div id="prediction-request-status" class="status-display">STATUS</div>
 </div>
 
 
