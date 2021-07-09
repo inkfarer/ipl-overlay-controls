@@ -46,14 +46,14 @@ export function handleColorSwapToggleChange(event: Event): void {
         };
     } else if (target.dataset.source === 'gameInfo-edited') {
         const toggleIndex = parseInt(target.id.split('_')[1], 10);
-        const customColorToggle =
-            document.getElementById(`custom-color-toggle_${toggleIndex}`) as HTMLInputElement;
+        const customColorToggle
+            = document.getElementById(`custom-color-toggle_${toggleIndex}`) as HTMLInputElement;
 
         if (customColorToggle.checked) {
-            const teamAColorInput =
-                document.getElementById(`custom-color-selector_a_${toggleIndex}`) as HTMLInputElement;
-            const teamBColorInput =
-                document.getElementById(`custom-color-selector_b_${toggleIndex}`) as HTMLInputElement;
+            const teamAColorInput
+                = document.getElementById(`custom-color-selector_a_${toggleIndex}`) as HTMLInputElement;
+            const teamBColorInput
+                = document.getElementById(`custom-color-selector_b_${toggleIndex}`) as HTMLInputElement;
 
             const teamAColor = teamAColorInput.value;
             teamAColorInput.value = teamBColorInput.value;

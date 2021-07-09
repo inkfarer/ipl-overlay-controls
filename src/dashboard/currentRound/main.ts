@@ -31,8 +31,8 @@ NodeCG.waitForReplicants(gameData, rounds, scoreboardData)
                 addRoundToggles(currentRound.games, currentRound.meta.name);
             } else {
                 removeToggles();
-                roundNameElem.innerText =
-                    'Undefined (Round might have been deleted...)';
+                roundNameElem.innerText
+                    = 'Undefined (Round might have been deleted...)';
             }
         });
 
