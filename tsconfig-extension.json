@@ -20,7 +20,8 @@
         },
         "types": [
             "webpack-env"
-        ]
+        ],
+        "resolveJsonModule": true
     },
     "exclude": [
         "node_modules"
