@@ -23,8 +23,8 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
             addRoundToggles(currentRound.games, currentRound.meta.name);
         } else {
             removeToggles();
-            roundNameElem.innerText =
-                'Undefined (Round might have been deleted...)';
+            roundNameElem.innerText
+                = 'Undefined (Round might have been deleted...)';
         }
     });
 
@@ -49,8 +49,8 @@ NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
             const oldGame = oldCurrentRound.games[i];
 
             if (
-                newGame.mode !== oldGame.mode ||
-                oldGame.stage !== newGame.stage
+                newGame.mode !== oldGame.mode
+                || oldGame.stage !== newGame.stage
             ) {
                 updateMapsModes(i, newGame);
                 break;

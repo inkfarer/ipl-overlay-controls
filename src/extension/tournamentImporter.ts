@@ -17,8 +17,8 @@ let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
     nodecg.log.warn(
-        `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! ` +
-        'Importing tournament data from smash.gg will not be possible.'
+        `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! `
+        + 'Importing tournament data from smash.gg will not be possible.'
     );
 } else {
     smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
@@ -106,8 +106,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 async function getBattlefyData(id: string): Promise<TournamentData> {
     const tournamentInfo = await getBattlefyTournamentInfo(id);
 
-    const requestURL =
-        'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
+    const requestURL
+        = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
         axios
             .get(requestURL)

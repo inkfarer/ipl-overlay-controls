@@ -44,8 +44,8 @@ class MultiSelect extends HTMLElement {
             if ((e.target as HTMLElement).classList.contains('option')) {
                 this.selectedOptions = this.selectedOptions.filter(elem => {
                     const target = e.target as HTMLDivElement;
-                    return elem.innerText !== target.innerText &&
-                        elem.value !== target.dataset.optionValue;
+                    return elem.innerText !== target.innerText
+                        && elem.value !== target.dataset.optionValue;
                 });
                 this.updateElemDisplay();
                 this.dispatchEvent(new Event('change'));
