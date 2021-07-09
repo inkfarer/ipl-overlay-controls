@@ -80,6 +80,15 @@ body {
     display: block;
 }
 
+.subtitle {
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    display: block;
+    word-break: break-word;
+}
+
 /* Buttons */
 
 button {
@@ -122,7 +131,7 @@ button[disabled]:hover {
 button.max-width {
     box-sizing: border-box;
     /* an ugly hack: 100% - button margin
-	prevents button from getting too wide */
+    prevents button from getting too wide */
     width: calc(100% - 4px);
 }
 
@@ -215,4 +224,12 @@ option[disabled] {
 
 .max-width > * {
     flex-grow: 1;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-small {
+    font-size: 0.75em;
 }

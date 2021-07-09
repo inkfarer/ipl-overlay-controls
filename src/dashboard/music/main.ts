@@ -59,6 +59,6 @@ musicShown.on('change', newValue => {
 });
 
 nowPlaying.on('change', newValue => {
-    (document.getElementById('now-playing-text') as HTMLDivElement).innerText =
-        `${newValue.artist} - ${newValue.song}`;
+    (document.getElementById('now-playing-text') as HTMLDivElement).innerText
+        = `${newValue.artist} - ${newValue.song}`;
 });

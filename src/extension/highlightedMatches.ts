@@ -100,18 +100,18 @@ function teamDataBuilder(teamData: MatchTeam): Team {
  * @param getAllStages Get data for all stages
  */
 async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatch> {
-    const requestUrl = `https://api.battlefy.com/tournaments/${tournamentData.value.meta.id}` +
-        '?extend[stages][$query][deletedAt][$exists]=false' +
-        '&extend[stages][matches]=1' +
-        '&extend[stages][$opts][name]=1' +
-        '&extend[stages][$opts][matches][$elemMatch][isMarkedLive]=true' +
-        '&extend[stages.matches.top.team]=1' +
-        '&extend[stages.matches.bottom.team]=1' +
-        '&extend[stages][$opts][bracket]=1' +
-        '&extend[stages.matches.top.team.persistentTeam]=1' +
-        '&extend[stages.matches.bottom.team.persistentTeam]=1' +
-        '&extend[stages.matches.top.team.players]=1' +
-        '&extend[stages.matches.bottom.team.players]=1';
+    const requestUrl = `https://api.battlefy.com/tournaments/${tournamentData.value.meta.id}`
+        + '?extend[stages][$query][deletedAt][$exists]=false'
+        + '&extend[stages][matches]=1'
+        + '&extend[stages][$opts][name]=1'
+        + '&extend[stages][$opts][matches][$elemMatch][isMarkedLive]=true'
+        + '&extend[stages.matches.top.team]=1'
+        + '&extend[stages.matches.bottom.team]=1'
+        + '&extend[stages][$opts][bracket]=1'
+        + '&extend[stages.matches.top.team.persistentTeam]=1'
+        + '&extend[stages.matches.bottom.team.persistentTeam]=1'
+        + '&extend[stages.matches.top.team.players]=1'
+        + '&extend[stages.matches.bottom.team.players]=1';
 
     const battlefyResponse = await axios.get(requestUrl);
     const { data } = battlefyResponse;

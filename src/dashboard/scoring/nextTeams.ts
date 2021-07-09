@@ -5,10 +5,10 @@ import { addChangeReminder } from '../globalScripts';
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 
 nextTeams.on('change', newValue => {
-    (document.getElementById('next-team-a-selector') as HTMLSelectElement).value =
-        newValue.teamAInfo.id;
-    (document.getElementById('next-team-b-selector') as HTMLSelectElement).value =
-        newValue.teamBInfo.id;
+    (document.getElementById('next-team-a-selector') as HTMLSelectElement).value
+        = newValue.teamAInfo.id;
+    (document.getElementById('next-team-b-selector') as HTMLSelectElement).value
+        = newValue.teamBInfo.id;
 });
 
 document.getElementById('update-next-teams-btn').onclick = () => {

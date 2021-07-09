@@ -25,8 +25,8 @@ const methodData: { [key: string]: { dataTitle: string } } = {
 methodSelector.addEventListener('change', e => {
     const method = (e.target as HTMLSelectElement).value;
 
-    document.getElementById('tournament-id-input-title').innerText =
-        methodData[method].dataTitle;
+    document.getElementById('tournament-id-input-title').innerText
+        = methodData[method].dataTitle;
 
     const webImportToggleContainer = document.getElementById(
         'team-web-import-toggle-container'

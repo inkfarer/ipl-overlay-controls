@@ -65,29 +65,29 @@ function createCasterElem(id: string, data: Caster = {}, isUncommitted = true) {
     container.id = `caster-container_${id}`;
 
     container.innerHTML = `
-	<div class='select-container'>
-		<label for='caster-name-input_${id}'>Name</label>
-		<input type='text' id='caster-name-input_${id}'>
-	</div>
-	<div class='layout horizontal select-container'>
-		<div class='select-container caster-twitter-input-container'>
-			<label for='caster-twitter-input_${id}'>Twitter</label>
-			<input type='text' id='caster-twitter-input_${id}'>
-		</div>
-		<div class='select-container'>
-			<label for='caster-pronoun-input_${id}'>Pronouns</label>
-			<input type='text' id='caster-pronoun-input_${id}'>
-		</div>
-	</div>
-	<div class='layout horizontal'>
-		<button
-			class='update-button max-width${isUncommitted ? ' uncommitted' : ''}'
-			id='update-caster_${id}'
-			style='background-color: ${isUncommitted ? 'var(--red)' : 'var(--blue)'}'>
-			update
-		</button>
-		<button class='red max-width' id='remove-caster_${id}'>remove</button>
-	</div>`;
+    <div class='select-container'>
+        <label for='caster-name-input_${id}'>Name</label>
+        <input type='text' id='caster-name-input_${id}'>
+    </div>
+    <div class='layout horizontal select-container'>
+        <div class='select-container caster-twitter-input-container'>
+            <label for='caster-twitter-input_${id}'>Twitter</label>
+            <input type='text' id='caster-twitter-input_${id}'>
+        </div>
+        <div class='select-container'>
+            <label for='caster-pronoun-input_${id}'>Pronouns</label>
+            <input type='text' id='caster-pronoun-input_${id}'>
+        </div>
+    </div>
+    <div class='layout horizontal'>
+        <button
+            class='update-button max-width${isUncommitted ? ' uncommitted' : ''}'
+            id='update-caster_${id}'
+            style='background-color: ${isUncommitted ? 'var(--red)' : 'var(--blue)'}'>
+            update
+        </button>
+        <button class='red max-width' id='remove-caster_${id}'>remove</button>
+    </div>`;
     document.getElementById('casters').prepend(container);
 
     // Add data
