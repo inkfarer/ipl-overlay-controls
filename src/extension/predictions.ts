@@ -1,94 +1,91 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import * as nodecgContext from './util/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { ErrorDetails, Prediction } from 'types/prediction';
+import { Prediction } from 'types/prediction';
 import { GuildServices } from './types/radiaApi';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
+import { PredictionStatus } from 'types/predictionStatus';
+import { Configschema } from '../../schemas/configschema';
 
 const nodecg = nodecgContext.get();
 
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
+const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
 
-const radiaConfig = nodecg.bundleConfig.radia;
+let predictionFetchErrorCount = 0;
+let predictionFetchInterval: NodeJS.Timeout;
 
-radiaSettings.on('change', newValue => {
-    // Checks if the GuildID provided is enabled for Radia's prediction feature
-    axios.get<GuildServices>(
-        `${radiaConfig.url}/predictions/check/${newValue.guildID}`,
-        { headers: { Authorization: radiaConfig.authentication } }
-    ).then(response => {
-        if (response.status !== 200) {
-            predictionStore.value.enablePrediction = false;
-            nodecg.log.error(`Guild Check Auth Error: ${response.data.detail}`);
-            return;
+radiaSettings.on('change', async (newValue) => {
+    const predictionsSupported = await checkGuildPredictionSupport(newValue.guildID);
+    predictionStore.value.enablePrediction = predictionsSupported;
+
+    // If predictions are supported, fetch games
+    if (predictionsSupported) {
+        try {
+            const guildPredictions = await getGuildPredictions(newValue.guildID);
+            assignPredictionData(guildPredictions[0]);
+        } catch (e) {
+            nodecg.log.error(e.toString());
         }
-        if (typeof response.data.twitch === 'boolean') {
-            predictionStore.value.enablePrediction = response.data.twitch;
-            if (response.data.twitch) {
-                // If the Twitch field is true we load the predictionStore with the latest Twitch Prediction Data
-                getGuildPredictions(radiaConfig.url, radiaConfig.authentication, newValue.guildID).then(response => {
-                    assignPredictionData(response[0]);
-                }).catch(err => {
-                    nodecg.log.error(`Twitch Prediction Load Error: ${err}`);
-                });
-            }
-            return;
-        } else {
-            predictionStore.value.enablePrediction = false;
-            return;
-        }
-    }).catch(err => {
-        predictionStore.value.enablePrediction = false;
-        nodecg.log.error(`Guild Check Auth Error: ${err}`);
-    });
-});
-
-nodecg.listenFor('getPredictions', async (data, ack: UnhandledListenForCb) => {
-    getGuildPredictions(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID)
-        .then(data => {
-            if (data.length > 0) {
-                assignPredictionData(data[0]);
-                ack(null,data);
-            }
-        }).catch(err => {
-            ack(err.response.data as ErrorDetails);
-        });
-});
-
-nodecg.listenFor('postPrediction', async  (data: CreatePrediction, ack: UnhandledListenForCb) => {
-    postGuildPrediction(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID, data)
-        .then(response => {
-            assignPredictionData(response);
-            ack(null, response);
-        }).catch(err => {
-            ack(err.response.data as ErrorDetails);
-        });
-});
-
-nodecg.listenFor('patchPrediction', async  (data: PatchPrediction, ack: UnhandledListenForCb) => {
-    patchGuildPrediction(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID, data)
-        .then(response => {
-            assignPredictionData(response);
-            ack(null,response);
-        }).catch(err => {
-            ack(err.response.data as ErrorDetails);
-        });
-});
-
-// This function runs every ~25 seconds
-setInterval(function() {
-    // While currently stored prediction is active we run a get the lastest prediction
-    if (predictionStore.value.currentPrediction.status === 'ACTIVE') {
-        getGuildPredictions(radiaConfig.url, radiaConfig.authentication, radiaSettings.value.guildID).then(
-            response => {
-                assignPredictionData(response[0]);
-            }).catch(err => {
-            nodecg.log.error(`Twitch Prediction Load Error: ${err}`);
-        });
     }
-}, 25000);
+});
+
+predictionStore.on('change', newValue => {
+    if (newValue.currentPrediction.status === PredictionStatus.ACTIVE) {
+        predictionFetchInterval = setInterval(async () => {
+            try {
+                const guildPredictions = await getGuildPredictions(radiaSettings.value.guildID);
+                assignPredictionData(guildPredictions[0]);
+                predictionFetchErrorCount = 0;
+            } catch (e) {
+                nodecg.log.error(e.toString());
+
+                // stop fetching if we get too many errors
+                predictionFetchErrorCount++;
+                if (predictionFetchErrorCount >= 3) {
+                    clearInterval(predictionFetchInterval);
+                    nodecg.log.info('Got too many errors fetching prediction data.');
+                }
+            }
+        }, 25000);
+    } else {
+        clearInterval(predictionFetchInterval);
+    }
+});
+
+nodecg.listenFor('getPredictions', async (data: never, ack: UnhandledListenForCb) => {
+    try {
+        const response = await getGuildPredictions(radiaSettings.value.guildID);
+        if (response.length > 0) {
+            assignPredictionData(response[0]);
+            ack(null, response[0]);
+        }
+    } catch (e) {
+        ack(e);
+    }
+});
+
+nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: UnhandledListenForCb) => {
+    try {
+        const response = await postGuildPrediction(radiaSettings.value.guildID, data);
+        assignPredictionData(response);
+        ack(null, response);
+    } catch (e) {
+        ack(e);
+    }
+});
+
+nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: UnhandledListenForCb) => {
+    try {
+        const response = await patchGuildPrediction(radiaSettings.value.guildID, data);
+        assignPredictionData(response);
+        ack(null, response);
+    } catch (e) {
+        ack(e);
+    }
+});
 
 /**
  * Assigns data to prediction replicant
@@ -96,92 +93,94 @@ setInterval(function() {
  */
 function assignPredictionData(data: Prediction) {
     // If outcome's top_predictors is null, change to empty array
-    if (data.outcomes[0].top_predictors === null) {
-        data.outcomes[0].top_predictors = [];
-    }
-    if (data.outcomes[1].top_predictors === null) {
-        data.outcomes[1].top_predictors = [];
-    }
+    data.outcomes.forEach(outcome => {
+        if (outcome.top_predictors === null) {
+            outcome.top_predictors = [];
+        }
+    });
+
     predictionStore.value.currentPrediction = data;
+}
+
+async function checkGuildPredictionSupport(guildId: string): Promise<boolean> {
+    try {
+        const result = await axios.get<GuildServices>(
+            `${radiaConfig.url}/predictions/check/${guildId}`,
+            { headers: { Authorization: radiaConfig.authentication } }
+        );
+
+        if (result.status === 200) {
+            return typeof result.data.twitch === 'boolean' ? result.data.twitch : false;
+        } else {
+            nodecg.log.error(`Guild Check Auth Error: ${result.data.detail}`);
+            return false;
+        }
+    } catch (e) {
+        nodecg.log.error(`Guild Check Auth Error: ${e}`);
+        return false;
+    }
 }
 
 /**
  * Get predictions on from Discord Guild
- * @param {string} url Base API URL
- * @param {string} authorisation API key for authentication
  * @param {string} guildID Guild ID of discord server
  */
-async function getGuildPredictions(url: string, authorisation: string, guildID: string): Promise<Prediction[]> {
-    return new Promise((resolve, reject) => {
-        axios.get<Prediction[]>(`${url}/predictions/${guildID}`, {
-            headers: {
-                Authorization: authorisation
-            }
-        }).then(response => {
-            if (response.status !== 200) {
-                reject(`Radia API call failed with response ${response.status.toString()}`);
-                return;
-            }
-            resolve(response.data);
-        }
-        ).catch(err => {
-            reject(err);
-        });
-    });
+async function getGuildPredictions(guildID: string): Promise<Prediction[]> {
+    try {
+        const result = await axios.get<Prediction[]>(
+            `${radiaConfig.url}/predictions/${guildID}`,
+            { headers: { Authorization: 'oinky test :)' + radiaConfig.authentication } });
+
+        return result.data;
+    } catch (e) {
+        handleAxiosError(e);
+    }
 }
 
 /**
  * Create a new Twitch Prediction
- * @param {string} url Base API URL
- * @param {string} authorisation API key for authentication
  * @param {string} guildID Guild ID of discord server
  * @param postData Data to create prediction with
  */
-async function postGuildPrediction(url: string, authorisation: string,
-    guildID: string, postData: CreatePrediction): Promise<Prediction> {
-    return new Promise((resolve, reject) => {
-        axios.post<Prediction>(`${url}/predictions/${guildID}`, postData, {
-            headers: {
-                Authorization: authorisation
-            }
-        }
-        ).then(response => {
-            if (response.status !== 200) {
-                reject(`Radia API call failed with response ${response.status.toString()}`);
-                return;
-            }
-            resolve(response.data);
-        }
-        ).catch(err => {
-            reject(err);
-        });
-    });
+async function postGuildPrediction(guildID: string, postData: CreatePrediction): Promise<Prediction> {
+    try {
+        const result = await axios.post<Prediction>(
+            `${radiaConfig.url}/predictions/${guildID}`,
+            postData,
+            { headers: { Authorization: radiaConfig.authentication } });
+
+        return result.data;
+    } catch (e) {
+        handleAxiosError(e);
+    }
 }
 
 /**
  * Patch active Twitch Prediction
- * @param {string} url Base API URL
- * @param {string} authorisation API key for authentication
  * @param {string} guildID Guild ID of discord server
  * @param patchData Patch data for prediction
  */
-async function patchGuildPrediction(url: string, authorisation: string,
-    guildID: string, patchData: PatchPrediction): Promise<Prediction> {
-    return new Promise((resolve, reject) => {
-        axios.patch<Prediction>(`${url}/predictions/${guildID}`, patchData, {
-            headers: {
-                Authorization: authorisation
-            }
+async function patchGuildPrediction(guildID: string, patchData: PatchPrediction): Promise<Prediction> {
+    try {
+        const result = await axios.patch<Prediction>(
+            `${radiaConfig.url}/predictions/${guildID}`,
+            patchData,
+            { headers: { Authorization: radiaConfig.authentication } });
+
+        return result.data;
+    } catch (e) {
+        handleAxiosError(e);
+    }
+}
+
+function handleAxiosError(e: AxiosError) {
+    if ('response' in e) {
+        let message = `Radia API call failed with response ${e.response.status}`;
+        if (e.response.data?.detail) {
+            message += `: ${e.response.data.detail}`;
         }
-        ).then(response => {
-            if (response.status !== 200) {
-                reject(`Radia API call failed with response ${response.status.toString()}`);
-                return;
-            }
-            resolve(response.data);
-        }
-        ).catch(err => {
-            reject(err);
-        });
-    });
+
+        throw new Error(message);
+    }
+    throw e;
 }
