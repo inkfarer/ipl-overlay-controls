@@ -33,7 +33,7 @@ radiaSettings.on('change', async (newValue) => {
 });
 
 predictionStore.on('change', newValue => {
-    if (newValue.currentPrediction.status === PredictionStatus.ACTIVE) {
+    if (newValue.currentPrediction?.status === PredictionStatus.ACTIVE) {
         predictionFetchInterval = setInterval(async () => {
             try {
                 const guildPredictions = await getGuildPredictions(radiaSettings.value.guildID);

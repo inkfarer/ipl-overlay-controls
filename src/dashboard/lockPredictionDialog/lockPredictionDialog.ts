@@ -2,6 +2,7 @@ import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { PredictionStore } from 'schemas';
+import { PredictionStatus } from 'types/predictionStatus';
 
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
@@ -18,7 +19,7 @@ document.addEventListener('dialog-opened', function() {
 
 NodeCG.waitForReplicants(predictionStore).then(() => {
     predictionStore.on('change', newValue => {
-        if (newValue.currentPrediction.status !== 'ACTIVE') {
+        if (newValue.currentPrediction?.status !== PredictionStatus.ACTIVE) {
             lockPredictionBtn.disabled = true;
             showElement(infoElem);
         } else {
@@ -29,6 +30,8 @@ NodeCG.waitForReplicants(predictionStore).then(() => {
 });
 
 lockPredictionBtn.onclick = () => {
+    if (!predictionStore.value.currentPrediction) return;
+
     setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,

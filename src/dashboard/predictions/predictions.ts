@@ -12,6 +12,7 @@ const predictionStatusElem = document.getElementById('prediction-status');
 const predictionPointCountElem = document.getElementById('prediction-point-count');
 const predictionTitleElem = document.getElementById('prediction-title');
 
+const noPredictionDataMessage = document.getElementById('no-prediction-message');
 const unsupportedGuildWarning = document.getElementById('unsupported-service-message');
 const currentPredictionSpace = document.getElementById('current-prediction-space');
 const predictionGetSpace = document.getElementById('prediction-get-space');
@@ -39,10 +40,11 @@ function getArrayDifference<T>(arr1: T[], arr2: T[]): T[] {
 predictionStore.on('change', newValue => {
     if (newValue.enablePrediction) {
         hideElement(unsupportedGuildWarning);
-        showElement(currentPredictionSpace);
         showElement(predictionGetSpace);
         // Display info on current prediction
         if (newValue.currentPrediction) {
+            showElement(currentPredictionSpace);
+            hideElement(noPredictionDataMessage);
             const prediction = newValue.currentPrediction;
             const totalChannelPoints = prediction.outcomes[0].channel_points + prediction.outcomes[1].channel_points;
 
@@ -67,6 +69,9 @@ predictionStore.on('change', newValue => {
             const hiddenButtons = getArrayDifference(predictionButtons, visibleButtons);
             hiddenButtons.forEach(btn => hideElement(btn));
             visibleButtons.forEach(btn => showElement(btn));
+        } else {
+            hideElement(currentPredictionSpace);
+            showElement(noPredictionDataMessage);
         }
     } else {
         showElement(unsupportedGuildWarning);

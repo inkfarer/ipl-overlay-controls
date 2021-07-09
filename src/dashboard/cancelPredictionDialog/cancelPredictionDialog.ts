@@ -18,7 +18,7 @@ document.addEventListener('dialog-opened', function() {
 
 NodeCG.waitForReplicants(predictionStore).then(() => {
     predictionStore.on('change', newValue => {
-        if (newValue.currentPrediction.status === 'CANCELED') {
+        if (!newValue.currentPrediction || newValue.currentPrediction.status === 'CANCELED') {
             lockPredictionBtn.disabled = true;
             showElement(infoElem);
         } else {
@@ -29,6 +29,8 @@ NodeCG.waitForReplicants(predictionStore).then(() => {
 });
 
 lockPredictionBtn.onclick = () => {
+    if (!predictionStore.value.currentPrediction) return;
+
     setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,

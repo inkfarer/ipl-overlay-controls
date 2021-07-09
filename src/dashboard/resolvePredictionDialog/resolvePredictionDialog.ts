@@ -41,7 +41,7 @@ function setBtnDisable(disabled: boolean) {
  * Sets the button UI
  * @param predictionValue value of predictionStore
  */
-function setUI(predictionValue:PredictionStore) {
+function setUI(predictionValue: PredictionStore) {
     setBtnDisable(false);
     hideElement(warningElem);
     hideElement(infoElem);
@@ -54,15 +54,15 @@ function setUI(predictionValue:PredictionStore) {
         autoResolveBtn.innerText = 'Auto Resolve: ?';
         autoResolveBtn.disabled = true;
         showElement(infoElem);
-        infoMessageElem.innerText = 'Unable to workout winning prediction option automatically';
+        infoMessageElem.innerText = 'Unable to determine winning team automatically';
     }
     // Set manual resolve field text
-    resolveOptionABtn.innerText = predictionValue.currentPrediction.outcomes[0].title;
-    resolveOptionBBtn.innerText = predictionValue.currentPrediction.outcomes[1].title;
+    resolveOptionABtn.innerText = predictionValue.currentPrediction?.outcomes[0].title || 'unknown';
+    resolveOptionBBtn.innerText = predictionValue.currentPrediction?.outcomes[1].title || 'unknown';
     // lock buttons if status is not LOCKED
-    if (predictionValue.currentPrediction.status !== 'LOCKED') {
+    if (!predictionValue.currentPrediction || predictionValue.currentPrediction.status !== 'LOCKED') {
         showElement(infoElem);
-        infoMessageElem.innerText = 'Prediction is not in a state that can be resolved';
+        infoMessageElem.innerText = 'This predication cannot be resolved right now';
         setBtnDisable(true);
     }
 }
@@ -74,8 +74,12 @@ function setUI(predictionValue:PredictionStore) {
  * @param predictionValue predictionStore replicant value
  */
 function autoResolveWinner(teamScoresValue: TeamScores,
-    scoreboardValue: ScoreboardData, predictionValue:PredictionStore) {
+    scoreboardValue: ScoreboardData, predictionValue: PredictionStore) {
     winningOption.validOption = false;
+    if (!predictionValue.currentPrediction) {
+        return setUI(predictionValue);
+    }
+
     let winningTeamName: string;
     // Work out which team has higher score
     if (teamScoresValue.teamA > teamScoresValue.teamB) {
@@ -103,7 +107,7 @@ function autoResolveWinner(teamScoresValue: TeamScores,
  * @param index index of winning outcome
  */
 function resolvePrediction(index: number) {
-    if (!predictionStore.value.currentPrediction.id || index > 1 || index < 0) {
+    if (!predictionStore.value.currentPrediction?.id || index > 1 || index < 0) {
         // if no id (aka no prediction) don't event attempt to patch prediction
         setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
         warningMessageElem.innerText = 'No outcomes/prediction to resolve >.<';
