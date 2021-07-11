@@ -6,9 +6,6 @@
  */
 
 export interface NextRoundStartTime {
-	hour: number;
-	minute: number;
-	day: number;
-	month: number;
-	isVisible?: boolean;
+	startTime: string;
+	isVisible: boolean;
 }

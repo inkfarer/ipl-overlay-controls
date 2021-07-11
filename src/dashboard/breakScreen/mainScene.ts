@@ -1,5 +1,6 @@
 import { MainFlavorText, NextRoundStartTime } from 'schemas';
 import { addChangeReminder } from '../globalScripts';
+import { DateTime } from 'luxon';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
 const nextRoundStartTime = nodecg.Replicant<NextRoundStartTime>('nextRoundStartTime');
@@ -10,6 +11,9 @@ const minuteInput = document.getElementById('next-stage-minute-input') as HTMLIn
 const hourInput = document.getElementById('next-stage-hour-input') as HTMLInputElement;
 const daySelect = document.getElementById('next-stage-day-select') as HTMLSelectElement;
 const nextStageTimerToggle = document.getElementById('next-stage-timer-toggle') as HTMLInputElement;
+
+const dayMonthFormat = 'dd/MM';
+const dayMonthYearFormat = 'dd/MM/yyyy';
 
 mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
@@ -25,68 +29,48 @@ nextStageTimerToggle.addEventListener('change', e => {
 });
 
 nextRoundStartTime.on('change', newValue => {
-    minuteInput.value = String(newValue.minute);
-    hourInput.value = String(newValue.hour);
-    updateDaySelector(newValue.month, newValue.day);
-    daySelect.value = `${newValue.day}/${newValue.month}`;
+    const newDate = DateTime.fromISO(newValue.startTime).toLocal();
+    minuteInput.value = String(newDate.minute);
+    hourInput.value = String(newDate.hour);
+
+    updateDaySelector(newDate);
 
     nextStageTimerToggle.checked = newValue.isVisible;
 });
 
-function updateDaySelector(selectedMonth: number, selectedDayOfMonth: number) {
+function updateDaySelector(selectedDate: DateTime) {
     daySelect.innerHTML = '';
 
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    const today = DateTime.now();
+    const tomorrow = DateTime.now().plus({ days: 1 });
+    daySelect.appendChild(getDayElem(today));
+    daySelect.appendChild(getDayElem(tomorrow));
 
-    const todayElem = getDayElem(today);
-    daySelect.appendChild(todayElem);
-
-    const tomorrowElem = getDayElem(tomorrow);
-    daySelect.appendChild(tomorrowElem);
-
-    const selectedDay = `${selectedDayOfMonth}/${selectedMonth}`;
-    if (todayElem.value !== selectedDay && tomorrowElem.value !== selectedDay) {
-        const selectedDayElem = document.createElement('option');
-        selectedDayElem.innerText = selectedDay;
-        selectedDayElem.value = selectedDay;
-        selectedDayElem.dataset.day = String(selectedDayOfMonth);
-        selectedDayElem.dataset.month = String(selectedMonth);
-        daySelect.appendChild(selectedDayElem);
+    if (!selectedDate.hasSame(today, 'days') && !selectedDate.hasSame(tomorrow, 'days')) {
+        daySelect.appendChild(getDayElem(selectedDate));
     }
+
+    daySelect.value = selectedDate.toFormat(dayMonthYearFormat);
 }
 
-function getDayElem(date: Date): HTMLOptionElement {
+function getDayElem(date: DateTime): HTMLOptionElement {
     const dayElem = document.createElement('option');
-    const dateText = getDayText(date);
-    dayElem.innerText = dateText;
-    dayElem.value = dateText;
-    dayElem.dataset.day = String(date.getDate());
-    dayElem.dataset.month = String(date.getMonth() + 1);
+    dayElem.innerText = date.toFormat(dayMonthFormat);
+    dayElem.value = date.toFormat(dayMonthYearFormat);
     return dayElem;
 }
 
-function getDayText(date: Date): string {
-    return `${date.getDate()}/${date.getMonth() + 1}`;
-}
-
 function updateStageTime() {
-    const min = parseInt(minuteInput.value, 10);
+    const minute = parseInt(minuteInput.value, 10);
     const hour = parseInt(hourInput.value, 10);
-    const selText = daySelect.options[daySelect.selectedIndex];
-    if (selText) {
-        const day = Number(selText.dataset.day);
-        const month = Number(selText.dataset.month);
+    const dateOption = daySelect.options[daySelect.selectedIndex];
 
-        if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
-            nextRoundStartTime.value = {
-                ...nextRoundStartTime.value,
-                hour,
-                minute: min,
-                day,
-                month
-            };
+    if (dateOption && !isNaN(minute) && !isNaN(hour)) {
+        const date = DateTime.fromFormat(dateOption.value, dayMonthYearFormat);
+        const dateTime = date.set({ minute, hour });
+
+        if (minute >= 0 && minute <= 59 && hour >= 0 && hour <= 23) {
+            nextRoundStartTime.value.startTime = dateTime.toUTC().toISO();
         }
     }
 }
