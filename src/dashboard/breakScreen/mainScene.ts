@@ -30,8 +30,8 @@ nextStageTimerToggle.addEventListener('change', e => {
 
 nextRoundStartTime.on('change', newValue => {
     const newDate = DateTime.fromISO(newValue.startTime).toLocal();
-    minuteInput.value = String(newDate.minute);
-    hourInput.value = String(newDate.hour);
+    minuteInput.value = padNumber(newDate.minute);
+    hourInput.value = padNumber(newDate.hour);
 
     updateDaySelector(newDate);
 
@@ -76,3 +76,20 @@ function updateStageTime() {
 }
 
 addChangeReminder(document.querySelectorAll('.main-update-reminder'), mainSceneUpdateBtn);
+
+function padNumber(value: number | string, minLength = 2): string {
+    const stringValue = String(value);
+    if (stringValue.length < minLength) {
+        return '0'.repeat(minLength - stringValue.length) + stringValue;
+    } else {
+        return stringValue;
+    }
+}
+
+function padNumberInput(e: InputEvent) {
+    const target = e.target as HTMLInputElement;
+    target.value = padNumber(target.value);
+}
+
+hourInput.addEventListener('change', padNumberInput);
+minuteInput.addEventListener('change', padNumberInput);
