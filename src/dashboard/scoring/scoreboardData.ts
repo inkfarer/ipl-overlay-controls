@@ -1,11 +1,17 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, setToggleButtonDisabled } from '../globalScripts';
-import { scoreboardData, scoreboardShown, tournamentData } from './replicants';
+import { scoreboardData, tournamentData } from './replicants';
 
 scoreboardData.on('change', newValue => {
     (document.getElementById('flavor-text-input') as HTMLInputElement).value = newValue.flavorText;
 
     (document.getElementById('team-a-selector') as HTMLSelectElement).value = newValue.teamAInfo.id;
     (document.getElementById('team-b-selector') as HTMLSelectElement).value = newValue.teamBInfo.id;
+
+    setToggleButtonDisabled(
+        document.getElementById('show-scoreboard-btn') as HTMLButtonElement,
+        document.getElementById('hide-scoreboard-btn') as HTMLButtonElement,
+        newValue.isVisible
+    );
 });
 
 tournamentData.on('change', newValue => {
@@ -34,16 +40,8 @@ addChangeReminder(
     document.getElementById('update-scoreboard-btn') as HTMLButtonElement
 );
 
-scoreboardShown.on('change', newValue => {
-    setToggleButtonDisabled(
-        document.getElementById('show-scoreboard-btn') as HTMLButtonElement,
-        document.getElementById('hide-scoreboard-btn') as HTMLButtonElement,
-        newValue
-    );
-});
-
-document.getElementById('show-scoreboard-btn').onclick = () => { scoreboardShown.value = true; };
-document.getElementById('hide-scoreboard-btn').onclick = () => { scoreboardShown.value = false; };
+document.getElementById('show-scoreboard-btn').onclick = () => { scoreboardData.value.isVisible = true; };
+document.getElementById('hide-scoreboard-btn').onclick = () => { scoreboardData.value.isVisible = false; };
 
 document.getElementById('show-casters-btn').onclick = () => {
     nodecg.sendMessage('mainShowCasters');

@@ -17,9 +17,12 @@
         "teamBInfo": {
             "type": "object",
             "$ref": "defs/team.json#/team"
+        },
+        "isVisible": {
+            "type": "boolean"
         }
     },
-    "required": ["flavorText", "colorInfo", "teamAInfo", "teamBInfo"],
+    "required": ["flavorText", "colorInfo", "teamAInfo", "teamBInfo", "isVisible"],
     "default": {
         "flavorText": "Flavor Text!",
         "colorInfo": {
@@ -52,6 +55,7 @@
                     "name": "Player 4"
                 }
             ]
-        }
+        },
+        "isVisible": true
     }
 }

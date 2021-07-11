@@ -35,4 +35,5 @@ export interface ScoreboardData {
 		}[];
 		[k: string]: any;
 	};
+	isVisible: boolean;
 }

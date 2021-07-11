@@ -17,7 +17,6 @@ export * from './predictionStore';
 export * from './radiaSettings';
 export * from './rounds';
 export * from './scoreboardData';
-export * from './scoreboardShown';
 export * from './setWinnersAutomatically';
 export * from './swapColorsInternally';
 export * from './teamImageHidden';
