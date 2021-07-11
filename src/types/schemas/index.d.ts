@@ -9,7 +9,6 @@ export * from './mainFlavorText';
 export * from './manualNowPlaying';
 export * from './musicShown';
 export * from './nextRoundStartTime';
-export * from './nextRoundStartTimeShown';
 export * from './nextTeams';
 export * from './nowPlaying';
 export * from './nowPlayingSource';

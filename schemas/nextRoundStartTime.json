@@ -4,21 +4,27 @@
     "additionalProperties": false,
     "properties": {
         "hour": {
-            "type": "number",
-            "default": 0
+            "type": "number"
         },
         "minute": {
-            "type": "number",
-            "default": 0
+            "type": "number"
         },
         "day": {
-            "type": "number",
-            "default": 1
+            "type": "number"
         },
         "month": {
-            "type": "number",
-            "default": 1
+            "type": "number"
+        },
+        "isVisible": {
+            "type": "boolean"
         }
     },
-    "required": ["hour", "minute", "day", "month"]
+    "required": ["hour", "minute", "day", "month"],
+    "default": {
+        "hour": 0,
+        "minute": 0,
+        "day": 1,
+        "month": 1,
+        "isVisible": false
+    }
 }

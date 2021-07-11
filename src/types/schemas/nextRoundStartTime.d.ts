@@ -10,4 +10,5 @@ export interface NextRoundStartTime {
 	minute: number;
 	day: number;
 	month: number;
+	isVisible?: boolean;
 }

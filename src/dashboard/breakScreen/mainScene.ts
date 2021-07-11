@@ -1,8 +1,7 @@
-import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'schemas';
+import { MainFlavorText, NextRoundStartTime } from 'schemas';
 import { addChangeReminder } from '../globalScripts';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
-const nextRoundStartTimeShown = nodecg.Replicant<NextRoundStartTimeShown>('nextRoundStartTimeShown');
 const nextRoundStartTime = nodecg.Replicant<NextRoundStartTime>('nextRoundStartTime');
 
 const flavorTextInput = document.getElementById('flavor-text-input') as HTMLInputElement;
@@ -22,11 +21,7 @@ mainSceneUpdateBtn.onclick = () => {
 };
 
 nextStageTimerToggle.addEventListener('change', e => {
-    nextRoundStartTimeShown.value = (e.target as HTMLInputElement).checked;
-});
-
-nextRoundStartTimeShown.on('change', newValue => {
-    nextStageTimerToggle.checked = newValue;
+    nextRoundStartTime.value.isVisible = (e.target as HTMLInputElement).checked;
 });
 
 nextRoundStartTime.on('change', newValue => {
@@ -34,6 +29,8 @@ nextRoundStartTime.on('change', newValue => {
     hourInput.value = String(newValue.hour);
     updateDaySelector(newValue.month, newValue.day);
     daySelect.value = `${newValue.day}/${newValue.month}`;
+
+    nextStageTimerToggle.checked = newValue.isVisible;
 });
 
 function updateDaySelector(selectedMonth: number, selectedDayOfMonth: number) {
@@ -84,6 +81,7 @@ function updateStageTime() {
 
         if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
             nextRoundStartTime.value = {
+                ...nextRoundStartTime.value,
                 hour,
                 minute: min,
                 day,
