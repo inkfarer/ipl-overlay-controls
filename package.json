@@ -22,7 +22,7 @@
         "cleanbuild": "npm run clean && npm run build",
         "start": "node ../..",
         "watch": "webpack -w",
-        "schema-types": "nodecg schema-types -o ./schemas",
+        "schema-types": "nodecg schema-types",
         "lint": "eslint ./src",
         "fix": "eslint ./src --fix",
         "devbuild": "webpack"

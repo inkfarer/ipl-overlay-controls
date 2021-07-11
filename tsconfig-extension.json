@@ -15,7 +15,7 @@
                 "src/types/*"
             ],
             "schemas": [
-                "schemas/index"
+                "src/types/schemas/index"
             ]
         },
         "types": [
