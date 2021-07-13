@@ -7,11 +7,12 @@ export default (nodecg: NodeCG): void => {
     nodecgContext.set(nodecg);
 
     require('./music');
-    require('./gameWinnerSetter');
+    require('./gameData');
     require('./tournamentImporter');
     require('./roundImporter');
     require('./fileImport');
     require('./highlightedMatches');
+    require('./colorData');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');

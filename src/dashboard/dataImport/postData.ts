@@ -18,14 +18,14 @@ export function sendLocalFile(
     })
         .then(response => {
             if (response.status === 200) {
-                setImportStatus(ImportStatus.Success, importStatusElem);
+                setImportStatus(ImportStatus.SUCCESS, importStatusElem);
             } else {
                 console.error(`Import failed with status ${response.status}`);
-                setImportStatus(ImportStatus.Failure, importStatusElem);
+                setImportStatus(ImportStatus.FAILURE, importStatusElem);
             }
         })
         .catch(e => {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, importStatusElem);
+            setImportStatus(ImportStatus.FAILURE, importStatusElem);
         });
 }

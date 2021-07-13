@@ -1,10 +1,12 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
-import { HighlightedMatch, NextTeams, TournamentData } from 'schemas';
+import { HighlightedMatches, NextTeams, TournamentData } from 'schemas';
 import { Match } from 'types/match';
+import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { BracketType } from 'types/enums/bracketType';
 
-const highlightedMatchData = nodecg.Replicant<HighlightedMatch>('highlightedMatches');
+const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 
@@ -37,7 +39,7 @@ function getMatchFromID(id: string): Match | null {
 
 // When get match button is pressed
 getMatchesBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, matchDataStatusElem);
+    setImportStatus(ImportStatus.LOADING, matchDataStatusElem);
     const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
 
     // Send message to extension
@@ -48,7 +50,7 @@ getMatchesBtn.onclick = () => {
         // If we get an error
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, matchDataStatusElem);
+            setImportStatus(ImportStatus.FAILURE, matchDataStatusElem);
             return;
         }
         // If we get success
@@ -75,10 +77,14 @@ tournamentData.on('change', newValue => {
         showElement(loadMatchesSpace);
         hideElement(unsupportedPlatformWarning);
 
-        for (let i = 0; i < newValue.meta.stages.length; i++) {
-            const element = newValue.meta.stages[i];
-            if (['swiss', 'elimination', 'roundrobin'].includes(element.bracketType)) {  // if bracket type is supported
-                // add to drop down
+        for (let i = 0; i < newValue.stages.length; i++) {
+            const element = newValue.stages[i];
+            if ([BracketType.SWISS,
+                BracketType.DOUBLE_ELIMINATION,
+                BracketType.SINGLE_ELIMINATION,
+                BracketType.ROUND_ROBIN].includes(element.type as BracketType)) {
+
+                // if bracket type is supported, add to drop down
                 addSelector(addDots(element.name), 'stage-selector', element.id);
             }
         }
@@ -134,5 +140,5 @@ matchSelectElem.oninput = function () {
 addChangeReminder(document.querySelectorAll('.next-match-update-warning'), setNextMatchBtnElem);
 
 function isValidSource(source: string): boolean {
-    return ['Battlefy'].includes(source);
+    return [TournamentDataSource.BATTLEFY].includes(source as TournamentDataSource);
 }

@@ -1,89 +1,145 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-import { ActiveRoundId, Game, GameWinners, Rounds, ScoreboardData } from 'schemas';
+import { Game, GameData } from 'schemas';
 
 import './setWinnersAutomatically';
+import './buttonColors';
 
 import '../styles/globalStyles.css';
 import './currentRound.css';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
-
-const gameWinners = nodecg.Replicant<GameWinners>('gameWinners');
-const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
-const rounds = nodecg.Replicant<Rounds>('rounds');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+import { GameWinner } from 'types/gameWinner';
+import { fillColorSelector, getColorOptionName, getContrastingTextColor } from '../helpers/colorHelper';
+import { addClasses, appendChildren } from '../helpers/elemHelper';
+import { createEmptyGameData } from '../../helpers/gameDataHelper';
+import {
+    handleColorSelectorChange,
+    handleColorSwapToggleChange,
+    handleCustomColorListenerChange
+} from './toggleEvents';
+import { activeRoundId, gameData, rounds, scoreboardData, swapColorsInternally } from './replicants';
 
 const roundNameElem = document.getElementById('round-name');
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
+const enableColorEditToggle = document.getElementById('enable-color-edit-toggle') as HTMLInputElement;
 
-NodeCG.waitForReplicants(gameWinners, rounds).then(() => {
-    activeRoundId.on('change', newValue => {
-        const currentRound = rounds.value[newValue];
+NodeCG.waitForReplicants(gameData, rounds, scoreboardData)
+    .then(() => {
+        activeRoundId.on('change', newValue => {
+            const currentRound = rounds.value[newValue];
 
-        if (currentRound) {
-            addRoundToggles(currentRound.games, currentRound.meta.name);
-        } else {
-            removeToggles();
-            roundNameElem.innerText
-                = 'Undefined (Round might have been deleted...)';
-        }
+            if (currentRound) {
+                addRoundToggles(currentRound.games, currentRound.meta.name);
+            } else {
+                removeToggles();
+                roundNameElem.innerText
+                    = 'Undefined (Round might have been deleted...)';
+            }
+        });
+
+        gameData.on('change', (newValue, oldValue) => {
+            updateColorData(newValue);
+            if (!oldValue || newValue.length === oldValue.length) {
+                disableWinButtons(newValue);
+            }
+        });
+
+        rounds.on('change', (newValue, oldValue) => {
+            if (!oldValue) return;
+
+            const newCurrentRound = newValue[activeRoundId.value];
+            const oldCurrentRound = oldValue[activeRoundId.value];
+
+            if (!newCurrentRound) return;
+
+            if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
+                roundNameElem.innerText = newCurrentRound.meta.name;
+            }
+
+            for (let i = 0; i < newCurrentRound.games.length; i++) {
+                const newGame = newCurrentRound.games[i];
+                const oldGame = oldCurrentRound.games[i];
+
+                if (newGame.mode !== oldGame.mode || oldGame.stage !== newGame.stage) {
+                    updateMapsAndModes(i, newGame);
+                    break;
+                }
+            }
+        });
     });
 
-    gameWinners.on('change', newValue => {
-        disableWinButtons(newValue);
+enableColorEditToggle.addEventListener('change', e => {
+    const colorSelectors = document.querySelectorAll('.color-selector-wrapper') as NodeListOf<HTMLDivElement>;
+    colorSelectors.forEach(selector => {
+        selector.style.display = (e.target as HTMLInputElement).checked ? '' : 'none';
     });
+});
 
-    rounds.on('change', (newValue, oldValue) => {
-        if (!oldValue) return;
+swapColorsInternally.on('change', (newValue, oldValue) => {
+    if (oldValue && oldValue === newValue) {
+        updateColorData(gameData.value);
+    }
+});
 
-        const newCurrentRound = newValue[activeRoundId.value];
-        const oldCurrentRound = oldValue[activeRoundId.value];
+scoreboardData.on('change', (newValue, oldValue) => {
+    if (oldValue) {
+        updateColorData(gameData.value);
+    }
+});
 
-        if (!newCurrentRound) return;
+function updateColorData(gameData: GameData) {
+    for (let i = 0; i < gameData.length; i++) {
+        const dataElem = gameData[i];
 
-        if (newCurrentRound.meta.name !== oldCurrentRound.meta.name) {
-            roundNameElem.innerText = newCurrentRound.meta.name;
-        }
+        const gameEditor = document.getElementById(`game-editor_${i}`);
+        const colorSelect = gameEditor.querySelector('.color-selector') as HTMLSelectElement;
 
-        for (let i = 0; i < newCurrentRound.games.length; i++) {
-            const newGame = newCurrentRound.games[i];
-            const oldGame = oldCurrentRound.games[i];
+        if (colorSelect.dataset.source !== 'gameInfo-edited') {
+            const colorSwapToggle = gameEditor.querySelector('.color-swap-toggle') as HTMLInputElement;
+            const customColorToggle = gameEditor.querySelector('.custom-color-toggle') as HTMLInputElement;
+            const teamAColorInput = document.getElementById(`custom-color-selector_a_${i}`) as HTMLInputElement;
+            const teamBColorInput = document.getElementById(`custom-color-selector_b_${i}`) as HTMLInputElement;
 
-            if (
-                newGame.mode !== oldGame.mode
-                || oldGame.stage !== newGame.stage
-            ) {
-                updateMapsModes(i, newGame);
-                break;
+            const colorData = dataElem.color ? dataElem.color : scoreboardData.value.colorInfo;
+            const colorSource = dataElem.color ? 'gameInfo' : 'scoreboard';
+
+            colorSelect.value = getColorOptionName(colorData, colorData.categoryName);
+            colorSelect.dataset.source = colorSource;
+            colorSwapToggle.dataset.source = colorSource;
+            colorSwapToggle.checked = dataElem.color ? dataElem.color.colorsSwapped : swapColorsInternally.value;
+            teamAColorInput.value = colorData.clrA;
+            teamBColorInput.value = colorData.clrB;
+            const isCustomColor = colorData.index === 999;
+            customColorToggle.checked = isCustomColor;
+            toggleCustomColorSelectorVisibility(i, isCustomColor);
+
+            if (dataElem.color) {
+                updateButtonColors(i, dataElem.color.clrA, dataElem.color.clrB);
+            } else {
+                removeCustomButtonColors(i);
             }
         }
-    });
-});
-
-scoreboardData.on('change', newValue => {
-    document.body.style.setProperty(
-        '--team-a-color',
-        newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA);
-    document.body.style.setProperty(
-        '--team-b-color',
-        newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB);
-    document.body.style.setProperty(
-        '--team-a-text-color',
-        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrB : newValue.colorInfo.clrA));
-    document.body.style.setProperty(
-        '--team-b-text-color',
-        getTextColor(newValue.swapColorOrder ? newValue.colorInfo.clrA : newValue.colorInfo.clrB));
-});
-
-function getTextColor(hex: string): string {
-    hex = hex.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-    return (yiq >= 128) ? '#333' : 'white';
+    }
 }
 
-function updateMapsModes(index: number, data: Game) {
+export function updateButtonColors(index: number, clrA: string, clrB: string): void {
+    const buttons = getButtons(index);
+    buttons[GameWinner.ALPHA].style.backgroundColor = clrA;
+    buttons[GameWinner.ALPHA].style.color = getContrastingTextColor(clrA);
+
+    buttons[GameWinner.BRAVO].style.backgroundColor = clrB;
+    buttons[GameWinner.BRAVO].style.color = getContrastingTextColor(clrB);
+}
+
+function removeCustomButtonColors(index: number): void {
+    const buttons = getButtons(index);
+    buttons[GameWinner.ALPHA].style.removeProperty('background-color');
+    buttons[GameWinner.ALPHA].style.removeProperty('color');
+
+    buttons[GameWinner.BRAVO].style.removeProperty('background-color');
+    buttons[GameWinner.BRAVO].style.removeProperty('color');
+}
+
+function updateMapsAndModes(index: number, data: Game) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
     stageSelector.value = data.stage;
 
@@ -101,102 +157,173 @@ function addRoundToggles(games: Game[], roundName: string) {
 }
 
 function addToggle(roundElement: Game, stageIndex: number) {
-    const toggleDiv = document.createElement('div');
-    toggleDiv.classList.add('toggles');
+    const gameInfo = gameData.value[stageIndex];
+    const colorData = gameInfo.color !== undefined ? gameInfo.color : scoreboardData.value.colorInfo;
+    const colorSource = gameInfo.color !== undefined ? 'gameInfo' : 'scoreboard';
+
     const stageModeDisplay = document.createElement('div');
+    stageModeDisplay.innerHTML = `<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
 
-    stageModeDisplay.innerHTML = `<div class="separator"><span>${
-        Number(stageIndex) + 1
-    }</span></div>`;
-    toggleDiv.appendChild(stageModeDisplay);
-
-    const reminderCreatingElements = [];
     const stageSelector = document.createElement('select');
-    stageSelector.id = `stage-selector_${stageIndex}`;
-    stageSelector.classList.add('stage-selector');
+    setToggleElementIdAndClass(stageSelector, 'stage-selector', stageIndex);
     fillList(stageSelector, splatStages);
     stageSelector.value = roundElement.stage;
-    toggleDiv.appendChild(stageSelector);
-    reminderCreatingElements.push(stageSelector);
 
     const modeSelector = document.createElement('select');
-    modeSelector.id = `mode-selector_${stageIndex}`;
-    modeSelector.classList.add('mode-selector');
+    setToggleElementIdAndClass(modeSelector, 'mode-selector', stageIndex);
     fillList(modeSelector, splatModes);
     modeSelector.value = roundElement.mode;
-    toggleDiv.appendChild(modeSelector);
-    reminderCreatingElements.push(modeSelector);
 
-    addChangeReminder(reminderCreatingElements, roundUpdateButton);
+    const customColorSelectorA = createCustomColorSelector(stageIndex, 'a', colorData.clrA);
+    const customColorSelectorB = createCustomColorSelector(stageIndex, 'b', colorData.clrB);
 
-    const noWinButton = document.createElement('button');
-    noWinButton.classList.add('no-win-toggle');
-    noWinButton.classList.add('max-width');
-    noWinButton.classList.add('red');
-    noWinButton.id = 'no-win-toggle_' + stageIndex;
-    noWinButton.innerText = '✖';
-    noWinButton.disabled = true;
+    const colorSelector = document.createElement('select');
+    setToggleElementIdAndClass(colorSelector, 'color-selector', stageIndex);
+    fillColorSelector(colorSelector);
+    colorSelector.dataset.source = colorSource;
+    colorSelector.value = getColorOptionName(colorData, colorData.categoryName);
+    colorSelector.style.display = colorData.index === 999 ? 'none' : '';
+    colorSelector.addEventListener('change', handleColorSelectorChange);
 
-    const AWinButton = document.createElement('button');
-    AWinButton.classList.add('team-a-win-toggle');
-    AWinButton.classList.add('max-width');
-    AWinButton.id = 'team-a-win-toggle_' + stageIndex;
-    AWinButton.innerText = 'A';
+    const colorSwapToggle = document.createElement('input');
+    setToggleElementIdAndClass(colorSwapToggle, 'color-swap-toggle', stageIndex);
+    colorSwapToggle.type = 'checkbox';
+    colorSwapToggle.dataset.source = colorSource;
+    colorSwapToggle.checked = gameInfo.color !== undefined ? gameInfo.color.colorsSwapped : swapColorsInternally.value;
+    colorSwapToggle.addEventListener('change', handleColorSwapToggleChange);
 
-    const BWinButton = document.createElement('button');
-    BWinButton.classList.add('team-b-win-toggle');
-    BWinButton.classList.add('max-width');
-    BWinButton.id = 'team-b-win-toggle_' + stageIndex;
-    BWinButton.innerText = 'B';
+    const colorSwapToggleLabel = document.createElement('label');
+    colorSwapToggleLabel.htmlFor = `color-swap-toggle_${stageIndex}`;
+    colorSwapToggleLabel.innerText = 'Swap colors';
+    colorSwapToggleLabel.classList.add('white-label');
 
-    noWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 0;
-    };
+    const customColorToggle = document.createElement('input');
+    setToggleElementIdAndClass(customColorToggle, 'custom-color-toggle', stageIndex);
+    customColorToggle.type = 'checkbox';
+    customColorToggle.checked = colorData.index === 999;
+    customColorToggle.addEventListener('change', event => {
+        const index = parseInt((event.target as HTMLInputElement).id.split('_')[1], 10);
+        toggleCustomColorSelectorVisibility(index, (event.target as HTMLInputElement).checked);
+    });
 
-    AWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 1;
-    };
+    const customColorToggleLabel = document.createElement('label');
+    customColorToggleLabel.classList.add('white-label');
+    customColorToggleLabel.innerText = 'Custom';
+    customColorToggleLabel.htmlFor = `custom-color-toggle_${stageIndex}`;
 
-    BWinButton.onclick = event => {
-        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        gameWinners.value[stageIndex] = 2;
-    };
+    addChangeReminder(
+        [stageSelector, modeSelector, customColorSelectorA, customColorSelectorB, colorSelector],
+        roundUpdateButton);
+
+    const customColorSelectorWrapper = document.createElement('div');
+    setToggleElementIdAndClass(customColorSelectorWrapper, 'custom-color-select-wrapper', stageIndex);
+    addClasses(customColorSelectorWrapper, 'layout', 'horizontal');
+    appendChildren(customColorSelectorWrapper, customColorSelectorA, customColorSelectorB);
+    customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
+
+    const colorDataToggleContainer = document.createElement('div');
+    addClasses(colorDataToggleContainer,
+        'layout', 'horizontal', 'center-horizontal', 'color-swap-toggle-container');
+    appendChildren(colorDataToggleContainer,
+        colorSwapToggle, colorSwapToggleLabel, customColorToggle, customColorToggleLabel);
 
     const winButtonContainer = document.createElement('div');
-    winButtonContainer.classList.add('layout');
-    winButtonContainer.classList.add('horizontal');
-    winButtonContainer.classList.add('win-button-container');
-    winButtonContainer.appendChild(noWinButton);
-    winButtonContainer.appendChild(AWinButton);
-    winButtonContainer.appendChild(BWinButton);
-    toggleDiv.appendChild(winButtonContainer);
+    addClasses(winButtonContainer, 'layout', 'horizontal', 'win-button-container');
+    appendChildren(winButtonContainer,
+        createWinButton(GameWinner.NO_WINNER, stageIndex),
+        createWinButton(GameWinner.ALPHA, stageIndex),
+        createWinButton(GameWinner.BRAVO, stageIndex));
 
-    document.getElementById('toggles')
-        .appendChild(toggleDiv);
+    const colorSelectorWrapper = document.createElement('div');
+    colorSelectorWrapper.style.display = enableColorEditToggle.checked ? '' : 'none';
+    colorSelectorWrapper.classList.add('color-selector-wrapper');
+    appendChildren(colorSelectorWrapper, colorSelector, customColorSelectorWrapper, colorDataToggleContainer);
+
+    const toggleDiv = document.createElement('div');
+    toggleDiv.classList.add('toggles');
+    toggleDiv.id = `game-editor_${stageIndex}`;
+    appendChildren(toggleDiv, stageModeDisplay, stageSelector, modeSelector, colorSelectorWrapper, winButtonContainer);
+
+    document.getElementById('toggles').appendChild(toggleDiv);
 }
 
-document.getElementById('reset-btn').onclick = () => {
-    gameWinners.value = [0, 0, 0, 0, 0, 0, 0];
+function setToggleElementIdAndClass(element: HTMLElement, className: string, index: number) {
+    element.classList.add(className);
+    element.id = `${className}_${index}`;
+}
+
+function toggleCustomColorSelectorVisibility(index: number, isCustomColor: boolean): void {
+    const customColorSelectWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
+    const colorSelect = document.getElementById(`color-selector_${index}`);
+    const toggle = document.getElementById(`custom-color-toggle_${index}`) as HTMLInputElement;
+
+    toggle.checked = isCustomColor;
+    customColorSelectWrapper.style.display = isCustomColor ? '' : 'none';
+    colorSelect.style.display = isCustomColor ? 'none' : '';
+}
+
+function createWinButton(toggleType: GameWinner, index: number): HTMLButtonElement {
+    const button = document.createElement('button');
+
+    const buttonClass = {
+        [GameWinner.NO_WINNER]: 'no-win-toggle',
+        [GameWinner.ALPHA]: 'team-a-win-toggle',
+        [GameWinner.BRAVO]: 'team-b-win-toggle'
+    }[toggleType];
+    addClasses(button, buttonClass, 'max-width');
+    if (toggleType === GameWinner.NO_WINNER) {
+        button.classList.add('red');
+        button.disabled = true;
+    }
+    button.id = `${buttonClass}_${index}`;
+
+    button.innerText = {
+        [GameWinner.NO_WINNER]: '✖',
+        [GameWinner.ALPHA]: 'A',
+        [GameWinner.BRAVO]: 'B'
+    }[toggleType];
+
+    button.addEventListener('click', event => {
+        const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
+        gameData.value[stageIndex].winner = toggleType;
+    });
+
+    return button;
+}
+
+function createCustomColorSelector(index: number, team: 'a' | 'b', value: string): HTMLInputElement {
+    const selector = document.createElement('input');
+    selector.type = 'color';
+    selector.id = `custom-color-selector_${team}_${index}`;
+    selector.classList.add(`team-${team}`);
+    selector.value = value;
+    selector.addEventListener('change', handleCustomColorListenerChange);
+    return selector;
+}
+
+document.getElementById('btn-reset').onclick = () => {
+    gameData.value = createEmptyGameData(rounds.value[activeRoundId.value].games.length);
 };
 
-function getButtons(id: number): HTMLButtonElement[] {
-    const noWinButton = document.querySelector('#no-win-toggle_' + id) as HTMLButtonElement;
-    const AWinButton = document.querySelector('#team-a-win-toggle_' + id) as HTMLButtonElement;
-    const BWinButton = document.querySelector('#team-b-win-toggle_' + id) as HTMLButtonElement;
-    return [noWinButton, AWinButton, BWinButton];
+function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
+    const noWinButton = document.querySelector(`#no-win-toggle_${id}`) as HTMLButtonElement;
+    const AWinButton = document.querySelector(`#team-a-win-toggle_${id}`) as HTMLButtonElement;
+    const BWinButton = document.querySelector(`#team-b-win-toggle_${id}`) as HTMLButtonElement;
+    return {
+        [GameWinner.NO_WINNER]: noWinButton,
+        [GameWinner.ALPHA]: AWinButton,
+        [GameWinner.BRAVO]: BWinButton
+    };
 }
 
-function disableWinButtons(gameWinnerValue: number[]) {
-    const currentRound = rounds.value[activeRoundId.value];
-
-    for (let i = 1; i < currentRound.games.length + 1; i++) {
-        const gameWinner = gameWinnerValue[i - 1];
-        const buttons = getButtons(i - 1);
-        for (let y = 0; y < buttons.length; y++) {
-            buttons[y].disabled = false;
-        }
+function disableWinButtons(gameData: GameData) {
+    for (let i = 0; i < gameData.length; i++) {
+        const gameWinner = gameData[i].winner;
+        const buttons = getButtons(i);
+        Object.values(buttons)
+            .forEach(button => {
+                button.disabled = false;
+            });
 
         buttons[gameWinner].disabled = true;
     }
@@ -208,19 +335,52 @@ function removeToggles() {
 
 roundUpdateButton.addEventListener('click', () => {
     const numberOfGames = rounds.value[activeRoundId.value].games.length;
-    const games = [];
+    const games: Game[] = [];
 
     for (let i = 0; i < numberOfGames; i++) {
-        const currentGame = {
-            stage: '',
-            mode: ''
-        };
+        const currentGame: Game = {};
+
         const stageSelector = document.getElementById(`stage-selector_${i}`) as HTMLSelectElement;
         currentGame.stage = stageSelector.value;
 
         const modeSelector = document.getElementById(`mode-selector_${i}`) as HTMLSelectElement;
         currentGame.mode = modeSelector.value;
         games.push(currentGame);
+
+        const colorSelector = document.getElementById(`color-selector_${i}`) as HTMLSelectElement;
+
+        if (colorSelector.dataset.source === 'gameInfo-edited') {
+            const colorSwapToggle = document.getElementById(`color-swap-toggle_${i}`) as HTMLInputElement;
+            const customColorToggle = document.getElementById(`custom-color-toggle_${i}`) as HTMLInputElement;
+
+            colorSelector.dataset.source = 'gameInfo';
+            colorSwapToggle.dataset.source = 'gameInfo';
+
+            if (customColorToggle.checked) {
+                const teamAColorInput = document.getElementById(`custom-color-selector_a_${i}`) as HTMLInputElement;
+                const teamBColorInput = document.getElementById(`custom-color-selector_b_${i}`) as HTMLInputElement;
+
+                gameData.value[i].color = {
+                    index: 999,
+                    title: 'Custom Color',
+                    clrA: teamAColorInput.value,
+                    clrB: teamBColorInput.value,
+                    categoryName: 'Custom Color',
+                    colorsSwapped: colorSwapToggle.checked
+                };
+            } else {
+                const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
+
+                gameData.value[i].color = {
+                    index: Number(colorOption.dataset.index),
+                    title: colorOption.text,
+                    clrA: colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
+                    clrB: colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
+                    categoryName: colorOption.dataset.categoryName,
+                    colorsSwapped: colorSwapToggle.checked
+                };
+            }
+        }
     }
 
     rounds.value[activeRoundId.value].games = games;

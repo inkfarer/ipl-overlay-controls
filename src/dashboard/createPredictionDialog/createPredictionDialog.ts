@@ -95,7 +95,7 @@ predictionWindowInput.addEventListener('input', function (event) {
 });
 
 createPredictionBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, predictionCreateStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionCreateStatusElem);
     nodecg.sendMessage('postPrediction', {
         title: predictionNameInput.value,
         outcomes: [
@@ -106,12 +106,12 @@ createPredictionBtn.onclick = () => {
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionCreateStatusElem);
             messageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionCreateStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionCreateStatusElem);
     });
 };
 

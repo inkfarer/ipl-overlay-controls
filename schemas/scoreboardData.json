@@ -8,28 +8,7 @@
         },
         "colorInfo": {
             "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "index": {
-                    "type": "number"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "clrA": {
-                    "type": "string"
-                },
-                "clrB": {
-                    "type": "string"
-                },
-                "categoryName": {
-                    "type": "string"
-                }
-            },
-            "required": ["index", "title", "clrA", "clrB", "categoryName"]
-        },
-        "swapColorOrder": {
-            "type": "boolean"
+            "$ref": "defs/color.json#/color"
         },
         "teamAInfo": {
             "type": "object",
@@ -38,8 +17,12 @@
         "teamBInfo": {
             "type": "object",
             "$ref": "defs/team.json#/team"
+        },
+        "isVisible": {
+            "type": "boolean"
         }
     },
+    "required": ["flavorText", "colorInfo", "teamAInfo", "teamBInfo", "isVisible"],
     "default": {
         "flavorText": "Flavor Text!",
         "colorInfo": {
@@ -49,24 +32,30 @@
             "clrB": "#7D28FC",
             "categoryName": "Ranked Modes"
         },
-        "swapColorOrder": false,
         "teamAInfo": {
-            "id": "000",
-            "name": "Placeholder Team 1",
+            "id": "AAA",
+            "name": "Placeholder Team A",
             "players": [
                 {
-                    "name": "Placeholder Player 1"
+                    "name": "Player 1"
+                },
+                {
+                    "name": "Player 2"
                 }
             ]
         },
         "teamBInfo": {
-            "id": "111",
-            "name": "Placeholder Team 2",
+            "id": "BBB",
+            "name": "Placeholder Team B",
             "players": [
                 {
-                    "name": "Placeholder Player 2"
+                    "name": "Player 3"
+                },
+                {
+                    "name": "Player 4"
                 }
             ]
-        }
+        },
+        "isVisible": true
     }
 }

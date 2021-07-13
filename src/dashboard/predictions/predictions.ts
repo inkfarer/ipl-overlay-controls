@@ -115,13 +115,13 @@ function updatePredictionDataDisplay(
 }
 
 getPredictionsBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, predictionDataStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionDataStatusElem);
     nodecg.sendMessage('getPredictions', {}, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionDataStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionDataStatusElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionDataStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionDataStatusElem);
     });
 };

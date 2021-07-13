@@ -5,31 +5,17 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type HighlightedMatch = {
-	meta: {
-		name: string;
-		/**
-		 * ID of the match, for Battlefy use _id
-		 */
-		id: string;
-		/**
-		 * Name of the stage match originates from
-		 */
-		stageName?: string;
-		/**
-		 * The time the set was completed at, null if yet to be completed, Stored in ISO format
-		 */
-		completionTime?: string;
-		/**
-		 * Round number from provider
-		 */
-		round?: number;
-		/**
-		 * Match number from provider
-		 */
-		match?: number;
+export interface ScoreboardData {
+	flavorText: string;
+	colorInfo: {
+		index: number;
+		title: string;
+		clrA: string;
+		clrB: string;
+		categoryName: string;
+		[k: string]: any;
 	};
-	teamA: {
+	teamAInfo: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -39,7 +25,7 @@ export type HighlightedMatch = {
 		}[];
 		[k: string]: any;
 	};
-	teamB: {
+	teamBInfo: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -49,4 +35,5 @@ export type HighlightedMatch = {
 		}[];
 		[k: string]: any;
 	};
-}[];
+	isVisible: boolean;
+}

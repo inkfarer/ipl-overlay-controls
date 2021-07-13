@@ -109,13 +109,13 @@ function autoResolveWinner(teamScoresValue: TeamScores,
 function resolvePrediction(index: number) {
     if (!predictionStore.value.currentPrediction?.id || index > 1 || index < 0) {
         // if no id (aka no prediction) don't event attempt to patch prediction
-        setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
+        setImportStatus(ImportStatus.FAILURE, predictionPatchStatusElem);
         warningMessageElem.innerText = 'No outcomes/prediction to resolve >.<';
         showElement(warningElem);
         return;
     }
     hideElement(warningElem);  // Hide an errors if we're showing any
-    setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
         status: 'RESOLVED',
@@ -123,12 +123,12 @@ function resolvePrediction(index: number) {
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionPatchStatusElem);
             warningMessageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionPatchStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionPatchStatusElem);
     });
 }
 

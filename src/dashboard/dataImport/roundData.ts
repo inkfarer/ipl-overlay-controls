@@ -7,18 +7,18 @@ const roundImportFileInput = document.getElementById('round-input-file-input') a
 const roundDataStatusElem = document.getElementById('round-data-submit-status');
 
 document.getElementById('round-import-submit').onclick = () => {
-    setImportStatus(ImportStatus.Loading, roundDataStatusElem);
+    setImportStatus(ImportStatus.LOADING, roundDataStatusElem);
 
     if (roundWebImportToggle.checked) {
         const listsURL = (document.getElementById('round-input-url-input') as HTMLInputElement).value;
         nodecg.sendMessage('getRounds', { url: listsURL }, e => {
             if (e) {
                 console.error(e);
-                setImportStatus(ImportStatus.Failure, roundDataStatusElem);
+                setImportStatus(ImportStatus.FAILURE, roundDataStatusElem);
                 return;
             }
 
-            setImportStatus(ImportStatus.Success, roundDataStatusElem);
+            setImportStatus(ImportStatus.SUCCESS, roundDataStatusElem);
         });
     } else {
         sendLocalFile('rounds', roundImportFileInput, roundDataStatusElem);

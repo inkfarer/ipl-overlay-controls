@@ -20,18 +20,15 @@
           "completionTime": {
             "description": "The time the set was completed at, null if yet to be completed, Stored in ISO format",
             "type": "string",
-            "format": "date-time",
-            "default": "None"
+            "format": "date-time"
           },
           "round": {
             "description": "Round number from provider",
-            "type": "integer",
-            "default": -1
+            "type": "integer"
           },
           "match": {
             "description": "Match number from provider",
-            "type": "integer",
-            "default": -1
+            "type": "integer"
           }
         },
         "required": ["name", "id"],

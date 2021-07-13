@@ -14,16 +14,16 @@ document.getElementById('lock-prediction-btn').addEventListener('confirm', () =>
         return;
     }
 
-    setImportStatus(ImportStatus.Loading, predictionRequestStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionRequestStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
         status: 'LOCKED',
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionRequestStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionRequestStatusElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionRequestStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionRequestStatusElem);
     });
 });
