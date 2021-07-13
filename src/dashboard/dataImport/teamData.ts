@@ -11,20 +11,23 @@ const methodSelector = document.getElementById('method-selector') as HTMLSelectE
 const teamDataFileInput = document.getElementById('team-input-file-input') as HTMLInputElement;
 const teamDataStatusElem = document.getElementById('team-data-submit-status');
 
-const methodData: { [key: string]: { dataTitle: string } } = {
-    battlefy: {
+const methodData: { [key in TournamentDataSource]: { dataTitle: string } } = {
+    [TournamentDataSource.BATTLEFY]: {
         dataTitle: 'Tournament ID'
     },
-    smashgg: {
+    [TournamentDataSource.SMASHGG]: {
         dataTitle: 'Tournament Slug'
     },
-    raw: {
+    [TournamentDataSource.UPLOAD]: {
         dataTitle: 'Data URL'
+    },
+    [TournamentDataSource.UNKNOWN]: {
+        dataTitle: '???'
     }
 };
 
 methodSelector.addEventListener('change', e => {
-    const method = (e.target as HTMLSelectElement).value;
+    const method = (e.target as HTMLSelectElement).value as TournamentDataSource;
 
     document.getElementById('tournament-id-input-title').innerText
         = methodData[method].dataTitle;
@@ -39,7 +42,7 @@ methodSelector.addEventListener('change', e => {
         'web-tournament-import-wrapper'
     );
 
-    if (method === 'raw') {
+    if (method === TournamentDataSource.UPLOAD) {
         webImportToggleContainer.style.display = '';
         if (!teamWebImportToggle.checked) {
             localTeamImportContainer.style.display = '';
