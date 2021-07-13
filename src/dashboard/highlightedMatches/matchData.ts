@@ -39,7 +39,7 @@ function getMatchFromID(id: string): Match | null {
 
 // When get match button is pressed
 getMatchesBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, matchDataStatusElem);
+    setImportStatus(ImportStatus.LOADING, matchDataStatusElem);
     const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
 
     // Send message to extension
@@ -50,7 +50,7 @@ getMatchesBtn.onclick = () => {
         // If we get an error
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, matchDataStatusElem);
+            setImportStatus(ImportStatus.FAILURE, matchDataStatusElem);
             return;
         }
         // If we get success

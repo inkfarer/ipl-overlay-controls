@@ -31,12 +31,12 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
                     if (data.length > 0) {
                         updateMatchReplicant(data);
                         ack(null, {
-                            status: ImportStatus.Success,
+                            status: ImportStatus.SUCCESS,
                             data: data
                         });
                     } else {
                         ack(null, {
-                            status: ImportStatus.NoData,
+                            status: ImportStatus.NO_DATA,
                             data: data
                         });
                     }

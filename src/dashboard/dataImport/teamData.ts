@@ -56,7 +56,7 @@ methodSelector.addEventListener('change', e => {
 });
 
 document.getElementById('submit-import').onclick = () => {
-    setImportStatus(ImportStatus.Loading, teamDataStatusElem);
+    setImportStatus(ImportStatus.LOADING, teamDataStatusElem);
     if (!teamWebImportToggle.checked && methodSelector.value === 'raw') {
         sendLocalFile('teams', teamDataFileInput, teamDataStatusElem);
     } else {
@@ -67,11 +67,11 @@ document.getElementById('submit-import').onclick = () => {
             }, e => {
                 if (e) {
                     console.error(e);
-                    setImportStatus(ImportStatus.Failure, teamDataStatusElem);
+                    setImportStatus(ImportStatus.FAILURE, teamDataStatusElem);
                     return;
                 }
 
-                setImportStatus(ImportStatus.Success, teamDataStatusElem);
+                setImportStatus(ImportStatus.SUCCESS, teamDataStatusElem);
             });
     }
 };

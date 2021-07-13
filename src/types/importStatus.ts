@@ -1,7 +1,7 @@
 export enum ImportStatus {
-    Success,
-    Loading,
-    Failure,
-    NoData,
-    NoStatus
+    SUCCESS,
+    LOADING,
+    FAILURE,
+    NO_DATA,
+    NO_STATUS
 }
