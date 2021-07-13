@@ -2,6 +2,7 @@ import { TournamentData } from 'schemas';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { sendLocalFile } from './postData';
+import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
@@ -57,12 +58,10 @@ document.getElementById('submit-import').onclick = () => {
         sendLocalFile('teams', teamDataFileInput, teamDataStatusElem);
     } else {
         nodecg.sendMessage(
-            'getTournamentData',
-            {
+            'getTournamentData', {
                 method: methodSelector.value,
                 id: (document.getElementById('tournament-id-input') as HTMLInputElement).value
-            },
-            e => {
+            }, e => {
                 if (e) {
                     console.error(e);
                     setImportStatus(ImportStatus.Failure, teamDataStatusElem);
@@ -70,8 +69,7 @@ document.getElementById('submit-import').onclick = () => {
                 }
 
                 setImportStatus(ImportStatus.Success, teamDataStatusElem);
-            }
-        );
+            });
     }
 };
 
@@ -88,5 +86,7 @@ teamWebImportToggle.onclick = e => {
 
 tournamentData.on('change', newValue => {
     document.getElementById('tournament-name').innerText = newValue.meta.name || 'No Name';
-    document.getElementById('tournament-id').innerText = `${newValue.meta.id} (${newValue.meta.source})`;
+
+    const formattedSource = TournamentDataSourceHelper.toPrettyString(newValue.meta.source as TournamentDataSource);
+    document.getElementById('tournament-id').innerText = `${newValue.meta.id} (${formattedSource})`;
 });

@@ -12,13 +12,11 @@ nextTeams.on('change', newValue => {
 });
 
 document.getElementById('update-next-teams-btn').onclick = () => {
-    const teamAInfo = tournamentData.value.data.filter(
-        team =>
-            team.id === (document.getElementById('next-team-a-selector') as HTMLSelectElement).value
+    const teamAInfo = tournamentData.value.teams.filter(team =>
+        team.id === (document.getElementById('next-team-a-selector') as HTMLSelectElement).value
     )[0];
-    const teamBInfo = tournamentData.value.data.filter(
-        team =>
-            team.id === (document.getElementById('next-team-b-selector') as HTMLSelectElement).value
+    const teamBInfo = tournamentData.value.teams.filter(team =>
+        team.id === (document.getElementById('next-team-b-selector') as HTMLSelectElement).value
     )[0];
 
     nextTeams.value.teamAInfo = teamAInfo;

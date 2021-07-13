@@ -6,31 +6,12 @@
  */
 
 export interface TournamentData {
-	meta?: {
+	meta: {
 		id: string;
-		source: string;
+		source: 'SMASHGG' | 'BATTLEFY' | 'UPLOAD';
 		name?: string;
-		/**
-		 * Stage/Bracket ID used by provider
-		 */
-		stages?: {
-			/**
-			 * Name of stage/bracket
-			 */
-			name?: string;
-			/**
-			 * ID of stage/bracket
-			 */
-			id?: string;
-			/**
-			 * The bracket type, swiss|elimination etc
-			 */
-			bracketType?: string;
-			[k: string]: any;
-		}[];
-		[k: string]: any;
 	};
-	data?: {
+	teams: {
 		id: string;
 		name: string;
 		logoUrl?: string;
@@ -40,5 +21,9 @@ export interface TournamentData {
 		}[];
 		[k: string]: any;
 	}[];
-	[k: string]: any;
+	stages?: {
+		name: string;
+		id: string;
+		type: 'SWISS' | 'SINGLE_ELIMINATION' | 'DOUBLE_ELIMINATION' | 'ROUND_ROBIN' | 'LADDER';
+	}[];
 }

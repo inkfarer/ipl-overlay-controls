@@ -6,6 +6,8 @@ import { generateId } from '../helpers/generateId';
 import { Team } from 'types/team';
 import { BattlefyTournamentData } from './types/battlefyTournamentData';
 import clone from 'clone';
+import { BracketType, BracketTypeHelper } from 'types/enums/bracketType';
+import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 
 const nodecg = nodecgContext.get();
 
@@ -60,7 +62,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
             getRaw(data.id)
                 .then(data => {
                     updateTeamDataReplicants(data);
-                    ack(null, data.id);
+                    ack(null, data.meta.id);
                 })
                 .catch(err => {
                     ack(err);
@@ -72,11 +74,11 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
 });
 
 export function updateTeamDataReplicants(data: TournamentData): void {
-    if (data.data.length <= 0) {
+    if (data.teams.length <= 0) {
         throw new Error('Tournament has no teams.');
     }
 
-    data.data.sort((a, b) => {
+    data.teams.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
 
@@ -93,21 +95,20 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 
     highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
 
-    const firstTeam = data.data[0];
-    const secondTeam = data.data[1] || data.data[0];
+    const firstTeam = data.teams[0];
+    const secondTeam = data.teams[1] || data.teams[0];
 
     scoreboardData.value.teamAInfo = clone(firstTeam);
     scoreboardData.value.teamBInfo = clone(secondTeam);
 
-    nextTeams.value.teamAInfo = clone(data.data[2] || firstTeam);
-    nextTeams.value.teamBInfo = clone(data.data[3] || secondTeam);
+    nextTeams.value.teamAInfo = clone(data.teams[2] || firstTeam);
+    nextTeams.value.teamBInfo = clone(data.teams[3] || secondTeam);
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
     const tournamentInfo = await getBattlefyTournamentInfo(id);
 
-    const requestURL
-        = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
+    const requestURL = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
         axios
             .get(requestURL)
@@ -119,23 +120,23 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                 }
 
                 // Process the stages in a tournament for rep
-                const tournamentStages: { name: string; id: string; bracketType: string}[] = [];
-                tournamentInfo.stages.forEach(function (value) {
+                const tournamentStages: { name: string; id: string; type: BracketType}[] = [];
+                tournamentInfo.stages.forEach(value => {
                     tournamentStages.push({
                         name: value.name,
                         id: value._id,
-                        bracketType: value.bracket.type
+                        type: BracketTypeHelper.fromBattlefy(value.bracket.type, value.bracket.style)
                     });
                 });
 
                 const teams: TournamentData = {
                     meta: {
                         id,
-                        source: 'Battlefy',
-                        name: tournamentInfo.name,
-                        stages: tournamentStages
+                        source: 'BATTLEFY',
+                        name: tournamentInfo.name
                     },
-                    data: []
+                    teams: [],
+                    stages: tournamentStages
                 };
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
@@ -154,7 +155,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                         teamInfo.players.push(playerInfo);
                     }
 
-                    teams.data.push(teamInfo);
+                    teams.teams.push(teamInfo);
                 }
 
                 resolve(teams);
@@ -180,12 +181,12 @@ async function getSmashGGData(slug: string, token: string): Promise<TournamentDa
                 const tourneyInfo: TournamentData = {
                     meta: {
                         id: slug,
-                        source: 'Smash.gg',
+                        source: TournamentDataSource.SMASHGG,
                         name: data.raw.data.tournament.name
                     },
-                    data: []
+                    teams: []
                 };
-                tourneyInfo.data = tourneyInfo.data.concat(data.pageInfo);
+                tourneyInfo.teams = tourneyInfo.teams.concat(data.pageInfo);
 
                 // If there are more pages, add them to our data set
                 if (data.raw.data.tournament.teams.pageInfo.totalPages > 1) {
@@ -197,7 +198,7 @@ async function getSmashGGData(slug: string, token: string): Promise<TournamentDa
                     const pages = await Promise.all(pagePromises);
 
                     for (let i = 0; i < pages.length; i++) {
-                        tourneyInfo.data = tourneyInfo.data.concat(pages[i].pageInfo);
+                        tourneyInfo.teams = tourneyInfo.teams.concat(pages[i].pageInfo);
                     }
                 }
 
@@ -316,17 +317,19 @@ async function getRaw(url: string): Promise<TournamentData> {
     });
 }
 
-export function handleRawData(data: Team[], dataUrl: string): TournamentData {
-    for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        element.id = generateId();
+export function handleRawData(teams: Team[], dataUrl: string): TournamentData {
+    for (let i = 0; i < teams.length; i++) {
+        const element = teams[i];
+        if (element.id == null) {
+            element.id = generateId();
+        }
     }
 
     return {
         meta: {
             id: dataUrl,
-            source: 'Uploaded file'
+            source: TournamentDataSource.UPLOAD
         },
-        data
+        teams
     };
 }

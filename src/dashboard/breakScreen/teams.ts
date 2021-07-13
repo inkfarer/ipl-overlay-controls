@@ -13,8 +13,8 @@ const teamBImageToggle = document.getElementById('team-b-image-toggle') as HTMLI
 
 tournamentData.on('change', newValue => {
     clearSelectors('team-selector');
-    for (let i = 0; i < newValue.data.length; i++) {
-        const element = newValue.data[i];
+    for (let i = 0; i < newValue.teams.length; i++) {
+        const element = newValue.teams[i];
         addSelector(addDots(element.name), 'team-selector', element.id);
     }
 });
@@ -25,8 +25,8 @@ nextTeams.on('change', newValue => {
 });
 
 nextTeamUpdateBtn.onclick = () => {
-    const teamAInfo = tournamentData.value.data.filter(team => team.id === nextTeamASelector.value)[0];
-    const teamBInfo = tournamentData.value.data.filter(team => team.id === nextTeamBSelector.value)[0];
+    const teamAInfo = tournamentData.value.teams.filter(team => team.id === nextTeamASelector.value)[0];
+    const teamBInfo = tournamentData.value.teams.filter(team => team.id === nextTeamBSelector.value)[0];
 
     nextTeams.value.teamAInfo = teamAInfo;
     nextTeams.value.teamBInfo = teamBInfo;

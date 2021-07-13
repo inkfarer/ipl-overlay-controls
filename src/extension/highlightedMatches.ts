@@ -25,7 +25,7 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
     }
 
     switch (tournamentData.value.meta.source) {
-        case 'Battlefy':
+        case 'BATTLEFY':
             getBattlefyMatches(data.stages, data.getAllStages)
                 .then(data => {
                     if (data.length > 0) {
@@ -99,7 +99,7 @@ function teamDataBuilder(teamData: MatchTeam): Team {
  * @param stages StageIDs of the stages to get highlighted matches from
  * @param getAllStages Get data for all stages
  */
-async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatch> {
+async function getBattlefyMatches(stages?: Array<string>, getAllStages?: boolean): Promise<HighlightedMatches> {
     const requestUrl = `https://api.battlefy.com/tournaments/${tournamentData.value.meta.id}`
         + '?extend[stages][$query][deletedAt][$exists]=false'
         + '&extend[stages][matches]=1'

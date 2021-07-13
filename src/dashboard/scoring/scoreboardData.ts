@@ -16,17 +16,17 @@ scoreboardData.on('change', newValue => {
 
 tournamentData.on('change', newValue => {
     clearSelectors('team-selector');
-    for (let i = 0; i < newValue.data.length; i++) {
-        const element = newValue.data[i];
+    for (let i = 0; i < newValue.teams.length; i++) {
+        const element = newValue.teams[i];
         addSelector(addDots(element.name), 'team-selector', element.id);
     }
 });
 
 document.getElementById('update-scoreboard-btn').addEventListener('click', () => {
-    const teamAInfo = tournamentData.value.data.filter(
+    const teamAInfo = tournamentData.value.teams.filter(
         team => team.id === (document.getElementById('team-a-selector') as HTMLSelectElement).value
     )[0];
-    const teamBInfo = tournamentData.value.data.filter(
+    const teamBInfo = tournamentData.value.teams.filter(
         team => team.id === (document.getElementById('team-b-selector') as HTMLSelectElement).value
     )[0];
 
