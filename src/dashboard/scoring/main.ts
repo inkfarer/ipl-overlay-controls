@@ -10,6 +10,7 @@ import './scoreboardData';
 import './colorEditor';
 import './nextTeams';
 import './colorToggles';
+import './teamSelectors';
 
 import '../styles/globalStyles.css';
 import './scoring.css';

@@ -1,7 +1,6 @@
 import { activeRound } from './replicants';
 
 activeRound.on('change', newValue => {
-    console.log(newValue);
     (document.getElementById('team-a-score-input') as HTMLInputElement).value = newValue.teamA.score.toString();
     (document.getElementById('team-b-score-input') as HTMLInputElement).value = newValue.teamB.score.toString();
 });

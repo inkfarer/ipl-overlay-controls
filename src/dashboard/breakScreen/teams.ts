@@ -11,17 +11,23 @@ const nextTeamUpdateBtn = document.getElementById('update-next-teams-btn') as HT
 const teamAImageToggle = document.getElementById('team-a-image-toggle') as HTMLInputElement;
 const teamBImageToggle = document.getElementById('team-b-image-toggle') as HTMLInputElement;
 
+function updateNextTeamSelectors(nextTeams: NextTeams): void {
+    nextTeamASelector.value = nextTeams.teamAInfo.id;
+    nextTeamBSelector.value = nextTeams.teamBInfo.id;
+}
+
 tournamentData.on('change', newValue => {
     clearSelectors('team-selector');
     for (let i = 0; i < newValue.teams.length; i++) {
         const element = newValue.teams[i];
         addSelector(addDots(element.name), 'team-selector', element.id);
     }
+
+    updateNextTeamSelectors(nextTeams.value);
 });
 
 nextTeams.on('change', newValue => {
-    nextTeamASelector.value = newValue.teamAInfo.id;
-    nextTeamBSelector.value = newValue.teamBInfo.id;
+    updateNextTeamSelectors(newValue);
 });
 
 nextTeamUpdateBtn.onclick = () => {

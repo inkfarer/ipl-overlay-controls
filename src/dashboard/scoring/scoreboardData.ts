@@ -1,10 +1,10 @@
-import { addChangeReminder, addDots, addSelector, clearSelectors, setToggleButtonDisabled } from '../globalScripts';
-import { activeRound, scoreboardData, tournamentData } from './replicants';
+import { addChangeReminder, setToggleButtonDisabled } from '../globalScripts';
+import { activeRound,  scoreboardData, tournamentData } from './replicants';
 import { Team } from 'types/team';
+import { updateTeamSelectors } from './teamSelectors';
 
 activeRound.on('change', newValue => {
-    (document.getElementById('team-a-selector') as HTMLSelectElement).value = newValue.teamA.id;
-    (document.getElementById('team-b-selector') as HTMLSelectElement).value = newValue.teamB.id;
+    updateTeamSelectors(newValue);
 });
 
 scoreboardData.on('change', newValue => {
@@ -15,14 +15,6 @@ scoreboardData.on('change', newValue => {
         document.getElementById('hide-scoreboard-btn') as HTMLButtonElement,
         newValue.isVisible
     );
-});
-
-tournamentData.on('change', newValue => {
-    clearSelectors('team-selector');
-    for (let i = 0; i < newValue.teams.length; i++) {
-        const element = newValue.teams[i];
-        addSelector(addDots(element.name), 'team-selector', element.id);
-    }
 });
 
 document.getElementById('update-scoreboard-btn').addEventListener('click', () => {

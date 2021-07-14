@@ -1,14 +1,9 @@
-import { NextTeams } from 'schemas';
-import { scoreboardData, teamScores, tournamentData } from './replicants';
+import { nextTeams, scoreboardData, teamScores, tournamentData } from './replicants';
 import { addChangeReminder } from '../globalScripts';
-
-const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
+import { updateNextTeamSelectors } from './teamSelectors';
 
 nextTeams.on('change', newValue => {
-    (document.getElementById('next-team-a-selector') as HTMLSelectElement).value
-        = newValue.teamAInfo.id;
-    (document.getElementById('next-team-b-selector') as HTMLSelectElement).value
-        = newValue.teamBInfo.id;
+    updateNextTeamSelectors(newValue);
 });
 
 document.getElementById('update-next-teams-btn').onclick = () => {
