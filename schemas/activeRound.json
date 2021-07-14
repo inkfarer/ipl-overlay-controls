@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
     "additionalProperties": false,
-    "required": ["teamA", "teamB", "games"],
+    "required": ["teamA", "teamB", "games", "activeColor"],
     "properties": {
         "teamA": {
             "type": "object",
@@ -14,10 +14,15 @@
                     "properties": {
                         "score": {
                             "type": "number"
+                        },
+                        "color": {
+                            "type": "string",
+                            "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
                         }
                     },
                     "required": [
-                        "score"
+                        "score",
+                        "color"
                     ]
                 }
             ]
@@ -32,13 +37,34 @@
                     "properties": {
                         "score": {
                             "type": "number"
+                        },
+                        "color": {
+                            "type": "string",
+                            "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
                         }
                     },
                     "required": [
-                        "score"
+                        "score",
+                        "color"
                     ]
                 }
             ]
+        },
+        "activeColor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "categoryName": {
+                    "type": "string"
+                }
+            },
+            "required": ["index", "title", "categoryName"]
         },
         "games": {
             "type": "array",
@@ -92,6 +118,7 @@
             "id": "AAA",
             "name": "Placeholder Team A",
             "score": 0,
+            "color": "#37FC00",
             "players": [
                 {
                     "name": "Player 1"
@@ -105,6 +132,7 @@
             "id": "BBB",
             "name": "Placeholder Team B",
             "score": 0,
+            "color": "#7D28FC",
             "players": [
                 {
                     "name": "Player 3"
@@ -113,6 +141,11 @@
                     "name": "Player 4"
                 }
             ]
+        },
+        "activeColor": {
+            "index": 0,
+            "title": "Green vs Grape",
+            "categoryName": "Ranked Modes"
         },
         "games": [
             {

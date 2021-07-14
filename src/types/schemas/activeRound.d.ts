@@ -17,6 +17,7 @@ export interface ActiveRound {
 		[k: string]: any;
 	} & {
 		score: number;
+		color: string;
 		[k: string]: any;
 	};
 	teamB: {
@@ -30,7 +31,13 @@ export interface ActiveRound {
 		[k: string]: any;
 	} & {
 		score: number;
+		color: string;
 		[k: string]: any;
+	};
+	activeColor: {
+		index: number;
+		title: string;
+		categoryName: string;
 	};
 	games: {
 		winner: 'none' | 'alpha' | 'bravo';

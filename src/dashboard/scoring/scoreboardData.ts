@@ -1,11 +1,14 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, setToggleButtonDisabled } from '../globalScripts';
-import { scoreboardData, tournamentData } from './replicants';
+import { activeRound, scoreboardData, tournamentData } from './replicants';
+import { Team } from 'types/team';
+
+activeRound.on('change', newValue => {
+    (document.getElementById('team-a-selector') as HTMLSelectElement).value = newValue.teamA.id;
+    (document.getElementById('team-b-selector') as HTMLSelectElement).value = newValue.teamB.id;
+});
 
 scoreboardData.on('change', newValue => {
     (document.getElementById('flavor-text-input') as HTMLInputElement).value = newValue.flavorText;
-
-    (document.getElementById('team-a-selector') as HTMLSelectElement).value = newValue.teamAInfo.id;
-    (document.getElementById('team-b-selector') as HTMLSelectElement).value = newValue.teamBInfo.id;
 
     setToggleButtonDisabled(
         document.getElementById('show-scoreboard-btn') as HTMLButtonElement,
@@ -23,17 +26,26 @@ tournamentData.on('change', newValue => {
 });
 
 document.getElementById('update-scoreboard-btn').addEventListener('click', () => {
-    const teamAInfo = tournamentData.value.teams.filter(
-        team => team.id === (document.getElementById('team-a-selector') as HTMLSelectElement).value
-    )[0];
-    const teamBInfo = tournamentData.value.teams.filter(
-        team => team.id === (document.getElementById('team-b-selector') as HTMLSelectElement).value
-    )[0];
+    const teamAInfo = getTeam((document.getElementById('team-a-selector') as HTMLSelectElement).value);
+    const teamBInfo = getTeam((document.getElementById('team-b-selector') as HTMLSelectElement).value);
 
-    scoreboardData.value.teamAInfo = teamAInfo;
-    scoreboardData.value.teamBInfo = teamBInfo;
+    activeRound.value.teamA = {
+        ...activeRound.value.teamA,
+        ...teamAInfo
+    };
+    activeRound.value.teamB = {
+        ...activeRound.value.teamB,
+        ...teamBInfo
+    };
+
     scoreboardData.value.flavorText = (document.getElementById('flavor-text-input') as HTMLInputElement).value;
 });
+
+function getTeam(id: string): Team {
+    return tournamentData.value.teams.filter(
+        team => team.id === id
+    )[0];
+}
 
 addChangeReminder(
     document.querySelectorAll('.scoreboard-update-warning'),

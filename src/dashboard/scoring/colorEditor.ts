@@ -1,4 +1,4 @@
-import { scoreboardData, swapColorsInternally } from './replicants';
+import { activeRound, swapColorsInternally } from './replicants';
 import { ColorInfo } from 'types/colorInfo';
 import { fillColorSelector, getColorOptionName } from '../helpers/colorHelper';
 
@@ -7,15 +7,15 @@ const colorSelector = <HTMLSelectElement> document.getElementById('color-selecto
 
 fillColorSelector(colorSelector);
 
-scoreboardData.on('change', newValue => {
-    colorSelector.value = getColorOptionName(newValue.colorInfo, newValue.colorInfo.categoryName);
+activeRound.on('change', newValue => {
+    colorSelector.value = getColorOptionName(newValue.activeColor.index, newValue.activeColor.categoryName);
 
-    document.getElementById('team-a-color-display').style.backgroundColor = newValue.colorInfo.clrA;
-    document.getElementById('team-b-color-display').style.backgroundColor = newValue.colorInfo.clrB;
-    (document.getElementById('team-a-custom-color') as HTMLInputElement).value = newValue.colorInfo.clrA;
-    (document.getElementById('team-b-custom-color') as HTMLInputElement).value = newValue.colorInfo.clrB;
+    document.getElementById('team-a-color-display').style.backgroundColor = newValue.teamA.color;
+    document.getElementById('team-b-color-display').style.backgroundColor = newValue.teamB.color;
+    (document.getElementById('team-a-custom-color') as HTMLInputElement).value = newValue.teamA.color;
+    (document.getElementById('team-b-custom-color') as HTMLInputElement).value = newValue.teamB.color;
 
-    const customColorEnabled = newValue.colorInfo.index === 999;
+    const customColorEnabled = newValue.activeColor.index === 999;
     customColorToggle.checked = customColorEnabled;
     updateCustomColorToggle(customColorEnabled);
 });
@@ -63,8 +63,15 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
         };
     }
 
-    scoreboardData.value.colorInfo = {
-        ...clrInfo,
-        categoryName: isCustomColor ? 'Custom Color' : colorOption.dataset.categoryName
+    const newActiveRound = activeRound.value;
+
+    newActiveRound.activeColor = {
+        categoryName: isCustomColor ? 'Custom Color' : colorOption.dataset.categoryName,
+        index: clrInfo.index,
+        title: clrInfo.title
     };
+    newActiveRound.teamA.color = clrInfo.clrA;
+    newActiveRound.teamB.color = clrInfo.clrB;
+
+    activeRound.value = newActiveRound;
 });

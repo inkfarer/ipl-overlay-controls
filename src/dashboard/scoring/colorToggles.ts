@@ -1,4 +1,4 @@
-import { scoreboardData, swapColorsInternally } from './replicants';
+import { activeRound, swapColorsInternally } from './replicants';
 import { ColorGroup } from 'types/colorGroup';
 import { ColorInfo } from 'types/colorInfo';
 import { colors } from '../../helpers/splatoonData';
@@ -6,18 +6,18 @@ import { colors } from '../../helpers/splatoonData';
 const colorToggleNext = document.getElementById('color-toggle-next');
 const colorTogglePrevious = document.getElementById('color-toggle-prev');
 
-scoreboardData.on('change', newValue => {
-    if (newValue.colorInfo.categoryName === 'Custom Color') {
+activeRound.on('change', newValue => {
+    if (newValue.activeColor.categoryName === 'Custom Color') {
         return disableToggles();
     } else {
         enableToggles();
     }
 
     const selectedGroup: ColorGroup = colors.filter(group => {
-        return group.meta.name === newValue.colorInfo.categoryName;
+        return group.meta.name === newValue.activeColor.categoryName;
     })[0];
 
-    const selectedIndex = newValue.colorInfo.index;
+    const selectedIndex = newValue.activeColor.index;
     const length = selectedGroup.colors.length;
 
     let nextColor = selectedGroup.colors.filter(color => {
@@ -58,11 +58,19 @@ colorToggleNext.addEventListener('click', handleColorToggleClick);
 
 function handleColorToggleClick(e: MouseEvent): void {
     const color: ColorInfo = JSON.parse((e.target as HTMLElement).dataset.colorInfo);
-    if (scoreboardData.value.colorInfo.index === color.index) return;
-    scoreboardData.value.colorInfo = {
-        ...color,
-        categoryName: (e.target as HTMLElement).dataset.categoryName
+    if (activeRound.value.activeColor.index === color.index) return;
+
+    const newValue = activeRound.value;
+
+    newValue.teamA.color = color.clrA;
+    newValue.teamB.color = color.clrB;
+    newValue.activeColor = {
+        ...activeRound.value.activeColor,
+        index: color.index,
+        title: color.title
     };
+
+    activeRound.value = newValue;
 }
 
 function disableToggles(): void {

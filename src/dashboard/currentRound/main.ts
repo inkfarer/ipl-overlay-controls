@@ -102,7 +102,7 @@ function updateColorData(gameData: GameData) {
             const colorData = dataElem.color ? dataElem.color : scoreboardData.value.colorInfo;
             const colorSource = dataElem.color ? 'gameInfo' : 'scoreboard';
 
-            colorSelect.value = getColorOptionName(colorData, colorData.categoryName);
+            colorSelect.value = getColorOptionName(colorData.index, colorData.categoryName);
             colorSelect.dataset.source = colorSource;
             colorSwapToggle.dataset.source = colorSource;
             colorSwapToggle.checked = dataElem.color ? dataElem.color.colorsSwapped : swapColorsInternally.value;
@@ -181,7 +181,7 @@ function addToggle(roundElement: Game, stageIndex: number) {
     setToggleElementIdAndClass(colorSelector, 'color-selector', stageIndex);
     fillColorSelector(colorSelector);
     colorSelector.dataset.source = colorSource;
-    colorSelector.value = getColorOptionName(colorData, colorData.categoryName);
+    colorSelector.value = getColorOptionName(colorData.index, colorData.categoryName);
     colorSelector.style.display = colorData.index === 999 ? 'none' : '';
     colorSelector.addEventListener('change', handleColorSelectorChange);
 

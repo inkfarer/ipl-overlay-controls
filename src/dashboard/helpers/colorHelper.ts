@@ -1,5 +1,4 @@
 import { colors } from '../../helpers/splatoonData';
-import { ColorInfo } from 'types/colorInfo';
 
 export function fillColorSelector(select: HTMLSelectElement): void {
     for (let i = 0; i < colors.length; i++) {
@@ -12,7 +11,7 @@ export function fillColorSelector(select: HTMLSelectElement): void {
             const color = element.colors[j];
 
             const option = document.createElement('option');
-            option.value = getColorOptionName(color, element.meta.name);
+            option.value = getColorOptionName(color.index, element.meta.name);
             option.text = color.title;
             option.dataset.index = String(color.index);
             option.dataset.firstColor = color.clrA;
@@ -32,8 +31,8 @@ export function formatColorCategoryName(name: string): string {
     return name.replace(' ', '-').toLowerCase();
 }
 
-export function getColorOptionName(color: ColorInfo, categoryName: string): string {
-    return `${formatColorCategoryName(categoryName)}_${color.index}`;
+export function getColorOptionName(index: number, categoryName: string): string {
+    return `${formatColorCategoryName(categoryName)}_${index}`;
 }
 
 export function getContrastingTextColor(backgroundColor: string): string {

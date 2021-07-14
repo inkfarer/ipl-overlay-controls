@@ -1,19 +1,15 @@
 import * as nodecgContext from './util/nodecg';
-import { ScoreboardData, SwapColorsInternally } from 'schemas';
+import { ActiveRound, SwapColorsInternally } from 'schemas';
 
 const nodecg = nodecgContext.get();
 
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
+const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 
 swapColorsInternally.on('change', (newValue, oldValue) => {
     if (oldValue !== undefined) {
-        const { colorInfo } = scoreboardData.value;
-
-        scoreboardData.value.colorInfo = {
-            ...scoreboardData.value.colorInfo,
-            clrA: colorInfo.clrB,
-            clrB: colorInfo.clrA
-        };
+        const clrA = activeRound.value.teamA.color;
+        activeRound.value.teamA.color = activeRound.value.teamB.color;
+        activeRound.value.teamB.color = clrA;
     }
 });
