@@ -129,13 +129,14 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "axios": "^0.21.1",
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
-        "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/free-solid-svg-icons": "^5.15.3"
+        "semver": "^7.3.5"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
