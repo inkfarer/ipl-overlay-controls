@@ -1,4 +1,5 @@
 export * from './activeBreakScene';
+export * from './activeRound';
 export * from './activeRoundId';
 export * from './casters';
 export * from './gameData';

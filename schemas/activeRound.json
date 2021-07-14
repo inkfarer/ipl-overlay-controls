@@ -1,0 +1,159 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["teamA", "teamB", "games"],
+    "properties": {
+        "teamA": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "defs/team.json#/team"
+                },
+                {
+                    "properties": {
+                        "score": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "score"
+                    ]
+                }
+            ]
+        },
+        "teamB": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "defs/team.json#/team"
+                },
+                {
+                    "properties": {
+                        "score": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "score"
+                    ]
+                }
+            ]
+        },
+        "games": {
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "winner": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "alpha",
+                            "bravo"
+                        ]
+                    },
+                    "stage": {
+                        "type": "string"
+                    },
+                    "mode": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "defs/color.json#/color"
+                            },
+                            {
+                                "properties": {
+                                    "colorsSwapped": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "colorsSwapped"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "winner",
+                    "stage",
+                    "mode"
+                ]
+            }
+        }
+    },
+    "default": {
+        "teamA": {
+            "id": "AAA",
+            "name": "Placeholder Team A",
+            "score": 0,
+            "players": [
+                {
+                    "name": "Player 1"
+                },
+                {
+                    "name": "Player 2"
+                }
+            ]
+        },
+        "teamB": {
+            "id": "BBB",
+            "name": "Placeholder Team B",
+            "score": 0,
+            "players": [
+                {
+                    "name": "Player 3"
+                },
+                {
+                    "name": "Player 4"
+                }
+            ]
+        },
+        "games": [
+            {
+                "winner": "none",
+                "color": {
+                    "index": 0,
+                    "title": "Green vs Grape",
+                    "clrA": "#37FC00",
+                    "clrB": "#7D28FC",
+                    "categoryName": "Ranked Modes",
+                    "colorsSwapped": false
+                },
+                "stage": "Blackbelly Skatepark",
+                "mode": "Rainmaker"
+            },
+            {
+                "winner": "none",
+                "color": {
+                    "index": 1,
+                    "title": "Green vs Magenta",
+                    "clrA": "#04D976",
+                    "clrB": "#D600AB",
+                    "categoryName": "Ranked Modes",
+                    "colorsSwapped": false
+                },
+                "stage": "MakoMart",
+                "mode": "Tower Control"
+            },
+            {
+                "winner": "none",
+                "color": {
+                    "index": 2,
+                    "title": "Turquoise vs Orange",
+                    "clrA": "#10E38F",
+                    "clrB": "#FB7B08",
+                    "categoryName": "Ranked Modes",
+                    "colorsSwapped": false
+                },
+                "stage": "Starfish Mainstage",
+                "mode": "Clam Blitz"
+            }
+        ]
+    }
+}
