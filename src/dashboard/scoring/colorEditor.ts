@@ -42,7 +42,6 @@ document.getElementById('swap-color-order-btn').addEventListener('click', () => 
 });
 
 document.getElementById('update-scoreboard-btn').addEventListener('click', () => {
-    console.log(swapColorsInternally.value);
     const colorOption = <HTMLOptionElement> colorSelector.options[colorSelector.selectedIndex];
 
     let clrInfo: ColorInfo;
