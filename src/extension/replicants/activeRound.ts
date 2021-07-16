@@ -1,5 +1,5 @@
 import * as nodecgContext from '../util/nodecg';
-import { ActiveRound, Rounds, SwapColorsInternally } from 'schemas';
+import { ActiveRound, Game, Rounds, SwapColorsInternally } from 'schemas';
 import { SetActiveRoundRequest, SetWinnerRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
@@ -115,13 +115,18 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
     }
 });
 
+function getRoundValuesFromActiveRound(activeRound: ActiveRound): Game[] {
+    return activeRound.games.map(game => ({ stage: game.stage, mode: game.mode }));
+}
+
 rounds.on('change', (newValue, oldValue) => {
-    if (!oldValue) return;
-
     const newActiveRound = newValue[activeRound.value.round.id];
-    const oldActiveRound = oldValue[activeRound.value.round.id];
+    if (!oldValue || !newActiveRound) return;
 
-    if (!isEqual(newActiveRound, oldActiveRound)) {
+    const oldActiveRound = oldValue[activeRound.value.round.id];
+    const activeRoundGames = getRoundValuesFromActiveRound(activeRound.value);
+
+    if (!isEqual(newActiveRound, oldActiveRound) && !isEqual(newActiveRound.games, activeRoundGames)) {
         const newRound = clone(activeRound.value);
         newRound.round.name = newActiveRound.meta.name;
         newRound.games = newActiveRound.games.map((game, index) => {
@@ -133,5 +138,17 @@ rounds.on('change', (newValue, oldValue) => {
         });
 
         activeRound.value = newRound;
+    }
+});
+
+activeRound.on('change', (newValue, oldValue) => {
+    if (!oldValue) return;
+
+    const newWatchedValues = getRoundValuesFromActiveRound(newValue);
+    if (!isEqual(newWatchedValues, getRoundValuesFromActiveRound(oldValue))) {
+        rounds.value[newValue.round.id] = {
+            ...rounds.value[newValue.round.id],
+            games: newWatchedValues
+        };
     }
 });
