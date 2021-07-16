@@ -39,7 +39,10 @@ export interface ActiveRound {
 		title: string;
 		categoryName: string;
 	};
-	roundId: string;
+	round: {
+		id: string;
+		name: string;
+	};
 	games: {
 		winner: 'none' | 'alpha' | 'bravo';
 		stage: string;

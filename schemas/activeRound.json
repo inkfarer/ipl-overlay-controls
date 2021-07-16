@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
     "additionalProperties": false,
-    "required": ["teamA", "teamB", "games", "activeColor", "roundId"],
+    "required": ["teamA", "teamB", "games", "activeColor", "round"],
     "properties": {
         "teamA": {
             "type": "object",
@@ -66,8 +66,18 @@
             },
             "required": ["index", "title", "categoryName"]
         },
-        "roundId": {
-            "type": "string"
+        "round": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["id", "name"]
         },
         "games": {
             "type": "array",
@@ -150,7 +160,10 @@
             "title": "Green vs Grape",
             "categoryName": "Ranked Modes"
         },
-        "roundId": "0",
+        "round": {
+            "id": "0",
+            "name": "Default Round"
+        },
         "games": [
             {
                 "winner": "none",

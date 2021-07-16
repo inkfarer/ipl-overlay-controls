@@ -14,7 +14,10 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
 
     if (selectedRound) {
         const newValue = activeRound.value;
-        newValue.roundId = data.roundId;
+        newValue.round = {
+            id: data.roundId,
+            name: selectedRound.meta.name
+        };
         newValue.teamA.score = 0;
         newValue.teamB.score = 0;
 
