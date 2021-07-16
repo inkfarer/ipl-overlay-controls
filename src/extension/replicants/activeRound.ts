@@ -115,7 +115,7 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
     }
 });
 
-function getRoundValuesFromActiveRound(activeRound: ActiveRound): Game[] {
+function getGamesFromActiveRound(activeRound: ActiveRound): Game[] {
     return activeRound.games.map(game => ({ stage: game.stage, mode: game.mode }));
 }
 
@@ -124,7 +124,7 @@ rounds.on('change', (newValue, oldValue) => {
     if (!oldValue || !newActiveRound) return;
 
     const oldActiveRound = oldValue[activeRound.value.round.id];
-    const activeRoundGames = getRoundValuesFromActiveRound(activeRound.value);
+    const activeRoundGames = getGamesFromActiveRound(activeRound.value);
 
     if (!isEqual(newActiveRound, oldActiveRound) && !isEqual(newActiveRound.games, activeRoundGames)) {
         const newRound = clone(activeRound.value);
@@ -144,11 +144,13 @@ rounds.on('change', (newValue, oldValue) => {
 activeRound.on('change', (newValue, oldValue) => {
     if (!oldValue) return;
 
-    const newWatchedValues = getRoundValuesFromActiveRound(newValue);
-    if (!isEqual(newWatchedValues, getRoundValuesFromActiveRound(oldValue))) {
+    const newGames = getGamesFromActiveRound(newValue);
+    if (!isEqual(newGames, getGamesFromActiveRound(oldValue))) {
         rounds.value[newValue.round.id] = {
-            ...rounds.value[newValue.round.id],
-            games: newWatchedValues
+            meta: {
+                name: newValue.round.name
+            },
+            games: newGames
         };
     }
 });
