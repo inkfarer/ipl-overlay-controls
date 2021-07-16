@@ -4,6 +4,8 @@
 
 .score-space .layout.vertical button {
     width: 35px;
+    font-size: 1.3em;
+    padding: 5px 3px 3px;
 }
 
 .score-space input {
@@ -11,7 +13,6 @@
     font-size: 3em;
     text-align: center;
     margin: 0 5px;
-    width: 57px;
 }
 
 .select-container {

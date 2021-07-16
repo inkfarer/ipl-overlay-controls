@@ -1,13 +1,19 @@
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+
 import { activeRound } from './replicants';
 import { ActiveRoundGame } from 'types/activeRoundGame';
-
-import './roundUpdater';
-
-import '../styles/globalStyles.css';
-import './currentRound.css';
 import { addToggle } from './toggleCreator';
 import { updateToggles } from './toggleUpdater';
 import { SetActiveRoundRequest } from 'types/messages/activeRound';
+
+import '../styles/globalStyles.css';
+import './currentRound.css';
+
+import './roundUpdater';
+
+library.add(faTimes);
+dom.watch();
 
 export const roundNameElem = document.getElementById('round-name');
 export const enableColorEditToggle = document.getElementById('enable-color-edit-toggle') as HTMLInputElement;

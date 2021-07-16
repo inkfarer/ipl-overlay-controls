@@ -141,8 +141,8 @@ function createWinButton(toggleType: GameWinner,
 
     button.id = `${buttonClass}_${index}`;
 
-    button.innerText = {
-        [GameWinner.NO_WINNER]: '✖',
+    button.innerHTML = {
+        [GameWinner.NO_WINNER]: '<i class="fas fa-times"></i>',
         [GameWinner.ALPHA]: 'A',
         [GameWinner.BRAVO]: 'B'
     }[toggleType];
