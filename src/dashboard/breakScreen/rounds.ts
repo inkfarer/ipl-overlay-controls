@@ -1,18 +1,14 @@
 import { addChangeReminder, clearSelectors } from '../globalScripts';
-import { ActiveRoundId, Rounds } from 'schemas';
+import { ActiveRound, Rounds } from 'schemas';
 import { SetActiveRoundRequest } from 'types/messages/activeRound';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
-const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
+const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 
 const currentStageUpdateButton = document.getElementById('current-round-update-btn') as HTMLButtonElement;
 const roundSelector = document.getElementById('round-selector') as HTMLSelectElement;
 
-NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
-    activeRoundId.on('change', newValue => {
-        roundSelector.value = newValue;
-    });
-
+NodeCG.waitForReplicants(rounds, activeRound).then(() => {
     rounds.on('change', newValue => {
         clearSelectors('round-selector');
         for (const [key, value] of Object.entries(newValue)) {
@@ -22,7 +18,11 @@ NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
             roundSelector.appendChild(opt);
         }
 
-        roundSelector.value = activeRoundId.value;
+        roundSelector.value = activeRound.value.round.id;
+    });
+
+    activeRound.on('change', newValue => {
+        roundSelector.value = newValue.round.id;
     });
 });
 
