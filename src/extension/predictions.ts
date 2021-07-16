@@ -6,7 +6,7 @@ import { Prediction } from 'types/prediction';
 import { GuildServices } from './types/radiaApi';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { PredictionStatus } from 'types/predictionStatus';
-import { Configschema } from '../../schemas/configschema';
+import { Configschema } from 'types/schemas/configschema';
 
 const nodecg = nodecgContext.get();
 
