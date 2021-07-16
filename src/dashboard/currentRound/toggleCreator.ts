@@ -8,10 +8,11 @@ import {
     handleColorSwapToggleChange,
     handleCustomColorListenerChange, toggleCustomColorSelectorVisibility
 } from './toggleHelper';
-import { activeRound, swapColorsInternally } from './replicants';
+import { swapColorsInternally } from './replicants';
 import { addClasses, appendChildren } from '../helpers/elemHelper';
 import { GameWinner } from 'types/gameWinner';
 import { enableColorEditToggle } from './main';
+import { SetWinnerRequest } from 'types/messages/activeRound';
 
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
@@ -148,7 +149,7 @@ function createWinButton(toggleType: GameWinner,
 
     button.addEventListener('click', event => {
         const stageIndex = parseInt((event.target as HTMLButtonElement).id.split('_')[1], 10);
-        activeRound.value.games[stageIndex].winner = toggleType;
+        nodecg.sendMessage('setWinner', { winner: toggleType, roundIndex: stageIndex } as SetWinnerRequest);
     });
 
     return button;

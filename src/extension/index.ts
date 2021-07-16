@@ -11,8 +11,6 @@ export default (nodecg: NodeCG): void => {
     require('./importers/roundImporter');
     require('./importers/fileImport');
     require('./importers/highlightedMatches');
-    require('./replicants/gameData');
-    require('./replicants/colorData');
     require('./replicants/activeRound');
     require('./versionChecker');
 
