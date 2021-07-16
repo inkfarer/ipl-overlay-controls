@@ -1,5 +1,7 @@
-import { updateButtonColors } from './main';
-import { gameData, swapColorsInternally } from './replicants';
+import { activeRound, swapColorsInternally } from './replicants';
+import { GameWinner } from 'types/gameWinner';
+import { getContrastingTextColor } from '../helpers/colorHelper';
+import { ColorInfo } from 'types/colorInfo';
 
 export function handleCustomColorListenerChange(event: Event): void {
     const index = parseInt((event.target as HTMLInputElement).id.split('_')[2], 10);
@@ -37,8 +39,8 @@ export function handleColorSwapToggleChange(event: Event): void {
         swapColorsInternally.value = target.checked;
     } else if (target.dataset.source === 'gameInfo') {
         const toggleIndex = parseInt(target.id.split('_')[1], 10);
-        const existingColor = gameData.value[toggleIndex].color;
-        gameData.value[toggleIndex].color = {
+        const existingColor = activeRound.value.games[toggleIndex].color;
+        activeRound.value.games[toggleIndex].color = {
             ...existingColor,
             colorsSwapped: !existingColor.colorsSwapped,
             clrA: existingColor.clrB,
@@ -68,4 +70,39 @@ export function handleColorSwapToggleChange(event: Event): void {
                 target.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
         }
     }
+}
+
+export function toggleCustomColorSelectorVisibility(index: number, isCustomColor: boolean): void {
+    const customColorSelectWrapper = document.getElementById(`custom-color-select-wrapper_${index}`);
+    const colorSelect = document.getElementById(`color-selector_${index}`);
+    const toggle = document.getElementById(`custom-color-toggle_${index}`) as HTMLInputElement;
+
+    toggle.checked = isCustomColor;
+    customColorSelectWrapper.style.display = isCustomColor ? '' : 'none';
+    colorSelect.style.display = isCustomColor ? 'none' : '';
+}
+
+export function updateButtonColors(index: number, clrA: string, clrB: string): void {
+    const buttons = getButtons(index);
+    buttons[GameWinner.ALPHA].style.backgroundColor = clrA;
+    buttons[GameWinner.ALPHA].style.color = getContrastingTextColor(clrA);
+
+    buttons[GameWinner.BRAVO].style.backgroundColor = clrB;
+    buttons[GameWinner.BRAVO].style.color = getContrastingTextColor(clrB);
+}
+
+export function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
+    return {
+        [GameWinner.NO_WINNER]: document.getElementById(`no-win-toggle_${id}`) as HTMLButtonElement,
+        [GameWinner.ALPHA]: document.getElementById(`team-a-win-toggle_${id}`) as HTMLButtonElement,
+        [GameWinner.BRAVO]: document.getElementById(`team-b-win-toggle_${id}`) as HTMLButtonElement
+    };
+}
+
+export function getActiveRoundColors(): ColorInfo & { categoryName: string } {
+    return {
+        ...activeRound.value.activeColor,
+        clrA: activeRound.value.teamA.color,
+        clrB: activeRound.value.teamB.color
+    };
 }

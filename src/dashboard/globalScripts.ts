@@ -41,12 +41,17 @@ export function addChangeReminder(
         else if (element.tagName.toLowerCase() === 'select') event = 'change';
         else return;
 
-        element.addEventListener(event, () => {
+        element.addEventListener(event, e => {
+            const target = e.target as HTMLElement;
+            target.dataset.edited = 'true';
             updateButton.style.backgroundColor = 'var(--red)';
         });
     });
 
     updateButton.addEventListener('click', () => {
+        elements.forEach(elem => {
+            elem.dataset.edited = 'false';
+        });
         updateButton.style.backgroundColor = 'var(--blue)';
     });
 }
