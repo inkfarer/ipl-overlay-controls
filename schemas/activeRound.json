@@ -1,54 +1,38 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "team": {
+            "allOf": [
+                {
+                    "$ref": "defs/team.json#/team"
+                },
+                {
+                    "properties": {
+                        "score": {
+                            "type": "number"
+                        },
+                        "color": {
+                            "type": "string",
+                            "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
+                        }
+                    },
+                    "required": [
+                        "score",
+                        "color"
+                    ]
+                }
+            ]
+        }
+    },
     "type": "object",
     "additionalProperties": false,
     "required": ["teamA", "teamB", "games", "activeColor", "round"],
     "properties": {
         "teamA": {
-            "type": "object",
-            "allOf": [
-                {
-                    "$ref": "defs/team.json#/team"
-                },
-                {
-                    "properties": {
-                        "score": {
-                            "type": "number"
-                        },
-                        "color": {
-                            "type": "string",
-                            "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
-                        }
-                    },
-                    "required": [
-                        "score",
-                        "color"
-                    ]
-                }
-            ]
+            "$ref": "#/definitions/team"
         },
         "teamB": {
-            "type": "object",
-            "allOf": [
-                {
-                    "$ref": "defs/team.json#/team"
-                },
-                {
-                    "properties": {
-                        "score": {
-                            "type": "number"
-                        },
-                        "color": {
-                            "type": "string",
-                            "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
-                        }
-                    },
-                    "required": [
-                        "score",
-                        "color"
-                    ]
-                }
-            ]
+            "$ref": "#/definitions/team"
         },
         "activeColor": {
             "type": "object",

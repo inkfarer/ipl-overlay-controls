@@ -5,35 +5,24 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type Team = {
+	id: string;
+	name: string;
+	logoUrl?: string;
+	players: {
+		name: string;
+		[k: string]: any;
+	}[];
+	[k: string]: any;
+} & {
+	score: number;
+	color: string;
+	[k: string]: any;
+};
+
 export interface ActiveRound {
-	teamA: {
-		id: string;
-		name: string;
-		logoUrl?: string;
-		players: {
-			name: string;
-			[k: string]: any;
-		}[];
-		[k: string]: any;
-	} & {
-		score: number;
-		color: string;
-		[k: string]: any;
-	};
-	teamB: {
-		id: string;
-		name: string;
-		logoUrl?: string;
-		players: {
-			name: string;
-			[k: string]: any;
-		}[];
-		[k: string]: any;
-	} & {
-		score: number;
-		color: string;
-		[k: string]: any;
-	};
+	teamA: Team;
+	teamB: Team;
 	activeColor: {
 		index: number;
 		title: string;
