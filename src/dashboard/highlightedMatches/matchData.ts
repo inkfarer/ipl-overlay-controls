@@ -29,12 +29,7 @@ const teamBName = document.getElementById('team-b-name');
  * @param id the ID of the match
  */
 function getMatchFromID(id: string): Match | null {
-    for (let x = 0; x < highlightedMatchData.value.length; x++) {
-        const value = highlightedMatchData.value[x];
-        if (value.meta.id === id) {
-            return value;
-        }
-    }
+    return highlightedMatchData.value.filter(match => match.meta.id === id)[0];
 }
 
 // When get match button is pressed
@@ -124,7 +119,7 @@ highlightedMatchData.on('change', newValue => {
     }
 });
 
-matchSelectElem.oninput = function () {
+matchSelectElem.oninput = () => {
     const selectedMatch = getMatchFromID(matchSelectElem.value);
     if (selectedMatch) {
         teamAName.innerText = selectedMatch.teamA.name;

@@ -4,6 +4,7 @@ import { SetActiveRoundRequest, SetWinnerRequest } from 'types/messages/activeRo
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
+import isEqual from 'lodash/isEqual';
 
 const nodecg = nodecgContext.get();
 
@@ -111,5 +112,26 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
         ack(null, newValue);
     } else {
         return ack(new Error('No round found.'));
+    }
+});
+
+rounds.on('change', (newValue, oldValue) => {
+    if (!oldValue) return;
+
+    const newActiveRound = newValue[activeRound.value.round.id];
+    const oldActiveRound = oldValue[activeRound.value.round.id];
+
+    if (!isEqual(newActiveRound, oldActiveRound)) {
+        const newRound = clone(activeRound.value);
+        newRound.round.name = newActiveRound.meta.name;
+        newRound.games = newActiveRound.games.map((game, index) => {
+            return {
+                ...activeRound.value.games[index],
+                stage: game.stage,
+                mode: game.mode
+            };
+        });
+
+        activeRound.value = newRound;
     }
 });
