@@ -13,6 +13,7 @@ export default (nodecg: NodeCG): void => {
     require('./importers/highlightedMatches');
     require('./replicants/gameData');
     require('./replicants/colorData');
+    require('./replicants/activeRound');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');

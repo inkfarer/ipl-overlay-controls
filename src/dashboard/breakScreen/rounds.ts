@@ -1,5 +1,6 @@
 import { addChangeReminder, clearSelectors } from '../globalScripts';
 import { ActiveRoundId, Rounds } from 'schemas';
+import { SetActiveRoundRequest } from 'types/messages/activeRound';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
@@ -26,7 +27,7 @@ NodeCG.waitForReplicants(rounds, activeRoundId).then(() => {
 });
 
 currentStageUpdateButton.onclick = () => {
-    activeRoundId.value = roundSelector.value;
+    nodecg.sendMessage('setActiveRound', { roundId: roundSelector.value } as SetActiveRoundRequest);
 };
 
 addChangeReminder([roundSelector], currentStageUpdateButton);
