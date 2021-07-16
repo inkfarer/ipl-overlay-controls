@@ -166,3 +166,6 @@ export const colors: ColorGroup[] = [
     }
 ];
 
+export function getColorOptionName(index: number, categoryName: string): string {
+    return `${(categoryName.replace(' ', '-').toLowerCase())}_${index}`;
+}

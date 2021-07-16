@@ -6,9 +6,9 @@ import './buttonColors';
 
 import '../styles/globalStyles.css';
 import './currentRound.css';
-import { splatModes, splatStages } from '../../helpers/splatoonData';
+import { getColorOptionName, splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
-import { fillColorSelector, getColorOptionName, getContrastingTextColor } from '../helpers/colorHelper';
+import { fillColorSelector, getContrastingTextColor } from '../helpers/colorHelper';
 import { addClasses, appendChildren } from '../helpers/elemHelper';
 import { createEmptyGameData } from '../../helpers/gameDataHelper';
 import {

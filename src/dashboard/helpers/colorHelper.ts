@@ -1,4 +1,4 @@
-import { colors } from '../../helpers/splatoonData';
+import { colors, getColorOptionName } from '../../helpers/splatoonData';
 
 export function fillColorSelector(select: HTMLSelectElement): void {
     for (let i = 0; i < colors.length; i++) {
@@ -25,14 +25,6 @@ export function fillColorSelector(select: HTMLSelectElement): void {
 
         select.appendChild(optGroup);
     }
-}
-
-export function formatColorCategoryName(name: string): string {
-    return name.replace(' ', '-').toLowerCase();
-}
-
-export function getColorOptionName(index: number, categoryName: string): string {
-    return `${formatColorCategoryName(categoryName)}_${index}`;
 }
 
 export function getContrastingTextColor(backgroundColor: string): string {

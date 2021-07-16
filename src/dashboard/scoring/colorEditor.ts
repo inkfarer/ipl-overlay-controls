@@ -1,6 +1,7 @@
 import { activeRound, swapColorsInternally } from './replicants';
 import { ColorInfo } from 'types/colorInfo';
-import { fillColorSelector, getColorOptionName } from '../helpers/colorHelper';
+import { fillColorSelector } from '../helpers/colorHelper';
+import { getColorOptionName } from '../../helpers/splatoonData';
 
 const customColorToggle = <HTMLInputElement> document.getElementById('custom-color-toggle');
 const colorSelector = <HTMLSelectElement> document.getElementById('color-selector');
