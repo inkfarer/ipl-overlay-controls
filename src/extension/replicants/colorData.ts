@@ -1,4 +1,4 @@
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import { ActiveRound, SwapColorsInternally } from 'schemas';
 
 const nodecg = nodecgContext.get();

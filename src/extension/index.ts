@@ -6,13 +6,13 @@ import { PredictionStore, RadiaSettings } from 'schemas';
 export default (nodecg: NodeCG): void => {
     nodecgContext.set(nodecg);
 
-    require('./music');
-    require('./gameData');
-    require('./tournamentImporter');
-    require('./roundImporter');
-    require('./fileImport');
-    require('./highlightedMatches');
-    require('./colorData');
+    require('./importers/music');
+    require('./importers/tournamentImporter');
+    require('./importers/roundImporter');
+    require('./importers/fileImport');
+    require('./importers/highlightedMatches');
+    require('./replicants/gameData');
+    require('./replicants/colorData');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -27,7 +27,7 @@ export default (nodecg: NodeCG): void => {
         predictionStore.value.enablePrediction = false;
     } else {
         radiaSettings.value.enabled = true;
-        require('./radia');
-        require('./predictions');
+        require('./importers/radia');
+        require('./importers/predictions');
     }
 };

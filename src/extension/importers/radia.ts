@@ -1,8 +1,8 @@
 import axios from 'axios';
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import { Casters, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { RadiaApiCaster } from './types/radiaApi';
+import { RadiaApiCaster } from '../types/radiaApi';
 
 const nodecg = nodecgContext.get();
 

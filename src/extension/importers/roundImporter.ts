@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import { Round, Rounds } from 'schemas';
-import { splatModes, splatStages } from '../helpers/splatoonData';
-import { generateId } from '../helpers/generateId';
+import { splatModes, splatStages } from '../../helpers/splatoonData';
+import { generateId } from '../../helpers/generateId';
 
 const nodecg = nodecgContext.get();
 

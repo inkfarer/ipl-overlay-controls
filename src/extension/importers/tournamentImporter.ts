@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import { TournamentData, ScoreboardData, NextTeams, HighlightedMatches } from 'schemas';
-import { generateId } from '../helpers/generateId';
+import { generateId } from '../../helpers/generateId';
 import { Team } from 'types/team';
-import { BattlefyTournamentData } from './types/battlefyTournamentData';
+import { BattlefyTournamentData } from '../types/battlefyTournamentData';
 import clone from 'clone';
 import { BracketType, BracketTypeHelper } from 'types/enums/bracketType';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';

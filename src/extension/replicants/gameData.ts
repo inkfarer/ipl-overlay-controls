@@ -1,4 +1,4 @@
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import {
     ActiveRoundId,
     GameData,
@@ -9,7 +9,7 @@ import {
     SwapColorsInternally
 } from 'schemas';
 import { GameWinner } from 'types/gameWinner';
-import { createEmptyGameData } from '../helpers/gameDataHelper';
+import { createEmptyGameData } from '../../helpers/gameDataHelper';
 import clone from 'clone';
 
 const nodecg = nodecgContext.get();

@@ -3,12 +3,12 @@ This file handles getting highlighted matches from different services
  */
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from '../util/nodecg';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { Team } from 'types/team';
-import { MatchTeam } from './types/battlefyStage';
+import { MatchTeam } from '../types/battlefyStage';
 import { ImportStatus } from 'types/importStatus';
-import { BattlefyTournamentData, Stage } from './types/battlefyTournamentData';
+import { BattlefyTournamentData, Stage } from '../types/battlefyTournamentData';
 
 const nodecg = nodecgContext.get();
 
