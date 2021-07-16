@@ -16,14 +16,16 @@ function updateNextTeamSelectors(nextTeams: NextTeams): void {
     nextTeamBSelector.value = nextTeams.teamBInfo.id;
 }
 
-tournamentData.on('change', newValue => {
-    clearSelectors('team-selector');
-    for (let i = 0; i < newValue.teams.length; i++) {
-        const element = newValue.teams[i];
-        addSelector(addDots(element.name), 'team-selector', element.id);
-    }
+NodeCG.waitForReplicants(nextTeams, tournamentData).then(() => {
+    tournamentData.on('change', newValue => {
+        clearSelectors('team-selector');
+        for (let i = 0; i < newValue.teams.length; i++) {
+            const element = newValue.teams[i];
+            addSelector(addDots(element.name), 'team-selector', element.id);
+        }
 
-    updateNextTeamSelectors(nextTeams.value);
+        updateNextTeamSelectors(nextTeams.value);
+    });
 });
 
 nextTeams.on('change', newValue => {
