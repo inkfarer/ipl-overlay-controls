@@ -7,6 +7,7 @@ const colorToggleNext = document.getElementById('color-toggle-next');
 const colorTogglePrevious = document.getElementById('color-toggle-prev');
 
 activeRound.on('change', newValue => {
+    console.log(newValue);
     if (newValue.activeColor.categoryName === 'Custom Color') {
         return disableToggles();
     } else {
