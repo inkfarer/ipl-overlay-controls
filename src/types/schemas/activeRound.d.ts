@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Team = {
+export type ActiveRoundTeam = {
 	id: string;
 	name: string;
 	logoUrl?: string;
@@ -21,8 +21,8 @@ export type Team = {
 };
 
 export interface ActiveRound {
-	teamA: Team;
-	teamB: Team;
+	teamA: ActiveRoundTeam;
+	teamB: ActiveRoundTeam;
 	activeColor: {
 		index: number;
 		title: string;

@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "definitions": {
-        "team": {
+        "activeRoundTeam": {
             "allOf": [
                 {
                     "$ref": "defs/team.json#/team"
@@ -29,10 +29,10 @@
     "required": ["teamA", "teamB", "games", "activeColor", "round"],
     "properties": {
         "teamA": {
-            "$ref": "#/definitions/team"
+            "$ref": "#/definitions/activeRoundTeam"
         },
         "teamB": {
-            "$ref": "#/definitions/team"
+            "$ref": "#/definitions/activeRoundTeam"
         },
         "activeColor": {
             "type": "object",

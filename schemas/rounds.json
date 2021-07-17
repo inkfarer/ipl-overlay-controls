@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "definitions": {
-        "team": {
+        "roundTeam": {
             "allOf": [
                 {
                     "$ref": "./defs/team.json#/team"
@@ -45,10 +45,10 @@
                     }
                 },
                 "teamA": {
-                    "$ref": "#/definitions/team"
+                    "$ref": "#/definitions/roundTeam"
                 },
                 "teamB": {
-                    "$ref": "#/definitions/team"
+                    "$ref": "#/definitions/roundTeam"
                 }
             }
         },
