@@ -1,6 +1,6 @@
 import { addChangeReminder, fillList } from '../globalScripts';
 import { generateId } from '../../helpers/generateId';
-import { ActiveRoundId, Round, Rounds } from 'schemas';
+import { Round, Rounds } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
 import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
@@ -10,7 +10,6 @@ import '../styles/globalStyles.css';
 import './rounds.css';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
-const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
 
 document.getElementById('create-3-game-round').onclick = () => {
     createRoundElem(3, generateId(), true);
@@ -52,7 +51,6 @@ function resetRounds() {
             ]
         }
     };
-    activeRoundId.value = '0';
 }
 
 function createRoundElem(numberOfGames: number, id: string, remindToUpdate: boolean) {
@@ -153,9 +151,6 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
     removeButton.classList.add('max-width');
     removeButton.onclick = event => {
         const buttonId = (event.target as HTMLButtonElement).id.split('_')[1];
-        if (activeRoundId.value === buttonId) {
-            activeRoundId.value = Object.keys(rounds.value)[0];
-        }
 
         if (rounds.value[buttonId]) {
             // This creates an error, but works anyways.
