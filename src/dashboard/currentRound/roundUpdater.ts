@@ -1,6 +1,7 @@
 import { activeRound } from './replicants';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { GameWinner } from 'types/gameWinner';
+import { UpdateActiveGamesRequest } from 'types/messages/activeRound';
 
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
@@ -58,5 +59,5 @@ roundUpdateButton.addEventListener('click', () => {
         games.push(currentGame);
     }
 
-    activeRound.value.games = games;
+    nodecg.sendMessage('updateActiveGames', { games: games } as UpdateActiveGamesRequest);
 });

@@ -1,10 +1,10 @@
 import * as nodecgContext from '../util/nodecg';
-import { ActiveRound, Game, Rounds, SwapColorsInternally } from 'schemas';
-import { SetActiveRoundRequest, SetWinnerRequest } from 'types/messages/activeRound';
+import { ActiveRound, Rounds, SwapColorsInternally } from 'schemas';
+import { UpdateActiveGamesRequest, SetActiveRoundRequest, SetWinnerRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
-import isEqual from 'lodash/isEqual';
+import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
 
 const nodecg = nodecgContext.get();
 
@@ -115,42 +115,26 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
     }
 });
 
-function getGamesFromActiveRound(activeRound: ActiveRound): Game[] {
-    return activeRound.games.map(game => ({ stage: game.stage, mode: game.mode }));
-}
-
-rounds.on('change', (newValue, oldValue) => {
-    const newActiveRound = newValue[activeRound.value.round.id];
-    if (!oldValue || !newActiveRound) return;
-
-    const oldActiveRound = oldValue[activeRound.value.round.id];
-    const activeRoundGames = getGamesFromActiveRound(activeRound.value);
-
-    if (!isEqual(newActiveRound, oldActiveRound) && !isEqual(newActiveRound.games, activeRoundGames)) {
-        const newRound = clone(activeRound.value);
-        newRound.round.name = newActiveRound.meta.name;
-        newRound.games = newActiveRound.games.map((game, index) => {
-            return {
-                ...activeRound.value.games[index],
-                stage: game.stage,
-                mode: game.mode
-            };
-        });
-
-        activeRound.value = newRound;
+nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
+    activeRound.value.games = clone(data.games);
+    const roundStoreValue = rounds.value[activeRound.value.round.id];
+    if (roundStoreValue) {
+        roundStoreValue.games = clone(data.games);
     }
 });
 
-activeRound.on('change', (newValue, oldValue) => {
-    if (!oldValue) return;
+nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+    const roundStoreValue = rounds.value[data.id];
+    if (!roundStoreValue) {
+        ack(new Error(`No round exists with id ${data.id}`));
+    }
 
-    const newGames = getGamesFromActiveRound(newValue);
-    if (!isEqual(newGames, getGamesFromActiveRound(oldValue))) {
-        rounds.value[newValue.round.id] = {
-            meta: {
-                name: newValue.round.name
-            },
-            games: newGames
-        };
+    roundStoreValue.games = clone(data.games);
+    roundStoreValue.meta.name = data.roundName;
+
+    if (activeRound.value.round.id === data.id) {
+        activeRound.value.round.name = data.roundName;
+        activeRound.value.games = data.games.map((game, index) =>
+            ({ ...activeRound.value.games[index], ...game }));
     }
 });

@@ -5,6 +5,7 @@ import './rounds.css';
 import { generateId } from '../../helpers/generateId';
 import { ActiveRoundId, Round, Rounds } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
+import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
@@ -117,26 +118,22 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
             .querySelectorAll('select').length / 2;
 
         const nameInput = document.getElementById('name-input_' + buttonId) as HTMLInputElement;
-        const games = [];
+        const games: {stage: string, mode: string}[] = [];
 
         for (let i = 0; i < numberOfGames; i++) {
-            const currentGame = {
-                stage: '',
-                mode: ''
-            };
             const id = buttonId + '_' + i;
             const stageSelector = document.getElementById(`stage-selector_${id}`) as HTMLSelectElement;
-            currentGame.stage = stageSelector.value;
-
             const modeSelector = document.getElementById(`mode-selector_${id}`) as HTMLSelectElement;
-            currentGame.mode = modeSelector.value;
+
+            const currentGame = {
+                stage: stageSelector.value,
+                mode: modeSelector.value
+            };
             games.push(currentGame);
         }
 
-        rounds.value[buttonId] = {
-            meta: { name: nameInput.value },
-            games
-        };
+        nodecg.sendMessage('updateRoundStore',
+            { id: buttonId, roundName: nameInput.value, games: games } as UpdateRoundStoreRequest);
     };
 
     updateButton.classList.add('max-width');
