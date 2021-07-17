@@ -125,11 +125,13 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
 
 nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
     const roundStoreValue = rounds.value[data.id];
+    const originalValue = clone(roundStoreValue);
     if (!roundStoreValue) {
         ack(new Error(`No round exists with id ${data.id}`));
     }
 
-    roundStoreValue.games = clone(data.games);
+    roundStoreValue.games = clone(data.games).map((game, index) =>
+        ({ ...game, winner: originalValue.games[index].winner }));
     roundStoreValue.meta.name = data.roundName;
 
     if (activeRound.value.round.id === data.id) {

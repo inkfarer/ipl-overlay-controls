@@ -4,6 +4,7 @@ import * as nodecgContext from '../util/nodecg';
 import { Round, Rounds } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { generateId } from '../../helpers/generateId';
+import { GameWinner } from 'types/gameWinner';
 
 const nodecg = nodecgContext.get();
 
@@ -65,7 +66,8 @@ export function handleRoundData(rounds: Round[]): Rounds {
 
             games.push({
                 stage: normalizeStageName(stageName),
-                mode: normalizeModeName(game.mode)
+                mode: normalizeModeName(game.mode),
+                winner: GameWinner.NO_WINNER
             });
         }
 

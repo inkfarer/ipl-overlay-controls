@@ -5,19 +5,48 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type Team = {
+	id: string;
+	name: string;
+	logoUrl?: string;
+	players: {
+		name: string;
+		[k: string]: any;
+	}[];
+	[k: string]: any;
+} & {
+	score: number;
+	[k: string]: any;
+};
+
 export interface Rounds {
 	[k: string]: Round;
 }
 export interface Round {
-	meta?: {
+	meta: {
 		name?: string;
+		isCompleted?: boolean;
 		[k: string]: any;
 	};
-	games?: Game[];
+	games: Game[];
+	teamA?: Team;
+	teamB?: Team;
 	[k: string]: any;
 }
 export interface Game {
-	stage?: string;
-	mode?: string;
+	winner: 'none' | 'alpha' | 'bravo';
+	stage: string;
+	mode: string;
+	color?: {
+		index: number;
+		title: string;
+		clrA: string;
+		clrB: string;
+		categoryName: string;
+		[k: string]: any;
+	} & {
+		colorsSwapped: boolean;
+		[k: string]: any;
+	};
 	[k: string]: any;
 }

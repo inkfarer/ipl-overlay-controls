@@ -5,6 +5,7 @@ import './rounds.css';
 import { generateId } from '../../helpers/generateId';
 import { ActiveRoundId, Round, Rounds } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
+import { GameWinner } from 'types/gameWinner';
 import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
@@ -33,15 +34,18 @@ function resetRounds() {
             games: [
                 {
                     stage: 'MakoMart',
-                    mode: 'Clam Blitz'
+                    mode: 'Clam Blitz',
+                    winner: GameWinner.NO_WINNER
                 },
                 {
                     stage: 'Ancho-V Games',
-                    mode: 'Tower Control'
+                    mode: 'Tower Control',
+                    winner: GameWinner.NO_WINNER
                 },
                 {
                     stage: 'Wahoo World',
-                    mode: 'Rainmaker'
+                    mode: 'Rainmaker',
+                    winner: GameWinner.NO_WINNER
                 }
             ]
         }
@@ -127,7 +131,8 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
 
             const currentGame = {
                 stage: stageSelector.value,
-                mode: modeSelector.value
+                mode: modeSelector.value,
+                winner: GameWinner.NO_WINNER
             };
             games.push(currentGame);
         }
