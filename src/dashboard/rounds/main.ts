@@ -1,12 +1,13 @@
 import { addChangeReminder, fillList } from '../globalScripts';
-
-import '../styles/globalStyles.css';
-import './rounds.css';
 import { generateId } from '../../helpers/generateId';
 import { ActiveRoundId, Round, Rounds } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
 import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
+import isEqual from 'lodash/isEqual';
+
+import '../styles/globalStyles.css';
+import './rounds.css';
 
 const rounds = nodecg.Replicant<Rounds>('rounds');
 const activeRoundId = nodecg.Replicant<ActiveRoundId>('activeRoundId');
@@ -29,7 +30,8 @@ function resetRounds() {
     rounds.value = {
         '0': {
             meta: {
-                name: 'Default round'
+                name: 'Default round',
+                isCompleted: false
             },
             games: [
                 {
@@ -54,10 +56,8 @@ function resetRounds() {
 }
 
 function createRoundElem(numberOfGames: number, id: string, remindToUpdate: boolean) {
-    if (typeof numberOfGames !== 'number'
-        || numberOfGames >= 8
-        || numberOfGames <= 0) {
-        throw new Error('Rounds with only up to 7 stages are supported.');
+    if (typeof numberOfGames !== 'number' || numberOfGames > 7 || numberOfGames <= 0) {
+        throw new Error('Rounds with only up to 7 games are supported.');
     }
 
     const reminderCreatingElements = [];
@@ -222,7 +222,7 @@ rounds.on('change', (newValue, oldValue) => {
         const object = newValue[id];
 
         if (oldValue) {
-            if (!roundObjectsMatch(object, oldValue[id])) {
+            if (!isEqual(object, oldValue[id])) {
                 updateOrCreateCreateRoundElem(id, object);
             }
         } else {
@@ -241,19 +241,3 @@ rounds.on('change', (newValue, oldValue) => {
         }
     }
 });
-
-function roundObjectsMatch(val1: Round, val2: Round) {
-    if (!val1 || !val2) return false;
-    if (val1.meta.name !== val2.meta.name) return false;
-    if (val1.games.length !== val2.games.length) return false;
-
-    for (let i = 0; i < val1.games.length; i++) {
-        const val1Game = val1.games[i];
-        const val2Game = val2.games[i];
-
-        if (val1Game.stage !== val2Game.stage) return false;
-        if (val1Game.mode !== val2Game.mode) return false;
-    }
-
-    return true;
-}

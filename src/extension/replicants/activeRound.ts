@@ -1,6 +1,6 @@
 import * as nodecgContext from '../util/nodecg';
 import { ActiveRound, Rounds, SwapColorsInternally } from 'schemas';
-import { UpdateActiveGamesRequest, SetActiveRoundRequest, SetWinnerRequest } from 'types/messages/activeRound';
+import { SetActiveRoundRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
@@ -90,29 +90,54 @@ function setWinner(index: number, winner: GameWinner): void {
 
 nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledListenForCb) => {
     const selectedRound = rounds.value[data.roundId];
+    const currentActiveRound = clone(activeRound.value);
 
-    if (selectedRound) {
-        const newValue = activeRound.value;
-        newValue.round = {
-            id: data.roundId,
-            name: selectedRound.meta.name
-        };
-        newValue.teamA.score = 0;
-        newValue.teamB.score = 0;
-
-        newValue.games = selectedRound.games.map(game => {
-            return {
-                mode: game.mode,
-                stage: game.stage,
-                winner: GameWinner.NO_WINNER
-            };
-        });
-
-        activeRound.value = newValue;
-        ack(null, newValue);
-    } else {
+    if (!selectedRound) {
         return ack(new Error('No round found.'));
     }
+
+    // A team has to win this many games to be considered the winner of the set
+    const winThreshold = currentActiveRound.games.length / 2;
+    const isCompleted
+        = (currentActiveRound.teamA.score > winThreshold || currentActiveRound.teamB.score > winThreshold);
+    const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
+
+    rounds.value[currentActiveRound.round.id] = {
+        ...(rounds.value[currentActiveRound.round.id]),
+        meta: {
+            name: currentActiveRound.round.name,
+            isCompleted
+        },
+        teamA: isStarted ? currentActiveRound.teamA : undefined,
+        teamB: isStarted ? currentActiveRound.teamB : undefined,
+        games: currentActiveRound.games.map((game) =>
+            ({ stage: game.stage, mode: game.mode, winner: game.winner, color: game.color })),
+    };
+
+    const newValue = activeRound.value;
+    newValue.round = {
+        id: data.roundId,
+        name: selectedRound.meta.name
+    };
+
+    if (selectedRound.teamA && selectedRound.teamB) {
+        newValue.teamA = {
+            ...currentActiveRound.teamA,
+            ...(clone(selectedRound.teamA))
+        };
+        newValue.teamB = {
+            ...currentActiveRound.teamB,
+            ...(clone(selectedRound.teamB))
+        };
+    } else {
+        newValue.teamA.score = 0;
+        newValue.teamB.score = 0;
+    }
+
+    newValue.games = clone(selectedRound.games);
+
+    activeRound.value = newValue;
+    ack(null, newValue);
 });
 
 nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
@@ -123,20 +148,33 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     }
 });
 
-nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
     const roundStoreValue = rounds.value[data.id];
     const originalValue = clone(roundStoreValue);
-    if (!roundStoreValue) {
-        ack(new Error(`No round exists with id ${data.id}`));
-    }
 
-    roundStoreValue.games = clone(data.games).map((game, index) =>
-        ({ ...game, winner: originalValue.games[index].winner }));
-    roundStoreValue.meta.name = data.roundName;
+    const mappedGames = clone(data.games).map((game, index) =>
+        ({ ...game, winner: originalValue?.games[index]?.winner || GameWinner.NO_WINNER }));
+
+    if (!roundStoreValue) {
+        rounds.value[data.id] = {
+            games: mappedGames,
+            meta: {
+                name: data.roundName,
+                isCompleted: false
+            }
+        };
+    } else {
+        roundStoreValue.games = mappedGames;
+        roundStoreValue.meta.name = data.roundName;
+    }
 
     if (activeRound.value.round.id === data.id) {
         activeRound.value.round.name = data.roundName;
         activeRound.value.games = data.games.map((game, index) =>
             ({ ...activeRound.value.games[index], ...game }));
     }
+});
+
+rounds.on('change', newValue => {
+    console.log(newValue);
 });

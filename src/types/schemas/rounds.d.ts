@@ -24,8 +24,8 @@ export interface Rounds {
 }
 export interface Round {
 	meta: {
-		name?: string;
-		isCompleted?: boolean;
+		name: string;
+		isCompleted: boolean;
 		[k: string]: any;
 	};
 	games: Game[];

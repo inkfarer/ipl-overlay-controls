@@ -28,6 +28,7 @@
             "properties": {
                 "meta": {
                     "type": "object",
+                    "required": ["name", "isCompleted"],
                     "properties": {
                         "name": {
                             "type": "string"
