@@ -33,7 +33,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
     }
 
     switch (data.method) {
-        case 'battlefy':
+        case TournamentDataSource.BATTLEFY:
             getBattlefyData(data.id)
                 .then(data => {
                     updateTeamDataReplicants(data);
@@ -43,7 +43,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
                     ack(err);
                 });
             break;
-        case 'smashgg':
+        case TournamentDataSource.SMASHGG:
             if (!smashGGKey) {
                 ack(new Error('No smash.gg token provided.'));
                 break;
@@ -58,7 +58,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
                     ack(err);
                 });
             break;
-        case 'raw':
+        case TournamentDataSource.UPLOAD:
             getRaw(data.id)
                 .then(data => {
                     updateTeamDataReplicants(data);
