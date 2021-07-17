@@ -174,7 +174,3 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
             ({ ...activeRound.value.games[index], ...game }));
     }
 });
-
-rounds.on('change', newValue => {
-    console.log(newValue);
-});
