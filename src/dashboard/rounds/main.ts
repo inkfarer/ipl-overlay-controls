@@ -1,6 +1,6 @@
 import { addChangeReminder, fillList } from '../globalScripts';
 import { generateId } from '../../helpers/generateId';
-import { Round, Rounds } from 'schemas';
+import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
 import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 import '../styles/globalStyles.css';
 import './rounds.css';
 
-const rounds = nodecg.Replicant<Rounds>('rounds');
+const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
 document.getElementById('create-3-game-round').onclick = () => {
     createRoundElem(3, generateId(), true);

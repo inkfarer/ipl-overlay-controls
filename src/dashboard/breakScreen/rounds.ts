@@ -1,8 +1,8 @@
 import { addChangeReminder, clearSelectors } from '../globalScripts';
-import { ActiveRound, Rounds } from 'schemas';
+import { ActiveRound, RoundStore } from 'schemas';
 import { SetActiveRoundRequest } from 'types/messages/activeRound';
 
-const rounds = nodecg.Replicant<Rounds>('rounds');
+const rounds = nodecg.Replicant<RoundStore>('roundStore');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 
 const currentStageUpdateButton = document.getElementById('current-round-update-btn') as HTMLButtonElement;

@@ -1,5 +1,5 @@
 import * as nodecgContext from '../util/nodecg';
-import { ActiveRound, Rounds, SwapColorsInternally } from 'schemas';
+import { ActiveRound, RoundStore, SwapColorsInternally } from 'schemas';
 import { SetActiveRoundRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
@@ -9,7 +9,7 @@ import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
-const rounds = nodecg.Replicant<Rounds>('rounds');
+const rounds = nodecg.Replicant<RoundStore>('roundStore');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 
 swapColorsInternally.on('change', (newValue, oldValue) => {

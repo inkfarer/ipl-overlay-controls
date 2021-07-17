@@ -19,7 +19,7 @@ export type RoundTeam = {
 	[k: string]: any;
 };
 
-export interface Rounds {
+export interface RoundStore {
 	[k: string]: Round;
 }
 export interface Round {

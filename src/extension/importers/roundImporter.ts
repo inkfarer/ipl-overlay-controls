@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../util/nodecg';
-import { Round, Rounds } from 'schemas';
+import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { generateId } from '../../helpers/generateId';
 import { GameWinner } from 'types/gameWinner';
 
 const nodecg = nodecgContext.get();
 
-const rounds = nodecg.Replicant<Rounds>('rounds');
+const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
 nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
     if (!data.url) {
@@ -30,7 +30,7 @@ const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
 
 const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
 
-async function getUrl(url: string): Promise<{rounds: Rounds, url: string}> {
+async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
     return new Promise((resolve, reject) => {
         axios
             .get(url, {
@@ -50,8 +50,8 @@ async function getUrl(url: string): Promise<{rounds: Rounds, url: string}> {
     });
 }
 
-export function handleRoundData(rounds: Round[]): Rounds {
-    const result: Rounds = {};
+export function handleRoundData(rounds: Round[]): RoundStore {
+    const result: RoundStore = {};
 
     for (let i = 0; i < rounds.length; i++) {
         const round = rounds[i];
