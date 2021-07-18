@@ -160,7 +160,7 @@ nodecg.listenFor('beginNextMatch', (data: never, ack: UnhandledListenForCb) => {
         }
     };
 
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToRoundStore(true);
 });
 
 nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {

@@ -116,7 +116,7 @@ nodecg.listenFor('resetRoundStore', () => {
     setNextRoundGames(secondDefaultRoundId);
 });
 
-export function commitActiveRoundToRoundStore(): void {
+export function commitActiveRoundToRoundStore(forceSetTeams = false): void {
     const currentActiveRound = clone(activeRound.value);
 
     const winThreshold = currentActiveRound.games.length / 2;
@@ -130,8 +130,8 @@ export function commitActiveRoundToRoundStore(): void {
             name: currentActiveRound.round.name,
             isCompleted
         },
-        teamA: isStarted ? currentActiveRound.teamA : undefined,
-        teamB: isStarted ? currentActiveRound.teamB : undefined,
+        teamA: (isStarted || forceSetTeams) ? currentActiveRound.teamA : undefined,
+        teamB: (isStarted || forceSetTeams) ? currentActiveRound.teamB : undefined,
         games: currentActiveRound.games.map((game) =>
             ({ stage: game.stage, mode: game.mode, winner: game.winner, color: game.color }))
     };

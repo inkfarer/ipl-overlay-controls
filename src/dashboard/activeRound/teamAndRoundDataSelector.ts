@@ -51,21 +51,25 @@ NodeCG.waitForReplicants(activeRound, tournamentData, roundStore).then(() => {
 roundSelector.addEventListener('change', checkRoundProgress);
 
 function checkRoundProgress() {
-    const selectedRound = roundSelector.options[roundSelector.selectedIndex];
-    if (selectedRound
-        && selectedRound.value !== activeRound.value.round.id
-        && selectedRound.dataset.teamAId
-        && selectedRound.dataset.teamBId) {
-        if (selectedRound.dataset.isCompleted === 'true') {
-            roundDataInfoText.innerText = `'${selectedRound.text}' has already been completed.`;
-        } else {
-            roundDataInfoText.innerText = `'${selectedRound.text}' already has saved progress.`;
+    const selectedRoundOption = roundSelector.options[roundSelector.selectedIndex];
+    if (selectedRoundOption
+        && selectedRoundOption.dataset.teamAId
+        && selectedRoundOption.dataset.teamBId) {
+
+        if (selectedRoundOption.value !== activeRound.value.round.id) {
+            if (selectedRoundOption.dataset.isCompleted === 'true') {
+                roundDataInfoText.innerText = `'${selectedRoundOption.text}' has already been completed.`;
+            } else {
+                roundDataInfoText.innerText = `'${selectedRoundOption.text}' already has saved progress.`;
+            }
+
+            roundDataInfoText.innerText
+                += `\n(${selectedRoundOption.dataset.teamAName} vs ${selectedRoundOption.dataset.teamBName})`;
+            roundDataInfoElem.style.display = '';
         }
 
-        teamASelector.value = selectedRound.dataset.teamAId;
-        teamBSelector.value = selectedRound.dataset.teamBId;
-        roundDataInfoText.innerText += `\n(${selectedRound.dataset.teamAName} vs ${selectedRound.dataset.teamBName})`;
-        roundDataInfoElem.style.display = '';
+        teamASelector.value = selectedRoundOption.dataset.teamAId;
+        teamBSelector.value = selectedRoundOption.dataset.teamBId;
     } else {
         roundDataInfoElem.style.display = 'none';
     }
