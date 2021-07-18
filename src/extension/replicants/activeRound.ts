@@ -39,7 +39,6 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb
 
     try {
         setWinner(index, data.winner);
-        ack(null, null);
     } catch (e) {
         ack(e);
     }

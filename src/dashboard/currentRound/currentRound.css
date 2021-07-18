@@ -46,6 +46,10 @@ span.center {
     margin-bottom: -1px;
 }
 
+.win-button-container > button * {
+    pointer-events: none;
+}
+
 .win-button-container > button.team-a-win-toggle,
 .win-button-container > button.team-b-win-toggle {
     filter: saturate(0.8) grayscale(5%);

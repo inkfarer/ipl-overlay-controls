@@ -82,7 +82,7 @@ function checkNextRoundProgress(nextRound: Round) {
     if (nextRound.meta.isCompleted) {
         savedProgressMessageText.innerText = `'${nextRound.meta.name}' is already completed.`;
     } else if (roundHasProgress) {
-        savedProgressMessageText.innerText = `${nextRound.meta.name} already has saved progress.`;
+        savedProgressMessageText.innerText = `'${nextRound.meta.name}' already has saved progress.`;
     }
 
     if (roundHasProgress) {
