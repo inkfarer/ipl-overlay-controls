@@ -45,7 +45,6 @@ function swapColors(data: ColorInfo): ColorInfo {
 }
 
 function updateColorToggle(toggle: HTMLElement, data: ColorInfo, categoryName: string): void {
-    // Update colors
     (toggle.querySelector('.color-toggle-display.a') as HTMLElement).style.backgroundColor = data.clrA;
     (toggle.querySelector('.color-toggle-display.b') as HTMLElement).style.backgroundColor = data.clrB;
 

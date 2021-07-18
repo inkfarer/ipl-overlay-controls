@@ -10,7 +10,6 @@ dom.watch();
 import './scores';
 import './scoreboardData';
 import './colorEditor';
-import './nextTeams';
 import './colorToggles';
 import './teamSelectors';
 

@@ -25,12 +25,10 @@ teamAScoreAddButton.onclick = () => {
     nodecg.sendMessage('setWinner', { winner: GameWinner.ALPHA } as SetWinnerRequest);
 };
 teamAScoreSubButton.onclick = () => {
-
     nodecg.sendMessage('removeWinner');
 };
 teamBScoreAddButton.onclick = () => {
     nodecg.sendMessage('setWinner', { winner: GameWinner.BRAVO } as SetWinnerRequest);
-
 };
 teamBScoreSubButton.onclick = () => {
     nodecg.sendMessage('removeWinner');
