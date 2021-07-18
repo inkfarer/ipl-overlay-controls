@@ -2,6 +2,7 @@ import { activeRound, swapColorsInternally } from './replicants';
 import { ColorGroup } from 'types/colorGroup';
 import { ColorInfo } from 'types/colorInfo';
 import { colors } from '../../helpers/splatoonData';
+import { SetActiveColorRequest } from 'types/messages/activeRound';
 
 const colorToggleNext = document.getElementById('color-toggle-next');
 const colorTogglePrevious = document.getElementById('color-toggle-prev');
@@ -59,17 +60,10 @@ function handleColorToggleClick(e: MouseEvent): void {
     const color: ColorInfo = JSON.parse((e.target as HTMLElement).dataset.colorInfo);
     if (activeRound.value.activeColor.index === color.index) return;
 
-    const newValue = activeRound.value;
-
-    newValue.teamA.color = color.clrA;
-    newValue.teamB.color = color.clrB;
-    newValue.activeColor = {
-        ...activeRound.value.activeColor,
-        index: color.index,
-        title: color.title
-    };
-
-    activeRound.value = newValue;
+    nodecg.sendMessage('setActiveColor', {
+        color,
+        categoryName: activeRound.value.activeColor.categoryName
+    } as SetActiveColorRequest);
 }
 
 function disableToggles(): void {

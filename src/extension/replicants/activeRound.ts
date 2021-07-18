@@ -1,6 +1,6 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
-import { SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
+import { SetActiveColorRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
@@ -166,4 +166,16 @@ nodecg.listenFor('beginNextMatch', (data: never, ack: UnhandledListenForCb) => {
     };
 
     commitActiveRoundToRoundStore();
+});
+
+nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
+    const isCustomColor = data.categoryName === 'Custom Color';
+
+    activeRound.value.activeColor = {
+        categoryName: isCustomColor ? 'Custom Color' : data.categoryName,
+        index: data.color.index,
+        title: data.color.title
+    };
+    activeRound.value.teamA.color = data.color.clrA;
+    activeRound.value.teamB.color = data.color.clrB;
 });

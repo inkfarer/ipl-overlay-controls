@@ -2,6 +2,7 @@ import { activeRound, swapColorsInternally } from './replicants';
 import { ColorInfo } from 'types/colorInfo';
 import { fillColorSelector } from '../helpers/colorHelper';
 import { getColorOptionName } from '../../helpers/splatoonData';
+import { SetActiveColorRequest } from 'types/messages/activeRound';
 
 const customColorToggle = <HTMLInputElement> document.getElementById('custom-color-toggle');
 const colorSelector = <HTMLSelectElement> document.getElementById('color-selector');
@@ -64,15 +65,8 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
         };
     }
 
-    const newActiveRound = activeRound.value;
-
-    newActiveRound.activeColor = {
-        categoryName: isCustomColor ? 'Custom Color' : colorOption.dataset.categoryName,
-        index: clrInfo.index,
-        title: clrInfo.title
-    };
-    newActiveRound.teamA.color = clrInfo.clrA;
-    newActiveRound.teamB.color = clrInfo.clrB;
-
-    activeRound.value = newActiveRound;
+    nodecg.sendMessage('setActiveColor', {
+        color: clrInfo,
+        categoryName: isCustomColor ? 'Custom Color' : colorOption.dataset.categoryName
+    } as SetActiveColorRequest);
 });
