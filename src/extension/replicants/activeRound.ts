@@ -120,6 +120,14 @@ nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenF
             name: round.meta.name
         };
         activeRound.value.games = clone(round.games);
+
+        if (round.teamA && round.teamB) {
+            activeRound.value.teamA.score = round.teamA.score;
+            activeRound.value.teamB.score = round.teamB.score;
+        } else {
+            activeRound.value.teamA.score = 0;
+            activeRound.value.teamB.score = 0;
+        }
     }
 
     commitActiveRoundToRoundStore();
