@@ -1,18 +1,19 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
-import { SetActiveRoundRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
+import { SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
 import { getTeam } from '../helpers/tournamentDataHelper';
 import isEmpty from 'lodash/isEmpty';
 import { commitActiveRoundToRoundStore } from './roundStore';
+import { SetRoundRequest } from 'types/messages/rounds';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
-const rounds = nodecg.Replicant<RoundStore>('roundStore');
+const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
@@ -92,12 +93,36 @@ function setWinner(index: number, winner: GameWinner): void {
     commitActiveRoundToRoundStore();
 }
 
-nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledListenForCb) => {
-    try {
-        setActiveRound(data.roundId);
-    } catch (e) {
-        ack(e);
+nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
+    const teamA = getTeam(data.teamAId, tournamentData.value);
+    const teamB = getTeam(data.teamBId, tournamentData.value);
+    if ([teamA, teamB].filter(isEmpty).length > 0) {
+        return ack(new Error('Could not find a team.'));
     }
+
+    activeRound.value.teamA = {
+        ...activeRound.value.teamA,
+        ...teamA
+    };
+    activeRound.value.teamB = {
+        ...activeRound.value.teamB,
+        ...teamB
+    };
+
+    if (data.roundId) {
+        const round = roundStore.value[data.roundId];
+        if (isEmpty(round)) {
+            return ack(new Error(`Could not find round ${data.roundId}.`));
+        }
+
+        activeRound.value.round = {
+            id: data.roundId,
+            name: round.meta.name
+        };
+        activeRound.value.games = clone(round.games);
+    }
+
+    commitActiveRoundToRoundStore();
 });
 
 nodecg.listenFor('resetActiveRound', () => {
@@ -142,37 +167,3 @@ nodecg.listenFor('beginNextMatch', (data: never, ack: UnhandledListenForCb) => {
 
     commitActiveRoundToRoundStore();
 });
-
-function setActiveRound(roundId: string): void {
-    const selectedRound = rounds.value[roundId];
-    const currentActiveRound = clone(activeRound.value);
-
-    if (!selectedRound) {
-        throw new Error('No round found.');
-    }
-
-    const newValue = activeRound.value;
-    newValue.round = {
-        id: roundId,
-        name: selectedRound.meta.name
-    };
-
-    if (selectedRound.teamA && selectedRound.teamB) {
-        newValue.teamA = {
-            ...currentActiveRound.teamA,
-            ...(clone(selectedRound.teamA))
-        };
-        newValue.teamB = {
-            ...currentActiveRound.teamB,
-            ...(clone(selectedRound.teamB))
-        };
-    } else {
-        newValue.teamA.score = 0;
-        newValue.teamB.score = 0;
-    }
-
-    newValue.games = clone(selectedRound.games);
-
-    activeRound.value = newValue;
-    commitActiveRoundToRoundStore();
-}

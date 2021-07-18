@@ -5,7 +5,7 @@ import { HighlightedMatches, TournamentData } from 'schemas';
 import { Match } from 'types/match';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
-import { SetNextRoundRequest } from 'types/messages/nextRound';
+import { SetRoundRequest } from 'types/messages/rounds';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -62,7 +62,7 @@ setNextMatchBtnElem.onclick = () => {
     const selectedMatch = getMatchFromID(matchSelectElem.value);
     if (selectedMatch) {
         nodecg.sendMessage('setNextRound',
-            { teamAId: selectedMatch.teamA.id, teamBId: selectedMatch.teamB.id } as SetNextRoundRequest);
+            { teamAId: selectedMatch.teamA.id, teamBId: selectedMatch.teamB.id } as SetRoundRequest);
     }
 };
 

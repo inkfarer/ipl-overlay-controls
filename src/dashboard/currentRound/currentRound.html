@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
 </head>
 <body>
+<div class="layout horizontal center-horizontal">
+    <div class="space" style="width: 45%">
+        <div class="layout horizontal max-width">
+            <div class="select-container">
+                <label for="team-a-selector">Team A</label>
+                <select id="team-a-selector" class="team-selector scoreboard-update-warning"></select>
+            </div>
+            <div class="select-container">
+                <label for="team-b-selector">Team B</label>
+                <select id="team-b-selector" class="team-selector scoreboard-update-warning"></select>
+            </div>
+        </div>
+        <div>
+            <label for="round-selector">Round</label>
+            <select id="round-selector" class="round-selector"></select>
+        </div>
+        <button id="update-active-round-button" class="max-width">update</button>
+    </div>
+</div>
 <div class="space">
     <div id="round-name" class="title text-center">Round Name</div>
     <div id="toggles"></div>

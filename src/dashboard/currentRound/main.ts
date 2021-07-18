@@ -10,6 +10,7 @@ import '../styles/globalStyles.css';
 import './currentRound.css';
 
 import './roundUpdater';
+import './teamAndRoundDataSelector';
 import '../helpers/buttonConfirm';
 
 library.add(faTimes);

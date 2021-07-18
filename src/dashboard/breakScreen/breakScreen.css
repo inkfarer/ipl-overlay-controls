@@ -44,10 +44,6 @@
     margin-top: 10px;
 }
 
-.select-container {
-    margin: 0 2.5px;
-}
-
 .small-scene-toggle {
     display: grid;
     grid-template-columns: 1fr max-content;

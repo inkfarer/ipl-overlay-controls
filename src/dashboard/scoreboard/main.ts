@@ -11,7 +11,6 @@ import './scores';
 import './scoreboardData';
 import './colorEditor';
 import './colorToggles';
-import './teamSelectors';
 
 import '../styles/globalStyles.css';
 import './scoreboard.css';

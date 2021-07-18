@@ -1,12 +1,12 @@
 import { RoundStore, TournamentData, NextRound, Round } from 'schemas';
 import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
-import { SetNextRoundRequest } from 'types/messages/nextRound';
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 
 import '../helpers/buttonConfirm';
 import '../styles/globalStyles.css';
 import './nextRound.css';
+import { SetRoundRequest } from 'types/messages/rounds';
 
 library.add(faInfoCircle);
 dom.watch();
@@ -69,7 +69,7 @@ nextRoundUpdateButton.addEventListener('click', () => {
         teamAId: nextTeamASelector.value,
         teamBId: nextTeamBSelector.value,
         roundId: roundSelector.value
-    } as SetNextRoundRequest);
+    } as SetRoundRequest);
 });
 
 beginNextMatchButton.addEventListener('confirm', () => {
