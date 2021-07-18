@@ -1,5 +1,6 @@
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 
 import { activeRound } from './replicants';
 import { ActiveRoundGame } from 'types/activeRoundGame';
@@ -13,7 +14,7 @@ import './roundUpdater';
 import './teamAndRoundDataSelector';
 import '../helpers/buttonConfirm';
 
-library.add(faTimes);
+library.add(faTimes, faInfoCircle);
 dom.watch();
 
 export const roundNameElem = document.getElementById('round-name');
