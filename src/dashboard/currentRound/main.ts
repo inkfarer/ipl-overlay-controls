@@ -28,9 +28,16 @@ activeRound.on('change', (newValue, oldValue) => {
 
 enableColorEditToggle.addEventListener('change', e => {
     const colorSelectors = document.querySelectorAll('.color-selector-wrapper') as NodeListOf<HTMLDivElement>;
-    const selectorDisplay = (e.target as HTMLInputElement).checked ? '' : 'none';
+    const roundDataSelectors
+        = document.querySelectorAll('.mode-selector, .stage-selector') as NodeListOf<HTMLSelectElement>;
+    const checked = (e.target as HTMLInputElement).checked;
+    const selectorDisplay = checked ? '' : 'none';
+    const modeSelectorDisplay = checked ? 'none' : '';
     colorSelectors.forEach(selector => {
         selector.style.display = selectorDisplay;
+    });
+    roundDataSelectors.forEach(selector => {
+        selector.style.display = modeSelectorDisplay;
     });
 });
 

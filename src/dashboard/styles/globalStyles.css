@@ -54,6 +54,11 @@ body {
     flex: 1 1 0;
 }
 
+.layout.even-spacing > * {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
 /* "Space" class for creating sections of elements + related styles */
 
 .space {

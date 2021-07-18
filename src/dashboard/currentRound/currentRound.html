@@ -4,21 +4,19 @@
     <meta charset="UTF-8" />
 </head>
 <body>
-<div id="round-name-space" class="space">
-    <div id="round-name">Round Name</div>
-    <div class="layout horizontal">
+<div class="space">
+    <div id="round-name" class="title text-center">Round Name</div>
+    <div id="toggles"></div>
+    <div class="layout horizontal center-vertical center-horizontal" style="margin-top: 5px">
         <button id="btn-reset" data-requires-confirmation>reset</button>
         <button id="update-round">update</button>
+        <div style="margin-left: 5px">
+            <input type="checkbox" id="enable-color-edit-toggle" />
+            <label for="enable-color-edit-toggle" class="white-label big-label">
+                Edit colors
+            </label>
+        </div>
     </div>
 </div>
-<div class="space layout vertical">
-    <div>
-        <input type="checkbox" id="enable-color-edit-toggle" />
-        <label for="enable-color-edit-toggle" class="white-label big-label">
-            Edit colors
-        </label>
-    </div>
-</div>
-<div id="toggles" class="space"></div>
 </body>
 </html>

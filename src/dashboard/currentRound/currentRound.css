@@ -1,18 +1,16 @@
-#round-name-space {
-    min-height: 40px;
-    display: grid;
-    grid-template-columns: 1fr max-content;
-    align-items: center;
-}
-
-#btn-reset {
-    max-height: 40px;
-}
-
 #toggles {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 5px;
+}
+
+.toggles {
+    height: 35px;
+}
+
+.toggles > * {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 span.center {
@@ -31,6 +29,10 @@ span.center {
 .separator span {
     background: #262f40;
     padding: 0 10px;
+}
+
+.win-button-container {
+    max-width: 120px;
 }
 
 .win-button-container > button {
@@ -78,4 +80,9 @@ span.center {
 
 .color-swap-toggle-container {
     margin-bottom: 5px;
+}
+
+.round-number-display {
+    max-width: max-content;
+    margin-top: 5px;
 }

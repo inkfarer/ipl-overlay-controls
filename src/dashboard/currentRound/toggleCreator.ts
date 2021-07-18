@@ -6,7 +6,8 @@ import {
     getActiveRoundColors,
     handleColorSelectorChange,
     handleColorSwapToggleChange,
-    handleCustomColorListenerChange, toggleCustomColorSelectorVisibility
+    handleCustomColorListenerChange,
+    toggleCustomColorSelectorVisibility
 } from './toggleHelper';
 import { swapColorsInternally } from './replicants';
 import { addClasses, appendChildren } from '../helpers/elemHelper';
@@ -20,8 +21,9 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
     const colorData = roundElement.color !== undefined ? roundElement.color : getActiveRoundColors();
     const colorSource = roundElement.color !== undefined ? 'gameInfo' : 'scoreboard';
 
-    const stageModeDisplay = document.createElement('div');
-    stageModeDisplay.innerHTML = `<div class="separator"><span>${Number(stageIndex) + 1}</span></div>`;
+    const numberDisplay = document.createElement('div');
+    numberDisplay.classList.add('round-number-display');
+    numberDisplay.innerText = String(stageIndex + 1);
 
     const stageSelector = document.createElement('select');
     setToggleElementIdAndClass(stageSelector, 'stage-selector', stageIndex);
@@ -96,13 +98,15 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
 
     const colorSelectorWrapper = document.createElement('div');
     colorSelectorWrapper.style.display = enableColorEditToggle.checked ? '' : 'none';
-    colorSelectorWrapper.classList.add('color-selector-wrapper');
+    addClasses(colorSelectorWrapper,
+        'color-selector-wrapper', 'layout', 'horizontal', 'center-vertical', 'even-spacing');
     appendChildren(colorSelectorWrapper, colorSelector, customColorSelectorWrapper, colorDataToggleContainer);
 
     const toggleDiv = document.createElement('div');
     toggleDiv.classList.add('toggles');
     toggleDiv.id = `game-editor_${stageIndex}`;
-    appendChildren(toggleDiv, stageModeDisplay, stageSelector, modeSelector, colorSelectorWrapper, winButtonContainer);
+    appendChildren(toggleDiv, numberDisplay, stageSelector, modeSelector, colorSelectorWrapper, winButtonContainer);
+    addClasses(toggleDiv, 'layout', 'horizontal', 'center-horizontal', 'even-spacing');
 
     document.getElementById('toggles').appendChild(toggleDiv);
 }
