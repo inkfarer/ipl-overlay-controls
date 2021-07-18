@@ -8,6 +8,7 @@ export * from './lastFmSettings';
 export * from './mainFlavorText';
 export * from './manualNowPlaying';
 export * from './musicShown';
+export * from './nextRound';
 export * from './nextRoundStartTime';
 export * from './nextTeams';
 export * from './nowPlaying';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import * as nodecgContext from '../util/nodecg';
+import * as nodecgContext from '../helpers/nodecg';
 import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { generateId } from '../../helpers/generateId';
@@ -73,7 +73,8 @@ export function handleRoundData(rounds: Round[]): RoundStore {
 
         result[generateId()] = {
             meta: {
-                name: round.name
+                name: round.name,
+                isCompleted: false
             },
             games
         };

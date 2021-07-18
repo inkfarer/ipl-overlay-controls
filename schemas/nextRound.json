@@ -1,0 +1,90 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["teamA", "teamB", "games", "round"],
+    "properties": {
+        "teamA": {
+            "$ref": "defs/team.json#/team"
+        },
+        "teamB": {
+            "$ref": "defs/team.json#/team"
+        },
+        "round": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["id", "name"]
+        },
+        "games": {
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "stage": {
+                        "type": "string"
+                    },
+                    "mode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "stage",
+                    "mode"
+                ]
+            }
+        }
+    },
+    "default": {
+        "teamA": {
+            "id": "AAA",
+            "name": "Placeholder Team A",
+            "players": [
+                {
+                    "name": "Player 1"
+                },
+                {
+                    "name": "Player 2"
+                }
+            ]
+        },
+        "teamB": {
+            "id": "BBB",
+            "name": "Placeholder Team B",
+            "players": [
+                {
+                    "name": "Player 3"
+                },
+                {
+                    "name": "Player 4"
+                }
+            ]
+        },
+        "round": {
+            "id": "0",
+            "name": "Default Round"
+        },
+        "games": [
+            {
+                "stage": "Blackbelly Skatepark",
+                "mode": "Rainmaker"
+            },
+            {
+                "stage": "MakoMart",
+                "mode": "Tower Control"
+            },
+            {
+                "stage": "Starfish Mainstage",
+                "mode": "Clam Blitz"
+            }
+        ]
+    }
+}

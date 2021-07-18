@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>nextRound</title>
+</head>
+<body>
+    <div id="saved-progress-message" class="space info layout message" style="display: none">
+        <i class="icon fas fa-info-circle"></i>
+        <div class="content">
+            Given round already has progress saved.
+        </div>
+    </div>
+    <div class="space">
+        <div class="layout horizontal max-width">
+            <div class="select-container side-margin">
+                <label for="next-team-a-selector">Next Team A</label>
+                <select id="next-team-a-selector" class="team-selector next-team-update-warning"></select>
+            </div>
+            <div class="select-container side-margin">
+                <label for="next-team-b-selector">Next Team B</label>
+                <select id="next-team-b-selector" class="team-selector next-team-update-warning"></select>
+            </div>
+        </div>
+        <label for="round-selector">Next Round</label>
+        <select id="round-selector" class="round-selector"></select>
+        <button id="update-next-round-btn" class="blue max-width">update</button>
+        <button id="begin-next-match-btn" class="max-width" data-requires-confirmation>begin next match</button>
+    </div>
+</body>
+</html>

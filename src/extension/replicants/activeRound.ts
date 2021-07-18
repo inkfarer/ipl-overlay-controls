@@ -1,16 +1,20 @@
-import * as nodecgContext from '../util/nodecg';
-import { ActiveRound, RoundStore, SwapColorsInternally } from 'schemas';
+import * as nodecgContext from '../helpers/nodecg';
+import { ActiveRound, NextRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
 import { SetActiveRoundRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/gameWinner';
 import clone from 'clone';
-import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
+import { getTeam } from '../helpers/tournamentDataHelper';
+import isEmpty from 'lodash/isEmpty';
+import { commitActiveRoundToRoundStore } from './roundStore';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
+const nextRound = nodecg.Replicant<NextRound>('nextRound');
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
+const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 swapColorsInternally.on('change', (newValue, oldValue) => {
     if (oldValue !== undefined) {
@@ -86,37 +90,71 @@ function setWinner(index: number, winner: GameWinner): void {
     }
 
     activeRound.value = newValue;
+    commitActiveRoundToRoundStore();
 }
 
 nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledListenForCb) => {
-    const selectedRound = rounds.value[data.roundId];
+    try {
+        setActiveRound(data.roundId);
+    } catch (e) {
+        ack(e);
+    }
+});
+
+nodecg.listenFor('resetActiveRound', () => {
+    activeRound.value.teamA.score = 0;
+    activeRound.value.teamB.score = 0;
+    activeRound.value.games = activeRound.value.games.map(game =>
+        ({ ...game, winner: GameWinner.NO_WINNER, color: undefined }));
+    commitActiveRoundToRoundStore();
+});
+
+nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
+    activeRound.value.games = clone(data.games);
+    commitActiveRoundToRoundStore();
+});
+
+nodecg.listenFor('beginNextMatch', (data: never, ack: UnhandledListenForCb) => {
+    const teamA = getTeam(nextRound.value.teamA.id, tournamentData.value);
+    const teamB = getTeam(nextRound.value.teamB.id, tournamentData.value);
+
+    if ([teamA, teamB].filter(isEmpty).length > 0) {
+        ack(new Error('Could not find a team.'));
+    }
+
+    activeRound.value = {
+        ...activeRound.value,
+        teamA: {
+            ...activeRound.value.teamA,
+            ...teamA,
+            score: 0
+        },
+        teamB: {
+            ...activeRound.value.teamB,
+            ...teamB,
+            score: 0
+        },
+        games: activeRound.value.games.map(game =>
+            ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
+        round: {
+            ...nextRound.value.round
+        }
+    };
+
+    commitActiveRoundToRoundStore();
+});
+
+function setActiveRound(roundId: string): void {
+    const selectedRound = rounds.value[roundId];
     const currentActiveRound = clone(activeRound.value);
 
     if (!selectedRound) {
-        return ack(new Error('No round found.'));
+        throw new Error('No round found.');
     }
-
-    // A team has to win this many games to be considered the winner of the set
-    const winThreshold = currentActiveRound.games.length / 2;
-    const isCompleted
-        = (currentActiveRound.teamA.score > winThreshold || currentActiveRound.teamB.score > winThreshold);
-    const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
-
-    rounds.value[currentActiveRound.round.id] = {
-        ...(rounds.value[currentActiveRound.round.id]),
-        meta: {
-            name: currentActiveRound.round.name,
-            isCompleted
-        },
-        teamA: isStarted ? currentActiveRound.teamA : undefined,
-        teamB: isStarted ? currentActiveRound.teamB : undefined,
-        games: currentActiveRound.games.map((game) =>
-            ({ stage: game.stage, mode: game.mode, winner: game.winner, color: game.color })),
-    };
 
     const newValue = activeRound.value;
     newValue.round = {
-        id: data.roundId,
+        id: roundId,
         name: selectedRound.meta.name
     };
 
@@ -137,40 +175,5 @@ nodecg.listenFor('setActiveRound', (data: SetActiveRoundRequest, ack: UnhandledL
     newValue.games = clone(selectedRound.games);
 
     activeRound.value = newValue;
-    ack(null, newValue);
-});
-
-nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
-    activeRound.value.games = clone(data.games);
-    const roundStoreValue = rounds.value[activeRound.value.round.id];
-    if (roundStoreValue) {
-        roundStoreValue.games = clone(data.games);
-    }
-});
-
-nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
-    const roundStoreValue = rounds.value[data.id];
-    const originalValue = clone(roundStoreValue);
-
-    const mappedGames = clone(data.games).map((game, index) =>
-        ({ ...game, winner: originalValue?.games[index]?.winner || GameWinner.NO_WINNER }));
-
-    if (!roundStoreValue) {
-        rounds.value[data.id] = {
-            games: mappedGames,
-            meta: {
-                name: data.roundName,
-                isCompleted: false
-            }
-        };
-    } else {
-        roundStoreValue.games = mappedGames;
-        roundStoreValue.meta.name = data.roundName;
-    }
-
-    if (activeRound.value.round.id === data.id) {
-        activeRound.value.round.name = data.roundName;
-        activeRound.value.games = data.games.map((game, index) =>
-            ({ ...activeRound.value.games[index], ...game }));
-    }
-});
+    commitActiveRoundToRoundStore();
+}

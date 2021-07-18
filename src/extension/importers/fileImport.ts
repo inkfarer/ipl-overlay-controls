@@ -1,5 +1,5 @@
 import { handleRoundData } from './roundImporter';
-import * as nodecgContext from '../util/nodecg';
+import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import { handleRawData, updateTeamDataReplicants } from './tournamentImporter';
 import * as express from 'express';

@@ -1,5 +1,6 @@
 body {
     font-family: 'Roboto', 'Noto', sans-serif;
+    margin: 10px;
 }
 
 :root {
@@ -49,13 +50,17 @@ body {
     margin: 0;
 }
 
+.layout > .fill {
+    flex: 1 1 0;
+}
+
 /* "Space" class for creating sections of elements + related styles */
 
 .space {
     background-color: #262f40;
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 5px;
+    margin: 5px 5px 8px;
 }
 
 .space.warning {

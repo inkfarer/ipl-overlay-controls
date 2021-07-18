@@ -1,5 +1,5 @@
 import { version } from '../../package.json';
-import * as nodecgContext from './util/nodecg';
+import * as nodecgContext from './helpers/nodecg';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import semver from 'semver/preload';
 

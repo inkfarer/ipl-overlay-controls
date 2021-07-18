@@ -63,6 +63,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "nextround",
+                "title": "Upcoming Round",
+                "width": 2,
+                "file": "nextRound.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "casters",
                 "title": "Casters",
                 "width": 2,
@@ -87,20 +95,6 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "createPredictionDialog",
-                "title": "",
-                "width": 3,
-                "file": "createPredictionDialog.html",
-                "dialog": true
-            },
-            {
-                "name": "resolvePredictionDialog",
-                "title": "",
-                "width": 3,
-                "file": "resolvePredictionDialog.html",
-                "dialog": true
-            },
-            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,
@@ -123,6 +117,20 @@
                 "file": "settings.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
+            },
+            {
+                "name": "createPredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "createPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "resolvePredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "resolvePredictionDialog.html",
+                "dialog": true
             }
         ]
     },

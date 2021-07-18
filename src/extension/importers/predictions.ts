@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import * as nodecgContext from '../util/nodecg';
+import * as nodecgContext from '../helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { Prediction } from 'types/prediction';

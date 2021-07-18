@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import * as nodecgContext from '../util/nodecg';
+import * as nodecgContext from '../helpers/nodecg';
 import { TournamentData, ScoreboardData, NextTeams, HighlightedMatches } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { Team } from 'types/team';

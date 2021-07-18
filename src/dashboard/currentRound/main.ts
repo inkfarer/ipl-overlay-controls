@@ -5,12 +5,12 @@ import { activeRound } from './replicants';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { addToggle } from './toggleCreator';
 import { updateToggles } from './toggleUpdater';
-import { SetActiveRoundRequest } from 'types/messages/activeRound';
 
 import '../styles/globalStyles.css';
 import './currentRound.css';
 
 import './roundUpdater';
+import '../helpers/buttonConfirm';
 
 library.add(faTimes);
 dom.watch();
@@ -43,6 +43,6 @@ function addRoundToggles(games: ActiveRoundGame[], roundName: string) {
     }
 }
 
-document.getElementById('btn-reset').onclick = () => {
-    nodecg.sendMessage('setActiveRound', { roundId: activeRound.value.round.id } as SetActiveRoundRequest);
-};
+document.getElementById('btn-reset').addEventListener('confirm', () => {
+    nodecg.sendMessage('resetActiveRound');
+});

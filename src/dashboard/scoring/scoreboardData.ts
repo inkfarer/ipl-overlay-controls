@@ -34,9 +34,7 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
 });
 
 function getTeam(id: string): Team {
-    return tournamentData.value.teams.filter(
-        team => team.id === id
-    )[0];
+    return tournamentData.value.teams.filter(team => team.id === id)[0];
 }
 
 addChangeReminder(

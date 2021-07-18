@@ -1,7 +1,7 @@
 // @ts-ignore: TODO: No type defs available, could be written on fork
 import { LastFmNode } from 'lastfm';
 import clone from 'clone';
-import * as nodecgContext from '../util/nodecg';
+import * as nodecgContext from '../helpers/nodecg';
 import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from 'schemas';
 import { ReplicantServer } from 'nodecg/lib/replicant';
 const nodecg = nodecgContext.get();
