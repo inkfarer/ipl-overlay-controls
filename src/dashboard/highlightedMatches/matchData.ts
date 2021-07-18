@@ -1,14 +1,14 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
-import { HighlightedMatches, NextTeams, TournamentData } from 'schemas';
+import { HighlightedMatches, TournamentData } from 'schemas';
 import { Match } from 'types/match';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
+import { SetNextRoundRequest } from 'types/messages/nextRound';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
-const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 
 const matchDataStatusElem = document.getElementById('match-data-status');
 const stageSelectElem = document.getElementById('stage-selector') as MultiSelect;
@@ -60,9 +60,9 @@ stageSelectElem.addEventListener('change', event => {
 // When set next match button is pressed
 setNextMatchBtnElem.onclick = () => {
     const selectedMatch = getMatchFromID(matchSelectElem.value);
-    if (selectedMatch) {  // if match exists then assign it to the next match rep
-        nextTeams.value.teamAInfo = selectedMatch.teamA;
-        nextTeams.value.teamBInfo = selectedMatch.teamB;
+    if (selectedMatch) {
+        nodecg.sendMessage('setNextRound',
+            { teamAId: selectedMatch.teamA.id, teamBId: selectedMatch.teamB.id } as SetNextRoundRequest);
     }
 };
 
@@ -91,32 +91,35 @@ tournamentData.on('change', newValue => {
     }
 });
 
-highlightedMatchData.on('change', newValue => {
-    clearSelectors('match-selector');
-    if (!newValue || newValue.length < 1) {
-        hideElement(selectMatchSpace);
-        if (isValidSource(tournamentData.value.meta.source)) {
-            showElement(noLoadedMatchesMessage);
+NodeCG.waitForReplicants(tournamentData).then(() => {
+    highlightedMatchData.on('change', newValue => {
+        console.log(newValue);
+        clearSelectors('match-selector');
+        if (!newValue || newValue.length < 1) {
+            hideElement(selectMatchSpace);
+            if (isValidSource(tournamentData.value.meta.source)) {
+                showElement(noLoadedMatchesMessage);
+            }
+        } else {
+            hideElement(noLoadedMatchesMessage);
+            showElement(selectMatchSpace);
+
+            const isSameBracket = newValue.every(value => {
+                return value.meta.stageName === newValue[0].meta.stageName;
+            });
+
+            // fill drop down with matches
+            newValue.forEach(function (value) {
+                const matchName = isSameBracket ? value.meta.name : `${value.meta.name} | ${value.meta.stageName}`;
+                addSelector(
+                    addDots(matchName),
+                    'match-selector',
+                    value.meta.id);
+            });
+            teamAName.innerText = addDots(newValue[0].teamA.name);
+            teamBName.innerText = addDots(newValue[0].teamB.name);
         }
-    } else {
-        hideElement(noLoadedMatchesMessage);
-        showElement(selectMatchSpace);
-
-        const isSameBracket = newValue.every(value => {
-            return value.meta.stageName === newValue[0].meta.stageName;
-        });
-
-        // fill drop down with matches
-        newValue.forEach(function (value) {
-            const matchName = isSameBracket ? value.meta.name : `${value.meta.name} | ${value.meta.stageName}`;
-            addSelector(
-                addDots(matchName),
-                'match-selector',
-                value.meta.id);
-        });
-        teamAName.innerText = addDots(newValue[0].teamA.name);
-        teamBName.innerText = addDots(newValue[0].teamB.name);
-    }
+    });
 });
 
 matchSelectElem.oninput = () => {
