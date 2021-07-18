@@ -2,6 +2,7 @@ import { activeRound, roundStore, tournamentData } from './replicants';
 import { ActiveRound } from 'schemas';
 import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
 import { SetRoundRequest } from 'types/messages/rounds';
+import { ToggleTeamImageRequest } from 'types/messages/tournamentData';
 
 const roundSelector = document.getElementById('round-selector') as HTMLSelectElement;
 const teamASelector = document.getElementById('team-a-selector') as HTMLSelectElement;
@@ -9,10 +10,18 @@ const teamBSelector = document.getElementById('team-b-selector') as HTMLSelectEl
 const updateActiveRoundButton = document.getElementById('update-active-round-button') as HTMLButtonElement;
 const roundDataInfoElem = document.getElementById('round-data-info') as HTMLDivElement;
 const roundDataInfoText = roundDataInfoElem.querySelector('.content') as HTMLDivElement;
+const showTeamAImage = document.getElementById('show-team-a-image') as HTMLInputElement;
+const showTeamBImage = document.getElementById('show-team-b-image') as HTMLInputElement;
 
 NodeCG.waitForReplicants(activeRound, tournamentData, roundStore).then(() => {
     activeRound.on('change', newValue => {
         updateTeamSelectors(newValue);
+
+        showTeamAImage.checked = newValue.teamA.showLogo;
+        showTeamAImage.dataset.teamId = newValue.teamA.id;
+        showTeamBImage.checked = newValue.teamB.showLogo;
+        showTeamBImage.dataset.teamId = newValue.teamB.id;
+
         roundSelector.value = newValue.round.id;
         checkRoundProgress();
     });
@@ -50,6 +59,27 @@ NodeCG.waitForReplicants(activeRound, tournamentData, roundStore).then(() => {
 
 roundSelector.addEventListener('change', checkRoundProgress);
 
+updateActiveRoundButton.addEventListener('click', () => {
+    nodecg.sendMessage('setActiveRound', {
+        roundId: roundSelector.value,
+        teamAId: teamASelector.value,
+        teamBId: teamBSelector.value
+    } as SetRoundRequest);
+});
+
+showTeamAImage.addEventListener('change', handleTeamImageToggleChange);
+showTeamBImage.addEventListener('change', handleTeamImageToggleChange);
+
+function handleTeamImageToggleChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const teamId = target.dataset.teamId;
+    if (!teamId) {
+        throw new Error('Team image toggle has no team ID set');
+    }
+
+    nodecg.sendMessage('toggleTeamImage', { teamId: teamId, isVisible: target.checked } as ToggleTeamImageRequest);
+}
+
 function checkRoundProgress() {
     const selectedRoundOption = roundSelector.options[roundSelector.selectedIndex];
     if (selectedRoundOption
@@ -79,13 +109,5 @@ function updateTeamSelectors(activeRound: ActiveRound): void {
     teamASelector.value = activeRound.teamA.id;
     teamBSelector.value = activeRound.teamB.id;
 }
-
-updateActiveRoundButton.addEventListener('click', () => {
-    nodecg.sendMessage('setActiveRound', {
-        roundId: roundSelector.value,
-        teamAId: teamASelector.value,
-        teamBId: teamBSelector.value
-    } as SetRoundRequest);
-});
 
 addChangeReminder([roundSelector, teamASelector, teamBSelector], updateActiveRoundButton);
