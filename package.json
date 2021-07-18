@@ -55,10 +55,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "currentround",
+                "name": "activeround",
                 "title": "Current Round",
                 "width": 4,
-                "file": "currentRound.html",
+                "file": "activeRound.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },

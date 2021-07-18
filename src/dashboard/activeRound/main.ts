@@ -7,7 +7,7 @@ import { addToggle } from './toggleCreator';
 import { updateToggles } from './toggleUpdater';
 
 import '../styles/globalStyles.css';
-import './currentRound.css';
+import './activeRound.css';
 
 import './roundUpdater';
 import './teamAndRoundDataSelector';
