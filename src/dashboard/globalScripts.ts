@@ -11,11 +11,15 @@ export function clearSelectors(className: string): void {
 export function addSelector(text: string, className: string, value: string): void {
     const elements = document.querySelectorAll(`.${className}`);
     Array.from(elements).forEach(item => {
-        const opt = document.createElement('option');
-        opt.value = value === '' ? text : value;
-        opt.text = text;
-        item.appendChild(opt);
+        item.appendChild(createSelector(text, value === '' ? text : value));
     });
+}
+
+export function createSelector(text: string, value: string): HTMLOptionElement {
+    const result = document.createElement('option');
+    result.value = value;
+    result.text = text;
+    return result;
 }
 
 // For toggling show/hide buttons

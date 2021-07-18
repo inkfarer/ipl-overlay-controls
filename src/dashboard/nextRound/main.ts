@@ -1,5 +1,5 @@
 import { RoundStore, TournamentData, NextRound, Round } from 'schemas';
-import { addChangeReminder, addDots, addSelector, clearSelectors } from '../globalScripts';
+import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
 import { SetNextRoundRequest } from 'types/messages/nextRound';
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
@@ -27,18 +27,18 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     rounds.on('change', newValue => {
         clearSelectors('round-selector');
         for (const [key, value] of Object.entries(newValue)) {
-            const opt = document.createElement('option');
-            opt.value = key;
-            opt.text = value.meta.name;
-            roundSelector.appendChild(opt);
+            roundSelector.appendChild(createSelector(value.meta.name, key));
+        }
+
+        const newNextRound = newValue[nextRound.value.round.id];
+
+        if (newNextRound) {
+            checkNextRoundProgress(newNextRound);
+        } else {
+            roundSelector.appendChild(createSelector(nextRound.value.round.name, nextRound.value.round.id));
         }
 
         roundSelector.value = nextRound.value.round.id;
-
-        const newNextRound = newValue[nextRound.value.round.id];
-        if (newNextRound) {
-            checkNextRoundProgress(newNextRound);
-        }
     });
 
     nextRound.on('change', newValue => {
@@ -47,7 +47,9 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
         roundSelector.value = newValue.round.id;
 
         const roundValue = rounds.value[newValue.round.id];
-        checkNextRoundProgress(roundValue);
+        if (roundValue) {
+            checkNextRoundProgress(roundValue);
+        }
     });
 
     tournamentData.on('change', newValue => {

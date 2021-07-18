@@ -93,7 +93,6 @@ tournamentData.on('change', newValue => {
 
 NodeCG.waitForReplicants(tournamentData).then(() => {
     highlightedMatchData.on('change', newValue => {
-        console.log(newValue);
         clearSelectors('match-selector');
         if (!newValue || newValue.length < 1) {
             hideElement(selectMatchSpace);

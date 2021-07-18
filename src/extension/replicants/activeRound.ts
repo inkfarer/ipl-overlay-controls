@@ -133,7 +133,7 @@ nodecg.listenFor('beginNextMatch', (data: never, ack: UnhandledListenForCb) => {
             ...teamB,
             score: 0
         },
-        games: activeRound.value.games.map(game =>
+        games: nextRound.value.games.map(game =>
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
         round: {
             ...nextRound.value.round
