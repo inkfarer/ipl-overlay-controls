@@ -31,11 +31,8 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
         }
 
         const newNextRound = newValue[nextRound.value.round.id];
-
         if (newNextRound) {
             checkNextRoundProgress(newNextRound);
-        } else {
-            roundSelector.appendChild(createSelector(nextRound.value.round.name, nextRound.value.round.id));
         }
 
         roundSelector.value = nextRound.value.round.id;
