@@ -14,4 +14,4 @@ import './colorToggles';
 import './teamSelectors';
 
 import '../styles/globalStyles.css';
-import './scoring.css';
+import './scoreboard.css';

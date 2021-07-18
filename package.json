@@ -32,9 +32,9 @@
         "dashboardPanels": [
             {
                 "name": "scoring",
-                "title": "Scoring",
+                "title": "Scoreboard",
                 "width": 2,
-                "file": "scoring.html",
+                "file": "scoreboard.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
