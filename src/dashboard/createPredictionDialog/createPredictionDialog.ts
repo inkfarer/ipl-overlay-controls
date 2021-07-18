@@ -2,11 +2,11 @@ import { addDots, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
 import { FieldValidity } from './types/fieldValidity';
-import { NextTeams } from 'schemas';
+import { NextRound } from 'schemas';
 
 const fieldValidity: FieldValidity = {};
 
-const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
+const nextRound = nodecg.Replicant<NextRound>('nextRound');
 const predictionCreateStatusElem = document.getElementById('prediction-create-status');
 
 const predictionNameLabel = document.getElementById('prediction-name-label');
@@ -116,9 +116,9 @@ createPredictionBtn.onclick = () => {
 };
 
 // Set team names
-nextTeams.on('change', newValue => {
-    setInputField(optionAInput, addDots(newValue.teamAInfo.name, 25));
-    setInputField(optionBInput, addDots(newValue.teamBInfo.name, 25));
+nextRound.on('change', newValue => {
+    setInputField(optionAInput, addDots(newValue.teamA.name, 25));
+    setInputField(optionBInput, addDots(newValue.teamB.name, 25));
 });
 
 addInputLengthLimit(predictionNameInput, predictionNameLabel, 'Name of Prediction', 45);

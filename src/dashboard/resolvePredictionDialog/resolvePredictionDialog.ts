@@ -1,7 +1,7 @@
 import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/importStatus';
-import { PredictionStore, ScoreboardData, TeamScores } from 'schemas';
+import { ActiveRound, PredictionStore } from 'schemas';
 import { WinningOption } from './types/winningOption';
 
 // Stores data on current winning Option
@@ -12,8 +12,7 @@ const winningOption: WinningOption = {
 };
 
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
-const teamScores = nodecg.Replicant<TeamScores>('teamScores');
+const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 
 const autoResolveBtn = document.getElementById('auto-resolve-predictions-btn') as HTMLButtonElement;
 const resolveOptionABtn = document.getElementById('resolve-A-predictions-btn') as HTMLButtonElement;
@@ -69,12 +68,8 @@ function setUI(predictionValue: PredictionStore) {
 
 /**
  * Attempt to work out which team is winning and if there's a prediction option to resolve in ether's favour
- * @param teamScoresValue teamScores replicant Value
- * @param scoreboardValue scoreboardData replicant value
- * @param predictionValue predictionStore replicant value
  */
-function autoResolveWinner(teamScoresValue: TeamScores,
-    scoreboardValue: ScoreboardData, predictionValue: PredictionStore) {
+function autoResolveWinner(activeRound: ActiveRound, predictionValue: PredictionStore) {
     winningOption.validOption = false;
     if (!predictionValue.currentPrediction) {
         return setUI(predictionValue);
@@ -82,10 +77,10 @@ function autoResolveWinner(teamScoresValue: TeamScores,
 
     let winningTeamName: string;
     // Work out which team has higher score
-    if (teamScoresValue.teamA > teamScoresValue.teamB) {
-        winningTeamName = scoreboardValue.teamAInfo.name;
-    } else if (teamScoresValue.teamB > teamScoresValue.teamA) {
-        winningTeamName = scoreboardValue.teamBInfo.name;
+    if (activeRound.teamA.score > activeRound.teamB.score) {
+        winningTeamName = activeRound.teamA.name;
+    } else if (activeRound.teamB.score > activeRound.teamA.score) {
+        winningTeamName = activeRound.teamB.name;
     } else {  // if neither team is in the lead
         setUI(predictionValue);
         return;
@@ -132,17 +127,16 @@ function resolvePrediction(index: number) {
     });
 }
 
-NodeCG.waitForReplicants(predictionStore, teamScores, scoreboardData).then(() => {
+NodeCG.waitForReplicants(predictionStore, activeRound).then(() => {
     predictionStore.on('change', newValue => {
-        autoResolveWinner(teamScores.value, scoreboardData.value, newValue);
+        autoResolveWinner(activeRound.value, newValue);
         setUI(newValue);
     });
 
-    teamScores.on('change', newValue => {
-        autoResolveWinner(newValue, scoreboardData.value, predictionStore.value);
+    activeRound.on('change', newValue => {
+        autoResolveWinner(newValue, predictionStore.value);
         setUI(predictionStore.value);
     });
-
 });
 
 // Assign onclick functions to buttons
