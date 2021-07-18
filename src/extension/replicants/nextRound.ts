@@ -12,21 +12,13 @@ const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 
 nodecg.listenFor('setNextRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
-    const teamA = getTeam(data.teamAId, tournamentData.value);
-    const teamB = getTeam(data.teamBId, tournamentData.value);
-    if ([teamA, teamB].filter(isEmpty).length > 0) {
-        return ack(new Error('Could not find a team.'));
-    }
-
-    nextRound.value.teamA = teamA;
-    nextRound.value.teamB = teamB;
-
-    if (data.roundId) {
-        try {
+    try {
+        setNextRoundTeams(data.teamAId, data.teamBId);
+        if (data.roundId) {
             setNextRoundGames(data.roundId);
-        } catch (e) {
-            ack(e);
         }
+    } catch (e) {
+        return ack(e);
     }
 });
 
@@ -41,4 +33,15 @@ export function setNextRoundGames(roundId: string): void {
         name: round.meta.name
     };
     nextRound.value.games = round.games.map(game => ({ stage: game.stage, mode: game.mode }));
+}
+
+export function setNextRoundTeams(teamAId: string, teamBId: string): void {
+    const teamA = getTeam(teamAId, tournamentData.value);
+    const teamB = getTeam(teamBId, tournamentData.value);
+    if ([teamA, teamB].filter(isEmpty).length > 0) {
+        throw new Error('Could not find a team.');
+    }
+
+    nextRound.value.teamA = teamA;
+    nextRound.value.teamB = teamB;
 }

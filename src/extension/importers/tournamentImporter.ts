@@ -5,9 +5,10 @@ import { TournamentData, HighlightedMatches } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { Team } from 'types/team';
 import { BattlefyTournamentData } from '../types/battlefyTournamentData';
-import clone from 'clone';
 import { BracketType, BracketTypeHelper } from 'types/enums/bracketType';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { setActiveRoundTeams } from '../replicants/activeRound';
+import { setNextRoundTeams } from '../replicants/nextRound';
 
 const nodecg = nodecgContext.get();
 
@@ -96,7 +97,8 @@ export function updateTeamDataReplicants(data: TournamentData): void {
     const firstTeam = data.teams[0];
     const secondTeam = data.teams[1] || data.teams[0];
 
-    // TODO: set new replicants
+    setActiveRoundTeams(firstTeam.id, secondTeam.id);
+    setNextRoundTeams((data.teams[2].id || firstTeam.id), (data.teams[3].id || secondTeam.id));
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {
@@ -138,6 +140,7 @@ async function getBattlefyData(id: string): Promise<TournamentData> {
                         id: element._id,
                         name: element.name,
                         logoUrl: element.persistentTeam.logoUrl,
+                        showLogo: true,
                         players: []
                     };
                     for (let j = 0; j < element.players.length; j++) {
@@ -277,7 +280,8 @@ async function getSmashGGPage(
                     pageInfo.push({
                         id: generateId(),
                         name: teamName,
-                        players: teamPlayers
+                        players: teamPlayers,
+                        showLogo: true
                     });
                 }
 
@@ -302,7 +306,6 @@ async function getRaw(url: string): Promise<TournamentData> {
             .get(url)
             .then(response => {
                 const finalResponse = handleRawData(response.data, url);
-
                 resolve(finalResponse);
             })
             .catch(err => {
@@ -316,6 +319,9 @@ export function handleRawData(teams: Team[], dataUrl: string): TournamentData {
         const element = teams[i];
         if (element.id == null) {
             element.id = generateId();
+        }
+        if (element.showLogo == null) {
+            element.showLogo = true;
         }
     }
 

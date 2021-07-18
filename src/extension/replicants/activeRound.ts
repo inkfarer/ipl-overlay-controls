@@ -94,27 +94,13 @@ function setWinner(index: number, winner: GameWinner): void {
 }
 
 nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
-    const teamA = getTeam(data.teamAId, tournamentData.value);
-    const teamB = getTeam(data.teamBId, tournamentData.value);
-    if ([teamA, teamB].filter(isEmpty).length > 0) {
-        return ack(new Error('Could not find a team.'));
-    }
-
-    activeRound.value.teamA = {
-        ...activeRound.value.teamA,
-        ...teamA
-    };
-    activeRound.value.teamB = {
-        ...activeRound.value.teamB,
-        ...teamB
-    };
-
-    if (data.roundId) {
-        try {
+    try {
+        setActiveRoundTeams(data.teamAId, data.teamBId);
+        if (data.roundId) {
             setActiveRoundGames(data.roundId);
-        } catch (e) {
-            ack(e);
         }
+    } catch (e) {
+        return ack(e);
     }
 
     commitActiveRoundToRoundStore();
@@ -194,4 +180,21 @@ export function setActiveRoundGames(roundId: string): void {
         activeRound.value.teamA.score = 0;
         activeRound.value.teamB.score = 0;
     }
+}
+
+export function setActiveRoundTeams(teamAId: string, teamBId: string): void {
+    const teamA = getTeam(teamAId, tournamentData.value);
+    const teamB = getTeam(teamBId, tournamentData.value);
+    if ([teamA, teamB].filter(isEmpty).length > 0) {
+        throw new Error('Could not find a team.');
+    }
+
+    activeRound.value.teamA = {
+        ...activeRound.value.teamA,
+        ...teamA
+    };
+    activeRound.value.teamB = {
+        ...activeRound.value.teamB,
+        ...teamB
+    };
 }
