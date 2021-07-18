@@ -47,3 +47,18 @@
 .select-container {
     margin: 0 2.5px;
 }
+
+.small-scene-toggle {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+}
+
+.small-scene-toggle > .title {
+    margin: 0 0 0 5px;
+    text-align: left;
+}
+
+.small-scene-toggle > button {
+    margin: 0;
+}
