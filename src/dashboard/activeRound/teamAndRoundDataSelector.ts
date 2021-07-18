@@ -2,7 +2,7 @@ import { activeRound, roundStore, tournamentData } from './replicants';
 import { ActiveRound } from 'schemas';
 import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
 import { SetRoundRequest } from 'types/messages/rounds';
-import { ToggleTeamImageRequest } from 'types/messages/tournamentData';
+import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
 
 const roundSelector = document.getElementById('round-selector') as HTMLSelectElement;
 const teamASelector = document.getElementById('team-a-selector') as HTMLSelectElement;
@@ -69,16 +69,6 @@ updateActiveRoundButton.addEventListener('click', () => {
 
 showTeamAImage.addEventListener('change', handleTeamImageToggleChange);
 showTeamBImage.addEventListener('change', handleTeamImageToggleChange);
-
-function handleTeamImageToggleChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const teamId = target.dataset.teamId;
-    if (!teamId) {
-        throw new Error('Team image toggle has no team ID set');
-    }
-
-    nodecg.sendMessage('toggleTeamImage', { teamId: teamId, isVisible: target.checked } as ToggleTeamImageRequest);
-}
 
 function checkRoundProgress() {
     const selectedRoundOption = roundSelector.options[roundSelector.selectedIndex];

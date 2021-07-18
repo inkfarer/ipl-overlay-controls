@@ -7,6 +7,7 @@ import '../helpers/buttonConfirm';
 import '../styles/globalStyles.css';
 import './nextRound.css';
 import { SetRoundRequest } from 'types/messages/rounds';
+import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
 
 library.add(faInfoCircle);
 dom.watch();
@@ -22,6 +23,8 @@ const nextTeamASelector = document.getElementById('next-team-a-selector') as HTM
 const nextTeamBSelector = document.getElementById('next-team-b-selector') as HTMLSelectElement;
 const savedProgressMessage = document.getElementById('saved-progress-message') as HTMLDivElement;
 const savedProgressMessageText = savedProgressMessage.querySelector('.content') as HTMLElement;
+const showTeamAImage = document.getElementById('show-team-a-image') as HTMLInputElement;
+const showTeamBImage = document.getElementById('show-team-b-image') as HTMLInputElement;
 
 NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     rounds.on('change', newValue => {
@@ -39,6 +42,12 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     });
 
     nextRound.on('change', newValue => {
+        console.log(newValue);
+        showTeamAImage.checked = newValue.teamA.showLogo;
+        showTeamBImage.checked = newValue.teamB.showLogo;
+        showTeamAImage.dataset.teamId = newValue.teamA.id;
+        showTeamBImage.dataset.teamId = newValue.teamB.id;
+
         nextTeamASelector.value = newValue.teamA.id;
         nextTeamBSelector.value = newValue.teamB.id;
         roundSelector.value = newValue.round.id;
@@ -74,6 +83,9 @@ beginNextMatchButton.addEventListener('confirm', () => {
 });
 
 addChangeReminder([roundSelector, nextTeamASelector, nextTeamBSelector], nextRoundUpdateButton);
+
+showTeamAImage.addEventListener('change', handleTeamImageToggleChange);
+showTeamBImage.addEventListener('change', handleTeamImageToggleChange);
 
 function checkNextRoundProgress(nextRound: Round) {
     const roundHasProgress = (nextRound.teamA?.score || 0) + (nextRound.teamB?.score || 0) > 0;
