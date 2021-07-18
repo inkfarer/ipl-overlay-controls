@@ -1,13 +1,17 @@
 import * as nodecgContext from '../helpers/nodecg';
-import { ActiveRound, RoundStore } from 'schemas';
-import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
+import { ActiveRound, NextRound, RoundStore } from 'schemas';
+import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
 import clone from 'clone';
 import { GameWinner } from 'types/gameWinner';
+import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import { setActiveRoundGames } from './activeRound';
+import { setNextRoundGames } from './nextRound';
 
 const nodecg = nodecgContext.get();
 
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
+const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
 nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
     const roundStoreValue = roundStore.value[data.id];
@@ -34,6 +38,82 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
         activeRound.value.games = data.games.map((game, index) =>
             ({ ...activeRound.value.games[index], ...game }));
     }
+});
+
+nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenForCb) => {
+    if (Object.keys(roundStore.value).length <= 1) {
+        return ack(new Error('Cannot delete the last round.'));
+    }
+    if (!roundStore.value[data.roundId]) {
+        return ack(new Error(`Couldn't find round with id ${data.roundId}.`));
+    }
+
+    delete roundStore.value[data.roundId];
+
+    const firstRoundId = Object.keys(roundStore.value)[0];
+    if (activeRound.value.round.id === data.roundId) {
+        setActiveRoundGames(firstRoundId);
+    }
+    if (nextRound.value.round.id === data.roundId) {
+        setNextRoundGames(firstRoundId);
+    }
+});
+
+nodecg.listenFor('resetRoundStore', () => {
+    const defaultRoundId = '00000';
+    const secondDefaultRoundId = '11111';
+
+    roundStore.value = {
+        [defaultRoundId]: {
+            meta: {
+                name: 'Default round 1',
+                isCompleted: false
+            },
+            games: [
+                {
+                    stage: 'MakoMart',
+                    mode: 'Clam Blitz',
+                    winner: GameWinner.NO_WINNER
+                },
+                {
+                    stage: 'Ancho-V Games',
+                    mode: 'Tower Control',
+                    winner: GameWinner.NO_WINNER
+                },
+                {
+                    stage: 'Wahoo World',
+                    mode: 'Rainmaker',
+                    winner: GameWinner.NO_WINNER
+                }
+            ]
+        },
+        [secondDefaultRoundId]: {
+            meta: {
+                name: 'Default round 2',
+                isCompleted: false
+            },
+            games: [
+                {
+                    stage: 'Inkblot Art Academy',
+                    mode: 'Turf War',
+                    winner: GameWinner.NO_WINNER
+                },
+                {
+                    stage: 'Ancho-V Games',
+                    mode: 'Tower Control',
+                    winner: GameWinner.NO_WINNER
+                },
+                {
+                    stage: 'Wahoo World',
+                    mode: 'Rainmaker',
+                    winner: GameWinner.NO_WINNER
+                }
+            ]
+        }
+    };
+
+    setActiveRoundGames(defaultRoundId);
+    setNextRoundGames(secondDefaultRoundId);
 });
 
 export function commitActiveRoundToRoundStore(): void {

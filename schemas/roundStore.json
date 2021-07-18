@@ -100,15 +100,38 @@
         "$ref": "#/definitions/round"
     },
     "default": {
-        "0": {
+        "00000": {
             "meta": {
-                "name": "Default round",
+                "name": "Default round 2",
                 "isCompleted": false
             },
             "games": [
                 {
                     "stage": "MakoMart",
                     "mode": "Clam Blitz",
+                    "winner": "none"
+                },
+                {
+                    "stage": "Ancho-V Games",
+                    "mode": "Tower Control",
+                    "winner": "none"
+                },
+                {
+                    "stage": "Wahoo World",
+                    "mode": "Rainmaker",
+                    "winner": "none"
+                }
+            ]
+        },
+        "11111": {
+            "meta": {
+                "name": "Default round 2",
+                "isCompleted": false
+            },
+            "games": [
+                {
+                    "stage": "Inkblot Art Academy",
+                    "mode": "Turf War",
                     "winner": "none"
                 },
                 {

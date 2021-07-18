@@ -69,21 +69,21 @@
             ]
         },
         "round": {
-            "id": "0",
-            "name": "Default Round"
+            "id": "11111",
+            "name": "Default Round 2"
         },
         "games": [
             {
-                "stage": "Blackbelly Skatepark",
-                "mode": "Rainmaker"
+                "stage": "Inkblot Art Academy",
+                "mode": "Turf War"
             },
             {
-                "stage": "MakoMart",
+                "stage": "Ancho-V Games",
                 "mode": "Tower Control"
             },
             {
-                "stage": "Starfish Mainstage",
-                "mode": "Clam Blitz"
+                "stage": "Wahoo World",
+                "mode": "Rainmaker"
             }
         ]
     }

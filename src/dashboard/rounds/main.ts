@@ -3,11 +3,13 @@ import { generateId } from '../../helpers/generateId';
 import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { GameWinner } from 'types/gameWinner';
-import { UpdateRoundStoreRequest } from 'types/messages/roundStore';
+import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
 import isEqual from 'lodash/isEqual';
 
+import '../helpers/buttonConfirm';
 import '../styles/globalStyles.css';
 import './rounds.css';
+import { addClasses } from '../helpers/elemHelper';
 
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
@@ -23,35 +25,7 @@ document.getElementById('create-7-game-round').onclick = () => {
     createRoundElem(7, generateId(), true);
 };
 
-document.getElementById('reset-rounds').onclick = () => resetRounds();
-
-function resetRounds() {
-    rounds.value = {
-        '0': {
-            meta: {
-                name: 'Default round',
-                isCompleted: false
-            },
-            games: [
-                {
-                    stage: 'MakoMart',
-                    mode: 'Clam Blitz',
-                    winner: GameWinner.NO_WINNER
-                },
-                {
-                    stage: 'Ancho-V Games',
-                    mode: 'Tower Control',
-                    winner: GameWinner.NO_WINNER
-                },
-                {
-                    stage: 'Wahoo World',
-                    mode: 'Rainmaker',
-                    winner: GameWinner.NO_WINNER
-                }
-            ]
-        }
-    };
-}
+document.getElementById('reset-rounds').addEventListener('confirm', () => nodecg.sendMessage('resetRoundStore'));
 
 function createRoundElem(numberOfGames: number, id: string, remindToUpdate: boolean) {
     if (typeof numberOfGames !== 'number' || numberOfGames > 7 || numberOfGames <= 0) {
@@ -148,17 +122,16 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
     removeButton.style.backgroundColor = 'var(--red)';
     removeButton.id = 'removeButton_' + id;
     removeButton.innerText = 'REMOVE';
-    removeButton.classList.add('max-width');
+    addClasses(removeButton, 'max-width', 'remove-round-button');
+    removeButton.dataset.uncommitted = remindToUpdate ? 'true' : 'false';
     removeButton.onclick = event => {
-        const buttonId = (event.target as HTMLButtonElement).id.split('_')[1];
+        const target = event.target as HTMLButtonElement;
 
-        if (rounds.value[buttonId]) {
-            // This creates an error, but works anyways.
-            try {
-                delete rounds.value[buttonId];
-            } catch {}
-        } else {
+        const buttonId = target.id.split('_')[1];
+        if (removeButton.dataset.uncommitted === 'true') {
             deleteRoundElem(buttonId);
+        } else {
+            nodecg.sendMessage('removeRound', { roundId: buttonId } as RemoveRoundRequest);
         }
     };
 
@@ -210,7 +183,17 @@ function updateOrCreateCreateRoundElem(id: string, data: Round) {
     }
 }
 
+function setRemoveButtonDisabled(disabled: boolean) {
+    const buttons = document.querySelectorAll('.remove-round-button');
+    buttons.forEach(button => {
+        (button as HTMLButtonElement).disabled = disabled;
+    });
+}
+
 rounds.on('change', (newValue, oldValue) => {
+    const disableRemoving = Object.keys(newValue).length <= 1;
+    setRemoveButtonDisabled(disableRemoving);
+
     for (const id in newValue) {
         if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
 

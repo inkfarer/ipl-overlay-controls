@@ -22,15 +22,23 @@ nodecg.listenFor('setNextRound', (data: SetRoundRequest, ack: UnhandledListenFor
     nextRound.value.teamB = teamB;
 
     if (data.roundId) {
-        const round = roundStore.value[data.roundId];
-        if (isEmpty(round)) {
-            return ack(new Error(`Could not find round ${data.roundId}.`));
+        try {
+            setNextRoundGames(data.roundId);
+        } catch (e) {
+            ack(e);
         }
-
-        nextRound.value.round = {
-            id: data.roundId,
-            name: round.meta.name
-        };
-        nextRound.value.games = round.games.map(game => ({ stage: game.stage, mode: game.mode }));
     }
 });
+
+export function setNextRoundGames(roundId: string): void {
+    const round = roundStore.value[roundId];
+    if (isEmpty(round)) {
+        throw new Error(`Could not find round ${roundId}.`);
+    }
+
+    nextRound.value.round = {
+        id: roundId,
+        name: round.meta.name
+    };
+    nextRound.value.games = round.games.map(game => ({ stage: game.stage, mode: game.mode }));
+}

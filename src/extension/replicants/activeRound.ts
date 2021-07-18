@@ -110,23 +110,10 @@ nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenF
     };
 
     if (data.roundId) {
-        const round = roundStore.value[data.roundId];
-        if (isEmpty(round)) {
-            return ack(new Error(`Could not find round ${data.roundId}.`));
-        }
-
-        activeRound.value.round = {
-            id: data.roundId,
-            name: round.meta.name
-        };
-        activeRound.value.games = clone(round.games);
-
-        if (round.teamA && round.teamB) {
-            activeRound.value.teamA.score = round.teamA.score;
-            activeRound.value.teamB.score = round.teamB.score;
-        } else {
-            activeRound.value.teamA.score = 0;
-            activeRound.value.teamB.score = 0;
+        try {
+            setActiveRoundGames(data.roundId);
+        } catch (e) {
+            ack(e);
         }
     }
 
@@ -187,3 +174,24 @@ nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
     activeRound.value.teamA.color = data.color.clrA;
     activeRound.value.teamB.color = data.color.clrB;
 });
+
+export function setActiveRoundGames(roundId: string): void {
+    const round = roundStore.value[roundId];
+    if (isEmpty(round)) {
+        throw new Error(`Could not find round ${roundId}.`);
+    }
+
+    activeRound.value.round = {
+        id: roundId,
+        name: round.meta.name
+    };
+    activeRound.value.games = clone(round.games);
+
+    if (round.teamA && round.teamB) {
+        activeRound.value.teamA.score = round.teamA.score;
+        activeRound.value.teamB.score = round.teamB.score;
+    } else {
+        activeRound.value.teamA.score = 0;
+        activeRound.value.teamB.score = 0;
+    }
+}

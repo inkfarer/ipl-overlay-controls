@@ -145,8 +145,8 @@
             "categoryName": "Ranked Modes"
         },
         "round": {
-            "id": "0",
-            "name": "Default Round"
+            "id": "00000",
+            "name": "Default Round 1"
         },
         "games": [
             {
@@ -159,8 +159,8 @@
                     "categoryName": "Ranked Modes",
                     "colorsSwapped": false
                 },
-                "stage": "Blackbelly Skatepark",
-                "mode": "Rainmaker"
+                "stage": "MakoMart",
+                "mode": "Clam Blitz"
             },
             {
                 "winner": "none",
@@ -172,7 +172,7 @@
                     "categoryName": "Ranked Modes",
                     "colorsSwapped": false
                 },
-                "stage": "MakoMart",
+                "stage": "Ancho-V Games",
                 "mode": "Tower Control"
             },
             {
@@ -185,8 +185,8 @@
                     "categoryName": "Ranked Modes",
                     "colorsSwapped": false
                 },
-                "stage": "Starfish Mainstage",
-                "mode": "Clam Blitz"
+                "stage": "Wahoo World",
+                "mode": "Rainmaker"
             }
         ]
     }
