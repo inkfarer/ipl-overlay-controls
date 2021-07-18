@@ -42,7 +42,6 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     });
 
     nextRound.on('change', newValue => {
-        console.log(newValue);
         showTeamAImage.checked = newValue.teamA.showLogo;
         showTeamBImage.checked = newValue.teamB.showLogo;
         showTeamAImage.dataset.teamId = newValue.teamA.id;
