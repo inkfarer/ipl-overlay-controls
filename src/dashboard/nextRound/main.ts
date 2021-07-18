@@ -8,6 +8,7 @@ import '../styles/globalStyles.css';
 import './nextRound.css';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
+import { setValueIfNotEdited } from '../helpers/inputHelper';
 
 library.add(faInfoCircle);
 dom.watch();
@@ -47,9 +48,9 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
         showTeamAImage.dataset.teamId = newValue.teamA.id;
         showTeamBImage.dataset.teamId = newValue.teamB.id;
 
-        nextTeamASelector.value = newValue.teamA.id;
-        nextTeamBSelector.value = newValue.teamB.id;
-        roundSelector.value = newValue.round.id;
+        setValueIfNotEdited(nextTeamASelector, newValue.teamA.id);
+        setValueIfNotEdited(nextTeamBSelector, newValue.teamB.id);
+        setValueIfNotEdited(roundSelector, newValue.round.id);
 
         const roundValue = rounds.value[newValue.round.id];
         if (roundValue) {

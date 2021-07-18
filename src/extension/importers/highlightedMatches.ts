@@ -82,6 +82,7 @@ function teamDataBuilder(teamData: MatchTeam): Team {
         id: teamData.team._id,
         name: teamData.team.name,
         logoUrl: teamData.team.persistentTeam?.logoUrl,
+        showLogo: true,
         players: []
     };
     for (let x = 0; x < teamData.team.players.length; x++) {

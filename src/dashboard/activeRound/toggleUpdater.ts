@@ -10,6 +10,7 @@ import {
 import { roundNameElem } from './main';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { GameWinner } from 'types/gameWinner';
+import { setValueIfNotEdited } from '../helpers/inputHelper';
 
 export function updateToggles(games: ActiveRoundGame[], roundName: string): void {
     roundNameElem.innerText = roundName;
@@ -35,12 +36,6 @@ function updateMapsModes(index: number, game: ActiveRoundGame) {
     const modeSelector = document.getElementById(`mode-selector_${index}`) as HTMLSelectElement;
     setValueIfNotEdited(stageSelector, game.stage);
     setValueIfNotEdited(modeSelector, game.mode);
-}
-
-function setValueIfNotEdited(element: HTMLInputElement | HTMLSelectElement, value: string): void {
-    if (element.dataset.edited !== 'true') {
-        element.value = value;
-    }
 }
 
 function updateColor(index: number, color?: GameColor): void {
