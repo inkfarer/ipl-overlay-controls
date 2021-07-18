@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
-import { TournamentData, ScoreboardData, NextTeams, HighlightedMatches } from 'schemas';
+import { TournamentData, HighlightedMatches } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { Team } from 'types/team';
 import { BattlefyTournamentData } from '../types/battlefyTournamentData';
@@ -12,8 +12,6 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 const nodecg = nodecgContext.get();
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
-const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 let smashGGKey: string;
 
@@ -98,11 +96,7 @@ export function updateTeamDataReplicants(data: TournamentData): void {
     const firstTeam = data.teams[0];
     const secondTeam = data.teams[1] || data.teams[0];
 
-    scoreboardData.value.teamAInfo = clone(firstTeam);
-    scoreboardData.value.teamBInfo = clone(secondTeam);
-
-    nextTeams.value.teamAInfo = clone(data.teams[2] || firstTeam);
-    nextTeams.value.teamBInfo = clone(data.teams[3] || secondTeam);
+    // TODO: set new replicants
 }
 
 async function getBattlefyData(id: string): Promise<TournamentData> {

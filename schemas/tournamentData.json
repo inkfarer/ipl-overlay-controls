@@ -58,6 +58,7 @@
             {
                 "id": "AAA",
                 "name": "Placeholder Team A",
+                "showLogo": true,
                 "players": [
                     {
                         "name": "Player 1"
@@ -70,6 +71,7 @@
             {
                 "id": "BBB",
                 "name": "Placeholder Team B",
+                "showLogo": true,
                 "players": [
                     {
                         "name": "Player 3"

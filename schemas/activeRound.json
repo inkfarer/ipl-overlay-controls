@@ -116,6 +116,7 @@
             "name": "Placeholder Team A",
             "score": 0,
             "color": "#37FC00",
+            "showLogo": true,
             "players": [
                 {
                     "name": "Player 1"
@@ -130,6 +131,7 @@
             "name": "Placeholder Team B",
             "score": 0,
             "color": "#7D28FC",
+            "showLogo": true,
             "players": [
                 {
                     "name": "Player 3"

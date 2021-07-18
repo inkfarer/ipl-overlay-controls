@@ -10,6 +10,7 @@ export interface NextRound {
 		id: string;
 		name: string;
 		logoUrl?: string;
+		showLogo: boolean;
 		players: {
 			name: string;
 			[k: string]: any;
@@ -20,6 +21,7 @@ export interface NextRound {
 		id: string;
 		name: string;
 		logoUrl?: string;
+		showLogo: boolean;
 		players: {
 			name: string;
 			[k: string]: any;

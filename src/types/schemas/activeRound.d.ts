@@ -9,6 +9,7 @@ export type ActiveRoundTeam = {
 	id: string;
 	name: string;
 	logoUrl?: string;
+	showLogo: boolean;
 	players: {
 		name: string;
 		[k: string]: any;

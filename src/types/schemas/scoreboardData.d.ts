@@ -15,25 +15,5 @@ export interface ScoreboardData {
 		categoryName: string;
 		[k: string]: any;
 	};
-	teamAInfo: {
-		id: string;
-		name: string;
-		logoUrl?: string;
-		players: {
-			name: string;
-			[k: string]: any;
-		}[];
-		[k: string]: any;
-	};
-	teamBInfo: {
-		id: string;
-		name: string;
-		logoUrl?: string;
-		players: {
-			name: string;
-			[k: string]: any;
-		}[];
-		[k: string]: any;
-	};
 	isVisible: boolean;
 }

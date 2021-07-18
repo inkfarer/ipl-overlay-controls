@@ -10,19 +10,11 @@
             "type": "object",
             "$ref": "defs/color.json#/color"
         },
-        "teamAInfo": {
-            "type": "object",
-            "$ref": "defs/team.json#/team"
-        },
-        "teamBInfo": {
-            "type": "object",
-            "$ref": "defs/team.json#/team"
-        },
         "isVisible": {
             "type": "boolean"
         }
     },
-    "required": ["flavorText", "colorInfo", "teamAInfo", "teamBInfo", "isVisible"],
+    "required": ["flavorText", "colorInfo", "isVisible"],
     "default": {
         "flavorText": "Flavor Text!",
         "colorInfo": {
@@ -31,30 +23,6 @@
             "clrA": "#37FC00",
             "clrB": "#7D28FC",
             "categoryName": "Ranked Modes"
-        },
-        "teamAInfo": {
-            "id": "AAA",
-            "name": "Placeholder Team A",
-            "players": [
-                {
-                    "name": "Player 1"
-                },
-                {
-                    "name": "Player 2"
-                }
-            ]
-        },
-        "teamBInfo": {
-            "id": "BBB",
-            "name": "Placeholder Team B",
-            "players": [
-                {
-                    "name": "Player 3"
-                },
-                {
-                    "name": "Player 4"
-                }
-            ]
         },
         "isVisible": true
     }
