@@ -6,6 +6,7 @@ import { GameWinner } from 'types/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setActiveRoundGames } from './activeRound';
 import { setNextRoundGames } from './nextRound';
+import { DateTime } from 'luxon';
 
 const nodecg = nodecgContext.get();
 
@@ -123,12 +124,14 @@ export function commitActiveRoundToRoundStore(forceSetTeams = false): void {
     const isCompleted
         = (currentActiveRound.teamA.score > winThreshold || currentActiveRound.teamB.score > winThreshold);
     const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
+    const completionTime = isCompleted ? DateTime.now().toUTC().toISO() : undefined;
 
     roundStore.value[currentActiveRound.round.id] = {
         ...(roundStore.value[currentActiveRound.round.id]),
         meta: {
             name: currentActiveRound.round.name,
-            isCompleted
+            isCompleted,
+            completionTime
         },
         teamA: (isStarted || forceSetTeams) ? currentActiveRound.teamA : undefined,
         teamB: (isStarted || forceSetTeams) ? currentActiveRound.teamB : undefined,

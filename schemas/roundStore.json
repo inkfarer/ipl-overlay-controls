@@ -35,6 +35,10 @@
                         },
                         "isCompleted": {
                             "type": "boolean"
+                        },
+                        "completionTime": {
+                            "type": "string",
+                            "format": "date-time"
                         }
                     }
                 },
