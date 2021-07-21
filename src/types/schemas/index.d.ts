@@ -17,6 +17,5 @@ export * from './radiaSettings';
 export * from './roundStore';
 export * from './scoreboardData';
 export * from './swapColorsInternally';
-export * from './teamImageHidden';
 export * from './teamScores';
 export * from './tournamentData';
