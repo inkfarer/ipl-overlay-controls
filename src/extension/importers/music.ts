@@ -43,14 +43,6 @@ function handleNowPlayingSource() {
 }
 
 function handleLastFm() {
-    if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.lastfm === 'undefined') {
-        nodecg.log.warn(
-            `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! `
-            + 'Getting music information automatically will not function.'
-        );
-        return;
-    }
-
     const lastfm = new LastFmNode({
         // eslint-disable-next-line camelcase
         api_key: nodecg.bundleConfig.lastfm.apiKey,
@@ -66,6 +58,16 @@ function handleLastFm() {
     let trackStream: any;
 
     lastFmSettings.on('change', newValue => {
+        if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.lastfm === 'undefined') {
+            nodecg.log.warn(
+                `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! `
+                + 'Getting music information automatically will not function.'
+            );
+            return;
+        } else if (!newValue.username && newValue.username === '') {
+            return;
+        }
+
         if (trackStream) {
             trackStream.stop();
         }

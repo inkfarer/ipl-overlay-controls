@@ -139,7 +139,6 @@
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
-        "@types/luxon": "^1.27.1",
         "axios": "^0.21.1",
         "babel-plugin-add-module-exports": "^1.0.4",
         "clone": "^2.1.2",
@@ -156,6 +155,7 @@
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/lodash": "^4.14.171",
+        "@types/luxon": "^1.27.1",
         "@types/node": "^15.12.1",
         "@types/semver": "^7.3.7",
         "@types/webpack": "^5.28.0",
