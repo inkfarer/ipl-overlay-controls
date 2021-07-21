@@ -1,4 +1,4 @@
-import { ColorGroup } from '../types/colorGroup';
+import { ColorGroup } from '../types/colors';
 
 export const splatStages = [
     'Ancho-V Games',

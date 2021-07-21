@@ -1,4 +1,4 @@
-import { GameColor } from 'types/gameColor';
+import { GameColor } from 'types/colors';
 import { swapColorsInternally } from './replicants';
 import { getColorOptionName } from '../../helpers/splatoonData';
 import {

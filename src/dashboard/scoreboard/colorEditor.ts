@@ -1,5 +1,5 @@
 import { activeRound, swapColorsInternally } from './replicants';
-import { ColorInfo } from 'types/colorInfo';
+import { ColorInfo } from 'types/colors';
 import { fillColorSelector } from '../helpers/colorHelper';
 import { getColorOptionName } from '../../helpers/splatoonData';
 import { SetActiveColorRequest } from 'types/messages/activeRound';

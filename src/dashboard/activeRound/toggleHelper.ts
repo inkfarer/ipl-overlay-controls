@@ -1,7 +1,7 @@
 import { activeRound, swapColorsInternally } from './replicants';
 import { GameWinner } from 'types/enums/gameWinner';
 import { getContrastingTextColor } from '../helpers/colorHelper';
-import { ColorInfo } from 'types/colorInfo';
+import { ColorInfo } from 'types/colors';
 
 export function handleCustomColorListenerChange(event: Event): void {
     const index = parseInt((event.target as HTMLInputElement).id.split('_')[2], 10);

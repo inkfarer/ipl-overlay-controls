@@ -1,6 +1,6 @@
 import { GameWinner } from 'types/enums/gameWinner';
 import { ActiveRoundGame } from 'types/activeRoundGame';
-import { ColorInfo } from 'types/colorInfo';
+import { ColorInfo } from 'types/colors';
 
 export interface UpdateActiveGamesRequest {
     games: ActiveRoundGame[]
