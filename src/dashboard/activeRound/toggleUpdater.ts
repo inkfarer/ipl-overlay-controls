@@ -9,7 +9,7 @@ import {
 } from './toggleHelper';
 import { roundNameElem } from './main';
 import { ActiveRoundGame } from 'types/activeRoundGame';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { setValueIfNotEdited } from '../helpers/inputHelper';
 
 export function updateToggles(games: ActiveRoundGame[], roundName: string): void {

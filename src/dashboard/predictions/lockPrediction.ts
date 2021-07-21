@@ -1,7 +1,7 @@
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 import { predictionStore } from './replicants';
-import { PredictionStatus } from 'types/predictionStatus';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 
 const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 

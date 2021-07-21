@@ -1,5 +1,5 @@
 import { activeRound, swapColorsInternally } from './replicants';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { getContrastingTextColor } from '../helpers/colorHelper';
 import { ColorInfo } from 'types/colorInfo';
 

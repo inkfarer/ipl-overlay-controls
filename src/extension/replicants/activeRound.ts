@@ -2,7 +2,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
 import { SetActiveColorRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
 import { getTeam } from '../helpers/tournamentDataHelper';
 import isEmpty from 'lodash/isEmpty';

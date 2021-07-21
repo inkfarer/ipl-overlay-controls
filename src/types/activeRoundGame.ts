@@ -1,4 +1,4 @@
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 
 export interface ActiveRoundGame {
     winner: GameWinner;

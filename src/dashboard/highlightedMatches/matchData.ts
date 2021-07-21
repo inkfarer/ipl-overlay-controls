@@ -1,6 +1,6 @@
 import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { Match } from 'types/match';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';

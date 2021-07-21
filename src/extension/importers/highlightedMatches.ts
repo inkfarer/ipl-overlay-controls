@@ -7,7 +7,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { Team } from 'types/team';
 import { MatchTeam } from '../types/battlefyStage';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 import { BattlefyTournamentData, Stage } from '../types/battlefyTournamentData';
 
 const nodecg = nodecgContext.get();

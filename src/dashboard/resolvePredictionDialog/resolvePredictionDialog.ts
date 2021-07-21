@@ -1,6 +1,6 @@
 import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 import { ActiveRound, PredictionStore } from 'schemas';
 import { WinningOption } from './types/winningOption';
 

@@ -11,7 +11,7 @@ import {
 } from './toggleHelper';
 import { swapColorsInternally } from './replicants';
 import { addClasses, appendChildren } from '../helpers/elemHelper';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { enableColorEditToggle } from './main';
 import { SetWinnerRequest } from 'types/messages/activeRound';
 

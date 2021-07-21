@@ -2,7 +2,7 @@ import { addChangeReminder, fillList } from '../globalScripts';
 import { generateId } from '../../helpers/generateId';
 import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
 import isEqual from 'lodash/isEqual';
 

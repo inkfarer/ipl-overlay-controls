@@ -1,6 +1,6 @@
 import { activeRound } from './replicants';
 import { ActiveRoundGame } from 'types/activeRoundGame';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { UpdateActiveGamesRequest } from 'types/messages/activeRound';
 
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;

@@ -2,7 +2,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, RoundStore } from 'schemas';
 import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
 import clone from 'clone';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setActiveRoundGames } from './activeRound';
 import { setNextRoundGames } from './nextRound';

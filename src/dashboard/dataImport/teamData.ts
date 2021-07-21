@@ -1,6 +1,6 @@
 import { TournamentData } from 'schemas';
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 import { sendLocalFile } from './postData';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 

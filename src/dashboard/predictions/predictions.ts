@@ -1,7 +1,7 @@
 import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
-import { PredictionStatus } from 'types/predictionStatus';
+import { ImportStatus } from 'types/enums/importStatus';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 import { Outcome } from 'types/prediction';
 import { predictionStore } from './replicants';
 

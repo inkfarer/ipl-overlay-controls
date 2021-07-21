@@ -1,5 +1,5 @@
 import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 
 export function sendLocalFile(
     dataType: 'teams' | 'rounds',

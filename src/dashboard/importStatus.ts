@@ -1,4 +1,4 @@
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 
 export function setImportStatus(status: ImportStatus, elem: HTMLElement): void {
     let backgroundColor;

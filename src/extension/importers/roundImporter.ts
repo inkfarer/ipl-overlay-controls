@@ -4,7 +4,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { generateId } from '../../helpers/generateId';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 
 const nodecg = nodecgContext.get();
 

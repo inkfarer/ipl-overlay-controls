@@ -1,6 +1,6 @@
 import { activeRound } from './replicants';
 import { SetWinnerRequest } from 'types/messages/activeRound';
-import { GameWinner } from 'types/gameWinner';
+import { GameWinner } from 'types/enums/gameWinner';
 import last from 'lodash/last';
 
 const teamAScoreAddButton = document.getElementById('team-a-score-plus-btn') as HTMLButtonElement;

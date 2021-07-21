@@ -1,6 +1,6 @@
 import { setImportStatus } from '../importStatus';
 import { sendLocalFile } from './postData';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 
 const roundWebImportToggle = document.getElementById('round-web-import-toggle') as HTMLInputElement;
 const roundImportFileInput = document.getElementById('round-input-file-input') as HTMLInputElement;
