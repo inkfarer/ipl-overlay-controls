@@ -29,7 +29,6 @@ const showTeamBImage = document.getElementById('show-team-b-image') as HTMLInput
 
 NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     rounds.on('change', newValue => {
-        console.log(newValue);
         clearSelectors('round-selector');
         for (const [key, value] of Object.entries(newValue)) {
             roundSelector.appendChild(createSelector(value.meta.name, key));
