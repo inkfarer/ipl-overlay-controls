@@ -33,12 +33,8 @@ describe('activeRound', () => {
     describe('swapColorsInternally', () => {
         it('swaps colors on change', () => {
             nodecg.replicants.activeRound.value = {
-                teamA: {
-                    color: 'Team A Color'
-                },
-                teamB: {
-                    color: 'Team B Color'
-                }
+                teamA: { color: 'Team A Color' },
+                teamB: { color: 'Team B Color' }
             };
 
             nodecg.replicantListeners.swapColorsInternally(true, false);

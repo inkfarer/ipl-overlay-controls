@@ -5,7 +5,7 @@ import clone from 'clone';
 import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setActiveRoundGames } from './activeRoundHelper';
-import { setNextRoundGames } from './nextRound';
+import { setNextRoundGames } from './nextRoundHelper';
 import { DateTime } from 'luxon';
 
 const nodecg = nodecgContext.get();
