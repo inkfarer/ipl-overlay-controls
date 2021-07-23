@@ -54,6 +54,9 @@ jobs:
       - name: Run tests
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm run test:ci
+
+      - name: Create test report
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
         uses: tanmen/jest-reporter@v1
         with:
           github-token: ${{ secrets['GITHUB_TOKEN'] }}
