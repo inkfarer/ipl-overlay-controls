@@ -59,6 +59,7 @@ jobs:
         uses: tanmen/jest-reporter@v1
         with:
           github-token: ${{ secrets['GITHUB_TOKEN'] }}
+          result-file: ./nodecg/bundles/ipl-overlay-controls/result.json
 
       - name: Set up GitHub for SSH access
         if: github.ref == 'refs/heads/master'
