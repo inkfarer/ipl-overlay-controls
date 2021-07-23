@@ -19,7 +19,8 @@
             ]
         },
         "types": [
-            "webpack-env"
+            "webpack-env",
+            "jest"
         ],
         "resolveJsonModule": true
     },

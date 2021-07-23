@@ -10,7 +10,8 @@
             "dom.iterable"
         ],
         "types": [
-            "webpack-env"
+            "webpack-env",
+            "jest"
         ],
         "esModuleInterop": true,
         "experimentalDecorators": true,

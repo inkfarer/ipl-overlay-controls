@@ -12,12 +12,12 @@ const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
 nodecg.listenFor('toggleTeamImage', ( data: ToggleTeamImageRequest, ack: UnhandledListenForCb ) => {
-    const teamIndex = tournamentData.value.teams.filter(team => team.id === data.teamId)[0];
-    if (teamIndex == null) {
+    const team = tournamentData.value.teams.filter(team => team.id === data.teamId)[0];
+    if (team == null) {
         return ack(new Error('No team found.'));
     }
 
-    teamIndex.showLogo = data.isVisible;
+    team.showLogo = data.isVisible;
     updateTournamentData();
 });
 
