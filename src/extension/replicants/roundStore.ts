@@ -4,7 +4,7 @@ import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roun
 import clone from 'clone';
 import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { setActiveRoundGames } from './activeRound';
+import { setActiveRoundGames } from './activeRoundHelper';
 import { setNextRoundGames } from './nextRound';
 import { DateTime } from 'luxon';
 

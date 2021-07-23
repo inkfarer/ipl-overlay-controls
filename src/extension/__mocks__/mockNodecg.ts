@@ -5,7 +5,7 @@ type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
 export class MockNodecg {
     replicants: {[key: string]: MockReplicant};
     replicantListeners: {[key: string]: ReplicantChangeHandler};
-    messageListeners: {[key: string]: (message: unknown, cb?: () => void) => void};
+    messageListeners: {[key: string]: (message?: unknown, cb?: () => void) => void};
 
     constructor() {
         this.replicants = {};

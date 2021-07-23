@@ -1,4 +1,4 @@
 import '../styles/globalStyles.css';
-import 'nodecg/browser';
+import { NodeCGBrowser } from 'nodecg/browser';
 import './lastFmSettings';
 import './radiaSettings';
