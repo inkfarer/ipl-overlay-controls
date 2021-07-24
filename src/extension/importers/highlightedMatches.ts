@@ -9,6 +9,8 @@ import { Team } from 'types/team';
 import { MatchTeam } from '../types/battlefyStage';
 import { ImportStatus } from 'types/enums/importStatus';
 import { BattlefyTournamentData, Stage } from '../types/battlefyTournamentData';
+import isEmpty from 'lodash/isEmpty';
+import { HighlightedMatchMetaData } from 'types/highlightedMatch';
 
 const nodecg = nodecgContext.get();
 
@@ -168,16 +170,15 @@ function mapBattlefyRoundData(stages: Stage[]): HighlightedMatches {
                 matchName += match.matchNumber;
             }
 
-            const metaData = {
+            const metaData: HighlightedMatchMetaData = {
                 id: match._id,
                 stageName: stage.name,
                 round: match.roundNumber,
                 match: match.matchNumber,
-                name: matchName,
-                completionTime: 'None'
+                name: matchName
             };
             // If the completedAt exists then we add it to the metadata
-            if (match.completedAt !== undefined) {
+            if (!isEmpty(match.completedAt)) {
                 metaData.completionTime = match.completedAt;
             }
             result.push({
