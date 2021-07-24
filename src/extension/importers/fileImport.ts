@@ -8,6 +8,8 @@ import { RoundStore } from 'schemas';
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
 
+const rounds = nodecg.Replicant<RoundStore>('roundStore');
+
 (router as express.Router).post(
     '/upload-tournament-json',
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }),
@@ -27,7 +29,6 @@ const router = nodecg.Router();
         switch (req.body.jsonType) {
             case 'rounds': {
                 const resolvedRounds = handleRoundData(content);
-                const rounds = nodecg.Replicant<RoundStore>('roundStore');
                 rounds.value = { ...rounds.value, ...resolvedRounds };
                 break;
             }
