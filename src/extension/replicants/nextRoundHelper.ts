@@ -12,7 +12,7 @@ const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 export function setNextRoundGames(roundId: string): void {
     const round = roundStore.value[roundId];
     if (isEmpty(round)) {
-        throw new Error(`Could not find round ${roundId}.`);
+        throw new Error(`Could not find round '${roundId}'.`);
     }
 
     nextRound.value.round = {
