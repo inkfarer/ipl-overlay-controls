@@ -7,8 +7,8 @@ import { Team } from 'types/team';
 import { BattlefyTournamentData } from '../types/battlefyTournamentData';
 import { BracketType, BracketTypeHelper } from 'types/enums/bracketType';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { setActiveRoundTeams } from '../replicants/activeRoundHelper';
 import { setNextRoundTeams } from '../replicants/nextRoundHelper';
+import { setActiveRoundTeams } from '../replicants/activeRoundHelper';
 
 const nodecg = nodecgContext.get();
 
