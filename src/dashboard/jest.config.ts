@@ -4,5 +4,8 @@ export default {
     moduleNameMapper: {
         '\\.(css|scss)$': '<rootDir>/src/dashboard/__mocks__/mockStyle.ts'
     },
-    preset: 'ts-jest'
+    preset: 'ts-jest',
+    transform: {
+        '^.+\\.(ts|tsx)?$': 'ts-jest'
+    },
 };

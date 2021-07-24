@@ -35,9 +35,10 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
     }
 
     if (activeRound.value.round.id === data.id) {
-        activeRound.value.round.name = data.roundName;
-        activeRound.value.games = data.games.map((game, index) =>
-            ({ ...activeRound.value.games[index], ...game }));
+        setActiveRoundGames(data.id);
+    }
+    if (nextRound.value.round.id === data.id) {
+        setNextRoundGames(data.id);
     }
 });
 
@@ -46,7 +47,7 @@ nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenF
         return ack(new Error('Cannot delete the last round.'));
     }
     if (!roundStore.value[data.roundId]) {
-        return ack(new Error(`Couldn't find round with id ${data.roundId}.`));
+        return ack(new Error(`Couldn't find round with id '${data.roundId}'.`));
     }
 
     delete roundStore.value[data.roundId];
@@ -124,7 +125,7 @@ export function commitActiveRoundToRoundStore(forceSetTeams = false): void {
     const isCompleted
         = (currentActiveRound.teamA.score > winThreshold || currentActiveRound.teamB.score > winThreshold);
     const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
-    const completionTime = isCompleted ? DateTime.now().toUTC().toISO() : undefined;
+    const completionTime = isCompleted ? DateTime.utc().toISO() : undefined;
 
     roundStore.value[currentActiveRound.round.id] = {
         ...(roundStore.value[currentActiveRound.round.id]),
