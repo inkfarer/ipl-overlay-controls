@@ -27,6 +27,7 @@ export interface Round {
 	meta: {
 		name: string;
 		isCompleted: boolean;
+		completionTime?: string;
 		[k: string]: any;
 	};
 	games: Game[];
