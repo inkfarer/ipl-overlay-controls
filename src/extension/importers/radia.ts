@@ -24,6 +24,7 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
                 const id = obj.discord_user_id;
                 delete obj.discord_user_id;
                 obj.twitter = '@' + obj.twitter;
+                obj.pronouns = obj.pronouns.toLowerCase();
                 map[id] = obj;
                 return map;
             }, {});
