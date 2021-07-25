@@ -76,7 +76,8 @@
             }
         ],
         "operator-linebreak": ["error", "before"],
-        "eol-last": 2
+        "eol-last": 2,
+        "quote-props": [2, "as-needed", {"numbers": true}]
     },
     "overrides": [
         {

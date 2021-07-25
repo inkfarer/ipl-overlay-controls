@@ -70,7 +70,8 @@
                 }
             }
         ],
-        "operator-linebreak": ["error", "before"]
+        "operator-linebreak": ["error", "before"],
+        "quote-props": [2, "as-needed", {"numbers": true}]
     },
     "overrides": [
         {
