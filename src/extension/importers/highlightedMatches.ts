@@ -20,7 +20,6 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
             getBattlefyMatches(tournamentData.value.meta.id, data.stages, data.getAllStages).then(data => {
                 if (data.length > 0) {
                     updateMatchReplicant(data);
-                    console.log('eeyup');
                     return ack(null, {
                         status: ImportStatus.SUCCESS,
                         data: data
