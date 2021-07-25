@@ -86,6 +86,8 @@ function checkRoundProgress() {
             roundDataInfoText.innerText
                 += `\n(${selectedRoundOption.dataset.teamAName} vs ${selectedRoundOption.dataset.teamBName})`;
             roundDataInfoElem.style.display = '';
+        } else {
+            roundDataInfoElem.style.display = 'none';
         }
 
         teamASelector.value = selectedRoundOption.dataset.teamAId;
