@@ -1,14 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
-import { TournamentData, HighlightedMatches } from 'schemas';
+import { HighlightedMatches, TournamentData } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { Team } from 'types/team';
-import { BattlefyTournamentData } from '../types/battlefyTournamentData';
-import { BracketType, BracketTypeHelper } from 'types/enums/bracketType';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { setNextRoundTeams } from '../replicants/nextRoundHelper';
 import { setActiveRoundTeams } from '../replicants/activeRoundHelper';
+import { getBattlefyTournamentData } from './clients/battlefyClient';
 
 const nodecg = nodecgContext.get();
 
@@ -33,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
 
     switch (data.method) {
         case TournamentDataSource.BATTLEFY:
-            getBattlefyData(data.id)
+            getBattlefyTournamentData(data.id)
                 .then(data => {
                     updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
@@ -99,76 +98,6 @@ export function updateTeamDataReplicants(data: TournamentData): void {
 
     setActiveRoundTeams(firstTeam.id, secondTeam.id);
     setNextRoundTeams((data.teams[2].id || firstTeam.id), (data.teams[3].id || secondTeam.id));
-}
-
-async function getBattlefyData(id: string): Promise<TournamentData> {
-    const tournamentInfo = await getBattlefyTournamentInfo(id);
-
-    const requestURL = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
-    return new Promise((resolve, reject) => {
-        axios
-            .get(requestURL)
-            .then(response => {
-                const { data } = response;
-                if (data.error) {
-                    reject(data.error);
-                    return;
-                }
-
-                // Process the stages in a tournament for rep
-                const tournamentStages: { name: string; id: string; type: BracketType}[] = [];
-                tournamentInfo.stages.forEach(value => {
-                    tournamentStages.push({
-                        name: value.name,
-                        id: value._id,
-                        type: BracketTypeHelper.fromBattlefy(value.bracket.type, value.bracket.style)
-                    });
-                });
-
-                const teams: TournamentData = {
-                    meta: {
-                        id,
-                        source: 'BATTLEFY',
-                        name: tournamentInfo.name
-                    },
-                    teams: [],
-                    stages: tournamentStages
-                };
-                for (let i = 0; i < data.length; i++) {
-                    const element = data[i];
-                    const teamInfo: Team = {
-                        id: element._id,
-                        name: element.name,
-                        logoUrl: element.persistentTeam.logoUrl,
-                        showLogo: true,
-                        players: []
-                    };
-                    for (let j = 0; j < element.players.length; j++) {
-                        const elementPlayer = element.players[j];
-                        const playerInfo = {
-                            name: elementPlayer.inGameName,
-                            username: elementPlayer.username
-                        };
-                        teamInfo.players.push(playerInfo);
-                    }
-
-                    teams.teams.push(teamInfo);
-                }
-
-                resolve(teams);
-            })
-            .catch(err => {
-                reject(err);
-            });
-    });
-}
-
-async function getBattlefyTournamentInfo(id: string): Promise<BattlefyTournamentData> {
-    // API link gets all the details on a battlefy tournament
-    // eslint-disable-next-line max-len
-    const url = `https://api.battlefy.com/tournaments/${id}?extend%5Bcampaign%5D%5Bsponsor%5D=true&extend%5Bstages%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false&extend%5Bstages%5D%5B%24opts%5D%5Bname%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bbracket%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BstartTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BendTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bschedule%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BmatchCheckinDuration%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasCheckinTimer%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasStarted%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasMatchCheckin%5D=1&extend%5Borganization%5D%5Bowner%5D%5B%24opts%5D%5Btimezone%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bname%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bslug%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BownerID%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BlogoUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BbannerUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfeatures%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfollowers%5D=1&extend%5Bgame%5D=true&extend%5Bstreams%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false`;
-    const response = await axios.get(url);
-    return response.data[0];  // This URL provides each tournament as an array of objects
 }
 
 async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {
