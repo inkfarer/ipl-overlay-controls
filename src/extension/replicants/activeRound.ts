@@ -83,7 +83,8 @@ nodecg.listenFor('beginNextMatch', () => {
         games: nextRound.value.games.map(game =>
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
         round: {
-            ...clone(nextRound.value.round)
+            ...clone(nextRound.value.round),
+            isCompleted: false
         }
     };
 

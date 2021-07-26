@@ -57,6 +57,9 @@ export function setWinner(index: number, winner: GameWinner): void {
         }
     }
 
+    const winThreshold = newValue.games.length / 2;
+    newValue.round.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
+
     activeRound.value = newValue;
     commitActiveRoundToRoundStore();
 }
@@ -69,7 +72,8 @@ export function setActiveRoundGames(roundId: string): void {
 
     activeRound.value.round = {
         id: roundId,
-        name: round.meta.name
+        name: round.meta.name,
+        isCompleted: round.meta.isCompleted
     };
     activeRound.value.games = clone(round.games);
 

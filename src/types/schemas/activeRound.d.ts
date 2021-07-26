@@ -32,6 +32,7 @@ export interface ActiveRound {
 	round: {
 		id: string;
 		name: string;
+		isCompleted: boolean;
 	};
 	games: {
 		winner: 'none' | 'alpha' | 'bravo';

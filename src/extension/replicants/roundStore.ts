@@ -121,17 +121,14 @@ nodecg.listenFor('resetRoundStore', () => {
 export function commitActiveRoundToRoundStore(forceSetTeams = false): void {
     const currentActiveRound = clone(activeRound.value);
 
-    const winThreshold = currentActiveRound.games.length / 2;
-    const isCompleted
-        = (currentActiveRound.teamA.score > winThreshold || currentActiveRound.teamB.score > winThreshold);
     const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
-    const completionTime = isCompleted ? DateTime.utc().toISO() : undefined;
+    const completionTime = currentActiveRound.round.isCompleted ? DateTime.utc().toISO() : undefined;
 
     roundStore.value[currentActiveRound.round.id] = {
         ...(roundStore.value[currentActiveRound.round.id]),
         meta: {
             name: currentActiveRound.round.name,
-            isCompleted,
+            isCompleted: currentActiveRound.round.isCompleted,
             completionTime
         },
         teamA: (isStarted || forceSetTeams) ? currentActiveRound.teamA : undefined,

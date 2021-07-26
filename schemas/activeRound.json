@@ -59,9 +59,12 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "isCompleted": {
+                    "type": "boolean"
                 }
             },
-            "required": ["id", "name"]
+            "required": ["id", "name", "isCompleted"]
         },
         "games": {
             "type": "array",
@@ -148,7 +151,8 @@
         },
         "round": {
             "id": "00000",
-            "name": "Default Round 1"
+            "name": "Default Round 1",
+            "isCompleted": false
         },
         "games": [
             {
