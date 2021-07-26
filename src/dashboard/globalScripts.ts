@@ -88,3 +88,50 @@ export function hideElement(element: HTMLElement): void {
 export function showElement(element: HTMLElement): void {
     element.style.removeProperty('display');
 }
+
+export function showMessage(
+    key: string,
+    type: 'info' | 'warning',
+    message: string,
+    creationCallback = prependToBody
+): void {
+    const existingMessage = document.getElementById(key);
+
+    if (!existingMessage) {
+        const newMessage = document.createElement('div');
+        const iconElement = {
+            info: '<i class="icon fas fa-info-circle"></i>',
+            warning: '<i class="icon fas fa-exclamation-triangle"></i>'
+        }[type];
+
+        newMessage.innerHTML = `${iconElement}<div class="content">${message}</div>`;
+        newMessage.classList.add('space', type, 'layout', 'message');
+        newMessage.id = key;
+        creationCallback(newMessage);
+    } else {
+        const messageContent = existingMessage.querySelector('.content') as HTMLElement;
+        messageContent.innerText = message;
+
+        if (!existingMessage.classList.contains(type)) {
+            existingMessage.classList.remove('info', 'warning');
+            existingMessage.classList.add(type);
+        }
+
+        existingMessage.style.display = '';
+    }
+}
+
+function prependToBody(elem: HTMLElement): void {
+    document.body.prepend(elem);
+}
+
+export function hideMessage(key: string): void {
+    const existingMessage = document.getElementById(key);
+    if (existingMessage) {
+        existingMessage.style.display = 'none';
+    }
+}
+
+export function appendElementAfter(newElement: HTMLElement, element: HTMLElement): void {
+    element.parentNode.insertBefore(newElement, element.nextSibling);
+}

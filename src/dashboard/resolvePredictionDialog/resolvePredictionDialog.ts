@@ -1,8 +1,9 @@
-import { hideElement, showElement } from '../globalScripts';
+import { appendElementAfter, hideElement, hideMessage, showElement, showMessage } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/enums/importStatus';
 import { ActiveRound, PredictionStore } from 'schemas';
 import { WinningOption } from './types/winningOption';
+import { elementById } from '../helpers/elemHelper';
 
 // Stores data on current winning Option
 const winningOption: WinningOption = {
@@ -136,10 +137,19 @@ NodeCG.waitForReplicants(predictionStore, activeRound).then(() => {
     activeRound.on('change', newValue => {
         autoResolveWinner(newValue, predictionStore.value);
         setUI(predictionStore.value);
+        if (!newValue.round.isCompleted) {
+            showMessage(
+                'round-completed-warning',
+                'warning',
+                'The active round has not yet completed!',
+                (elem) => appendElementAfter(elem, elementById('resolve-space-title')));
+        } else {
+            hideMessage('round-completed-warning');
+        }
     });
 });
 
 // Assign onclick functions to buttons
-autoResolveBtn.onclick = () => {resolvePrediction(winningOption.optionIndex);};
-resolveOptionABtn.onclick = () => {resolvePrediction(0);};
-resolveOptionBBtn.onclick = () => {resolvePrediction(1);};
+autoResolveBtn.onclick = () => resolvePrediction(winningOption.optionIndex);
+resolveOptionABtn.onclick = () => resolvePrediction(0);
+resolveOptionBBtn.onclick = () => resolvePrediction(1);
