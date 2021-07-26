@@ -86,3 +86,14 @@ span.center {
     max-width: max-content;
     margin-top: 5px;
 }
+
+.color-display-wrapper {
+    margin: 5px 3px 2px;
+}
+
+.color-display {
+    width: auto;
+    height: 18px;
+    margin: 2px;
+    border-radius: 2px;
+}

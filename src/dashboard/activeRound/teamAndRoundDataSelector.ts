@@ -24,6 +24,9 @@ NodeCG.waitForReplicants(activeRound, tournamentData, roundStore).then(() => {
 
         roundSelector.value = newValue.round.id;
         checkRoundProgress();
+
+        document.getElementById('team-a-color-display').style.backgroundColor = newValue.teamA.color;
+        document.getElementById('team-b-color-display').style.backgroundColor = newValue.teamB.color;
     });
 
     tournamentData.on('change', newValue => {
