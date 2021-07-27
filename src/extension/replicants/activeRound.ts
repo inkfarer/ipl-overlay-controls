@@ -7,6 +7,7 @@ import clone from 'clone';
 import { commitActiveRoundToRoundStore } from './roundStore';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
+import findLastIndex from 'lodash/findLastIndex';
 
 const nodecg = nodecgContext.get();
 
@@ -24,7 +25,9 @@ swapColorsInternally.on('change', (newValue, oldValue) => {
 
 nodecg.listenFor('removeWinner', (data: never, ack: UnhandledListenForCb) => {
     try {
-        setWinner(activeRound.value.teamA.score + activeRound.value.teamB.score - 1, GameWinner.NO_WINNER);
+        const lastWinnerIndex = findLastIndex(activeRound.value.games, game => game.winner !== GameWinner.NO_WINNER);
+        if (lastWinnerIndex < 0) return;
+        setWinner(lastWinnerIndex, GameWinner.NO_WINNER);
     } catch (e) {
         ack(e);
     }

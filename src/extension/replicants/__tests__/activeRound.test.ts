@@ -64,23 +64,51 @@ describe('activeRound', () => {
     describe('removeWinner', () => {
         it('tries to remove the last winner', () => {
             nodecg.replicants.activeRound.value = {
-                teamA: {
-                    score: 10
-                },
-                teamB: {
-                    score: 2
-                }
+                games: [
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.ALPHA },
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.ALPHA },
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.NO_WINNER },
+                ]
             };
 
             nodecg.messageListeners.removeWinner();
 
-            expect(mockSetWinner).toHaveBeenCalledWith(11, GameWinner.NO_WINNER);
+            expect(mockSetWinner).toHaveBeenCalledWith(4, GameWinner.NO_WINNER);
+        });
+
+        it('removes the last winner if rounds were not played in order', () => {
+            nodecg.replicants.activeRound.value = {
+                teamA: {
+                    score: 0
+                },
+                teamB: {
+                    score: 1
+                },
+                games: [
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.BRAVO }
+                ]
+            };
+
+            nodecg.messageListeners.removeWinner();
+
+            expect(mockSetWinner).toHaveBeenCalledWith(2, GameWinner.NO_WINNER);
         });
 
         it('sends a callback when setWinner throws an error', () => {
             nodecg.replicants.activeRound.value = {
-                teamA: { score: 1 },
-                teamB: { score: 2 }
+                games: [
+                    { winner: GameWinner.ALPHA },
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.ALPHA },
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.NO_WINNER },
+                ]
             };
             const ack = jest.fn();
             const error = new Error();
