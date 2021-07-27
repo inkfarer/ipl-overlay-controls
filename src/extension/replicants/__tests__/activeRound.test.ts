@@ -259,7 +259,8 @@ describe('activeRound', () => {
                     { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER, color: undefined }
                 ],
                 round: {
-                    name: 'Cool Next Round'
+                    name: 'Cool Next Round',
+                    isCompleted: false
                 }
             });
             expect(mockCommitActiveRound).toHaveBeenCalledWith(true);

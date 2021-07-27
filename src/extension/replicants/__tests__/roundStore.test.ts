@@ -310,7 +310,7 @@ describe('roundStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1, name: 'Team Alpha' },
                 teamB: { score: 1, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round' },
+                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false, },
                 games: [
                     {
                         stage: 'Walleye Warehouse',
@@ -401,7 +401,7 @@ describe('roundStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0, name: 'Team Alpha' },
                 teamB: { score: 0, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round' },
+                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false },
                 games: [
                     {
                         stage: 'Walleye Warehouse',
@@ -490,7 +490,7 @@ describe('roundStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0, name: 'Team Alpha' },
                 teamB: { score: 0, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round' },
+                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false },
                 games: [
                     {
                         stage: 'Walleye Warehouse',
@@ -575,29 +575,11 @@ describe('roundStore', () => {
             });
         });
 
-        it('sets round completion time if it is completed', () => {
-            mockDateTime.utc = jest.fn().mockReturnValue(DateTime.now());
-            mockDateTime.prototype.toISO = jest.fn().mockReturnValue('DateTime in ISO format');
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 2 },
-                teamB: { score: 0 },
-                round: { name: 'Cool Round', id: '123123' },
-                games: [{ }, { }, { }]
-            };
-            nodecg.replicants.roundStore.value = { };
-
-            extension.commitActiveRoundToRoundStore(false);
-
-            const roundStoreValue = (nodecg.replicants.roundStore.value as RoundStore)['123123'];
-            expect(roundStoreValue.meta.isCompleted).toBe(true);
-            expect(roundStoreValue.meta.completionTime).toBe('DateTime in ISO format');
-        });
-
         it('removes round completion time if active round is incomplete', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1 },
                 teamB: { score: 0 },
-                round: { name: 'Cool Round', id: '123123' },
+                round: { name: 'Cool Round', id: '123123', isCompleted: false },
                 games: [{ }, { }, { }]
             };
             nodecg.replicants.roundStore.value = {

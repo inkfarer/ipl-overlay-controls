@@ -33,6 +33,7 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0 },
                 teamB: { score: 1 },
+                round: { id: 'asdasdasd' },
                 games: [
                     { winner: GameWinner.NO_WINNER },
                     { winner: GameWinner.BRAVO },
@@ -69,6 +70,7 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
+                round: { id: 'asdasdasd' },
                 activeColor: {
                     name: 'Cool Color'
                 },
@@ -100,6 +102,7 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
+                round: { id: 'asdasdasd' },
                 activeColor: {
                     name: 'Cool Color'
                 },
@@ -120,6 +123,7 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
+                round: { id: 'asdasdasd' },
                 activeColor: {
                     name: 'Cool Color'
                 },
@@ -152,6 +156,7 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0 },
                 teamB: { score: 0 },
+                round: { id: 'asdasdasd' },
                 games: [
                     { winner: GameWinner.NO_WINNER },
                     { winner: GameWinner.BRAVO },
