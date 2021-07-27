@@ -32,7 +32,7 @@ span.center {
 }
 
 .win-button-container {
-    max-width: 120px;
+    max-width: 130px;
 }
 
 .win-button-container > button {
@@ -52,26 +52,18 @@ span.center {
     pointer-events: none;
 }
 
-.win-button-container > button.team-a-win-toggle,
-.win-button-container > button.team-b-win-toggle {
-    filter: saturate(0.8) grayscale(5%);
-    color: white;
-}
-
-.win-button-container > button.team-a-win-toggle {
-    background-color: var(--green);
-}
-
-.win-button-container > button.team-b-win-toggle {
-    background-color: var(--red);
-}
-
-.win-button-container > button:nth-child(1) {
-    border-radius: 5px 0 0 5px;
+.win-button-container > button.win-set-toggle {
+    background-color: #181E29;
 }
 
 .win-button-container > button:nth-child(2) {
-    border-radius: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.win-button-container > button:nth-child(1) {
+    border-radius: 5px;
+    margin-right: 5px;
+    max-width: 35px;
 }
 
 .win-button-container > button:nth-child(3) {

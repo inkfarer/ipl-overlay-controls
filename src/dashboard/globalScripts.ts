@@ -27,7 +27,8 @@ export function createSelector(text: string, value: string): HTMLOptionElement {
 export function setToggleButtonDisabled(
     toggleTrue: HTMLButtonElement,
     toggleFalse: HTMLButtonElement,
-    state: boolean): void {
+    state: boolean
+): void {
     toggleTrue.disabled = state;
     toggleFalse.disabled = !state;
 }
@@ -36,7 +37,8 @@ export function setToggleButtonDisabled(
 
 export function addChangeReminder(
     elements: HTMLElement[] | NodeListOf<HTMLElement>,
-    updateButton: HTMLButtonElement): void {
+    updateButton: HTMLButtonElement
+): void {
     elements.forEach(element => {
         if (!element.tagName) return;
 

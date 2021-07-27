@@ -84,11 +84,20 @@ export function toggleCustomColorSelectorVisibility(index: number, isCustomColor
 
 export function updateButtonColors(index: number, clrA: string, clrB: string): void {
     const buttons = getButtons(index);
-    buttons[GameWinner.ALPHA].style.backgroundColor = clrA;
-    buttons[GameWinner.ALPHA].style.color = getContrastingTextColor(clrA);
+    setToggleColor(buttons[GameWinner.ALPHA], clrA);
+    setToggleColor(buttons[GameWinner.BRAVO], clrB);
+}
 
-    buttons[GameWinner.BRAVO].style.backgroundColor = clrB;
-    buttons[GameWinner.BRAVO].style.color = getContrastingTextColor(clrB);
+export function setToggleColor(button: HTMLButtonElement, color: string): void {
+    button.style.backgroundColor = color;
+    button.style.color = getContrastingTextColor(color);
+
+    const borderWidth = button.disabled ? '8px' : '0';
+    if (button.classList.contains('team-a-win-toggle')) {
+        button.style.borderLeft = `${borderWidth} solid ${color}`;
+    } else if (button.classList.contains('team-b-win-toggle')) {
+        button.style.borderRight = `${borderWidth} solid ${color}`;
+    }
 }
 
 export function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {

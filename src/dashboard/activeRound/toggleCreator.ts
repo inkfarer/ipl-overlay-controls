@@ -1,12 +1,13 @@
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { addChangeReminder, fillList } from '../globalScripts';
 import { getColorOptionName, splatModes, splatStages } from '../../helpers/splatoonData';
-import { fillColorSelector, getContrastingTextColor } from '../helpers/colorHelper';
+import { fillColorSelector } from '../helpers/colorHelper';
 import {
     getActiveRoundColors,
     handleColorSelectorChange,
     handleColorSwapToggleChange,
     handleCustomColorListenerChange,
+    setToggleColor,
     toggleCustomColorSelectorVisibility
 } from './toggleHelper';
 import { swapColorsInternally } from './replicants';
@@ -132,15 +133,14 @@ function createWinButton(toggleType: GameWinner,
 
     if (toggleType === GameWinner.NO_WINNER) {
         button.classList.add('red');
+    } else {
+        button.classList.add('win-set-toggle');
     }
 
-    if (toggleType === currentWinner) {
-        button.disabled = true;
-    }
+    button.disabled = toggleType === currentWinner;
 
     if (color) {
-        button.style.backgroundColor = color;
-        button.style.color = getContrastingTextColor(color);
+        setToggleColor(button, color);
     }
 
     button.id = `${buttonClass}_${index}`;
