@@ -1,30 +1,32 @@
-import axios, { AxiosError } from 'axios';
 import * as nodecgContext from '../helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { Prediction } from 'types/prediction';
-import { GuildServices } from '../types/radiaApi';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { Configschema } from 'types/schemas/configschema';
+import {
+    hasPredictionSupport,
+    getPredictions,
+    updatePrediction,
+    createPrediction
+} from './clients/radiaClient';
 
 const nodecg = nodecgContext.get();
 
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
 
 let predictionFetchErrorCount = 0;
 let predictionFetchInterval: NodeJS.Timeout;
 
 radiaSettings.on('change', async (newValue) => {
-    const predictionsSupported = await checkGuildPredictionSupport(newValue.guildID);
+    const predictionsSupported = await hasPredictionSupport(newValue.guildID);
     predictionStore.value.enablePrediction = predictionsSupported;
 
     // If predictions are supported, fetch them
     if (predictionsSupported) {
         try {
-            const guildPredictions = await getGuildPredictions(newValue.guildID);
+            const guildPredictions = await getPredictions(newValue.guildID);
             assignPredictionData(guildPredictions[0]);
         } catch (e) {
             nodecg.log.error(e.toString());
@@ -36,7 +38,7 @@ predictionStore.on('change', newValue => {
     if (newValue.currentPrediction?.status === PredictionStatus.ACTIVE && predictionFetchInterval == null) {
         predictionFetchInterval = setInterval(async () => {
             try {
-                const guildPredictions = await getGuildPredictions(radiaSettings.value.guildID);
+                const guildPredictions = await getPredictions(radiaSettings.value.guildID);
                 assignPredictionData(guildPredictions[0]);
                 predictionFetchErrorCount = 0;
             } catch (e) {
@@ -60,10 +62,12 @@ predictionStore.on('change', newValue => {
 
 nodecg.listenFor('getPredictions', async (data: never, ack: UnhandledListenForCb) => {
     try {
-        const response = await getGuildPredictions(radiaSettings.value.guildID);
+        const response = await getPredictions(radiaSettings.value.guildID);
         if (response.length > 0) {
             assignPredictionData(response[0]);
             ack(null, response[0]);
+        } else {
+            ack(null, null);
         }
     } catch (e) {
         ack(e);
@@ -72,7 +76,7 @@ nodecg.listenFor('getPredictions', async (data: never, ack: UnhandledListenForCb
 
 nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: UnhandledListenForCb) => {
     try {
-        const response = await postGuildPrediction(radiaSettings.value.guildID, data);
+        const response = await createPrediction(radiaSettings.value.guildID, data);
         assignPredictionData(response);
         ack(null, response);
     } catch (e) {
@@ -82,7 +86,7 @@ nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: Unhandled
 
 nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: UnhandledListenForCb) => {
     try {
-        const response = await patchGuildPrediction(radiaSettings.value.guildID, data);
+        const response = await updatePrediction(radiaSettings.value.guildID, data);
         assignPredictionData(response);
         ack(null, response);
     } catch (e) {
@@ -90,10 +94,6 @@ nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: Unhandled
     }
 });
 
-/**
- * Assigns data to prediction replicant
- * @param data Prediction Data
- */
 function assignPredictionData(data: Prediction) {
     // If outcome's top_predictors is null, change to empty array
     data.outcomes.forEach(outcome => {
@@ -103,95 +103,4 @@ function assignPredictionData(data: Prediction) {
     });
 
     predictionStore.value.currentPrediction = data;
-}
-
-async function checkGuildPredictionSupport(guildId: string): Promise<boolean> {
-    try {
-        const result = await axios.get<GuildServices>(
-            `${radiaConfig.url}/predictions/check/${guildId}`,
-            { headers: { Authorization: radiaConfig.authentication } }
-        );
-
-        if (result.status === 200) {
-            return typeof result.data.twitch === 'boolean' ? result.data.twitch : false;
-        } else {
-            nodecg.log.error(`Guild Check Auth Error: ${result.data.detail}`);
-            return false;
-        }
-    } catch (e) {
-        nodecg.log.error(`Guild Check Auth Error: ${e}`);
-        return false;
-    }
-}
-
-/**
- * Get predictions on from Discord Guild
- * @param {string} guildID Guild ID of discord server
- */
-async function getGuildPredictions(guildID: string): Promise<Prediction[]> {
-    try {
-        const result = await axios.get<Prediction[]>(
-            `${radiaConfig.url}/predictions/${guildID}`,
-            { headers: { Authorization: radiaConfig.authentication } });
-
-        return result.data;
-    } catch (e) {
-        handleAxiosError(e);
-    }
-}
-
-/**
- * Create a new Twitch Prediction
- * @param {string} guildID Guild ID of discord server
- * @param postData Data to create prediction with
- */
-async function postGuildPrediction(guildID: string, postData: CreatePrediction): Promise<Prediction> {
-    try {
-        const result = await axios.post<Prediction>(
-            `${radiaConfig.url}/predictions/${guildID}`,
-            postData,
-            { headers: { Authorization: radiaConfig.authentication } });
-
-        return result.data;
-    } catch (e) {
-        handleAxiosError(e);
-    }
-}
-
-/**
- * Patch active Twitch Prediction
- * @param {string} guildID Guild ID of discord server
- * @param patchData Patch data for prediction
- */
-async function patchGuildPrediction(guildID: string, patchData: PatchPrediction): Promise<Prediction> {
-    try {
-        const result = await axios.patch<Prediction>(
-            `${radiaConfig.url}/predictions/${guildID}`,
-            patchData,
-            { headers: { Authorization: radiaConfig.authentication } });
-
-        return result.data;
-    } catch (e) {
-        handleAxiosError(e);
-    }
-}
-
-function handleAxiosError(e: AxiosError) {
-    if ('response' in e) {
-        let message = `Radia API call failed with response ${e.response.status}`;
-        if (e.response.data?.detail) {
-            if (typeof e.response.data.detail === 'object') {
-                if (e.response.data.detail.message) {
-                    message += `: ${e.response.data.detail.message}`;
-                } else {
-                    message += `: ${JSON.stringify(e.response.data.detail)}`;
-                }
-            } else {
-                message += `: ${e.response.data.detail}`;
-            }
-        }
-
-        throw new Error(message);
-    }
-    throw e;
 }

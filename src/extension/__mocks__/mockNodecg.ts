@@ -47,7 +47,8 @@ export class MockNodecg {
             mount: self.mount,
             log: {
                 warn: jest.fn(),
-                info: jest.fn()
+                info: jest.fn(),
+                error: jest.fn()
             },
             bundleConfig: self.bundleConfig
         });
