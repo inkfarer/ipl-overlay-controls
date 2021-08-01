@@ -13,7 +13,7 @@ describe('fileImport', () => {
         updateTeamDataReplicants: mockUpdateTeamDataReplicants
     }));
 
-    jest.mock('../roundImporter', () => ({
+    jest.mock('../roundDataHelper', () => ({
         __esModule: true,
         handleRoundData: mockHandleRoundData
     }));

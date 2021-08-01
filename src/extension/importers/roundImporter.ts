@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
-import { Round, RoundStore } from 'schemas';
-import { splatModes, splatStages } from '../../helpers/splatoonData';
-import { generateId } from '../../helpers/generateId';
-import { GameWinner } from 'types/enums/gameWinner';
+import { RoundStore } from 'schemas';
+import { handleRoundData } from './roundDataHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -12,23 +10,18 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
 nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
     if (!data.url) {
-        ack(new Error('Missing arguments.'), null);
+        ack(new Error('Missing arguments.'));
         return;
     }
 
-    getUrl(data.url)
-        .then(data => {
-            rounds.value = { ...rounds.value, ...data.rounds };
-            ack(null, data.url);
-        })
-        .catch(err => {
-            ack(err);
-        });
+    try {
+        const roundData = await getUrl(data.url);
+        rounds.value = { ...rounds.value, ...roundData.rounds };
+        ack(null, roundData.url);
+    } catch (e) {
+        ack(e);
+    }
 });
-
-const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
-
-const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
 
 async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
     return new Promise((resolve, reject) => {
@@ -48,57 +41,4 @@ async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
                 reject(err);
             });
     });
-}
-
-export function handleRoundData(rounds: Round[]): RoundStore {
-    const result: RoundStore = {};
-
-    for (let i = 0; i < rounds.length; i++) {
-        const round = rounds[i];
-        const games = [];
-        const roundGames = round.games == null ? round.maps : round.games;
-
-        if (!roundGames) continue;
-
-        for (let j = 0; j < roundGames.length; j++) {
-            const game = roundGames[j];
-            const stageName = game.stage == null ? game.map : game.stage;
-
-            games.push({
-                stage: normalizeStageName(stageName),
-                mode: normalizeModeName(game.mode),
-                winner: GameWinner.NO_WINNER
-            });
-        }
-
-        result[generateId()] = {
-            meta: {
-                name: round.name,
-                isCompleted: false
-            },
-            games
-        };
-    }
-
-    return result;
-}
-
-function normalizeStageName(name: string): string {
-    name = name.toLowerCase();
-
-    if (!lowerCaseSplatStages.includes(name)) {
-        return 'Unknown Stage';
-    }
-
-    return splatStages[lowerCaseSplatStages.indexOf(name)];
-}
-
-function normalizeModeName(name: string): string {
-    name = name.toLowerCase();
-
-    if (!lowerCaseSplatModes.includes(name)) {
-        return 'Unknown Mode';
-    }
-
-    return splatModes[lowerCaseSplatModes.indexOf(name)];
 }
