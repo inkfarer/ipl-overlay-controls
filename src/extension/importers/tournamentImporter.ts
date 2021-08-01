@@ -1,18 +1,14 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
-import { HighlightedMatches, TournamentData } from 'schemas';
-import { generateId } from '../../helpers/generateId';
-import { Team } from 'types/team';
+import { TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { setNextRoundTeams } from '../replicants/nextRoundHelper';
-import { setActiveRoundTeams } from '../replicants/activeRoundHelper';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
+import { getSmashGGData } from './clients/smashggClient';
+import { handleRawData, updateTeamDataReplicants } from './tournamentDataHelper';
 
 const nodecg = nodecgContext.get();
 
-const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
-const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 let smashGGKey: string;
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
@@ -57,7 +53,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
                 });
             break;
         case TournamentDataSource.UPLOAD:
-            getRaw(data.id)
+            getRawData(data.id)
                 .then(data => {
                     updateTeamDataReplicants(data);
                     ack(null, data.meta.id);
@@ -71,165 +67,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
     }
 });
 
-export function updateTeamDataReplicants(data: TournamentData): void {
-    if (data.teams.length <= 0) {
-        throw new Error('Tournament has no teams.');
-    }
-
-    data.teams.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-
-        if (nameA < nameB) {
-            return -1;
-        }
-        if (nameA > nameB) {
-            return 1;
-        }
-        return 0;
-    });
-
-    tournamentData.value = data;
-
-    highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
-
-    const firstTeam = data.teams[0];
-    const secondTeam = data.teams[1] || data.teams[0];
-
-    setActiveRoundTeams(firstTeam.id, secondTeam.id);
-    setNextRoundTeams((data.teams[2].id || firstTeam.id), (data.teams[3].id || secondTeam.id));
-}
-
-async function getSmashGGData(slug: string, token: string): Promise<TournamentData> {
-    return new Promise((resolve, reject) => {
-        getSmashGGPage(1, slug, token, true)
-            .then(async data => {
-                const tourneyInfo: TournamentData = {
-                    meta: {
-                        id: slug,
-                        source: TournamentDataSource.SMASHGG,
-                        name: data.raw.data.tournament.name
-                    },
-                    teams: []
-                };
-                tourneyInfo.teams = tourneyInfo.teams.concat(data.pageInfo);
-
-                // If there are more pages, add them to our data set
-                if (data.raw.data.tournament.teams.pageInfo.totalPages > 1) {
-                    const pagePromises = [];
-                    for (let i = 2; i <= data.raw.data.tournament.teams.pageInfo.totalPages; i++) {
-                        pagePromises.push(getSmashGGPage(i, slug, token));
-                    }
-
-                    const pages = await Promise.all(pagePromises);
-
-                    for (let i = 0; i < pages.length; i++) {
-                        tourneyInfo.teams = tourneyInfo.teams.concat(pages[i].pageInfo);
-                    }
-                }
-
-                resolve(tourneyInfo);
-            })
-            .catch(err => {
-                reject(err);
-            });
-    });
-}
-
-async function getSmashGGPage(
-    page: number,
-    slug: string,
-    token: string,
-    getRaw = false): Promise<{ pageInfo: Team[], raw?: AxiosResponse }> {
-
-    const query = `query Entrants($slug: String!, $page: Int!, $perPage: Int!) {
-        tournament(slug: $slug) {
-        id
-        name
-        teams(query: {
-            page: $page
-            perPage: $perPage
-        }) {
-            pageInfo {
-            total
-            totalPages
-            }
-            nodes {
-            id
-            name
-            entrant {
-                id
-                participants {
-                id
-                gamerTag
-                }
-            }
-            }
-        }
-        }
-    }`;
-    const perPage = '50';
-
-    return new Promise((resolve, reject) => {
-        axios
-            .post(
-                'https://api.smash.gg/gql/alpha',
-                JSON.stringify({
-                    query,
-                    variables: {
-                        slug,
-                        page,
-                        perPage
-                    }
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-            .then(response => {
-                const { data } = response;
-                const pageInfo: Team[] = [];
-                for (let i = 0; i < data.data.tournament.teams.nodes.length; i++) {
-                    const teamPlayers = [];
-                    const element = data.data.tournament.teams.nodes[i];
-
-                    if (!element.entrant) continue;
-
-                    for (let j = 0; j < element.entrant.participants.length; j++) {
-                        const teamPlayer = element.entrant.participants[j];
-                        const name = teamPlayer.gamerTag;
-                        teamPlayers.push({ name });
-                    }
-
-                    const teamName = element.name;
-                    pageInfo.push({
-                        id: generateId(),
-                        name: teamName,
-                        players: teamPlayers,
-                        showLogo: true
-                    });
-                }
-
-                if (getRaw) {
-                    resolve({
-                        pageInfo,
-                        raw: data
-                    });
-                } else {
-                    resolve({ pageInfo });
-                }
-            })
-            .catch(e => {
-                reject(e);
-            });
-    });
-}
-
-async function getRaw(url: string): Promise<TournamentData> {
+async function getRawData(url: string): Promise<TournamentData> {
     return new Promise((resolve, reject) => {
         axios
             .get(url)
@@ -241,24 +79,4 @@ async function getRaw(url: string): Promise<TournamentData> {
                 reject(err);
             });
     });
-}
-
-export function handleRawData(teams: Team[], dataUrl: string): TournamentData {
-    for (let i = 0; i < teams.length; i++) {
-        const element = teams[i];
-        if (element.id == null) {
-            element.id = generateId();
-        }
-        if (element.showLogo == null) {
-            element.showLogo = true;
-        }
-    }
-
-    return {
-        meta: {
-            id: dataUrl,
-            source: TournamentDataSource.UPLOAD
-        },
-        teams
-    };
 }

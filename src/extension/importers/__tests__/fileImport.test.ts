@@ -7,15 +7,15 @@ describe('fileImport', () => {
     const mockHandleRawData = jest.fn();
     let nodecg: MockNodecg;
 
-    jest.mock('../tournamentImporter', () => ({
-        __esModule: true,
-        handleRawData: mockHandleRawData,
-        updateTeamDataReplicants: mockUpdateTeamDataReplicants
-    }));
-
     jest.mock('../roundDataHelper', () => ({
         __esModule: true,
         handleRoundData: mockHandleRoundData
+    }));
+
+    jest.mock('../tournamentDataHelper', () => ({
+        __esModule: true,
+        updateTeamDataReplicants: mockUpdateTeamDataReplicants,
+        handleRawData: mockHandleRawData
     }));
 
     beforeEach(() => {

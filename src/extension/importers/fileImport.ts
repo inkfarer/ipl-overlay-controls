@@ -1,9 +1,9 @@
 import { handleRoundData } from './roundDataHelper';
 import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
-import { handleRawData, updateTeamDataReplicants } from './tournamentImporter';
 import * as express from 'express';
 import { RoundStore } from 'schemas';
+import { handleRawData, updateTeamDataReplicants } from './tournamentDataHelper';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
