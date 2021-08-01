@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { GuildServices } from '../../types/radiaApi';
+import { GuildServices, RadiaApiCaster } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { Configschema } from 'types/schemas/configschema';
 import { Prediction } from 'types/prediction';
@@ -99,3 +99,19 @@ export function handleAxiosError(e: AxiosError): void {
     throw e;
 }
 
+/**
+ * Get the current live casters in vc from a guild
+ * @param {string} guildID Guild ID of discord server
+ * @returns {Promise<RadiaApiCaster[]>} List of live casters
+ */
+export async function getLiveCasters(guildID: string): Promise<RadiaApiCaster[]> {
+    return await axios.get<RadiaApiCaster[]>(
+        `${radiaConfig.url}/live/guild/${guildID}`,
+        { headers: { Authorization: radiaConfig.authentication } })
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(`Radia API call failed with response ${response.status.toString()}`);
+            }
+            return response.data;
+        });
+}

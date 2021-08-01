@@ -190,4 +190,26 @@ describe('radiaClient', () => {
             })).toThrow('Radia API call failed with response 500: An error has occurred.');
         });
     });
+
+    describe('getLiveCasters', () => {
+        it('fetches casters from the API', async () => {
+            const expectedResult = [{ name: 'Caster One' }, { name: 'Caster Two' }];
+            mockGet.mockResolvedValue({ status: 200, data: expectedResult });
+
+            const result = await client.getLiveCasters('19873590');
+
+            expect(result).toEqual(expectedResult);
+            expect(mockGet).toHaveBeenCalledWith(
+                'radia://api/live/guild/19873590',
+                { headers: { Authorization: 'radia_auth' } }
+            );
+        });
+
+        it('throws an error if the status is not 200', () => {
+            mockGet.mockResolvedValue({ status: 401 });
+
+            expect(client.getLiveCasters('0259378')).rejects
+                .toThrow('Radia API call failed with response 401');
+        });
+    });
 });

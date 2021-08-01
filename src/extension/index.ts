@@ -28,7 +28,7 @@ export default (nodecg: NodeCG & NodeCGStatic): void => {
         predictionStore.value.enablePrediction = false;
     } else {
         radiaSettings.value.enabled = true;
-        require('./importers/radia');
+        require('./importers/casters');
         require('./importers/predictions');
     }
 };
