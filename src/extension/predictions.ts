@@ -33,7 +33,7 @@ radiaSettings.on('change', async (newValue) => {
 });
 
 predictionStore.on('change', newValue => {
-    if (newValue.currentPrediction?.status === PredictionStatus.ACTIVE) {
+    if (newValue.currentPrediction?.status === PredictionStatus.ACTIVE && predictionFetchInterval == null) {
         predictionFetchInterval = setInterval(async () => {
             try {
                 const guildPredictions = await getGuildPredictions(radiaSettings.value.guildID);
@@ -46,12 +46,15 @@ predictionStore.on('change', newValue => {
                 predictionFetchErrorCount++;
                 if (predictionFetchErrorCount >= 3) {
                     clearInterval(predictionFetchInterval);
+                    predictionFetchInterval = undefined;
                     nodecg.log.info('Got too many errors fetching prediction data.');
                 }
             }
         }, 25000);
-    } else {
+    } else if (newValue.currentPrediction?.status !== PredictionStatus.ACTIVE && predictionFetchInterval != null) {
+        predictionFetchErrorCount = 0;
         clearInterval(predictionFetchInterval);
+        predictionFetchInterval = undefined;
     }
 });
 
