@@ -4,17 +4,18 @@ import clone from 'clone';
 import * as nodecgContext from '../helpers/nodecg';
 import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from 'schemas';
 import { ReplicantServer } from 'nodecg/lib/replicant';
+import isEmpty from 'lodash/isEmpty';
+
 const nodecg = nodecgContext.get();
+const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
+const manualNowPlaying = nodecg.Replicant<ManualNowPlaying>('manualNowPlaying');
+const nowPlayingSource = nodecg.Replicant<NowPlayingSource>('nowPlayingSource');
+const nowPlaying = nodecg.Replicant<NowPlaying>('nowPlaying');
 
 handleLastFm();
 handleNowPlayingSource();
 
 function handleNowPlayingSource() {
-    const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
-    const manualNowPlaying = nodecg.Replicant<ManualNowPlaying>('manualNowPlaying');
-    const nowPlayingSource = nodecg.Replicant<NowPlayingSource>('nowPlayingSource');
-    const nowPlaying = nodecg.Replicant<NowPlaying>('nowPlaying');
-
     const replicantToSource: {[key: string]: ReplicantServer<unknown>} = {
         lastfm: lastFmNowPlaying,
         manual: manualNowPlaying
@@ -23,10 +24,8 @@ function handleNowPlayingSource() {
     nowPlayingSource.on('change', newValue => {
         switch (newValue) {
             case 'manual':
-                nowPlaying.value = clone(manualNowPlaying.value);
-                break;
             case 'lastfm':
-                nowPlaying.value = clone(lastFmNowPlaying.value);
+                nowPlaying.value = clone(replicantToSource[newValue].value);
                 break;
             default:
                 throw new Error('Invalid value for nowPlayingSource.');
@@ -49,22 +48,19 @@ function handleLastFm() {
         secret: nodecg.bundleConfig.lastfm.secret
     });
 
-    const nowPlaying = nodecg.Replicant('lastFmNowPlaying', {
-        persistent: false
-    });
-
     const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let trackStream: any;
 
     lastFmSettings.on('change', newValue => {
-        if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.lastfm === 'undefined') {
+        if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.lastfm)
+            || isEmpty(nodecg.bundleConfig.lastfm.apiKey) || isEmpty(nodecg.bundleConfig.lastfm.secret)) {
             nodecg.log.warn(
-                `"lastfm" is not defined in cfg/${nodecg.bundleName}.json! `
-                + 'Getting music information automatically will not function.'
+                `"lastfm" configuration is missing in cfg/${nodecg.bundleName}.json! `
+                + 'Getting music information from last.fm automatically will not function.'
             );
             return;
-        } else if (!newValue.username && newValue.username === '') {
+        } else if (isEmpty(newValue.username)) {
             return;
         }
 
@@ -76,7 +72,7 @@ function handleLastFm() {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         trackStream.on('nowPlaying', (track: any) => {
-            nowPlaying.value = {
+            lastFmNowPlaying.value = {
                 artist: track.artist['#text'],
                 song: track.name,
                 album: track.album['#text'],

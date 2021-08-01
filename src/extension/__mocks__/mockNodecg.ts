@@ -11,13 +11,15 @@ export class MockNodecg {
     messageListeners: {[key: string]: (message?: unknown, cb?: () => void) => void};
     requestHandlers: {[type in 'POST' | 'GET']: {[path: string]: express.RequestHandler}};
     mount: jest.Mock;
+    bundleConfig: unknown;
 
-    constructor() {
+    constructor(bundleConfig?: unknown) {
         this.replicants = {};
         this.replicantListeners = {};
         this.messageListeners = {};
         this.requestHandlers = { POST: {}, GET: {} };
         this.mount = jest.fn();
+        this.bundleConfig = bundleConfig;
     }
 
     init(): void {
@@ -44,8 +46,10 @@ export class MockNodecg {
             }),
             mount: self.mount,
             log: {
-                warn: jest.fn()
-            }
+                warn: jest.fn(),
+                info: jest.fn()
+            },
+            bundleConfig: self.bundleConfig
         });
     }
 }
