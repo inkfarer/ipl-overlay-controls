@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getSmashGGData } from '../smashggClient';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import * as generateId from '../../../../helpers/generateId';
+
 describe('smashggClient', () => {
     jest.mock('axios');
     const mockPost = jest.fn();

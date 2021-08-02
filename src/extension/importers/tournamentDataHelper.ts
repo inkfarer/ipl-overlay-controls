@@ -36,7 +36,14 @@ export function updateTeamDataReplicants(data: TournamentData): void {
     const secondTeam = data.teams[1] || data.teams[0];
 
     setActiveRoundTeams(firstTeam.id, secondTeam.id);
-    setNextRoundTeams((data.teams[2].id || firstTeam.id), (data.teams[3].id || secondTeam.id));
+
+    if (data.teams.length < 5) {
+        setNextRoundTeams(
+            (data.teams[data.teams.length - 2]?.id || firstTeam.id),
+            data.teams[data.teams.length - 1].id);
+    } else {
+        setNextRoundTeams(data.teams[2].id, data.teams[3].id);
+    }
 }
 
 export function handleRawData(teams: Team[], dataUrl: string): TournamentData {
