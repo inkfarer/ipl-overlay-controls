@@ -26,57 +26,44 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         return;
     }
 
-    switch (data.method) {
-        case TournamentDataSource.BATTLEFY:
-            getBattlefyTournamentData(data.id)
-                .then(data => {
-                    updateTeamDataReplicants(data);
-                    ack(null, data.meta.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        case TournamentDataSource.SMASHGG:
-            if (!smashGGKey) {
-                ack(new Error('No smash.gg token provided.'));
+    try {
+        switch (data.method) {
+            case TournamentDataSource.BATTLEFY: {
+                const serviceData = await getBattlefyTournamentData(data.id);
+                updateTeamDataReplicants(serviceData);
+                ack(null, serviceData.meta.id);
                 break;
             }
+            case TournamentDataSource.SMASHGG: {
+                if (!smashGGKey) {
+                    ack(new Error('No smash.gg token provided.'));
+                    break;
+                }
 
-            getSmashGGData(data.id, smashGGKey)
-                .then(data => {
-                    updateTeamDataReplicants(data);
-                    ack(null, data.meta.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        case TournamentDataSource.UPLOAD:
-            getRawData(data.id)
-                .then(data => {
-                    updateTeamDataReplicants(data);
-                    ack(null, data.meta.id);
-                })
-                .catch(err => {
-                    ack(err);
-                });
-            break;
-        default:
-            ack(new Error('Invalid method given.'));
+                const serviceData = await getSmashGGData(data.id, smashGGKey);
+                updateTeamDataReplicants(serviceData);
+                ack(null, serviceData.meta.id);
+                break;
+            }
+            case TournamentDataSource.UPLOAD: {
+                const serviceData = await getRawData(data.id);
+                updateTeamDataReplicants(serviceData);
+                ack(null, serviceData.meta.id);
+                break;
+            }
+            default:
+                ack(new Error('Invalid method given.'));
+        }
+    } catch (e) {
+        ack(e);
     }
 });
 
 async function getRawData(url: string): Promise<TournamentData> {
-    return new Promise((resolve, reject) => {
-        axios
-            .get(url)
-            .then(response => {
-                const finalResponse = handleRawData(response.data, url);
-                resolve(finalResponse);
-            })
-            .catch(err => {
-                reject(err);
-            });
-    });
+    const response = await axios.get(url);
+    if (response.status === 200) {
+        return handleRawData(response.data, url);
+    } else {
+        throw new Error(`Got response code ${response.status} from URL ${url}`);
+    }
 }
