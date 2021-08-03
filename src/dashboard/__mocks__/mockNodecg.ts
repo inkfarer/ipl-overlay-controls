@@ -1,3 +1,5 @@
+import Mock = jest.Mock;
+
 export type ReplicantChangeHandler = (newValue?: unknown, oldValue?: unknown) => void;
 export type MockReplicant = { value: unknown };
 type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
@@ -5,10 +7,12 @@ type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
 export class MockNodecg {
     replicants: {[key: string]: MockReplicant};
     listeners: {[key: string]: ReplicantChangeHandler};
+    sendMessage: Mock
 
     constructor() {
         this.replicants = {};
         this.listeners = {};
+        this.sendMessage = jest.fn();
     }
 
     init(): void {
@@ -24,7 +28,8 @@ export class MockNodecg {
                 };
                 self.replicants[name] = replicantValue;
                 return replicantValue;
-            }
+            },
+            sendMessage: self.sendMessage
         };
     }
 }
