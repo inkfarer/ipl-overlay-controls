@@ -1,10 +1,11 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { Module } from '../../__mocks__/module';
 
 describe('tournamentDataHelper', () => {
     const mockSetActiveRoundTeams = jest.fn();
     const mockSetNextRoundTeams = jest.fn();
-    let helper: {[key: string]: (...args: unknown[]) => unknown};
+    let helper: Module;
     let nodecg: MockNodecg;
 
     jest.mock('../../replicants/activeRoundHelper', () => ({

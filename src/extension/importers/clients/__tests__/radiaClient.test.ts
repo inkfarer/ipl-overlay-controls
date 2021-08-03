@@ -1,10 +1,11 @@
 import { MockNodecg } from '../../../__mocks__/mockNodecg';
+import { Module } from '../../../__mocks__/module';
 
 describe('radiaClient', () => {
     const mockGet = jest.fn();
     const mockPatch = jest.fn();
     const mockPost = jest.fn();
-    let client: {[key: string]: (...args: unknown[]) => unknown};
+    let client: Module;
     let nodecg: MockNodecg;
 
     jest.mock('axios', () => ({
