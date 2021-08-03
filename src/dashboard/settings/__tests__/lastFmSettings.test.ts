@@ -18,7 +18,7 @@ describe('lastFmSettings', () => {
 
     describe('lastFmSettings replicant change', () => {
         it('updates input', () => {
-            nodecg.listeners['lastFmSettings']({ username: 'new-username' });
+            nodecg.listeners.lastFmSettings({ username: 'new-username' });
 
             expect(elementById<HTMLInputElement>('last-fm-username-input').value)
                 .toBe('new-username');

@@ -12,6 +12,6 @@ export function elementById<T extends HTMLElement>(id: string): T | undefined {
     return document.getElementById(id) as T;
 }
 
-export function dispatch(element: HTMLElement, event: string): void {
+export function dispatch(element: EventTarget, event: string): void {
     element.dispatchEvent(new Event(event));
 }
