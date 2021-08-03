@@ -11,7 +11,7 @@ import {
     toggleCustomColorSelectorVisibility
 } from './toggleHelper';
 import { swapColorsInternally } from './replicants';
-import { addClasses, appendChildren } from '../helpers/elemHelper';
+import { appendChildren } from '../helpers/elemHelper';
 import { GameWinner } from 'types/enums/gameWinner';
 import { enableColorEditToggle } from './main';
 import { SetWinnerRequest } from 'types/messages/activeRound';
@@ -80,18 +80,17 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
 
     const customColorSelectorWrapper = document.createElement('div');
     setToggleElementIdAndClass(customColorSelectorWrapper, 'custom-color-select-wrapper', stageIndex);
-    addClasses(customColorSelectorWrapper, 'layout', 'horizontal');
+    customColorSelectorWrapper.classList.add('layout', 'horizontal');
     appendChildren(customColorSelectorWrapper, customColorSelectorA, customColorSelectorB);
     customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
 
     const colorDataToggleContainer = document.createElement('div');
-    addClasses(colorDataToggleContainer,
-        'layout', 'horizontal', 'center-horizontal', 'color-swap-toggle-container');
+    colorDataToggleContainer.classList.add('layout', 'horizontal', 'center-horizontal', 'color-swap-toggle-container');
     appendChildren(colorDataToggleContainer,
         colorSwapToggle, colorSwapToggleLabel, customColorToggle, customColorToggleLabel);
 
     const winButtonContainer = document.createElement('div');
-    addClasses(winButtonContainer, 'layout', 'horizontal', 'win-button-container');
+    winButtonContainer.classList.add('layout', 'horizontal', 'win-button-container');
     appendChildren(winButtonContainer,
         createWinButton(GameWinner.NO_WINNER, stageIndex, roundElement.winner),
         createWinButton(GameWinner.ALPHA, stageIndex, roundElement.winner, colorData.clrA),
@@ -99,15 +98,19 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
 
     const colorSelectorWrapper = document.createElement('div');
     colorSelectorWrapper.style.display = enableColorEditToggle.checked ? '' : 'none';
-    addClasses(colorSelectorWrapper,
-        'color-selector-wrapper', 'layout', 'horizontal', 'center-vertical', 'even-spacing');
+    colorSelectorWrapper.classList.add(
+        'color-selector-wrapper',
+        'layout',
+        'horizontal',
+        'center-vertical',
+        'even-spacing');
     appendChildren(colorSelectorWrapper, colorSelector, customColorSelectorWrapper, colorDataToggleContainer);
 
     const toggleDiv = document.createElement('div');
     toggleDiv.classList.add('toggles');
     toggleDiv.id = `game-editor_${stageIndex}`;
     appendChildren(toggleDiv, numberDisplay, stageSelector, modeSelector, colorSelectorWrapper, winButtonContainer);
-    addClasses(toggleDiv, 'layout', 'horizontal', 'center-horizontal', 'even-spacing');
+    toggleDiv.classList.add('layout', 'horizontal', 'center-horizontal', 'even-spacing');
 
     document.getElementById('toggles').appendChild(toggleDiv);
 }
@@ -129,7 +132,7 @@ function createWinButton(toggleType: GameWinner,
         [GameWinner.ALPHA]: 'team-a-win-toggle',
         [GameWinner.BRAVO]: 'team-b-win-toggle'
     }[toggleType];
-    addClasses(button, buttonClass, 'max-width');
+    button.classList.add(buttonClass, 'max-width');
 
     if (toggleType === GameWinner.NO_WINNER) {
         button.classList.add('red');

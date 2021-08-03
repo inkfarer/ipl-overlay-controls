@@ -1,7 +1,3 @@
-export function addClasses(element: HTMLElement, ...classes: string[]): void {
-    element.classList.add(...classes);
-}
-
 export function appendChildren(element: HTMLElement, ...children: HTMLElement[]): void {
     children.forEach(elem => {
         element.appendChild(elem);

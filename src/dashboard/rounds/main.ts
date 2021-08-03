@@ -9,7 +9,6 @@ import isEqual from 'lodash/isEqual';
 import '../helpers/buttonConfirm';
 import '../styles/globalStyles.css';
 import './rounds.css';
-import { addClasses } from '../helpers/elemHelper';
 
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
@@ -122,7 +121,7 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
     removeButton.style.backgroundColor = 'var(--red)';
     removeButton.id = 'removeButton_' + id;
     removeButton.innerText = 'REMOVE';
-    addClasses(removeButton, 'max-width', 'remove-round-button');
+    removeButton.classList.add('max-width', 'remove-round-button');
     removeButton.dataset.uncommitted = remindToUpdate ? 'true' : 'false';
     removeButton.onclick = event => {
         const target = event.target as HTMLButtonElement;
