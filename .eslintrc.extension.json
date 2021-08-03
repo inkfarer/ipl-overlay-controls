@@ -30,7 +30,13 @@
     ],
     "rules": {
         "import/no-extraneous-dependencies": "off",
-        "max-len": ["error", { "code": 120, "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }],
+        "max-len": ["error", {
+            "code": 120,
+            "ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+            "ignoreRegExpLiterals": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreStrings": true
+        }],
         "indent": ["warn", 4, { "SwitchCase": 1 }],
         "linebreak-style": "off",
         "quotes": ["error", "single"],

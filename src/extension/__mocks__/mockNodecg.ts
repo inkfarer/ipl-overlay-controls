@@ -12,6 +12,7 @@ export class MockNodecg {
     requestHandlers: {[type in 'POST' | 'GET']: {[path: string]: express.RequestHandler}};
     mount: jest.Mock;
     bundleConfig: unknown;
+    log: { warn: jest.Mock, info: jest.Mock, error: jest.Mock }
 
     constructor(bundleConfig?: unknown) {
         this.replicants = {};
@@ -20,6 +21,11 @@ export class MockNodecg {
         this.requestHandlers = { POST: {}, GET: {} };
         this.mount = jest.fn();
         this.bundleConfig = bundleConfig;
+        this.log = {
+            warn: jest.fn(),
+            info: jest.fn(),
+            error: jest.fn()
+        };
     }
 
     init(): void {
@@ -45,12 +51,9 @@ export class MockNodecg {
                 }
             }),
             mount: self.mount,
-            log: {
-                warn: jest.fn(),
-                info: jest.fn(),
-                error: jest.fn()
-            },
-            bundleConfig: self.bundleConfig
+            log: self.log,
+            bundleConfig: self.bundleConfig,
+            bundleName: 'ipl-overlay-controls'
         });
     }
 }
