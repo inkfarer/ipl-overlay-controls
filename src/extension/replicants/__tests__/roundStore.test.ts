@@ -254,7 +254,7 @@ describe('roundStore', () => {
             expect(nodecg.replicants.roundStore.value).toEqual({
                 '00000': {
                     meta: {
-                        name: 'Default round 1',
+                        name: 'Default Round 1',
                         isCompleted: false
                     },
                     games: [
@@ -277,7 +277,7 @@ describe('roundStore', () => {
                 },
                 '11111': {
                     meta: {
-                        name: 'Default round 2',
+                        name: 'Default Round 2',
                         isCompleted: false
                     },
                     games: [

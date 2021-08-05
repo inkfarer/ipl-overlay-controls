@@ -68,7 +68,7 @@ nodecg.listenFor('resetRoundStore', () => {
     roundStore.value = {
         [defaultRoundId]: {
             meta: {
-                name: 'Default round 1',
+                name: 'Default Round 1',
                 isCompleted: false
             },
             games: [
@@ -91,7 +91,7 @@ nodecg.listenFor('resetRoundStore', () => {
         },
         [secondDefaultRoundId]: {
             meta: {
-                name: 'Default round 2',
+                name: 'Default Round 2',
                 isCompleted: false
             },
             games: [
