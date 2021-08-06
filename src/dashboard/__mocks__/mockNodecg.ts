@@ -31,5 +31,10 @@ export class MockNodecg {
             },
             sendMessage: self.sendMessage
         };
+
+        // @ts-ignore: It's a mock.
+        window.NodeCG = {
+            waitForReplicants: jest.fn().mockResolvedValue(true)
+        };
     }
 }

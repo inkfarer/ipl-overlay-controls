@@ -1,6 +1,6 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { Module } from '../../__mocks__/module';
+import { Module } from '../../../helpers/__mocks__/module';
 
 describe('tournamentDataHelper', () => {
     const mockSetActiveRoundTeams = jest.fn();

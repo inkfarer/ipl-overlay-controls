@@ -1,5 +1,5 @@
 import { MockNodecg } from '../../../__mocks__/mockNodecg';
-import { Module } from '../../../__mocks__/module';
+import { Module } from '../../../../helpers/__mocks__/module';
 
 describe('radiaClient', () => {
     const mockGet = jest.fn();
