@@ -6,6 +6,7 @@ import { Match } from 'types/match';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
 import { SetRoundRequest } from 'types/messages/rounds';
+import { MultiSelect } from '../components/multiSelect';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');

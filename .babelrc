@@ -1,3 +1,14 @@
 {
-    "presets": [["@babel/preset-env", {"modules": "commonjs"}], "@babel/preset-typescript"]
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": "commonjs",
+                "targets": {
+                    "esmodules": true
+                }
+            }
+        ],
+        "@babel/preset-typescript"
+    ]
 }

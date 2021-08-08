@@ -1,4 +1,4 @@
-class MultiSelect extends HTMLElement {
+export class MultiSelect extends HTMLElement {
     select: HTMLSelectElement;
     selectedElemDisplay: HTMLDivElement;
     selectedOptions: HTMLOptionElement[];
@@ -43,9 +43,7 @@ class MultiSelect extends HTMLElement {
             // Delete selected element on click
             if ((e.target as HTMLElement).classList.contains('option')) {
                 this.selectedOptions = this.selectedOptions.filter(elem => {
-                    const target = e.target as HTMLDivElement;
-                    return elem.innerText !== target.innerText
-                        && elem.value !== target.dataset.optionValue;
+                    return elem.value !== (e.target as HTMLDivElement).dataset.optionValue;
                 });
                 this.updateElemDisplay();
                 this.dispatchEvent(new Event('change'));
@@ -80,7 +78,7 @@ class MultiSelect extends HTMLElement {
         this.selectedOptions.forEach(opt => {
             const optionElem = document.createElement('div');
             optionElem.classList.add('option');
-            optionElem.innerText = opt.innerText;
+            optionElem.innerText = opt.text;
             optionElem.dataset.optionValue = opt.value;
             this.selectedElemDisplay.appendChild(optionElem);
         });
@@ -88,7 +86,6 @@ class MultiSelect extends HTMLElement {
 
     private static createStyle(): HTMLStyleElement {
         const style = document.createElement('style');
-        /* eslint-disable max-len */
         style.textContent = `
             ::slotted(select) {
                 opacity: 0;
@@ -136,7 +133,6 @@ class MultiSelect extends HTMLElement {
                 position: relative;
                 cursor: pointer;
             }`;
-        /* eslint-enable max-len */
 
         return style;
     }
