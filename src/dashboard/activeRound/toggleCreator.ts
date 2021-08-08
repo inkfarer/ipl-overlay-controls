@@ -7,7 +7,6 @@ import {
     handleColorSelectorChange,
     handleColorSwapToggleChange,
     handleCustomColorListenerChange,
-    setToggleColor,
     toggleCustomColorSelectorVisibility
 } from './toggleHelper';
 import { swapColorsInternally } from './replicants';
@@ -15,6 +14,7 @@ import { appendChildren } from '../helpers/elemHelper';
 import { GameWinner } from 'types/enums/gameWinner';
 import { enableColorEditToggle } from './main';
 import { SetWinnerRequest } from 'types/messages/activeRound';
+import { setWinToggleColor } from './winToggleColorHelper';
 
 const roundUpdateButton = document.getElementById('update-round') as HTMLButtonElement;
 
@@ -143,7 +143,7 @@ function createWinButton(toggleType: GameWinner,
     button.disabled = toggleType === currentWinner;
 
     if (color) {
-        setToggleColor(button, color);
+        setWinToggleColor(button, color);
     }
 
     button.id = `${buttonClass}_${index}`;

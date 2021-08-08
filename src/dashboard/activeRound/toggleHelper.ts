@@ -1,7 +1,7 @@
 import { activeRound, swapColorsInternally } from './replicants';
 import { GameWinner } from 'types/enums/gameWinner';
-import { getContrastingTextColor } from '../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
+import { updateWinToggleColors } from './winToggleColorHelper';
 
 export function handleCustomColorListenerChange(event: Event): void {
     const index = parseInt((event.target as HTMLInputElement).id.split('_')[2], 10);
@@ -15,7 +15,7 @@ export function handleCustomColorListenerChange(event: Event): void {
     const teamASelector = customColorsWrapper.querySelector('.team-a') as HTMLInputElement;
     const teamBSelector = customColorsWrapper.querySelector('.team-b') as HTMLInputElement;
 
-    updateButtonColors(index, teamASelector.value, teamBSelector.value);
+    updateWinToggleColors(index, teamASelector.value, teamBSelector.value);
 }
 
 export function handleColorSelectorChange(event: Event): void {
@@ -27,7 +27,7 @@ export function handleColorSelectorChange(event: Event): void {
     colorSwapToggle.dataset.source = 'gameInfo-edited';
 
     const colorOption = target.options[target.selectedIndex] as HTMLOptionElement;
-    updateButtonColors(
+    updateWinToggleColors(
         index,
         colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
         colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
@@ -60,11 +60,11 @@ export function handleColorSwapToggleChange(event: Event): void {
             const teamAColor = teamAColorInput.value;
             teamAColorInput.value = teamBColorInput.value;
             teamBColorInput.value = teamAColor;
-            updateButtonColors(toggleIndex, teamAColorInput.value, teamBColorInput.value);
+            updateWinToggleColors(toggleIndex, teamAColorInput.value, teamBColorInput.value);
         } else {
             const colorSelector = document.getElementById(`color-selector_${toggleIndex}`) as HTMLSelectElement;
             const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
-            updateButtonColors(
+            updateWinToggleColors(
                 toggleIndex,
                 target.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
                 target.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor);
@@ -82,25 +82,7 @@ export function toggleCustomColorSelectorVisibility(index: number, isCustomColor
     colorSelect.style.display = isCustomColor ? 'none' : '';
 }
 
-export function updateButtonColors(index: number, clrA: string, clrB: string): void {
-    const buttons = getButtons(index);
-    setToggleColor(buttons[GameWinner.ALPHA], clrA);
-    setToggleColor(buttons[GameWinner.BRAVO], clrB);
-}
-
-export function setToggleColor(button: HTMLButtonElement, color: string): void {
-    button.style.backgroundColor = color;
-    button.style.color = getContrastingTextColor(color);
-
-    const borderWidth = button.disabled ? '8px' : '0';
-    if (button.classList.contains('team-a-win-toggle')) {
-        button.style.borderLeft = `${borderWidth} solid ${color}`;
-    } else if (button.classList.contains('team-b-win-toggle')) {
-        button.style.borderRight = `${borderWidth} solid ${color}`;
-    }
-}
-
-export function getButtons(id: number): { [key in GameWinner]: HTMLButtonElement } {
+export function getWinToggles(id: number): { [key in GameWinner]: HTMLButtonElement } {
     return {
         [GameWinner.NO_WINNER]: document.getElementById(`no-win-toggle_${id}`) as HTMLButtonElement,
         [GameWinner.ALPHA]: document.getElementById(`team-a-win-toggle_${id}`) as HTMLButtonElement,

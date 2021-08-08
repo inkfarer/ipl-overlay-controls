@@ -3,27 +3,27 @@ import { swapColorsInternally } from './replicants';
 import { getColorOptionName } from '../../helpers/splatoonData';
 import {
     getActiveRoundColors,
-    getButtons,
-    toggleCustomColorSelectorVisibility,
-    updateButtonColors
+    getWinToggles,
+    toggleCustomColorSelectorVisibility
 } from './toggleHelper';
 import { roundNameElem } from './main';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { GameWinner } from 'types/enums/gameWinner';
 import { setValueIfNotEdited } from '../helpers/inputHelper';
+import { updateWinToggleColors } from './winToggleColorHelper';
 
 export function updateToggles(games: ActiveRoundGame[], roundName: string): void {
     roundNameElem.innerText = roundName;
 
     games.forEach((game, index) => {
-        updateMapsModes(index, game);
+        updateStagesAndModes(index, game);
         setGameWinner(index, game.winner);
         updateColor(index, game.color);
     });
 }
 
 function setGameWinner(index: number, winner: GameWinner) {
-    const buttons = getButtons(index);
+    const buttons = getWinToggles(index);
     Object.values(buttons).forEach(button => {
         button.disabled = false;
     });
@@ -31,7 +31,7 @@ function setGameWinner(index: number, winner: GameWinner) {
     buttons[winner].disabled = true;
 }
 
-function updateMapsModes(index: number, game: ActiveRoundGame) {
+function updateStagesAndModes(index: number, game: ActiveRoundGame) {
     const stageSelector = document.getElementById(`stage-selector_${index}`) as HTMLSelectElement;
     const modeSelector = document.getElementById(`mode-selector_${index}`) as HTMLSelectElement;
     setValueIfNotEdited(stageSelector, game.stage);
@@ -59,8 +59,8 @@ function updateColor(index: number, color?: GameColor): void {
         teamBColorInput.value = colorData.clrB;
         const isCustomColor = colorData.index === 999;
         customColorToggle.checked = isCustomColor;
-        toggleCustomColorSelectorVisibility(index, isCustomColor);
 
-        updateButtonColors(index, colorData.clrA, colorData.clrB);
+        toggleCustomColorSelectorVisibility(index, isCustomColor);
+        updateWinToggleColors(index, colorData.clrA, colorData.clrB);
     }
 }
