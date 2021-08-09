@@ -1,5 +1,6 @@
 import { dispatch } from '../elemHelper';
 import Mock = jest.Mock;
+import { UnknownFunction } from '../../../helpers/__mocks__/module';
 
 describe('buttonConfirm', () => {
     beforeEach(() => {
@@ -72,10 +73,10 @@ describe('buttonConfirm', () => {
     });
 
     it('creates a mutation observer that adds event listeners to added nodes', () => {
-        let mutationObserverCallback: (...args: unknown[]) => unknown;
+        let mutationObserverCallback: UnknownFunction;
         // @ts-ignore: just a test
         global.MutationObserver = class {
-            constructor(callback: (...args: unknown[]) => unknown) {
+            constructor(callback: UnknownFunction) {
                 mutationObserverCallback = callback;
             }
             observe = jest.fn();

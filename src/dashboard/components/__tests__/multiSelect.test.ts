@@ -1,6 +1,7 @@
 import '../multiSelect';
 import { MultiSelect } from '../multiSelect';
 import { dispatch, elementById } from '../../helpers/elemHelper';
+import { UnknownFunction } from '../../../helpers/__mocks__/module';
 
 describe('multiSelect', () => {
     it('is defined as a custom element', () => {
@@ -129,10 +130,10 @@ describe('multiSelect', () => {
     });
 
     it('handles options being changed', () => {
-        let mutationObserverCallback: (...args: unknown[]) => unknown;
+        let mutationObserverCallback: UnknownFunction;
         // @ts-ignore: just a test
         global.MutationObserver = class {
-            constructor(callback: (...args: unknown[]) => unknown) {
+            constructor(callback: UnknownFunction) {
                 mutationObserverCallback = callback;
             }
             observe = jest.fn();

@@ -1,4 +1,5 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { UnknownFunction } from '../../../helpers/__mocks__/module';
 
 describe('music', () => {
     let nodecg: MockNodecg;
@@ -69,7 +70,7 @@ describe('music', () => {
     describe('handleLastFm', () => {
         const mockStopStream = jest.fn();
         const mockStartStream = jest.fn();
-        let trackStreamEvents: {[event: string]: (...args: unknown[]) => void} = { };
+        let trackStreamEvents: {[event: string]: UnknownFunction} = { };
 
         beforeEach(() => {
             trackStreamEvents = { };
@@ -80,7 +81,7 @@ describe('music', () => {
                 stream: jest.fn().mockReturnValue({
                     stop: mockStopStream,
                     start: mockStartStream,
-                    on: (event: string, cb: (...args: unknown[]) => void) => {
+                    on: (event: string, cb: UnknownFunction) => {
                         trackStreamEvents[event] = cb;
                     }
                 })
