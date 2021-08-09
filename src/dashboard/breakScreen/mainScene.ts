@@ -1,6 +1,7 @@
 import { MainFlavorText, NextRoundStartTime } from 'schemas';
 import { addChangeReminder } from '../globalScripts';
 import { DateTime } from 'luxon';
+import clamp from 'lodash/clamp';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
 const nextRoundStartTime = nodecg.Replicant<NextRoundStartTime>('nextRoundStartTime');
@@ -19,10 +20,10 @@ mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
 });
 
-mainSceneUpdateBtn.onclick = () => {
+mainSceneUpdateBtn.addEventListener('click', () => {
     mainFlavorText.value = flavorTextInput.value;
     updateStageTime();
-};
+});
 
 nextStageTimerToggle.addEventListener('change', e => {
     nextRoundStartTime.value.isVisible = (e.target as HTMLInputElement).checked;
@@ -43,21 +44,21 @@ function updateDaySelector(selectedDate: DateTime) {
 
     const today = DateTime.now();
     const tomorrow = DateTime.now().plus({ days: 1 });
-    daySelect.appendChild(getDayElem(today));
-    daySelect.appendChild(getDayElem(tomorrow));
+    daySelect.appendChild(getDayOption(today));
+    daySelect.appendChild(getDayOption(tomorrow));
 
     if (!selectedDate.hasSame(today, 'days') && !selectedDate.hasSame(tomorrow, 'days')) {
-        daySelect.appendChild(getDayElem(selectedDate));
+        daySelect.appendChild(getDayOption(selectedDate));
     }
 
     daySelect.value = selectedDate.toFormat(dayMonthYearFormat);
 }
 
-function getDayElem(date: DateTime): HTMLOptionElement {
-    const dayElem = document.createElement('option');
-    dayElem.innerText = date.toFormat(dayMonthFormat);
-    dayElem.value = date.toFormat(dayMonthYearFormat);
-    return dayElem;
+function getDayOption(date: DateTime): HTMLOptionElement {
+    const result = document.createElement('option');
+    result.text = date.toFormat(dayMonthFormat);
+    result.value = date.toFormat(dayMonthYearFormat);
+    return result;
 }
 
 function updateStageTime() {
@@ -69,9 +70,7 @@ function updateStageTime() {
         const date = DateTime.fromFormat(dateOption.value, dayMonthYearFormat);
         const dateTime = date.set({ minute, hour });
 
-        if (minute >= 0 && minute <= 59 && hour >= 0 && hour <= 23) {
-            nextRoundStartTime.value.startTime = dateTime.toUTC().toISO();
-        }
+        nextRoundStartTime.value.startTime = dateTime.toUTC().toISO();
     }
 }
 
@@ -86,10 +85,16 @@ function padNumber(value: number | string, minLength = 2): string {
     }
 }
 
-function padNumberInput(e: InputEvent) {
+function padAndClampInput(e: Event, max: number) {
     const target = e.target as HTMLInputElement;
-    target.value = padNumber(target.value);
+    const intValue = parseInt(target.value);
+
+    if (isNaN(intValue)) {
+        target.value = '';
+    } else {
+        target.value = padNumber(clamp(intValue, 0, max));
+    }
 }
 
-hourInput.addEventListener('change', padNumberInput);
-minuteInput.addEventListener('change', padNumberInput);
+hourInput.addEventListener('change', e => padAndClampInput(e, 23));
+minuteInput.addEventListener('change', e => padAndClampInput(e, 59));
