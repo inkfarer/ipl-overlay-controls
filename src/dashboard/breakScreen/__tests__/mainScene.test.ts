@@ -51,7 +51,7 @@ describe('mainScene', () => {
             dispatch(elementById('main-scene-update-btn'), 'click');
 
             expect((nodecg.replicants.nextRoundStartTime.value as NextRoundStartTime).startTime)
-                .toEqual('2022-10-21T07:59:00.000Z');
+                .toEqual(DateTime.fromObject({ hour: 10, minute: 59, year: 2022, day: 21, month: 10 }).toUTC().toISO());
         });
 
         it('does not set next stage time if no valid hour is given', () => {
