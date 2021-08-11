@@ -27,6 +27,7 @@
         "fix": "eslint ./src --fix",
         "devbuild": "webpack",
         "test": "jest",
+        "test:update": "jest -u",
         "test:ci": "jest --json --outputFile=result.json --testLocationInResults"
     },
     "nodecg": {

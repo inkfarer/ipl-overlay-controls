@@ -19,8 +19,6 @@ btnLoadFromVC.addEventListener('click', () => {
             }
 
             setUncommittedButtonDisabled(true);
-        } else {
-            setUncommittedButtonDisabled(false);
         }
     });
 });
