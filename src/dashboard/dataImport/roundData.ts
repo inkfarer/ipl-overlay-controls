@@ -6,7 +6,7 @@ const roundWebImportToggle = document.getElementById('round-web-import-toggle') 
 const roundImportFileInput = document.getElementById('round-input-file-input') as HTMLInputElement;
 const roundDataStatusElem = document.getElementById('round-data-submit-status');
 
-document.getElementById('round-import-submit').onclick = () => {
+document.getElementById('round-import-submit').addEventListener('click', () => {
     setImportStatus(ImportStatus.LOADING, roundDataStatusElem);
 
     if (roundWebImportToggle.checked) {
@@ -23,9 +23,9 @@ document.getElementById('round-import-submit').onclick = () => {
     } else {
         sendLocalFile('rounds', roundImportFileInput, roundDataStatusElem);
     }
-};
+});
 
-roundWebImportToggle.onclick = e => {
+roundWebImportToggle.addEventListener('click', e => {
     const fileInput = document.getElementById('local-round-input-wrapper');
     const urlInput = document.getElementById('web-file-input-wrapper');
 
@@ -34,4 +34,4 @@ roundWebImportToggle.onclick = e => {
 
     shownElem.style.display = '';
     hiddenElem.style.display = 'none';
-};
+});

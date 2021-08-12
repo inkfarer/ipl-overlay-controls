@@ -29,18 +29,11 @@ const methodData: { [key in TournamentDataSource]: { dataTitle: string } } = {
 methodSelector.addEventListener('change', e => {
     const method = (e.target as HTMLSelectElement).value as TournamentDataSource;
 
-    document.getElementById('tournament-id-input-title').innerText
-        = methodData[method].dataTitle;
+    document.getElementById('tournament-id-input-title').innerText = methodData[method].dataTitle;
 
-    const webImportToggleContainer = document.getElementById(
-        'team-web-import-toggle-container'
-    );
-    const localTeamImportContainer = document.getElementById(
-        'local-team-input-wrapper'
-    );
-    const webTournamentImportWrapper = document.getElementById(
-        'web-tournament-import-wrapper'
-    );
+    const webImportToggleContainer = document.getElementById('team-web-import-toggle-container');
+    const localTeamImportContainer = document.getElementById('local-team-input-wrapper');
+    const webTournamentImportWrapper = document.getElementById('web-tournament-import-wrapper');
 
     if (method === TournamentDataSource.UPLOAD) {
         webImportToggleContainer.style.display = '';
@@ -55,9 +48,9 @@ methodSelector.addEventListener('change', e => {
     }
 });
 
-document.getElementById('submit-import').onclick = () => {
+document.getElementById('submit-import').addEventListener('click', () => {
     setImportStatus(ImportStatus.LOADING, teamDataStatusElem);
-    if (!teamWebImportToggle.checked && methodSelector.value === 'raw') {
+    if (!teamWebImportToggle.checked && methodSelector.value === TournamentDataSource.UPLOAD) {
         sendLocalFile('teams', teamDataFileInput, teamDataStatusElem);
     } else {
         nodecg.sendMessage(
@@ -74,9 +67,9 @@ document.getElementById('submit-import').onclick = () => {
                 setImportStatus(ImportStatus.SUCCESS, teamDataStatusElem);
             });
     }
-};
+});
 
-teamWebImportToggle.onclick = e => {
+teamWebImportToggle.addEventListener('click', e => {
     const fileInput = document.getElementById('local-team-input-wrapper') as HTMLInputElement;
     const urlInput = document.getElementById('web-tournament-import-wrapper') as HTMLInputElement;
 
@@ -85,7 +78,7 @@ teamWebImportToggle.onclick = e => {
 
     shownElem.style.display = '';
     hiddenElem.style.display = 'none';
-};
+});
 
 tournamentData.on('change', newValue => {
     document.getElementById('tournament-name').innerText = newValue.meta.name || 'No Name';

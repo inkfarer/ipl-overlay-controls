@@ -4,7 +4,8 @@ import { ImportStatus } from 'types/enums/importStatus';
 export function sendLocalFile(
     dataType: 'teams' | 'rounds',
     fileInput: HTMLInputElement,
-    importStatusElem: HTMLElement): void {
+    importStatusElem: HTMLElement
+): void {
 
     if (!fileInput.files[0]) return;
 
