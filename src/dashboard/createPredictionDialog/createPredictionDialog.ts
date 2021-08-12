@@ -9,11 +9,8 @@ const fieldValidity: FieldValidity = {};
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 const predictionCreateStatusElem = document.getElementById('prediction-create-status');
 
-const predictionNameLabel = document.getElementById('prediction-name-label');
 const predictionNameInput = document.getElementById('prediction-name-input') as HTMLInputElement;
-const optionALabel = document.getElementById('prediction-option-a-label');
 const optionAInput = document.getElementById('prediction-option-a-input') as HTMLInputElement;
-const optionBLabel = document.getElementById('prediction-option-b-label');
 const optionBInput = document.getElementById('prediction-option-b-input') as HTMLInputElement;
 const predictionWindowInput = document.getElementById('prediction-window-input') as HTMLInputElement;
 
@@ -45,11 +42,11 @@ function checkButtonValidity() {
 /**
  * Add change listen to text field
  * @param input Input Element
- * @param label Label Element
  * @param name The name of the Label
  * @param fieldLimit Field limit for input
  */
-function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
+function addInputLengthLimit(input: HTMLInputElement, name: string, fieldLimit: number) {
+    const label = document.querySelector(`label[for="${input.id}"]`) as HTMLLabelElement;
     validateFieldLength(input, label, name, fieldLimit);
 
     input.addEventListener('input', (event) => {
@@ -121,6 +118,6 @@ nextRound.on('change', newValue => {
     setInputField(optionBInput, addDots(newValue.teamB.name, 25));
 });
 
-addInputLengthLimit(predictionNameInput, predictionNameLabel, 'Name of Prediction', 45);
-addInputLengthLimit(optionAInput, optionALabel, 'Option A', 25);
-addInputLengthLimit(optionBInput, optionBLabel, 'Option B', 25);
+addInputLengthLimit(predictionNameInput, 'Name of Prediction', 45);
+addInputLengthLimit(optionAInput, 'Option A', 25);
+addInputLengthLimit(optionBInput, 'Option B', 25);
