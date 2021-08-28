@@ -18,7 +18,7 @@ export class MockNodecg {
     init(): void {
         const self = this;
         window.nodecg = {
-            // @ts-ignore: Just a test, improve mocks as needed.
+            // @ts-ignore: Just a mock
             Replicant(name: string) {
                 const replicantValue: { value: unknown, on: OnFunction } = {
                     value: undefined,
@@ -29,7 +29,11 @@ export class MockNodecg {
                 self.replicants[name] = replicantValue;
                 return replicantValue;
             },
-            sendMessage: self.sendMessage
+            sendMessage: self.sendMessage,
+            // @ts-ignore: Just a mock
+            log: {
+                info: jest.fn()
+            }
         };
 
         // @ts-ignore: It's a mock.

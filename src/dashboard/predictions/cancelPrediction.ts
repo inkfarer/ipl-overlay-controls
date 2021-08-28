@@ -17,7 +17,7 @@ document.getElementById('cancel-prediction-btn').addEventListener('confirm', () 
     setImportStatus(ImportStatus.LOADING, predictionRequestStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
-        status: 'CANCELED',
+        status: PredictionStatus.CANCELED,
     }, (e) => {
         if (e) {
             console.error(e);

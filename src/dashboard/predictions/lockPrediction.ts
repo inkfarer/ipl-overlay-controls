@@ -17,7 +17,7 @@ document.getElementById('lock-prediction-btn').addEventListener('confirm', () =>
     setImportStatus(ImportStatus.LOADING, predictionRequestStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
-        status: 'LOCKED',
+        status: PredictionStatus.LOCKED,
     }, (e) => {
         if (e) {
             console.error(e);
