@@ -1,6 +1,6 @@
-import { RoundStore, TournamentData, NextRound, Round } from 'schemas';
+import { NextRound, Round, RoundStore, TournamentData } from 'schemas';
 import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 
 import '../helpers/buttonConfirm';
@@ -34,11 +34,7 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
             roundSelector.appendChild(createSelector(value.meta.name, key));
         }
 
-        const newNextRound = newValue[nextRound.value.round.id];
-        if (newNextRound) {
-            checkNextRoundProgress(newNextRound);
-        }
-
+        checkNextRoundProgress(newValue[nextRound.value.round.id]);
         roundSelector.value = nextRound.value.round.id;
     });
 
@@ -51,11 +47,7 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
         setValueIfNotEdited(nextTeamASelector, newValue.teamA.id);
         setValueIfNotEdited(nextTeamBSelector, newValue.teamB.id);
         setValueIfNotEdited(roundSelector, newValue.round.id);
-
-        const roundValue = rounds.value[newValue.round.id];
-        if (roundValue) {
-            checkNextRoundProgress(roundValue);
-        }
+        checkNextRoundProgress(rounds.value[newValue.round.id]);
     });
 
     tournamentData.on('change', newValue => {
@@ -87,7 +79,9 @@ addChangeReminder([roundSelector, nextTeamASelector, nextTeamBSelector], nextRou
 showTeamAImage.addEventListener('change', handleTeamImageToggleChange);
 showTeamBImage.addEventListener('change', handleTeamImageToggleChange);
 
-function checkNextRoundProgress(nextRound: Round) {
+export function checkNextRoundProgress(nextRound?: Round): void {
+    if (!nextRound) return;
+
     const roundHasProgress = (nextRound.teamA?.score || 0) + (nextRound.teamB?.score || 0) > 0;
 
     if (nextRound.meta.isCompleted) {
