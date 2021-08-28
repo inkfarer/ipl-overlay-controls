@@ -197,7 +197,6 @@ describe('matchData', () => {
                 it(`displays no match selector or message if source is ${source}`, () => {
                     const loadMatchesMsg = elementById('load-matches-hint');
                     loadMatchesMsg.style.display = 'none';
-                    console.log(loadMatchesMsg.style.display);
                     nodecg.replicants.tournamentData.value = { meta: { source: source } };
 
                     nodecg.listeners.highlightedMatches([]);
