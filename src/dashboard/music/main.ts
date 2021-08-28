@@ -20,9 +20,7 @@ manualSongToggle.addEventListener('change', e => {
 });
 
 lastFmNowPlaying.on('change', newValue => {
-    const lastfmNowPlayingElem = document.getElementById(
-        'lastfm-now-playing-text'
-    );
+    const lastfmNowPlayingElem = document.getElementById('lastfm-now-playing-text');
 
     if (newValue.artist !== undefined && newValue.song !== undefined) {
         lastfmNowPlayingElem.innerText = `${newValue.artist} - ${newValue.song}`;
@@ -41,14 +39,14 @@ addChangeReminder(
     document.getElementById('update-manual-song') as HTMLButtonElement
 );
 
-document.getElementById('update-manual-song').onclick = () => {
+document.getElementById('update-manual-song').addEventListener('click', () => {
     manualNowPlaying.value.song = (document.getElementById('manual-song-name-input') as HTMLInputElement).value;
     manualNowPlaying.value.artist = (document.getElementById('manual-song-artist-input') as HTMLInputElement).value;
-};
+});
 
-document.getElementById('show-music-btn').onclick = () => { musicShown.value = true; };
+document.getElementById('show-music-btn').addEventListener('click', () => { musicShown.value = true; });
 
-document.getElementById('hide-music-btn').onclick = () => { musicShown.value = false; };
+document.getElementById('hide-music-btn').addEventListener('click', () => { musicShown.value = false; });
 
 musicShown.on('change', newValue => {
     setToggleButtonDisabled(
@@ -59,6 +57,5 @@ musicShown.on('change', newValue => {
 });
 
 nowPlaying.on('change', newValue => {
-    (document.getElementById('now-playing-text') as HTMLDivElement).innerText
-        = `${newValue.artist} - ${newValue.song}`;
+    document.getElementById('now-playing-text').innerText = `${newValue.artist} - ${newValue.song}`;
 });
