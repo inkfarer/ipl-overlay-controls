@@ -1,23 +1,8 @@
-import { appendElementAfter, hideElement, hideMessage, showElement, showMessage } from '../globalScripts';
+import { hideElement, showElement } from '../globalScripts';
 import { setImportStatus } from '../importStatus';
 import { ImportStatus } from 'types/enums/importStatus';
 import { ActiveRound, PredictionStore } from 'schemas';
-import { WinningOption } from './types/winningOption';
-import { elementById } from '../helpers/elemHelper';
-
-// Stores data on current winning Option
-const winningOption: WinningOption = {
-    validOption: false,
-    optionIndex: -1,
-    optionTitle: ''
-};
-
-const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
-
-const autoResolveBtn = document.getElementById('auto-resolve-predictions-btn') as HTMLButtonElement;
-const resolveOptionABtn = document.getElementById('resolve-A-predictions-btn') as HTMLButtonElement;
-const resolveOptionBBtn = document.getElementById('resolve-B-predictions-btn') as HTMLButtonElement;
+import { autoResolveBtn, predictionStore, resolveOptionABtn, resolveOptionBBtn, winningOption } from './elements';
 
 const warningMessageElem = document.getElementById('message-warning');
 const warningElem = document.getElementById('warning-message-box');
@@ -28,10 +13,10 @@ const infoElem = document.getElementById('info-message-box');
 const predictionPatchStatusElem = document.getElementById('prediction-patch-status');
 
 /**
- * Set disabled pram of all buttons
+ * Set disabled param of all buttons
  * @param disabled
  */
-function setBtnDisable(disabled: boolean) {
+export function setBtnDisable(disabled: boolean): void {
     autoResolveBtn.disabled = disabled;
     resolveOptionABtn.disabled = disabled;
     resolveOptionBBtn.disabled = disabled;
@@ -41,7 +26,7 @@ function setBtnDisable(disabled: boolean) {
  * Sets the button UI
  * @param predictionValue value of predictionStore
  */
-function setUI(predictionValue: PredictionStore) {
+export function setUI(predictionValue: PredictionStore): void {
     setBtnDisable(false);
     hideElement(warningElem);
     hideElement(infoElem);
@@ -62,7 +47,7 @@ function setUI(predictionValue: PredictionStore) {
     // lock buttons if status is not LOCKED
     if (!predictionValue.currentPrediction || predictionValue.currentPrediction.status !== 'LOCKED') {
         showElement(infoElem);
-        infoMessageElem.innerText = 'This predication cannot be resolved right now';
+        infoMessageElem.innerText = 'This prediction cannot be resolved right now';
         setBtnDisable(true);
     }
 }
@@ -70,7 +55,7 @@ function setUI(predictionValue: PredictionStore) {
 /**
  * Attempt to work out which team is winning and if there's a prediction option to resolve in ether's favour
  */
-function autoResolveWinner(activeRound: ActiveRound, predictionValue: PredictionStore) {
+export function autoResolveWinner(activeRound: ActiveRound, predictionValue: PredictionStore): void {
     winningOption.validOption = false;
     if (!predictionValue.currentPrediction) {
         return setUI(predictionValue);
@@ -102,7 +87,7 @@ function autoResolveWinner(activeRound: ActiveRound, predictionValue: Prediction
  * Run prediction resolve
  * @param index index of winning outcome
  */
-function resolvePrediction(index: number) {
+export function resolvePrediction(index: number): void {
     if (!predictionStore.value.currentPrediction?.id || index > 1 || index < 0) {
         // if no id (aka no prediction) don't event attempt to patch prediction
         setImportStatus(ImportStatus.FAILURE, predictionPatchStatusElem);
@@ -127,29 +112,3 @@ function resolvePrediction(index: number) {
         setImportStatus(ImportStatus.SUCCESS, predictionPatchStatusElem);
     });
 }
-
-NodeCG.waitForReplicants(predictionStore, activeRound).then(() => {
-    predictionStore.on('change', newValue => {
-        autoResolveWinner(activeRound.value, newValue);
-        setUI(newValue);
-    });
-
-    activeRound.on('change', newValue => {
-        autoResolveWinner(newValue, predictionStore.value);
-        setUI(predictionStore.value);
-        if (!newValue.round.isCompleted) {
-            showMessage(
-                'round-completed-warning',
-                'warning',
-                'The active round has not yet completed!',
-                (elem) => appendElementAfter(elem, elementById('resolve-space-title')));
-        } else {
-            hideMessage('round-completed-warning');
-        }
-    });
-});
-
-// Assign onclick functions to buttons
-autoResolveBtn.onclick = () => resolvePrediction(winningOption.optionIndex);
-resolveOptionABtn.onclick = () => resolvePrediction(0);
-resolveOptionBBtn.onclick = () => resolvePrediction(1);
