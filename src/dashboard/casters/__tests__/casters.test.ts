@@ -1,12 +1,17 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { appendChildren, dispatch, elementById } from '../../helpers/elemHelper';
 import { Module } from '../../../helpers/__mocks__/module';
-import * as generateId from '../../../helpers/generateId';
 import { Casters } from 'schemas';
 
 describe('casters', () => {
+    const mockGenerateId = jest.fn();
     let nodecg: MockNodecg;
     let casters: Module;
+
+    jest.mock('../../../helpers/generateId', () => ({
+        __esModule: true,
+        generateId: mockGenerateId
+    }));
 
     beforeEach(() => {
         jest.resetModules();
@@ -183,13 +188,13 @@ describe('casters', () => {
 
     describe('add-caster-btn: click', () => {
         it('creates a caster', () => {
-            jest.spyOn(generateId, 'generateId').mockReturnValue('idid123');
+            mockGenerateId.mockReturnValue('idid123');
             const casterElem = elementById('casters');
             casterElem.innerHTML = '';
 
             dispatch(elementById('add-caster-btn'), 'click');
 
-            expect(elementById('caster-container_idid123')).not.toBeUndefined();
+            expect(elementById('caster-container_idid123')).not.toBeNull();
         });
 
         it('disables the button if the caster limit has been reached', () => {
