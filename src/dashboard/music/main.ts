@@ -1,4 +1,4 @@
-import { addChangeReminder, setToggleButtonDisabled } from '../globalScripts';
+import { addChangeReminder, setToggleButtonDisabled } from '../helpers/buttonHelper';
 import { LastFmNowPlaying, ManualNowPlaying, MusicShown, NowPlaying, NowPlayingSource } from 'schemas';
 
 import '../styles/globalStyles.css';

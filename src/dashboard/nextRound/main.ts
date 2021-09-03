@@ -1,5 +1,6 @@
 import { NextRound, Round, RoundStore, TournamentData } from 'schemas';
-import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { addSelector, clearSelectors, createSelector } from '../helpers/selectHelper';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 
@@ -9,6 +10,7 @@ import './nextRound.css';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
 import { setValueIfNotEdited } from '../helpers/inputHelper';
+import { addDots } from '../helpers/stringHelper';
 
 library.add(faInfoCircle);
 dom.watch();

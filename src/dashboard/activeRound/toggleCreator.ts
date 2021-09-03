@@ -1,5 +1,6 @@
 import { ActiveRoundGame } from 'types/activeRoundGame';
-import { addChangeReminder, fillList } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { fillList } from '../helpers/selectHelper';
 import { getColorOptionName, splatModes, splatStages } from '../../helpers/splatoonData';
 import { fillColorSelector } from '../helpers/colorHelper';
 import {

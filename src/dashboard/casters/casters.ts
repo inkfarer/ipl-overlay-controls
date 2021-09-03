@@ -1,6 +1,6 @@
 import { Caster } from 'schemas';
 import { generateId } from '../../helpers/generateId';
-import { addChangeReminder } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
 import { casters } from './replicants';
 
 const btnCreateCaster = document.getElementById('add-caster-btn') as HTMLButtonElement;

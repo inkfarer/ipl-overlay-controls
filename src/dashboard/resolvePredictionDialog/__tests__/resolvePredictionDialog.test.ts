@@ -6,7 +6,7 @@ import difference from 'lodash/difference';
 import { WinningOption } from '../types/winningOption';
 
 describe('resolvePredictionDialog', () => {
-    const mockGlobalScripts = {
+    const mockElemHelper = {
         hideElement: jest.fn(),
         showElement: jest.fn()
     };
@@ -14,7 +14,7 @@ describe('resolvePredictionDialog', () => {
     let elements: UnknownModule;
     let nodecg: MockNodecg;
 
-    jest.mock('../../globalScripts', () => mockGlobalScripts);
+    jest.mock('../../helpers/elemHelper', () => mockElemHelper);
 
     beforeEach(() => {
         jest.resetModules();
@@ -32,7 +32,6 @@ describe('resolvePredictionDialog', () => {
             <div id="message-info"></div>
             <div id="info-message-box"></div>
             <div id="prediction-patch-status"></div>
-            <div id="v"></div>
         `;
 
         module = require('../resolvePredictionDialog');
@@ -80,8 +79,8 @@ describe('resolvePredictionDialog', () => {
             const resolveBBtn = elementById<HTMLButtonElement>('resolve-B-predictions-btn');
             expect(resolveBBtn.disabled).toEqual(false);
             expect(resolveBBtn.innerText).toEqual('Option 2');
-            expect(mockGlobalScripts.hideElement).toHaveBeenCalledWith(elementById('warning-message-box'));
-            expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
+            expect(mockElemHelper.hideElement).toHaveBeenCalledWith(elementById('warning-message-box'));
+            expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
             expect(elementById('message-info').innerText).toEqual('Unable to determine winning team automatically');
         });
 
@@ -107,9 +106,9 @@ describe('resolvePredictionDialog', () => {
             const resolveBBtn = elementById<HTMLButtonElement>('resolve-B-predictions-btn');
             expect(resolveBBtn.disabled).toEqual(false);
             expect(resolveBBtn.innerText).toEqual('Option Two');
-            expect(mockGlobalScripts.hideElement).toHaveBeenCalledWith(elementById('warning-message-box'));
-            expect(mockGlobalScripts.showElement).not.toHaveBeenCalledWith(elementById('info-message-box'));
-            expect(mockGlobalScripts.hideElement).toHaveBeenCalledWith(elementById('info-message-box'));
+            expect(mockElemHelper.hideElement).toHaveBeenCalledWith(elementById('warning-message-box'));
+            expect(mockElemHelper.showElement).not.toHaveBeenCalledWith(elementById('info-message-box'));
+            expect(mockElemHelper.hideElement).toHaveBeenCalledWith(elementById('info-message-box'));
         });
 
         it('handles missing prediction data', () => {
@@ -119,7 +118,7 @@ describe('resolvePredictionDialog', () => {
                 currentPrediction: undefined
             });
 
-            expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
+            expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
             expect(elementById('message-info').innerText).toEqual('This prediction cannot be resolved right now');
             expect(elementById<HTMLButtonElement>('auto-resolve-predictions-btn').disabled).toEqual(true);
             const resolveABtn = elementById<HTMLButtonElement>('resolve-A-predictions-btn');
@@ -144,7 +143,7 @@ describe('resolvePredictionDialog', () => {
                     }
                 });
 
-                expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
+                expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('info-message-box'));
                 expect(elementById('message-info').innerText).toEqual('This prediction cannot be resolved right now');
                 expect(elementById<HTMLButtonElement>('auto-resolve-predictions-btn').disabled).toEqual(true);
                 expect(elementById<HTMLButtonElement>('resolve-A-predictions-btn').disabled).toEqual(true);
@@ -222,7 +221,7 @@ describe('resolvePredictionDialog', () => {
             module.resolvePrediction(0);
 
             expect(elementById('message-warning').innerText).toEqual('No outcomes/prediction to resolve >.<');
-            expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
+            expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
         });
 
         it('displays warning if no prediction id exists', () => {
@@ -231,7 +230,7 @@ describe('resolvePredictionDialog', () => {
             module.resolvePrediction(0);
 
             expect(elementById('message-warning').innerText).toEqual('No outcomes/prediction to resolve >.<');
-            expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
+            expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
         });
 
         it('displays warning if index is invalid', () => {
@@ -240,7 +239,7 @@ describe('resolvePredictionDialog', () => {
             module.resolvePrediction(100);
 
             expect(elementById('message-warning').innerText).toEqual('No outcomes/prediction to resolve >.<');
-            expect(mockGlobalScripts.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
+            expect(mockElemHelper.showElement).toHaveBeenCalledWith(elementById('warning-message-box'));
         });
 
         it('sends a message', () => {

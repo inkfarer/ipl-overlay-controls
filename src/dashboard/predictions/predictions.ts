@@ -1,5 +1,5 @@
-import { hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { Outcome } from 'types/prediction';

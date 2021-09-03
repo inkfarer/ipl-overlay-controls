@@ -1,4 +1,4 @@
-import { setImportStatus } from '../importStatus';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { sendLocalFile } from './postData';
 import { ImportStatus } from 'types/enums/importStatus';
 

@@ -1,6 +1,8 @@
 import { activeRound, roundStore, tournamentData } from './replicants';
 import { ActiveRound } from 'schemas';
-import { addChangeReminder, addDots, addSelector, clearSelectors, createSelector } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { addSelector, clearSelectors, createSelector } from '../helpers/selectHelper';
+import { addDots } from '../helpers/stringHelper';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
 import { checkRoundProgress } from './roundProgressHelper';

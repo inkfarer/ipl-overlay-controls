@@ -1,5 +1,7 @@
-import { addChangeReminder, addDots, addSelector, clearSelectors, hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { addSelector, clearSelectors } from '../helpers/selectHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { Match } from 'types/match';
@@ -7,6 +9,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { MultiSelect } from '../components/multiSelect';
+import { addDots } from '../helpers/stringHelper';
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');

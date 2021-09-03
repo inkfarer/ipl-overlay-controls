@@ -1,6 +1,13 @@
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import { hideMessage, showMessage } from '../helpers/messageHelper';
+import { appendElementAfter } from '../helpers/elemHelper';
+import { elementById } from '../helpers/elemHelper';
+import { autoResolveWinner, resolvePrediction, setUI } from './resolvePredictionDialog';
+import {
+    activeRound, autoResolveBtn, predictionStore, resolveOptionABtn, resolveOptionBBtn, winningOption
+} from './elements';
 
 library.add(faExclamationTriangle, faInfoCircle);
 dom.watch();
@@ -8,13 +15,6 @@ dom.watch();
 import '../styles/globalStyles.css';
 import '../styles/statusDisplay.css';
 import './resolvePredictionDialog.css';
-
-import { appendElementAfter, hideMessage, showMessage } from '../globalScripts';
-import { elementById } from '../helpers/elemHelper';
-import { autoResolveWinner, resolvePrediction, setUI } from './resolvePredictionDialog';
-import {
-    activeRound, autoResolveBtn, predictionStore, resolveOptionABtn, resolveOptionBBtn, winningOption
-} from './elements';
 
 NodeCG.waitForReplicants(predictionStore, activeRound).then(() => {
     predictionStore.on('change', newValue => {

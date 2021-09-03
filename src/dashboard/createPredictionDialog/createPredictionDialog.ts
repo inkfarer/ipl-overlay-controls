@@ -1,5 +1,6 @@
-import { addDots, hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { addDots } from '../helpers/stringHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { FieldValidity } from './types/fieldValidity';
 import { NextRound } from 'schemas';

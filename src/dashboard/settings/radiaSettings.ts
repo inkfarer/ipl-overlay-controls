@@ -1,5 +1,5 @@
 import { RadiaSettings } from 'schemas';
-import { addChangeReminder } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
 
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 

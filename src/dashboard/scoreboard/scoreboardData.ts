@@ -1,4 +1,4 @@
-import { addChangeReminder, setToggleButtonDisabled } from '../globalScripts';
+import { addChangeReminder, setToggleButtonDisabled } from '../helpers/buttonHelper';
 import { scoreboardData } from './replicants';
 
 const showScoreboardButton = document.getElementById('show-scoreboard-btn') as HTMLButtonElement;

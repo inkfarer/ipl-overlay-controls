@@ -1,4 +1,5 @@
-import { addChangeReminder, fillList } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { fillList } from '../helpers/selectHelper';
 import { generateId } from '../../helpers/generateId';
 import { Round, RoundStore } from 'schemas';
 import { splatModes, splatStages } from '../../helpers/splatoonData';

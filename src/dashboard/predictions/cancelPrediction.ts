@@ -1,4 +1,4 @@
-import { setImportStatus } from '../importStatus';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { predictionStore } from './replicants';
 import { PredictionStatus } from 'types/enums/predictionStatus';

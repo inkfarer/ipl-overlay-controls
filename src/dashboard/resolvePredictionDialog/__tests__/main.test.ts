@@ -9,7 +9,7 @@ describe('main', () => {
         resolvePrediction: jest.fn(),
         setUI: jest.fn()
     };
-    const mockGlobalScripts = {
+    const mockMessageHelper = {
         hideMessage: jest.fn(),
         showMessage: jest.fn()
     };
@@ -17,7 +17,7 @@ describe('main', () => {
     let elements: UnknownModule;
 
     jest.mock('../resolvePredictionDialog', () => mockResolvePredictionDialog);
-    jest.mock('../../globalScripts', () => mockGlobalScripts);
+    jest.mock('../../helpers/messageHelper', () => mockMessageHelper);
 
     beforeEach(() => {
         jest.resetModules();
@@ -70,7 +70,7 @@ describe('main', () => {
 
             nodecg.listeners.activeRound(newValue);
 
-            expect(mockGlobalScripts.showMessage).toHaveBeenCalledWith(
+            expect(mockMessageHelper.showMessage).toHaveBeenCalledWith(
                 'round-completed-warning', 'warning', 'The active round has not yet completed!', expect.any(Function));
         });
 
@@ -82,7 +82,7 @@ describe('main', () => {
 
             nodecg.listeners.activeRound(newValue);
 
-            expect(mockGlobalScripts.hideMessage).toHaveBeenCalledWith('round-completed-warning');
+            expect(mockMessageHelper.hideMessage).toHaveBeenCalledWith('round-completed-warning');
         });
     });
 

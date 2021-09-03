@@ -1,5 +1,5 @@
 import { MainFlavorText, NextRoundStartTime } from 'schemas';
-import { addChangeReminder } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
 import { DateTime } from 'luxon';
 import clamp from 'lodash/clamp';
 
