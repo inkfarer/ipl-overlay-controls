@@ -22,9 +22,9 @@ activeRound.on('change', newValue => {
     updateCustomColorToggle(customColorEnabled);
 });
 
-customColorToggle.onchange = e => {
+customColorToggle.addEventListener('change', e => {
     updateCustomColorToggle((e.target as HTMLInputElement).checked);
-};
+});
 
 function updateCustomColorToggle(checked: boolean) {
     const colorSelectContainer = document.getElementById('color-select-container');

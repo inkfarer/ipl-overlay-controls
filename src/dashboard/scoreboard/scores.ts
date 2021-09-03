@@ -21,15 +21,15 @@ activeRound.on('change', newValue => {
     teamBScoreSubButton.disabled = lastWinner === GameWinner.ALPHA || lastWinner == null;
 });
 
-teamAScoreAddButton.onclick = () => {
+teamAScoreAddButton.addEventListener('click', () => {
     nodecg.sendMessage('setWinner', { winner: GameWinner.ALPHA } as SetWinnerRequest);
-};
-teamAScoreSubButton.onclick = () => {
+});
+teamAScoreSubButton.addEventListener('click', () => {
     nodecg.sendMessage('removeWinner');
-};
-teamBScoreAddButton.onclick = () => {
+});
+teamBScoreAddButton.addEventListener('click', () => {
     nodecg.sendMessage('setWinner', { winner: GameWinner.BRAVO } as SetWinnerRequest);
-};
-teamBScoreSubButton.onclick = () => {
+});
+teamBScoreSubButton.addEventListener('click', () => {
     nodecg.sendMessage('removeWinner');
-};
+});

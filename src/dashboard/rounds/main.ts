@@ -12,17 +12,17 @@ import './rounds.css';
 
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
-document.getElementById('create-3-game-round').onclick = () => {
+document.getElementById('create-3-game-round').addEventListener('click', () => {
     createRoundElem(3, generateId(), true);
-};
+});
 
-document.getElementById('create-5-game-round').onclick = () => {
+document.getElementById('create-5-game-round').addEventListener('click', () => {
     createRoundElem(5, generateId(), true);
-};
+});
 
-document.getElementById('create-7-game-round').onclick = () => {
+document.getElementById('create-7-game-round').addEventListener('click', () => {
     createRoundElem(7, generateId(), true);
-};
+});
 
 document.getElementById('reset-rounds').addEventListener('confirm', () => nodecg.sendMessage('resetRoundStore'));
 
@@ -86,7 +86,7 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
         updateButton.style.backgroundColor = 'var(--red)';
     }
 
-    updateButton.onclick = event => {
+    updateButton.addEventListener('click', event => {
         const buttonId = (event.target as HTMLButtonElement).id.split('_')[1];
         const numberOfGames = document
             .getElementById(`round_${buttonId}`)
@@ -110,7 +110,7 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
 
         nodecg.sendMessage('updateRoundStore',
             { id: buttonId, roundName: nameInput.value, games: games } as UpdateRoundStoreRequest);
-    };
+    });
 
     updateButton.classList.add('max-width');
 
@@ -119,11 +119,11 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
     // Remove button
     const removeButton = document.createElement('button');
     removeButton.style.backgroundColor = 'var(--red)';
-    removeButton.id = 'removeButton_' + id;
+    removeButton.id = `remove-round_${id}`;
     removeButton.innerText = 'REMOVE';
     removeButton.classList.add('max-width', 'remove-round-button');
     removeButton.dataset.uncommitted = remindToUpdate ? 'true' : 'false';
-    removeButton.onclick = event => {
+    removeButton.addEventListener('click', event => {
         const target = event.target as HTMLButtonElement;
 
         const buttonId = target.id.split('_')[1];
@@ -132,7 +132,7 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
         } else {
             nodecg.sendMessage('removeRound', { roundId: buttonId } as RemoveRoundRequest);
         }
-    };
+    });
 
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('layout');
@@ -143,8 +143,7 @@ function createRoundElem(numberOfGames: number, id: string, remindToUpdate: bool
 
     roundElem.appendChild(buttonContainer);
 
-    document.getElementById('round-grid')
-        .prepend(roundElem);
+    document.getElementById('round-grid').prepend(roundElem);
 }
 
 function updateRoundElem(id: string, data: Round) {
@@ -190,9 +189,6 @@ function setRemoveButtonDisabled(disabled: boolean) {
 }
 
 rounds.on('change', (newValue, oldValue) => {
-    const disableRemoving = Object.keys(newValue).length <= 1;
-    setRemoveButtonDisabled(disableRemoving);
-
     for (const id in newValue) {
         if (!Object.prototype.hasOwnProperty.call(newValue, id)) continue;
 
@@ -217,4 +213,7 @@ rounds.on('change', (newValue, oldValue) => {
             }
         }
     }
+
+    const disableRemoving = Object.keys(newValue).length <= 1;
+    setRemoveButtonDisabled(disableRemoving);
 });

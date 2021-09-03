@@ -18,9 +18,9 @@ addChangeReminder(
     document.getElementById('update-scoreboard-btn') as HTMLButtonElement
 );
 
-showScoreboardButton.onclick = () => { scoreboardData.value.isVisible = true; };
-hideScoreboardButton.onclick = () => { scoreboardData.value.isVisible = false; };
+showScoreboardButton.addEventListener('click', () => { scoreboardData.value.isVisible = true; });
+hideScoreboardButton.addEventListener('click', () => { scoreboardData.value.isVisible = false; });
 
-document.getElementById('show-casters-btn').onclick = () => {
+document.getElementById('show-casters-btn').addEventListener('click', () => {
     nodecg.sendMessage('mainShowCasters');
-};
+});

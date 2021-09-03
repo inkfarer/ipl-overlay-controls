@@ -14,19 +14,19 @@ activeRound.on('change', newValue => {
         enableToggles();
     }
 
-    const selectedGroup: ColorGroup = colors.filter(group => {
+    const selectedGroup: ColorGroup = colors.find(group => {
         return group.meta.name === newValue.activeColor.categoryName;
-    })[0];
+    });
 
     const selectedIndex = newValue.activeColor.index;
     const length = selectedGroup.colors.length;
 
-    let nextColor = selectedGroup.colors.filter(color => {
+    let nextColor = selectedGroup.colors.find(color => {
         return color.index === (selectedIndex + 1 === length ? 0 : selectedIndex + 1);
-    })[0];
-    let previousColor = selectedGroup.colors.filter(color => {
+    });
+    let previousColor = selectedGroup.colors.find(color => {
         return color.index === (selectedIndex === 0 ? length - 1 : selectedIndex - 1);
-    })[0];
+    });
 
     if (swapColorsInternally.value === true) {
         nextColor = swapColors(nextColor);
