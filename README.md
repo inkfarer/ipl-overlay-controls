@@ -1,5 +1,7 @@
 # ipl-overlay-controls
 
+[![CI](https://github.com/inkfarer/ipl-overlay-controls/actions/workflows/ci.yml/badge.svg)](https://github.com/inkfarer/ipl-overlay-controls/actions/workflows/ci.yml)
+
 A [NodeCG](https://github.com/nodecg/nodecg) bundle. Provides dashboard panels for Inkling Performance Labs tournaments.
 
 Visit the [wiki](https://github.com/inkfarer/ipl-overlay-controls/wiki) if you are interested in using
