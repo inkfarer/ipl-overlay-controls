@@ -10,6 +10,7 @@ const colorSelector = <HTMLSelectElement> document.getElementById('color-selecto
 fillColorSelector(colorSelector);
 
 activeRound.on('change', newValue => {
+    console.log(newValue);
     colorSelector.value = getColorOptionName(newValue.activeColor.index, newValue.activeColor.categoryName);
 
     document.getElementById('team-a-color-display').style.backgroundColor = newValue.teamA.color;
@@ -17,7 +18,7 @@ activeRound.on('change', newValue => {
     (document.getElementById('team-a-custom-color') as HTMLInputElement).value = newValue.teamA.color;
     (document.getElementById('team-b-custom-color') as HTMLInputElement).value = newValue.teamB.color;
 
-    const customColorEnabled = newValue.activeColor.index === 999;
+    const customColorEnabled = newValue.activeColor.isCustom;
     customColorToggle.checked = customColorEnabled;
     updateCustomColorToggle(customColorEnabled);
 });
@@ -51,10 +52,11 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
 
     if (isCustomColor) {
         clrInfo = {
-            index: 999,
+            index: 0,
             title: 'Custom Color',
             clrA: (document.getElementById('team-a-custom-color') as HTMLInputElement).value,
             clrB: (document.getElementById('team-b-custom-color') as HTMLInputElement).value,
+            isCustom: true
         };
     } else {
         clrInfo = {
@@ -62,6 +64,7 @@ document.getElementById('update-scoreboard-btn').addEventListener('click', () =>
             title: colorOption.text,
             clrA: swapColorsInternally.value ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
             clrB: swapColorsInternally.value ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
+            isCustom: false
         };
     }
 

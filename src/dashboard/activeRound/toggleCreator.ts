@@ -45,7 +45,7 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
     fillColorSelector(colorSelector);
     colorSelector.dataset.source = colorSource;
     colorSelector.value = getColorOptionName(colorData.index, colorData.categoryName);
-    colorSelector.style.display = colorData.index === 999 ? 'none' : '';
+    colorSelector.style.display = colorData.isCustom ? 'none' : '';
     colorSelector.addEventListener('change', handleColorSelectorChange);
 
     const colorSwapToggle = document.createElement('input');
@@ -64,7 +64,7 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
     const customColorToggle = document.createElement('input');
     setToggleElementIdAndClass(customColorToggle, 'custom-color-toggle', stageIndex);
     customColorToggle.type = 'checkbox';
-    customColorToggle.checked = colorData.index === 999;
+    customColorToggle.checked = colorData.isCustom;
     customColorToggle.addEventListener('change', event => {
         const index = parseInt((event.target as HTMLInputElement).id.split('_')[1], 10);
         toggleCustomColorSelectorVisibility(index, (event.target as HTMLInputElement).checked);
@@ -83,7 +83,7 @@ export function addToggle(roundElement: ActiveRoundGame, stageIndex: number): vo
     setToggleElementIdAndClass(customColorSelectorWrapper, 'custom-color-select-wrapper', stageIndex);
     customColorSelectorWrapper.classList.add('layout', 'horizontal');
     appendChildren(customColorSelectorWrapper, customColorSelectorA, customColorSelectorB);
-    customColorSelectorWrapper.style.display = colorData.index === 999 ? '' : 'none';
+    customColorSelectorWrapper.style.display = colorData.isCustom ? '' : 'none';
 
     const colorDataToggleContainer = document.createElement('div');
     colorDataToggleContainer.classList.add('layout', 'horizontal', 'center-horizontal', 'color-swap-toggle-container');

@@ -57,10 +57,9 @@ function updateColor(index: number, color?: GameColor): void {
         colorSwapToggle.checked = color ? color.colorsSwapped : swapColorsInternally.value;
         teamAColorInput.value = colorData.clrA;
         teamBColorInput.value = colorData.clrB;
-        const isCustomColor = colorData.index === 999;
-        customColorToggle.checked = isCustomColor;
+        customColorToggle.checked = colorData.isCustom;
 
-        toggleCustomColorSelectorVisibility(index, isCustomColor);
+        toggleCustomColorSelectorVisibility(index, colorData.isCustom);
         updateWinToggleColors(index, colorData.clrA, colorData.clrB);
     }
 }

@@ -59,7 +59,7 @@ describe('toggleUpdater', () => {
                         <option selected value="cool-colors_0" />
                         <option value="cool-colors_1 /">
                         <option value="cool-colors_2" />
-                        <option value="custom-color_999" />
+                        <option value="custom-color_0" />
                     </select>
                     <input class="color-swap-toggle">
                     <input class="custom-color-toggle">
@@ -170,7 +170,8 @@ describe('toggleUpdater', () => {
                     categoryName: 'Cool Colors',
                     clrA: '#123',
                     clrB: '#345',
-                    colorsSwapped: true
+                    colorsSwapped: true,
+                    isCustom: false
                 }
             }], '');
 
@@ -214,7 +215,8 @@ describe('toggleUpdater', () => {
                     categoryName: 'Cool Colors',
                     clrA: '#123',
                     clrB: '#345',
-                    colorsSwapped: true
+                    colorsSwapped: true,
+                    isCustom: false
                 }
             }], '');
 
@@ -229,10 +231,11 @@ describe('toggleUpdater', () => {
 
         it('gets color from active round if it is not saved in the given round', () => {
             mockToggleHelper.getActiveRoundColors.mockReturnValue({
-                index: 999,
+                index: 0,
                 categoryName: 'Custom Color',
                 clrA: '#678',
-                clrB: '#876'
+                clrB: '#876',
+                isCustom: true
             });
             nodecg.replicants.swapColorsInternally.value = false;
 
@@ -245,7 +248,7 @@ describe('toggleUpdater', () => {
 
             expect((document.querySelector('.color-swap-toggle') as HTMLInputElement).checked).toEqual(false);
             expect((document.querySelector('.custom-color-toggle') as HTMLInputElement).checked).toEqual(true);
-            expect((document.querySelector('.color-selector') as HTMLSelectElement).value).toEqual('custom-color_999');
+            expect((document.querySelector('.color-selector') as HTMLSelectElement).value).toEqual('custom-color_0');
             expect(elementById<HTMLInputElement>('custom-color-selector_a_0').value).toEqual('#678');
             expect(elementById<HTMLInputElement>('custom-color-selector_b_0').value).toEqual('#876');
             expect(mockToggleHelper.toggleCustomColorSelectorVisibility).toHaveBeenCalledWith(0, true);

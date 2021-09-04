@@ -28,6 +28,7 @@ export interface ActiveRound {
 		index: number;
 		title: string;
 		categoryName: string;
+		isCustom: boolean;
 	};
 	round: {
 		id: string;
@@ -44,6 +45,7 @@ export interface ActiveRound {
 			clrA: string;
 			clrB: string;
 			categoryName: string;
+			isCustom: boolean;
 			[k: string]: any;
 		} & {
 			colorsSwapped: boolean;

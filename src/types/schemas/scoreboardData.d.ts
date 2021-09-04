@@ -7,13 +7,5 @@
 
 export interface ScoreboardData {
 	flavorText: string;
-	colorInfo: {
-		index: number;
-		title: string;
-		clrA: string;
-		clrB: string;
-		categoryName: string;
-		[k: string]: any;
-	};
 	isVisible: boolean;
 }

@@ -17,8 +17,7 @@ export function fillColorSelector(select: HTMLSelectElement): void {
             option.dataset.firstColor = color.clrA;
             option.dataset.secondColor = color.clrB;
             option.dataset.categoryName = element.meta.name;
-            // Make custom color unselectable by user
-            option.disabled = color.index === 999;
+            option.disabled = color.isCustom;
 
             optGroup.appendChild(option);
         }

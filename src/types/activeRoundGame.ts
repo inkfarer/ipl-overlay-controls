@@ -11,5 +11,6 @@ export interface ActiveRoundGame {
         clrB: string;
         categoryName: string;
         colorsSwapped: boolean;
+        isCustom: boolean;
     };
 }

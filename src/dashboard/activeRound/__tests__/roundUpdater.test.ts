@@ -45,7 +45,8 @@ describe('roundUpdater', () => {
                             clrB: '#234234',
                             colorsSwapped: false,
                             index: 0,
-                            title: 'COLOR0'
+                            title: 'COLOR0',
+                            isCustom: false
                         },
                         stage: 'Blackbelly Skatepark',
                         mode: 'Rainmaker',
@@ -58,7 +59,8 @@ describe('roundUpdater', () => {
                             clrB: '#AAA234',
                             colorsSwapped: true,
                             index: 1,
-                            title: 'COLOR1'
+                            title: 'COLOR1',
+                            isCustom: false
                         },
                         stage: 'MakoMart',
                         mode: 'Tower Control',
@@ -70,8 +72,9 @@ describe('roundUpdater', () => {
                             clrA: '#775674',
                             clrB: '#123545',
                             colorsSwapped: false,
-                            index: 999,
-                            title: 'Custom Color'
+                            index: 0,
+                            title: 'Custom Color',
+                            isCustom: true
                         },
                         stage: 'Moray Towers',
                         mode: 'Clam Blitz',

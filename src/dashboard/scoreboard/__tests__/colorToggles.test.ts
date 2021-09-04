@@ -26,9 +26,9 @@ describe('colorToggles', () => {
     });
 
     describe('activeRound: change', () => {
-        it('disables color toggles if category is custom color', () => {
+        it('disables color toggles if color is custom', () => {
             nodecg.listeners.activeRound({
-                activeColor: { categoryName: 'Custom Color' }
+                activeColor: { categoryName: 'Custom Color', isCustom: true }
             });
 
             expect(elementById('color-toggle-next').dataset.disabled).toEqual('');
@@ -41,7 +41,7 @@ describe('colorToggles', () => {
             colorToggleNext.dataset.disabled = 'true';
             colorTogglePrev.dataset.disabled = 'true';
 
-            nodecg.listeners.activeRound({ activeColor: { categoryName: 'Ranked Modes', index: 1 } });
+            nodecg.listeners.activeRound({ activeColor: { categoryName: 'Ranked Modes', index: 1, isCustom: false } });
 
             expect(colorToggleNext.dataset.colorInfo).toMatchSnapshot();
             expect(colorToggleNext.innerHTML).toMatchSnapshot();
@@ -60,7 +60,7 @@ describe('colorToggles', () => {
             colorTogglePrev.dataset.disabled = 'true';
             nodecg.replicants.swapColorsInternally.value = true;
 
-            nodecg.listeners.activeRound({ activeColor: { categoryName: 'Ranked Modes', index: 1 } });
+            nodecg.listeners.activeRound({ activeColor: { categoryName: 'Ranked Modes', index: 1, isCustom: false } });
 
             expect(colorToggleNext.dataset.colorInfo).toMatchSnapshot();
             expect(colorToggleNext.innerHTML).toMatchSnapshot();
@@ -75,7 +75,7 @@ describe('colorToggles', () => {
 
     describe('color-toggle-next: click', () => {
         it('sends message to set active color', () => {
-            const activeRoundValue = { activeColor: { categoryName: 'Ranked Modes', index: 2 } };
+            const activeRoundValue = { activeColor: { categoryName: 'Ranked Modes', index: 2, isCustom: false } };
             nodecg.replicants.activeRound.value = activeRoundValue;
             nodecg.listeners.activeRound(activeRoundValue);
 
@@ -86,7 +86,8 @@ describe('colorToggles', () => {
                     clrA: '#FF9E03',
                     clrB: '#B909E0',
                     index: 3,
-                    title: 'Mustard vs Purple'
+                    title: 'Mustard vs Purple',
+                    isCustom: false
                 },
                 categoryName: 'Ranked Modes'
             });
@@ -94,8 +95,14 @@ describe('colorToggles', () => {
 
         it('does not send message if toggle color index is same as active color index', () => {
             const toggle = elementById('color-toggle-next');
-            toggle.dataset.colorInfo = JSON.stringify({ index: 2 });
-            nodecg.replicants.activeRound.value = { activeColor: { categoryName: 'Ranked Modes', index: 2 } };
+            toggle.dataset.colorInfo = JSON.stringify({ index: 2, isCustom: false });
+            nodecg.replicants.activeRound.value = {
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    index: 2,
+                    isCustom: false
+                }
+            };
 
             dispatch(toggle, 'click');
 
@@ -105,7 +112,7 @@ describe('colorToggles', () => {
 
     describe('color-toggle-prev: click', () => {
         it('sends message to set active color', () => {
-            const activeRoundValue = { activeColor: { categoryName: 'Ranked Modes', index: 2 } };
+            const activeRoundValue = { activeColor: { categoryName: 'Ranked Modes', index: 2, isCustom: false } };
             nodecg.replicants.activeRound.value = activeRoundValue;
             nodecg.listeners.activeRound(activeRoundValue);
 
@@ -116,7 +123,8 @@ describe('colorToggles', () => {
                     clrA: '#04D976',
                     clrB: '#D600AB',
                     index: 1,
-                    title: 'Green vs Magenta'
+                    title: 'Green vs Magenta',
+                    isCustom: false
                 },
                 categoryName: 'Ranked Modes'
             });
@@ -124,8 +132,12 @@ describe('colorToggles', () => {
 
         it('does not send message if toggle color index is same as active color index', () => {
             const toggle = elementById('color-toggle-prev');
-            toggle.dataset.colorInfo = JSON.stringify({ index: 2 });
-            nodecg.replicants.activeRound.value = { activeColor: { categoryName: 'Ranked Modes', index: 2 } };
+            toggle.dataset.colorInfo = JSON.stringify({ index: 2, isCustom: false });
+            nodecg.replicants.activeRound.value = {
+                activeColor: {
+                    categoryName: 'Ranked Modes', index: 2, isCustom: false
+                }
+            };
 
             dispatch(toggle, 'click');
 

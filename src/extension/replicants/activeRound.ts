@@ -98,7 +98,8 @@ nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
     activeRound.value.activeColor = {
         categoryName: data.categoryName,
         index: data.color.index,
-        title: data.color.title
+        title: data.color.title,
+        isCustom: data.color.isCustom
     };
     activeRound.value.teamA.color = data.color.clrA;
     activeRound.value.teamB.color = data.color.clrB;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`colorToggles activeRound: change enables color toggles and updates data 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#10E38F\\",\\"clrB\\":\\"#FB7B08\\"}"`;
+exports[`colorToggles activeRound: change enables color toggles and updates data 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#10E38F\\",\\"clrB\\":\\"#FB7B08\\",\\"isCustom\\":false}"`;
 
 exports[`colorToggles activeRound: change enables color toggles and updates data 2`] = `
 "
@@ -9,7 +9,7 @@ exports[`colorToggles activeRound: change enables color toggles and updates data
             "
 `;
 
-exports[`colorToggles activeRound: change enables color toggles and updates data 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#37FC00\\",\\"clrB\\":\\"#7D28FC\\"}"`;
+exports[`colorToggles activeRound: change enables color toggles and updates data 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#37FC00\\",\\"clrB\\":\\"#7D28FC\\",\\"isCustom\\":false}"`;
 
 exports[`colorToggles activeRound: change enables color toggles and updates data 4`] = `
 "
@@ -18,7 +18,7 @@ exports[`colorToggles activeRound: change enables color toggles and updates data
             "
 `;
 
-exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#FB7B08\\",\\"clrB\\":\\"#10E38F\\"}"`;
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#FB7B08\\",\\"clrB\\":\\"#10E38F\\",\\"isCustom\\":false}"`;
 
 exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 2`] = `
 "
@@ -27,7 +27,7 @@ exports[`colorToggles activeRound: change enables color toggles and updates data
             "
 `;
 
-exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#7D28FC\\",\\"clrB\\":\\"#37FC00\\"}"`;
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#7D28FC\\",\\"clrB\\":\\"#37FC00\\",\\"isCustom\\":false}"`;
 
 exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 4`] = `
 "

@@ -36,7 +36,8 @@ describe('colorEditor', () => {
             nodecg.listeners.activeRound({
                 activeColor: {
                     index: 1,
-                    categoryName: 'Ranked Modes'
+                    categoryName: 'Ranked Modes',
+                    isCustom: false
                 },
                 teamA: { color: '#123123' },
                 teamB: { color: '#FFFFFF' }
@@ -53,14 +54,15 @@ describe('colorEditor', () => {
         it('updates data displays if a custom color is given', () => {
             nodecg.listeners.activeRound({
                 activeColor: {
-                    index: 999,
-                    categoryName: 'Custom Color'
+                    index: 0,
+                    categoryName: 'Custom Color',
+                    isCustom: true
                 },
                 teamA: { color: '#123123' },
                 teamB: { color: '#FFFFFF' }
             });
 
-            expect(elementById<HTMLSelectElement>('color-selector').value).toEqual('custom-color_999');
+            expect(elementById<HTMLSelectElement>('color-selector').value).toEqual('custom-color_0');
             expect(elementById('team-a-color-display').style.backgroundColor).toEqual('rgb(18, 49, 35)');
             expect(elementById('team-b-color-display').style.backgroundColor).toEqual('rgb(255, 255, 255)');
             expect(elementById<HTMLInputElement>('team-a-custom-color').value).toEqual('#123123');
@@ -117,7 +119,8 @@ describe('colorEditor', () => {
                     index: 1,
                     title: 'Green vs Magenta',
                     clrA: '#04D976',
-                    clrB: '#D600AB'
+                    clrB: '#D600AB',
+                    isCustom: false
                 },
                 categoryName: 'Ranked Modes'
             });
@@ -133,10 +136,11 @@ describe('colorEditor', () => {
 
             expect(nodecg.sendMessage).toHaveBeenCalledWith('setActiveColor', {
                 color: {
-                    index: 999,
+                    index: 0,
                     title: 'Custom Color',
                     clrA: '#123123',
-                    clrB: '#567567'
+                    clrB: '#567567',
+                    isCustom: true
                 },
                 categoryName: 'Custom Color'
             });

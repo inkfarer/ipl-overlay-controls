@@ -1,13 +1,14 @@
 export interface ColorInfo {
-    index: number,
-    title: string,
-    clrA: string,
-    clrB: string
+    index: number;
+    title: string;
+    clrA: string;
+    clrB: string;
+    isCustom: boolean;
 }
 
 export interface ColorGroup {
-    meta: { name: string },
-    colors: ColorInfo[]
+    meta: { name: string };
+    colors: ColorInfo[];
 }
 
 export interface GameColor {
@@ -16,4 +17,5 @@ export interface GameColor {
     index: number;
     categoryName: string;
     colorsSwapped: boolean;
+    isCustom: boolean;
 }

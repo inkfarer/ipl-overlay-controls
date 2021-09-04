@@ -45,6 +45,7 @@ export interface Game {
 		clrA: string;
 		clrB: string;
 		categoryName: string;
+		isCustom: boolean;
 		[k: string]: any;
 	} & {
 		colorsSwapped: boolean;

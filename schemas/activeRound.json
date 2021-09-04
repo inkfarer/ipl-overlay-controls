@@ -46,9 +46,12 @@
                 },
                 "categoryName": {
                     "type": "string"
+                },
+                "isCustom": {
+                    "type": "boolean"
                 }
             },
-            "required": ["index", "title", "categoryName"]
+            "required": ["index", "title", "categoryName", "isCustom"]
         },
         "round": {
             "type": "object",
@@ -147,7 +150,8 @@
         "activeColor": {
             "index": 0,
             "title": "Green vs Grape",
-            "categoryName": "Ranked Modes"
+            "categoryName": "Ranked Modes",
+            "isCustom": false
         },
         "round": {
             "id": "00000",
@@ -163,7 +167,8 @@
                     "clrA": "#37FC00",
                     "clrB": "#7D28FC",
                     "categoryName": "Ranked Modes",
-                    "colorsSwapped": false
+                    "colorsSwapped": false,
+                    "isCustom": false
                 },
                 "stage": "MakoMart",
                 "mode": "Clam Blitz"
@@ -176,7 +181,8 @@
                     "clrA": "#04D976",
                     "clrB": "#D600AB",
                     "categoryName": "Ranked Modes",
-                    "colorsSwapped": false
+                    "colorsSwapped": false,
+                    "isCustom": false
                 },
                 "stage": "Ancho-V Games",
                 "mode": "Tower Control"
@@ -189,7 +195,8 @@
                     "clrA": "#10E38F",
                     "clrB": "#FB7B08",
                     "categoryName": "Ranked Modes",
-                    "colorsSwapped": false
+                    "colorsSwapped": false,
+                    "isCustom": false
                 },
                 "stage": "Wahoo World",
                 "mode": "Rainmaker"

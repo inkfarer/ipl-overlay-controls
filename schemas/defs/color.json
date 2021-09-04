@@ -17,8 +17,11 @@
             },
             "categoryName": {
                 "type": "string"
+            },
+            "isCustom": {
+                "type": "boolean"
             }
         },
-        "required": ["index", "title", "clrA", "clrB", "categoryName"]
+        "required": ["index", "title", "clrA", "clrB", "categoryName", "isCustom"]
     }
 }

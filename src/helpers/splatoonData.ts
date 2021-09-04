@@ -50,43 +50,50 @@ export const colors: ColorGroup[] = [
                 index: 0,
                 title: 'Green vs Grape',
                 clrA: '#37FC00',
-                clrB: '#7D28FC'
+                clrB: '#7D28FC',
+                isCustom: false
             },
             {
                 index: 1,
                 title: 'Green vs Magenta',
                 clrA: '#04D976',
-                clrB: '#D600AB'
+                clrB: '#D600AB',
+                isCustom: false
             },
             {
                 index: 2,
                 title: 'Turquoise vs Orange',
                 clrA: '#10E38F',
-                clrB: '#FB7B08'
+                clrB: '#FB7B08',
+                isCustom: false
             },
             {
                 index: 3,
                 title: 'Mustard vs Purple',
                 clrA: '#FF9E03',
-                clrB: '#B909E0'
+                clrB: '#B909E0',
+                isCustom: false
             },
             {
                 index: 4,
                 title: 'Dark Blue vs Green',
                 clrA: '#2F27CC',
-                clrB: '#37FC00'
+                clrB: '#37FC00',
+                isCustom: false
             },
             {
                 index: 5,
                 title: 'Purple vs Green',
                 clrA: '#B909E0',
-                clrB: '#37FC00'
+                clrB: '#37FC00',
+                isCustom: false
             },
             {
                 index: 6,
                 title: 'Yellow vs Blue',
                 clrA: '#FEF232',
-                clrB: '#2ED2FE'
+                clrB: '#2ED2FE',
+                isCustom: false
             }
         ]
     },
@@ -99,43 +106,50 @@ export const colors: ColorGroup[] = [
                 index: 0,
                 title: 'Yellow vs Purple',
                 clrA: '#D1E004',
-                clrB: '#960CB2'
+                clrB: '#960CB2',
+                isCustom: false
             },
             {
                 index: 1,
                 title: 'Pink vs Blue',
                 clrA: '#E61077',
-                clrB: '#361CB8'
+                clrB: '#361CB8',
+                isCustom: false
             },
             {
                 index: 2,
                 title: 'Pink vs Yellow',
                 clrA: '#ED0C6A',
-                clrB: '#D5E802'
+                clrB: '#D5E802',
+                isCustom: false
             },
             {
                 index: 3,
                 title: 'Purple vs Turquoise',
                 clrA: '#6B10CC',
-                clrB: '#08CC81'
+                clrB: '#08CC81',
+                isCustom: false
             },
             {
                 index: 4,
                 title: 'Pink vs Light Blue',
                 clrA: '#E30960',
-                clrB: '#02ADCF'
+                clrB: '#02ADCF',
+                isCustom: false
             },
             {
                 index: 5,
                 title: 'Purple vs Orange',
                 clrA: '#5617C2',
-                clrB: '#FF5F03'
+                clrB: '#FF5F03',
+                isCustom: false
             },
             {
                 index: 6,
                 title: 'Pink vs Green',
                 clrA: '#E60572',
-                clrB: '#1BBF0F'
+                clrB: '#1BBF0F',
+                isCustom: false
             }
         ]
     },
@@ -148,7 +162,8 @@ export const colors: ColorGroup[] = [
                 index: 0,
                 title: 'Yellow vs Blue (Color Lock)',
                 clrA: '#FEF232',
-                clrB: '#2F27CC'
+                clrB: '#2F27CC',
+                isCustom: false
             }
         ]
     },
@@ -158,10 +173,11 @@ export const colors: ColorGroup[] = [
         },
         colors: [
             {
-                index: 999,
+                index: 0,
                 title: 'Custom Color',
                 clrA: '#000000',
-                clrB: '#FFFFFF'
+                clrB: '#FFFFFF',
+                isCustom: true
             }
         ]
     }

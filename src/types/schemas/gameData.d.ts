@@ -13,6 +13,7 @@ export type GameData = {
 		clrA: string;
 		clrB: string;
 		categoryName: string;
+		isCustom: boolean;
 		[k: string]: any;
 	} & {
 		colorsSwapped: boolean;

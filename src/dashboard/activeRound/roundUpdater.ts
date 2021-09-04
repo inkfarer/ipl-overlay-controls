@@ -33,12 +33,13 @@ roundUpdateButton.addEventListener('click', () => {
                 const teamBColorInput = document.getElementById(`custom-color-selector_b_${i}`) as HTMLInputElement;
 
                 currentGame.color = {
-                    index: 999,
+                    index: 0,
                     title: 'Custom Color',
                     clrA: teamAColorInput.value,
                     clrB: teamBColorInput.value,
                     categoryName: 'Custom Color',
-                    colorsSwapped: colorSwapToggle.checked
+                    colorsSwapped: colorSwapToggle.checked,
+                    isCustom: true
                 };
             } else {
                 const colorOption = colorSelector.options[colorSelector.selectedIndex] as HTMLOptionElement;
@@ -49,7 +50,8 @@ roundUpdateButton.addEventListener('click', () => {
                     clrA: colorSwapToggle.checked ? colorOption.dataset.secondColor : colorOption.dataset.firstColor,
                     clrB: colorSwapToggle.checked ? colorOption.dataset.firstColor : colorOption.dataset.secondColor,
                     categoryName: colorOption.dataset.categoryName,
-                    colorsSwapped: colorSwapToggle.checked
+                    colorsSwapped: colorSwapToggle.checked,
+                    isCustom: false
                 };
             }
         } else if (colorSelector.dataset.source === 'gameInfo') {
