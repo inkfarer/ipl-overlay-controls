@@ -10,7 +10,6 @@ const colorSelector = <HTMLSelectElement> document.getElementById('color-selecto
 fillColorSelector(colorSelector);
 
 activeRound.on('change', newValue => {
-    console.log(newValue);
     colorSelector.value = getColorOptionName(newValue.activeColor.index, newValue.activeColor.categoryName);
 
     document.getElementById('team-a-color-display').style.backgroundColor = newValue.teamA.color;
