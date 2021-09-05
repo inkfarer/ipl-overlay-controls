@@ -79,9 +79,12 @@ To create a debuggable development build, run `npm run watch` or `npm run devbui
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-06-11:
+The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2021-09-05:
 
 - [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
+
+The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-09-05:
+
 - [reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
 - [kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 - [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
