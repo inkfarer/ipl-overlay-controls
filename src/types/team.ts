@@ -1,5 +1,6 @@
 export interface Player {
     name: string;
+    [k: string]: unknown;
 }
 
 export interface Team {
@@ -8,4 +9,5 @@ export interface Team {
     logoUrl?: string;
     showLogo: boolean;
     players: Player[];
+    [k: string]: unknown;
 }

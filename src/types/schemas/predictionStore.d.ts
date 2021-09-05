@@ -11,7 +11,7 @@ export interface PredictionStore {
 	 */
 	enablePrediction: boolean;
 	/**
-	 * Currently stored prediction in use
+	 * Twitch Prediction instance
 	 */
 	currentPrediction?: {
 		/**
@@ -42,50 +42,17 @@ export interface PredictionStore {
 		 * Array of possible outcomes for the Prediction
 		 */
 		outcomes: {
-			/**
-			 * Twitch ID of prediction Outcome
-			 */
 			id: string;
-			/**
-			 * Text displayed for outcome
-			 */
 			title: string;
-			/**
-			 * Number of unique users that chose the outcome.
-			 */
 			users: number;
-			/**
-			 * Channel Points Spent on outcome
-			 */
 			channel_points: number;
-			/**
-			 * Users who were the top predictors
-			 */
 			top_predictors: {
-				/**
-				 * Twitch User ID
-				 */
 				user_id: string;
-				/**
-				 * Twitch User Login
-				 */
 				user_login: string;
-				/**
-				 * Twitch user Display Name
-				 */
 				user_name: string;
-				/**
-				 * Channel Points used to make bet
-				 */
 				channel_points_used: number;
-				/**
-				 * Channel points won from prediction
-				 */
 				channel_points_won: number;
 			}[];
-			/**
-			 * Color for the outcome.
-			 */
 			color: 'BLUE' | 'PINK';
 		}[];
 		/**

@@ -18,9 +18,9 @@ export interface TournamentData {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
 	stages?: {
 		name: string;

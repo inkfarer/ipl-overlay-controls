@@ -5,19 +5,467 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type GameData = {
-	winner: 'none' | 'alpha' | 'bravo';
-	color?: {
-		index: number;
-		title: string;
-		clrA: string;
-		clrB: string;
-		categoryName: string;
-		isCustom: boolean;
-		[k: string]: any;
-	} & {
-		colorsSwapped: boolean;
-		[k: string]: any;
-	};
-	[k: string]: any;
-}[];
+export type GameData =
+	| []
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ]
+	| [
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			},
+			{
+				winner: 'none' | 'alpha' | 'bravo';
+				color?: {
+					index: number;
+					title: string;
+					clrA: string;
+					clrB: string;
+					categoryName: string;
+					isCustom: boolean;
+					[k: string]: unknown;
+				} & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+				};
+				[k: string]: unknown;
+			}
+	  ];

@@ -1,3 +1,4 @@
+export * from './configschema';
 export * from './activeBreakScene';
 export * from './activeRound';
 export * from './casters';

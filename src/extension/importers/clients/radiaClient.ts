@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { GuildServices, RadiaApiCaster } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
-import { Configschema } from 'types/schemas/configschema';
 import { Prediction } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
+import { Configschema } from 'schemas';
 
 const nodecg = nodecgContext.get();
 const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
