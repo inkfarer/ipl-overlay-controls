@@ -1,9 +1,10 @@
-import { hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
-import { PredictionStatus } from 'types/predictionStatus';
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
+import { ImportStatus } from 'types/enums/importStatus';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 import { Outcome } from 'types/prediction';
 import { predictionStore } from './replicants';
+import difference from 'lodash/difference';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionAWrapper = document.getElementById('option-wrapper-a');
@@ -38,10 +39,6 @@ const visibleElementsForPredictionStatus: { [key in PredictionStatus]: HTMLEleme
     [PredictionStatus.CANCELED]: [createPredictionBtn]
 };
 
-function getArrayDifference<T>(arr1: T[], arr2: T[]): T[] {
-    return arr1.filter(elem => !arr2.includes(elem));
-}
-
 predictionStore.on('change', newValue => {
     if (newValue.enablePrediction) {
         hideElement(unsupportedGuildWarning);
@@ -57,12 +54,14 @@ predictionStore.on('change', newValue => {
                 optionAWrapper,
                 (prediction.outcomes[0] as Outcome),
                 totalChannelPoints,
-                prediction.winning_outcome_id);
+                prediction.winning_outcome_id,
+                'A');
             updatePredictionDataDisplay(
                 optionBWrapper,
                 (prediction.outcomes[1] as Outcome),
                 totalChannelPoints,
-                prediction.winning_outcome_id);
+                prediction.winning_outcome_id,
+                'B');
 
             getPredictionStatusElem.innerText = prediction.status.toLowerCase();
             predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
@@ -70,7 +69,7 @@ predictionStore.on('change', newValue => {
 
             // Show/Hide necessary buttons
             const visibleButtons = visibleElementsForPredictionStatus[prediction.status as PredictionStatus];
-            const hiddenButtons = getArrayDifference(predictionElements, visibleButtons);
+            const hiddenButtons = difference(predictionElements, visibleButtons);
             hiddenButtons.forEach(btn => hideElement(btn));
             visibleButtons.forEach(btn => showElement(btn));
         } else {
@@ -88,7 +87,9 @@ function updatePredictionDataDisplay(
     optionWrapper: HTMLElement,
     outcome: Outcome,
     totalPointsPredicted: number,
-    winningOutcomeId: string): void {
+    winningOutcomeId: string,
+    option: 'A' | 'B'
+): void {
     const optionDataWrapper = optionWrapper.querySelector('.option-data-wrapper');
     const titleElem = optionDataWrapper.querySelector('.option-title') as HTMLDivElement;
     const percentTextElem = optionDataWrapper.querySelector('.percent') as HTMLSpanElement;
@@ -102,7 +103,6 @@ function updatePredictionDataDisplay(
     barElem.style.width = (isNaN(optionPercentage) ? '0%' : `${optionPercentage}%`);
     optionWrapper.dataset.outcomeId = outcome.id;
 
-    const option = label.innerText.charAt(label.innerText.length - 1);
     if (winningOutcomeId != null && outcome.id === winningOutcomeId) {
         label.innerText = `Winner - Option ${option}`;
         label.classList.add('winner');
@@ -114,14 +114,14 @@ function updatePredictionDataDisplay(
     }
 }
 
-getPredictionsBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, predictionDataStatusElem);
+getPredictionsBtn.addEventListener('click', () => {
+    setImportStatus(ImportStatus.LOADING, predictionDataStatusElem);
     nodecg.sendMessage('getPredictions', {}, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionDataStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionDataStatusElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionDataStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionDataStatusElem);
     });
-};
+});

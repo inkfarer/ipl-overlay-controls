@@ -15,12 +15,14 @@
                 "src/types/*"
             ],
             "schemas": [
-                "schemas/index"
+                "src/types/schemas/index"
             ]
         },
         "types": [
-            "webpack-env"
-        ]
+            "webpack-env",
+            "jest"
+        ],
+        "resolveJsonModule": true
     },
     "exclude": [
         "node_modules"

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`main roundStore: change updates selector 1`] = `"<option value=\\"aaaaaa\\">Round 1</option><option value=\\"bbbbbb\\">Round 2</option>"`;
+
+exports[`main tournamentData: change updates inputs 1`] = `"<option value=\\"111\\">Team One</option><option value=\\"222\\">Team Two</option>"`;
+
+exports[`main tournamentData: change updates inputs 2`] = `"<option value=\\"111\\">Team One</option><option value=\\"222\\">Team Two</option>"`;

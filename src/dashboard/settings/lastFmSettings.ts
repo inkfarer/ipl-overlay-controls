@@ -1,5 +1,5 @@
 import { LastFmSettings } from 'schemas';
-import { addChangeReminder } from '../globalScripts';
+import { addChangeReminder } from '../helpers/buttonHelper';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 

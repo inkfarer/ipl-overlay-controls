@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "color": {
+        "type": "object",
+        "properties": {
+            "index": {
+                "type": "number"
+            },
+            "title": {
+                "type": "string"
+            },
+            "clrA": {
+                "type": "string"
+            },
+            "clrB": {
+                "type": "string"
+            },
+            "categoryName": {
+                "type": "string"
+            },
+            "isCustom": {
+                "type": "boolean"
+            }
+        },
+        "required": ["index", "title", "clrA", "clrB", "categoryName", "isCustom"]
+    }
+}

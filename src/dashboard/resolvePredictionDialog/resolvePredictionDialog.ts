@@ -1,23 +1,8 @@
-import { hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
-import { PredictionStore, ScoreboardData, TeamScores } from 'schemas';
-import { WinningOption } from './types/winningOption';
-
-// Stores data on current winning Option
-const winningOption: WinningOption = {
-    validOption: false,
-    optionIndex: -1,
-    optionTitle: ''
-};
-
-const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
-const teamScores = nodecg.Replicant<TeamScores>('teamScores');
-
-const autoResolveBtn = document.getElementById('auto-resolve-predictions-btn') as HTMLButtonElement;
-const resolveOptionABtn = document.getElementById('resolve-A-predictions-btn') as HTMLButtonElement;
-const resolveOptionBBtn = document.getElementById('resolve-B-predictions-btn') as HTMLButtonElement;
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
+import { ImportStatus } from 'types/enums/importStatus';
+import { ActiveRound, PredictionStore } from 'schemas';
+import { autoResolveBtn, predictionStore, resolveOptionABtn, resolveOptionBBtn, winningOption } from './elements';
 
 const warningMessageElem = document.getElementById('message-warning');
 const warningElem = document.getElementById('warning-message-box');
@@ -28,10 +13,10 @@ const infoElem = document.getElementById('info-message-box');
 const predictionPatchStatusElem = document.getElementById('prediction-patch-status');
 
 /**
- * Set disabled pram of all buttons
+ * Set disabled param of all buttons
  * @param disabled
  */
-function setBtnDisable(disabled: boolean) {
+export function setBtnDisable(disabled: boolean): void {
     autoResolveBtn.disabled = disabled;
     resolveOptionABtn.disabled = disabled;
     resolveOptionBBtn.disabled = disabled;
@@ -41,7 +26,7 @@ function setBtnDisable(disabled: boolean) {
  * Sets the button UI
  * @param predictionValue value of predictionStore
  */
-function setUI(predictionValue: PredictionStore) {
+export function setUI(predictionValue: PredictionStore): void {
     setBtnDisable(false);
     hideElement(warningElem);
     hideElement(infoElem);
@@ -62,19 +47,15 @@ function setUI(predictionValue: PredictionStore) {
     // lock buttons if status is not LOCKED
     if (!predictionValue.currentPrediction || predictionValue.currentPrediction.status !== 'LOCKED') {
         showElement(infoElem);
-        infoMessageElem.innerText = 'This predication cannot be resolved right now';
+        infoMessageElem.innerText = 'This prediction cannot be resolved right now';
         setBtnDisable(true);
     }
 }
 
 /**
  * Attempt to work out which team is winning and if there's a prediction option to resolve in ether's favour
- * @param teamScoresValue teamScores replicant Value
- * @param scoreboardValue scoreboardData replicant value
- * @param predictionValue predictionStore replicant value
  */
-function autoResolveWinner(teamScoresValue: TeamScores,
-    scoreboardValue: ScoreboardData, predictionValue: PredictionStore) {
+export function autoResolveWinner(activeRound: ActiveRound, predictionValue: PredictionStore): void {
     winningOption.validOption = false;
     if (!predictionValue.currentPrediction) {
         return setUI(predictionValue);
@@ -82,10 +63,10 @@ function autoResolveWinner(teamScoresValue: TeamScores,
 
     let winningTeamName: string;
     // Work out which team has higher score
-    if (teamScoresValue.teamA > teamScoresValue.teamB) {
-        winningTeamName = scoreboardValue.teamAInfo.name;
-    } else if (teamScoresValue.teamB > teamScoresValue.teamA) {
-        winningTeamName = scoreboardValue.teamBInfo.name;
+    if (activeRound.teamA.score > activeRound.teamB.score) {
+        winningTeamName = activeRound.teamA.name;
+    } else if (activeRound.teamB.score > activeRound.teamA.score) {
+        winningTeamName = activeRound.teamB.name;
     } else {  // if neither team is in the lead
         setUI(predictionValue);
         return;
@@ -106,16 +87,16 @@ function autoResolveWinner(teamScoresValue: TeamScores,
  * Run prediction resolve
  * @param index index of winning outcome
  */
-function resolvePrediction(index: number) {
+export function resolvePrediction(index: number): void {
     if (!predictionStore.value.currentPrediction?.id || index > 1 || index < 0) {
         // if no id (aka no prediction) don't event attempt to patch prediction
-        setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
+        setImportStatus(ImportStatus.FAILURE, predictionPatchStatusElem);
         warningMessageElem.innerText = 'No outcomes/prediction to resolve >.<';
         showElement(warningElem);
         return;
     }
     hideElement(warningElem);  // Hide an errors if we're showing any
-    setImportStatus(ImportStatus.Loading, predictionPatchStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionPatchStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
         status: 'RESOLVED',
@@ -123,29 +104,11 @@ function resolvePrediction(index: number) {
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionPatchStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionPatchStatusElem);
             warningMessageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionPatchStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionPatchStatusElem);
     });
 }
-
-NodeCG.waitForReplicants(predictionStore, teamScores, scoreboardData).then(() => {
-    predictionStore.on('change', newValue => {
-        autoResolveWinner(teamScores.value, scoreboardData.value, newValue);
-        setUI(newValue);
-    });
-
-    teamScores.on('change', newValue => {
-        autoResolveWinner(newValue, scoreboardData.value, predictionStore.value);
-        setUI(predictionStore.value);
-    });
-
-});
-
-// Assign onclick functions to buttons
-autoResolveBtn.onclick = () => {resolvePrediction(winningOption.optionIndex);};
-resolveOptionABtn.onclick = () => {resolvePrediction(0);};
-resolveOptionBBtn.onclick = () => {resolvePrediction(1);};

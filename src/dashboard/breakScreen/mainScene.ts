@@ -1,8 +1,9 @@
-import { MainFlavorText, NextRoundStartTime, NextRoundStartTimeShown } from 'schemas';
-import { addChangeReminder } from '../globalScripts';
+import { MainFlavorText, NextRoundStartTime } from 'schemas';
+import { addChangeReminder } from '../helpers/buttonHelper';
+import { DateTime } from 'luxon';
+import clamp from 'lodash/clamp';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
-const nextRoundStartTimeShown = nodecg.Replicant<NextRoundStartTimeShown>('nextRoundStartTimeShown');
 const nextRoundStartTime = nodecg.Replicant<NextRoundStartTime>('nextRoundStartTime');
 
 const flavorTextInput = document.getElementById('flavor-text-input') as HTMLInputElement;
@@ -12,85 +13,88 @@ const hourInput = document.getElementById('next-stage-hour-input') as HTMLInputE
 const daySelect = document.getElementById('next-stage-day-select') as HTMLSelectElement;
 const nextStageTimerToggle = document.getElementById('next-stage-timer-toggle') as HTMLInputElement;
 
+const dayMonthFormat = 'dd/MM';
+const dayMonthYearFormat = 'dd/MM/yyyy';
+
 mainFlavorText.on('change', newValue => {
     flavorTextInput.value = newValue;
 });
 
-mainSceneUpdateBtn.onclick = () => {
+mainSceneUpdateBtn.addEventListener('click', () => {
     mainFlavorText.value = flavorTextInput.value;
     updateStageTime();
-};
-
-nextStageTimerToggle.addEventListener('change', e => {
-    nextRoundStartTimeShown.value = (e.target as HTMLInputElement).checked;
 });
 
-nextRoundStartTimeShown.on('change', newValue => {
-    nextStageTimerToggle.checked = newValue;
+nextStageTimerToggle.addEventListener('change', e => {
+    nextRoundStartTime.value.isVisible = (e.target as HTMLInputElement).checked;
 });
 
 nextRoundStartTime.on('change', newValue => {
-    minuteInput.value = String(newValue.minute);
-    hourInput.value = String(newValue.hour);
-    updateDaySelector(newValue.month, newValue.day);
-    daySelect.value = `${newValue.day}/${newValue.month}`;
+    const newDate = DateTime.fromISO(newValue.startTime).toLocal();
+    minuteInput.value = padNumber(newDate.minute);
+    hourInput.value = padNumber(newDate.hour);
+
+    updateDaySelector(newDate);
+
+    nextStageTimerToggle.checked = newValue.isVisible;
 });
 
-function updateDaySelector(selectedMonth: number, selectedDayOfMonth: number) {
+function updateDaySelector(selectedDate: DateTime) {
     daySelect.innerHTML = '';
 
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    const today = DateTime.now();
+    const tomorrow = DateTime.now().plus({ days: 1 });
+    daySelect.appendChild(getDayOption(today));
+    daySelect.appendChild(getDayOption(tomorrow));
 
-    const todayElem = getDayElem(today);
-    daySelect.appendChild(todayElem);
-
-    const tomorrowElem = getDayElem(tomorrow);
-    daySelect.appendChild(tomorrowElem);
-
-    const selectedDay = `${selectedDayOfMonth}/${selectedMonth}`;
-    if (todayElem.value !== selectedDay && tomorrowElem.value !== selectedDay) {
-        const selectedDayElem = document.createElement('option');
-        selectedDayElem.innerText = selectedDay;
-        selectedDayElem.value = selectedDay;
-        selectedDayElem.dataset.day = String(selectedDayOfMonth);
-        selectedDayElem.dataset.month = String(selectedMonth);
-        daySelect.appendChild(selectedDayElem);
+    if (!selectedDate.hasSame(today, 'days') && !selectedDate.hasSame(tomorrow, 'days')) {
+        daySelect.appendChild(getDayOption(selectedDate));
     }
+
+    daySelect.value = selectedDate.toFormat(dayMonthYearFormat);
 }
 
-function getDayElem(date: Date): HTMLOptionElement {
-    const dayElem = document.createElement('option');
-    const dateText = getDayText(date);
-    dayElem.innerText = dateText;
-    dayElem.value = dateText;
-    dayElem.dataset.day = String(date.getDate());
-    dayElem.dataset.month = String(date.getMonth() + 1);
-    return dayElem;
-}
-
-function getDayText(date: Date): string {
-    return `${date.getDate()}/${date.getMonth() + 1}`;
+function getDayOption(date: DateTime): HTMLOptionElement {
+    const result = document.createElement('option');
+    result.text = date.toFormat(dayMonthFormat);
+    result.value = date.toFormat(dayMonthYearFormat);
+    return result;
 }
 
 function updateStageTime() {
-    const min = parseInt(minuteInput.value, 10);
+    const minute = parseInt(minuteInput.value, 10);
     const hour = parseInt(hourInput.value, 10);
-    const selText = daySelect.options[daySelect.selectedIndex];
-    if (selText) {
-        const day = Number(selText.dataset.day);
-        const month = Number(selText.dataset.month);
+    const dateOption = daySelect.options[daySelect.selectedIndex];
 
-        if (min <= 59 && min >= 0 && hour <= 23 && hour >= 0) {
-            nextRoundStartTime.value = {
-                hour,
-                minute: min,
-                day,
-                month
-            };
-        }
+    if (dateOption && !isNaN(minute) && !isNaN(hour)) {
+        const date = DateTime.fromFormat(dateOption.value, dayMonthYearFormat);
+        const dateTime = date.set({ minute, hour });
+
+        nextRoundStartTime.value.startTime = dateTime.toUTC().toISO();
     }
 }
 
 addChangeReminder(document.querySelectorAll('.main-update-reminder'), mainSceneUpdateBtn);
+
+function padNumber(value: number | string, minLength = 2): string {
+    const stringValue = String(value);
+    if (stringValue.length < minLength) {
+        return '0'.repeat(minLength - stringValue.length) + stringValue;
+    } else {
+        return stringValue;
+    }
+}
+
+function padAndClampInput(e: Event, max: number) {
+    const target = e.target as HTMLInputElement;
+    const intValue = parseInt(target.value);
+
+    if (isNaN(intValue)) {
+        target.value = '';
+    } else {
+        target.value = padNumber(clamp(intValue, 0, max));
+    }
+}
+
+hourInput.addEventListener('change', e => padAndClampInput(e, 23));
+minuteInput.addEventListener('change', e => padAndClampInput(e, 59));

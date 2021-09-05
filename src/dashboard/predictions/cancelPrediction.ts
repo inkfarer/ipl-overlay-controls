@@ -1,7 +1,7 @@
-import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { setImportStatus } from '../helpers/importStatusHelper';
+import { ImportStatus } from 'types/enums/importStatus';
 import { predictionStore } from './replicants';
-import { PredictionStatus } from 'types/predictionStatus';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 
 const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 
@@ -14,16 +14,16 @@ document.getElementById('cancel-prediction-btn').addEventListener('confirm', () 
         return;
     }
 
-    setImportStatus(ImportStatus.Loading, predictionRequestStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionRequestStatusElem);
     nodecg.sendMessage('patchPrediction', {
         id: predictionStore.value.currentPrediction.id,
-        status: 'CANCELED',
+        status: PredictionStatus.CANCELED,
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionRequestStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionRequestStatusElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionRequestStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionRequestStatusElem);
     });
 });

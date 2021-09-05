@@ -1,10 +1,11 @@
-import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { setImportStatus } from '../helpers/importStatusHelper';
+import { ImportStatus } from 'types/enums/importStatus';
 
 export function sendLocalFile(
     dataType: 'teams' | 'rounds',
     fileInput: HTMLInputElement,
-    importStatusElem: HTMLElement): void {
+    importStatusElem: HTMLElement
+): void {
 
     if (!fileInput.files[0]) return;
 
@@ -18,14 +19,14 @@ export function sendLocalFile(
     })
         .then(response => {
             if (response.status === 200) {
-                setImportStatus(ImportStatus.Success, importStatusElem);
+                setImportStatus(ImportStatus.SUCCESS, importStatusElem);
             } else {
                 console.error(`Import failed with status ${response.status}`);
-                setImportStatus(ImportStatus.Failure, importStatusElem);
+                setImportStatus(ImportStatus.FAILURE, importStatusElem);
             }
         })
         .catch(e => {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, importStatusElem);
+            setImportStatus(ImportStatus.FAILURE, importStatusElem);
         });
 }

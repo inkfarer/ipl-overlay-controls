@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`colorToggles activeRound: change enables color toggles and updates data 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#10E38F\\",\\"clrB\\":\\"#FB7B08\\",\\"isCustom\\":false}"`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data 2`] = `
+"
+                <div class=\\"color-toggle-display a\\" style=\\"background-color: rgb(16, 227, 143);\\"></div>
+                <div class=\\"color-toggle-display b\\" style=\\"background-color: rgb(251, 123, 8);\\"></div>
+            "
+`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#37FC00\\",\\"clrB\\":\\"#7D28FC\\",\\"isCustom\\":false}"`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data 4`] = `
+"
+                <div class=\\"color-toggle-display a\\" style=\\"background-color: rgb(55, 252, 0);\\"></div>
+                <div class=\\"color-toggle-display b\\" style=\\"background-color: rgb(125, 40, 252);\\"></div>
+            "
+`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 1`] = `"{\\"index\\":2,\\"title\\":\\"Turquoise vs Orange\\",\\"clrA\\":\\"#FB7B08\\",\\"clrB\\":\\"#10E38F\\",\\"isCustom\\":false}"`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 2`] = `
+"
+                <div class=\\"color-toggle-display a\\" style=\\"background-color: rgb(251, 123, 8);\\"></div>
+                <div class=\\"color-toggle-display b\\" style=\\"background-color: rgb(16, 227, 143);\\"></div>
+            "
+`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 3`] = `"{\\"index\\":0,\\"title\\":\\"Green vs Grape\\",\\"clrA\\":\\"#7D28FC\\",\\"clrB\\":\\"#37FC00\\",\\"isCustom\\":false}"`;
+
+exports[`colorToggles activeRound: change enables color toggles and updates data if colors are swapped 4`] = `
+"
+                <div class=\\"color-toggle-display a\\" style=\\"background-color: rgb(125, 40, 252);\\"></div>
+                <div class=\\"color-toggle-display b\\" style=\\"background-color: rgb(55, 252, 0);\\"></div>
+            "
+`;
