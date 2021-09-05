@@ -4,11 +4,16 @@ import * as nodecgContext from '../../helpers/nodecg';
 import { Prediction } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { Configschema } from 'schemas';
+import isEmpty from 'lodash/isEmpty';
 
 const nodecg = nodecgContext.get();
 const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
 
 export async function hasPredictionSupport(guildId: string): Promise<boolean> {
+    if (isEmpty(radiaConfig.authentication)) {
+        return false;
+    }
+
     try {
         const result = await axios.get<GuildServices>(
             `${radiaConfig.url}/predictions/check/${guildId}`,

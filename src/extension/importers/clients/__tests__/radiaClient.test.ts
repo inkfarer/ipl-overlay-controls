@@ -14,22 +14,35 @@ describe('radiaClient', () => {
         post: mockPost
     }));
 
-    beforeEach(() => {
+    function init(bundleConfig: {[k: string]: unknown}) {
         jest.resetAllMocks();
         jest.resetModules();
 
-        nodecg = new MockNodecg({
+        nodecg = new MockNodecg(bundleConfig);
+        nodecg.init();
+
+        client = require('../radiaClient');
+    }
+
+    beforeEach(() => {
+        init({
             radia: {
                 url: 'radia://api',
                 authentication: 'radia_auth'
             }
         });
-        nodecg.init();
-
-        client = require('../radiaClient');
     });
 
     describe('hasPredictionSupport', () => {
+        it('returns false if bundle config does not have an auth key', async () => {
+            init({ radia: { } });
+
+            const result = await client.hasPredictionSupport('aaaa');
+
+            expect(result).toEqual(false);
+            expect(mockGet).not.toHaveBeenCalled();
+        });
+
         it('checks whether predictions are enabled', async () => {
             mockGet.mockResolvedValue({
                 status: 200,

@@ -1,6 +1,7 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
+import isEmpty from 'lodash/isEmpty';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export default (nodecg: NodeCG & NodeCGStatic): void => {
@@ -19,10 +20,10 @@ export default (nodecg: NodeCG & NodeCGStatic): void => {
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
-    if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.radia === 'undefined') {
+    if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
-            `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia
-            Production API won't be possible.`
+            `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
+            + 'Production API will not be possible.'
         );
         radiaSettings.value.enabled = false;
         predictionStore.value.enablePrediction = false;
