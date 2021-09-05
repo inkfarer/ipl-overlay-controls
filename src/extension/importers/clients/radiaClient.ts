@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { GuildServices, RadiaApiCaster } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
-import { Prediction } from 'types/prediction';
+import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
@@ -36,9 +36,9 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
  * Get predictions on from Discord Guild
  * @param {string} guildID Guild ID of discord server
  */
-export async function getPredictions(guildID: string): Promise<Prediction[]> {
+export async function getPredictions(guildID: string): Promise<PredictionResponse[]> {
     try {
-        const result = await axios.get<Prediction[]>(
+        const result = await axios.get<PredictionResponse[]>(
             `${radiaConfig.url}/predictions/${guildID}`,
             { headers: { Authorization: radiaConfig.authentication } });
 
@@ -53,9 +53,9 @@ export async function getPredictions(guildID: string): Promise<Prediction[]> {
  * @param {string} guildID Guild ID of discord server
  * @param data Patch data for prediction
  */
-export async function updatePrediction(guildID: string, data: PatchPrediction): Promise<Prediction> {
+export async function updatePrediction(guildID: string, data: PatchPrediction): Promise<PredictionResponse> {
     try {
-        const result = await axios.patch<Prediction>(
+        const result = await axios.patch<PredictionResponse>(
             `${radiaConfig.url}/predictions/${guildID}`,
             data,
             { headers: { Authorization: radiaConfig.authentication } });
@@ -71,9 +71,9 @@ export async function updatePrediction(guildID: string, data: PatchPrediction): 
  * @param {string} guildID Guild ID of discord server
  * @param data Data to create prediction with
  */
-export async function createPrediction(guildID: string, data: CreatePrediction): Promise<Prediction> {
+export async function createPrediction(guildID: string, data: CreatePrediction): Promise<PredictionResponse> {
     try {
-        const result = await axios.post<Prediction>(
+        const result = await axios.post<PredictionResponse>(
             `${radiaConfig.url}/predictions/${guildID}`,
             data,
             { headers: { Authorization: radiaConfig.authentication } });

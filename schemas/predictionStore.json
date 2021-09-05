@@ -1,148 +1,192 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "object",
-	"properties": {
-		"enablePrediction": {
-			"description": "If Predictions should be enabled for current settings",
-			"type": "boolean"
-		},
-		"currentPrediction": {
-			"description": "Twitch Prediction instance",
-			"type": "object",
-			"properties": {
-				"id": {
-					"description": "Twitch ID of the Prediction.",
-					"type": "string"
-				},
-				"broadcaster_id": {
-					"description": "Twitch ID of the broadcaster",
-					"type": "string"
-				},
-				"broadcaster_name": {
-					"description": "Twitch User Login",
-					"type": "string"
-				},
-				"broadcaster_login": {
-					"description": "Twitch user Display Name",
-					"type": "string"
-				},
-				"title": {
-					"description": "Title of prediction",
-					"type": "string",
-					"maxLength": 45
-				},
-				"winning_outcome_id": {
-					"description": "ID of wining ID",
-					"type": ["string", "null"]
-				},
-				"outcomes": {
-					"description": "Array of possible outcomes for the Prediction",
-					"type": "array",
-					"items": {
-						"description": "Info on a possible Twitch prediction Outcome",
-						"type": "object",
-						"properties": {
-							"id": {
-								"description": "Twitch ID of prediction Outcome",
-								"type": "string"
-							},
-							"title": {
-								"description": "Text displayed for outcome",
-								"type": "string",
-								"maxLength": 25
-							},
-							"users": {
-								"description": "Number of unique users that chose the outcome.",
-								"type": "integer"
-							},
-							"channel_points": {
-								"description": "Channel Points Spent on outcome",
-								"type": "integer"
-							},
-							"top_predictors": {
-								"description": "Users who were the top predictors",
-								"type": "array",
-								"items": {
-									"description": "Info on a Twitch predictor",
-									"type": "object",
-									"properties": {
-										"user_id": {
-											"description": "Twitch User ID",
-											"type": "string"
-										},
-										"user_login": {
-											"description": "Twitch User Login",
-											"type": "string"
-										},
-										"user_name": {
-											"description": "Twitch user Display Name",
-											"type": "string"
-										},
-										"channel_points_used": {
-											"description": "Channel Points used to make bet",
-											"type": "integer"
-										},
-										"channel_points_won": {
-											"description": "Channel points won from prediction",
-											"type": "integer"
-										}
-									},
-									"required": ["user_id", "user_login", "user_name", "channel_points_used", "channel_points_won"],
-									"additionalProperties": false
-								}
-							},
-							"color": {
-								"description": "Color for the outcome.",
-								"type": "string",
-								"enum": [
-									"BLUE",
-									"PINK"
-								]
-							}
-						},
-						"required": ["id", "title", "users", "channel_points", "top_predictors", "color"],
-						"additionalProperties": false
-					},
-					"maxItems": 2,
-					"tsType": "{id: string; title: string; users: number; channel_points: number; top_predictors: { user_id: string; user_login: string; user_name: string; channel_points_used: number; channel_points_won: number;}[]; color: 'BLUE' | 'PINK';}[]"
-				},
-				"prediction_window": {
-					"description": "Total duration for the Prediction (in seconds)",
-					"type": "integer",
-					"maximum": 1800,
-					"minLength": 1
-				},
-				"status": {
-					"description": "Status of the Prediction",
-					"type": "string",
-					"enum": ["RESOLVED", "ACTIVE", "CANCELED", "LOCKED"]
-				},
-				"created_at": {
-					"description": "UTC timestamp for the Prediction’s start time",
-					"type": "string",
-					"format": "date-time"
-				},
-				"ended_at": {
-					"description": "UTC timestamp for when the Prediction ended, null if ACTIVE",
-					"type": ["string", "null"],
-					"format": "date-time"
-				},
-				"locked_at": {
-					"description": "UTC timestamp for when the Prediction was locked, null if not LOCKED",
-					"type": ["string", "null"],
-					"format": "date-time"
-				}
-			},
-			"required": ["id", "broadcaster_id", "broadcaster_name", "broadcaster_login", "title", "winning_outcome_id",
-				"outcomes", "prediction_window", "status", "created_at", "ended_at", "locked_at"],
-			"additionalProperties": false
-		}
-	},
-	"required": [
-		"enablePrediction"
-	],
-	"default": {
-		"enablePrediction": false
-	},
-	"additionalProperties": false
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "prediction": {
+            "description": "Twitch Prediction instance",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Twitch ID of the Prediction.",
+                    "type": "string"
+                },
+                "broadcasterId": {
+                    "description": "Twitch ID of the broadcaster",
+                    "type": "string"
+                },
+                "broadcasterName": {
+                    "description": "Twitch User Login",
+                    "type": "string"
+                },
+                "broadcasterLogin": {
+                    "description": "Twitch user Display Name",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Title of prediction",
+                    "type": "string",
+                    "maxLength": 45
+                },
+                "winningOutcome": {
+                    "description": "ID of winning outcome",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "outcomes": {
+                    "description": "Array of possible outcomes for the Prediction",
+                    "type": "array",
+                    "items": {
+                        "description": "Info on a possible Twitch prediction Outcome",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Twitch ID of prediction Outcome",
+                                "type": "string"
+                            },
+                            "title": {
+                                "description": "Text displayed for outcome",
+                                "type": "string",
+                                "maxLength": 25
+                            },
+                            "users": {
+                                "description": "Number of unique users that chose the outcome.",
+                                "type": "integer"
+                            },
+                            "pointsUsed": {
+                                "description": "Channel Points Spent on outcome",
+                                "type": "integer"
+                            },
+                            "topPredictors": {
+                                "description": "Users who were the top predictors",
+                                "type": "array",
+                                "items": {
+                                    "description": "Info on a Twitch predictor",
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "description": "Twitch User ID",
+                                            "type": "string"
+                                        },
+                                        "login": {
+                                            "description": "Twitch User Login",
+                                            "type": "string"
+                                        },
+                                        "username": {
+                                            "description": "Twitch user Display Name",
+                                            "type": "string"
+                                        },
+                                        "pointsUsed": {
+                                            "description": "Channel Points used to make bet",
+                                            "type": "integer"
+                                        },
+                                        "pointsWon": {
+                                            "description": "Channel points won from prediction",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "id",
+                                        "login",
+                                        "username",
+                                        "pointsUsed",
+                                        "pointsWon"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "color": {
+                                "description": "Color for the outcome.",
+                                "type": "string",
+                                "enum": [
+                                    "BLUE",
+                                    "PINK"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "title",
+                            "users",
+                            "pointsUsed",
+                            "topPredictors",
+                            "color"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "maxItems": 2,
+                    "tsType": "{id: string; title: string; users: number; pointsUsed: number; topPredictors: { id: string; login: string; username: string; pointsUsed: number; pointsWon: number;}[]; color: 'BLUE' | 'PINK';}[]"
+                },
+                "duration": {
+                    "description": "Total duration for the Prediction (in seconds)",
+                    "type": "integer",
+                    "maximum": 1800,
+                    "minLength": 1
+                },
+                "status": {
+                    "description": "Status of the Prediction",
+                    "type": "string",
+                    "enum": [
+                        "RESOLVED",
+                        "ACTIVE",
+                        "CANCELED",
+                        "LOCKED"
+                    ]
+                },
+                "createdAt": {
+                    "description": "UTC timestamp for the Prediction’s start time",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "endedAt": {
+                    "description": "UTC timestamp for when the Prediction ended, null if ACTIVE",
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "date-time"
+                },
+                "lockedAt": {
+                    "description": "UTC timestamp for when the Prediction was locked, null if not LOCKED",
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "id",
+                "broadcasterId",
+                "broadcasterName",
+                "broadcasterLogin",
+                "title",
+                "winningOutcome",
+                "outcomes",
+                "duration",
+                "status",
+                "createdAt",
+                "endedAt",
+                "lockedAt"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "enablePrediction": {
+            "description": "If Predictions should be enabled for current settings",
+            "type": "boolean"
+        },
+        "currentPrediction": {
+            "$ref": "#/definitions/prediction"
+        }
+    },
+    "required": [
+        "enablePrediction"
+    ],
+    "default": {
+        "enablePrediction": false
+    },
+    "additionalProperties": false
 }

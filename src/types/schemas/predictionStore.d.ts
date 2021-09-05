@@ -10,70 +10,65 @@ export interface PredictionStore {
 	 * If Predictions should be enabled for current settings
 	 */
 	enablePrediction: boolean;
+	currentPrediction?: Prediction;
+}
+/**
+ * Twitch Prediction instance
+ */
+export interface Prediction {
 	/**
-	 * Twitch Prediction instance
+	 * Twitch ID of the Prediction.
 	 */
-	currentPrediction?: {
-		/**
-		 * Twitch ID of the Prediction.
-		 */
+	id: string;
+	/**
+	 * Twitch ID of the broadcaster
+	 */
+	broadcasterId: string;
+	/**
+	 * Twitch User Login
+	 */
+	broadcasterName: string;
+	/**
+	 * Twitch user Display Name
+	 */
+	broadcasterLogin: string;
+	/**
+	 * Title of prediction
+	 */
+	title: string;
+	/**
+	 * ID of winning outcome
+	 */
+	winningOutcome: string | null;
+	/**
+	 * Array of possible outcomes for the Prediction
+	 */
+	outcomes: {
 		id: string;
-		/**
-		 * Twitch ID of the broadcaster
-		 */
-		broadcaster_id: string;
-		/**
-		 * Twitch User Login
-		 */
-		broadcaster_name: string;
-		/**
-		 * Twitch user Display Name
-		 */
-		broadcaster_login: string;
-		/**
-		 * Title of prediction
-		 */
 		title: string;
-		/**
-		 * ID of wining ID
-		 */
-		winning_outcome_id: string | null;
-		/**
-		 * Array of possible outcomes for the Prediction
-		 */
-		outcomes: {
-			id: string;
-			title: string;
-			users: number;
-			channel_points: number;
-			top_predictors: {
-				user_id: string;
-				user_login: string;
-				user_name: string;
-				channel_points_used: number;
-				channel_points_won: number;
-			}[];
-			color: 'BLUE' | 'PINK';
-		}[];
-		/**
-		 * Total duration for the Prediction (in seconds)
-		 */
-		prediction_window: number;
-		/**
-		 * Status of the Prediction
-		 */
-		status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
-		/**
-		 * UTC timestamp for the Prediction’s start time
-		 */
-		created_at: string;
-		/**
-		 * UTC timestamp for when the Prediction ended, null if ACTIVE
-		 */
-		ended_at: string | null;
-		/**
-		 * UTC timestamp for when the Prediction was locked, null if not LOCKED
-		 */
-		locked_at: string | null;
-	};
+		users: number;
+		pointsUsed: number;
+		topPredictors: {id: string; login: string; username: string; pointsUsed: number; pointsWon: number}[];
+		color: 'BLUE' | 'PINK';
+	}[];
+	/**
+	 * Total duration for the Prediction (in seconds)
+	 */
+	duration: number;
+	/**
+	 * Status of the Prediction
+	 */
+	status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
+	/**
+	 * UTC timestamp for the Prediction’s start time
+	 */
+	createdAt: string;
+	/**
+	 * UTC timestamp for when the Prediction ended, null if ACTIVE
+	 */
+	endedAt: string | null;
+	/**
+	 * UTC timestamp for when the Prediction was locked, null if not LOCKED
+	 */
+	lockedAt: string | null;
 }

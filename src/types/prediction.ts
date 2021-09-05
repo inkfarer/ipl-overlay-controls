@@ -15,7 +15,7 @@ export interface Outcome {
     color: 'BLUE' | 'PINK';
 }
 
-export interface Prediction {
+export interface PredictionResponse {
     id: string;
     broadcaster_id: string;
     broadcaster_name: string;
@@ -28,12 +28,4 @@ export interface Prediction {
     created_at: string;
     ended_at: string | null;
     locked_at: string | null;
-}
-
-export interface ErrorDetails {
-    detail: {
-        error: string;
-        status: number;
-        message: string;
-    }
 }

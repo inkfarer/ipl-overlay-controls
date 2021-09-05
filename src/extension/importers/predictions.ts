@@ -1,7 +1,7 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { Prediction } from 'types/prediction';
+import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import {
@@ -10,6 +10,7 @@ import {
     updatePrediction,
     createPrediction
 } from './clients/radiaClient';
+import { PredictionDataMapper } from './mappers/predictionDataMapper';
 
 const nodecg = nodecgContext.get();
 
@@ -94,13 +95,6 @@ nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: Unhandled
     }
 });
 
-function assignPredictionData(data: Prediction) {
-    // If outcome's top_predictors is null, change to empty array
-    data.outcomes.forEach(outcome => {
-        if (outcome.top_predictors === null) {
-            outcome.top_predictors = [];
-        }
-    });
-
-    predictionStore.value.currentPrediction = data;
+function assignPredictionData(data: PredictionResponse) {
+    predictionStore.value.currentPrediction = PredictionDataMapper.fromApiResponse(data);
 }
