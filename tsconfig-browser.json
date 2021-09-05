@@ -3,14 +3,15 @@
         "allowJs": true,
         "noImplicitAny": true,
         "module": "esnext",
-        "target": "es5",
+        "target": "es6",
         "lib": [
             "esnext",
             "dom",
             "dom.iterable"
         ],
         "types": [
-            "webpack-env"
+            "webpack-env",
+            "jest"
         ],
         "esModuleInterop": true,
         "experimentalDecorators": true,
@@ -26,7 +27,7 @@
                 "src/types/*"
             ],
             "schemas": [
-                "schemas/index"
+                "src/types/schemas/index"
             ]
         }
     }

@@ -38,7 +38,7 @@ export interface Bracket {
     teamsCount: number;
     hasThirdPlaceMatch: boolean;
     currentRoundNumber: number;
-    style: string;
+    style?: string;
 }
 
 export interface Stage {

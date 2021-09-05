@@ -1,31 +1,31 @@
-import { setImportStatus } from '../importStatus';
+import { setImportStatus } from '../helpers/importStatusHelper';
 import { sendLocalFile } from './postData';
-import { ImportStatus } from 'types/importStatus';
+import { ImportStatus } from 'types/enums/importStatus';
 
 const roundWebImportToggle = document.getElementById('round-web-import-toggle') as HTMLInputElement;
 const roundImportFileInput = document.getElementById('round-input-file-input') as HTMLInputElement;
 const roundDataStatusElem = document.getElementById('round-data-submit-status');
 
-document.getElementById('round-import-submit').onclick = () => {
-    setImportStatus(ImportStatus.Loading, roundDataStatusElem);
+document.getElementById('round-import-submit').addEventListener('click', () => {
+    setImportStatus(ImportStatus.LOADING, roundDataStatusElem);
 
     if (roundWebImportToggle.checked) {
         const listsURL = (document.getElementById('round-input-url-input') as HTMLInputElement).value;
         nodecg.sendMessage('getRounds', { url: listsURL }, e => {
             if (e) {
                 console.error(e);
-                setImportStatus(ImportStatus.Failure, roundDataStatusElem);
+                setImportStatus(ImportStatus.FAILURE, roundDataStatusElem);
                 return;
             }
 
-            setImportStatus(ImportStatus.Success, roundDataStatusElem);
+            setImportStatus(ImportStatus.SUCCESS, roundDataStatusElem);
         });
     } else {
         sendLocalFile('rounds', roundImportFileInput, roundDataStatusElem);
     }
-};
+});
 
-roundWebImportToggle.onclick = e => {
+roundWebImportToggle.addEventListener('click', e => {
     const fileInput = document.getElementById('local-round-input-wrapper');
     const urlInput = document.getElementById('web-file-input-wrapper');
 
@@ -34,4 +34,4 @@ roundWebImportToggle.onclick = e => {
 
     shownElem.style.display = '';
     hiddenElem.style.display = 'none';
-};
+});

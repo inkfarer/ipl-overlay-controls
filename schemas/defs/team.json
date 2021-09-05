@@ -12,6 +12,9 @@
             "logoUrl": {
                 "type": "string"
             },
+            "showLogo": {
+                "type": "boolean"
+            },
             "players": {
                 "type": "array",
                 "items": {
@@ -20,6 +23,6 @@
             }
         },
         "additionalProperties": true,
-        "required": ["id", "name", "players"]
+        "required": ["id", "name", "players", "showLogo"]
     }
 }

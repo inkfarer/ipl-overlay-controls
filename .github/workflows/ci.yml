@@ -3,6 +3,8 @@ name: CI
 on:
   push:
   pull_request:
+    branches: [ master ]
+    types: [ opened, closed ]
   workflow_dispatch:
 
 jobs:
@@ -41,7 +43,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Update NPM
-        run: npm install -g npm@7.7.0
+        run: npm install -g npm@7.19.1
 
       - name: Install NPM dependencies
         working-directory: ./nodecg/bundles/ipl-overlay-controls
@@ -50,6 +52,17 @@ jobs:
       - name: Run ESLint on source
         working-directory: ./nodecg/bundles/ipl-overlay-controls
         run: npm run lint
+
+      - name: Run tests
+        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        run: npm run test:ci
+
+      - name: Create test report
+        if: ${{ always() }}
+        uses: tanmen/jest-reporter@v1
+        with:
+          github-token: ${{ secrets['GITHUB_TOKEN'] }}
+          result-file: ./nodecg/bundles/ipl-overlay-controls/result.json
 
       - name: Set up GitHub for SSH access
         if: github.ref == 'refs/heads/master'

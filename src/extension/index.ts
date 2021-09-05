@@ -1,17 +1,19 @@
-import type { NodeCG } from 'nodecg/server';
-import * as nodecgContext from './util/nodecg';
+import type { NodeCG, NodeCGStatic } from 'nodecg/server';
+import * as nodecgContext from './helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export default (nodecg: NodeCG): void => {
+export default (nodecg: NodeCG & NodeCGStatic): void => {
     nodecgContext.set(nodecg);
 
-    require('./music');
-    require('./gameWinnerSetter');
-    require('./tournamentImporter');
-    require('./roundImporter');
-    require('./fileImport');
-    require('./highlightedMatches');
+    require('./importers/music');
+    require('./importers/tournamentImporter');
+    require('./importers/roundImporter');
+    require('./importers/fileImport');
+    require('./importers/highlightedMatches');
+    require('./replicants/activeRound');
+    require('./replicants/nextRound');
+    require('./replicants/tournamentData');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -26,7 +28,7 @@ export default (nodecg: NodeCG): void => {
         predictionStore.value.enablePrediction = false;
     } else {
         radiaSettings.value.enabled = true;
-        require('./radia');
-        require('./predictions');
+        require('./importers/casters');
+        require('./importers/predictions');
     }
 };

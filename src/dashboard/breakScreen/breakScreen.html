@@ -25,8 +25,8 @@
                     <input
                         id="next-stage-hour-input"
                         class="main-update-reminder"
-                        type="number"
-                        value="0"
+                        value="00"
+                        pattern="[0-9]{2}"
                     />
                 </div>
                 <span style="margin-top: 20px">:</span>
@@ -35,8 +35,8 @@
                     <input
                         id="next-stage-minute-input"
                         class="main-update-reminder"
-                        type="number"
-                        value="0"
+                        value="00"
+                        pattern="[0-9]{2}"
                     />
                 </div>
                 <div class="timer-container-day">
@@ -63,56 +63,14 @@
             </button>
         </div>
 
-        <div class="space">
+        <div class="space small-scene-toggle">
             <div class="title">Teams</div>
-            <div class="show-hide-space">
-                <button id="show-teams-scene-btn" class="green">Show</button>
-            </div>
-            <div class="layout horizontal max-width">
-                <div class="select-container">
-                    <label for="next-team-a-selector">Next Team A</label>
-                    <select
-                        id="next-team-a-selector"
-                        class="team-selector teams-update-reminder"
-                    ></select>
-                    <div class="layout horizontal">
-                        <input type="checkbox" id="team-a-image-toggle" />
-                        <label for="team-a-image-toggle" class="white-label"
-                            >Show image</label
-                        >
-                    </div>
-                </div>
-                <div class="select-container">
-                    <label for="next-team-b-selector">Next Team B</label>
-                    <select
-                        id="next-team-b-selector"
-                        class="team-selector teams-update-reminder"
-                    ></select>
-                    <div class="layout horizontal">
-                        <input type="checkbox" id="team-b-image-toggle" />
-                        <label for="team-b-image-toggle" class="white-label"
-                            >Show image</label
-                        >
-                    </div>
-                </div>
-            </div>
-            <button id="update-next-teams-btn" class="blue max-width">
-                update
-            </button>
+            <button id="show-teams-scene-btn" class="green">Show</button>
         </div>
 
-        <div class="space">
+        <div class="space small-scene-toggle">
             <div class="title">Stages</div>
-            <div class="show-hide-space">
-                <button id="show-stages-scene-btn" class="green">Show</button>
-            </div>
-            <div class="layout vertical">
-                <label for="round-selector">Round</label>
-                <select id="round-selector" class="round-selector"></select>
-            </div>
-            <button id="current-round-update-btn" class="max-width">
-                Update
-            </button>
+            <button id="show-stages-scene-btn" class="green">Show</button>
         </div>
     </body>
 </html>

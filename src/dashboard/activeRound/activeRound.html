@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div class="layout horizontal center-horizontal">
+    <div style="width: 50%">
+        <div class="space layout message info" id="round-data-info">
+            <i class="icon fas fa-info-circle"></i>
+            <div class="content">
+
+            </div>
+        </div>
+        <div class="space">
+            <div class="layout horizontal max-width">
+                <div class="select-container">
+                    <label for="team-a-selector">Team A</label>
+                    <select id="team-a-selector" class="team-selector scoreboard-update-warning"></select>
+                </div>
+                <div class="select-container">
+                    <label for="team-b-selector">Team B</label>
+                    <select id="team-b-selector" class="team-selector scoreboard-update-warning"></select>
+                </div>
+            </div>
+            <div class="layout horizontal max-width">
+                <input type="checkbox" id="show-team-a-image">
+                <label for="show-team-a-image" class="white-label">Show image</label>
+                <input type="checkbox" id="show-team-b-image">
+                <label for="show-team-b-image" class="white-label">Show image</label>
+            </div>
+            <div class="layout horizontal max-width color-display-wrapper">
+                <div class="color-display" id="team-a-color-display" style="background-color: black"></div>
+                <div class="color-display" id="team-b-color-display" style="background-color: white"></div>
+            </div>
+            <div>
+                <label for="round-selector">Round</label>
+                <select id="round-selector" class="round-selector"></select>
+            </div>
+            <button id="update-active-round-button" class="max-width">update</button>
+        </div>
+    </div>
+</div>
+<div class="space">
+    <div id="round-name" class="title text-center">Round Name</div>
+    <div id="toggles"></div>
+    <div class="layout horizontal center-vertical center-horizontal" style="margin-top: 5px">
+        <button id="btn-reset" data-requires-confirmation>reset</button>
+        <button id="update-round">update</button>
+        <div style="margin-left: 5px">
+            <input type="checkbox" id="enable-color-edit-toggle" />
+            <label for="enable-color-edit-toggle" class="white-label big-label">
+                Edit colors
+            </label>
+        </div>
+    </div>
+</div>
+</body>
+</html>

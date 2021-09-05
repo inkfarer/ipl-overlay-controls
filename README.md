@@ -26,7 +26,7 @@ ipl-overlay-controls for your own graphics.
   Example: `nodecg install inkfarer/ipl-overlay-controls#1.3.2`
 
   Find a list of the repository's releases [here](https://github.com/inkfarer/ipl-overlay-controls/releases). You can
-  see the tag name next to the commit hash, located on the left hand side of the page on desktop.
+  see the tag name next to the commit hash, located on the left-hand side of the page on desktop.
 
 7. Configure the bundle at `<nodecg>/cfg/ipl-overlay-controls.json`. It should contain the following info:
 

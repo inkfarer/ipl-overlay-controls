@@ -1,6 +1,6 @@
 {
     "name": "ipl-overlay-controls",
-    "version": "2.7.0",
+    "version": "3.0.0",
     "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
     "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
     "author": {
@@ -22,19 +22,22 @@
         "cleanbuild": "npm run clean && npm run build",
         "start": "node ../..",
         "watch": "webpack -w",
-        "schema-types": "nodecg schema-types -o ./schemas",
+        "schema-types": "nodecg schema-types",
         "lint": "eslint ./src",
         "fix": "eslint ./src --fix",
-        "devbuild": "webpack"
+        "devbuild": "webpack",
+        "test": "jest",
+        "test:update": "jest -u",
+        "test:ci": "jest --json --outputFile=result.json --testLocationInResults"
     },
     "nodecg": {
         "compatibleRange": "^1.7.0",
         "dashboardPanels": [
             {
                 "name": "scoring",
-                "title": "Scoring",
+                "title": "Scoreboard",
                 "width": 2,
-                "file": "scoring.html",
+                "file": "scoreboard.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
@@ -55,10 +58,18 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "currentround",
+                "name": "activeround",
                 "title": "Current Round",
                 "width": 4,
-                "file": "currentRound.html",
+                "file": "activeRound.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
+                "name": "nextround",
+                "title": "Upcoming Round",
+                "width": 2,
+                "file": "nextRound.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
@@ -87,20 +98,6 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "createPredictionDialog",
-                "title": "",
-                "width": 3,
-                "file": "createPredictionDialog.html",
-                "dialog": true
-            },
-            {
-                "name": "resolvePredictionDialog",
-                "title": "",
-                "width": 3,
-                "file": "resolvePredictionDialog.html",
-                "dialog": true
-            },
-            {
                 "name": "battlefyimport",
                 "title": "Import data",
                 "width": 2,
@@ -123,6 +120,20 @@
                 "file": "settings.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
+            },
+            {
+                "name": "createPredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "createPredictionDialog.html",
+                "dialog": true
+            },
+            {
+                "name": "resolvePredictionDialog",
+                "title": "",
+                "width": 3,
+                "file": "resolvePredictionDialog.html",
+                "dialog": true
             }
         ]
     },
@@ -136,6 +147,8 @@
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
+        "lodash": "^4.17.21",
+        "luxon": "^2.0.1",
         "semver": "^7.3.5"
     },
     "devDependencies": {
@@ -144,7 +157,12 @@
         "@babel/preset-typescript": "^7.13.0",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
+        "@types/jest": "^26.0.24",
+        "@types/jest-when": "^2.7.3",
+        "@types/lodash": "^4.14.171",
+        "@types/luxon": "^1.27.1",
         "@types/node": "^15.12.1",
+        "@types/semver": "^7.3.7",
         "@types/webpack": "^5.28.0",
         "@types/webpack-livereload-plugin": "^2.3.2",
         "@typescript-eslint/eslint-plugin": "^4.26.0",
@@ -158,9 +176,12 @@
         "eslint-plugin-import": "^2.23.4",
         "globby": "^11.0.3",
         "html-webpack-plugin": "^5.3.1",
+        "jest": "^27.0.6",
+        "jest-when": "^3.3.1",
         "json-schema-to-typescript": "^10.1.4",
         "style-loader": "^2.0.0",
         "trash-cli": "^4.0.0",
+        "ts-jest": "^27.0.4",
         "ts-node": "^10.0.0",
         "tsconfig-paths-webpack-plugin": "^3.5.1",
         "typescript": "^4.3.2",
@@ -168,5 +189,12 @@
         "webpack-cli": "^4.7.0",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-node-externals": "^3.0.0"
+    },
+    "jest": {
+        "projects": [
+            "<rootDir>/src/dashboard/jest.config.ts",
+            "<rootDir>/src/extension/jest.config.ts",
+            "<rootDir>/src/helpers/jest.config.ts"
+        ]
     }
 }

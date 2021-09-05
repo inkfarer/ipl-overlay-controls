@@ -6,67 +6,13 @@
         "flavorText": {
             "type": "string"
         },
-        "colorInfo": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "index": {
-                    "type": "number"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "clrA": {
-                    "type": "string"
-                },
-                "clrB": {
-                    "type": "string"
-                },
-                "categoryName": {
-                    "type": "string"
-                }
-            },
-            "required": ["index", "title", "clrA", "clrB", "categoryName"]
-        },
-        "swapColorOrder": {
+        "isVisible": {
             "type": "boolean"
-        },
-        "teamAInfo": {
-            "type": "object",
-            "$ref": "defs/team.json#/team"
-        },
-        "teamBInfo": {
-            "type": "object",
-            "$ref": "defs/team.json#/team"
         }
     },
+    "required": ["flavorText", "isVisible"],
     "default": {
         "flavorText": "Flavor Text!",
-        "colorInfo": {
-            "index": 0,
-            "title": "Green vs Grape",
-            "clrA": "#37FC00",
-            "clrB": "#7D28FC",
-            "categoryName": "Ranked Modes"
-        },
-        "swapColorOrder": false,
-        "teamAInfo": {
-            "id": "000",
-            "name": "Placeholder Team 1",
-            "players": [
-                {
-                    "name": "Placeholder Player 1"
-                }
-            ]
-        },
-        "teamBInfo": {
-            "id": "111",
-            "name": "Placeholder Team 2",
-            "players": [
-                {
-                    "name": "Placeholder Player 2"
-                }
-            ]
-        }
+        "isVisible": true
     }
 }

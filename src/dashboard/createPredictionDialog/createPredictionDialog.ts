@@ -1,19 +1,17 @@
-import { addDots, hideElement, showElement } from '../globalScripts';
-import { setImportStatus } from '../importStatus';
-import { ImportStatus } from 'types/importStatus';
+import { hideElement, showElement } from '../helpers/elemHelper';
+import { addDots } from '../helpers/stringHelper';
+import { setImportStatus } from '../helpers/importStatusHelper';
+import { ImportStatus } from 'types/enums/importStatus';
 import { FieldValidity } from './types/fieldValidity';
-import { NextTeams } from 'schemas';
+import { NextRound } from 'schemas';
 
 const fieldValidity: FieldValidity = {};
 
-const nextTeams = nodecg.Replicant<NextTeams>('nextTeams');
+const nextRound = nodecg.Replicant<NextRound>('nextRound');
 const predictionCreateStatusElem = document.getElementById('prediction-create-status');
 
-const predictionNameLabel = document.getElementById('prediction-name-label');
 const predictionNameInput = document.getElementById('prediction-name-input') as HTMLInputElement;
-const optionALabel = document.getElementById('prediction-option-a-label');
 const optionAInput = document.getElementById('prediction-option-a-input') as HTMLInputElement;
-const optionBLabel = document.getElementById('prediction-option-b-label');
 const optionBInput = document.getElementById('prediction-option-b-input') as HTMLInputElement;
 const predictionWindowInput = document.getElementById('prediction-window-input') as HTMLInputElement;
 
@@ -45,11 +43,11 @@ function checkButtonValidity() {
 /**
  * Add change listen to text field
  * @param input Input Element
- * @param label Label Element
  * @param name The name of the Label
  * @param fieldLimit Field limit for input
  */
-function addInputLengthLimit(input: HTMLInputElement, label: HTMLElement, name: string, fieldLimit: number) {
+function addInputLengthLimit(input: HTMLInputElement, name: string, fieldLimit: number) {
+    const label = document.querySelector(`label[for="${input.id}"]`) as HTMLLabelElement;
     validateFieldLength(input, label, name, fieldLimit);
 
     input.addEventListener('input', (event) => {
@@ -95,7 +93,7 @@ predictionWindowInput.addEventListener('input', function (event) {
 });
 
 createPredictionBtn.onclick = () => {
-    setImportStatus(ImportStatus.Loading, predictionCreateStatusElem);
+    setImportStatus(ImportStatus.LOADING, predictionCreateStatusElem);
     nodecg.sendMessage('postPrediction', {
         title: predictionNameInput.value,
         outcomes: [
@@ -106,21 +104,21 @@ createPredictionBtn.onclick = () => {
     }, (e) => {
         if (e) {
             console.error(e);
-            setImportStatus(ImportStatus.Failure, predictionCreateStatusElem);
+            setImportStatus(ImportStatus.FAILURE, predictionCreateStatusElem);
             messageElem.innerText = e.message;
             showElement(warningElem);
             return;
         }
-        setImportStatus(ImportStatus.Success, predictionCreateStatusElem);
+        setImportStatus(ImportStatus.SUCCESS, predictionCreateStatusElem);
     });
 };
 
 // Set team names
-nextTeams.on('change', newValue => {
-    setInputField(optionAInput, addDots(newValue.teamAInfo.name, 25));
-    setInputField(optionBInput, addDots(newValue.teamBInfo.name, 25));
+nextRound.on('change', newValue => {
+    setInputField(optionAInput, addDots(newValue.teamA.name, 25));
+    setInputField(optionBInput, addDots(newValue.teamB.name, 25));
 });
 
-addInputLengthLimit(predictionNameInput, predictionNameLabel, 'Name of Prediction', 45);
-addInputLengthLimit(optionAInput, optionALabel, 'Option A', 25);
-addInputLengthLimit(optionBInput, optionBLabel, 'Option B', 25);
+addInputLengthLimit(predictionNameInput, 'Name of Prediction', 45);
+addInputLengthLimit(optionAInput, 'Option A', 25);
+addInputLengthLimit(optionBInput, 'Option B', 25);

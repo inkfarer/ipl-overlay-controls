@@ -6,4 +6,4 @@ extension/**/*
 graphics/**/*
 node_modules/**/*
 schemas/**/*
-src/types/schemas/**/*
+src/types/schemas/*

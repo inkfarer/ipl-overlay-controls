@@ -1,64 +1,64 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-
     "type": "object",
+    "required": ["meta", "teams"],
+    "additionalProperties": false,
     "properties": {
         "meta": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": "string"
                 },
                 "source": {
                     "type": "string",
-                    "default": "None"
+                    "enum": ["SMASHGG", "BATTLEFY", "UPLOAD", "UNKNOWN"]
                 },
                 "name": {
                     "type": "string"
-                },
-                "stages": {
-                    "description": "Stage/Bracket ID used by provider",
-                    "type": ["array", "null"],
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string",
-                                "description": "Name of stage/bracket"
-                            },
-                            "id": {
-                                "type": "string",
-                                "description": "ID of stage/bracket"
-                            },
-                            "bracketType": {
-                                "type": "string",
-                                "description": "The bracket type, swiss|elimination etc"
-                            }
-                        }
-                    },
-                    "default": null
                 }
             },
             "required": ["id", "source"]
         },
-        "data": {
+        "teams": {
             "type": "array",
             "items": {
                 "$ref": "defs/team.json#/team"
             }
+        },
+        "stages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "id", "type"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["SWISS", "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION", "ROUND_ROBIN", "LADDER"]
+                    }
+                }
+            }
         }
     },
-    "additionalItems": true,
     "default": {
         "meta": {
             "id": "No ID",
-            "source": "None",
+            "source": "UNKNOWN",
             "name": "No tournament"
         },
-        "data": [
+        "teams": [
             {
                 "id": "AAA",
                 "name": "Placeholder Team A",
+                "showLogo": true,
                 "players": [
                     {
                         "name": "Player 1"
@@ -71,6 +71,7 @@
             {
                 "id": "BBB",
                 "name": "Placeholder Team B",
+                "showLogo": true,
                 "players": [
                     {
                         "name": "Player 3"

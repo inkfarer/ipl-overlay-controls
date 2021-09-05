@@ -3,22 +3,17 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-        "hour": {
-            "type": "number",
-            "default": 0
+        "startTime": {
+            "type": "string",
+            "format": "date-time"
         },
-        "minute": {
-            "type": "number",
-            "default": 0
-        },
-        "day": {
-            "type": "number",
-            "default": 1
-        },
-        "month": {
-            "type": "number",
-            "default": 1
+        "isVisible": {
+            "type": "boolean"
         }
     },
-    "required": ["hour", "minute", "day", "month"]
+    "required": ["startTime", "isVisible"],
+    "default": {
+        "startTime": "1970-01-01T00:00:00+00:00",
+        "isVisible": false
+    }
 }
