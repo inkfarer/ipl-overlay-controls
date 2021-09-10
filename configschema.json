@@ -23,6 +23,7 @@
             "additionalProperties": false,
             "properties": {
                 "url": { "type": "string" },
+                "socketUrl": { "type": "string" },
                 "authentication": { "type": "string" }
             }
         }

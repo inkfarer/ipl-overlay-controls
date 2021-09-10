@@ -1,24 +1,94 @@
 import * as nodecgContext from '../helpers/nodecg';
-import { PredictionStore, RadiaSettings } from 'schemas';
+import { Configschema, PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { PredictionResponse } from 'types/prediction';
-import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
-import { PredictionStatus } from 'types/enums/predictionStatus';
 import {
-    hasPredictionSupport,
-    getPredictions,
-    updatePrediction,
-    createPrediction
-} from './clients/radiaClient';
+    PredictionBeginEvent, PredictionEndEvent, PredictionLockEvent, PredictionProgressEvent, PredictionResponse
+} from 'types/prediction';
+import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
+import { createPrediction, getPredictions, hasPredictionSupport, updatePrediction } from './clients/radiaClient';
+import WebSocket from 'ws';
 import { PredictionDataMapper } from './mappers/predictionDataMapper';
+import { RadiaSocketMessage } from '../types/radiaApi';
+import { DateTime } from 'luxon';
+import isEmpty from 'lodash/isEmpty';
 
 const nodecg = nodecgContext.get();
 
+const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
-let predictionFetchErrorCount = 0;
-let predictionFetchInterval: NodeJS.Timeout;
+let socket: WebSocket;
+
+function initSocket(guildId: string): void {
+    if (isEmpty(radiaConfig.socketUrl)) {
+        nodecg.log.warn('Bundle configuration is missing "radia.socketUrl" property! Predictions may not work as expected.');
+        return;
+    }
+
+    if (socket && socket.readyState !== WebSocket.CLOSED) {
+        socket.close();
+    }
+
+    socket = new WebSocket(`${radiaConfig.socketUrl}/events/guild/${guildId}`,
+        { headers: { Authorization: radiaConfig.authentication } });
+
+    socket.on('open', () => {
+        predictionStore.value.socketOpen = true;
+    });
+
+    socket.on('error', err => {
+        const messageParts = [];
+        if ('code' in err) {
+            messageParts.push(`Code: ${(err as Error & { code: string }).code}`);
+        }
+        if (err.message) {
+            messageParts.push(`Message: ${err.message}`);
+        }
+
+        nodecg.log.error(`Received error from Radia websocket. ${messageParts.join(', ')}`);
+    });
+
+    socket.on('close', () => {
+        predictionStore.value.socketOpen = false;
+    });
+
+    socket.on('message', rawMsg => {
+        const msg = JSON.parse(rawMsg.toString()) as RadiaSocketMessage;
+
+        if (!msg.subscription) return;
+
+        const validPredictionTypes = [
+            'channel.prediction.begin',
+            'channel.prediction.progress',
+            'channel.prediction.lock',
+            'channel.prediction.end'];
+        if (!validPredictionTypes.includes(msg.subscription.type)) return;
+
+        const predictionModificationTime = DateTime.fromISO(predictionStore.value.modificationTime);
+        const messageTimestamp = DateTime.fromISO(msg.subscription.created_at);
+        if (predictionModificationTime > messageTimestamp) return;
+        predictionStore.value.modificationTime = msg.subscription.created_at;
+
+        switch (msg.subscription.type) {
+            case 'channel.prediction.begin':
+                predictionStore.value.currentPrediction
+                    = PredictionDataMapper.fromBeginEvent(msg.event as PredictionBeginEvent);
+                break;
+            case 'channel.prediction.progress':
+                predictionStore.value.currentPrediction
+                    = PredictionDataMapper.fromProgressEvent(msg.event as PredictionProgressEvent);
+                break;
+            case 'channel.prediction.lock':
+                predictionStore.value.currentPrediction
+                    = PredictionDataMapper.fromLockEvent(msg.event as PredictionLockEvent);
+                break;
+            case 'channel.prediction.end':
+                predictionStore.value.currentPrediction = PredictionDataMapper
+                    .applyEndEvent(msg.event as PredictionEndEvent, predictionStore.value.currentPrediction);
+        }
+    });
+}
 
 radiaSettings.on('change', async (newValue) => {
     const predictionsSupported = await hasPredictionSupport(newValue.guildID);
@@ -26,38 +96,13 @@ radiaSettings.on('change', async (newValue) => {
 
     // If predictions are supported, fetch them
     if (predictionsSupported) {
+        initSocket(newValue.guildID);
         try {
             const guildPredictions = await getPredictions(newValue.guildID);
             assignPredictionData(guildPredictions[0]);
         } catch (e) {
             nodecg.log.error(e.toString());
         }
-    }
-});
-
-predictionStore.on('change', newValue => {
-    if (newValue.currentPrediction?.status === PredictionStatus.ACTIVE && predictionFetchInterval == null) {
-        predictionFetchInterval = setInterval(async () => {
-            try {
-                const guildPredictions = await getPredictions(radiaSettings.value.guildID);
-                assignPredictionData(guildPredictions[0]);
-                predictionFetchErrorCount = 0;
-            } catch (e) {
-                nodecg.log.error(e.toString());
-
-                // stop fetching if we get too many errors
-                predictionFetchErrorCount++;
-                if (predictionFetchErrorCount >= 3) {
-                    clearInterval(predictionFetchInterval);
-                    predictionFetchInterval = undefined;
-                    nodecg.log.warn('Got too many errors fetching prediction data.');
-                }
-            }
-        }, 25000);
-    } else if (newValue.currentPrediction?.status !== PredictionStatus.ACTIVE && predictionFetchInterval != null) {
-        predictionFetchErrorCount = 0;
-        clearInterval(predictionFetchInterval);
-        predictionFetchInterval = undefined;
     }
 });
 

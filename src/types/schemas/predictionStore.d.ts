@@ -10,6 +10,8 @@ export interface PredictionStore {
 	 * If Predictions should be enabled for current settings
 	 */
 	enablePrediction: boolean;
+	socketOpen: boolean;
+	modificationTime?: string;
 	currentPrediction?: Prediction;
 }
 /**
@@ -39,18 +41,11 @@ export interface Prediction {
 	/**
 	 * ID of winning outcome
 	 */
-	winningOutcome: string | null;
+	winningOutcome?: string;
 	/**
 	 * Array of possible outcomes for the Prediction
 	 */
-	outcomes: {
-		id: string;
-		title: string;
-		users: number;
-		pointsUsed: number;
-		topPredictors: {id: string; login: string; username: string; pointsUsed: number; pointsWon: number}[];
-		color: 'BLUE' | 'PINK';
-	}[];
+	outcomes: Outcome[];
 	/**
 	 * Total duration for the Prediction (in seconds)
 	 */
@@ -60,15 +55,62 @@ export interface Prediction {
 	 */
 	status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
 	/**
-	 * UTC timestamp for the Prediction’s start time
+	 * UTC timestamp for the Prediction's start time
 	 */
-	createdAt: string;
+	creationTime: string;
 	/**
-	 * UTC timestamp for when the Prediction ended, null if ACTIVE
+	 * UTC timestamp for when the Prediction ends
 	 */
-	endedAt: string | null;
+	endTime?: string;
 	/**
-	 * UTC timestamp for when the Prediction was locked, null if not LOCKED
+	 * UTC timestamp for when the Prediction locks
 	 */
-	lockedAt: string | null;
+	lockTime?: string;
+}
+export interface Outcome {
+	/**
+	 * Twitch ID of prediction Outcome
+	 */
+	id: string;
+	/**
+	 * Text displayed for outcome
+	 */
+	title: string;
+	/**
+	 * Number of unique users that chose the outcome.
+	 */
+	users: number;
+	/**
+	 * Channel Points Spent on outcome
+	 */
+	pointsUsed: number;
+	/**
+	 * Users who were the top predictors
+	 */
+	topPredictors: {
+		/**
+		 * Twitch User ID
+		 */
+		id: string;
+		/**
+		 * Twitch User Login
+		 */
+		login: string;
+		/**
+		 * Twitch user Display Name
+		 */
+		username: string;
+		/**
+		 * Channel Points used to make bet
+		 */
+		pointsUsed: number;
+		/**
+		 * Channel points won from prediction
+		 */
+		pointsWon: number;
+	}[];
+	/**
+	 * Color for the outcome.
+	 */
+	color: 'BLUE' | 'PINK';
 }

@@ -19,6 +19,7 @@ export default (nodecg: NodeCG & NodeCGStatic): void => {
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
+    predictionStore.value.socketOpen = false;
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
