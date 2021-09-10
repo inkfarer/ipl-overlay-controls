@@ -5,6 +5,7 @@ import { PredictionStatus } from 'types/enums/predictionStatus';
 import { predictionStore } from './replicants';
 import difference from 'lodash/difference';
 import { Outcome } from 'schemas';
+import { pluralize } from '../helpers/stringHelper';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionAWrapper = document.getElementById('option-wrapper-a');
@@ -49,6 +50,7 @@ predictionStore.on('change', newValue => {
             hideElement(noPredictionDataMessage);
             const prediction = newValue.currentPrediction;
             const totalChannelPoints = prediction.outcomes[0].pointsUsed + prediction.outcomes[1].pointsUsed;
+            const totalPredictors = prediction.outcomes[0].users + prediction.outcomes[1].users;
 
             updatePredictionDataDisplay(
                 optionAWrapper,
@@ -64,7 +66,7 @@ predictionStore.on('change', newValue => {
                 'B');
 
             getPredictionStatusElem.innerText = prediction.status.toLowerCase();
-            predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
+            predictionPointCountElem.innerText = `${totalChannelPoints} points predicted by ${pluralize('user', totalPredictors)}`;
             predictionTitleElem.innerText = prediction.title;
 
             // Show/Hide necessary buttons

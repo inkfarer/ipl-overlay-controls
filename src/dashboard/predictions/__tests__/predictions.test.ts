@@ -90,8 +90,8 @@ describe('predictions', () => {
                 enablePrediction: true,
                 currentPrediction: {
                     outcomes: [
-                        { pointsUsed: 12000, title: 'Team A', id: '111' },
-                        { pointsUsed: 9999, title: 'Team Bravo', id: '222' }
+                        { pointsUsed: 12000, title: 'Team A', id: '111', users: 10 },
+                        { pointsUsed: 9999, title: 'Team Bravo', id: '222', users: 11 }
                     ],
                     status: 'ACTIVE',
                     title: 'Who will win?'
@@ -99,7 +99,7 @@ describe('predictions', () => {
                 socketOpen: true
             });
 
-            expect(elementById('prediction-point-count').innerText).toEqual('21999 points predicted');
+            expect(elementById('prediction-point-count').innerText).toEqual('21999 points predicted by 21 users');
             expect(elementById('get-prediction-status').innerText).toEqual('active');
             expect(elementById('prediction-title').innerText).toEqual('Who will win?');
 
