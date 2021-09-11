@@ -1,8 +1,14 @@
 import { Team } from 'types/team';
 import axios from 'axios';
-import { TournamentData } from 'schemas';
+import { HighlightedMatches, TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { SmashggEntrantsResponse, SmashggEvent, SmashggEventsResponse } from 'types/smashgg';
+import {
+    SmashggEntrantsResponse,
+    SmashggEvent,
+    SmashggEventsResponse,
+    SmashggTournamentStreamQueueResponse,
+    SmashggTournamentStreamQueueSlot
+} from 'types/smashgg';
 import isEmpty from 'lodash/isEmpty';
 
 export async function getSmashGGEvents(slug: string, token: string): Promise<SmashggEvent[]> {
@@ -178,3 +184,128 @@ async function getSmashGGPage(
         return { pageInfo };
     }
 }
+
+/**
+ * Creates a Team object from SmashGG slot data
+ * @param teamData Slot data for a team
+ */
+function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Team {
+    const team: Team = {
+        id: teamData.entrant.id.toString(10),
+        name: teamData.entrant.name,
+        showLogo: true,
+        seed: teamData.seed.groupSeedNum,
+        players: teamData.entrant.participants.map(participant => ({
+            name: isEmpty(participant.prefix)
+                ? participant.gamerTag : `${participant.prefix} ${participant.gamerTag}`,
+            pronouns: participant.user?.genderPronoun?.toLowerCase()
+        }))
+    };
+    // Check if team object is present
+    if (teamData.entrant.team !== null) {
+        team.logoUrl = teamData.entrant.team.images.find(image => image.type === 'profile')?.url;
+    }
+    return team;
+}
+
+/**
+ * Get Queued sets
+ * @param slug Tournament slug
+ * @param token Smash.gg token
+ * @param streamIDs List of streamID you want to get sets for. If blank, all all queued sets will be returned
+ */
+export async function getSmashGGStreamQueue(
+    slug: string,
+    token: string,
+    streamIDs: number[]
+): Promise<HighlightedMatches> {
+    const query = `query EventEntrants($slug: String!) {
+        tournament(slug: $slug) {
+            streamQueue {
+                stream{
+                  id
+                }
+                sets {
+                    id
+                    round
+                    event {
+                        name
+                        videogame{
+                          slug
+                        }
+                    }
+                    phaseGroup {
+                        displayIdentifier
+                    }
+                    slots {
+                        seed {
+                            groupSeedNum
+                        }
+                        entrant {
+                            id
+                            name
+                            team {
+                                images {
+                                    url
+                                    type
+                                }
+                            }
+                            participants {
+                                prefix
+                                gamerTag
+                                user {
+                                    genderPronoun
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
+    const response = await axios.post<SmashggTournamentStreamQueueResponse>(
+        'https://api.smash.gg/gql/alpha',
+        JSON.stringify({
+            query,
+            variables: {
+                slug,
+            }
+        }),
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    const highlightedStreamQueue: HighlightedMatches = [];
+    const { data } = response;
+
+    data.data.tournament.streamQueue.forEach(streamQueue => {
+        // If steamIDs is not empty && the streamIDs include this streamID for the queue
+        // or is streamIDs is empty
+        if ((streamIDs.length !== 0 && streamIDs.includes(streamQueue.stream.id)) || streamIDs.length === 0) {
+            streamQueue.sets.forEach(set => {
+                if (set.slots.length === 2) {  // If there's 2 teams
+                    highlightedStreamQueue.push({
+                        meta: {
+                            id: set.id.toString(),
+                            stageName: set.phaseGroup.displayIdentifier,
+                            round: set.round,
+                            match: 0,
+                            name: `${set.phaseGroup.displayIdentifier} Round ${set.round}`
+                        },
+                        teamA: streamQueueTeamCreator(set.slots[0]),
+                        teamB: streamQueueTeamCreator(set.slots[1])
+                    });
+                }
+            });
+        }
+    });
+    // console.log(highlightedStreamQueue);
+    return highlightedStreamQueue;
+}
+
