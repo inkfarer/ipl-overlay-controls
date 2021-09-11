@@ -12,6 +12,10 @@ export interface TournamentData {
 		sourceSpecificData?: {
 			smashgg?: {
 				tournamentId: number;
+				streams?: {
+					id: number;
+					streamName: string;
+				}[];
 				eventData: {
 					id: number;
 					name: string;

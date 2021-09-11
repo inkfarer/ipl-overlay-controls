@@ -31,6 +31,10 @@ export interface SmashggEntrantsResponse {
                 name: string
                 id: number
                 slug: string
+                streams: {
+                    id: number
+                    streamName: string
+                }[]
             }
             entrants: {
                 pageInfo: {

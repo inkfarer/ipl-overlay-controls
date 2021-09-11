@@ -26,6 +26,12 @@
                                 "tournamentId": {
                                     "type": "number"
                                 },
+                                "streams": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "defs/smashggStreams.json#/streams"
+                                    }
+                                },
                                 "eventData": {
                                     "type": "object",
                                     "additionalProperties": false,
