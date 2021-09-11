@@ -19,6 +19,7 @@ const stageSelectElem = document.getElementById('stage-selector') as MultiSelect
 const matchSelectElem = document.getElementById('match-selector') as HTMLSelectElement;
 const setNextMatchBtn = document.getElementById('set-next-match-btn') as HTMLButtonElement;
 const getMatchesBtn = document.getElementById('get-matches') as HTMLButtonElement;
+const matchLabelElem = document.getElementById('match-label') as HTMLLabelElement
 
 const unsupportedPlatformWarning = document.getElementById('unsupported-service-message');
 const noLoadedMatchesMessage = document.getElementById('load-matches-hint');
@@ -39,23 +40,52 @@ function getMatchFromID(id: string): Match | null {
 // When get match button is pressed
 getMatchesBtn.addEventListener('click', () => {
     setImportStatus(ImportStatus.LOADING, matchDataStatusElem);
-    const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
 
-    if (selectedStages.length > 0) {
-        // Send message to extension
-        nodecg.sendMessage('getHighlightedMatches', {
-            stages: selectedStages,
-            getAllStages: selectedStages.includes('AllStages')
-        }, (e, result) => {
-            // If we get an error
-            if (e) {
-                console.error(e);
-                setImportStatus(ImportStatus.FAILURE, matchDataStatusElem);
-                return;
+    switch (tournamentData.value.meta.source) {
+        case TournamentDataSource.BATTLEFY: {
+            const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => {
+                return option.value;
+            });
+
+            if (selectedStages.length > 0) {
+                // Send message to extension
+                nodecg.sendMessage('getHighlightedMatches', {
+                    stages: selectedStages,
+                    getAllStages: selectedStages.includes('AllStages')
+                }, (e, result) => {
+                    // If we get an error
+                    if (e) {
+                        console.error(e);
+                        setImportStatus(ImportStatus.FAILURE, matchDataStatusElem);
+                        return;
+                    }
+                    // If we get success
+                    setImportStatus(result.status, matchDataStatusElem);
+                });
             }
-            // If we get success
-            setImportStatus(result.status, matchDataStatusElem);
-        });
+            break;
+        }
+        case TournamentDataSource.SMASHGG: {
+            const selectedStreams: string[] = stageSelectElem.selectedOptions.map(option => {return option.value;});
+
+            const selectedID: number[] = [];
+            if (!selectedStreams.includes('AllStreams')) {
+                selectedStreams.forEach(value => {selectedID.push(parseInt(value));});
+            }
+            nodecg.sendMessage('getHighlightedMatches', {
+                streamIDs: selectedID
+            }, (e, result) => {
+                // If we get an error
+                if (e) {
+                    console.error(e);
+                    setImportStatus(ImportStatus.FAILURE, matchDataStatusElem);
+                    return;
+                }
+                // If we get success
+                setImportStatus(result.status, matchDataStatusElem);
+            });
+            break;
+        }
     }
 });
 
@@ -78,18 +108,30 @@ tournamentData.on('change', newValue => {
         showElement(loadMatchesSpace);
         hideElement(unsupportedPlatformWarning);
 
-        for (let i = 0; i < newValue.stages.length; i++) {
-            const element = newValue.stages[i];
-            if ([BracketType.SWISS,
-                BracketType.DOUBLE_ELIMINATION,
-                BracketType.SINGLE_ELIMINATION,
-                BracketType.ROUND_ROBIN].includes(element.type as BracketType)) {
+        switch (newValue.meta.source) {
+            case TournamentDataSource.BATTLEFY:
+                matchLabelElem.innerText = 'Bracket';
+                for (let i = 0; i < newValue.stages.length; i++) {
+                    const element = newValue.stages[i];
+                    if ([BracketType.SWISS,
+                        BracketType.DOUBLE_ELIMINATION,
+                        BracketType.SINGLE_ELIMINATION,
+                        BracketType.ROUND_ROBIN].includes(element.type as BracketType)) {
 
-                // if bracket type is supported, add to drop down
-                addSelector(addDots(element.name), 'stage-selector', element.id);
-            }
+                        // if bracket type is supported, add to drop down
+                        addSelector(addDots(element.name), 'stage-selector', element.id);
+                    }
+                }
+                addSelector('All Brackets', 'stage-selector', 'AllStages');
+                break;
+            case TournamentDataSource.SMASHGG:
+                matchLabelElem.innerText = 'Streams';
+                newValue.meta.sourceSpecificData.smashgg.streams.forEach(stream => {
+                    addSelector(addDots(stream.streamName), 'stage-selector', stream.id.toString());
+                });
+                addSelector('All Streams', 'stage-selector', 'AllStreams');
+                break;
         }
-        addSelector('All Brackets', 'stage-selector', 'AllStages');
     } else {
         hideElement(loadMatchesSpace);
         showElement(unsupportedPlatformWarning);
@@ -143,5 +185,5 @@ matchSelectElem.addEventListener('input', () => {
 addChangeReminder(document.querySelectorAll('.next-match-update-warning'), setNextMatchBtn);
 
 function canImportDataFrom(source: TournamentDataSource): boolean {
-    return [TournamentDataSource.BATTLEFY].includes(source);
+    return [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG].includes(source);
 }
