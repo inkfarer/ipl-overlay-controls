@@ -191,7 +191,7 @@ async function getSmashGGPage(
  */
 function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Team {
     const team: Team = {
-        id: teamData.entrant.id.toString(10),
+        id: teamData.entrant.id.toString(),
         name: teamData.entrant.name,
         showLogo: true,
         seed: teamData.seed.groupSeedNum,
@@ -289,7 +289,8 @@ export async function getSmashGGStreamQueue(
         // or is streamIDs is empty
         if ((streamIDs.length !== 0 && streamIDs.includes(streamQueue.stream.id)) || streamIDs.length === 0) {
             streamQueue.sets.forEach(set => {
-                if (set.slots.length === 2) {  // If there's 2 teams
+                // If there's 2 teams and neither of the objects are null
+                if (set.slots.length === 2 && !(set.slots.some(slot => slot.entrant === null))) {
                     highlightedStreamQueue.push({
                         meta: {
                             id: set.id.toString(),
@@ -305,7 +306,6 @@ export async function getSmashGGStreamQueue(
             });
         }
     });
-    // console.log(highlightedStreamQueue);
     return highlightedStreamQueue;
 }
 
