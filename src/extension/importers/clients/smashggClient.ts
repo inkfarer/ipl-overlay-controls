@@ -3,10 +3,7 @@ import axios from 'axios';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import {
-    SmashggEntrantsResponse,
-    SmashggEvent,
-    SmashggEventsResponse,
-    SmashggTournamentStreamQueueResponse,
+    SmashggEntrantsResponse, SmashggEvent, SmashggEventsResponse, SmashggTournamentStreamQueueResponse,
     SmashggTournamentStreamQueueSlot
 } from 'types/smashgg';
 import isEmpty from 'lodash/isEmpty';
@@ -190,7 +187,7 @@ async function getSmashGGPage(
  * @param teamData Slot data for a team
  */
 function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Team {
-    const team: Team = {
+    return {
         id: teamData.entrant.id.toString(),
         name: teamData.entrant.name,
         showLogo: true,
@@ -199,13 +196,9 @@ function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Tea
             name: isEmpty(participant.prefix)
                 ? participant.gamerTag : `${participant.prefix} ${participant.gamerTag}`,
             pronouns: participant.user?.genderPronoun?.toLowerCase()
-        }))
+        })),
+        logoUrl: teamData.entrant.team?.images?.find(image => image.type === 'profile')?.url
     };
-    // Check if team object is present
-    if (teamData.entrant.team !== null) {
-        team.logoUrl = teamData.entrant.team.images.find(image => image.type === 'profile')?.url;
-    }
-    return team;
 }
 
 /**
@@ -297,7 +290,8 @@ export async function getSmashGGStreamQueue(
         if (getAllStreams || streamIDs.includes(streamQueue.stream.id)) {
             streamQueue.sets.forEach(set => {
                 // If there's 2 teams and neither of the objects are null and matched the event we imported
-                if (set.slots.length === 2 && !(set.slots.some(slot => slot.entrant === null))
+                if (set.slots.length === 2
+                    && !(set.slots.some(slot => slot.entrant === null))
                     && set.event.id === eventID) {
                     highlightedStreamQueue.push({
                         meta: {

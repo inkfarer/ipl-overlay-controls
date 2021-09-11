@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSmashGGData, getSmashGGEvents } from '../smashggClient';
+import { getSmashGGData, getSmashGGEvents, getSmashGGStreamQueue } from '../smashggClient';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { SmashggEntrantsResponse } from 'types/smashgg';
 
@@ -437,6 +437,319 @@ describe('smashggClient', () => {
                 ]
             });
             expect(mockPost).toHaveBeenCalledTimes(3);
+        });
+    });
+
+    describe('getSmashGGStreamQueue', () => {
+        it('returns empty array if no streams are requested', async () => {
+            await expect(getSmashGGStreamQueue('slugslug', 'tokenboken', 111, [], false)).resolves.toEqual([]);
+            expect(mockPost).not.toHaveBeenCalled();
+        });
+
+        it('returns requested streams in the active event', async () => {
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        tournament: {
+                            streamQueue: [
+                                {
+                                    stream: {
+                                        id: 111
+                                    },
+                                    sets: [
+                                        {
+                                            id: 999,
+                                            round: '999',
+                                            phaseGroup: {
+                                                displayIdentifier: 'ID999',
+                                                phase: {
+                                                    name: 'Phase X'
+                                                }
+                                            },
+                                            identifier: 'Z',
+                                            event: {
+                                                id: 1234
+                                            },
+                                            slots: [
+                                                {
+                                                    entrant: {
+                                                        id: 123456,
+                                                        name: 'Entrant One',
+                                                        participants: [
+                                                            { prefix: 'EO', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'He/Him' }
+                                                            }
+                                                        ]
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 2
+                                                    }
+                                                },
+                                                {
+                                                    entrant: {
+                                                        id: 234234,
+                                                        name: 'Entrant Two',
+                                                        participants: [
+                                                            { prefix: 'ET', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'She/Her' }
+                                                            }
+                                                        ],
+                                                        team: {
+                                                            images: [
+                                                                {
+                                                                    type: 'profile',
+                                                                    url: 'smashgg://img'
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 3
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            id: 919,
+                                            round: '919',
+                                            phaseGroup: {
+                                                displayIdentifier: 'ID919',
+                                                phase: {
+                                                    name: 'Phase H'
+                                                }
+                                            },
+                                            identifier: 'G',
+                                            event: {
+                                                id: 12345
+                                            },
+                                            slots: [
+                                                {
+                                                    entrant: {
+                                                        id: 123456,
+                                                        name: 'Entrant One',
+                                                        participants: [
+                                                            { prefix: 'EO', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'He/Him' }
+                                                            }
+                                                        ]
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 2
+                                                    }
+                                                },
+                                                {
+                                                    entrant: {
+                                                        id: 234234,
+                                                        name: 'Entrant Two',
+                                                        participants: [
+                                                            { prefix: 'ET', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'She/Her' }
+                                                            }
+                                                        ],
+                                                        team: {
+                                                            images: [
+                                                                {
+                                                                    type: 'profile',
+                                                                    url: 'smashgg://img'
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 3
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            slots: [{ }]
+                                        }
+                                    ]
+                                },
+                                {
+                                    stream: {
+                                        id: 222
+                                    },
+                                    sets: [
+                                        {
+                                            id: 988,
+                                            round: '987',
+                                            identifier: 'I',
+                                            phaseGroup: {
+                                                displayIdentifier: 'ID988',
+                                                phase: {
+                                                    name: 'Phase R'
+                                                }
+                                            },
+                                            event: {
+                                                id: 1234
+                                            },
+                                            slots: [
+                                                {
+                                                    entrant: {
+                                                        id: 567567,
+                                                        name: 'Entrant One',
+                                                        participants: [
+                                                            { prefix: 'EO', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'He/Him' }
+                                                            }
+                                                        ]
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 2
+                                                    }
+                                                },
+                                                {
+                                                    entrant: {
+                                                        id: 789789,
+                                                        name: 'Entrant Two',
+                                                        participants: [
+                                                            { prefix: 'ET', gamerTag: 'Player One' },
+                                                            {
+                                                                gamerTag: 'Player Two',
+                                                                user: { genderPronoun: 'She/Her' }
+                                                            }
+                                                        ],
+                                                        team: {
+                                                            images: [
+                                                                {
+                                                                    type: 'profile',
+                                                                    url: 'smashgg://img'
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    seed: {
+                                                        groupSeedNum: 3
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            slots: [{ }]
+                                        }
+                                    ]
+                                },
+                                {
+                                    stream: {
+                                        id: 333
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            });
+
+            const result = await getSmashGGStreamQueue('slugslug', 'tokenboken', 1234, [111, 222], false);
+
+            expect(result).toEqual([{
+                meta: {
+                    id: '999',
+                    match: 0,
+                    name: 'Set Z - Round 999 - Pool ID999 - Phase X',
+                    round: '999',
+                    stageName: 'ID999'
+                },
+                teamA: {
+                    id: '123456',
+                    logoUrl: undefined,
+                    name: 'Entrant One',
+                    players: [
+                        {
+                            name: 'EO Player One',
+                            pronouns: undefined
+                        },
+                        {
+                            name: 'Player Two',
+                            pronouns: 'he/him'
+                        }
+                    ],
+                    seed: 2,
+                    showLogo: true
+                },
+                teamB: {
+                    id: '234234',
+                    logoUrl: 'smashgg://img',
+                    name: 'Entrant Two',
+                    players: [
+                        {
+                            name: 'ET Player One',
+                            pronouns: undefined
+                        },
+                        {
+                            name: 'Player Two',
+                            pronouns: 'she/her'
+                        }
+                    ],
+                    seed: 3,
+                    showLogo: true
+                }
+            }, {
+                meta: {
+                    id: '988',
+                    match: 0,
+                    name: 'Set I - Round 987 - Pool ID988 - Phase R',
+                    round: '987',
+                    stageName: 'ID988'
+                },
+                teamA: {
+                    id: '567567',
+                    logoUrl: undefined,
+                    name: 'Entrant One',
+                    players: [
+                        {
+                            name: 'EO Player One',
+                            pronouns: undefined
+                        },
+                        {
+                            name: 'Player Two',
+                            pronouns: 'he/him'
+                        }
+                    ],
+                    seed: 2,
+                    showLogo: true
+                },
+                teamB: {
+                    id: '789789',
+                    logoUrl: 'smashgg://img',
+                    name: 'Entrant Two',
+                    players: [
+                        {
+                            name: 'ET Player One',
+                            pronouns: undefined
+                        },
+                        {
+                            name: 'Player Two',
+                            pronouns: 'she/her'
+                        }
+                    ],
+                    seed: 3,
+                    showLogo: true
+                }
+            }]);
+            expect(mockPost).toHaveBeenCalledWith(
+                'https://api.smash.gg/gql/alpha',
+                expect.any(String),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: 'Bearer tokenboken'
+                    }
+                }
+            );
+            expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1])).toMatchSnapshot();
         });
     });
 });
