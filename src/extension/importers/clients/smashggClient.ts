@@ -213,11 +213,13 @@ function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Tea
  * @param slug Tournament slug
  * @param token Smash.gg token
  * @param streamIDs List of streamID you want to get sets for. If blank, all all queued sets will be returned
+ * @param eventID Event ID
  */
 export async function getSmashGGStreamQueue(
     slug: string,
     token: string,
-    streamIDs: number[]
+    streamIDs: number[],
+    eventID: number
 ): Promise<HighlightedMatches> {
     const query = `query EventEntrants($slug: String!) {
         tournament(slug: $slug) {
@@ -227,15 +229,17 @@ export async function getSmashGGStreamQueue(
                 }
                 sets {
                     id
+                    identifier
                     round
                     event {
+                        id
                         name
-                        videogame{
-                          slug
-                        }
                     }
                     phaseGroup {
                         displayIdentifier
+                        phase {
+                            name
+                        }
                     }
                     slots {
                         seed {
@@ -289,15 +293,16 @@ export async function getSmashGGStreamQueue(
         // or is streamIDs is empty
         if ((streamIDs.length !== 0 && streamIDs.includes(streamQueue.stream.id)) || streamIDs.length === 0) {
             streamQueue.sets.forEach(set => {
-                // If there's 2 teams and neither of the objects are null
-                if (set.slots.length === 2 && !(set.slots.some(slot => slot.entrant === null))) {
+                // If there's 2 teams and neither of the objects are null and matched the event we imported
+                if (set.slots.length === 2 && !(set.slots.some(slot => slot.entrant === null))
+                    && set.event.id === eventID) {
                     highlightedStreamQueue.push({
                         meta: {
                             id: set.id.toString(),
                             stageName: set.phaseGroup.displayIdentifier,
                             round: set.round,
                             match: 0,
-                            name: `${set.phaseGroup.displayIdentifier} Round ${set.round}`
+                            name: `${set.phaseGroup.phase.name}-${set.phaseGroup.displayIdentifier}-${set.identifier} | R${set.round}`
                         },
                         teamA: streamQueueTeamCreator(set.slots[0]),
                         teamB: streamQueueTeamCreator(set.slots[1])

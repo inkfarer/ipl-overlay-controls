@@ -98,15 +98,17 @@ export interface SmashggTournamentStreamQueueResponse {
                 }
                 sets: {
                     id: number
+                    identifier: string
                     round: number
                     event: {
+                        id: number
                         name: string
-                        videogame: {
-                            slug: string
-                        }
                     }
                     phaseGroup: {
                         displayIdentifier: string
+                        phase: {
+                            name: string
+                        }
                     },
                     slots: SmashggTournamentStreamQueueSlot[]
                 }[]

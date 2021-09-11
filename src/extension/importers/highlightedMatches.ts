@@ -51,7 +51,8 @@ nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb
             if ((!data.streamIDs)) {
                 return ack(new Error('Missing argument.'));
             }
-            getSmashGGStreamQueue(tournamentData.value.meta.id, smashGGKey, data.streamIDs).then(data => {
+            getSmashGGStreamQueue(tournamentData.value.meta.id, smashGGKey, data.streamIDs,
+                tournamentData.value.meta.sourceSpecificData.smashgg.eventData.id).then(data => {
                 if (data.length > 0) {
                     updateMatchReplicant(data);
                     return ack(null, {
