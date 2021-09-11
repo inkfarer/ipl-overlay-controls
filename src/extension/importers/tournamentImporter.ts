@@ -4,8 +4,9 @@ import * as nodecgContext from '../helpers/nodecg';
 import { TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
-import { getSmashGGData } from './clients/smashggClient';
+import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
 import { handleRawData, updateTeamDataReplicants } from './tournamentDataHelper';
+import { GetSmashggEventRequest } from 'types/messages/tournamentData';
 
 const nodecg = nodecgContext.get();
 
@@ -31,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
             case TournamentDataSource.BATTLEFY: {
                 const serviceData = await getBattlefyTournamentData(data.id);
                 updateTeamDataReplicants(serviceData);
-                ack(null, serviceData.meta.id);
+                ack(null, { id: serviceData.meta.id });
                 break;
             }
             case TournamentDataSource.SMASHGG: {
@@ -40,15 +41,19 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
                     break;
                 }
 
-                const serviceData = await getSmashGGData(data.id, smashGGKey);
-                updateTeamDataReplicants(serviceData);
-                ack(null, serviceData.meta.id);
-                break;
+                const events = await getSmashGGEvents(data.id, smashGGKey);
+
+                if (events.length === 1) {
+                    await getSmashggEventData(events[0].id);
+                    return ack(null, { id: data.id });
+                } else {
+                    return ack(null, { id: data.id, events });
+                }
             }
             case TournamentDataSource.UPLOAD: {
                 const serviceData = await getRawData(data.id);
                 updateTeamDataReplicants(serviceData);
-                ack(null, serviceData.meta.id);
+                ack(null, { id: serviceData.meta.id });
                 break;
             }
             default:
@@ -58,6 +63,16 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         ack(e);
     }
 });
+
+nodecg.listenFor('getSmashggEvent', async (data: GetSmashggEventRequest, ack: UnhandledListenForCb) => {
+    await getSmashggEventData(data.eventId);
+    ack(null, data.eventId);
+});
+
+async function getSmashggEventData(eventId: number): Promise<void> {
+    const serviceData = await getSmashGGData(eventId, smashGGKey);
+    updateTeamDataReplicants(serviceData);
+}
 
 async function getRawData(url: string): Promise<TournamentData> {
     const response = await axios.get(url);

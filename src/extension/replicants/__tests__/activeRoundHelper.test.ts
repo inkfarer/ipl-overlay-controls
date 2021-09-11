@@ -269,10 +269,12 @@ describe('activeRoundHelper', () => {
             };
             nodecg.replicants.activeRound.value = {
                 teamA: {
-                    score: 10
+                    score: 10,
+                    logoUrl: 'logo://team_one'
                 },
                 teamB: {
-                    score: 90
+                    score: 90,
+                    logoUrl: 'logo://team_two'
                 }
             };
 

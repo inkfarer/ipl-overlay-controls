@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { getSmashGGData } from '../smashggClient';
+import { getSmashGGData, getSmashGGEvents } from '../smashggClient';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import * as generateId from '../../../../helpers/generateId';
+import { SmashggEntrantsResponse } from 'types/smashgg';
 
 describe('smashggClient', () => {
     jest.mock('axios');
@@ -13,76 +13,177 @@ describe('smashggClient', () => {
         axios.post = mockPost;
     });
 
-    describe('getSmashGGData', () => {
-        it('fetches data from Smash.gg and turns it into our expected format', async () => {
-            jest.spyOn(generateId, 'generateId')
-                .mockReturnValueOnce('111111')
-                .mockReturnValueOnce('222222');
-
+    describe('getSmashGGEvents', () => {
+        it('fetches events from Smash.gg', async () => {
             mockPost.mockResolvedValue({
                 data: {
                     data: {
                         tournament: {
-                            name: 'Cool Tournament',
-                            teams: {
-                                pageInfo: {
-                                    totalPages: 1
-                                },
-                                nodes: [
-                                    {
-                                        name: 'Team One',
-                                        entrant: {
-                                            participants: [
-                                                { gamerTag: 'Player One' },
-                                                { gamerTag: 'Player Two' }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        name: 'Team ???',
-                                        entrant: undefined
-                                    },
-                                    {
-                                        name: 'Team Two',
-                                        entrant: {
-                                            participants: [
-                                                { gamerTag: 'Player Three' },
-                                                { gamerTag: 'Player Four' }
-                                            ]
-                                        }
+                            events: [
+                                {
+                                    id: 123431423,
+                                    name: 'Cool Event',
+                                    videogame: {
+                                        displayName: 'Splatoon 2'
                                     }
-                                ]
-                            }
+                                },
+                                {
+                                    id: 238470278,
+                                    name: 'Cool Smash',
+                                    videogame: {
+                                        displayName: 'Ultimate'
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
             });
 
-            const result = await getSmashGGData('ggtourney', '149083257830574');
+            const result = await getSmashGGEvents('event', 'apdjwiadhjwio');
+
+            expect(result).toEqual([
+                {
+                    id: 123431423,
+                    name: 'Cool Event',
+                    game: 'Splatoon 2'
+                },
+                {
+                    id: 238470278,
+                    name: 'Cool Smash',
+                    game: 'Ultimate'
+                }
+            ]);
+            expect(mockPost).toHaveBeenCalledWith(
+                'https://api.smash.gg/gql/alpha',
+                expect.any(String),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: 'Bearer apdjwiadhjwio'
+                    }
+                }
+            );
+            expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1])).toMatchSnapshot();
+        });
+    });
+
+    describe('getSmashGGData', () => {
+        it('fetches data from Smash.gg and turns it into our expected format', async () => {
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        event: {
+                            id: 1234567,
+                            name: 'Splatoon Two',
+                            videogame: {
+                                displayName: 'Splatoon 2'
+                            },
+                            tournament: {
+                                name: 'Cool Tournament',
+                                id: 654423,
+                                slug: 'ct'
+                            },
+                            entrants: {
+                                pageInfo: {
+                                    total: 10,
+                                    totalPages: 1
+                                },
+                                nodes: [
+                                    {
+                                        id: 1111111,
+                                        name: 'Team One',
+                                        team: {
+                                            images: [
+                                                {
+                                                    url: 'smashgg://img',
+                                                    type: 'profile'
+                                                }
+                                            ]
+                                        },
+                                        participants: [
+                                            {
+                                                id: 12345,
+                                                prefix: 'TO',
+                                                gamerTag: 'Player One',
+                                                user: {
+                                                    genderPronoun: 'he/him'
+                                                }
+                                            },
+                                            {
+                                                id: 23456,
+                                                gamerTag: 'Player Two',
+                                                user: { }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 2222222,
+                                        name: 'Team Two',
+                                        team: {
+                                            images: []
+                                        },
+                                        participants: [
+                                            {
+                                                id: 45678,
+                                                gamerTag: 'Player Three',
+                                                user: { }
+                                            },
+                                            {
+                                                id: 23456,
+                                                prefix: 'TT',
+                                                gamerTag: 'Player Four',
+                                                user: {
+                                                    genderPronoun: 'She/Her'
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                } as SmashggEntrantsResponse
+            });
+
+            const result = await getSmashGGData(123123, '149083257830574');
 
             expect(result).toEqual({
                 meta: {
-                    id: 'ggtourney',
+                    id: 'ct',
                     name: 'Cool Tournament',
-                    source: TournamentDataSource.SMASHGG
+                    source: TournamentDataSource.SMASHGG,
+                    sourceSpecificData: {
+                        smashgg: {
+                            eventData: {
+                                game: 'Splatoon 2',
+                                id: 1234567,
+                                name: 'Splatoon Two'
+                            },
+                            tournamentId: 654423
+                        }
+                    }
                 },
                 teams: [
                     {
-                        id: '111111',
+                        id: '1111111',
                         name: 'Team One',
+                        logoUrl: 'smashgg://img',
                         showLogo: true,
                         players: [
-                            { name: 'Player One' },
-                            { name: 'Player Two' }
+                            { name: 'TO Player One', pronouns: 'he/him' },
+                            { name: 'Player Two', pronouns: undefined }
                         ]
                     },
                     {
-                        id: '222222',
+                        id: '2222222',
                         name: 'Team Two',
                         showLogo: true,
+                        logoUrl: undefined,
                         players: [
-                            { name: 'Player Three' },
-                            { name: 'Player Four' }
+                            { name: 'Player Three', pronouns: undefined },
+                            { name: 'TT Player Four', pronouns: 'she/her' }
                         ]
                     }
                 ]
@@ -98,131 +199,242 @@ describe('smashggClient', () => {
                     }
                 }
             );
-            expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1]))
-                .toEqual('{"query":"query Entrants($slug: String!, $page: Int!, $perPage: Int!) '
-                    + '{ tournament(slug: $slug) { id name teams(query: { page: $page perPage: $perPage })'
-                    + ' { pageInfo { total totalPages } nodes { id name entrant { id participants { id gam'
-                    + 'erTag } } } } } }","variables":{"slug":"ggtourney","page":1,"perPage":"50"}}');
+            expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1])).toMatchSnapshot();
         });
 
         it('fetches data multiple times if more than one page is available', async () => {
-            jest.spyOn(generateId, 'generateId')
-                .mockReturnValueOnce('111111')
-                .mockReturnValueOnce('222222')
-                .mockReturnValueOnce('333333');
-
             mockPost.mockResolvedValueOnce({
                 data: {
                     data: {
-                        tournament: {
-                            name: 'Cool Tournament',
-                            teams: {
+                        event: {
+                            id: 1234567,
+                            name: 'Splatoon Two',
+                            videogame: {
+                                displayName: 'Splatoon 2'
+                            },
+                            tournament: {
+                                name: 'Cool Tournament',
+                                id: 654423,
+                                slug: 'ct'
+                            },
+                            entrants: {
                                 pageInfo: {
+                                    total: 10,
                                     totalPages: 3
                                 },
                                 nodes: [
                                     {
+                                        id: 1111111,
                                         name: 'Team One',
-                                        entrant: {
-                                            participants: [
-                                                { gamerTag: 'Player One' },
-                                                { gamerTag: 'Player Two' }
+                                        team: {
+                                            images: [
+                                                {
+                                                    url: 'smashgg://img',
+                                                    type: 'profile'
+                                                }
                                             ]
-                                        }
-                                    },
+                                        },
+                                        participants: [
+                                            {
+                                                id: 12345,
+                                                prefix: 'TO',
+                                                gamerTag: 'Player One',
+                                                user: {
+                                                    genderPronoun: 'he/him'
+                                                }
+                                            },
+                                            {
+                                                id: 23456,
+                                                gamerTag: 'Player Two',
+                                                user: { }
+                                            }
+                                        ]
+                                    }
                                 ]
                             }
                         }
                     }
-                }
+                } as SmashggEntrantsResponse
             }).mockResolvedValueOnce({
                 data: {
                     data: {
-                        tournament: {
-                            name: 'Cool Tournament',
-                            teams: {
+                        event: {
+                            id: 1234567,
+                            name: 'Splatoon Two',
+                            videogame: {
+                                displayName: 'Splatoon 2'
+                            },
+                            tournament: {
+                                name: 'Cool Tournament',
+                                id: 654423,
+                                slug: 'ct'
+                            },
+                            entrants: {
                                 pageInfo: {
+                                    total: 10,
                                     totalPages: 3
                                 },
                                 nodes: [
                                     {
-                                        name: 'Team ???',
-                                        entrant: undefined
-                                    },
-                                    {
+                                        id: 345345345,
                                         name: 'Cool Team',
-                                        entrant: {
-                                            participants: [
-                                                { gamerTag: 'Player One' },
-                                                { gamerTag: 'Player Two' }
+                                        team: {
+                                            images: [
+                                                {
+                                                    url: 'smashgg://img_cool',
+                                                    type: 'profile'
+                                                }
                                             ]
-                                        }
+                                        },
+                                        participants: [
+                                            {
+                                                id: 12345,
+                                                prefix: 'CT',
+                                                gamerTag: 'Player One',
+                                                user: {
+                                                    genderPronoun: 'he/him'
+                                                }
+                                            },
+                                            {
+                                                id: 23456,
+                                                gamerTag: 'Player Two',
+                                                user: { }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 56756757,
+                                        name: 'Team Three',
+                                        team: {
+                                            images: []
+                                        },
+                                        participants: [
+                                            {
+                                                id: 45678,
+                                                gamerTag: 'Player Three',
+                                                user: { }
+                                            },
+                                            {
+                                                id: 23456,
+                                                prefix: 'TT',
+                                                gamerTag: 'Player Four',
+                                                user: {
+                                                    genderPronoun: 'She/Her'
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         }
                     }
-                }
+                } as SmashggEntrantsResponse
             }).mockResolvedValueOnce({
                 data: {
                     data: {
-                        tournament: {
-                            name: 'Cool Tournament',
-                            teams: {
+                        event: {
+                            id: 1234567,
+                            name: 'Splatoon Two',
+                            videogame: {
+                                displayName: 'Splatoon 2'
+                            },
+                            tournament: {
+                                name: 'Cool Tournament',
+                                id: 654423,
+                                slug: 'ct'
+                            },
+                            entrants: {
                                 pageInfo: {
+                                    total: 10,
                                     totalPages: 3
                                 },
                                 nodes: [
                                     {
-                                        name: 'Team Two',
-                                        entrant: {
-                                            participants: [
-                                                { gamerTag: 'Player Three' },
-                                                { gamerTag: 'Player Four' }
-                                            ]
-                                        }
+                                        id: 89089,
+                                        name: 'Team Four',
+                                        team: {
+                                            images: []
+                                        },
+                                        participants: [
+                                            {
+                                                id: 45678,
+                                                gamerTag: 'Player Three',
+                                                user: { }
+                                            },
+                                            {
+                                                id: 23456,
+                                                prefix: 'TT',
+                                                gamerTag: 'Player Four',
+                                                user: {
+                                                    genderPronoun: 'She/Her'
+                                                }
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         }
                     }
-                }
+                } as SmashggEntrantsResponse
             });
 
-            const result = await getSmashGGData('ggtourney', '149083257830574');
+            const result = await getSmashGGData(1234, '149083257830574');
 
             expect(result).toEqual({
                 meta: {
-                    id: 'ggtourney',
+                    id: 'ct',
                     name: 'Cool Tournament',
-                    source: TournamentDataSource.SMASHGG
+                    source: TournamentDataSource.SMASHGG,
+                    sourceSpecificData: {
+                        smashgg: {
+                            eventData: {
+                                game: 'Splatoon 2',
+                                id: 1234567,
+                                name: 'Splatoon Two'
+                            },
+                            tournamentId: 654423
+                        }
+                    }
                 },
                 teams: [
                     {
-                        id: '111111',
+                        id: '1111111',
                         name: 'Team One',
                         showLogo: true,
+                        logoUrl: 'smashgg://img',
                         players: [
-                            { name: 'Player One' },
-                            { name: 'Player Two' }
+                            { name: 'TO Player One', pronouns: 'he/him' },
+                            { name: 'Player Two', pronouns: undefined }
                         ]
                     },
                     {
-                        id: '222222',
+                        id: '345345345',
                         name: 'Cool Team',
+                        logoUrl: 'smashgg://img_cool',
                         showLogo: true,
                         players: [
-                            { name: 'Player One' },
-                            { name: 'Player Two' }
+                            { name: 'CT Player One', pronouns: 'he/him' },
+                            { name: 'Player Two', pronouns: undefined }
                         ]
                     },
                     {
-                        id: '333333',
-                        name: 'Team Two',
+                        id: '56756757',
+                        name: 'Team Three',
+                        logoUrl: undefined,
                         showLogo: true,
                         players: [
-                            { name: 'Player Three' },
-                            { name: 'Player Four' }
+                            { name: 'Player Three', pronouns: undefined },
+                            { name: 'TT Player Four', pronouns: 'she/her' }
+                        ]
+                    },
+                    {
+                        id: '89089',
+                        name: 'Team Four',
+                        logoUrl: undefined,
+                        showLogo: true,
+                        players: [
+                            { name: 'Player Three', pronouns: undefined },
+                            { name: 'TT Player Four', pronouns: 'she/her' }
                         ]
                     }
                 ]

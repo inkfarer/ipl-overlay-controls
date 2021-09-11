@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smashggClient getSmashGGData fetches data from Smash.gg and turns it into our expected format 1`] = `"{\\"query\\":\\"query EventEntrants($eventId: ID!, $page: Int!, $perPage: Int!) { event(id: $eventId) { id videogame { displayName } tournament { id name slug } name entrants(query: { page: $page perPage: $perPage }) { pageInfo { total totalPages } nodes { id name team { images { type url } } participants { id prefix gamerTag user{ genderPronoun } } } } } }\\",\\"variables\\":{\\"eventId\\":123123,\\"page\\":1,\\"perPage\\":\\"50\\"}}"`;
+
+exports[`smashggClient getSmashGGEvents fetches events from Smash.gg 1`] = `"{\\"query\\":\\"query Events($slug: String!) { tournament(slug: $slug) { id events { id name videogame { displayName } } } }\\",\\"variables\\":{\\"slug\\":\\"event\\"}}"`;

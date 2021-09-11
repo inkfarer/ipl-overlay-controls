@@ -9,6 +9,16 @@ export interface TournamentData {
 	meta: {
 		id: string;
 		source: 'SMASHGG' | 'BATTLEFY' | 'UPLOAD' | 'UNKNOWN';
+		sourceSpecificData?: {
+			smashgg?: {
+				tournamentId: number;
+				eventData: {
+					id: number;
+					name: string;
+					game: string;
+				};
+			};
+		};
 		name?: string;
 	};
 	teams: {
