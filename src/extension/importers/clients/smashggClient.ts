@@ -158,7 +158,7 @@ async function getSmashGGPage(
             id: entrant.id.toString(10),
             name: entrant.name,
             showLogo: true,
-            logoUrl: entrant.team.images.find(image => image.type === 'profile')?.url,
+            logoUrl: entrant.team?.images.find(image => image.type === 'profile')?.url,
             players: entrant.participants.map(participant => ({
                 name: isEmpty(participant.prefix)
                     ? participant.gamerTag : `${participant.prefix} ${participant.gamerTag}`,
