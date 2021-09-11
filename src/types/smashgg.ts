@@ -92,7 +92,6 @@ export interface SmashggTournamentStreamQueueResponse {
     data: {
         tournament: {
             streamQueue: {
-                id: string
                 stream: {
                     id: number
                 }
@@ -102,7 +101,6 @@ export interface SmashggTournamentStreamQueueResponse {
                     round: number
                     event: {
                         id: number
-                        name: string
                     }
                     phaseGroup: {
                         displayIdentifier: string

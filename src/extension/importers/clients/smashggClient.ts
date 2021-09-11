@@ -233,7 +233,6 @@ export async function getSmashGGStreamQueue(
                     round
                     event {
                         id
-                        name
                     }
                     phaseGroup {
                         displayIdentifier
