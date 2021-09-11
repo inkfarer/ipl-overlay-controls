@@ -301,7 +301,7 @@ export async function getSmashGGStreamQueue(
                             stageName: set.phaseGroup.displayIdentifier,
                             round: set.round,
                             match: 0,
-                            name: `${set.phaseGroup.phase.name}-${set.phaseGroup.displayIdentifier}-${set.identifier} | R${set.round}`
+                            name: `Set ${set.identifier} - Round ${set.round} - Pool ${set.phaseGroup.displayIdentifier} - ${set.phaseGroup.phase.name}`
                         },
                         teamA: streamQueueTeamCreator(set.slots[0]),
                         teamB: streamQueueTeamCreator(set.slots[1])
