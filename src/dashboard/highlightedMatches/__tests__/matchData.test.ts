@@ -23,6 +23,7 @@ describe('matchData', () => {
             <select id="match-selector" class="match-selector"></select>
             <button id="set-next-match-btn"></button>
             <button id="get-matches"></button>
+            <label id="match-label"></label>
             <div id="unsupported-service-message"></div>
             <div id="load-matches-hint"></div>
             <div id="load-matches-space"></div>
@@ -34,38 +35,81 @@ describe('matchData', () => {
     });
 
     describe('get-matches: click', () => {
-        it('sends a message if getting specific stages', () => {
-            elementById<MultiSelect>('stage-selector').selectedOptions
-                = [{ value: 'stage-1' }, { value: 'stage-2' }] as unknown as HTMLOptionElement[];
+        describe('source: BATTLEFY', () => {
+            it('sends a message if getting specific stages', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.BATTLEFY } };
+                elementById<MultiSelect>('stage-selector').selectedOptions
+                    = [{ value: 'stage-1' }, { value: 'stage-2' }] as unknown as HTMLOptionElement[];
 
-            dispatch(elementById('get-matches'), 'click');
+                dispatch(elementById('get-matches'), 'click');
 
-            expect(nodecg.sendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
-                stages: [ 'stage-1', 'stage-2' ],
-                getAllStages: false
-            },
-            expect.any(Function));
+                expect(nodecg.sendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
+                    stages: [ 'stage-1', 'stage-2' ],
+                    getAllMatches: false
+                },
+                expect.any(Function));
+            });
+
+            it('sends a message if getting all stages', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.BATTLEFY } };
+                elementById<MultiSelect>('stage-selector').selectedOptions
+                    = [{ value: 'stage-1' }, { value: 'AllStages' }] as unknown as HTMLOptionElement[];
+
+                dispatch(elementById('get-matches'), 'click');
+
+                expect(nodecg.sendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
+                    stages: [ 'stage-1', 'AllStages' ],
+                    getAllMatches: true
+                },
+                expect.any(Function));
+            });
+
+            it('sends no message if no stages have been selected', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.BATTLEFY } };
+                elementById<MultiSelect>('stage-selector').selectedOptions = [] as unknown as HTMLOptionElement[];
+
+                dispatch(elementById('get-matches'), 'click');
+
+                expect(nodecg.sendMessage).not.toHaveBeenCalled();
+            });
         });
 
-        it('sends a message if getting all stages', () => {
-            elementById<MultiSelect>('stage-selector').selectedOptions
-                = [{ value: 'stage-1' }, { value: 'AllStages' }] as unknown as HTMLOptionElement[];
+        describe('source: SMASHGG', () => {
+            it('sends a message if getting specific stages', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.SMASHGG } };
+                elementById<MultiSelect>('stage-selector').selectedOptions
+                    = [{ value: '123123' }, { value: '345345' }] as unknown as HTMLOptionElement[];
 
-            dispatch(elementById('get-matches'), 'click');
+                dispatch(elementById('get-matches'), 'click');
 
-            expect(nodecg.sendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
-                stages: [ 'stage-1', 'AllStages' ],
-                getAllStages: true
-            },
-            expect.any(Function));
-        });
+                expect(nodecg.sendMessage).toHaveBeenCalledWith(
+                    'getHighlightedMatches',
+                    { streamIDs: [ 123123, 345345 ], getAllMatches: false },
+                    expect.any(Function));
+            });
 
-        it('sends no message if no stages have been selected', () => {
-            elementById<MultiSelect>('stage-selector').selectedOptions = [] as unknown as HTMLOptionElement[];
+            it('sends a message if getting all stages', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.SMASHGG } };
+                elementById<MultiSelect>('stage-selector').selectedOptions
+                    = [{ value: '234' }, { value: 'AllStreams' }] as unknown as HTMLOptionElement[];
 
-            dispatch(elementById('get-matches'), 'click');
+                dispatch(elementById('get-matches'), 'click');
 
-            expect(nodecg.sendMessage).not.toHaveBeenCalled();
+                expect(nodecg.sendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
+                    streamIDs: [],
+                    getAllMatches: true
+                },
+                expect.any(Function));
+            });
+
+            it('sends no message if no stages have been selected', () => {
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.SMASHGG } };
+                elementById<MultiSelect>('stage-selector').selectedOptions = [] as unknown as HTMLOptionElement[];
+
+                dispatch(elementById('get-matches'), 'click');
+
+                expect(nodecg.sendMessage).not.toHaveBeenCalled();
+            });
         });
     });
 
@@ -161,9 +205,37 @@ describe('matchData', () => {
             expect(stageSelector.innerHTML).toMatchSnapshot();
             expect(elementById('load-matches-space').style.display).toEqual('');
             expect(elementById('unsupported-service-message').style.display).toEqual('none');
+            expect(elementById('match-label').innerText).toEqual('Bracket');
         });
 
-        difference(Object.values(TournamentDataSource), [TournamentDataSource.BATTLEFY]).forEach(source => {
+        it('hides messages and updates stages if source is SMASHGG', () => {
+            const stageSelector = elementById<HTMLSelectElement>('inner-stage-selector');
+            stageSelector.innerHTML = '<option value="old-option"></option>';
+
+            nodecg.listeners.tournamentData({
+                meta: {
+                    source: TournamentDataSource.SMASHGG,
+                    sourceSpecificData: {
+                        smashgg: {
+                            streams: [
+                                { streamName: 'Cool Stream', id: 123123 },
+                                { streamName: 'Cool Stream 2', id: 345345 }
+                            ]
+                        }
+                    }
+                }
+            });
+
+            expect(stageSelector.innerHTML).toMatchSnapshot();
+            expect(elementById('load-matches-space').style.display).toEqual('');
+            expect(elementById('unsupported-service-message').style.display).toEqual('none');
+            expect(elementById('match-label').innerText).toEqual('Stream');
+        });
+
+        difference(
+            Object.values(TournamentDataSource),
+            [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
+        ).forEach(source => {
             it(`shows warning message if source is ${source}`, () => {
                 const stageSelector = elementById<HTMLSelectElement>('inner-stage-selector');
                 stageSelector.innerHTML = '<option value="old-option"></option>';
@@ -193,7 +265,21 @@ describe('matchData', () => {
                 expect(loadMatchesMsg.style.display).toEqual('');
             });
 
-            difference(Object.values(TournamentDataSource), [TournamentDataSource.BATTLEFY]).forEach(source => {
+            it('displays message if source is SMASHGG', () => {
+                const loadMatchesMsg = elementById('load-matches-hint');
+                loadMatchesMsg.style.display = 'none';
+                nodecg.replicants.tournamentData.value = { meta: { source: TournamentDataSource.SMASHGG } };
+
+                nodecg.listeners.highlightedMatches([]);
+
+                expect(elementById('select-match-space').style.display).toEqual('none');
+                expect(loadMatchesMsg.style.display).toEqual('');
+            });
+
+            difference(
+                Object.values(TournamentDataSource),
+                [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
+            ).forEach(source => {
                 it(`displays no match selector or message if source is ${source}`, () => {
                     const loadMatchesMsg = elementById('load-matches-hint');
                     loadMatchesMsg.style.display = 'none';

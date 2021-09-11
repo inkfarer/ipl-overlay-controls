@@ -19,7 +19,7 @@ const stageSelectElem = document.getElementById('stage-selector') as MultiSelect
 const matchSelectElem = document.getElementById('match-selector') as HTMLSelectElement;
 const setNextMatchBtn = document.getElementById('set-next-match-btn') as HTMLButtonElement;
 const getMatchesBtn = document.getElementById('get-matches') as HTMLButtonElement;
-const matchLabelElem = document.getElementById('match-label') as HTMLLabelElement
+const matchLabelElem = document.getElementById('match-label') as HTMLLabelElement;
 
 const unsupportedPlatformWarning = document.getElementById('unsupported-service-message');
 const noLoadedMatchesMessage = document.getElementById('load-matches-hint');
@@ -43,15 +43,12 @@ getMatchesBtn.addEventListener('click', () => {
 
     switch (tournamentData.value.meta.source) {
         case TournamentDataSource.BATTLEFY: {
-            const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => {
-                return option.value;
-            });
+            const selectedStages: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
 
             if (selectedStages.length > 0) {
-                // Send message to extension
                 nodecg.sendMessage('getHighlightedMatches', {
                     stages: selectedStages,
-                    getAllStages: selectedStages.includes('AllStages')
+                    getAllMatches: selectedStages.includes('AllStages')
                 }, (e, result) => {
                     // If we get an error
                     if (e) {
@@ -66,14 +63,14 @@ getMatchesBtn.addEventListener('click', () => {
             break;
         }
         case TournamentDataSource.SMASHGG: {
-            const selectedStreams: string[] = stageSelectElem.selectedOptions.map(option => {return option.value;});
+            const selectedStreams: string[] = stageSelectElem.selectedOptions.map(option => { return option.value; });
+            if (selectedStreams.length <= 0) return;
 
-            const selectedID: number[] = [];
-            if (!selectedStreams.includes('AllStreams')) {
-                selectedStreams.forEach(value => {selectedID.push(parseInt(value));});
-            }
+            const getAllMatches = selectedStreams.includes('AllStreams');
+
             nodecg.sendMessage('getHighlightedMatches', {
-                streamIDs: selectedID
+                streamIDs: getAllMatches ? [] : selectedStreams.map(stream => parseInt(stream)),
+                getAllMatches: getAllMatches
             }, (e, result) => {
                 // If we get an error
                 if (e) {
@@ -125,7 +122,7 @@ tournamentData.on('change', newValue => {
                 addSelector('All Brackets', 'stage-selector', 'AllStages');
                 break;
             case TournamentDataSource.SMASHGG:
-                matchLabelElem.innerText = 'Streams';
+                matchLabelElem.innerText = 'Stream';
                 newValue.meta.sourceSpecificData.smashgg.streams.forEach(stream => {
                     addSelector(addDots(stream.streamName), 'stage-selector', stream.id.toString());
                 });

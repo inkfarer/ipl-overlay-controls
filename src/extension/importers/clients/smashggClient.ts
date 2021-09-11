@@ -212,15 +212,21 @@ function streamQueueTeamCreator(teamData: SmashggTournamentStreamQueueSlot): Tea
  * Get Queued sets
  * @param slug Tournament slug
  * @param token Smash.gg token
- * @param streamIDs List of streamID you want to get sets for. If blank, all all queued sets will be returned
  * @param eventID Event ID
+ * @param streamIDs List of streamID you want to get sets for.
+ * @param getAllStreams Whether to fetch all streams or only the streams provided
  */
 export async function getSmashGGStreamQueue(
     slug: string,
     token: string,
-    streamIDs: number[],
-    eventID: number
+    eventID: number,
+    streamIDs?: number[],
+    getAllStreams?: boolean
 ): Promise<HighlightedMatches> {
+    if ((!streamIDs || streamIDs.length <= 0) && !getAllStreams) {
+        return [];
+    }
+
     const query = `query EventEntrants($slug: String!) {
         tournament(slug: $slug) {
             streamQueue {
@@ -288,9 +294,7 @@ export async function getSmashGGStreamQueue(
     const { data } = response;
 
     data.data.tournament.streamQueue.forEach(streamQueue => {
-        // If steamIDs is not empty && the streamIDs include this streamID for the queue
-        // or is streamIDs is empty
-        if ((streamIDs.length !== 0 && streamIDs.includes(streamQueue.stream.id)) || streamIDs.length === 0) {
+        if (getAllStreams || streamIDs.includes(streamQueue.stream.id)) {
             streamQueue.sets.forEach(set => {
                 // If there's 2 teams and neither of the objects are null and matched the event we imported
                 if (set.slots.length === 2 && !(set.slots.some(slot => slot.entrant === null))

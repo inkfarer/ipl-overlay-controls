@@ -5,3 +5,5 @@ exports[`matchData highlightedMatchData: change with matches fills match selecto
 exports[`matchData highlightedMatchData: change with matches fills match selector if all matches are on the same stage 1`] = `"<option value=\\"111\\">Match 1</option><option value=\\"222\\">Match 2</option><option value=\\"333\\">Match 3</option>"`;
 
 exports[`matchData tournamentData: change hides messages and updates stages if source is BATTLEFY 1`] = `"<option value=\\"123123\\">Cool Stage</option><option value=\\"5467567\\">Cool Stage 2</option><option value=\\"1236\\">Robin Stage</option><option value=\\"9999\\">Swiss Stage</option><option value=\\"AllStages\\">All Brackets</option>"`;
+
+exports[`matchData tournamentData: change hides messages and updates stages if source is SMASHGG 1`] = `"<option value=\\"123123\\">Cool Stream</option><option value=\\"345345\\">Cool Stream 2</option><option value=\\"AllStreams\\">All Streams</option>"`;
