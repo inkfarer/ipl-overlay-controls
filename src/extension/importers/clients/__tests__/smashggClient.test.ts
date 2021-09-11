@@ -121,9 +121,6 @@ describe('smashggClient', () => {
                                     {
                                         id: 2222222,
                                         name: 'Team Two',
-                                        team: {
-                                            images: []
-                                        },
                                         participants: [
                                             {
                                                 id: 45678,
