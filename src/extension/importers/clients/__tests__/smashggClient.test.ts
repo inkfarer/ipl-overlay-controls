@@ -83,7 +83,10 @@ describe('smashggClient', () => {
                             tournament: {
                                 name: 'Cool Tournament',
                                 id: 654423,
-                                slug: 'ct'
+                                slug: 'ct',
+                                streams: [
+                                    { id: 994422, streamName: 'Cool Stream' }
+                                ]
                             },
                             entrants: {
                                 pageInfo: {
@@ -158,9 +161,13 @@ describe('smashggClient', () => {
                                 id: 1234567,
                                 name: 'Splatoon Two'
                             },
+                            streams: [
+                                { id: 994422, streamName: 'Cool Stream' }
+                            ],
                             tournamentId: 654423
                         }
-                    }
+                    },
+                    url: 'https://smash.gg/ct/details'
                 },
                 teams: [
                     {
@@ -389,9 +396,11 @@ describe('smashggClient', () => {
                                 id: 1234567,
                                 name: 'Splatoon Two'
                             },
+                            streams: undefined,
                             tournamentId: 654423
                         }
-                    }
+                    },
+                    url: 'https://smash.gg/ct/details'
                 },
                 teams: [
                     {

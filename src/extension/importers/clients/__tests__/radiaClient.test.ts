@@ -226,4 +226,24 @@ describe('radiaClient', () => {
                 .toThrow('Radia API call failed with response 401');
         });
     });
+
+    describe('updateTournamentData', () => {
+        it('POSTs new tournament data', async () => {
+            mockPost.mockResolvedValueOnce({ status: 200 });
+
+            await client.updateTournamentData('123123345', 'bracket://link', 'Cool Tournament');
+
+            expect(mockPost).toHaveBeenCalledWith(
+                'radia://api/organisation/guild/123123345',
+                { bracket_link: 'bracket://link', tournament_name: 'Cool Tournament' },
+                { headers: { Authorization: 'radia_auth' } });
+        });
+
+        it('throws an error if the status is not 200', async () => {
+            mockPost.mockResolvedValue({ status: 400 });
+
+            await expect(client.updateTournamentData('456', 'bracket://link', 'Rad Tournament'))
+                .rejects.toThrow('Radia API call failed with response 400');
+        });
+    });
 });

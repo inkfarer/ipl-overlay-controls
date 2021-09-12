@@ -5,6 +5,7 @@ import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
+import { SetGuildInfoResponse } from 'types/radia';
 
 const nodecg = nodecgContext.get();
 const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
@@ -119,4 +120,20 @@ export async function getLiveCasters(guildID: string): Promise<RadiaApiCaster[]>
             }
             return response.data;
         });
+}
+
+export async function updateTournamentData(
+    guildId: string,
+    bracketLink: string,
+    tournamentName: string
+): Promise<SetGuildInfoResponse> {
+    const response = await axios.post<SetGuildInfoResponse>(
+        `${radiaConfig.url}/organisation/guild/${guildId}`,
+        { bracket_link: bracketLink, tournament_name: tournamentName },
+        { headers: { Authorization: radiaConfig.authentication } });
+
+    if (response.status !== 200) {
+        throw new Error(`Radia API call failed with response ${response.status.toString()}`);
+    }
+    return response.data;
 }

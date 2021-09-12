@@ -12,16 +12,20 @@ describe('lastFmSettings', () => {
 
         document.body.innerHTML = `
             <input id="radia-guild-input">
+            <input id="auto-tournament-data-update-toggle">
             <button id="update-radia-data-btn"></button>`;
         require('../radiaSettings');
     });
 
-    describe('radiaSettings replicant change', () => {
-        it('updates input', () => {
-            nodecg.listeners.radiaSettings({ guildID: 'new1239047819804' });
+    describe('radiaSettings: change', () => {
+        it('updates inputs', () => {
+            const updateOnImportToggle = elementById<HTMLInputElement>('auto-tournament-data-update-toggle');
+            updateOnImportToggle.checked = false;
+            nodecg.listeners.radiaSettings({ guildID: 'new1239047819804', updateOnImport: true });
 
             expect(elementById<HTMLInputElement>('radia-guild-input').value)
                 .toBe('new1239047819804');
+            expect(updateOnImportToggle.checked).toEqual(true);
         });
     });
 
@@ -33,6 +37,18 @@ describe('lastFmSettings', () => {
             dispatch(elementById('update-radia-data-btn'), 'click');
 
             expect((nodecg.replicants.radiaSettings.value as RadiaSettings).guildID).toBe('NEW324345');
+        });
+    });
+
+    describe('auto-tournament-data-update-toggle: change', () => {
+        it('updates replicant value', () => {
+            nodecg.replicants.radiaSettings.value = { updateOnImport: false };
+            const toggle = elementById<HTMLInputElement>('auto-tournament-data-update-toggle');
+            toggle.checked = true;
+
+            dispatch(toggle, 'change');
+
+            expect((nodecg.replicants.radiaSettings.value as RadiaSettings).updateOnImport).toEqual(true);
         });
     });
 });

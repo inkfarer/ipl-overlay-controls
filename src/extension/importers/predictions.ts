@@ -91,6 +91,11 @@ function initSocket(guildId: string): void {
 }
 
 radiaSettings.on('change', async (newValue) => {
+    if (isEmpty(newValue.guildID)) {
+        nodecg.log.warn('Radia guild ID is not configured!');
+        return;
+    }
+
     const predictionsSupported = await hasPredictionSupport(newValue.guildID);
     predictionStore.value.enablePrediction = predictionsSupported;
 

@@ -255,7 +255,12 @@ describe('battlefyClient', () => {
             mockGet.mockResolvedValueOnce({
                 data: [
                     {
+                        _id: '123123345345',
                         name: 'Cool Tournament',
+                        slug: 'cool-tourney',
+                        organization: {
+                            slug: 'tournament-org'
+                        },
                         stages: [
                             {
                                 _id: '12314321',
@@ -321,6 +326,7 @@ describe('battlefyClient', () => {
                     id: 'pjaojrtipfj3w09quhf',
                     name: 'Cool Tournament',
                     source: TournamentDataSource.BATTLEFY,
+                    url: 'https://battlefy.com/tournament-org/cool-tourney/123123345345/info?infoTab=details'
                 },
                 stages: [
                     {

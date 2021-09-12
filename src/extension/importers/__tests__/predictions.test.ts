@@ -81,6 +81,16 @@ describe('predictions', () => {
                 });
             });
 
+            it('does nothing if guild ID is empty', async () => {
+                mockHasPredictionSupport.mockResolvedValue(false);
+
+                await nodecg.replicantListeners.radiaSettings({ guildID: '' });
+
+                expect(nodecg.log.warn).toHaveBeenCalledWith('Radia guild ID is not configured!');
+                expect(mockHasPredictionSupport).not.toHaveBeenCalled();
+                expect(mockWebSocket).not.toHaveBeenCalled();
+            });
+
             it('sets replicant data if predictions are supported', async () => {
                 mockHasPredictionSupport.mockResolvedValue(true);
 
