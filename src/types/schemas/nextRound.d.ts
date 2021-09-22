@@ -32,6 +32,7 @@ export interface NextRound {
 		id: string;
 		name: string;
 	};
+	showOnStream: boolean;
 	games: {
 		stage: string;
 		mode: string;

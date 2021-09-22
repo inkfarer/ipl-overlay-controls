@@ -11,6 +11,7 @@ import { SetRoundRequest } from 'types/messages/rounds';
 import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
 import { setValueIfNotEdited } from '../helpers/inputHelper';
 import { addDots } from '../helpers/stringHelper';
+import { elementById } from '../helpers/elemHelper';
 
 library.add(faInfoCircle);
 dom.watch();
@@ -28,6 +29,7 @@ const savedProgressMessage = document.getElementById('saved-progress-message') a
 const savedProgressMessageText = savedProgressMessage.querySelector('.content') as HTMLElement;
 const showTeamAImage = document.getElementById('show-team-a-image') as HTMLInputElement;
 const showTeamBImage = document.getElementById('show-team-b-image') as HTMLInputElement;
+const showOnStreamToggle = elementById<HTMLInputElement>('show-on-stream-toggle');
 
 NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
     rounds.on('change', newValue => {
@@ -45,6 +47,7 @@ NodeCG.waitForReplicants(rounds, nextRound, tournamentData).then(() => {
         showTeamBImage.checked = newValue.teamB.showLogo;
         showTeamAImage.dataset.teamId = newValue.teamA.id;
         showTeamBImage.dataset.teamId = newValue.teamB.id;
+        showOnStreamToggle.checked = newValue.showOnStream;
 
         setValueIfNotEdited(nextTeamASelector, newValue.teamA.id);
         setValueIfNotEdited(nextTeamBSelector, newValue.teamB.id);
@@ -99,3 +102,7 @@ export function checkNextRoundProgress(nextRound?: Round): void {
         savedProgressMessage.style.display = 'none';
     }
 }
+
+showOnStreamToggle.addEventListener('change', e => {
+    nextRound.value.showOnStream = (e.target as HTMLInputElement).checked;
+});

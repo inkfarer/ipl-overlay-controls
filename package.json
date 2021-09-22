@@ -171,7 +171,7 @@
         "@typescript-eslint/parser": "^4.26.0",
         "babel-loader": "^8.2.2",
         "cross-env": "^7.0.3",
-        "css-loader": "^5.2.6",
+        "css-loader": "^5.2.7",
         "eslint": "^7.28.0",
         "eslint-import-resolver-typescript": "^2.4.0",
         "eslint-import-resolver-webpack": "^0.13.1",
