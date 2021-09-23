@@ -92,6 +92,7 @@ nodecg.listenFor('beginNextMatch', () => {
     };
 
     commitActiveRoundToRoundStore(true);
+    nextRound.value.showOnStream = false;
 });
 
 nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
