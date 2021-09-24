@@ -65,10 +65,12 @@ function initSocket(guildId: string): void {
             'channel.prediction.end'];
         if (!validPredictionTypes.includes(msg.subscription.type)) return;
 
-        const predictionModificationTime = DateTime.fromISO(predictionStore.value.modificationTime);
-        const messageTimestamp = DateTime.fromISO(msg.subscription.created_at);
-        if (predictionModificationTime > messageTimestamp) return;
-        predictionStore.value.modificationTime = msg.subscription.created_at;
+        if (msg.timestamp) {
+            const predictionModificationTime = DateTime.fromISO(predictionStore.value.modificationTime);
+            const messageTimestamp = DateTime.fromISO(msg.timestamp);
+            if (predictionModificationTime > messageTimestamp) return;
+            predictionStore.value.modificationTime = msg.timestamp;
+        }
 
         switch (msg.subscription.type) {
             case 'channel.prediction.begin':

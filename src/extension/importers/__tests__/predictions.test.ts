@@ -180,7 +180,7 @@ describe('predictions', () => {
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
 
                     messageCallback(JSON.stringify({ subscription: {
-                        type: 'channel.prediction.begin', created_at: '2021-09-10T13:52:28' } }));
+                        type: 'channel.prediction.begin' }, timestamp: '2021-09-10T13:52:28' }));
 
                     expect((nodecg.replicants.predictionStore.value as PredictionStore).currentPrediction).toBeNull();
                 });
@@ -191,8 +191,9 @@ describe('predictions', () => {
                     mockPredictionDataMapper.fromBeginEvent.mockReturnValue({ id: '1234567' });
 
                     messageCallback(JSON.stringify({
-                        subscription: { type: 'channel.prediction.begin', created_at: '2021-09-10T13:52:30' },
-                        event
+                        subscription: { type: 'channel.prediction.begin' },
+                        event,
+                        timestamp: '2021-09-10T13:52:30'
                     }));
 
                     const predictionStore = nodecg.replicants.predictionStore.value as PredictionStore;
@@ -207,8 +208,9 @@ describe('predictions', () => {
                     mockPredictionDataMapper.fromProgressEvent.mockReturnValue({ id: '1234567' });
 
                     messageCallback(JSON.stringify({
-                        subscription: { type: 'channel.prediction.progress', created_at: '2021-09-10T13:52:31' },
-                        event
+                        subscription: { type: 'channel.prediction.progress' },
+                        event,
+                        timestamp: '2021-09-10T13:52:31'
                     }));
 
                     const predictionStore = nodecg.replicants.predictionStore.value as PredictionStore;
@@ -223,8 +225,9 @@ describe('predictions', () => {
                     mockPredictionDataMapper.fromLockEvent.mockReturnValue({ id: '12345678' });
 
                     messageCallback(JSON.stringify({
-                        subscription: { type: 'channel.prediction.lock', created_at: '2021-09-10T13:52:31' },
-                        event
+                        subscription: { type: 'channel.prediction.lock' },
+                        event,
+                        timestamp: '2021-09-10T13:52:31'
                     }));
 
                     const predictionStore = nodecg.replicants.predictionStore.value as PredictionStore;
@@ -239,8 +242,9 @@ describe('predictions', () => {
                     mockPredictionDataMapper.applyEndEvent.mockReturnValue({ id: '12345678' });
 
                     messageCallback(JSON.stringify({
-                        subscription: { type: 'channel.prediction.end', created_at: '2021-09-10T13:52:31' },
-                        event
+                        subscription: { type: 'channel.prediction.end' },
+                        event,
+                        timestamp: '2021-09-10T13:52:31'
                     }));
 
                     const predictionStore = nodecg.replicants.predictionStore.value as PredictionStore;

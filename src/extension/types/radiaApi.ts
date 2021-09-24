@@ -21,4 +21,5 @@ export interface RadiaSocketMessage {
         created_at: string;
     };
     event: unknown;
+    timestamp?: string;
 }
