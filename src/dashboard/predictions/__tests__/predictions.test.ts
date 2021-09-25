@@ -42,6 +42,7 @@ describe('predictions', () => {
             <button id="lock-prediction-btn"></button>
             <button id="cancel-prediction-btn"></button>
             <button id="get-predictions-btn"></button>
+            <button id="show-prediction-btn"></button>
         `;
 
         require('../predictions');
@@ -272,6 +273,14 @@ describe('predictions', () => {
             dispatch(elementById('get-predictions-btn'), 'click');
 
             expect(nodecg.sendMessage).toHaveBeenCalledWith('getPredictions', {}, expect.any(Function));
+        });
+    });
+
+    describe('show-prediction-btn: click', () => {
+        it('sends a message', () => {
+            dispatch(elementById('show-prediction-btn'), 'click');
+
+            expect(nodecg.sendMessage).toHaveBeenCalledWith('showPredictionData');
         });
     });
 });

@@ -1,4 +1,4 @@
-import { hideElement, showElement } from '../helpers/elemHelper';
+import { elementById, hideElement, showElement } from '../helpers/elemHelper';
 import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { PredictionStatus } from 'types/enums/predictionStatus';
@@ -24,6 +24,7 @@ const resolvePredictionBtn = document.getElementById('resolve-prediction-btn');
 const lockPredictionBtn = document.getElementById('lock-prediction-btn');
 const cancelPredictionBtn = document.getElementById('cancel-prediction-btn');
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
+const showPredictionBtn = elementById('show-prediction-btn');
 const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 
 const predictionElements = [
@@ -132,4 +133,8 @@ getPredictionsBtn.addEventListener('click', () => {
         }
         setImportStatus(ImportStatus.SUCCESS, predictionDataStatusElem);
     });
+});
+
+showPredictionBtn.addEventListener('click', () => {
+    nodecg.sendMessage('showPredictionData');
 });
