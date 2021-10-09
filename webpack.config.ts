@@ -5,8 +5,10 @@ import LiveReloadPlugin from 'webpack-livereload-plugin';
 import nodeExternals from 'webpack-node-externals';
 import * as globby from 'globby';
 import * as path from 'path';
-import webpack from 'webpack';
+import webpack, { DefinePlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import { VueLoaderPlugin } from 'vue-loader';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -23,6 +25,7 @@ function dashboardConfig(): webpack.Configuration {
     const legacyEntries = getEntries(['*/main_legacy.ts']);
 
     let plugins: any[] = [
+        new VueLoaderPlugin(),
         ...Object.keys(legacyEntries).map((entryName) =>
             new HtmlWebpackPlugin({
                 filename: `${entryName}.html`,
@@ -39,6 +42,20 @@ function dashboardConfig(): webpack.Configuration {
                 template: 'template.html'
             })
         ),
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                extensions: {
+                    vue: {
+                        enabled: true,
+                        compiler: '@vue/compiler-sfc'
+                    }
+                }
+            }
+        }),
+        new DefinePlugin({
+            __VUE_OPTIONS_API__: JSON.stringify(false),
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(!isProd)
+        }),
         ...(isProd ? [] : [
             new LiveReloadPlugin({
                 port: 0,
@@ -60,7 +77,10 @@ function dashboardConfig(): webpack.Configuration {
             filename: 'js/[name].js'
         },
         resolve: {
-            extensions: ['.js', '.ts', '.json'],
+            extensions: ['.js', '.ts', '.tsx', '.json'],
+            alias: {
+                vue: 'vue/dist/vue.runtime.esm-bundler.js',
+            },
             plugins: [
                 new TsconfigPathsPlugin({
                     configFile: 'tsconfig-browser.json'
@@ -69,6 +89,10 @@ function dashboardConfig(): webpack.Configuration {
         },
         module: {
             rules: [
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader'
+                },
                 {
                     test: /\.css$/,
                     use: [
@@ -82,10 +106,19 @@ function dashboardConfig(): webpack.Configuration {
                     ]
                 },
                 {
-                    test: /\.ts$/,
-                    exclude: '/node_modules',
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                },
+                {
+                    test: /\.tsx?$/,
                     loader: 'ts-loader',
                     options: {
+                        transpileOnly: true,
+                        appendTsSuffixTo: [/\.vue$/],
                         configFile: 'tsconfig-browser.json'
                     }
                 }
