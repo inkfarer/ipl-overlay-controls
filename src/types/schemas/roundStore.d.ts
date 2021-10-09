@@ -12,12 +12,12 @@ export type RoundTeam = {
 	showLogo: boolean;
 	players: {
 		name: string;
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
-	[k: string]: any;
+	[k: string]: unknown;
 } & {
 	score: number;
-	[k: string]: any;
+	[k: string]: unknown;
 };
 
 export interface RoundStore {
@@ -28,12 +28,12 @@ export interface Round {
 		name: string;
 		isCompleted: boolean;
 		completionTime?: string;
-		[k: string]: any;
+		[k: string]: unknown;
 	};
 	games: Game[];
 	teamA?: RoundTeam;
 	teamB?: RoundTeam;
-	[k: string]: any;
+	[k: string]: unknown;
 }
 export interface Game {
 	winner: 'none' | 'alpha' | 'bravo';
@@ -46,10 +46,10 @@ export interface Game {
 		clrB: string;
 		categoryName: string;
 		isCustom: boolean;
-		[k: string]: any;
+		[k: string]: unknown;
 	} & {
 		colorsSwapped: boolean;
-		[k: string]: any;
+		[k: string]: unknown;
 	};
-	[k: string]: any;
+	[k: string]: unknown;
 }

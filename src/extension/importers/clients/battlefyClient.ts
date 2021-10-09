@@ -157,7 +157,8 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                     meta: {
                         id,
                         source: TournamentDataSource.BATTLEFY,
-                        name: tournamentInfo.name
+                        name: tournamentInfo.name,
+                        url: `https://battlefy.com/${tournamentInfo.organization.slug}/${tournamentInfo.slug}/${tournamentInfo._id}/info?infoTab=details`
                     },
                     teams: [],
                     stages: tournamentStages

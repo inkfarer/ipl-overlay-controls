@@ -7,5 +7,5 @@
 
 export interface ManualNowPlaying {
 	artist?: string;
-	song?: string;
+	song: string;
 }

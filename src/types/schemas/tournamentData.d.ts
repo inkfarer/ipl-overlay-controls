@@ -9,7 +9,22 @@ export interface TournamentData {
 	meta: {
 		id: string;
 		source: 'SMASHGG' | 'BATTLEFY' | 'UPLOAD' | 'UNKNOWN';
+		sourceSpecificData?: {
+			smashgg?: {
+				tournamentId: number;
+				streams?: {
+					id: number;
+					streamName: string;
+				}[];
+				eventData: {
+					id: number;
+					name: string;
+					game: string;
+				};
+			};
+		};
 		name?: string;
+		url?: string;
 	};
 	teams: {
 		id: string;
@@ -18,9 +33,9 @@ export interface TournamentData {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
 	stages?: {
 		name: string;

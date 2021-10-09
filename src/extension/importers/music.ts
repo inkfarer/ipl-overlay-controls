@@ -25,7 +25,7 @@ function handleNowPlayingSource() {
         switch (newValue) {
             case 'manual':
             case 'lastfm':
-                nowPlaying.value = clone(replicantToSource[newValue].value);
+                nowPlaying.value = clone(replicantToSource[newValue].value) as NowPlaying;
                 break;
             default:
                 throw new Error('Invalid value for nowPlayingSource.');
@@ -35,7 +35,7 @@ function handleNowPlayingSource() {
     for (const [key, value] of Object.entries(replicantToSource)) {
         value.on('change', newValue => {
             if (nowPlayingSource.value === key) {
-                nowPlaying.value = clone(newValue);
+                nowPlaying.value = clone(newValue) as NowPlaying;
             }
         });
     }

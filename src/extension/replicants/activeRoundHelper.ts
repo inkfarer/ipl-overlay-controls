@@ -93,12 +93,17 @@ export function setActiveRoundTeams(teamAId: string, teamBId: string): void {
         throw new Error('Could not find a team.');
     }
 
+    const existingTeamA = clone(activeRound.value.teamA);
+    delete existingTeamA.logoUrl;
+    const existingTeamB = clone(activeRound.value.teamB);
+    delete existingTeamB.logoUrl;
+
     activeRound.value.teamA = {
-        ...activeRound.value.teamA,
+        ...existingTeamA,
         ...teamA
     };
     activeRound.value.teamB = {
-        ...activeRound.value.teamB,
+        ...existingTeamB,
         ...teamB
     };
 }

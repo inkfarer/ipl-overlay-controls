@@ -10,103 +10,107 @@ export interface PredictionStore {
 	 * If Predictions should be enabled for current settings
 	 */
 	enablePrediction: boolean;
+	socketOpen: boolean;
+	modificationTime?: string;
+	currentPrediction?: Prediction;
+}
+/**
+ * Twitch Prediction instance
+ */
+export interface Prediction {
 	/**
-	 * Currently stored prediction in use
+	 * Twitch ID of the Prediction.
 	 */
-	currentPrediction?: {
+	id: string;
+	/**
+	 * Twitch ID of the broadcaster
+	 */
+	broadcasterId: string;
+	/**
+	 * Twitch User Login
+	 */
+	broadcasterName: string;
+	/**
+	 * Twitch user Display Name
+	 */
+	broadcasterLogin: string;
+	/**
+	 * Title of prediction
+	 */
+	title: string;
+	/**
+	 * ID of winning outcome
+	 */
+	winningOutcome?: string;
+	/**
+	 * Array of possible outcomes for the Prediction
+	 */
+	outcomes: Outcome[];
+	/**
+	 * Total duration for the Prediction (in seconds)
+	 */
+	duration: number;
+	/**
+	 * Status of the Prediction
+	 */
+	status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
+	/**
+	 * UTC timestamp for the Prediction's start time
+	 */
+	creationTime: string;
+	/**
+	 * UTC timestamp for when the Prediction ends
+	 */
+	endTime?: string;
+	/**
+	 * UTC timestamp for when the Prediction locks
+	 */
+	lockTime?: string;
+}
+export interface Outcome {
+	/**
+	 * Twitch ID of prediction Outcome
+	 */
+	id: string;
+	/**
+	 * Text displayed for outcome
+	 */
+	title: string;
+	/**
+	 * Number of unique users that chose the outcome.
+	 */
+	users: number;
+	/**
+	 * Channel Points Spent on outcome
+	 */
+	pointsUsed: number;
+	/**
+	 * Users who were the top predictors
+	 */
+	topPredictors: {
 		/**
-		 * Twitch ID of the Prediction.
+		 * Twitch User ID
 		 */
 		id: string;
 		/**
-		 * Twitch ID of the broadcaster
-		 */
-		broadcaster_id: string;
-		/**
 		 * Twitch User Login
 		 */
-		broadcaster_name: string;
+		login: string;
 		/**
 		 * Twitch user Display Name
 		 */
-		broadcaster_login: string;
+		username: string;
 		/**
-		 * Title of prediction
+		 * Channel Points used to make bet
 		 */
-		title: string;
+		pointsUsed: number;
 		/**
-		 * ID of wining ID
+		 * Channel points won from prediction
 		 */
-		winning_outcome_id: string | null;
-		/**
-		 * Array of possible outcomes for the Prediction
-		 */
-		outcomes: {
-			/**
-			 * Twitch ID of prediction Outcome
-			 */
-			id: string;
-			/**
-			 * Text displayed for outcome
-			 */
-			title: string;
-			/**
-			 * Number of unique users that chose the outcome.
-			 */
-			users: number;
-			/**
-			 * Channel Points Spent on outcome
-			 */
-			channel_points: number;
-			/**
-			 * Users who were the top predictors
-			 */
-			top_predictors: {
-				/**
-				 * Twitch User ID
-				 */
-				user_id: string;
-				/**
-				 * Twitch User Login
-				 */
-				user_login: string;
-				/**
-				 * Twitch user Display Name
-				 */
-				user_name: string;
-				/**
-				 * Channel Points used to make bet
-				 */
-				channel_points_used: number;
-				/**
-				 * Channel points won from prediction
-				 */
-				channel_points_won: number;
-			}[];
-			/**
-			 * Color for the outcome.
-			 */
-			color: 'BLUE' | 'PINK';
-		}[];
-		/**
-		 * Total duration for the Prediction (in seconds)
-		 */
-		prediction_window: number;
-		/**
-		 * Status of the Prediction
-		 */
-		status: 'RESOLVED' | 'ACTIVE' | 'CANCELED' | 'LOCKED';
-		/**
-		 * UTC timestamp for the Prediction’s start time
-		 */
-		created_at: string;
-		/**
-		 * UTC timestamp for when the Prediction ended, null if ACTIVE
-		 */
-		ended_at: string | null;
-		/**
-		 * UTC timestamp for when the Prediction was locked, null if not LOCKED
-		 */
-		locked_at: string | null;
-	};
+		pointsWon: number;
+	}[];
+	/**
+	 * Color for the outcome.
+	 */
+	color: 'BLUE' | 'PINK';
 }

@@ -8,10 +8,10 @@
 export type LastFmNowPlaying = {
 	artist?: string;
 	song: string;
-	[k: string]: any;
+	[k: string]: unknown;
 } & {
 	album?: string;
 	cover?: string;
 	artistSong?: string;
-	[k: string]: any;
+	[k: string]: unknown;
 };

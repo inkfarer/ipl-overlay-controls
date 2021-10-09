@@ -4,20 +4,58 @@ import { HighlightedMatches, TournamentData } from 'schemas';
 import { ImportStatus } from 'types/enums/importStatus';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyMatches } from './clients/battlefyClient';
+import { getSmashGGStreamQueue } from './clients/smashggClient';
+import { GetHighlightedMatchesMessage } from 'types/messages/highlightedMatches';
 
 const nodecg = nodecgContext.get();
 
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
-nodecg.listenFor('getHighlightedMatches', async (data, ack: UnhandledListenForCb) => {
-    if ((!data.stages && !data.getAllStages)) {
-        return ack(new Error('Missing arguments.'));
-    }
+let smashGGKey: string;
 
+if (nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg !== 'undefined') {
+    smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
+}
+
+nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMessage, ack: UnhandledListenForCb) => {
     switch (tournamentData.value.meta.source) {
         case TournamentDataSource.BATTLEFY:
-            getBattlefyMatches(tournamentData.value.meta.id, data.stages, data.getAllStages).then(data => {
+            if (!data.stages && !data.getAllMatches) {
+                return ack(new Error('Missing arguments.'));
+            }
+            getBattlefyMatches(tournamentData.value.meta.id, data.stages, data.getAllMatches).then(data => {
+                if (data.length > 0) {
+                    updateMatchReplicant(data);
+                    return ack(null, {
+                        status: ImportStatus.SUCCESS,
+                        data: data
+                    });
+                } else {
+                    return ack(null, {
+                        status: ImportStatus.NO_DATA,
+                        data: data
+                    });
+                }
+            }).catch(err => {
+                ack(err);
+            });
+            break;
+        case TournamentDataSource.SMASHGG:
+            // if smashGGKey is empty, we raise a failure
+            if (!smashGGKey) {
+                return ack(new Error('No Smash.gg API key found.'));
+            }
+            if (!data.streamIDs && !data.getAllMatches) {
+                return ack(new Error('Missing arguments.'));
+            }
+            getSmashGGStreamQueue(
+                tournamentData.value.meta.id,
+                smashGGKey,
+                tournamentData.value.meta.sourceSpecificData.smashgg.eventData.id,
+                data.streamIDs,
+                data.getAllMatches
+            ).then(data => {
                 if (data.length > 0) {
                     updateMatchReplicant(data);
                     return ack(null, {

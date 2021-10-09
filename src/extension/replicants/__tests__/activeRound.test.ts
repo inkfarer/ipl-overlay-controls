@@ -1,5 +1,5 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
-import { ActiveRound } from 'schemas';
+import { ActiveRound, NextRound } from 'schemas';
 import { GameWinner } from 'types/enums/gameWinner';
 
 describe('activeRound', () => {
@@ -270,7 +270,8 @@ describe('activeRound', () => {
                 ],
                 round: {
                     name: 'Cool Next Round'
-                }
+                },
+                showOnStream: true
             };
             nodecg.replicants.activeRound.value = {
                 teamA: { name: 'Team One' },
@@ -292,6 +293,7 @@ describe('activeRound', () => {
                 }
             });
             expect(mockCommitActiveRound).toHaveBeenCalledWith(true);
+            expect((nodecg.replicants.nextRound.value as NextRound).showOnStream).toEqual(false);
         });
     });
 

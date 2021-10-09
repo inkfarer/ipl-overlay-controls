@@ -1,7 +1,7 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { dispatch, elementById } from '../../helpers/elemHelper';
 
-describe('something', () => {
+describe('predictions', () => {
     let nodecg: MockNodecg;
 
     beforeEach(() => {
@@ -42,6 +42,7 @@ describe('something', () => {
             <button id="lock-prediction-btn"></button>
             <button id="cancel-prediction-btn"></button>
             <button id="get-predictions-btn"></button>
+            <button id="show-prediction-btn"></button>
         `;
 
         require('../predictions');
@@ -65,20 +66,41 @@ describe('something', () => {
             expect(elementById('prediction-get-space').style.display).toEqual('');
         });
 
+        it('hides option to fetch prediction data if websocket is open', () => {
+            nodecg.listeners.predictionStore({
+                enablePrediction: true,
+                currentPrediction: undefined,
+                socketOpen: true
+            });
+
+            expect(elementById('prediction-get-space').style.display).toEqual('none');
+        });
+
+        it('shows option to fetch prediction data if websocket is closed', () => {
+            nodecg.listeners.predictionStore({
+                enablePrediction: true,
+                currentPrediction: undefined,
+                socketOpen: false
+            });
+
+            expect(elementById('prediction-get-space').style.display).toEqual('');
+        });
+
         it('updates prediction data displays', () => {
             nodecg.listeners.predictionStore({
                 enablePrediction: true,
                 currentPrediction: {
                     outcomes: [
-                        { channel_points: 12000, title: 'Team A', id: '111' },
-                        { channel_points: 9999, title: 'Team Bravo', id: '222' }
+                        { pointsUsed: 12000, title: 'Team A', id: '111', users: 10 },
+                        { pointsUsed: 9999, title: 'Team Bravo', id: '222', users: 11 }
                     ],
                     status: 'ACTIVE',
                     title: 'Who will win?'
-                }
+                },
+                socketOpen: true
             });
 
-            expect(elementById('prediction-point-count').innerText).toEqual('21999 points predicted');
+            expect(elementById('prediction-point-count').innerText).toEqual('21999 points predicted by 21 users');
             expect(elementById('get-prediction-status').innerText).toEqual('active');
             expect(elementById('prediction-title').innerText).toEqual('Who will win?');
 
@@ -100,12 +122,12 @@ describe('something', () => {
                 enablePrediction: true,
                 currentPrediction: {
                     outcomes: [
-                        { channel_points: 182390, title: 'Team A', id: 'aaa111' },
-                        { channel_points: 12313, title: 'Team Bravo', id: '222' }
+                        { pointsUsed: 182390, title: 'Team A', id: 'aaa111' },
+                        { pointsUsed: 12313, title: 'Team Bravo', id: '222' }
                     ],
                     status: 'ACTIVE',
                     title: 'Who will win?',
-                    winning_outcome_id: 'aaa111'
+                    winningOutcome: 'aaa111'
                 }
             });
 
@@ -133,12 +155,12 @@ describe('something', () => {
                 enablePrediction: true,
                 currentPrediction: {
                     outcomes: [
-                        { channel_points: 585833, title: 'Team Alpha', id: '1212' },
-                        { channel_points: 1029387, title: 'The Second Team', id: 'bbb123' }
+                        { pointsUsed: 585833, title: 'Team Alpha', id: '1212' },
+                        { pointsUsed: 1029387, title: 'The Second Team', id: 'bbb123' }
                     ],
                     status: 'ACTIVE',
                     title: 'Who will win?',
-                    winning_outcome_id: 'bbb123'
+                    winningOutcome: 'bbb123'
                 }
             });
 
@@ -251,6 +273,14 @@ describe('something', () => {
             dispatch(elementById('get-predictions-btn'), 'click');
 
             expect(nodecg.sendMessage).toHaveBeenCalledWith('getPredictions', {}, expect.any(Function));
+        });
+    });
+
+    describe('show-prediction-btn: click', () => {
+        it('sends a message', () => {
+            dispatch(elementById('show-prediction-btn'), 'click');
+
+            expect(nodecg.sendMessage).toHaveBeenCalledWith('showPredictionData');
         });
     });
 });
