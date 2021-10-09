@@ -76,23 +76,11 @@ function dashboardConfig(): webpack.Configuration {
                     ]
                 },
                 {
-                    test: /\.js$/,
-                    exclude: '/node_modules',
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env']
-                        }
-                    }
-                },
-                {
                     test: /\.ts$/,
                     exclude: '/node_modules',
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-typescript']
-                        }
+                    loader: 'ts-loader',
+                    options: {
+                        configFile: 'tsconfig-browser.json'
                     }
                 }
             ]
@@ -133,25 +121,11 @@ const extensionConfig: webpack.Configuration = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: '/node_modules',
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['@babel/preset-env', { modules: 'commonjs' }]],
-                        plugins: ['add-module-exports']
-                    }
-                }
-            },
-            {
                 test: /\.ts$/,
                 exclude: '/node_modules',
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['@babel/preset-env', { modules: 'commonjs' }], '@babel/preset-typescript'],
-                        plugins: ['add-module-exports']
-                    }
+                loader: 'ts-loader',
+                options: {
+                    configFile: 'tsconfig-extension.json'
                 }
             }
         ]

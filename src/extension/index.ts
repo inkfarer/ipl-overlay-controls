@@ -4,7 +4,7 @@ import { PredictionStore, RadiaSettings } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export default (nodecg: NodeCG & NodeCGStatic): void => {
+export = (nodecg: NodeCG & NodeCGStatic): void => {
     nodecgContext.set(nodecg);
 
     require('./importers/music');

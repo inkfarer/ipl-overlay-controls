@@ -10,7 +10,6 @@
             "dom.iterable"
         ],
         "types": [
-            "webpack-env",
             "jest"
         ],
         "esModuleInterop": true,
@@ -30,5 +29,12 @@
                 "src/types/schemas/index"
             ]
         }
-    }
+    },
+    "exclude": [
+        "webpack.config.ts"
+    ],
+    "include": [
+        "src/dashboard/**/*.ts",
+        "src/types/**/*.d.ts"
+    ]
 }
