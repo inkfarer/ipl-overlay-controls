@@ -7,12 +7,16 @@
         },
         "enabled": {
             "type": "boolean"
+        },
+        "updateOnImport": {
+            "type": "boolean"
         }
     },
-    "required": ["guildID", "enabled"],
+    "required": ["guildID", "enabled", "updateOnImport"],
     "additionalProperties": false,
     "default": {
         "guildID": "",
-        "enabled": false
+        "enabled": false,
+        "updateOnImport": false
     }
 }

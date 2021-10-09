@@ -7,10 +7,15 @@
         <div class="space">
             <div class="title">Team Data</div>
 
+            <label for="method-selector">Import from</label>
+            <select id="method-selector">
+                <option value="BATTLEFY" selected>Battlefy</option>
+                <option value="SMASHGG">Smash.gg</option>
+                <option value="UPLOAD">Raw JSON</option>
+            </select>
+
             <div id="web-tournament-import-wrapper">
-                <label for="tournament-id-input" id="tournament-id-input-title">
-                    Tournament ID</label
-                >
+                <label for="tournament-id-input" id="tournament-id-input-title">Tournament ID</label>
                 <input type="text" id="tournament-id-input" />
             </div>
 
@@ -30,19 +35,16 @@
                 style="display: none"
             >
                 <input type="checkbox" id="team-web-import-toggle" />
-                <label for="team-web-import-toggle" class="white-label"
-                    >Import from URL</label
-                >
+                <label for="team-web-import-toggle" class="white-label">Import from URL</label>
             </div>
 
-            <label for="method-selector">Import from</label>
-            <select id="method-selector">
-                <option value="BATTLEFY" selected>Battlefy</option>
-                <option value="SMASHGG">Smash.gg</option>
-                <option value="UPLOAD">Raw JSON import</option>
-            </select>
-
             <button class="max-width" id="submit-import">submit</button>
+
+            <div id="smashgg-event-select-wrapper" style="margin-top: 5px; display: none">
+                <label for="smashgg-event-select" id="smashgg-event-select-label">Event</label>
+                <select id="smashgg-event-select" class="smashgg-event-select"></select>
+                <button class="max-width" id="smashgg-event-submit">submit</button>
+            </div>
 
             <div id="team-data-submit-status" class="status-display">
                 STATUS

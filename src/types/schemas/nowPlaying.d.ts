@@ -7,6 +7,6 @@
 
 export interface NowPlaying {
 	artist?: string;
-	song?: string;
-	[k: string]: any;
+	song: string;
+	[k: string]: unknown;
 }

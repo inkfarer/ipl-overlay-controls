@@ -1,10 +1,11 @@
-import { hideElement, showElement } from '../helpers/elemHelper';
+import { elementById, hideElement, showElement } from '../helpers/elemHelper';
 import { setImportStatus } from '../helpers/importStatusHelper';
 import { ImportStatus } from 'types/enums/importStatus';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { Outcome } from 'types/prediction';
 import { predictionStore } from './replicants';
 import difference from 'lodash/difference';
+import { Outcome } from 'schemas';
+import { pluralize } from '../helpers/stringHelper';
 
 const predictionDataStatusElem = document.getElementById('prediction-data-status');
 const optionAWrapper = document.getElementById('option-wrapper-a');
@@ -23,6 +24,7 @@ const resolvePredictionBtn = document.getElementById('resolve-prediction-btn');
 const lockPredictionBtn = document.getElementById('lock-prediction-btn');
 const cancelPredictionBtn = document.getElementById('cancel-prediction-btn');
 const getPredictionsBtn = document.getElementById('get-predictions-btn');
+const showPredictionBtn = elementById('show-prediction-btn');
 const predictionRequestStatusElem = document.getElementById('prediction-request-status');
 
 const predictionElements = [
@@ -48,23 +50,24 @@ predictionStore.on('change', newValue => {
             showElement(currentPredictionSpace);
             hideElement(noPredictionDataMessage);
             const prediction = newValue.currentPrediction;
-            const totalChannelPoints = prediction.outcomes[0].channel_points + prediction.outcomes[1].channel_points;
+            const totalChannelPoints = prediction.outcomes[0].pointsUsed + prediction.outcomes[1].pointsUsed;
+            const totalPredictors = prediction.outcomes[0].users + prediction.outcomes[1].users;
 
             updatePredictionDataDisplay(
                 optionAWrapper,
-                (prediction.outcomes[0] as Outcome),
+                prediction.outcomes[0],
                 totalChannelPoints,
-                prediction.winning_outcome_id,
+                prediction.winningOutcome,
                 'A');
             updatePredictionDataDisplay(
                 optionBWrapper,
-                (prediction.outcomes[1] as Outcome),
+                prediction.outcomes[1],
                 totalChannelPoints,
-                prediction.winning_outcome_id,
+                prediction.winningOutcome,
                 'B');
 
             getPredictionStatusElem.innerText = prediction.status.toLowerCase();
-            predictionPointCountElem.innerText = `${totalChannelPoints} points predicted`;
+            predictionPointCountElem.innerText = `${totalChannelPoints} points predicted by ${pluralize('user', totalPredictors)}`;
             predictionTitleElem.innerText = prediction.title;
 
             // Show/Hide necessary buttons
@@ -75,6 +78,12 @@ predictionStore.on('change', newValue => {
         } else {
             hideElement(currentPredictionSpace);
             showElement(noPredictionDataMessage);
+        }
+
+        if (newValue.socketOpen) {
+            hideElement(predictionGetSpace);
+        } else {
+            showElement(predictionGetSpace);
         }
     } else {
         showElement(unsupportedGuildWarning);
@@ -96,7 +105,7 @@ function updatePredictionDataDisplay(
     const barElem = optionDataWrapper.querySelector('.bar') as HTMLDivElement;
     const label = optionWrapper.querySelector('label');
 
-    const optionPercentage = Math.round((outcome.channel_points / totalPointsPredicted) * 100);
+    const optionPercentage = Math.round((outcome.pointsUsed / totalPointsPredicted) * 100);
 
     titleElem.innerText = outcome.title;
     percentTextElem.innerText = (isNaN(optionPercentage) ? '?%' : `${optionPercentage}%`);
@@ -124,4 +133,8 @@ getPredictionsBtn.addEventListener('click', () => {
         }
         setImportStatus(ImportStatus.SUCCESS, predictionDataStatusElem);
     });
+});
+
+showPredictionBtn.addEventListener('click', () => {
+    nodecg.sendMessage('showPredictionData');
 });

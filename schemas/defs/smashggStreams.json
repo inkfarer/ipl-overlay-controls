@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "streams": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "streamName": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": ["id", "streamName"]
+  }
+}

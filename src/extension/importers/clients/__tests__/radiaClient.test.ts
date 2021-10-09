@@ -14,22 +14,35 @@ describe('radiaClient', () => {
         post: mockPost
     }));
 
-    beforeEach(() => {
+    function init(bundleConfig: {[k: string]: unknown}) {
         jest.resetAllMocks();
         jest.resetModules();
 
-        nodecg = new MockNodecg({
+        nodecg = new MockNodecg(bundleConfig);
+        nodecg.init();
+
+        client = require('../radiaClient');
+    }
+
+    beforeEach(() => {
+        init({
             radia: {
                 url: 'radia://api',
                 authentication: 'radia_auth'
             }
         });
-        nodecg.init();
-
-        client = require('../radiaClient');
     });
 
     describe('hasPredictionSupport', () => {
+        it('returns false if bundle config does not have an auth key', async () => {
+            init({ radia: { } });
+
+            const result = await client.hasPredictionSupport('aaaa');
+
+            expect(result).toEqual(false);
+            expect(mockGet).not.toHaveBeenCalled();
+        });
+
         it('checks whether predictions are enabled', async () => {
             mockGet.mockResolvedValue({
                 status: 200,
@@ -211,6 +224,26 @@ describe('radiaClient', () => {
 
             expect(client.getLiveCasters('0259378')).rejects
                 .toThrow('Radia API call failed with response 401');
+        });
+    });
+
+    describe('updateTournamentData', () => {
+        it('POSTs new tournament data', async () => {
+            mockPost.mockResolvedValueOnce({ status: 200 });
+
+            await client.updateTournamentData('123123345', 'bracket://link', 'Cool Tournament');
+
+            expect(mockPost).toHaveBeenCalledWith(
+                'radia://api/organisation/guild/123123345',
+                { bracket_link: 'bracket://link', tournament_name: 'Cool Tournament' },
+                { headers: { Authorization: 'radia_auth' } });
+        });
+
+        it('throws an error if the status is not 200', async () => {
+            mockPost.mockResolvedValue({ status: 400 });
+
+            await expect(client.updateTournamentData('456', 'bracket://link', 'Rad Tournament'))
+                .rejects.toThrow('Radia API call failed with response 400');
         });
     });
 });

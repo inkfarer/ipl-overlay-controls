@@ -36,9 +36,9 @@ export type HighlightedMatches = {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	};
 	teamB: {
 		id: string;
@@ -47,8 +47,8 @@ export type HighlightedMatches = {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	};
 }[];

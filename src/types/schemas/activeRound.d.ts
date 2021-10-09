@@ -12,13 +12,13 @@ export type ActiveRoundTeam = {
 	showLogo: boolean;
 	players: {
 		name: string;
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
-	[k: string]: any;
+	[k: string]: unknown;
 } & {
 	score: number;
 	color: string;
-	[k: string]: any;
+	[k: string]: unknown;
 };
 
 export interface ActiveRound {
@@ -46,11 +46,11 @@ export interface ActiveRound {
 			clrB: string;
 			categoryName: string;
 			isCustom: boolean;
-			[k: string]: any;
+			[k: string]: unknown;
 		} & {
 			colorsSwapped: boolean;
-			[k: string]: any;
+			[k: string]: unknown;
 		};
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
 }

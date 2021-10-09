@@ -1,6 +1,7 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { dispatch, elementById } from '../../helpers/elemHelper';
 import { Module } from '../../../helpers/__mocks__/module';
+import { NextRound } from 'schemas';
 
 describe('main', () => {
     const mockTeamImageToggleHelper = {
@@ -29,6 +30,7 @@ describe('main', () => {
             </div>
             <input id="show-team-a-image">
             <input id="show-team-b-image">
+            <input id="show-on-stream-toggle">
         `;
 
         main = require('../main');
@@ -65,11 +67,14 @@ describe('main', () => {
             teamBSelector.innerHTML = '<option value="qweqwe"></option><option value="456456"></option>';
             const roundSelector = elementById<HTMLSelectElement>('round-selector');
             roundSelector.innerHTML = '<option value="zxczxc"></option><option value="890890"></option>';
+            const showOnStreamToggle = elementById<HTMLInputElement>('show-on-stream-toggle');
+            showOnStreamToggle.checked = false;
 
             nodecg.listeners.nextRound({
                 teamA: { showLogo: true, id: '123123' },
                 teamB: { showLogo: false, id: '456456' },
-                round: { id: '890890' }
+                round: { id: '890890' },
+                showOnStream: true,
             });
 
             const showTeamAImage = elementById<HTMLInputElement>('show-team-a-image');
@@ -81,6 +86,7 @@ describe('main', () => {
             expect(teamASelector.value).toEqual('123123');
             expect(teamBSelector.value).toEqual('456456');
             expect(roundSelector.value).toEqual('890890');
+            expect(showOnStreamToggle.checked).toEqual(true);
         });
     });
 
@@ -197,6 +203,18 @@ describe('main', () => {
             });
 
             expect(message.style.display).toEqual('none');
+        });
+    });
+
+    describe('show-on-stream-toggle: change', () => {
+        it('updates replicant data', () => {
+            nodecg.replicants.nextRound.value = { showOnStream: false };
+            const toggle = elementById<HTMLInputElement>('show-on-stream-toggle');
+            toggle.checked = true;
+
+            dispatch(toggle, 'change');
+
+            expect((nodecg.replicants.nextRound.value as NextRound).showOnStream).toEqual(true);
         });
     });
 });

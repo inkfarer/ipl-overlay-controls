@@ -1,21 +1,189 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema",
-	"type": "object",
-	"properties": {
-		"enablePrediction": {
-			"description": "If Predictions should be enabled for current settings",
-			"type": "boolean"
-		},
-		"currentPrediction": {
-			"description": "Currently stored prediction in use",
-			"$ref": "defs/predictions/prediction.json#/prediction"
-		}
-	},
-	"required": [
-		"enablePrediction"
-	],
-	"default": {
-		"enablePrediction": false
-	},
-	"additionalProperties": false
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "outcome": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Twitch ID of prediction Outcome",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Text displayed for outcome",
+                    "type": "string",
+                    "maxLength": 25
+                },
+                "users": {
+                    "description": "Number of unique users that chose the outcome.",
+                    "type": "integer"
+                },
+                "pointsUsed": {
+                    "description": "Channel Points Spent on outcome",
+                    "type": "integer"
+                },
+                "topPredictors": {
+                    "description": "Users who were the top predictors",
+                    "type": "array",
+                    "items": {
+                        "description": "Info on a Twitch predictor",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Twitch User ID",
+                                "type": "string"
+                            },
+                            "login": {
+                                "description": "Twitch User Login",
+                                "type": "string"
+                            },
+                            "username": {
+                                "description": "Twitch user Display Name",
+                                "type": "string"
+                            },
+                            "pointsUsed": {
+                                "description": "Channel Points used to make bet",
+                                "type": "integer"
+                            },
+                            "pointsWon": {
+                                "description": "Channel points won from prediction",
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "login",
+                            "username",
+                            "pointsUsed",
+                            "pointsWon"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "color": {
+                    "description": "Color for the outcome.",
+                    "type": "string",
+                    "enum": [
+                        "BLUE",
+                        "PINK"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "title",
+                "users",
+                "pointsUsed",
+                "topPredictors",
+                "color"
+            ],
+            "additionalProperties": false
+        },
+        "prediction": {
+            "description": "Twitch Prediction instance",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Twitch ID of the Prediction.",
+                    "type": "string"
+                },
+                "broadcasterId": {
+                    "description": "Twitch ID of the broadcaster",
+                    "type": "string"
+                },
+                "broadcasterName": {
+                    "description": "Twitch User Login",
+                    "type": "string"
+                },
+                "broadcasterLogin": {
+                    "description": "Twitch user Display Name",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Title of prediction",
+                    "type": "string",
+                    "maxLength": 45
+                },
+                "winningOutcome": {
+                    "description": "ID of winning outcome",
+                    "type": "string"
+                },
+                "outcomes": {
+                    "description": "Array of possible outcomes for the Prediction",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/outcome"
+                    }
+                },
+                "duration": {
+                    "description": "Total duration for the Prediction (in seconds)",
+                    "type": "integer",
+                    "maximum": 1800,
+                    "minLength": 1
+                },
+                "status": {
+                    "description": "Status of the Prediction",
+                    "type": "string",
+                    "enum": [
+                        "RESOLVED",
+                        "ACTIVE",
+                        "CANCELED",
+                        "LOCKED"
+                    ]
+                },
+                "creationTime": {
+                    "description": "UTC timestamp for the Prediction's start time",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "endTime": {
+                    "description": "UTC timestamp for when the Prediction ends",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "lockTime": {
+                    "description": "UTC timestamp for when the Prediction locks",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "id",
+                "broadcasterId",
+                "broadcasterName",
+                "broadcasterLogin",
+                "title",
+                "outcomes",
+                "duration",
+                "status",
+                "creationTime"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "enablePrediction": {
+            "description": "If Predictions should be enabled for current settings",
+            "type": "boolean"
+        },
+        "socketOpen": {
+            "type": "boolean"
+        },
+        "modificationTime": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "currentPrediction": {
+            "$ref": "#/definitions/prediction"
+        }
+    },
+    "required": [
+        "enablePrediction",
+        "socketOpen"
+    ],
+    "default": {
+        "enablePrediction": false,
+        "socketOpen": false
+    },
+    "additionalProperties": false
 }

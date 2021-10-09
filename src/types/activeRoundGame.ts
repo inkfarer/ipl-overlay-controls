@@ -13,4 +13,5 @@ export interface ActiveRoundGame {
         colorsSwapped: boolean;
         isCustom: boolean;
     };
+    [k: string]: unknown;
 }

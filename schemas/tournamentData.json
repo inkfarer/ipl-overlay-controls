@@ -15,7 +15,48 @@
                     "type": "string",
                     "enum": ["SMASHGG", "BATTLEFY", "UPLOAD", "UNKNOWN"]
                 },
+                "sourceSpecificData": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "smashgg": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "tournamentId": {
+                                    "type": "number"
+                                },
+                                "streams": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "defs/smashggStreams.json#/streams"
+                                    }
+                                },
+                                "eventData": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "game": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["id", "name", "game"]
+                                }
+                            },
+                            "required": ["tournamentId", "eventData"]
+                        }
+                    }
+                },
                 "name": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 }
             },

@@ -13,9 +13,9 @@ export interface NextRound {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	};
 	teamB: {
 		id: string;
@@ -24,17 +24,18 @@ export interface NextRound {
 		showLogo: boolean;
 		players: {
 			name: string;
-			[k: string]: any;
+			[k: string]: unknown;
 		}[];
-		[k: string]: any;
+		[k: string]: unknown;
 	};
 	round: {
 		id: string;
 		name: string;
 	};
+	showOnStream: boolean;
 	games: {
 		stage: string;
 		mode: string;
-		[k: string]: any;
+		[k: string]: unknown;
 	}[];
 }

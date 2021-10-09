@@ -15,6 +15,7 @@ export interface Configschema {
 	};
 	radia?: {
 		url?: string;
+		socketUrl?: string;
 		authentication?: string;
 	};
 }
