@@ -33,7 +33,7 @@ describe('main', () => {
             <input id="show-on-stream-toggle">
         `;
 
-        main = require('../main');
+        main = require('../main_legacy');
     });
 
     describe('roundStore: change', () => {

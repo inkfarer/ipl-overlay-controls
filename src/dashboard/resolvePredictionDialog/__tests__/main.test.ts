@@ -32,7 +32,7 @@ describe('main', () => {
             <button id="resolve-B-predictions-btn"></button>
         `;
 
-        require('../main');
+        require('../main_legacy');
         elements = require('../elements');
     });
 

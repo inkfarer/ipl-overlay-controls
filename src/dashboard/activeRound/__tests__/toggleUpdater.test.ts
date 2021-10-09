@@ -27,7 +27,7 @@ describe('toggleUpdater', () => {
     let nodecg: MockNodecg;
     let helper: Module;
 
-    jest.mock('../main', () => mockMain);
+    jest.mock('../main_legacy', () => mockMain);
     jest.mock('../toggleHelper', () => mockToggleHelper);
     jest.mock('../winToggleColorHelper', () => mockWinToggleColorHelper);
 

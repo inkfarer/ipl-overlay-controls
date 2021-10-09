@@ -31,7 +31,7 @@ describe('main', () => {
             <div id="toggles" />
             <input id="enable-color-edit-toggle">
             <button id="btn-reset" />`;
-        require('../main');
+        require('../main_legacy');
     });
 
     describe('activeRound change', () => {

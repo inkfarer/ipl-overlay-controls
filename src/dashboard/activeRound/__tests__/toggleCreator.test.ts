@@ -16,7 +16,7 @@ describe('toggleCreator', () => {
     let nodecg: MockNodecg;
     let helper: Module;
 
-    jest.mock('../main', () => ({
+    jest.mock('../main_legacy', () => ({
         __esModule: true,
         enableColorEditToggle: document.createElement('input')
     }));

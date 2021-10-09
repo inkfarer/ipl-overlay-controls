@@ -26,7 +26,7 @@ describe('main', () => {
             <div id="round-grid"></div>
         `;
 
-        require('../main');
+        require('../main_legacy');
     });
 
     describe('create-3-game-round: click', () => {

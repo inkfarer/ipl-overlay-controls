@@ -11,44 +11,50 @@ import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 const isProd = process.env.NODE_ENV === 'production';
 
 function dashboardConfig(): webpack.Configuration {
-    const entries: { [key: string]: string } = globby
-        .sync(['*/main.js', '*/main.ts'], { cwd: 'src/dashboard' })
-        .reduce((prev, curr) => {
-            prev[path.basename(path.dirname(curr))] = `./${curr}`;
-            return prev;
-        }, {});
+    function getEntries(patterns: string[]): { [key: string]: string } {
+        return globby.sync(patterns, { cwd: 'src/dashboard' })
+            .reduce((prev, curr) => {
+                prev[path.basename(path.dirname(curr))] = `./${curr}`;
+                return prev;
+            }, {});
+    }
 
-    let plugins = [];
+    const entries = getEntries(['*/main.ts']);
+    const legacyEntries = getEntries(['*/main_legacy.ts']);
 
-    plugins = plugins.concat(
-        [
-            ...Object.keys(entries)
-                .map(
-                    (entryName) =>
-                        new HtmlWebpackPlugin({
-                            filename: `${entryName}.html`,
-                            chunks: [entryName],
-                            title: entryName,
-                            template: `./${entryName}/${entryName}.html`
-                        })
-                )
-        ]
-    );
-
-    if (!isProd) {
-        plugins.push(
+    let plugins: any[] = [
+        ...Object.keys(legacyEntries).map((entryName) =>
+            new HtmlWebpackPlugin({
+                filename: `${entryName}.html`,
+                chunks: [entryName],
+                title: entryName,
+                template: `./${entryName}/${entryName}.html`
+            })
+        ),
+        ...Object.keys(entries).map((entryName) =>
+            new HtmlWebpackPlugin({
+                filename: `${entryName}.html`,
+                chunks: [entryName],
+                title: entryName,
+                template: 'template.html'
+            })
+        ),
+        ...(isProd ? [] : [
             new LiveReloadPlugin({
                 port: 0,
                 appendScriptTag: true
             })
-        );
-    }
+        ])
+    ];
 
     return {
         context: path.resolve(__dirname, 'src/dashboard'),
         mode: isProd ? 'production' : 'development',
         target: 'web',
-        entry: entries,
+        entry: {
+            ...entries,
+            ...legacyEntries
+        },
         output: {
             path: path.resolve(__dirname, 'dashboard'),
             filename: 'js/[name].js'

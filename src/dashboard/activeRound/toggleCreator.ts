@@ -13,7 +13,7 @@ import {
 import { swapColorsInternally } from './replicants';
 import { appendChildren } from '../helpers/elemHelper';
 import { GameWinner } from 'types/enums/gameWinner';
-import { enableColorEditToggle } from './main';
+import { enableColorEditToggle } from './main_legacy';
 import { SetWinnerRequest } from 'types/messages/activeRound';
 import { setWinToggleColor } from './winToggleColorHelper';
 

@@ -6,7 +6,7 @@ import {
     getWinToggles,
     toggleCustomColorSelectorVisibility
 } from './toggleHelper';
-import { roundNameElem } from './main';
+import { roundNameElem } from './main_legacy';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { GameWinner } from 'types/enums/gameWinner';
 import { setValueIfNotEdited } from '../helpers/inputHelper';

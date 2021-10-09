@@ -21,7 +21,7 @@ describe('main', () => {
             <div id="lastfm-now-playing-text"></div>
             <div id="now-playing-text"></div>`;
 
-        require('../main');
+        require('../main_legacy');
     });
 
     describe('nowPlayingSource: change', () => {
