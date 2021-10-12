@@ -7,7 +7,7 @@ dom.watch();
 
 import '../components/multiSelect';
 
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import '../styles/statusDisplay.css';
 
 import './matchData';

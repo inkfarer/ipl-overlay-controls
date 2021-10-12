@@ -1,4 +1,4 @@
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import './breakScreen.css';
 
 import './mainScene';

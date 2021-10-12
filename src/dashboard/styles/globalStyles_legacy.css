@@ -1,10 +1,10 @@
 body {
     font-family: 'Roboto', 'Noto', sans-serif;
-    margin: 10px;
+    margin: 8px;
 }
 
 :root {
-    --blue: rgb(63, 81, 181);
+    --blue: #6155BD;
     --info-blue: rgb(62, 98, 240);
     --info-blue-a-10: rgba(62, 98, 240, 0.1);
     --red: #e74e36;

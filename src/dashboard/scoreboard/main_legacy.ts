@@ -12,5 +12,5 @@ import './scoreboardData';
 import './colorEditor';
 import './colorToggles';
 
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import './scoreboard.css';

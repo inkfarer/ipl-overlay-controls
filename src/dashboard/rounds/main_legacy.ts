@@ -8,7 +8,7 @@ import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roun
 import isEqual from 'lodash/isEqual';
 
 import '../helpers/buttonConfirm';
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import './rounds.css';
 
 const rounds = nodecg.Replicant<RoundStore>('roundStore');

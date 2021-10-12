@@ -1,7 +1,7 @@
 import { addChangeReminder, setToggleButtonDisabled } from '../helpers/buttonHelper';
 import { LastFmNowPlaying, ManualNowPlaying, MusicShown, NowPlaying, NowPlayingSource } from 'schemas';
 
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 
 const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
 const manualNowPlaying = nodecg.Replicant<ManualNowPlaying>('manualNowPlaying');

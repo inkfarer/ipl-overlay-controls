@@ -12,7 +12,7 @@ import {
 library.add(faExclamationTriangle, faInfoCircle);
 dom.watch();
 
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import '../styles/statusDisplay.css';
 import './resolvePredictionDialog.css';
 

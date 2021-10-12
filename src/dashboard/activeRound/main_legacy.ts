@@ -7,7 +7,7 @@ import { ActiveRoundGame } from 'types/activeRoundGame';
 import { addToggle } from './toggleCreator';
 import { updateToggles } from './toggleUpdater';
 
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import './activeRound.css';
 
 import './roundUpdater';

@@ -5,7 +5,7 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 
 import '../helpers/buttonConfirm';
-import '../styles/globalStyles.css';
+import '../styles/globalStyles_legacy.css';
 import './nextRound.css';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { handleTeamImageToggleChange } from '../helpers/teamImageToggleHelper';
