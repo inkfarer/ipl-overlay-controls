@@ -57,7 +57,7 @@ describe('buttonHelper', () => {
             dispatch(select, 'change');
             dispatch(button, 'click');
 
-            expect(button.style.backgroundColor).toEqual('rgb(63, 81, 181)');
+            expect(button.style.backgroundColor).toEqual('rgb(97, 85, 189)');
             expect(input.dataset.edited).toEqual('false');
             expect(select.dataset.edited).toEqual('false');
         });

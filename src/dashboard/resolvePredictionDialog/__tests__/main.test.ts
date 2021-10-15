@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { MockNodecg } from '../../__mocks__/mockNodecg_legacy';
 import { dispatch, elementById } from '../../helpers/elemHelper';
 import { UnknownModule } from '../../../helpers/__mocks__/module';
 import { WinningOption } from '../types/winningOption';

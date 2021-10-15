@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { MockNodecg } from '../../__mocks__/mockNodecg_legacy';
 import { appendChildren, dispatch, elementById } from '../../helpers/elemHelper';
 import { Module } from '../../../helpers/__mocks__/module';
 import { Casters } from 'schemas';

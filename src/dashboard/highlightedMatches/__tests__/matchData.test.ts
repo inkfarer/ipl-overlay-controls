@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { MockNodecg } from '../../__mocks__/mockNodecg_legacy';
 import { dispatch, elementById } from '../../helpers/elemHelper';
 import { MultiSelect } from '../../components/multiSelect';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';

@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { MockNodecg } from '../../__mocks__/mockNodecg_legacy';
 import { handleTeamImageToggleChange } from '../teamImageToggleHelper';
 
 describe('teamImageToggleHelper', () => {

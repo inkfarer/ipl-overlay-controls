@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { MockNodecg } from '../../__mocks__/mockNodecg_legacy';
 import { Module } from '../../../helpers/__mocks__/module';
 import { GameWinner } from 'types/enums/gameWinner';
 import { elementById } from '../../helpers/elemHelper';
