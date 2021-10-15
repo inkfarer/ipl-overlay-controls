@@ -16,6 +16,7 @@ export class MockNodecg {
     }
 
     init(): void {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         window.nodecg = {
             // @ts-ignore: Just a mock

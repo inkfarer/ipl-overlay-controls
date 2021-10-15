@@ -16,6 +16,13 @@
             :disabled="!isValid"
             @click="handleUpdate"
         />
+        <ipl-checkbox
+            v-model="settings.updateOnImport"
+            class="m-t-8"
+            label="Update tournament data on import"
+            data-test="update-on-import-checkbox"
+            @update:modelValue="setUpdateOnImport"
+        />
     </ipl-space>
 </template>
 
@@ -28,13 +35,16 @@ import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import { RadiaSettings } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';
+import pick from 'lodash/pick';
 import { allValid, validator } from '../../helpers/validation/validator';
 import { minLength, numeric } from '../../helpers/validation/stringValidators';
+import IplCheckbox from '../../components/iplCheckbox.vue';
 
 export default defineComponent({
     name: 'RadiaSettings',
 
     components: {
+        IplCheckbox,
         IplButton,
         IplInput,
         IplSpace
@@ -43,7 +53,7 @@ export default defineComponent({
     setup() {
         const store = useSettingsStore();
         const isFocused = ref(false);
-        const isChanged = computed(() => !isEqual(settings.value, store.state.radiaSettings));
+        const isChanged = computed(() => !isEqual(pick(settings.value, ['guildID']), pick(store.state.radiaSettings, ['guildID'])));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
         const validators = {
             guildId: validator(() => settings.value.guildID, minLength(17), numeric)
@@ -68,6 +78,9 @@ export default defineComponent({
                 if (isChanged.value) {
                     store.commit('setRadiaSettings', { newValue: settings.value });
                 }
+            },
+            setUpdateOnImport(value: boolean) {
+                store.commit('setUpdateOnImport', value);
             },
             v: validators
         };

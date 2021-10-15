@@ -20,7 +20,8 @@ describe('radiaSettings', () => {
                 }
             },
             mutations: {
-                setRadiaSettings: jest.fn()
+                setRadiaSettings: jest.fn(),
+                setUpdateOnImport: jest.fn()
             }
         });
     };
@@ -127,5 +128,20 @@ describe('radiaSettings', () => {
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="update-button"]').props().disabled).toEqual(true);
+    });
+
+    it('updates updateOnImport value when relevant checkbox is interacted with', async () => {
+        const store = createSettingsStore();
+        jest.spyOn(store, 'commit');
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [[store, settingsStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="update-on-import-checkbox"]').vm.$emit('update:modelValue', true);
+        await wrapper.vm.$nextTick();
+
+        expect(store.commit).toHaveBeenCalledWith('setUpdateOnImport', true);
     });
 });

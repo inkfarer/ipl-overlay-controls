@@ -32,6 +32,9 @@ export const settingsStore = createStore<SettingsStore>({
         },
         setRadiaSettings(store, { newValue }: { newValue: RadiaSettings }): void {
             radiaSettings.value = newValue;
+        },
+        setUpdateOnImport(store, updateOnImport: boolean): void {
+            radiaSettings.value.updateOnImport = updateOnImport;
         }
     }
 });
