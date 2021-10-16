@@ -8,4 +8,4 @@ exports[`importStatusHelper setImportStatus matches snapshot for status NO_DATA 
 
 exports[`importStatusHelper setImportStatus matches snapshot for status NO_STATUS 1`] = `"<div style=\\"background-color: rgb(24, 30, 41); color: white;\\"></div>STATUS"`;
 
-exports[`importStatusHelper setImportStatus matches snapshot for status SUCCESS 1`] = `"<div style=\\"background-color: rgb(91, 166, 100); color: white;\\"></div>SUCCESS"`;
+exports[`importStatusHelper setImportStatus matches snapshot for status SUCCESS 1`] = `"<div style=\\"background-color: rgb(0, 166, 81); color: white;\\"></div>SUCCESS"`;

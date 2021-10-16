@@ -14,7 +14,7 @@ describe('iplButton', () => {
         const greenWrapper = shallowMount(IplButton, { props: { label: 'Button', color: 'green' } });
 
         expect(redWrapper.find('a').element.style.backgroundColor).toEqual('rgb(231, 78, 54)');
-        expect(greenWrapper.find('a').element.style.backgroundColor).toEqual('rgb(91, 166, 100)');
+        expect(greenWrapper.find('a').element.style.backgroundColor).toEqual('rgb(0, 166, 81)');
     });
 
     it('emits event on click', async () => {

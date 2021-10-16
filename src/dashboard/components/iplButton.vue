@@ -55,7 +55,6 @@ export default defineComponent({
     .ipl-button {
         text-decoration: none;
         text-transform: uppercase;
-        font-family: 'Roboto', sans-serif;
         font-size: 1em;
         font-weight: 700;
         color: white;
