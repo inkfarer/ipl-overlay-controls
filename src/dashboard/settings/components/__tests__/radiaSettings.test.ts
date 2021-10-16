@@ -6,7 +6,8 @@ import { mount, config } from '@vue/test-utils';
 describe('radiaSettings', () => {
     config.global.stubs = {
         IplInput: true,
-        IplButton: true
+        IplButton: true,
+        IplCheckbox: true
     };
 
     const createSettingsStore = () => {
@@ -30,7 +31,7 @@ describe('radiaSettings', () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
@@ -46,16 +47,34 @@ describe('radiaSettings', () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
         const usernameInput = wrapper.findComponent('[name="guild-id"]');
         usernameInput.vm.$emit('focuschange', true);
-        store.state.lastFmSettings.username = '345345';
+        store.state.radiaSettings.guildID = '345345';
+        store.state.radiaSettings.updateOnImport = false;
         await wrapper.vm.$nextTick();
 
         expect(usernameInput.attributes().modelvalue).toEqual('123123');
+        expect(wrapper.getComponent('[data-test="update-on-import-checkbox"]').attributes().modelvalue)
+            .toEqual('false');
+    });
+
+    it('updates updateOnInput value on store change', async () => {
+        const store = createSettingsStore();
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [ [ store, settingsStoreKey ] ]
+            }
+        });
+
+        store.state.radiaSettings.updateOnImport = true;
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="update-on-import-checkbox"]').attributes().modelvalue)
+            .toEqual('true');
     });
 
     it('updates settings on button click if they have been updated', async () => {
@@ -63,18 +82,20 @@ describe('radiaSettings', () => {
         jest.spyOn(store, 'commit');
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
         wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.commit).toHaveBeenCalledWith('setRadiaSettings', { newValue: {
-            enabled: null,
-            guildID: '789789',
-            updateOnImport: null
-        } });
+        expect(store.commit).toHaveBeenCalledWith('setRadiaSettings', {
+            newValue: {
+                enabled: null,
+                guildID: '789789',
+                updateOnImport: null
+            }
+        });
     });
 
     it('does not update settings on button click if data has not been updated', async () => {
@@ -82,7 +103,7 @@ describe('radiaSettings', () => {
         jest.spyOn(store, 'commit');
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
@@ -95,7 +116,7 @@ describe('radiaSettings', () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
@@ -106,7 +127,7 @@ describe('radiaSettings', () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
@@ -120,7 +141,7 @@ describe('radiaSettings', () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 
@@ -135,7 +156,7 @@ describe('radiaSettings', () => {
         jest.spyOn(store, 'commit');
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [[store, settingsStoreKey]]
+                plugins: [ [ store, settingsStoreKey ] ]
             }
         });
 

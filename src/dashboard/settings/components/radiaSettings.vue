@@ -31,14 +31,14 @@ import { computed, defineComponent, Ref, ref } from 'vue';
 import IplInput from '../../components/iplInput.vue';
 import IplSpace from '../../components/iplSpace.vue';
 import IplButton from '../../components/iplButton.vue';
+import IplCheckbox from '../../components/iplCheckbox.vue';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
-import { RadiaSettings } from 'schemas';
-import cloneDeep from 'lodash/cloneDeep';
 import pick from 'lodash/pick';
+import cloneDeep from 'lodash/cloneDeep';
+import { RadiaSettings } from 'schemas';
 import { allValid, validator } from '../../helpers/validation/validator';
 import { minLength, numeric } from '../../helpers/validation/stringValidators';
-import IplCheckbox from '../../components/iplCheckbox.vue';
 
 export default defineComponent({
     name: 'RadiaSettings',
@@ -53,17 +53,24 @@ export default defineComponent({
     setup() {
         const store = useSettingsStore();
         const isFocused = ref(false);
-        const isChanged = computed(() => !isEqual(pick(settings.value, ['guildID']), pick(store.state.radiaSettings, ['guildID'])));
+        const isChanged = computed(() => !isEqual(
+            pick(settings.value, ['guildID']),
+            pick(store.state.radiaSettings, ['guildID'])
+        ));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
         const validators = {
             guildId: validator(() => settings.value.guildID, minLength(17), numeric)
         };
 
-        store.watch(store => store.radiaSettings, (newValue) => {
+        store.watch(store => store.radiaSettings.guildID, newValue => {
             if (!isFocused.value) {
-                settings.value = cloneDeep(newValue);
+                settings.value.guildID = newValue;
             }
-        }, { deep: true });
+        });
+
+        store.watch(store => store.radiaSettings.updateOnImport, newValue => {
+            settings.value.updateOnImport = newValue;
+        });
 
         return {
             focused: isFocused,

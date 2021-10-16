@@ -29,7 +29,7 @@ describe('Scoreboard', () => {
         const store = createScoreboardStore();
         const wrapper = mount(Scoreboard, {
             global: {
-                plugins: [[store, scoreboardStoreKey]]
+                plugins: [ [ store, scoreboardStoreKey ] ]
             }
         });
 
@@ -43,16 +43,32 @@ describe('Scoreboard', () => {
         const store = createScoreboardStore();
         const wrapper = mount(Scoreboard, {
             global: {
-                plugins: [[store, scoreboardStoreKey]]
+                plugins: [ [ store, scoreboardStoreKey ] ]
             }
         });
 
         const flavorTextInput = wrapper.findComponent('[name="flavor-text"]');
         flavorTextInput.vm.$emit('focuschange', true);
         store.state.scoreboardData.flavorText = 'new flavor text';
+        store.state.scoreboardData.isVisible = false;
         await wrapper.vm.$nextTick();
 
         expect(flavorTextInput.attributes().modelvalue).toEqual('whoa');
+    });
+
+    it('updates isVisible on store change', async () => {
+        const store = createScoreboardStore();
+        const wrapper = mount(Scoreboard, {
+            global: {
+                plugins: [ [ store, scoreboardStoreKey ] ]
+            }
+        });
+
+        store.state.scoreboardData.isVisible = false;
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findComponent('[data-test="scoreboard-visible-toggle"]').attributes().modelvalue)
+            .toEqual('false');
     });
 
     it('updates flavor text on button press', async () => {
@@ -60,7 +76,7 @@ describe('Scoreboard', () => {
         jest.spyOn(store, 'commit');
         const wrapper = mount(Scoreboard, {
             global: {
-                plugins: [[store, scoreboardStoreKey]]
+                plugins: [ [ store, scoreboardStoreKey ] ]
             }
         });
 
@@ -75,7 +91,7 @@ describe('Scoreboard', () => {
         jest.spyOn(store, 'commit');
         const wrapper = mount(Scoreboard, {
             global: {
-                plugins: [[store, scoreboardStoreKey]]
+                plugins: [ [ store, scoreboardStoreKey ] ]
             }
         });
 
@@ -88,7 +104,7 @@ describe('Scoreboard', () => {
         const store = createScoreboardStore();
         const wrapper = mount(Scoreboard, {
             global: {
-                plugins: [[store, scoreboardStoreKey]]
+                plugins: [ [ store, scoreboardStoreKey ] ]
             }
         });
 

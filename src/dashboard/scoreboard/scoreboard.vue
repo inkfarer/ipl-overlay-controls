@@ -54,6 +54,10 @@ export default defineComponent({
             }
         });
 
+        store.watch(store => store.scoreboardData.isVisible, newValue => {
+            scoreboardData.value.isVisible = newValue;
+        });
+
         return {
             scoreboardData,
             handleFocusEvent(event: boolean) {
