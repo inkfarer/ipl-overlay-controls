@@ -70,7 +70,7 @@ export default defineComponent({
                     emit('click');
                 }
             },
-            isIconButton: props.icon != null
+            isIconButton: computed(() => props.icon != null)
         };
     }
 });
