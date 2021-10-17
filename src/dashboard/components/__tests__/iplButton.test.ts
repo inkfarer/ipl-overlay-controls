@@ -1,12 +1,34 @@
 import IplButton from '../iplButton.vue';
-import { shallowMount } from '@vue/test-utils';
+import { config, shallowMount } from '@vue/test-utils';
 import { buttonColors } from '../../styles/colors';
 
 describe('iplButton', () => {
+    config.global.stubs = {
+        FontAwesomeIcon: true
+    };
+
     it('applies label to element', () => {
         const wrapper = shallowMount(IplButton, { props: { label: 'Button' } });
 
         expect(wrapper.find('span.label').text()).toEqual('Button');
+    });
+
+    it('creates icon if given', () => {
+        const wrapper = shallowMount(IplButton, { props: { icon: 'cool-icon' } });
+
+        expect(wrapper.find('font-awesome-icon-stub.icon').attributes().icon).toEqual('cool-icon');
+    });
+
+    it('does not create label element if icon is given', () => {
+        const wrapper = shallowMount(IplButton, { props: { icon: 'cool-icon', label: 'something' } });
+
+        expect(wrapper.find('span.label').exists()).toEqual(false);
+        expect(wrapper.find('font-awesome-icon-stub.icon').exists()).toEqual(true);
+    });
+
+    it('throws error if icon and label are both missing', () => {
+        expect(() => shallowMount(IplButton, { props: { icon: undefined, label: '' } }))
+            .toThrow('ipl-button requires an icon or label to be provided.');
     });
 
     it('applies appropriate style according to color prop', () => {
@@ -33,10 +55,16 @@ describe('iplButton', () => {
         expect(wrapper.emitted().click).toBeUndefined();
     });
 
-    it('has class if disabled', () => {
+    it('gives class to link button element if disabled', () => {
         const wrapper = shallowMount(IplButton, { props: { label: 'Button', disabled: true } });
 
         expect(wrapper.find('a').classes()).toContain('disabled');
+    });
+
+    it('gives class to link button element if element has icon', () => {
+        const wrapper = shallowMount(IplButton, { props: { icon: 'dope-icon' } });
+
+        expect(wrapper.find('a').classes()).toContain('has-icon');
     });
 
     describe('validator: color', () => {

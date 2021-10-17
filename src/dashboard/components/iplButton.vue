@@ -2,24 +2,44 @@
     <a
         class="ipl-button"
         :style="buttonStyle"
-        :class="{ disabled: disabled }"
+        :class="{ disabled: disabled, 'has-icon': isIconButton }"
         @click="handleClick"
     >
-        <span class="label">{{ label }}</span>
+        <span
+            v-if="!isIconButton"
+            class="label"
+        >
+            {{ label }}
+        </span>
+        <font-awesome-icon
+            v-else
+            :icon="icon"
+            class="icon"
+        />
     </a>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import { buttonColors } from '../styles/colors';
+import isEmpty from 'lodash/isEmpty';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default defineComponent({
     name: 'IplButton',
 
+    components: {
+        FontAwesomeIcon
+    },
+
     props: {
         label: {
             type: String,
-            required: true
+            default: null
+        },
+        icon: {
+            type: [Array, String] as PropType<Array<string> | string>,
+            default: null
         },
         color: {
             type: String as PropType<keyof typeof buttonColors>,
@@ -37,6 +57,10 @@ export default defineComponent({
     emits: ['click'],
 
     setup(props, { emit }) {
+        if (isEmpty(props.icon) && isEmpty(props.label)) {
+            throw new Error('ipl-button requires an icon or label to be provided.');
+        }
+
         return {
             buttonStyle: computed(() => ({
                 backgroundColor: buttonColors[props.color]
@@ -45,7 +69,8 @@ export default defineComponent({
                 if (!props.disabled) {
                     emit('click');
                 }
-            }
+            },
+            isIconButton: props.icon != null
         };
     }
 });
@@ -71,7 +96,13 @@ export default defineComponent({
 
         transition-duration: 100ms;
 
-        .label {
+        &.has-icon {
+            font-size: 26px;
+            width: 49px;
+            padding: 4px 0 2px;
+        }
+
+        .label, .icon {
             z-index: 2;
             position: relative;
             user-select: none;
