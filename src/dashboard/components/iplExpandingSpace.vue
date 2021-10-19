@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { computed, defineComponent, getCurrentInstance, inject, Ref, ref } from 'vue';
+import { computed, defineComponent, getCurrentInstance, inject, ref, WritableComputedRef } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 
@@ -51,7 +51,7 @@ export default defineComponent({
     setup() {
         const contentVisible = ref(false);
         const key = getCurrentInstance().vnode.key as string;
-        const activeSpace = inject<Ref<string>>('activeSpace', null);
+        const activeSpace = inject<WritableComputedRef<string>>('activeSpace', null);
         const isInGroup = activeSpace != null;
         const shouldShowContent = computed(() => isInGroup ? activeSpace.value === key : contentVisible.value);
 

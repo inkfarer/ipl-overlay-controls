@@ -3,13 +3,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, ref } from 'vue';
+import { computed, defineComponent, provide } from 'vue';
 
 export default defineComponent({
     name: 'IplExpandingSpaceGroup',
 
-    setup() {
-        provide('activeSpace', ref<string>(null));
+    props: {
+        modelValue: {
+            type: [String, null],
+            required: true
+        },
+    },
+
+    emits: [ 'update:modelValue' ],
+
+    setup(props, { emit }) {
+        const model = computed<string>({
+            get() {
+                return props.modelValue;
+            },
+            set(value) {
+                emit('update:modelValue', value);
+            }
+        });
+
+        provide('activeSpace', model);
     }
 });
 </script>
