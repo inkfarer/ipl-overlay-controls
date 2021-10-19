@@ -3,6 +3,11 @@ import { config, shallowMount } from '@vue/test-utils';
 import { buttonColors } from '../../styles/colors';
 
 describe('iplButton', () => {
+    beforeEach(() => {
+        jest.restoreAllMocks();
+        jest.clearAllMocks();
+    });
+
     config.global.stubs = {
         FontAwesomeIcon: true
     };
@@ -78,6 +83,157 @@ describe('iplButton', () => {
 
         it('does not allow unknown colors', () => {
             expect(validator('something that is not a color')).toEqual(false);
+        });
+    });
+
+    describe('async behavior', () => {
+        it('disables button and applies label provided in props to button when action is in progress', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true,
+                    progressMessage: 'Loading...'
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockReturnValue(new Promise(() => { }));
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+
+            expect(wrapper.vm.disabledInternal).toEqual(true);
+            expect(button.classes()).toContain('disabled');
+            expect(button.text()).toEqual('Loading...');
+        });
+
+        it('applies label provided in props and uses appropriate color on success', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true,
+                    successMessage: 'All good!'
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockResolvedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('All good!');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#00A651');
+        });
+
+        it('uses different success color if idle color is already green', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true,
+                    successMessage: 'All good!',
+                    color: 'green'
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockResolvedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('All good!');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#18C682');
+        });
+
+        it('resets successful button state after a timeout period', async () => {
+            // @ts-ignore: Fine for testing
+            jest.spyOn(global.window, 'setTimeout').mockImplementation(handler => {
+                handler();
+            });
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true,
+                    successMessage: 'All good!',
+                    color: 'green'
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockResolvedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('Button');
+            expect(wrapper.vm.buttonState).toEqual('idle');
+            expect(global.window.setTimeout).toHaveBeenCalled();
+        });
+
+        it('applies label provided in props and uses appropriate color on failure', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('Error!');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#e74e36');
+        });
+
+        it('uses different failure color if idle color is already red', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true,
+                    color: 'red'
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('Error!');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#FF682E');
+        });
+
+        it('resets unsuccessful button state after a timeout period', async () => {
+            // @ts-ignore: Fine for testing
+            jest.spyOn(global.window, 'setTimeout').mockImplementation(handler => {
+                handler();
+            });
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    async: true
+                }
+            });
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('Button');
+            expect(wrapper.vm.buttonState).toEqual('idle');
+            expect(global.window.setTimeout).toHaveBeenCalled();
         });
     });
 });

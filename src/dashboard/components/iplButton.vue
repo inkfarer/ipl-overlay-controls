@@ -2,14 +2,14 @@
     <a
         class="ipl-button"
         :style="buttonStyle"
-        :class="{ disabled: disabled, 'has-icon': isIconButton }"
+        :class="{ disabled: disabledInternal, 'has-icon': isIconButton }"
         @click="handleClick"
     >
         <span
             v-if="!isIconButton"
             class="label"
         >
-            {{ label }}
+            {{ labelInternal }}
         </span>
         <font-awesome-icon
             v-else
@@ -20,10 +20,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, getCurrentInstance, PropType, Ref, ref } from 'vue';
 import { buttonColors } from '../styles/colors';
 import isEmpty from 'lodash/isEmpty';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { getContrastingTextColor } from '../helpers/colorHelper';
 
 export default defineComponent({
     name: 'IplButton',
@@ -51,6 +52,18 @@ export default defineComponent({
         disabled: {
             type: Boolean,
             default: false
+        },
+        async: {
+            type: Boolean,
+            default: false
+        },
+        progressMessage: {
+            type: String,
+            default: 'Working...'
+        },
+        successMessage: {
+            type: String,
+            default: 'Done!'
         }
     },
 
@@ -61,16 +74,69 @@ export default defineComponent({
             throw new Error('ipl-button requires an icon or label to be provided.');
         }
 
+        const instance = getCurrentInstance();
+        const resetTimeout: Ref<number> = ref(null);
+        const buttonState: Ref<'idle' | 'error' | 'success' | 'loading'> = ref('idle');
+        const setState = (state: 'error' | 'success') => {
+            buttonState.value = state;
+            clearTimeout(resetTimeout.value);
+            resetTimeout.value = window.setTimeout(() => {
+                buttonState.value = 'idle';
+            }, 5000);
+        };
+        const disabledInternal = computed(() => props.disabled || (props.async && buttonState.value === 'loading'));
+        const colorInternal = computed(() => {
+            switch (buttonState.value) {
+                case 'error':
+                    return props.color === 'red' ? 'orange' : 'red';
+                case 'success':
+                    return props.color === 'green' ? 'green-success' : 'green';
+                default:
+                    return props.color;
+            }
+        });
+
         return {
-            buttonStyle: computed(() => ({
-                backgroundColor: buttonColors[props.color]
-            })),
-            handleClick() {
-                if (!props.disabled) {
-                    emit('click');
+            buttonStyle: computed(() => {
+                const buttonColor = buttonColors[colorInternal.value];
+                return ({
+                    backgroundColor: buttonColor,
+                    color: disabledInternal.value ? '#A9AAA9' : getContrastingTextColor(buttonColor)
+                });
+            }),
+            async handleClick() {
+                if (!disabledInternal.value) {
+                    if (!props.async) {
+                        emit('click');
+                    } else {
+                        try {
+                            buttonState.value = 'loading';
+                            await instance.vnode.props.onClick();
+                            setState('success');
+                        } catch (e) {
+                            console.error(e);
+                            setState('error');
+                        }
+                    }
                 }
             },
-            isIconButton: computed(() => props.icon != null)
+            buttonState,
+            isIconButton: computed(() => props.icon != null),
+            disabledInternal,
+            labelInternal: computed(() => {
+                if (!props.async) return props.label;
+
+                switch (buttonState.value) {
+                    case 'error':
+                        return 'Error!';
+                    case 'loading':
+                        return props.progressMessage;
+                    case 'success':
+                        return props.successMessage;
+                    default:
+                        return props.label;
+                }
+            })
         };
     }
 });
