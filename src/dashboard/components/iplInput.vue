@@ -1,25 +1,27 @@
 <template>
-    <div
-        class="ipl-input__wrapper"
-        :class="{ 'has-error': !isValid }"
-    >
-        <ipl-label :class="{ 'has-error': !isValid }">
-            {{ label }}
-            <input
-                v-model="model"
-                :name="name"
-                :type="type"
-                @focus="handleFocusEvent"
-                @blur="handleFocusEvent"
-                @input="handleFocusEvent($event), handleInputEvent()"
-            >
-        </ipl-label>
+    <div class="ipl-input__wrapper">
+        <div
+            class="ipl-input__text-input-wrapper"
+            :class="{ 'has-error': !isValid }"
+        >
+            <ipl-label :class="{ 'has-error': !isValid }">
+                {{ label }}
+                <input
+                    v-model="model"
+                    :name="name"
+                    :type="type"
+                    @focus="handleFocusEvent"
+                    @blur="handleFocusEvent"
+                    @input="handleFocusEvent($event), handleInputEvent()"
+                >
+            </ipl-label>
+        </div>
+        <span
+            v-if="!!validator"
+            v-show="!isValid"
+            class="error"
+        >{{ validator.message }}</span>
     </div>
-    <span
-        v-if="!!validator"
-        v-show="!isValid"
-        class="error"
-    >{{ validator.message }}</span>
 </template>
 
 <script lang="ts">
@@ -83,7 +85,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.ipl-input__wrapper {
+.ipl-input__text-input-wrapper {
     border-bottom: 1px solid #737373;
     transition-duration: 100ms;
 

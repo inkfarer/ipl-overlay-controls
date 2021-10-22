@@ -64,7 +64,7 @@ describe('IplInput', () => {
         });
 
         expect(wrapper.find('.error').text()).toEqual('very bad!!!');
-        expect(wrapper.find('.ipl-input__wrapper').classes()).toContain('has-error');
+        expect(wrapper.find('.ipl-input__text-input-wrapper').classes()).toContain('has-error');
         expect(wrapper.find('.ipl-label').classes()).toContain('has-error');
     });
 
@@ -81,7 +81,7 @@ describe('IplInput', () => {
         });
 
         expect(wrapper.find('.error').isVisible()).toEqual(false);
-        expect(wrapper.find('.ipl-input__wrapper').classes()).not.toContain('has-error');
+        expect(wrapper.find('.ipl-input__text-input-wrapper').classes()).not.toContain('has-error');
         expect(wrapper.find('.ipl-label').classes()).not.toContain('has-error');
     });
 
