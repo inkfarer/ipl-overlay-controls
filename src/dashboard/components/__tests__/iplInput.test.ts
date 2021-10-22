@@ -1,19 +1,19 @@
 import IplInput from '../iplInput.vue';
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 describe('IplInput', () => {
     it('provides props to inner elements', () => {
-        const wrapper = shallowMount(IplInput, { props: {  label: 'Label', name: 'input', type: 'number'  } });
+        const wrapper = mount(IplInput, { props: {  label: 'Label', name: 'input', type: 'number'  } });
 
-        const input = wrapper.find('input');
+        const input = wrapper.get('input');
         expect(input.element.name).toEqual('input');
         expect(input.element.type).toEqual('number');
-        expect(wrapper.find('label').text()).toEqual('Label');
+        expect(wrapper.find('.ipl-label').text()).toEqual('Label');
     });
 
     it('sends event on focus change', () => {
-        const wrapper = shallowMount(IplInput, { props: { label: 'Label', name: 'input' } });
-        const innerInput = wrapper.find('input');
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input' } });
+        const innerInput = wrapper.get('input');
 
         innerInput.trigger('focus');
         innerInput.trigger('blur');
@@ -27,8 +27,8 @@ describe('IplInput', () => {
     });
 
     it('sends event and updates v-model on input', async () => {
-        const wrapper = shallowMount(IplInput, { props: { label: 'Label', name: 'input' } });
-        const innerInput = wrapper.find('input');
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input' } });
+        const innerInput = wrapper.get('input');
 
         await innerInput.setValue('new text');
 
@@ -40,7 +40,7 @@ describe('IplInput', () => {
     });
 
     it('shows no message if validator does not exist', () => {
-        const wrapper = shallowMount(IplInput, {
+        const wrapper = mount(IplInput, {
             props: {
                 label: 'Label',
                 name: 'input',
@@ -52,7 +52,7 @@ describe('IplInput', () => {
     });
 
     it('applies classes to elements and shows error message if validator with error is provided', () => {
-        const wrapper = shallowMount(IplInput, {
+        const wrapper = mount(IplInput, {
             props: {
                 label: 'Label',
                 name: 'input',
@@ -65,11 +65,11 @@ describe('IplInput', () => {
 
         expect(wrapper.find('.error').text()).toEqual('very bad!!!');
         expect(wrapper.find('.ipl-input__wrapper').classes()).toContain('has-error');
-        expect(wrapper.find('label').classes()).toContain('has-error');
+        expect(wrapper.find('.ipl-label').classes()).toContain('has-error');
     });
 
     it('hides error message if no validator error is present', () => {
-        const wrapper = shallowMount(IplInput, {
+        const wrapper = mount(IplInput, {
             props: {
                 label: 'Label',
                 name: 'input',
@@ -82,7 +82,7 @@ describe('IplInput', () => {
 
         expect(wrapper.find('.error').isVisible()).toEqual(false);
         expect(wrapper.find('.ipl-input__wrapper').classes()).not.toContain('has-error');
-        expect(wrapper.find('label').classes()).not.toContain('has-error');
+        expect(wrapper.find('.ipl-label').classes()).not.toContain('has-error');
     });
 
     describe('validator: type', () => {

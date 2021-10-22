@@ -3,7 +3,7 @@
         class="ipl-input__wrapper"
         :class="{ 'has-error': !isValid }"
     >
-        <label :class="{ 'has-error': !isValid }">
+        <ipl-label :class="{ 'has-error': !isValid }">
             {{ label }}
             <input
                 v-model="model"
@@ -13,7 +13,7 @@
                 @blur="handleFocusEvent"
                 @input="handleFocusEvent($event), handleInputEvent()"
             >
-        </label>
+        </ipl-label>
     </div>
     <span
         v-if="!!validator"
@@ -25,10 +25,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import { ValidatorResult } from '../helpers/validation/validator';
+import IplLabel from './iplLabel.vue';
 
 export default defineComponent({
     name: 'IplInput',
-
+    components: { IplLabel },
     props: {
         label: {
             type: String,
@@ -99,17 +100,8 @@ export default defineComponent({
     }
 }
 
-label {
-    color: #737373;
-    font-size: 0.75em;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    transition-duration: 100ms;
-
-    &.has-error {
-        color: #E74E36 !important;
-    }
+label.has-error {
+    color: #E74E36 !important;
 }
 
 input {
