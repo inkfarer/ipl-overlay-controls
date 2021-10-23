@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IplSelect applies given options to select element 1`] = `"<select><option value=\\"opt\\">Option</option><option value=\\"opt2\\">Option the Second</option><option value=\\"optthree\\">Opt 3</option></select>"`;

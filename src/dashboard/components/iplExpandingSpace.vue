@@ -2,18 +2,24 @@
     <div class="ipl-expansion-panel__content">
         <div
             class="ipl-expansion-panel__header layout horizontal center-vertical"
-            @click="handleHeaderClick"
+            @click.self="handleHeaderClick"
         >
-            <div class="ipl-expansion-panel__title">
+            <div
+                class="ipl-expansion-panel__title"
+                @click="handleHeaderClick"
+            >
                 <slot name="title">
                     {{ title }}
                 </slot>
             </div>
-            <font-awesome-icon
-                icon="chevron-left"
-                class="icon"
-                :class="{ 'content-expanded': shouldShowContent }"
-            />
+            <div @click="handleHeaderClick">
+                <font-awesome-icon
+                    icon="chevron-left"
+                    class="icon"
+                    :class="{ 'content-expanded': shouldShowContent }"
+                />
+            </div>
+            <slot name="header-extra" />
         </div>
         <div
             v-show="shouldShowContent"
