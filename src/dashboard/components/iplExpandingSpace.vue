@@ -82,7 +82,7 @@ export default defineComponent({
         cursor: pointer;
         user-select: none;
         display: flex;
-        padding: 10px;
+        padding: 8px;
 
         .icon {
             transition-duration: 100ms;
