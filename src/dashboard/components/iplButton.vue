@@ -64,6 +64,10 @@ export default defineComponent({
         successMessage: {
             type: String,
             default: 'Done!'
+        },
+        requiresConfirmation: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -75,26 +79,31 @@ export default defineComponent({
         }
 
         const instance = getCurrentInstance();
-        const resetTimeout: Ref<number> = ref(null);
+        let resetTimeout: number = null;
+        let confirmationResetTimeout: number = null;
         const buttonState: Ref<'idle' | 'error' | 'success' | 'loading'> = ref('idle');
         const setState = (state: 'error' | 'success') => {
             buttonState.value = state;
-            clearTimeout(resetTimeout.value);
-            resetTimeout.value = window.setTimeout(() => {
+            clearTimeout(resetTimeout);
+            resetTimeout = window.setTimeout(() => {
                 buttonState.value = 'idle';
             }, 5000);
         };
         const disabledInternal = computed(() => props.disabled || (props.async && buttonState.value === 'loading'));
         const colorInternal = computed(() => {
+            const warningColor = props.color === 'red' ? 'orange' : 'red';
+            if (props.requiresConfirmation && isClicked.value) return warningColor;
+
             switch (buttonState.value) {
                 case 'error':
-                    return props.color === 'red' ? 'orange' : 'red';
+                    return warningColor;
                 case 'success':
                     return props.color === 'green' ? 'green-success' : 'green';
                 default:
                     return props.color;
             }
         });
+        const isClicked = ref(false);
 
         return {
             buttonStyle: computed(() => {
@@ -106,6 +115,17 @@ export default defineComponent({
             }),
             async handleClick() {
                 if (!disabledInternal.value) {
+                    if (props.requiresConfirmation && !isClicked.value) {
+                        isClicked.value = true;
+                        confirmationResetTimeout = window.setTimeout(() => {
+                            isClicked.value = false;
+                        }, 5000);
+                        return;
+                    } else if (props.requiresConfirmation && isClicked.value) {
+                        isClicked.value = false;
+                        clearTimeout(confirmationResetTimeout);
+                    }
+
                     if (!props.async) {
                         emit('click');
                     } else {
@@ -124,6 +144,7 @@ export default defineComponent({
             isIconButton: computed(() => props.icon != null),
             disabledInternal,
             labelInternal: computed(() => {
+                if (props.requiresConfirmation && isClicked.value) return 'Are you sure?';
                 if (!props.async) return props.label;
 
                 switch (buttonState.value) {

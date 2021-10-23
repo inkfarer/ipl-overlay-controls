@@ -86,6 +86,66 @@ describe('iplButton', () => {
         });
     });
 
+    describe('requires-confirmation', () => {
+        it('must be pressed twice to emit click event', async () => {
+            const wrapper = shallowMount(IplButton, { props: { label: 'Button', requiresConfirmation: true } });
+            const button = wrapper.get('a');
+
+            await button.trigger('click');
+            await button.trigger('click');
+
+            expect(wrapper.emitted('click').length).toEqual(1);
+        });
+
+        it('has expected label and color when clicked once', async () => {
+            const wrapper = shallowMount(IplButton, { props: { label: 'Button', requiresConfirmation: true } });
+            const button = wrapper.get('a');
+
+            await button.trigger('click');
+
+            expect(button.text()).toEqual('Are you sure?');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#e74e36');
+        });
+
+        it('has expected label and color when clicked once and original color is red', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    requiresConfirmation: true,
+                    color: 'red'
+                }
+            });
+            const button = wrapper.get('a');
+
+            await button.trigger('click');
+
+            expect(button.text()).toEqual('Are you sure?');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#FF682E');
+        });
+
+        it('resets state after timeout', async () => {
+            // @ts-ignore: Fine for testing
+            jest.spyOn(global.window, 'setTimeout').mockImplementation(handler => {
+                handler();
+            });
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    requiresConfirmation: true,
+                    color: 'green'
+                }
+            });
+            const button = wrapper.get('a');
+
+            await button.trigger('click');
+
+            expect(wrapper.emitted('click')).toBeUndefined();
+            expect(button.text()).toEqual('Button');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#00A651');
+            expect(global.window.setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
+        });
+    });
+
     describe('async behavior', () => {
         it('disables button and applies label provided in props to button when action is in progress', async () => {
             const wrapper = shallowMount(IplButton, {
@@ -96,7 +156,8 @@ describe('iplButton', () => {
                 }
             });
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            wrapper.vm.$.vnode.props.onClick = jest.fn().mockReturnValue(new Promise(() => { }));
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockReturnValue(new Promise(() => {
+            }));
             const button = wrapper.find('a');
 
             await button.trigger('click');
