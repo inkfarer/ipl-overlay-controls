@@ -47,6 +47,19 @@ describe('IplInput', () => {
         expect(modelValueUpdates[0]).toEqual(['new text']);
     });
 
+    it('updates v-model with formatted input if formatter is passed to component', async () => {
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input', formatter: (value: string) => `${value}_formatted` } });
+        const innerInput = wrapper.get('input');
+
+        await innerInput.setValue('new text');
+
+        const emitted = wrapper.emitted();
+        expect(emitted.input.length).toEqual(1);
+        const modelValueUpdates = emitted['update:modelValue'];
+        expect(modelValueUpdates.length).toEqual(1);
+        expect(modelValueUpdates[0]).toEqual(['new text_formatted']);
+    });
+
     it('shows no message if validator does not exist', () => {
         const wrapper = mount(IplInput, {
             props: {

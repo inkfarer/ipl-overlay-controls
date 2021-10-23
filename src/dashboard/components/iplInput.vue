@@ -32,7 +32,9 @@ import IplLabel from './iplLabel.vue';
 
 export default defineComponent({
     name: 'IplInput',
+
     components: { IplLabel },
+
     props: {
         label: {
             type: String,
@@ -57,7 +59,14 @@ export default defineComponent({
             type: Object as PropType<ValidatorResult>,
             default: null
         },
-        centered: Boolean
+        centered: {
+            type: Boolean,
+            default: false
+        },
+        formatter: {
+            type: Function as PropType<(value: string) => string>,
+            default: null
+        }
     },
 
     emits: [ 'update:modelValue', 'focuschange', 'input' ],
@@ -68,8 +77,8 @@ export default defineComponent({
                 get() {
                     return props.modelValue;
                 },
-                set(value) {
-                    emit('update:modelValue', value);
+                set(value: string) {
+                    emit('update:modelValue', props.formatter ? props.formatter(value) : value);
                 }
             }),
             isValid: computed(() => {
