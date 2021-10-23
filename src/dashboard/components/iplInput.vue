@@ -121,6 +121,16 @@ input {
     &:focus {
         outline: none;
     }
+
+    &[type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    &[type='number']::-webkit-outer-spin-button,
+    &[type='number']::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 }
 
 .error {
