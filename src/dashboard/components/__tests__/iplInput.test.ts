@@ -8,7 +8,15 @@ describe('IplInput', () => {
         const input = wrapper.get('input');
         expect(input.element.name).toEqual('input');
         expect(input.element.type).toEqual('number');
+        expect(input.element.classList).not.toContain('centered');
         expect(wrapper.find('.ipl-label').text()).toEqual('Label');
+    });
+
+    it('gives class to input if set as centered', () => {
+        const wrapper = mount(IplInput, { props: {  label: 'Label', name: 'input', centered: true  } });
+
+        const input = wrapper.get('input');
+        expect(input.element.classList).toContain('centered');
     });
 
     it('sends event on focus change', () => {

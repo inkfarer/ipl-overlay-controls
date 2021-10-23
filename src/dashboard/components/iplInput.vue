@@ -10,6 +10,7 @@
                     v-model="model"
                     :name="name"
                     :type="type"
+                    :class="{ centered: centered }"
                     @focus="handleFocusEvent"
                     @blur="handleFocusEvent"
                     @input="handleFocusEvent($event), handleInputEvent()"
@@ -55,7 +56,8 @@ export default defineComponent({
         validator: {
             type: Object as PropType<ValidatorResult>,
             default: null
-        }
+        },
+        centered: Boolean
     },
 
     emits: [ 'update:modelValue', 'focuschange', 'input' ],
@@ -130,6 +132,10 @@ input {
     &[type='number']::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
+    }
+
+    &.centered {
+        text-align: center;
     }
 }
 
