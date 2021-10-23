@@ -53,7 +53,7 @@ describe('NextStageTimeInput', () => {
     });
 
     it('emits update on date change', async () => {
-        const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2021-06-23T05:54:00Z' } });
+        const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2021-02-23T05:54:00Z' } });
 
         wrapper.getComponent('[data-test="next-stage-date-select"]')
             .vm.$emit('update:modelValue', '23/01/2021');
@@ -61,7 +61,7 @@ describe('NextStageTimeInput', () => {
 
         const emitted = wrapper.emitted('update:modelValue');
         expect(emitted.length).toEqual(1);
-        expect(emitted[0]).toEqual([ '2021-01-23T06:54:00.000Z' ]);
+        expect(emitted[0]).toEqual([ '2021-01-23T05:54:00.000Z' ]);
     });
 
     it('has expected date options if selected time is today', async () => {
