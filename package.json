@@ -99,7 +99,7 @@
             },
             {
                 "name": "battlefyimport",
-                "title": "Import data",
+                "title": "Data importer",
                 "width": 2,
                 "file": "dataImport.html",
                 "workspace": "ipl setup",
