@@ -59,6 +59,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ipl-select__wrapper {
     border-bottom: 1px solid #737373;
+    width: 100%;
 }
 
 select {
