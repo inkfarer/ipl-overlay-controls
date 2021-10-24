@@ -49,7 +49,7 @@ export default defineComponent({
                     case 'warning':
                         return 'exclamation-triangle';
                     default:
-                        throw new Error('Unknown type given to ipl-message.');
+                        throw new Error(`No icon found for type '${props.type}'`);
                 }
             })
         };
