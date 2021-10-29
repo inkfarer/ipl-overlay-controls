@@ -106,6 +106,22 @@ describe('IplInput', () => {
         expect(wrapper.find('.ipl-label').classes()).not.toContain('has-error');
     });
 
+    it('hides error message if validator has not run', () => {
+        const wrapper = mount(IplInput, {
+            props: {
+                label: 'Label',
+                name: 'input',
+                validator: {
+                    isValid: null
+                }
+            }
+        });
+
+        expect(wrapper.find('.error').isVisible()).toEqual(false);
+        expect(wrapper.find('.ipl-input__text-input-wrapper').classes()).not.toContain('has-error');
+        expect(wrapper.find('.ipl-label').classes()).not.toContain('has-error');
+    });
+
     describe('validator: type', () => {
         const validator = IplInput.props.type.validator as (value: string) => boolean;
 

@@ -82,7 +82,7 @@ export default defineComponent({
                 }
             }),
             isValid: computed(() => {
-                return !props.validator ? true : props.validator.isValid;
+                return !props.validator ? true : props.validator?.isValid ?? true;
             }),
             handleFocusEvent(e: Event) {
                 emit('focuschange', e.type !== 'blur');
