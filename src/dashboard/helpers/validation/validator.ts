@@ -7,6 +7,7 @@ export interface ValidatorResult {
 
 export function validator<T>(
     value: WatchSource<T>,
+    immediate: boolean,
     ...validators: ((value: T) => ValidatorResult)[]
 ): ValidatorResult {
     const result: ValidatorResult = reactive({
@@ -25,7 +26,7 @@ export function validator<T>(
                 result.message = null;
             }
         }
-    }, { immediate: true });
+    }, { immediate });
 
     return result;
 }

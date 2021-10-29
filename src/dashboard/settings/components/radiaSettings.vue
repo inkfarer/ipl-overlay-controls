@@ -59,7 +59,7 @@ export default defineComponent({
         ));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
         const validators = {
-            guildId: validator(() => settings.value.guildID, minLength(17), numeric)
+            guildId: validator(() => settings.value.guildID, true, minLength(17), numeric)
         };
 
         store.watch(store => store.radiaSettings.guildID, newValue => {
