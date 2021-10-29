@@ -18,6 +18,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import IplLabel from './iplLabel.vue';
+import { SelectOptions } from '../types/select';
 
 export default defineComponent({
     name: 'IplSelect',
@@ -30,7 +31,7 @@ export default defineComponent({
             default: null
         },
         options: {
-            type: Array as PropType<Array<{ name: string, value: string }>>,
+            type: Array as PropType<SelectOptions>,
             required: true
         },
         modelValue: {
