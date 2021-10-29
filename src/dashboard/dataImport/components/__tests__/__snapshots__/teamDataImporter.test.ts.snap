@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`teamDataImporter displays data of existing tournament 1`] = `"<div class=\\"existing-data m-t-8\\"><div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--></div>"`;
+
+exports[`teamDataImporter displays data of existing tournament if it has smash.gg data 1`] = `"<div class=\\"existing-data m-t-8\\"><div class=\\"title\\">Saved data</div><a href=\\"smashgg://cool-tournament\\" target=\\"_blank\\">cool tournament</a><span class=\\"badge badge-blue m-l-6\\">Smash.gg</span><br> 123123asd <br> Cool Event (Splatoon 2) </div>"`;
+
+exports[`teamDataImporter displays data of existing tournament if it is missing a name 1`] = `"<div class=\\"existing-data m-t-8\\"><div class=\\"title\\">Saved data</div><a href=\\"tounament://cool-tournament\\" target=\\"_blank\\">No name</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--></div>"`;
+
+exports[`teamDataImporter displays data of existing tournament if it is missing an URL 1`] = `"<div class=\\"existing-data m-t-8\\"><div class=\\"title\\">Saved data</div><span>cool tournament</span><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--></div>"`;

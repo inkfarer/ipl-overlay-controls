@@ -26,6 +26,14 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         setTeamImageHidden(store, { teamId, isVisible }: { teamId: string, isVisible: boolean }): void {
             nodecg.sendMessage('toggleTeamImage', { teamId, isVisible } as ToggleTeamImageRequest);
         }
+    },
+    actions: {
+        async getTournamentData(store, { method, id }: { method: TournamentDataStore, id: string }): Promise<void> {
+            return await nodecg.sendMessage('getTournamentData', { method, id });
+        },
+        async getSmashggEvent(store, { eventId }: { eventId: number }): Promise<void> {
+            return await nodecg.sendMessage('getSmashggEvent', { eventId });
+        }
     }
 });
 
