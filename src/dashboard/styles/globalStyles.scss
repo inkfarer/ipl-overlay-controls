@@ -1,5 +1,6 @@
 @import './layout.scss';
 @import './colors.scss';
+@import './badges.scss';
 
 body {
     margin: 8px;
@@ -15,4 +16,13 @@ body {
 
 p {
     margin: 2px 0;
+}
+
+a {
+    color: #0090FF;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

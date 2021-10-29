@@ -5,10 +5,10 @@
     >
         <template #title>
             {{ internalCaster.name }}
-            <span class="badge pronoun-badge">{{ internalCaster.pronouns }}</span>
+            <span class="badge badge-blue pronoun-badge">{{ internalCaster.pronouns }}</span>
             <span
                 v-if="uncommitted"
-                class="badge uncommitted-badge"
+                class="badge badge-red uncommitted-badge"
             >Unsaved</span>
         </template>
         <ipl-input
@@ -131,24 +131,3 @@ export default defineComponent({
     }
 });
 </script>
-
-<style lang="scss" scoped>
-@import './src/dashboard/styles/colors';
-
-span.badge {
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-weight: 400;
-    font-size: 0.75em;
-    display: inline-block;
-    margin-right: 4px;
-
-    &.pronoun-badge {
-        background-color: $blue
-    }
-
-    &.uncommitted-badge {
-        background-color: $red;
-    }
-}
-</style>
