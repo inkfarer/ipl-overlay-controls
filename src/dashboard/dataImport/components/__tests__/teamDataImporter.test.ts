@@ -9,11 +9,13 @@ describe('teamDataImporter', () => {
     config.global.stubs = {
         IplButton: true,
         IplSelect: true,
-        IplInput: true
+        IplInput: true,
+        IplUpload: true
     };
 
     const mockGetSmashggEvent = jest.fn();
     const mockGetTournamentData = jest.fn();
+    const mockUploadTeamData = jest.fn();
 
     function createTournamentDataStore() {
         return createStore<TournamentDataStore>({
@@ -29,7 +31,8 @@ describe('teamDataImporter', () => {
             },
             actions: {
                 getSmashggEvent: mockGetSmashggEvent,
-                getTournamentData: mockGetTournamentData
+                getTournamentData: mockGetTournamentData,
+                uploadTeamData: mockUploadTeamData
             }
         });
     }
@@ -161,6 +164,45 @@ describe('teamDataImporter', () => {
         });
     });
 
+    it('dispatches to store on import if file upload is enabled but source is not set to UPLOAD', async () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'SMASHGG');
+        wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
+        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        await wrapper.vm.$nextTick();
+        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+
+        expect(mockGetTournamentData).toHaveBeenCalledWith(expect.any(Object), {
+            method: TournamentDataSource.SMASHGG,
+            id: 'cool-tourney'
+        });
+        expect(mockUploadTeamData).not.toHaveBeenCalled();
+    });
+
+    it('dispatches to store on file import', async () => {
+        const file = new File([], 'mock-file');
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent('[data-test="team-data-upload"]').vm.$emit('update:modelValue', file);
+        await wrapper.vm.$nextTick();
+        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+
+        expect(mockUploadTeamData).toHaveBeenCalledWith(expect.any(Object), { file });
+    });
+
     it('shows smash.gg event selector if import returns more than one event', async () => {
         mockGetTournamentData.mockResolvedValue({
             events: [
@@ -230,5 +272,53 @@ describe('teamDataImporter', () => {
 
         expect(mockGetSmashggEvent).not.toHaveBeenCalled();
         expect(wrapper.findComponent('[data-test="import-button"]').exists()).toEqual(true);
+    });
+
+    it('shows uploader if selected source is UPLOAD and file upload is enabled', async () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(true);
+        expect(wrapper.findComponent('[name="tournament-id-input"]').isVisible()).toEqual(false);
+    });
+
+    it('shows ID input if selected source is UPLOAD and file upload is disabled', async () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', false);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(false);
+        expect(wrapper.findComponent('[name="tournament-id-input"]').isVisible()).toEqual(true);
+    });
+
+    it('shows ID input if selected source is not UPLOAD and file upload is enabled', async () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(false);
+        expect(wrapper.findComponent('[name="tournament-id-input"]').isVisible()).toEqual(true);
     });
 });

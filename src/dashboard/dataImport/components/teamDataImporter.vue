@@ -32,12 +32,29 @@
                 :options="dataSourceOptions"
             />
             <ipl-input
+                v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
                 v-model="tournamentId"
                 :label="idLabel"
                 name="tournament-id-input"
                 class="m-t-4"
                 :validator="validators.tournamentId"
             />
+            <ipl-upload
+                v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
+                v-model="teamDataFile"
+                class="m-t-8"
+                data-test="team-data-upload"
+            />
+            <div class="layout horizontal center-horizontal">
+                <ipl-checkbox
+                    v-show="dataSource === TournamentDataSource.UPLOAD"
+                    v-model="useFileUpload"
+                    label="Upload file"
+                    class="m-t-6"
+                    small
+                    data-test="use-file-upload-checkbox"
+                />
+            </div>
             <ipl-button
                 class="m-t-8"
                 label="Import"
@@ -82,11 +99,13 @@ import { allValid, validator } from '../../helpers/validation/validator';
 import { notBlank } from '../../helpers/validation/stringValidators';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
+import IplUpload from '../../components/iplUpload.vue';
+import IplCheckbox from '../../components/iplCheckbox.vue';
 
 export default defineComponent({
     name: 'TeamDataImporter',
 
-    components: { IplButton, IplInput, IplSelect, IplSpace },
+    components: { IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -96,12 +115,16 @@ export default defineComponent({
         const dataSource: Ref<TournamentDataSource> = ref(TournamentDataSource.BATTLEFY);
         const tournamentId = ref('');
         const smashggEvent = ref('');
+        const teamDataFile: Ref<File> = ref(null);
+        const useFileUpload = ref(false);
 
         const validators = {
             tournamentId: validator(tournamentId, false, notBlank)
         };
 
         return {
+            teamDataFile,
+            useFileUpload,
             tournamentMetadata: computed(() => tournamentDataStore.state.tournamentData.meta),
             dataSourceOptions: computed(() => {
                 const options = [
@@ -135,19 +158,23 @@ export default defineComponent({
                 }
             }),
             async handleImport() {
-                const result: GetTournamentDataResponse = await tournamentDataStore.dispatch('getTournamentData', {
-                    method: dataSource.value,
-                    id: tournamentId.value
-                });
-
-                if (result?.events?.length > 1) {
-                    smashggEvents.value = result.events.map(event => ({
-                        name: `${event.name} (${event.game})`,
-                        value: event.id.toString()
-                    }));
-                    smashggEvent.value = result.events[0].id.toString();
+                if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
+                    return tournamentDataStore.dispatch('uploadTeamData', { file: teamDataFile.value });
                 } else {
-                    smashggEvents.value = [];
+                    const result: GetTournamentDataResponse = await tournamentDataStore.dispatch('getTournamentData', {
+                        method: dataSource.value,
+                        id: tournamentId.value
+                    });
+
+                    if (result?.events?.length > 1) {
+                        smashggEvents.value = result.events.map(event => ({
+                            name: `${event.name} (${event.game})`,
+                            value: event.id.toString()
+                        }));
+                        smashggEvent.value = result.events[0].id.toString();
+                    } else {
+                        smashggEvents.value = [];
+                    }
                 }
             },
             async handleSmashggEventImport() {
@@ -157,7 +184,7 @@ export default defineComponent({
             handleSmashggImportCancel() {
                 smashggEvents.value = [];
             },
-            allValid: computed(() => allValid(validators)),
+            allValid: computed(() => allValid(validators) || (useFileUpload.value && !!teamDataFile.value)),
             validators,
             tournamentId,
             smashggEvents,

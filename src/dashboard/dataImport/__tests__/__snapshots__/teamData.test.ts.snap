@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`teamData submit-import: click shows event selector if import returns multiple events 1`] = `"<option value=\\"123123\\">Cool Event (Splatoon 2)</option><option value=\\"324234\\">Cool Smash (Ultimate)</option>"`;
