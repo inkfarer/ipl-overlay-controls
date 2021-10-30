@@ -50,7 +50,7 @@
                     v-show="dataSource === TournamentDataSource.UPLOAD"
                     v-model="useFileUpload"
                     label="Upload file"
-                    class="m-t-6"
+                    class="m-t-8"
                     small
                     data-test="use-file-upload-checkbox"
                 />

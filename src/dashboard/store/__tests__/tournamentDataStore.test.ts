@@ -118,4 +118,12 @@ describe('tournamentDataStore', () => {
             }
         });
     });
+
+    describe('fetchRoundData', () => {
+        it('sends message to extension', () => {
+            tournamentDataStore.dispatch('fetchRoundData', { url: 'data://round-data' });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('getRounds', { url: 'data://round-data' });
+        });
+    });
 });

@@ -34,11 +34,14 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         async getSmashggEvent(store, { eventId }: { eventId: number }): Promise<void> {
             return await nodecg.sendMessage('getSmashggEvent', { eventId });
         },
-        async uploadTeamData(store, { file }: { file: File }) {
+        async uploadTeamData(store, { file }: { file: File }): Promise<void> {
             return sendLocalFile('teams', file);
         },
-        async uploadRoundData(store, { file }: { file: File }) {
+        async uploadRoundData(store, { file }: { file: File }): Promise<void> {
             return sendLocalFile('rounds', file);
+        },
+        async fetchRoundData(store, { url }: { url: string }): Promise<void> {
+            return nodecg.sendMessage('getRounds', { url });
         }
     }
 });
