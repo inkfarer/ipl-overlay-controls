@@ -81,11 +81,12 @@ export default defineComponent({
 <style lang="scss" scoped>
     label {
         text-align: center;
-        border: 1px dashed #737373;
+        border-radius: 5px;
         padding: 8px 16px;
         min-height: 50px;
         cursor: pointer;
         transition-duration: 100ms;
+        background-color: #181E29;
 
         span {
             pointer-events: none;
@@ -100,7 +101,7 @@ export default defineComponent({
         }
 
         &.active {
-            background-color: rgba(78, 97, 132, 0.5);
+            background-color: #212938
         }
     }
 
