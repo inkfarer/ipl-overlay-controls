@@ -13,3 +13,14 @@ export const buttonColors = {
     orange: colors.orange,
     'green-success': '#18C682'
 };
+
+export const progressBarColors = {
+    blue: '#387AFF',
+    pink: '#F5009B',
+    yellow: '#FDD835'
+};
+
+export const progressBarBackgroundColors = {
+    light: '#2F3A4F',
+    dark: '#262F40'
+};
