@@ -59,7 +59,6 @@ export default defineComponent({
 
     .progress-bar {
         height: 100%;
-        background-color: #0090FF;
         border-radius: 6px;
         transition-duration: 100ms;
     }

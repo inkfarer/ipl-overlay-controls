@@ -10,8 +10,9 @@ export function addDots(value: string, maxLength = 48): string {
 }
 
 export function pluralize(word: string, count: number, pluralWord?: string): string {
-    if (count === 1) return `${count} ${word}`;
-    else return !pluralWord ? `${count} ${word}s` : `${count} ${pluralWord}`;
+    const formattedCount = formatNumber(count);
+    if (count === 1) return `${formattedCount} ${word}`;
+    else return !pluralWord ? `${formattedCount} ${word}s` : `${formattedCount} ${pluralWord}`;
 }
 
 export function padNumber(value: number | string, minLength = 2): string {
@@ -21,4 +22,8 @@ export function padNumber(value: number | string, minLength = 2): string {
     } else {
         return stringValue;
     }
+}
+
+export function formatNumber(value: number): string {
+    return new Intl.NumberFormat('en-US').format(value);
 }

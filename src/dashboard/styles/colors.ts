@@ -17,7 +17,7 @@ export const buttonColors = {
 export const progressBarColors = {
     blue: '#387AFF',
     pink: '#F5009B',
-    yellow: '#FDD835'
+    yellow: '#FFC700'
 };
 
 export const progressBarBackgroundColors = {
