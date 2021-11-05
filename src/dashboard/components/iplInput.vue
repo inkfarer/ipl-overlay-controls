@@ -2,7 +2,7 @@
     <div class="ipl-input__wrapper">
         <div
             class="ipl-input__text-input-wrapper"
-            :class="{ 'has-error': !isValid }"
+            :class="{ 'has-error': !isValid, 'is-color': type === 'color' }"
         >
             <ipl-label :class="{ 'has-error': !isValid }">
                 {{ label }}
@@ -38,17 +38,17 @@ export default defineComponent({
     props: {
         label: {
             type: String,
-            required: true
+            default: null
         },
         modelValue: {
             type: String,
             default: ''
         },
         type: {
-            type: String as PropType<'text' | 'number'>,
+            type: String as PropType<'text' | 'number' | 'color'>,
             default: 'text',
             validator: (value: string) => {
-                return ['text', 'number'].includes(value);
+                return ['text', 'number', 'color'].includes(value);
             }
         },
         name: {
@@ -111,6 +111,10 @@ export default defineComponent({
     &.has-error {
         border-bottom: 1px solid #E74E36;
     }
+
+    &.is-color {
+        border-bottom: unset !important;
+    }
 }
 
 label.has-error {
@@ -141,6 +145,13 @@ input {
     &[type='number']::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
+    }
+
+    &[type='color'] {
+        background-color: #2f3a4f;
+        padding: 5px;
+        height: 36px;
+        border-radius: 7px;
     }
 
     &.centered {

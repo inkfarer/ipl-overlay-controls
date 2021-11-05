@@ -19,6 +19,13 @@ describe('IplInput', () => {
         expect(input.element.classList).toContain('centered');
     });
 
+    it('has class if type is color', () => {
+        const wrapper = mount(IplInput, { props: { name: 'input', type: 'color'  } });
+
+        const textInputWrapper = wrapper.get('.ipl-input__text-input-wrapper');
+        expect(textInputWrapper.element.classList).toContain('is-color');
+    });
+
     it('sends event on focus change', () => {
         const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input' } });
         const innerInput = wrapper.get('input');
