@@ -7,7 +7,7 @@
         Unsupported Guild, unable to run predictions.
     </ipl-message>
     <ipl-message
-        v-if="!hasPredictionData"
+        v-if="!hasPredictionData && predictionsEnabled"
         type="info"
         data-test="no-prediction-data-message"
     >

@@ -61,6 +61,7 @@ describe('Predictions', () => {
     it('shows warning if predictions are not enabled', () => {
         const store = createPredictionDataStore();
         store.state.predictionStore.enablePrediction = false;
+        store.state.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {
                 plugins: [[store, predictionDataStoreKey]]
