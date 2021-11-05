@@ -16,12 +16,14 @@ describe('colorHelper', () => {
             expect(getContrastingTextColor('#ffffff')).toEqual('#333');
             expect(getContrastingTextColor('#00ff00')).toEqual('#333');
             expect(getContrastingTextColor('ffff00')).toEqual('#333');
+            expect(getContrastingTextColor('ffff00', 'red', 'blue')).toEqual('blue');
         });
 
         it('returns a light color if applicable', () => {
             expect(getContrastingTextColor('#0000ff')).toEqual('white');
             expect(getContrastingTextColor('#A80000')).toEqual('white');
             expect(getContrastingTextColor('005238')).toEqual('white');
+            expect(getContrastingTextColor('005238', 'blue', 'black')).toEqual('blue');
         });
     });
 

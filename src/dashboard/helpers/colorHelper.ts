@@ -26,10 +26,10 @@ export function fillColorSelector(select: HTMLSelectElement): void {
     }
 }
 
-export function getContrastingTextColor(backgroundColor: string): string {
+export function getContrastingTextColor(backgroundColor: string, lightColor = 'white', darkColor = '#333'): string {
     const { r, g, b } = hexToRbg(backgroundColor);
     const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-    return (yiq >= 128) ? '#333' : 'white';
+    return (yiq >= 128) ? darkColor : lightColor;
 }
 
 export function hexToRbg(color: string): { r: number, g: number, b: number } {
