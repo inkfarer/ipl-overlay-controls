@@ -1,5 +1,7 @@
 <template>
-    <slot />
+    <div class="ipl-expanding-space-group">
+        <slot />
+    </div>
 </template>
 
 <script lang="ts">
