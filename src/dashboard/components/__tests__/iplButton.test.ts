@@ -107,6 +107,22 @@ describe('iplButton', () => {
             expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#e74e36');
         });
 
+        it('has expected label and color when clicked once and short confirmation message is enabled', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    requiresConfirmation: true,
+                    shortConfirmationMessage: true
+                }
+            });
+            const button = wrapper.get('a');
+
+            await button.trigger('click');
+
+            expect(button.text()).toEqual('Confirm?');
+            expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#e74e36');
+        });
+
         it('has expected label and color when clicked once and original color is red', async () => {
             const wrapper = shallowMount(IplButton, {
                 props: {

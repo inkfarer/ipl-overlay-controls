@@ -68,6 +68,10 @@ export default defineComponent({
         requiresConfirmation: {
             type: Boolean,
             default: false
+        },
+        shortConfirmationMessage: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -144,7 +148,9 @@ export default defineComponent({
             isIconButton: computed(() => props.icon != null),
             disabledInternal,
             labelInternal: computed(() => {
-                if (props.requiresConfirmation && isClicked.value) return 'Are you sure?';
+                if (props.requiresConfirmation && isClicked.value) {
+                    return props.shortConfirmationMessage ? 'Confirm?' : 'Are you sure?';
+                }
                 if (!props.async) return props.label;
 
                 switch (buttonState.value) {
