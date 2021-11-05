@@ -194,6 +194,7 @@ export default defineComponent({
         transition-duration: 100ms;
 
         &.has-icon {
+            flex-grow: 0;
             font-size: 26px;
             width: 40px;
             min-width: 40px;

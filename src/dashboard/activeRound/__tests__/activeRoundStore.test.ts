@@ -1,6 +1,6 @@
 import { activeRoundStore } from '../activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
-import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 
 describe('activeRoundStore', () => {
     describe('setState', () => {
@@ -24,6 +24,52 @@ describe('activeRoundStore', () => {
             activeRoundStore.dispatch('removeWinner');
 
             expect(mockSendMessage).toHaveBeenCalledWith('removeWinner');
+        });
+    });
+
+    describe('setActiveColor', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.dispatch('setActiveColor', {
+                color: {
+                    clrA: '#123',
+                    clrB: '#456'
+                },
+                categoryName: 'cool colors'
+            });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setActiveColor', {
+                color: {
+                    clrA: '#123',
+                    clrB: '#456'
+                },
+                categoryName: 'cool colors'
+            });
+        });
+    });
+
+    describe('swapColors', () => {
+        it('updates replicant value', () => {
+            replicants.swapColorsInternally = true;
+
+            activeRoundStore.dispatch('swapColors');
+
+            expect(replicants.swapColorsInternally).toEqual(false);
+        });
+    });
+
+    describe('setActiveRound', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.commit('setActiveRound', {
+                teamAId: 'teama123',
+                teamBId: 'teamb234',
+                roundId: 'round2'
+            });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setActiveRound', {
+                teamAId: 'teama123',
+                teamBId: 'teamb234',
+                roundId: 'round2'
+            });
         });
     });
 });

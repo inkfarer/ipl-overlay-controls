@@ -9,21 +9,19 @@
                 color editor placeholder
             </ipl-expanding-space>
         </div>
-        <ipl-space class="m-l-8 max-width h-max-content">
-            team editor placeholder
-        </ipl-space>
+        <active-round-editor class="m-l-8 max-width h-max-content" />
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
 import IplExpandingSpace from '../components/iplExpandingSpace.vue';
 import ScoreDisplay from './components/scoreDisplay.vue';
+import ActiveRoundEditor from './components/activeRoundEditor.vue';
 
 export default defineComponent({
     name: 'ActiveRound',
 
-    components: { ScoreDisplay, IplExpandingSpace, IplSpace }
+    components: { ActiveRoundEditor, ScoreDisplay, IplExpandingSpace }
 });
 </script>
