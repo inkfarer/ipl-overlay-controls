@@ -16,6 +16,11 @@ const defaultBundleConfig = {
     }
 };
 
+export const mockDialog = {
+    open: jest.fn(),
+    hide: jest.fn()
+};
+export const mockGetDialog = jest.fn().mockReturnValue(mockDialog);
 export const mockSendMessage = jest.fn();
 export let replicants: {[key: string]: unknown} = {};
 export let mockBundleConfig: Configschema = defaultBundleConfig;
@@ -38,5 +43,6 @@ window.nodecg = {
         };
     },
     sendMessage: mockSendMessage,
+    getDialog: mockGetDialog,
     bundleConfig: mockBundleConfig
 } as unknown as NodeCGBrowser;
