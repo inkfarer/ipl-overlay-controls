@@ -66,6 +66,12 @@ describe('iplButton', () => {
         expect(wrapper.find('a').classes()).toContain('disabled');
     });
 
+    it('gives class to link button element if small', () => {
+        const wrapper = shallowMount(IplButton, { props: { label: 'Button', small: true } });
+
+        expect(wrapper.find('a').classes()).toContain('small');
+    });
+
     it('gives class to link button element if element has icon', () => {
         const wrapper = shallowMount(IplButton, { props: { icon: 'dope-icon' } });
 

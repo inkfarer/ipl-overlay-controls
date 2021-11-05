@@ -2,7 +2,7 @@
     <a
         class="ipl-button"
         :style="buttonStyle"
-        :class="{ disabled: disabledInternal, 'has-icon': isIconButton }"
+        :class="{ disabled: disabledInternal, 'has-icon': isIconButton, 'small': small }"
         @click="handleClick"
     >
         <span
@@ -70,6 +70,10 @@ export default defineComponent({
             default: false
         },
         shortConfirmationMessage: {
+            type: Boolean,
+            default: false
+        },
+        small: {
             type: Boolean,
             default: false
         }
@@ -191,8 +195,23 @@ export default defineComponent({
 
         &.has-icon {
             font-size: 26px;
-            width: 49px;
-            padding: 4px 0 2px;
+            width: 40px;
+            min-width: 40px;
+            height: 35px;
+            padding: 5px 0 0;
+
+            &.small {
+                font-size: 20px;
+                width: 30px;
+                min-width: 30px;
+                height: 27px;
+                padding: 3px 0 0;
+            }
+        }
+
+        &.small {
+            font-size: 0.75em;
+            padding: 7px 0;
         }
 
         .label, .icon {
