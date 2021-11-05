@@ -26,3 +26,21 @@ a {
         text-decoration: underline;
     }
 }
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #181E29 rgba(0, 0, 0, 0);
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #181E29;
+        border-radius: 3px;
+    }
+}
