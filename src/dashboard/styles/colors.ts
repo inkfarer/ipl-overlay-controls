@@ -6,7 +6,7 @@ export const colors = {
     orange: '#FF682E'
 };
 
-export const buttonColors = {
+export const buttonColors: Record<string, string> = {
     blue: colors.blue,
     green: colors.green,
     red: colors.red,
