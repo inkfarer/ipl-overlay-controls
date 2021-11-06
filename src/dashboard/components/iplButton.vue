@@ -43,10 +43,10 @@ export default defineComponent({
             default: null
         },
         color: {
-            type: String as PropType<keyof typeof buttonColors>,
+            type: String as PropType<string>,
             default: 'blue',
             validator: (value: string) => {
-                return Object.keys(buttonColors).includes(value);
+                return value.startsWith('#') || Object.keys(buttonColors).includes(value);
             }
         },
         disabled: {
@@ -115,7 +115,7 @@ export default defineComponent({
 
         return {
             buttonStyle: computed(() => {
-                const buttonColor = buttonColors[colorInternal.value];
+                const buttonColor = buttonColors[colorInternal.value] ?? colorInternal.value;
                 return ({
                     backgroundColor: buttonColor,
                     color: disabledInternal.value ? '#A9AAA9' : getContrastingTextColor(buttonColor)

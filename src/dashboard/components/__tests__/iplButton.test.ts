@@ -44,6 +44,12 @@ describe('iplButton', () => {
         expect(greenWrapper.find('a').element.style.backgroundColor).toEqual('rgb(0, 166, 81)');
     });
 
+    it('applies hex color from props', () => {
+        const wrapper = shallowMount(IplButton, { props: { label: 'Button', color: '#FFF' } });
+
+        expect(wrapper.find('a').element.style.backgroundColor).toEqual('rgb(255, 255, 255)');
+    });
+
     it('emits event on click', async () => {
         const wrapper = shallowMount(IplButton, { props: { label: 'Button' } });
 
@@ -85,6 +91,10 @@ describe('iplButton', () => {
             it(`allows color '${color}'`, () => {
                 expect(validator(color)).toEqual(true);
             });
+        });
+
+        it('allows hex values', () => {
+            expect(validator('#FFFFFF')).toEqual(true);
         });
 
         it('does not allow unknown colors', () => {
