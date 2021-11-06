@@ -8,6 +8,13 @@ describe('IplSelect', () => {
         expect(wrapper.get('label').text()).toEqual('Label!');
     });
 
+    it('has class if disabled', () => {
+        const wrapper = mount(IplSelect, { props: { label: 'Label!', modelValue: '', options: [], disabled: true } });
+
+        expect(wrapper.get('.ipl-select__wrapper').classes()).toContain('disabled');
+        expect(wrapper.get('select').element.disabled).toEqual(true);
+    });
+
     it('throws error if no options or option groups are given', () => {
         expect(() => mount(IplSelect, { props: { label: 'Label!', modelValue: '' } }))
             .toThrow('ipl-select requires either options or option groups to be set.');

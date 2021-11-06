@@ -1,8 +1,14 @@
 <template>
-    <div class="ipl-select__wrapper">
+    <div
+        class="ipl-select__wrapper"
+        :class="{disabled}"
+    >
         <ipl-label>
             {{ label }}
-            <select v-model="model">
+            <select
+                v-model="model"
+                :disabled="disabled"
+            >
                 <template v-if="!!options">
                     <option
                         v-for="option in options"
@@ -58,6 +64,10 @@ export default defineComponent({
         modelValue: {
             type: [ String, null ],
             required: true
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -86,6 +96,11 @@ export default defineComponent({
 .ipl-select__wrapper {
     border-bottom: 1px solid #737373;
     width: 100%;
+
+    &.disabled select {
+        color: rgb(169, 170, 169);
+        pointer-events: none;
+    }
 }
 
 select {
