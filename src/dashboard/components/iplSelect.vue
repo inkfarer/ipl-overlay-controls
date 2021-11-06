@@ -3,13 +3,30 @@
         <ipl-label>
             {{ label }}
             <select v-model="model">
-                <option
-                    v-for="option in options"
-                    :key="`option_${option.value}`"
-                    :value="option.value"
-                >
-                    {{ option.name }}
-                </option>
+                <template v-if="!!options">
+                    <option
+                        v-for="option in options"
+                        :key="`option_${option.value}`"
+                        :value="option.value"
+                    >
+                        {{ option.name }}
+                    </option>
+                </template>
+                <template v-else>
+                    <optgroup
+                        v-for="(group, groupIndex) in optionGroups"
+                        :key="`optgroup_${groupIndex}`"
+                        :label="group.name"
+                    >
+                        <option
+                            v-for="(option, optionIndex) in group.options"
+                            :key="`option_${groupIndex}_${optionIndex}`"
+                            :value="option.value"
+                        >
+                            {{ option.name }}
+                        </option>
+                    </optgroup>
+                </template>
             </select>
         </ipl-label>
     </div>
@@ -18,7 +35,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
 import IplLabel from './iplLabel.vue';
-import { SelectOptions } from '../types/select';
+import { SelectOptionGroups, SelectOptions } from '../types/select';
 
 export default defineComponent({
     name: 'IplSelect',
@@ -32,7 +49,11 @@ export default defineComponent({
         },
         options: {
             type: Array as PropType<SelectOptions>,
-            required: true
+            default: null
+        },
+        optionGroups: {
+            type: Array as PropType<SelectOptionGroups>,
+            default: null
         },
         modelValue: {
             type: [ String, null ],
@@ -43,6 +64,10 @@ export default defineComponent({
     emits: [ 'update:modelValue' ],
 
     setup(props, { emit }) {
+        if (!props.options && !props.optionGroups) {
+            throw new Error('ipl-select requires either options or option groups to be set.');
+        }
+
         return {
             model: computed({
                 get() {
