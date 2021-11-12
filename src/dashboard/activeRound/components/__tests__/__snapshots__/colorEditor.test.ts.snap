@@ -10,7 +10,7 @@ exports[`ColorEditor matches snapshot 1`] = `
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal center-horizontal\\">
-      <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"false\\" small=\\"true\\"></ipl-checkbox-stub>
+      <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\"></ipl-checkbox-stub>
     </div>
     <div class=\\"colors-container m-t-8\\">
       <div class=\\"color-group\\">
@@ -127,7 +127,7 @@ exports[`ColorEditor matches snapshot when using custom color 1`] = `
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal center-horizontal\\">
-      <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"true\\" small=\\"true\\"></ipl-checkbox-stub>
+      <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"true\\" small=\\"true\\" disabled=\\"false\\"></ipl-checkbox-stub>
     </div>
     <div>
       <div class=\\"layout horizontal m-t-8\\">

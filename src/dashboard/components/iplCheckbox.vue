@@ -1,8 +1,9 @@
 <template>
-    <label :class="{ checked: model, small: small }">
+    <label :class="{ checked: model, small: small, disabled: disabled }">
         <input
             v-model="model"
             type="checkbox"
+            :disabled="disabled"
         >
         {{ label }}
     </label>
@@ -24,6 +25,10 @@ export default defineComponent({
             default: false
         },
         small: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }
@@ -82,6 +87,15 @@ export default defineComponent({
                 width: 16px;
                 height: 16px;
                 background-size: 14px;
+            }
+        }
+
+        &.disabled {
+            color: rgb(169, 170, 169);
+            cursor: default;
+
+            input {
+                cursor: default;
             }
         }
 

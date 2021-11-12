@@ -7,12 +7,12 @@ exports[`ActiveRoundEditor matches snapshot 1`] = `
     <div class=\\"layout horizontal\\">
       <div class=\\"layout vertical center-horizontal max-width\\">
         <ipl-select-stub modelvalue=\\"123123\\" label=\\"Team A\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-a-selector\\"></ipl-select-stub>
-        <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"true\\" small=\\"true\\" class=\\"m-t-6\\" data-test=\\"team-a-image-toggle\\"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"true\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-a-image-toggle\\"></ipl-checkbox-stub>
         <div class=\\"color-display m-t-6\\" data-test=\\"team-a-color-display\\"></div>
       </div>
       <div class=\\"layout vertical center-horizontal max-width m-l-8\\">
         <ipl-select-stub modelvalue=\\"345345\\" label=\\"Team B\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-b-selector\\"></ipl-select-stub>
-        <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
         <div class=\\"color-display m-t-6\\" data-test=\\"team-b-color-display\\"></div>
       </div>
     </div>
