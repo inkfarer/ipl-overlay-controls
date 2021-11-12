@@ -1,6 +1,6 @@
 import NextRound from '../nextRound.vue';
 import { createStore } from 'vuex';
-import { NextRoundStore, nextRoundStoreKey } from '../nextRoundStore';
+import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';
 

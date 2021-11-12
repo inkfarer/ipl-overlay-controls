@@ -1,4 +1,4 @@
-import { minLength, notBlank, numeric } from '../stringValidators';
+import { maxLength, minLength, notBlank, numeric } from '../stringValidators';
 
 describe('minLength', () => {
     const validator1 = minLength(10);
@@ -26,6 +26,35 @@ describe('minLength', () => {
 
         expect(validatorMinLength1('a').message).toEqual('Must be at least 1 character');
         expect(validator2('a').message).toEqual('Must be at least 4 characters');
+    });
+});
+
+describe('maxLength', () => {
+    const validator1 = maxLength(10);
+    const validator2 = maxLength(4);
+
+    it('is valid if string is below maximum length', () => {
+        expect(validator1(undefined).isValid).toEqual(true);
+        expect(validator1(null).isValid).toEqual(true);
+        expect(validator1('aaaaaaaaaa').isValid).toEqual(true);
+        expect(validator1('aaaaaa').isValid).toEqual(true);
+
+        expect(validator2(undefined).isValid).toEqual(true);
+        expect(validator2(null).isValid).toEqual(true);
+        expect(validator2('aaaa').isValid).toEqual(true);
+        expect(validator2('aa').isValid).toEqual(true);
+    });
+
+    it('is invalid if string is above maximum length', () => {
+        expect(validator1('aaaaaaaaaaa').isValid).toEqual(false);
+        expect(validator2('aaaaa').isValid).toEqual(false);
+    });
+
+    it('has expected message', () => {
+        const validatorMaxLength1 = maxLength(1);
+
+        expect(validatorMaxLength1('a').message).toEqual('Must not be over 1 character');
+        expect(validator2('a').message).toEqual('Must not be over 4 characters');
     });
 });
 

@@ -92,5 +92,82 @@ describe('predictionDataStore', () => {
                 expect(mockSendMessage).not.toHaveBeenCalled();
             });
         });
+
+        describe('resolvePrediction', () => {
+            it('throws error if index is below 0', async () => {
+                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: -21 }))
+                    .rejects.toThrow('Cannot resolve prediction with outcome index -21');
+            });
+
+            it('throws error if index is above 1', async () => {
+                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 2 }))
+                    .rejects.toThrow('Cannot resolve prediction with outcome index 2');
+            });
+
+            it('throws error if prediction data is missing', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction = undefined;
+
+                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 1 }))
+                    .rejects.toThrow('No prediction to resolve.');
+            });
+
+            it('throws error if prediction is not locked', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+
+                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 1 }))
+                    .rejects.toThrow('Can only resolve a locked prediction.');
+            });
+
+            it('sends message to extension', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+
+                await predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 0 });
+
+                expect(mockSendMessage).toHaveBeenCalledWith('patchPrediction', {
+                    id: 'prediction123',
+                    status: PredictionStatus.RESOLVED,
+                    winning_outcome_id: 'outcome-1'
+                });
+            });
+        });
+
+        describe('createPrediction', () => {
+            it('throws error if current prediction is active', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+
+                await expect(
+                    () => predictionDataStore.dispatch(
+                        'createPrediction',
+                        { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 })
+                ).rejects.toThrow('An unresolved prediction already exists.');
+            });
+
+            it('throws error if current prediction is locked', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+
+                await expect(
+                    () => predictionDataStore.dispatch(
+                        'createPrediction',
+                        { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 })
+                ).rejects.toThrow('An unresolved prediction already exists.');
+            });
+
+            it('creates new prediction', async () => {
+                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+
+                await predictionDataStore.dispatch(
+                    'createPrediction',
+                    { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 });
+
+                expect(mockSendMessage).toHaveBeenCalledWith('postPrediction', {
+                    title: 'Who will win?',
+                    outcomes: [
+                        { title: 'Team A' },
+                        { title: 'Team B' }
+                    ],
+                    prediction_window: 120
+                });
+            });
+        });
     });
 });

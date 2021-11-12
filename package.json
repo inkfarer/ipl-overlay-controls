@@ -124,7 +124,7 @@
             {
                 "name": "createPredictionDialog",
                 "title": "",
-                "width": 3,
+                "width": 4,
                 "file": "createPredictionDialog.html",
                 "dialog": true
             },

@@ -12,6 +12,15 @@ export function minLength(length: number): (value: string) => ValidatorResult {
     };
 }
 
+export function maxLength(length: number): (value: string) => ValidatorResult {
+    return (value: string) => {
+        return {
+            isValid: isEmpty(value) || length >= value.length,
+            message: `Must not be over ${pluralize('character', length)}`
+        };
+    };
+}
+
 export const numeric: (value: string) => ValidatorResult = (value) => ({
     isValid: isEmpty(value) || /^\d*$/.test(value),
     message: 'Must be numeric'

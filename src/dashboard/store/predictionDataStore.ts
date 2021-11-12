@@ -40,12 +40,35 @@ export const predictionDataStore = createStore<PredictionDataStore>({
                 throw new Error(`Cannot resolve prediction with outcome index ${winningOutcomeIndex}.`);
             } else if (!store.state.predictionStore.currentPrediction?.id) {
                 throw new Error('No prediction to resolve.');
+            } else if (store.state.predictionStore.currentPrediction.status !== PredictionStatus.LOCKED ) {
+                throw new Error('Can only resolve a locked prediction.');
             }
 
             return nodecg.sendMessage('patchPrediction', {
                 id: store.state.predictionStore.currentPrediction.id,
                 status: PredictionStatus.RESOLVED,
                 winning_outcome_id: store.state.predictionStore.currentPrediction.outcomes[winningOutcomeIndex].id
+            });
+        },
+        async createPrediction(
+            store,
+            { title, teamAName, teamBName, duration }:
+                { title: string, teamAName: string, teamBName: string, duration: number }
+        ) {
+            if (
+                [PredictionStatus.ACTIVE, PredictionStatus.LOCKED]
+                    .includes(store.state.predictionStore.currentPrediction?.status as PredictionStatus)
+            ) {
+                throw new Error('An unresolved prediction already exists.');
+            }
+
+            return nodecg.sendMessage('postPrediction', {
+                title,
+                outcomes: [
+                    { title: teamAName },
+                    { title: teamBName }
+                ],
+                prediction_window: duration
             });
         }
     }
@@ -56,8 +79,7 @@ async function patchPrediction(
     status: PredictionStatus,
     allowedForStatuses: PredictionStatus[]
 ): Promise<void> {
-    if (!currentPrediction || !allowedForStatuses.includes(currentPrediction?.status as PredictionStatus)
-    ) {
+    if (!currentPrediction || !allowedForStatuses.includes(currentPrediction?.status as PredictionStatus)) {
         throw new Error(`Cannot set prediction status at this time. Status must match one of [${allowedForStatuses.join(', ')}]`);
     }
 

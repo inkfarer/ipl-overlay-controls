@@ -83,7 +83,7 @@ import IplSelect from '../components/iplSelect.vue';
 import IplCheckbox from '../components/iplCheckbox.vue';
 import IplButton from '../components/iplButton.vue';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
-import { useNextRoundStore } from './nextRoundStore';
+import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../helpers/stringHelper';
 import IplMessage from '../components/iplMessage.vue';
 
