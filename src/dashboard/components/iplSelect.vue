@@ -14,6 +14,7 @@
                         v-for="option in options"
                         :key="`option_${option.value}`"
                         :value="option.value"
+                        :disabled="option.disabled"
                     >
                         {{ option.name }}
                     </option>
@@ -28,6 +29,7 @@
                             v-for="(option, optionIndex) in group.options"
                             :key="`option_${groupIndex}_${optionIndex}`"
                             :value="option.value"
+                            :disabled="option.disabled"
                         >
                             {{ option.name }}
                         </option>

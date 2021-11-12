@@ -26,8 +26,8 @@ describe('IplSelect', () => {
                 modelValue: '',
                 options: [
                     { name: 'Option', value: 'opt' },
-                    { name: 'Option the Second', value: 'opt2' },
-                    { name: 'Opt 3', value: 'optthree' }
+                    { name: 'Option the Second', value: 'opt2', disabled: false },
+                    { name: 'Opt 3', value: 'optthree', disabled: true }
                 ]
             }
         });
@@ -45,7 +45,7 @@ describe('IplSelect', () => {
                         name: 'Group A',
                         options: [
                             { name: 'Option', value: 'opt' },
-                            { name: 'Option the Second', value: 'opt2' },
+                            { name: 'Option the Second', value: 'opt2', disabled: false },
                             { name: 'Opt 3', value: 'optthree' }
                         ]
                     },
@@ -54,7 +54,7 @@ describe('IplSelect', () => {
                         options: [
                             { name: 'Another Option', value: 'opt4' },
                             { name: 'Option the Fifth', value: 'opt5' },
-                            { name: 'Opt 6', value: 'opt6' }
+                            { name: 'Opt 6', value: 'opt6', disabled: true }
                         ]
                     }
                 ]
