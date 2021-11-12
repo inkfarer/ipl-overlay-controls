@@ -2,32 +2,44 @@
     <div class="ipl-input__wrapper">
         <div
             class="ipl-input__text-input-wrapper"
-            :class="{ 'has-error': !isValid, 'is-color': type === 'color' }"
+            :class="{ 'has-error': !isValid, 'is-color': type === 'color', 'layout horizontal': !!extra }"
         >
-            <ipl-label :class="{ 'has-error': !isValid }">
-                {{ label }}
-                <input
-                    v-model="model"
-                    :name="name"
-                    :type="type"
-                    :class="{ centered: centered }"
-                    :disabled="disabled"
-                    @focus="handleFocusEvent"
-                    @blur="handleFocusEvent"
-                    @input="handleFocusEvent($event), handleInputEvent()"
-                >
-            </ipl-label>
+            <div>
+                <ipl-label :class="{ 'has-error': !isValid }">
+                    {{ label }}
+                    <input
+                        ref="input"
+                        v-model="model"
+                        :name="name"
+                        :type="type"
+                        :class="{ centered: centered }"
+                        :disabled="disabled"
+                        @focus="handleFocusEvent"
+                        @blur="handleFocusEvent"
+                        @input="handleFocusEvent($event), handleInputEvent()"
+                    >
+                </ipl-label>
+            </div>
+            <span
+                v-if="extra"
+                class="extra"
+                @click="focus"
+            >
+                {{ extra }}
+            </span>
         </div>
         <span
             v-if="!!validator"
             v-show="!isValid"
             class="error"
-        >{{ validator.message }}</span>
+        >
+            {{ validator.message }}
+        </span>
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType, Ref, ref } from 'vue';
 import { ValidatorResult } from '../helpers/validation/validator';
 import IplLabel from './iplLabel.vue';
 
@@ -71,12 +83,18 @@ export default defineComponent({
         disabled: {
             type: Boolean,
             default: false
+        },
+        extra: {
+            type: String,
+            default: null
         }
     },
 
     emits: [ 'update:modelValue', 'focuschange', 'input' ],
 
     setup(props, { emit }) {
+        const input: Ref<HTMLElement> = ref(null);
+
         return {
             model: computed({
                 get() {
@@ -94,7 +112,11 @@ export default defineComponent({
             },
             handleInputEvent() {
                 emit('input');
-            }
+            },
+            focus() {
+                input.value.focus();
+            },
+            input
         };
     }
 });
@@ -104,6 +126,7 @@ export default defineComponent({
 .ipl-input__text-input-wrapper {
     border-bottom: 1px solid #737373;
     transition-duration: 100ms;
+    width: 100%;
 
     &:focus-within {
         border-color: white;
@@ -175,5 +198,14 @@ input {
 .error {
     color: #E74E36;
     font-size: 0.75em;
+}
+
+.extra {
+    align-self: flex-end;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    user-select: none;
+    cursor: text;
+    float: right;
 }
 </style>

@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 
 describe('IplInput', () => {
     it('provides props to inner elements', () => {
-        const wrapper = mount(IplInput, { props: {  label: 'Label', name: 'input', type: 'number', disabled: true } });
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input', type: 'number', disabled: true } });
 
         const input = wrapper.get('input');
         expect(input.element.name).toEqual('input');
@@ -11,6 +11,15 @@ describe('IplInput', () => {
         expect(input.element.disabled).toEqual(true);
         expect(input.element.classList).not.toContain('centered');
         expect(wrapper.find('.ipl-label').text()).toEqual('Label');
+    });
+
+    it('shows extra text and has additional classes if given', () => {
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input', extra: 'extra' } });
+
+        expect(wrapper.get('.extra').text()).toEqual('extra');
+        const wrapperClasses = wrapper.get('.ipl-input__text-input-wrapper').element.classList;
+        expect(wrapperClasses).toContain('layout');
+        expect(wrapperClasses).toContain('horizontal');
     });
 
     it('gives class to input if set as centered', () => {
