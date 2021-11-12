@@ -6,12 +6,12 @@ exports[`ActiveRoundEditor matches snapshot 1`] = `
   <div class=\\"ipl-space color-dark\\">
     <div class=\\"layout horizontal\\">
       <div class=\\"layout vertical center-horizontal max-width\\">
-        <ipl-select-stub modelvalue=\\"123123\\" options=\\"[object Object],[object Object]\\" label=\\"Team A\\" data-test=\\"team-a-selector\\"></ipl-select-stub>
+        <ipl-select-stub modelvalue=\\"123123\\" label=\\"Team A\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-a-selector\\"></ipl-select-stub>
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"true\\" small=\\"true\\" class=\\"m-t-6\\" data-test=\\"team-a-image-toggle\\"></ipl-checkbox-stub>
         <div class=\\"color-display m-t-6\\" data-test=\\"team-a-color-display\\"></div>
       </div>
       <div class=\\"layout vertical center-horizontal max-width m-l-8\\">
-        <ipl-select-stub modelvalue=\\"345345\\" options=\\"[object Object],[object Object]\\" label=\\"Team B\\" data-test=\\"team-b-selector\\"></ipl-select-stub>
+        <ipl-select-stub modelvalue=\\"345345\\" label=\\"Team B\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-b-selector\\"></ipl-select-stub>
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
         <div class=\\"color-display m-t-6\\" data-test=\\"team-b-color-display\\"></div>
       </div>
@@ -29,7 +29,7 @@ exports[`ActiveRoundEditor matches snapshot 1`] = `
         <font-awesome-icon-stub icon=\\"chevron-right\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-right\\"></font-awesome-icon-stub>
       </div>
     </div>
-    <ipl-select-stub modelvalue=\\"0387\\" options=\\"[object Object]\\" label=\\"Round\\" class=\\"m-t-6\\" data-test=\\"round-selector\\"></ipl-select-stub>
+    <ipl-select-stub modelvalue=\\"0387\\" label=\\"Round\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"round-selector\\"></ipl-select-stub>
     <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-8\\" data-test=\\"update-round-button\\"></ipl-button-stub>
   </div>
 </div>"

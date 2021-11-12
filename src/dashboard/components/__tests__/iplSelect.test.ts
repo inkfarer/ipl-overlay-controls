@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 
 describe('IplSelect', () => {
     it('applies given label to element', () => {
-        const wrapper = mount(IplSelect, { props: { label: 'Label!', modelValue: '', options: [] } });
+        const wrapper = mount(IplSelect, { props: { label: 'Label!', modelValue: '', options: []} });
 
         expect(wrapper.get('label').text()).toEqual('Label!');
     });
@@ -36,6 +36,7 @@ describe('IplSelect', () => {
     });
 
     it('applies given option groups to select element', () => {
+        // @ts-ignore: This works; I can't explain why it's causing an error.
         const wrapper = mount(IplSelect, {
             props: {
                 modelValue: '',
