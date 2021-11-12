@@ -1,6 +1,6 @@
 <template>
-    <div class="ipl-panel-title layout horizontal center-vertical">
-        <span class="ipl-panel-title__title-text">{{ title }}</span>
+    <div class="ipl-dialog-title layout horizontal center-vertical">
+        <span class="ipl-dialog-title__title-text">{{ title }}</span>
         <font-awesome-icon
             icon="times"
             class="close-icon"
@@ -20,7 +20,7 @@ import { NodecgDialog } from '../types/dialog';
 library.add(faTimes);
 
 export default defineComponent({
-    name: 'IplPanelTitle',
+    name: 'IplDialogTitle',
 
     components: { FontAwesomeIcon },
 
@@ -46,7 +46,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    .ipl-panel-title {
+    .ipl-dialog-title {
         width: calc(100% - 16px);
         height: 40px;
         font-weight: 500;
@@ -55,7 +55,7 @@ export default defineComponent({
         padding: 0 8px;
         border-radius: 7px;
 
-        .ipl-panel-title__title-text {
+        .ipl-dialog-title__title-text {
             flex-grow: 1;
         }
 

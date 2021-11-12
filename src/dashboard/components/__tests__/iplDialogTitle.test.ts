@@ -1,8 +1,8 @@
-import IplPanelTitle from '../iplPanelTitle.vue';
+import IplPanelTitle from '../iplDialogTitle.vue';
 import { config, mount } from '@vue/test-utils';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 
-describe('IplPanelTitle', () => {
+describe('IplDialogTitle', () => {
     config.global.mocks = {
         FontAwesomeIcon: true
     };
