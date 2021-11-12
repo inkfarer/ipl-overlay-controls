@@ -3,15 +3,20 @@ import { ActiveRoundGame } from 'types/activeRoundGame';
 import { ColorInfo } from 'types/colors';
 
 export interface UpdateActiveGamesRequest {
-    games: ActiveRoundGame[]
+    games: ActiveRoundGame[];
 }
 
 export interface SetWinnerRequest {
-    winner: GameWinner,
-    roundIndex?: number
+    winner: GameWinner;
+    roundIndex?: number;
 }
 
 export interface SetActiveColorRequest {
-    color: ColorInfo,
-    categoryName: string
+    color: ColorInfo;
+    categoryName: string;
+}
+
+export interface SwapRoundColorRequest {
+    roundIndex: number;
+    colorsSwapped: boolean;
 }

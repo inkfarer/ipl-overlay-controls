@@ -326,4 +326,50 @@ describe('activeRound', () => {
             });
         });
     });
+
+    describe('swapRoundColor', () => {
+        it('swaps colors for given round', () => {
+            nodecg.replicants.activeRound.value = {
+                games: [
+                    { color: { clrA: '#123', clrB: '#234', colorsSwapped: false, title: 'Cool Color' } }
+                ]
+            };
+
+            nodecg.messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
+
+            expect((nodecg.replicants.activeRound.value as ActiveRound).games[0].color).toEqual({
+                clrA: '#234',
+                clrB: '#123',
+                colorsSwapped: true,
+                title: 'Cool Color'
+            });
+        });
+
+        it('does not swap colors if round has no color saved', () => {
+            const activeRound = {
+                games: [
+                    { color: { clrA: '#123', clrB: '#234', colorsSwapped: false, title: 'Cool Color' } },
+                    { color: undefined }
+                ]
+            };
+            nodecg.replicants.activeRound.value = activeRound;
+
+            nodecg.messageListeners.swapRoundColor({ roundIndex: 1, colorsSwapped: true });
+
+            expect(nodecg.replicants.activeRound.value).toEqual(activeRound);
+        });
+
+        it('does not swap colors if request colorsSwapped matches value for saved game', () => {
+            const activeRound = {
+                games: [
+                    { color: { clrA: '#123', clrB: '#234', colorsSwapped: true, title: 'Cool Color' } }
+                ]
+            };
+            nodecg.replicants.activeRound.value = activeRound;
+
+            nodecg.messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
+
+            expect(nodecg.replicants.activeRound.value).toEqual(activeRound);
+        });
+    });
 });

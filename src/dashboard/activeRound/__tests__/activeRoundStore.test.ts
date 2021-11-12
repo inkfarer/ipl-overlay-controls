@@ -72,4 +72,38 @@ describe('activeRoundStore', () => {
             });
         });
     });
+
+    describe('swapRoundColor', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.commit('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
+        });
+    });
+
+    describe('updateActiveGames', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.commit('updateActiveGames', [ { foo: 'bar' }, { biz: 'boz' } ]);
+
+            expect(mockSendMessage).toHaveBeenCalledWith('updateActiveGames', {
+                games: [ { foo: 'bar' }, { biz: 'boz' } ]
+            });
+        });
+    });
+
+    describe('setWinnerForIndex', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.dispatch('setWinnerForIndex', { index: 50, winner: GameWinner.ALPHA });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setWinner', { roundIndex: 50, winner: GameWinner.ALPHA });
+        });
+    });
+
+    describe('resetActiveRound', () => {
+        it('sends message to extension', () => {
+            activeRoundStore.dispatch('resetActiveRound');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('resetActiveRound');
+        });
+    });
 });

@@ -3,8 +3,9 @@ import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
 import { GameWinner } from 'types/enums/gameWinner';
-import { SetActiveColorRequest } from 'types/messages/activeRound';
+import { SetActiveColorRequest, SetWinnerRequest, SwapRoundColorRequest } from 'types/messages/activeRound';
 import { SetRoundRequest } from 'types/messages/rounds';
+import { ActiveRoundGame } from 'types/activeRoundGame';
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
@@ -27,6 +28,12 @@ export const activeRoundStore = createStore<ActiveRoundStore>({
         },
         setActiveRound(store, request: SetRoundRequest): void {
             nodecg.sendMessage('setActiveRound', request);
+        },
+        swapRoundColor(store, request: SwapRoundColorRequest): void {
+            nodecg.sendMessage('swapRoundColor', request);
+        },
+        updateActiveGames(store, games: ActiveRoundGame[]): void {
+            nodecg.sendMessage('updateActiveGames', { games });
         }
     },
     actions: {
@@ -41,6 +48,12 @@ export const activeRoundStore = createStore<ActiveRoundStore>({
         },
         swapColors(): void {
             swapColorsInternally.value = !swapColorsInternally.value;
+        },
+        setWinnerForIndex(store, { index, winner }: { index: number, winner: GameWinner }): void {
+            nodecg.sendMessage('setWinner', { winner, roundIndex: index } as SetWinnerRequest);
+        },
+        resetActiveRound(): void {
+            nodecg.sendMessage('resetActiveRound');
         }
     }
 });
