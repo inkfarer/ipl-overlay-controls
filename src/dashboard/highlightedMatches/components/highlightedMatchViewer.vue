@@ -1,5 +1,11 @@
 <template>
-    <ipl-space class="m-t-8">
+    <ipl-message
+        v-if="!matchOptions?.length"
+        type="info"
+    >
+        No matches loaded.
+    </ipl-message>
+    <ipl-space v-else>
         <ipl-select
             v-model="selectedMatch"
             label="Match"
@@ -33,11 +39,12 @@ import IplSelect from '../../components/iplSelect.vue';
 import IplDataRow from '../../components/iplDataRow.vue';
 import IplButton from '../../components/iplButton.vue';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
+import IplMessage from '../../components/iplMessage.vue';
 
 export default defineComponent({
     name: 'HighlightedMatchViewer',
 
-    components: { IplDataRow, IplSelect, IplSpace, IplButton },
+    components: { IplMessage, IplDataRow, IplSelect, IplSpace, IplButton },
 
     setup() {
         const store = useHighlightedMatchStore();

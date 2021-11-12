@@ -8,7 +8,7 @@
     </ipl-message>
     <template v-else>
         <highlighted-match-importer />
-        <highlighted-match-viewer />
+        <highlighted-match-viewer class="m-t-8" />
     </template>
 </template>
 

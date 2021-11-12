@@ -33,6 +33,33 @@ describe('HighlightedMatchViewer', () => {
         });
     }
 
+    it('matches snapshot when no matches are loaded', () => {
+        const store = createHighlightedMatchStore();
+        store.state.highlightedMatches = [];
+        const wrapper = mount(HighlightedMatchViewer, {
+            global: {
+                plugins: [[store, highlightedMatchStoreKey]]
+            }
+        });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('matches snapshot', () => {
+        const store = createHighlightedMatchStore();
+        store.state.highlightedMatches = [
+            { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
+            { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
+        ];
+        const wrapper = mount(HighlightedMatchViewer, {
+            global: {
+                plugins: [[store, highlightedMatchStoreKey]]
+            }
+        });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it('selects first match when highlighted matches are updated', async () => {
         const store = createHighlightedMatchStore();
         store.state.highlightedMatches = [
@@ -128,18 +155,6 @@ describe('HighlightedMatchViewer', () => {
 
         wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', 'something');
         await wrapper.vm.$nextTick();
-
-        expect(wrapper.getComponent('[data-test="set-next-match-button"]').attributes().disabled).toEqual('true');
-    });
-
-    it('disables set next match button if there are no highlighted matches', async () => {
-        const store = createHighlightedMatchStore();
-        store.state.highlightedMatches = [];
-        const wrapper = mount(HighlightedMatchViewer, {
-            global: {
-                plugins: [[store, highlightedMatchStoreKey]]
-            }
-        });
 
         expect(wrapper.getComponent('[data-test="set-next-match-button"]').attributes().disabled).toEqual('true');
     });
