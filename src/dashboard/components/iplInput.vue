@@ -11,6 +11,7 @@
                     :name="name"
                     :type="type"
                     :class="{ centered: centered }"
+                    :disabled="disabled"
                     @focus="handleFocusEvent"
                     @blur="handleFocusEvent"
                     @input="handleFocusEvent($event), handleInputEvent()"
@@ -66,6 +67,10 @@ export default defineComponent({
         formatter: {
             type: Function as PropType<(value: string) => string>,
             default: null
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -133,6 +138,10 @@ input {
     margin: 2px 0;
     padding: 0;
 
+    &:disabled {
+        color: rgb(169, 170, 169);
+    }
+
     &:focus {
         outline: none;
     }
@@ -152,6 +161,10 @@ input {
         padding: 5px;
         height: 36px;
         border-radius: 7px;
+
+        &:disabled {
+            background-color: #181E29;
+        }
     }
 
     &.centered {

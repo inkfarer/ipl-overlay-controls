@@ -3,11 +3,12 @@ import { mount } from '@vue/test-utils';
 
 describe('IplInput', () => {
     it('provides props to inner elements', () => {
-        const wrapper = mount(IplInput, { props: {  label: 'Label', name: 'input', type: 'number'  } });
+        const wrapper = mount(IplInput, { props: {  label: 'Label', name: 'input', type: 'number', disabled: true } });
 
         const input = wrapper.get('input');
         expect(input.element.name).toEqual('input');
         expect(input.element.type).toEqual('number');
+        expect(input.element.disabled).toEqual(true);
         expect(input.element.classList).not.toContain('centered');
         expect(wrapper.find('.ipl-label').text()).toEqual('Label');
     });

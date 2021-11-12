@@ -131,8 +131,8 @@ exports[`ColorEditor matches snapshot when using custom color 1`] = `
     </div>
     <div>
       <div class=\\"layout horizontal m-t-8\\">
-        <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" style=\\"flex-grow: 1;\\"></ipl-input-stub>
-        <ipl-input-stub name=\\"team-b-color\\" type=\\"color\\" centered=\\"false\\" class=\\"m-l-8\\" style=\\"flex-grow: 1;\\"></ipl-input-stub>
+        <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" style=\\"flex-grow: 1;\\"></ipl-input-stub>
+        <ipl-input-stub name=\\"team-b-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"m-l-8\\" style=\\"flex-grow: 1;\\"></ipl-input-stub>
       </div>
       <ipl-button-stub label=\\"Submit\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-8\\" data-test=\\"custom-color-submit-btn\\"></ipl-button-stub>
     </div>
