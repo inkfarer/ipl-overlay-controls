@@ -59,7 +59,7 @@
 import { computed, defineComponent, ref, watch } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
-import { usePredictionDataStore } from '../predictionDataStore';
+import { usePredictionDataStore } from '../../store/predictionDataStore';
 import { Outcome } from 'schemas';
 import IplProgressBar from '../../components/iplProgressBar.vue';
 import IplSpace from '../../components/iplSpace.vue';

@@ -1,6 +1,6 @@
 import PredictionDataDisplay from '../predictionDataDisplay.vue';
 import { createStore } from 'vuex';
-import { PredictionDataStore, predictionDataStoreKey } from '../../predictionDataStore';
+import { PredictionDataStore, predictionDataStoreKey } from '../../../store/predictionDataStore';
 import { config, mount } from '@vue/test-utils';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { DateTime } from 'luxon';

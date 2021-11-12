@@ -2,7 +2,7 @@ export const colors = {
     blue: '#6155BD',
     green: '#00A651',
     red: '#e74e36',
-    yellow: '#FDD835',
+    yellow: '#FFC700',
     orange: '#FF682E'
 };
 
@@ -11,7 +11,8 @@ export const buttonColors: Record<string, string> = {
     green: colors.green,
     red: colors.red,
     orange: colors.orange,
-    'green-success': '#18C682'
+    'green-success': '#18C682',
+    yellow: colors.yellow
 };
 
 export const progressBarColors = {

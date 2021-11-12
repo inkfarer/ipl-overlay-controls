@@ -1,6 +1,6 @@
 import SetEditor from '../setEditor.vue';
 import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../activeRoundStore';
+import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { ActiveRoundGame } from 'types/activeRoundGame';

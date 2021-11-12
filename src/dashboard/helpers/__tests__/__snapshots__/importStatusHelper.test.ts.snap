@@ -2,9 +2,9 @@
 
 exports[`importStatusHelper setImportStatus matches snapshot for status FAILURE 1`] = `"<div style=\\"background-color: rgb(231, 78, 54); color: white;\\"></div>FAIL"`;
 
-exports[`importStatusHelper setImportStatus matches snapshot for status LOADING 1`] = `"<div style=\\"background-color: rgb(253, 216, 53); color: black;\\"></div>LOADING"`;
+exports[`importStatusHelper setImportStatus matches snapshot for status LOADING 1`] = `"<div style=\\"background-color: rgb(255, 199, 0); color: black;\\"></div>LOADING"`;
 
-exports[`importStatusHelper setImportStatus matches snapshot for status NO_DATA 1`] = `"<div style=\\"background-color: rgb(253, 216, 53); color: black;\\"></div>NO DATA"`;
+exports[`importStatusHelper setImportStatus matches snapshot for status NO_DATA 1`] = `"<div style=\\"background-color: rgb(255, 199, 0); color: black;\\"></div>NO DATA"`;
 
 exports[`importStatusHelper setImportStatus matches snapshot for status NO_STATUS 1`] = `"<div style=\\"background-color: rgb(24, 30, 41); color: white;\\"></div>STATUS"`;
 

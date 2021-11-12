@@ -1,6 +1,6 @@
 import ActiveRoundEditor from '../activeRoundEditor.vue';
 import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../activeRoundStore';
+import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';

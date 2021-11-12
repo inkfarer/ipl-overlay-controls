@@ -1,15 +1,17 @@
 import '../styles/globalStyles.scss';
+import '../styles/dialogStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
-import Panel from './activeRound.vue';
+import Panel from './resolvePredictionDialog.vue';
 import { createApp } from 'vue';
-import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';
+import { predictionDataStore, predictionDataStoreKey, predictionReps } from '../store/predictionDataStore';
 import { activeRoundReps, activeRoundStore, activeRoundStoreKey } from '../store/activeRoundStore';
 
 (async () => {
-    await setUpReplicants(tournamentDataReps, tournamentDataStore);
+    await setUpReplicants(predictionReps, predictionDataStore);
     await setUpReplicants(activeRoundReps, activeRoundStore);
+
     const app = createApp(Panel);
-    app.use(tournamentDataStore, tournamentDataStoreKey);
+    app.use(predictionDataStore, predictionDataStoreKey);
     app.use(activeRoundStore, activeRoundStoreKey);
     app.mount('#app');
 })();

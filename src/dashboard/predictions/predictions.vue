@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { usePredictionDataStore } from './predictionDataStore';
+import { usePredictionDataStore } from '../store/predictionDataStore';
 import IplSpace from '../components/iplSpace.vue';
 import IplMessage from '../components/iplMessage.vue';
 import IplDataRow from '../components/iplDataRow.vue';

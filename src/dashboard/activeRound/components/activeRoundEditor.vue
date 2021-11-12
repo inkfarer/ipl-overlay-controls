@@ -130,7 +130,7 @@ import IplSelect from '../../components/iplSelect.vue';
 import IplCheckbox from '../../components/iplCheckbox.vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { addDots } from '../../helpers/stringHelper';
-import { useActiveRoundStore } from '../activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';

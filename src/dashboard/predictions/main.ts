@@ -2,7 +2,7 @@ import '../styles/globalStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import Panel from './predictions.vue';
 import { createApp } from 'vue';
-import { predictionDataStore, predictionDataStoreKey, predictionReps } from './predictionDataStore';
+import { predictionDataStore, predictionDataStoreKey, predictionReps } from '../store/predictionDataStore';
 
 setUpReplicants(predictionReps, predictionDataStore).then(() => {
     const app = createApp(Panel);

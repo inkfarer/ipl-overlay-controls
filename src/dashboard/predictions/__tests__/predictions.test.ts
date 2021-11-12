@@ -1,7 +1,7 @@
 import Predictions from '../predictions.vue';
 import { config, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
-import { PredictionDataStore, predictionDataStoreKey } from '../predictionDataStore';
+import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { mockDialog, mockGetDialog, mockSendMessage } from '../../__mocks__/mockNodecg';
 

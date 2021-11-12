@@ -1,6 +1,6 @@
 import ScoreDisplay from '../scoreDisplay.vue';
 import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../activeRoundStore';
+import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { config, mount } from '@vue/test-utils';
 import { GameWinner } from 'types/enums/gameWinner';
 

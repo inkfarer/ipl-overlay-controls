@@ -18,7 +18,7 @@ const defaultBundleConfig = {
 
 export const mockDialog = {
     open: jest.fn(),
-    hide: jest.fn()
+    close: jest.fn()
 };
 export const mockGetDialog = jest.fn().mockReturnValue(mockDialog);
 export const mockSendMessage = jest.fn();

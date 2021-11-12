@@ -65,7 +65,7 @@ import IplButton from '../../components/iplButton.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';
-import { useActiveRoundStore } from '../activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import last from 'lodash/last';
 

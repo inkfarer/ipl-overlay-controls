@@ -34,6 +34,19 @@ export const predictionDataStore = createStore<PredictionDataStore>({
                 store.state.predictionStore.currentPrediction,
                 PredictionStatus.CANCELED,
                 [ PredictionStatus.ACTIVE, PredictionStatus.LOCKED ]);
+        },
+        async resolvePrediction(store, { winningOutcomeIndex }: { winningOutcomeIndex: number }) {
+            if (winningOutcomeIndex > 1 || winningOutcomeIndex < 0) {
+                throw new Error(`Cannot resolve prediction with outcome index ${winningOutcomeIndex}.`);
+            } else if (!store.state.predictionStore.currentPrediction?.id) {
+                throw new Error('No prediction to resolve.');
+            }
+
+            return nodecg.sendMessage('patchPrediction', {
+                id: store.state.predictionStore.currentPrediction.id,
+                status: PredictionStatus.RESOLVED,
+                winning_outcome_id: store.state.predictionStore.currentPrediction.outcomes[winningOutcomeIndex].id
+            });
         }
     }
 });

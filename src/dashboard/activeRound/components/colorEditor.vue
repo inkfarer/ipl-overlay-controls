@@ -77,7 +77,7 @@ import { computed, defineComponent, ref } from 'vue';
 import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
 import IplCheckbox from '../../components/iplCheckbox.vue';
 import { colors } from '../../../helpers/splatoonData';
-import { useActiveRoundStore } from '../activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
 import IplInput from '../../components/iplInput.vue';

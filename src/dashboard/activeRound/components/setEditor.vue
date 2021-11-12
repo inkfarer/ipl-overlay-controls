@@ -137,7 +137,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
-import { useActiveRoundStore } from '../activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { colors, splatModes, splatStages } from '../../../helpers/splatoonData';
 import IplSelect from '../../components/iplSelect.vue';
 import IplButton from '../../components/iplButton.vue';
