@@ -64,7 +64,7 @@ export default defineComponent({
 
     .content {
         width: 85%;
-        height: 100%;
+        height: calc(100% - 16px);
         position: absolute;
         left: 0;
         top: 0;
