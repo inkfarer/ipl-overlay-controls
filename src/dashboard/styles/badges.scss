@@ -7,6 +7,7 @@ span.badge {
     font-size: 0.75em;
     display: inline-block;
     margin-right: 4px;
+    transform: translate(0, -1px);
 
     &.badge-blue {
         background-color: $blue
