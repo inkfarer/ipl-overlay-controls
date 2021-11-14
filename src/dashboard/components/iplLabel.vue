@@ -14,6 +14,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 label {
     color: $input-color;
@@ -21,6 +22,6 @@ label {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 }
 </style>

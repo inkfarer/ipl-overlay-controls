@@ -80,14 +80,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 label {
     text-align: center;
-    border-radius: 5px;
+    border-radius: $border-radius-inner;
     padding: 8px 16px;
     min-height: 50px;
     cursor: pointer;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
     background-color: $background-tertiary;
 
     span {

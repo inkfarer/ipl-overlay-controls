@@ -149,6 +149,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .top-bar-button {
     padding: 10px 20px;
@@ -158,7 +159,7 @@ export default defineComponent({
 .round-option {
     user-select: none;
     cursor: pointer;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 
     &.selected {
         background-color: $blue;

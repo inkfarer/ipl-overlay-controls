@@ -175,6 +175,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-button {
     text-decoration: none;
@@ -185,7 +186,7 @@ export default defineComponent({
     text-align: center;
 
     border: none;
-    border-radius: 5px;
+    border-radius: $border-radius-inner;
     cursor: pointer;
     display: block;
     width: 100%;
@@ -193,7 +194,7 @@ export default defineComponent({
     padding: 10px 0;
     position: relative;
 
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 
     &.has-icon {
         flex-grow: 0;
@@ -235,7 +236,7 @@ export default defineComponent({
         left: 0; top: 0;
         width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0);
-        transition-duration: 100ms;
+        transition-duration: $transition-duration-low;
     }
 
     &:not(.disabled) {

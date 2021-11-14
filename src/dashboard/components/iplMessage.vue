@@ -59,9 +59,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-message__wrapper {
-    border-radius: 7px;
+    border-radius: $border-radius-outer;
     border-width: 2px;
     border-style: solid;
     padding: 8px;

@@ -45,6 +45,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-sidebar__wrapper {
     position: absolute;
@@ -80,21 +81,21 @@ export default defineComponent({
 
 .sidebar-transition-enter-active {
     .background {
-        transition: opacity 250ms ease-out;
+        transition: opacity $transition-duration-med ease-out;
     }
 
     .content {
-        transition: left 250ms ease-out;
+        transition: left $transition-duration-med ease-out;
     }
 }
 
 .sidebar-transition-leave-active {
     .background {
-        transition: opacity 250ms ease-in;
+        transition: opacity $transition-duration-med ease-in;
     }
 
     .content {
-        transition: left 250ms ease-in;
+        transition: left $transition-duration-med ease-in;
     }
 }
 

@@ -80,10 +80,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-expansion-panel__content {
     background-color: $background-primary;
-    border-radius: 7px;
+    border-radius: $border-radius-outer;
     position: relative;
 
     .ipl-expansion-panel__header {
@@ -93,7 +94,7 @@ export default defineComponent({
         padding: 8px;
 
         .icon {
-            transition-duration: 100ms;
+            transition-duration: $transition-duration-low;
             justify-self: flex-end;
             margin: 0 5px;
         }

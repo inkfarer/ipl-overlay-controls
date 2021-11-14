@@ -27,9 +27,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-space {
-    border-radius: 7px;
+    border-radius: $border-radius-outer;
     padding: 8px;
 
     &.color-light {

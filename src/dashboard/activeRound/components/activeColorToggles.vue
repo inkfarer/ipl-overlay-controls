@@ -151,12 +151,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .color-display {
     width: 100%;
     height: 20px;
     border-radius: 3px;
-    transition-duration: 250ms;
+    transition-duration: $transition-duration-med;
 }
 
 .color-toggle-container {
@@ -169,8 +170,8 @@ export default defineComponent({
 .color-toggle {
     width: 68px;
     background-color: $background-secondary;
-    border-radius: 5px;
-    transition-duration: 100ms;
+    border-radius: $border-radius-inner;
+    transition-duration: $transition-duration-low;
     padding: 6px;
 
     &:not(.disabled):hover {
@@ -199,7 +200,7 @@ export default defineComponent({
         border-radius: 50%;
         margin: 1px;
         pointer-events: none;
-        transition-duration: 250ms;
+        transition-duration: $transition-duration-med;
     }
 
     .icon-right {

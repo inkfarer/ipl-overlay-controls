@@ -165,6 +165,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .colors-container {
     max-height: 140px;
@@ -175,10 +176,10 @@ export default defineComponent({
     width: auto;
     margin: 8px 0;
     background-color: $background-secondary;
-    border-radius: 7px;
+    border-radius: $border-radius-inner;
     padding: 6px 10px;
     cursor: pointer;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 
     &.is-selected {
         background-color: $blue;
@@ -214,7 +215,7 @@ export default defineComponent({
         border-radius: 50%;
         margin: 1px;
         pointer-events: none;
-        transition-duration: 250ms;
+        transition-duration: $transition-duration-med;
     }
 }
 </style>

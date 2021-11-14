@@ -91,10 +91,17 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-multi-select {
     position: relative;
     cursor: pointer;
+
+    &:focus-within {
+        .elem-display {
+            border-color: $input-color-active;
+        }
+    }
 
     select {
         opacity: 0;
@@ -134,7 +141,7 @@ export default defineComponent({
             background-size: 14px 14px;
             background-repeat: no-repeat;
             background-position: right 3px center;
-            transition-duration: 100ms;
+            transition-duration: $transition-duration-low;
             user-select: none;
             overflow-wrap: anywhere;
 

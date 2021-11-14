@@ -123,6 +123,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/constants';
+
 span.team-name {
     font-size: 1.25em;
     font-weight: 600;
@@ -133,9 +135,9 @@ span.team-name {
 }
 
 .outcome {
-    border-radius: 5px;
+    border-radius: $border-radius-inner;
     padding: 4px;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 
     &.is-winner {
         background-color: rgba(255, 199, 0, 0.15);

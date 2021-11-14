@@ -105,6 +105,14 @@ export default defineComponent({
         color: $text-color-disabled;
         pointer-events: none;
     }
+
+    &:focus-within {
+        border-color: $input-color-active;
+
+        label {
+            color: $input-color-active;
+        }
+    }
 }
 
 select {

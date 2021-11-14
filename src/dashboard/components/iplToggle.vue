@@ -60,11 +60,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
     @import './src/dashboard/styles/colors';
+    @import './src/dashboard/styles/constants';
 
     .ipl-toggle__container {
         height: 44px;
         background-color: $background-tertiary;
-        border-radius: 7px;
+        border-radius: $border-radius-inner;
         position: relative;
         cursor: pointer;
 
@@ -83,7 +84,7 @@ export default defineComponent({
 
             span {
                 color: $text-color-disabled;
-                transition-duration: 250ms;
+                transition-duration: $transition-duration-med;
 
                 &.selected {
                     color: $text-color;
@@ -98,9 +99,9 @@ export default defineComponent({
             background-color: $red;
             left: calc(50% + 2px);
             top: 2px;
-            border-radius: 5px;
+            border-radius: $border-radius-inner;
             z-index: 1;
-            transition-duration: 250ms;
+            transition-duration: $transition-duration-med;
 
             &.is-true {
                 // Fixes oddities with Safari on iOS

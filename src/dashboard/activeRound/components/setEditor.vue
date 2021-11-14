@@ -283,10 +283,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/constants';
+
 .no-winner-button {
     height: 32px !important;
     padding-top: 3px !important;
-    transition-duration: 250ms;
+    transition-duration: $transition-duration-med;
 }
 
 .set-number {
@@ -307,14 +309,14 @@ export default defineComponent({
         font-size: 1.5em;
         font-weight: bold;
         padding: 3px 0 0;
-        transition-duration: 250ms;
+        transition-duration: $transition-duration-med;
 
         &:first-child {
-            border-radius: 7px 0 0 7px;
+            border-radius: $border-radius-inner 0 0 $border-radius-inner;
         }
 
         &:last-child {
-            border-radius: 0 7px 7px 0;
+            border-radius: 0 $border-radius-inner $border-radius-inner 0;
         }
     }
 }

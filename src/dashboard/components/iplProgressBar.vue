@@ -49,17 +49,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/constants';
+
 .ipl-progress-bar__wrapper {
     height: 10px;
     border-radius: 8px;
     padding: 3px;
     display: block;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
 
     .progress-bar {
         height: 100%;
         border-radius: 6px;
-        transition-duration: 100ms;
+        transition-duration: $transition-duration-low;
     }
 }
 </style>

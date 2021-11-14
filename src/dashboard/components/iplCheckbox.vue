@@ -53,6 +53,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 label {
     display: flex;
@@ -68,7 +69,7 @@ label {
         left: 0;
         width: 22px;
         height: 22px;
-        border-radius: 5px;
+        border-radius: $border-radius-inner;
         background-color: $background-tertiary;
         background-size: 18px;
         background-repeat: no-repeat;

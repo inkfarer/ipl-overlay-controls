@@ -47,6 +47,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-dialog-title {
     width: calc(100% - 16px);
@@ -55,7 +56,7 @@ export default defineComponent({
     font-size: 1.25em;
     background-color: $background-primary;
     padding: 0 8px;
-    border-radius: 7px;
+    border-radius: $border-radius-outer;
 
     .ipl-dialog-title__title-text {
         flex-grow: 1;

@@ -197,10 +197,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .existing-data {
     padding: 8px;
-    border-radius: 5px;
+    border-radius: $border-radius-inner;
     background-color: $background-tertiary;
     text-align: center;
     word-break: break-all;

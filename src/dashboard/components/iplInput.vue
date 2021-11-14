@@ -124,10 +124,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
+@import './src/dashboard/styles/constants';
 
 .ipl-input__text-input-wrapper {
     border-bottom: 1px solid $input-color;
-    transition-duration: 100ms;
+    transition-duration: $transition-duration-low;
     width: 100%;
 
     &:focus-within {
@@ -185,7 +186,7 @@ input {
         background-color: $background-secondary;
         padding: 5px;
         height: 36px;
-        border-radius: 7px;
+        border-radius: $border-radius-inner;
 
         &:disabled {
             background-color: $background-tertiary;
