@@ -108,7 +108,7 @@
             {
                 "name": "rounds",
                 "title": "Rounds",
-                "width": 6,
+                "width": 2,
                 "file": "rounds.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"

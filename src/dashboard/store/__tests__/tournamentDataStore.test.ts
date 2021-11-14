@@ -126,4 +126,39 @@ describe('tournamentDataStore', () => {
             expect(mockSendMessage).toHaveBeenCalledWith('getRounds', { url: 'data://round-data' });
         });
     });
+
+    describe('removeRound', () => {
+        it('sends message to extension', () => {
+            tournamentDataStore.commit('removeRound', { roundId: 'round123' });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('removeRound', { roundId: 'round123' });
+        });
+    });
+
+    describe('updateRound', () => {
+        it('sends message to extension', async () => {
+            mockSendMessage.mockResolvedValue({ id: 'round-round' });
+
+            const result = await tournamentDataStore.dispatch('updateRound', {
+                id: 'round',
+                roundName: 'Cool Round',
+                games: [ { mode: 'Rainmaker', stage: 'Ancho-V Games' } ]
+            });
+
+            expect(result).toEqual({ id: 'round-round' });
+            expect(mockSendMessage).toHaveBeenCalledWith('updateRoundStore', {
+                id: 'round',
+                roundName: 'Cool Round',
+                games: [ { mode: 'Rainmaker', stage: 'Ancho-V Games' } ]
+            });
+        });
+    });
+
+    describe('resetRoundStore', () => {
+        it('sends message to extension', () => {
+            tournamentDataStore.dispatch('resetRoundStore');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('resetRoundStore');
+        });
+    });
 });

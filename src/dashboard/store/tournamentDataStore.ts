@@ -3,6 +3,7 @@ import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
 import { ToggleTeamImageRequest } from 'types/messages/tournamentData';
+import { UpdateRoundStoreRequest, UpdateRoundStoreResponse } from 'types/messages/roundStore';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
@@ -25,6 +26,9 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         },
         setTeamImageHidden(store, { teamId, isVisible }: { teamId: string, isVisible: boolean }): void {
             nodecg.sendMessage('toggleTeamImage', { teamId, isVisible } as ToggleTeamImageRequest);
+        },
+        removeRound(store, { roundId }: { roundId: string }): void {
+            nodecg.sendMessage('removeRound', { roundId });
         }
     },
     actions: {
@@ -42,6 +46,12 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         },
         async fetchRoundData(store, { url }: { url: string }): Promise<void> {
             return nodecg.sendMessage('getRounds', { url });
+        },
+        async updateRound(store, data: UpdateRoundStoreRequest): Promise<UpdateRoundStoreResponse> {
+            return nodecg.sendMessage('updateRoundStore', data);
+        },
+        resetRoundStore() {
+            nodecg.sendMessage('resetRoundStore');
         }
     }
 });
