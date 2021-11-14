@@ -34,14 +34,6 @@
         "compatibleRange": "^1.7.0",
         "dashboardPanels": [
             {
-                "name": "scoring",
-                "title": "Scoreboard",
-                "width": 2,
-                "file": "scoreboard.html",
-                "workspace": "ipl",
-                "headerColor": "#262F40"
-            },
-            {
                 "name": "music",
                 "title": "Music",
                 "width": 2,
