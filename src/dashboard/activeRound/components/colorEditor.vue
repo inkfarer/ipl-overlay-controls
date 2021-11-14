@@ -3,52 +3,54 @@
         key="more-colors"
         title="More colors"
     >
-        <div class="layout horizontal center-horizontal">
-            <ipl-checkbox
-                v-model="useCustomColor"
-                label="Use custom color"
-                small
-            />
-        </div>
-        <div
-            v-if="!useCustomColor"
-            class="colors-container m-t-8"
-        >
+        <div class="colors-container">
+            <div class="layout horizontal center-horizontal">
+                <ipl-checkbox
+                    v-model="useCustomColor"
+                    label="Use custom color"
+                    small
+                />
+            </div>
             <div
-                v-for="(group, groupIndex) in colorsWithoutCustom"
-                :key="`color-group_${groupIndex}`"
-                class="color-group"
+                v-if="!useCustomColor"
+                class="m-t-8"
             >
-                <div class="title">{{ group.meta.name }}</div>
                 <div
-                    v-for="(color, colorIndex) in group.colors"
-                    :key="`color_${groupIndex}_${colorIndex}`"
-                    :data-test="`color-option-${groupIndex}-${colorIndex}`"
-                    class="color-option layout horizontal center-vertical"
-                    :class="{ 'is-selected': activeColor === color.title }"
-                    @click="setColor(color, group.meta.name)"
+                    v-for="(group, groupIndex) in colorsWithoutCustom"
+                    :key="`color-group_${groupIndex}`"
+                    class="color-group"
                 >
-                    <span style="flex-grow: 1">{{ color.title }}</span>
-                    <div class="color-previews layout horizontal">
-                        <div
-                            class="color-preview"
-                            :style="{
-                                backgroundColor: swapColorsInternally ? color.clrB : color.clrA,
-                                borderColor: getBorderColor(swapColorsInternally ? color.clrB : color.clrA)
-                            }"
-                        />
-                        <div
-                            class="color-preview"
-                            :style="{
-                                backgroundColor: swapColorsInternally ? color.clrA : color.clrB,
-                                borderColor: getBorderColor(swapColorsInternally ? color.clrA : color.clrB)
-                            }"
-                        />
+                    <div class="title">{{ group.meta.name }}</div>
+                    <div
+                        v-for="(color, colorIndex) in group.colors"
+                        :key="`color_${groupIndex}_${colorIndex}`"
+                        :data-test="`color-option-${groupIndex}-${colorIndex}`"
+                        class="color-option layout horizontal center-vertical"
+                        :class="{ 'is-selected': activeColor === color.title }"
+                        @click="setColor(color, group.meta.name)"
+                    >
+                        <span style="flex-grow: 1">{{ color.title }}</span>
+                        <div class="color-previews layout horizontal">
+                            <div
+                                class="color-preview"
+                                :style="{
+                                    backgroundColor: swapColorsInternally ? color.clrB : color.clrA,
+                                    borderColor: getBorderColor(swapColorsInternally ? color.clrB : color.clrA)
+                                }"
+                            />
+                            <div
+                                class="color-preview"
+                                :style="{
+                                    backgroundColor: swapColorsInternally ? color.clrA : color.clrB,
+                                    borderColor: getBorderColor(swapColorsInternally ? color.clrA : color.clrB)
+                                }"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div v-else>
+        <div v-if="useCustomColor">
             <div class="layout horizontal m-t-8">
                 <ipl-input
                     v-model="customColorA"
