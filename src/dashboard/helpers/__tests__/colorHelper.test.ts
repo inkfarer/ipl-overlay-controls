@@ -1,16 +1,6 @@
-import { fillColorSelector, getContrastingTextColor, hexToRbg } from '../colorHelper';
+import { getContrastingTextColor, hexToRbg } from '../colorHelper';
 
 describe('colorHelper', () => {
-    describe('fillColorSelector', () => {
-        it('creates option groups', () => {
-            const select = document.createElement('select');
-
-            fillColorSelector(select);
-
-            expect(select.innerHTML).toMatchSnapshot();
-        });
-    });
-
     describe('getContrastingTextColor', () => {
         it('returns a dark color if applicable', () => {
             expect(getContrastingTextColor('#ffffff')).toEqual('#333');

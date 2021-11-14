@@ -1,6 +1,5 @@
 import IplCheckbox from '../iplCheckbox.vue';
 import { shallowMount } from '@vue/test-utils';
-import { dispatch } from '../../helpers/elemHelper';
 
 describe('iplCheckbox', () => {
     it('emits event when checked', () => {
@@ -8,7 +7,7 @@ describe('iplCheckbox', () => {
 
         const input = wrapper.find('input');
         input.element.checked = true;
-        dispatch(input.element, 'change');
+        input.element.dispatchEvent(new Event('change'));
 
         expect(wrapper.emitted()['update:modelValue'].length).toEqual(1);
     });
