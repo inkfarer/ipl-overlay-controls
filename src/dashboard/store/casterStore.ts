@@ -70,6 +70,9 @@ export const casterStore = createStore<CasterStore>({
                     store.commit('addUncommittedCaster', { id, caster: extraCaster });
                 }
             }
+        },
+        showCasters() {
+            nodecg.sendMessage('mainShowCasters');
         }
     }
 });

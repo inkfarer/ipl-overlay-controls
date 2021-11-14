@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { computed,  defineComponent, Ref, ref } from 'vue';
-import { useCasterStore } from './casterStore';
+import { useCasterStore } from '../store/casterStore';
 import IplSpace from '../components/iplSpace.vue';
 import IplButton from '../components/iplButton.vue';
 import IplExpandingSpaceGroup from '../components/iplExpandingSpaceGroup.vue';

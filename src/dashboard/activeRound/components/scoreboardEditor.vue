@@ -1,5 +1,8 @@
 <template>
-    <ipl-space>
+    <ipl-expanding-space
+        key="scoreboard"
+        title="Scoreboard"
+    >
         <ipl-input
             v-model="scoreboardData.flavorText"
             label="Flavor text"
@@ -19,25 +22,25 @@
             data-test="scoreboard-visible-toggle"
             @update:modelValue="setScoreboardVisible"
         />
-    </ipl-space>
+    </ipl-expanding-space>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplInput from '../components/iplInput.vue';
-import { useScoreboardStore } from '../store/scoreboardStore';
-import { ScoreboardData } from 'schemas';
-import cloneDeep from 'lodash/cloneDeep';
+import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
+import IplInput from '../../components/iplInput.vue';
+import IplToggle from '../../components/iplToggle.vue';
+import IplButton from '../../components/iplButton.vue';
+import { useScoreboardStore } from '../../store/scoreboardStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import IplButton from '../components/iplButton.vue';
-import IplToggle from '../components/iplToggle.vue';
+import { ScoreboardData } from 'schemas';
+import cloneDeep from 'lodash/cloneDeep';
 
 export default defineComponent({
-    name: 'Scoreboard',
+    name: 'ScoreboardEditor',
 
-    components: { IplToggle, IplButton, IplInput, IplSpace },
+    components: { IplButton, IplToggle, IplInput, IplExpandingSpace },
 
     setup() {
         const store = useScoreboardStore();
@@ -76,3 +79,7 @@ export default defineComponent({
     }
 });
 </script>
+
+<style lang="scss" scoped>
+
+</style>

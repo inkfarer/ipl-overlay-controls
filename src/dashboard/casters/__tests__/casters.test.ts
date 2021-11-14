@@ -1,6 +1,6 @@
 import Casters from '../casters.vue';
 import { createStore } from 'vuex';
-import { CasterStore, casterStoreKey } from '../casterStore';
+import { CasterStore, casterStoreKey } from '../../store/casterStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
 
 describe('Casters', () => {

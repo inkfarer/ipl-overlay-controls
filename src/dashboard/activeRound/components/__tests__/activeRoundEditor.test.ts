@@ -280,12 +280,12 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
+
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
         const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.isVisible()).toEqual(true);
         expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team vs Cool Team 2)');
     });
 
@@ -305,12 +305,12 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
+
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
         const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.isVisible()).toEqual(true);
         expect(roundProgressMessage.text()).toEqual('\'dope round\' is already completed. (Cool Team vs Cool Team 2)');
     });
 
@@ -394,67 +394,5 @@ describe('ActiveRoundEditor', () => {
         expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('567234');
         expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('123098');
-    });
-
-    it('sets color when clicking previous color toggle', async () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
-        const wrapper = mount(ActiveRoundEditor, {
-            global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
-            }
-        });
-
-        const toggle = wrapper.get('[data-test="color-toggle-previous"]');
-        await toggle.trigger('click');
-
-        expect(mockSetActiveColor).toHaveBeenCalledWith(expect.any(Object), {
-            categoryName: 'Ranked Modes',
-            color: {
-                clrA: '#FEF232',
-                clrB: '#2ED2FE',
-                index: 6,
-                isCustom: false,
-                title: 'Yellow vs Blue'
-            }
-        });
-    });
-
-    it('sets color when clicking next color toggle', async () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
-        const wrapper = mount(ActiveRoundEditor, {
-            global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
-            }
-        });
-
-        const toggle = wrapper.get('[data-test="color-toggle-next"]');
-        await toggle.trigger('click');
-
-        expect(mockSetActiveColor).toHaveBeenCalledWith(expect.any(Object), {
-            categoryName: 'Ranked Modes',
-            color: {
-                clrA: '#04D976',
-                clrB: '#D600AB',
-                index: 1,
-                isCustom: false,
-                title: 'Green vs Magenta'
-            }
-        });
-    });
-
-    it('swaps colors on swap button click', () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
-        const wrapper = mount(ActiveRoundEditor, {
-            global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
-            }
-        });
-
-        wrapper.getComponent('[data-test="swap-colors-button"]').vm.$emit('click');
-
-        expect(mockSwapColors).toHaveBeenCalled();
     });
 });

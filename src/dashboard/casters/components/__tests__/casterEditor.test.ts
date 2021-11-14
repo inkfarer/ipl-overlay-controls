@@ -1,7 +1,7 @@
 import CasterEditor from '../casterEditor.vue';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
-import { CasterStore, casterStoreKey } from '../../casterStore';
+import { CasterStore, casterStoreKey } from '../../../store/casterStore';
 import { reactive } from 'vue';
 
 describe('CasterEditor', () => {

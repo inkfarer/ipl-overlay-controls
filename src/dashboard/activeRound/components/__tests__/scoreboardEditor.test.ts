@@ -1,9 +1,9 @@
-import Scoreboard from '../scoreboard.vue';
-import { createStore } from 'vuex';
-import { ScoreboardStore, scoreboardStoreKey } from '../../store/scoreboardStore';
+import ScoreboardEditor from '../scoreboardEditor.vue';
 import { config, mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { ScoreboardStore, scoreboardStoreKey } from '../../../store/scoreboardStore';
 
-describe('Scoreboard', () => {
+describe('ScoreboardEditor', () => {
     config.global.stubs = {
         IplInput: true,
         IplButton: true,
@@ -27,7 +27,7 @@ describe('Scoreboard', () => {
 
     it('updates flavor text from store if input is not focused', async () => {
         const store = createScoreboardStore();
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }
@@ -41,7 +41,7 @@ describe('Scoreboard', () => {
 
     it('does not update flavor text from store if input is focused', async () => {
         const store = createScoreboardStore();
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }
@@ -58,7 +58,7 @@ describe('Scoreboard', () => {
 
     it('updates isVisible on store change', async () => {
         const store = createScoreboardStore();
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }
@@ -74,7 +74,7 @@ describe('Scoreboard', () => {
     it('updates flavor text on button press', async () => {
         const store = createScoreboardStore();
         jest.spyOn(store, 'commit');
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }
@@ -89,7 +89,7 @@ describe('Scoreboard', () => {
     it('updates scoreboard visible on toggle interaction', async () => {
         const store = createScoreboardStore();
         jest.spyOn(store, 'commit');
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }
@@ -102,7 +102,7 @@ describe('Scoreboard', () => {
 
     it('colors update button when data is updated', async () => {
         const store = createScoreboardStore();
-        const wrapper = mount(Scoreboard, {
+        const wrapper = mount(ScoreboardEditor, {
             global: {
                 plugins: [ [ store, scoreboardStoreKey ] ]
             }

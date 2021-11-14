@@ -1,32 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveRoundEditor matches snapshot 1`] = `
-"<div>
-  <!--v-if-->
-  <div class=\\"ipl-space color-dark\\">
+"<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
+    <div class=\\"ipl-expansion-panel__title\\">Teams &amp; Rounds</div>
+    <div>
+      <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    </div>
+  </div>
+  <div class=\\"content\\" style=\\"display: none;\\">
+    <!--v-if-->
     <div class=\\"layout horizontal\\">
       <div class=\\"layout vertical center-horizontal max-width\\">
         <ipl-select-stub modelvalue=\\"123123\\" label=\\"Team A\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-a-selector\\"></ipl-select-stub>
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"true\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-a-image-toggle\\"></ipl-checkbox-stub>
-        <div class=\\"color-display m-t-6\\" data-test=\\"team-a-color-display\\"></div>
       </div>
       <div class=\\"layout vertical center-horizontal max-width m-l-8\\">
         <ipl-select-stub modelvalue=\\"345345\\" label=\\"Team B\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-b-selector\\"></ipl-select-stub>
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
-        <div class=\\"color-display m-t-6\\" data-test=\\"team-b-color-display\\"></div>
-      </div>
-    </div>
-    <div class=\\"layout horizontal m-t-6 color-toggle-container\\">
-      <div class=\\"color-toggle layout horizontal center-vertical center-horizontal\\" data-test=\\"color-toggle-previous\\">
-        <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-left\\"></font-awesome-icon-stub>
-        <div class=\\"color\\" style=\\"background-color: rgb(254, 242, 50); border-color: #181e29;\\"></div>
-        <div class=\\"color\\" style=\\"background-color: rgb(46, 210, 254); border-color: #181e29;\\"></div>
-      </div>
-      <ipl-button-stub label=\\"Swap\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-l-6\\" data-test=\\"swap-colors-button\\"></ipl-button-stub>
-      <div class=\\"color-toggle layout horizontal center-vertical center-horizontal m-l-6\\" data-test=\\"color-toggle-next\\">
-        <div class=\\"color\\" style=\\"background-color: rgb(4, 217, 118); border-color: #181e29;\\"></div>
-        <div class=\\"color\\" style=\\"background-color: rgb(214, 0, 171); border-color: white;\\"></div>
-        <font-awesome-icon-stub icon=\\"chevron-right\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-right\\"></font-awesome-icon-stub>
       </div>
     </div>
     <ipl-select-stub modelvalue=\\"0387\\" label=\\"Round\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"round-selector\\"></ipl-select-stub>

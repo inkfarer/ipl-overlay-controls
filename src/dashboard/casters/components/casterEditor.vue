@@ -54,7 +54,7 @@ import IplButton from '../../components/iplButton.vue';
 import IplInput from '../../components/iplInput.vue';
 import { computed, defineComponent, getCurrentInstance, PropType, Ref, ref, watch } from 'vue';
 import { Caster } from 'schemas';
-import { useCasterStore } from '../casterStore';
+import { useCasterStore } from '../../store/casterStore';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { library } from '@fortawesome/fontawesome-svg-core';

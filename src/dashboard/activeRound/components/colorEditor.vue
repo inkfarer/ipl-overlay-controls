@@ -1,5 +1,8 @@
 <template>
-    <ipl-expanding-space title="More colors">
+    <ipl-expanding-space
+        key="more-colors"
+        title="More colors"
+    >
         <div class="layout horizontal center-horizontal">
             <ipl-checkbox
                 v-model="useCustomColor"
