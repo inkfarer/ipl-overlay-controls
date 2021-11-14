@@ -1,5 +1,12 @@
 <template>
-    <ipl-expanding-space title="Edit round">
+    <ipl-expanding-space>
+        <template #title>
+            Edit round
+            <template v-if="!!nextGame">
+                <span class="badge badge-blue m-l-6">Next up</span>
+                <span class="text-small">{{ nextGame.mode }} on {{ nextGame.stage }}</span>
+            </template>
+        </template>
         <div
             v-for="(game, index) in games"
             :key="`set-editor-${index}`"
@@ -192,6 +199,9 @@ export default defineComponent({
             clrB: activeRoundStore.state.activeRound.teamB.color
         }));
 
+        const nextGame = computed(() =>
+            activeRoundStore.state.activeRound.games.find(game => game.winner === GameWinner.NO_WINNER));
+
         return {
             games,
             stages: splatStages.map(stage => ({ value: stage, name: stage })),
@@ -265,7 +275,8 @@ export default defineComponent({
             },
             handleReset(): void {
                 activeRoundStore.dispatch('resetActiveRound');
-            }
+            },
+            nextGame
         };
     }
 });

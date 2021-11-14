@@ -110,6 +110,61 @@ describe('setEditor', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    it('matches snapshot with no upcoming round', () => {
+        const store = createActiveRoundStore();
+        store.state.activeRound.games = [
+            {
+                winner: GameWinner.BRAVO,
+                stage: 'Blackbelly Skatepark',
+                mode: 'Rainmaker',
+                color: {
+                    index: 2,
+                    title: 'Cool Color',
+                    clrA: '#123123',
+                    clrB: '#345345',
+                    categoryName: 'Cool Colors',
+                    isCustom: false,
+                    colorsSwapped: false
+                }
+            },
+            {
+                winner: GameWinner.BRAVO,
+                stage: 'MakoMart',
+                mode: 'Tower Control',
+                color: {
+                    index: 0,
+                    title: 'Cool Color',
+                    clrA: '#837693',
+                    clrB: '#206739',
+                    categoryName: 'Custom Color',
+                    isCustom: true,
+                    colorsSwapped: true
+                }
+            },
+            {
+                winner: GameWinner.ALPHA,
+                stage: 'Camp Triggerfish',
+                mode: 'Splat Zones',
+                color: {
+                    index: 0,
+                    title: 'Cool Color',
+                    clrA: '#837693',
+                    clrB: '#206739',
+                    categoryName: 'Custom Color',
+                    isCustom: true,
+                    colorsSwapped: true
+                }
+            },
+        ];
+        const wrapper = mount(SetEditor, {
+            global: {
+                plugins: [ [ store, activeRoundStoreKey ] ]
+            }
+        });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it('matches snapshot when editing colors', async () => {
         const store = createActiveRoundStore();
         const wrapper = mount(SetEditor, {
