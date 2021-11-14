@@ -79,33 +79,35 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    label {
-        text-align: center;
-        border-radius: 5px;
-        padding: 8px 16px;
-        min-height: 50px;
-        cursor: pointer;
-        transition-duration: 100ms;
-        background-color: #181E29;
+@import './src/dashboard/styles/colors';
 
-        span {
-            pointer-events: none;
-            user-select: none;
-            margin: 0;
-            overflow-wrap: anywhere;
-        }
+label {
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px 16px;
+    min-height: 50px;
+    cursor: pointer;
+    transition-duration: 100ms;
+    background-color: $background-tertiary;
 
-        .icon {
-            margin-right: 8px;
-            font-size: 2em;
-        }
-
-        &.active {
-            background-color: #212938
-        }
+    span {
+        pointer-events: none;
+        user-select: none;
+        margin: 0;
+        overflow-wrap: anywhere;
     }
 
-    input {
-        display: none;
+    .icon {
+        margin-right: 8px;
+        font-size: 2em;
     }
+
+    &.active {
+        background-color: $background-tertiary-active;
+    }
+}
+
+input {
+    display: none;
+}
 </style>

@@ -1,18 +1,20 @@
-export const colors = {
+export const themeColors = {
     blue: '#6155BD',
     green: '#00A651',
     red: '#e74e36',
     yellow: '#FFC700',
-    orange: '#FF682E'
+    orange: '#FF682E',
+    backgroundColorSecondary: '#2F3A4F',
+    backgroundColorTertiary: '#181e29'
 };
 
 export const buttonColors: Record<string, string> = {
-    blue: colors.blue,
-    green: colors.green,
-    red: colors.red,
-    orange: colors.orange,
+    blue: themeColors.blue,
+    green: themeColors.green,
+    red: themeColors.red,
+    orange: themeColors.orange,
     'green-success': '#18C682',
-    yellow: colors.yellow
+    yellow: themeColors.yellow
 };
 
 export const progressBarColors = {

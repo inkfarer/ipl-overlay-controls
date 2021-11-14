@@ -123,21 +123,23 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-input__text-input-wrapper {
-    border-bottom: 1px solid #737373;
+    border-bottom: 1px solid $input-color;
     transition-duration: 100ms;
     width: 100%;
 
     &:focus-within {
-        border-color: white;
+        border-color: $input-color-active;
 
         label {
-            color: white;
+            color: $input-color-active;
         }
     }
 
     &.has-error {
-        border-bottom: 1px solid #E74E36;
+        border-color: $error-color;
     }
 
     &.is-color {
@@ -146,14 +148,14 @@ export default defineComponent({
 }
 
 label.has-error {
-    color: #E74E36 !important;
+    color: $error-color !important;
 }
 
 input {
     background-color: transparent;
     border: 0;
     width: 100%;
-    color: white;
+    color: $text-color;
     font-size: 1.4em;
     font-family: 'Roboto', sans-serif;
     display: block;
@@ -162,7 +164,7 @@ input {
     padding: 0;
 
     &:disabled {
-        color: rgb(169, 170, 169);
+        color: $text-color-disabled;
     }
 
     &:focus {
@@ -180,13 +182,13 @@ input {
     }
 
     &[type='color'] {
-        background-color: #2f3a4f;
+        background-color: $background-secondary;
         padding: 5px;
         height: 36px;
         border-radius: 7px;
 
         &:disabled {
-            background-color: #181E29;
+            background-color: $background-tertiary;
         }
     }
 
@@ -196,7 +198,7 @@ input {
 }
 
 .error {
-    color: #E74E36;
+    color: $error-color;
     font-size: 0.75em;
 }
 

@@ -52,7 +52,6 @@ export default defineComponent({
 .ipl-progress-bar__wrapper {
     height: 10px;
     border-radius: 8px;
-    background-color: #2F3A4F;
     padding: 3px;
     display: block;
     transition-duration: 100ms;

@@ -44,6 +44,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-sidebar__wrapper {
     position: absolute;
     top: 0;
@@ -70,7 +72,7 @@ export default defineComponent({
         left: 0%;
         top: 0;
         z-index: 102;
-        background-color: #262F40;
+        background-color: $background-primary;
         padding: 8px;
         overflow-y: auto;
     }

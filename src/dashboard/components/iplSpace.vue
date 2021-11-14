@@ -26,16 +26,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-space {
     border-radius: 7px;
     padding: 8px;
 
     &.color-light {
-        background-color: #2F3A4F;
+        background-color: $background-secondary;
     }
 
     &.color-dark {
-        background-color: #262F40;
+        background-color: $background-primary;
     }
 }
 </style>

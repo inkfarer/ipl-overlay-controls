@@ -13,8 +13,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 label {
-    color: #737373;
+    color: $input-color;
     font-size: 0.75em;
     user-select: none;
     -moz-user-select: none;

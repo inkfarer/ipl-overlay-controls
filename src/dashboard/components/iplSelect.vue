@@ -95,12 +95,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-select__wrapper {
-    border-bottom: 1px solid #737373;
+    border-bottom: 1px solid $input-color;
     width: 100%;
 
     &.disabled select {
-        color: rgb(169, 170, 169);
+        color: $text-color-disabled;
         pointer-events: none;
     }
 }
@@ -109,7 +111,7 @@ select {
     background-color: transparent;
     border: 0;
     width: 100%;
-    color: white;
+    color: $text-color;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
     outline: 0;

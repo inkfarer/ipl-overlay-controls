@@ -196,10 +196,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .existing-data {
     padding: 8px;
     border-radius: 5px;
-    background-color: #181e29;
+    background-color: $background-tertiary;
     text-align: center;
     word-break: break-all;
 }

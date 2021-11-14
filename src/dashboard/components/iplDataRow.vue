@@ -26,23 +26,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    .ipl-data-row {
-        border-bottom: 1px solid #737373;
-        width: 100%;
-        padding: 2px 0;
-        margin-top: 6px;
+@import './src/dashboard/styles/colors';
 
-        label {
-            align-self: flex-end;
-            flex-grow: 1;
-            min-width: max-content;
-        }
+.ipl-data-row {
+    border-bottom: 1px solid $input-color;
+    width: 100%;
+    padding: 2px 0;
+    margin-top: 6px;
 
-        .value {
-            justify-self: flex-end;
-            align-self: flex-end;
-            text-align: right;
-            overflow-wrap: anywhere;
-        }
+    label {
+        align-self: flex-end;
+        flex-grow: 1;
+        min-width: max-content;
     }
+
+    .value {
+        justify-self: flex-end;
+        align-self: flex-end;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+}
 </style>

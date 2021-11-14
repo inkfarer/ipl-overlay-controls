@@ -63,7 +63,7 @@ export default defineComponent({
 
     .ipl-toggle__container {
         height: 44px;
-        background-color: #181E29;
+        background-color: $background-tertiary;
         border-radius: 7px;
         position: relative;
         cursor: pointer;
@@ -82,11 +82,11 @@ export default defineComponent({
             user-select: none;
 
             span {
-                color: #A9AAA9;
+                color: $text-color-disabled;
                 transition-duration: 250ms;
 
                 &.selected {
-                    color: white;
+                    color: $text-color;
                 }
             }
         }

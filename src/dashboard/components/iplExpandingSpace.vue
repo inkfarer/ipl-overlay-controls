@@ -79,8 +79,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-expansion-panel__content {
-    background-color: #262F40;
+    background-color: $background-primary;
     border-radius: 7px;
     position: relative;
 

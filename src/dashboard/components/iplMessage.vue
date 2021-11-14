@@ -58,6 +58,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .ipl-message__wrapper {
     border-radius: 7px;
     border-width: 2px;
@@ -70,18 +72,18 @@ export default defineComponent({
     }
 
     &.ipl-message__type-info {
-        border-color: rgb(62, 98, 240);
-        background-color: rgba(62, 98, 240, 0.1);
+        border-color: $info-color;
+        background-color: $info-background-color;
     }
 
     &.ipl-message__type-warning {
-        border-color: rgb(253, 216, 53);
-        background-color: rgba(253, 216, 53, 0.1);
+        border-color: $warning-color;
+        background-color: $warning-background-color;
     }
 
     &.ipl-message__type-error {
-        border-color: rgb(231, 78, 54);
-        background-color: rgba(231, 78, 54, 0.1);
+        border-color: $error-color;
+        background-color: $error-background-color;
     }
 }
 </style>

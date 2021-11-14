@@ -174,80 +174,82 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    .ipl-button {
-        text-decoration: none;
-        text-transform: uppercase;
-        font-size: 1em;
-        font-weight: 700;
-        color: white;
-        text-align: center;
+@import './src/dashboard/styles/colors';
 
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: block;
-        width: 100%;
-        margin: 0;
-        padding: 10px 0;
-        position: relative;
+.ipl-button {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: 700;
+    color: white;
+    text-align: center;
 
-        transition-duration: 100ms;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    position: relative;
 
-        &.has-icon {
-            flex-grow: 0;
-            font-size: 26px;
-            width: 40px;
-            min-width: 40px;
-            height: 35px;
-            padding: 5px 0 0;
+    transition-duration: 100ms;
 
-            &.small {
-                font-size: 20px;
-                width: 30px;
-                min-width: 30px;
-                height: 27px;
-                padding: 3px 0 0;
-            }
-        }
+    &.has-icon {
+        flex-grow: 0;
+        font-size: 26px;
+        width: 40px;
+        min-width: 40px;
+        height: 35px;
+        padding: 5px 0 0;
 
         &.small {
-            font-size: 0.75em;
-            padding: 7px 0;
+            font-size: 20px;
+            width: 30px;
+            min-width: 30px;
+            height: 27px;
+            padding: 3px 0 0;
         }
+    }
 
-        .label, .icon {
-            z-index: 2;
-            position: relative;
-            user-select: none;
-        }
+    &.small {
+        font-size: 0.75em;
+        padding: 7px 0;
+    }
 
-        &.disabled {
-            background-color: #181E29 !important;
-            color: #A9AAA9;
-            cursor: initial;
-        }
+    .label, .icon {
+        z-index: 2;
+        position: relative;
+        user-select: none;
+    }
 
-        &:after {
-            content: '';
-            position: absolute;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0);
-            transition-duration: 100ms;
-        }
+    &.disabled {
+        background-color: $background-tertiary !important;
+        color: $text-color-disabled;
+        cursor: initial;
+    }
 
-        &:not(.disabled) {
-            &:hover {
-                &:after {
-                    background-color: rgba(0, 0, 0, 0.1);
-                }
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        transition-duration: 100ms;
+    }
+
+    &:not(.disabled) {
+        &:hover {
+            &:after {
+                background-color: rgba(0, 0, 0, 0.1);
             }
+        }
 
-            &:active {
-                &:after {
-                    background-color: rgba(0, 0, 0, 0.2);
-                }
+        &:active {
+            &:after {
+                background-color: rgba(0, 0, 0, 0.2);
             }
         }
     }
+}
 </style>

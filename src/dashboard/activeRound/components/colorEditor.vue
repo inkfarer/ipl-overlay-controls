@@ -85,6 +85,7 @@ import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
 import IplInput from '../../components/iplInput.vue';
 import IplButton from '../../components/iplButton.vue';
+import { themeColors } from '../../styles/colors';
 
 export default defineComponent({
     name: 'ColorEditor',
@@ -148,7 +149,7 @@ export default defineComponent({
             colorsWithoutCustom: colors.filter(color => color.meta.name !== 'Custom Color'),
             activeColor: computed(() => activeRoundStore.state.activeRound.activeColor.title),
             getBorderColor(color: string): string {
-                return getContrastingTextColor(color, 'white', '#181E29');
+                return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
             setColor(color: ColorInfo, categoryName: string): void {
                 activeRoundStore.dispatch('setActiveColor', {
@@ -173,7 +174,7 @@ export default defineComponent({
 .color-option {
     width: auto;
     margin: 8px 0;
-    background-color: #2F3A4F;
+    background-color: $background-secondary;
     border-radius: 7px;
     padding: 6px 10px;
     cursor: pointer;
@@ -181,6 +182,24 @@ export default defineComponent({
 
     &.is-selected {
         background-color: $blue;
+
+        &:hover {
+            background-color: $blue-hover;
+        }
+
+        &:active {
+            background-color: $blue-active;
+        }
+    }
+
+    &:not(.is-selected) {
+        &:hover {
+            background-color: $background-secondary-hover;
+        }
+
+        &:active {
+            background-color: $background-secondary-active;
+        }
     }
 
     .color-previews {

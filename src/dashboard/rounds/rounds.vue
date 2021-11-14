@@ -148,6 +148,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .top-bar-button {
     padding: 10px 20px;
     width: max-content;
@@ -159,7 +161,23 @@ export default defineComponent({
     transition-duration: 100ms;
 
     &.selected {
-        background-color: #6155BD;
+        background-color: $blue;
+
+        &:hover {
+            background-color: $blue-hover;
+        }
+
+        &:active {
+            background-color: $blue-active;
+        }
+    }
+
+    &:hover {
+        background-color: $background-secondary-hover;
+    }
+
+    &:active {
+        background-color: $background-secondary-active;
     }
 }
 

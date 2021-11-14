@@ -135,17 +135,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .separator {
     width: 100%;
     text-align: center;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid $text-color;
+    color: $text-color;
     line-height: 0.1em;
     margin: 14px 0 10px;
     user-select: none;
 }
 
 .separator span {
-    background: #262f40;
+    background: $background-primary;
     padding: 0 10px;
 }
 </style>

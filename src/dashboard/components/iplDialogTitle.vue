@@ -46,22 +46,24 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    .ipl-dialog-title {
-        width: calc(100% - 16px);
-        height: 40px;
-        font-weight: 500;
-        font-size: 1.25em;
-        background-color: #262F40;
-        padding: 0 8px;
-        border-radius: 7px;
+@import './src/dashboard/styles/colors';
 
-        .ipl-dialog-title__title-text {
-            flex-grow: 1;
-        }
+.ipl-dialog-title {
+    width: calc(100% - 16px);
+    height: 40px;
+    font-weight: 500;
+    font-size: 1.25em;
+    background-color: $background-primary;
+    padding: 0 8px;
+    border-radius: 7px;
 
-        .close-icon {
-            cursor: pointer;
-            margin-right: 8px;
-        }
+    .ipl-dialog-title__title-text {
+        flex-grow: 1;
     }
+
+    .close-icon {
+        cursor: pointer;
+        margin-right: 8px;
+    }
+}
 </style>

@@ -145,12 +145,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .width-wrapper {
     max-width: 165px;
 
     span {
         margin-top: 21px;
-        border-bottom: 1px solid #737373;
+        border-bottom: 1px solid $input-color;
     }
 
     .ipl-select__wrapper {

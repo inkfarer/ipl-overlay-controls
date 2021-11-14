@@ -1,7 +1,7 @@
 <template>
     <ipl-button
         :label="label"
-        :color="modelValue ? 'green' : '#2F3A4F'"
+        :color="modelValue ? 'green' : disabledColor"
         class="ipl-toggle-button"
         @click="toggle"
     />
@@ -10,6 +10,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import IplButton from './iplButton.vue';
+import { themeColors } from '../styles/colors';
 
 export default defineComponent({
     name: 'IplToggleButton',
@@ -33,12 +34,9 @@ export default defineComponent({
         return {
             toggle() {
                 emit('update:modelValue', !props.modelValue);
-            }
+            },
+            disabledColor: themeColors.backgroundColorSecondary
         };
     }
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

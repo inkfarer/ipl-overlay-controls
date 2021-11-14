@@ -79,6 +79,7 @@ import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
 import { colors } from '../../../helpers/splatoonData';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
+import { themeColors } from '../../styles/colors';
 
 library.add(faChevronRight, faChevronLeft);
 
@@ -136,7 +137,7 @@ export default defineComponent({
                 });
             },
             getBorderColor(color: string): string {
-                return getContrastingTextColor(color, 'white', '#181E29');
+                return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
             nextColor,
             previousColor,
@@ -149,6 +150,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './src/dashboard/styles/colors';
+
 .color-display {
     width: 100%;
     height: 20px;
@@ -165,23 +168,23 @@ export default defineComponent({
 
 .color-toggle {
     width: 68px;
-    background-color: #2F3A4F;
+    background-color: $background-secondary;
     border-radius: 5px;
     transition-duration: 100ms;
     padding: 6px;
 
     &:not(.disabled):hover {
-        background-color: #3C4B66;
+        background-color: $background-secondary-hover;
     }
 
     &:not(.disabled):active {
-        background-color: #334057;
+        background-color: $background-secondary-active;
     }
 
     &.disabled {
-        background-color: #181e29;
+        background-color: $background-tertiary;
         pointer-events: none;
-        color: #a9aaa9;
+        color: $text-color-disabled;
 
         .color {
             filter: contrast(0.25);
