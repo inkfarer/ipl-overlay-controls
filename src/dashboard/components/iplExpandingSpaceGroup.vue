@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide } from 'vue';
+import { defineComponent, provide, ref, watch } from 'vue';
 
 export default defineComponent({
     name: 'IplExpandingSpaceGroup',
@@ -13,23 +13,20 @@ export default defineComponent({
     props: {
         modelValue: {
             type: [String, null],
-            required: true
+            default: null
         },
     },
 
     emits: [ 'update:modelValue' ],
 
-    setup(props, { emit }) {
-        const model = computed<string>({
-            get() {
-                return props.modelValue;
-            },
-            set(value) {
-                emit('update:modelValue', value);
-            }
-        });
+    setup(props) {
+        const selectedSpace = ref(null);
 
-        provide('activeSpace', model);
+        watch(() => props.modelValue, newValue => {
+            selectedSpace.value = newValue;
+        }, { immediate: true });
+
+        provide('activeSpace', selectedSpace);
     }
 });
 </script>
