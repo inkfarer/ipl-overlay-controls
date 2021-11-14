@@ -66,7 +66,8 @@ export default defineComponent({
         width: 85%;
         height: calc(100% - 16px);
         position: absolute;
-        left: 0;
+        //noinspection CssRedundantUnit; Fixes issues on iOS Safari
+        left: 0%;
         top: 0;
         z-index: 102;
         background-color: #262F40;
