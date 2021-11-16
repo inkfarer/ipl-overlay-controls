@@ -1,6 +1,14 @@
 <template>
     <ipl-space>
         <div class="layout horizontal">
+            <span class="max-width text-small team-name">
+                {{ addDots(activeRound.teamA.name, 36) }}
+            </span>
+            <span class="max-width text-small team-name text-right m-l-6">
+                {{ addDots(activeRound.teamB.name, 36) }}
+            </span>
+        </div>
+        <div class="layout horizontal m-t-4">
             <div
                 class="color-display"
                 :style="{ backgroundColor: activeRound.teamA.color }"
@@ -80,6 +88,7 @@ import { ColorInfo } from 'types/colors';
 import { colors } from '../../../helpers/splatoonData';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { themeColors } from '../../styles/colors';
+import { addDots } from '../../helpers/stringHelper';
 
 library.add(faChevronRight, faChevronLeft);
 
@@ -143,7 +152,8 @@ export default defineComponent({
             previousColor,
             swapColors() {
                 activeRoundStore.dispatch('swapColors');
-            }
+            },
+            addDots
         };
     }
 });
@@ -152,6 +162,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import './src/dashboard/styles/colors';
 @import './src/dashboard/styles/constants';
+
+span.team-name {
+    align-self: flex-end;
+}
 
 .color-display {
     width: 100%;

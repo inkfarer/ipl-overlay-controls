@@ -19,7 +19,7 @@ describe('ActiveColorToggles', () => {
                     teamA: {
                         score: 0,
                         id: '123123',
-                        name: null,
+                        name: 'Team One',
                         showLogo: true,
                         players: null,
                         color: null
@@ -27,7 +27,7 @@ describe('ActiveColorToggles', () => {
                     teamB: {
                         score: 2,
                         id: '345345',
-                        name: null,
+                        name: 'Team Two (Really long name for testing ;))',
                         showLogo: false,
                         players: null,
                         color: null
