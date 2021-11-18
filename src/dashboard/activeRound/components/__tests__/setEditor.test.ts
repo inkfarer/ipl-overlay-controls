@@ -84,6 +84,16 @@ describe('setEditor', () => {
                             stage: 'Camp Triggerfish',
                             mode: 'Splat Zones'
                         },
+                        {
+                            winner: GameWinner.NO_WINNER,
+                            stage: 'Humpback Pump Track',
+                            mode: 'Clam Blitz'
+                        },
+                        {
+                            winner: GameWinner.NO_WINNER,
+                            stage: 'Inkblot Art Academy',
+                            mode: 'Splat Zones'
+                        }
                     ],
                 },
                 swapColorsInternally: false
@@ -236,6 +246,16 @@ describe('setEditor', () => {
             {
                 mode: 'Splat Zones',
                 stage: 'Camp Triggerfish',
+                winner: GameWinner.NO_WINNER,
+            },
+            {
+                mode: 'Clam Blitz',
+                stage: 'Humpback Pump Track',
+                winner: GameWinner.NO_WINNER,
+            },
+            {
+                mode: 'Splat Zones',
+                stage: 'Inkblot Art Academy',
                 winner: GameWinner.NO_WINNER,
             },
         ]);
@@ -498,5 +518,121 @@ describe('setEditor', () => {
                 colorsSwapped: false
             }
         });
+    });
+
+    it('matches snapshot when active round updates to one with less games than the previous one', async () => {
+        const store = createActiveRoundStore();
+        const wrapper = mount(SetEditor, {
+            global: {
+                plugins: [ [ store, activeRoundStoreKey ] ]
+            }
+        });
+
+        store.state.activeRound.games = [
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Blackbelly Skatepark',
+                mode: 'Rainmaker',
+                color: {
+                    index: 2,
+                    title: 'Cool Color',
+                    clrA: '#123123',
+                    clrB: '#345345',
+                    categoryName: 'Cool Colors',
+                    isCustom: false,
+                    colorsSwapped: false
+                }
+            },
+            {
+                winner: GameWinner.BRAVO,
+                stage: 'MakoMart',
+                mode: 'Tower Control',
+                color: {
+                    index: 0,
+                    title: 'Cool Color',
+                    clrA: '#837693',
+                    clrB: '#206739',
+                    categoryName: 'Custom Color',
+                    isCustom: true,
+                    colorsSwapped: true
+                }
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Camp Triggerfish',
+                mode: 'Splat Zones'
+            },
+        ];
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('matches snapshot when active round updates to one with more games than the previous one', async () => {
+        const store = createActiveRoundStore();
+        const wrapper = mount(SetEditor, {
+            global: {
+                plugins: [ [ store, activeRoundStoreKey ] ]
+            }
+        });
+
+        store.state.activeRound.games = [
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Blackbelly Skatepark',
+                mode: 'Rainmaker',
+                color: {
+                    index: 2,
+                    title: 'Cool Color',
+                    clrA: '#123123',
+                    clrB: '#345345',
+                    categoryName: 'Cool Colors',
+                    isCustom: false,
+                    colorsSwapped: false
+                }
+            },
+            {
+                winner: GameWinner.BRAVO,
+                stage: 'MakoMart',
+                mode: 'Tower Control',
+                color: {
+                    index: 0,
+                    title: 'Cool Color',
+                    clrA: '#837693',
+                    clrB: '#206739',
+                    categoryName: 'Custom Color',
+                    isCustom: true,
+                    colorsSwapped: true
+                }
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Camp Triggerfish',
+                mode: 'Splat Zones'
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Starfish Mainstage',
+                mode: 'Splat Zones'
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'The Reef',
+                mode: 'Splat Zones'
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Camp Triggerfish',
+                mode: 'Splat Zones'
+            },
+            {
+                winner: GameWinner.NO_WINNER,
+                stage: 'Musselforge Fitness',
+                mode: 'Splat Zones'
+            },
+        ];
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.html()).toMatchSnapshot();
     });
 });

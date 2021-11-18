@@ -181,9 +181,9 @@ export default defineComponent({
                     winner: game.winner,
                 };
 
-                if (!isEqual(game.color, oldGame.color)) result.color = game.color;
-                if (!isEqual(game.stage, oldGame.stage)) result.stage = game.stage;
-                if (!isEqual(game.mode, oldGame.mode)) result.mode = game.mode;
+                if (!isEqual(game.color, oldGame?.color)) result.color = game.color;
+                if (!isEqual(game.stage, oldGame?.stage)) result.stage = game.stage;
+                if (!isEqual(game.mode, oldGame?.mode)) result.mode = game.mode;
 
                 if (!result.color) {
                     delete result.color;
