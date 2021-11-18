@@ -92,6 +92,8 @@ export default defineComponent({
         user-select: none;
         display: flex;
         padding: 8px;
+        transition-duration: $transition-duration-low;
+        border-radius: $border-radius-outer;
 
         .icon {
             transition-duration: $transition-duration-low;
@@ -106,6 +108,14 @@ export default defineComponent({
         .ipl-expansion-panel__title {
             font-weight: 500;
             flex-grow: 1;
+        }
+
+        &:hover {
+            background-color: $background-primary-hover;
+        }
+
+        &:active {
+            background-color: $background-primary-active;
         }
     }
 
