@@ -65,6 +65,17 @@ export default defineComponent({
     .close-icon {
         cursor: pointer;
         margin-right: 8px;
+        padding: 4px 7px;
+        border-radius: $border-radius-inner;
+        transition-duration: $transition-duration-med;
+
+        &:hover {
+            background-color: $background-primary-hover;
+        }
+
+        &:active {
+            background-color: $background-primary-active;
+        }
     }
 }
 </style>
