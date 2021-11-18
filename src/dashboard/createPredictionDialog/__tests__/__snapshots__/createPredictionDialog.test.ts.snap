@@ -12,7 +12,7 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
   <div class=\\"layout horizontal m-t-4\\">
     <ipl-input-stub name=\\"team-a-name\\" label=\\"Team A\\" modelvalue=\\"cool team A\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width\\"></ipl-input-stub>
     <ipl-input-stub name=\\"team-b-name\\" label=\\"Team B\\" modelvalue=\\"cool team B\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width m-l-6\\"></ipl-input-stub>
-  </div><a class=\\"ipl-button m-t-8\\" style=\\"background-color: rgb(0, 166, 81); color: white;\\" data-test=\\"create-prediction-button\\"><span class=\\"label\\">Create</span></a>
+  </div><a class=\\"ipl-button m-t-8\\" href=\\"#\\" style=\\"background-color: rgb(0, 166, 81); color: white;\\" data-test=\\"create-prediction-button\\"><span class=\\"label\\">Create</span></a>
 </div>"
 `;
 

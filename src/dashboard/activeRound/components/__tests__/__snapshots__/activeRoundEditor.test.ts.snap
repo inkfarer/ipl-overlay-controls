@@ -3,10 +3,10 @@
 exports[`ActiveRoundEditor matches snapshot 1`] = `
 "<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
+    <div class=\\"ipl-expansion-panel__header-background\\"></div>
     <div class=\\"ipl-expansion-panel__title\\">Teams &amp; Rounds</div>
-    <div>
-      <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    </div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\"></div>
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <!--v-if-->

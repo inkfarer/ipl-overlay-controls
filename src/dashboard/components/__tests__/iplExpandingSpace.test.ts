@@ -9,7 +9,7 @@ describe('IplExpandingSpace', () => {
 
     it('toggles content and sets appropriate classes on header click', async () => {
         const wrapper = shallowMount(IplExpandingSpace);
-        const header = wrapper.get('.ipl-expansion-panel__header');
+        const header = wrapper.get('.ipl-expansion-panel__header-background');
         const content = wrapper.get('.content');
         const icon = wrapper.get('.icon');
 
@@ -28,7 +28,7 @@ describe('IplExpandingSpace', () => {
             global: { provide: { activeSpace } },
             props: { key: 'coolkey' }
         });
-        const header = wrapper.get('.ipl-expansion-panel__header');
+        const header = wrapper.get('.ipl-expansion-panel__header-background');
         const content = wrapper.get('.content');
         const icon = wrapper.get('.icon');
 

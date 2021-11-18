@@ -1,25 +1,23 @@
 <template>
     <div class="ipl-expansion-panel__content">
-        <div
-            class="ipl-expansion-panel__header layout horizontal center-vertical"
-            @click.self="handleHeaderClick"
-        >
+        <div class="ipl-expansion-panel__header layout horizontal center-vertical">
             <div
-                class="ipl-expansion-panel__title"
-                @click="handleHeaderClick"
-            >
+                class="ipl-expansion-panel__header-background"
+                @click.self="handleHeaderClick"
+            />
+            <div class="ipl-expansion-panel__title">
                 <slot name="title">
                     {{ title }}
                 </slot>
             </div>
-            <div @click="handleHeaderClick">
-                <font-awesome-icon
-                    icon="chevron-left"
-                    class="icon"
-                    :class="{ 'content-expanded': shouldShowContent }"
-                />
+            <font-awesome-icon
+                icon="chevron-left"
+                class="icon"
+                :class="{ 'content-expanded': shouldShowContent }"
+            />
+            <div class="header-extra">
+                <slot name="header-extra" />
             </div>
-            <slot name="header-extra" />
         </div>
         <div
             v-show="shouldShowContent"
@@ -94,28 +92,44 @@ export default defineComponent({
         padding: 8px;
         transition-duration: $transition-duration-low;
         border-radius: $border-radius-outer;
+        position: relative;
 
         .icon {
             transition-duration: $transition-duration-low;
             justify-self: flex-end;
             margin: 0 5px;
-        }
+            z-index: 1;
+            position: relative;
+            pointer-events: none;
 
-        .content-expanded {
-            transform: rotate(-90deg);
+            &.content-expanded {
+                transform: rotate(-90deg);
+            }
         }
 
         .ipl-expansion-panel__title {
             font-weight: 500;
             flex-grow: 1;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        &:hover {
-            background-color: $background-primary-hover;
-        }
+        .ipl-expansion-panel__header-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0; top: 0;
+            border-radius: $border-radius-outer;
+            z-index: 0;
+            transition-duration: $transition-duration-low;
 
-        &:active {
-            background-color: $background-primary-active;
+            &:hover {
+                background-color: $background-primary-hover;
+            }
+
+            &:active {
+                background-color: $background-primary-active;
+            }
         }
     }
 

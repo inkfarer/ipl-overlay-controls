@@ -4,10 +4,10 @@ exports[`Rounds matches snapshot 1`] = `
 "<!--v-if-->
 <div class=\\"ipl-expansion-panel__content\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
+    <div class=\\"ipl-expansion-panel__header-background\\"></div>
     <div class=\\"ipl-expansion-panel__title\\">Create Round</div>
-    <div>
-      <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    </div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\"></div>
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
@@ -40,10 +40,10 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
 </div>
 <div class=\\"ipl-expansion-panel__content\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
+    <div class=\\"ipl-expansion-panel__header-background\\"></div>
     <div class=\\"ipl-expansion-panel__title\\">Create Round</div>
-    <div>
-      <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    </div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\"></div>
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
