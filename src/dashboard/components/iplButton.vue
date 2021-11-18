@@ -221,7 +221,7 @@ export default defineComponent({
     }
 
     .label, .icon {
-        z-index: 2;
+        z-index: 3;
         position: relative;
         user-select: none;
     }
@@ -229,7 +229,7 @@ export default defineComponent({
     &.disabled {
         background-color: $background-tertiary !important;
         color: $text-color-disabled;
-        cursor: initial;
+        cursor: default;
     }
 
     &:after {
