@@ -62,6 +62,8 @@ label {
     position: relative;
     user-select: none;
     cursor: pointer;
+    transition-duration: $transition-duration-low;
+    outline-width: 0;
 
     &:before {
         content: '';
@@ -97,6 +99,16 @@ label {
 
         input {
             cursor: default;
+        }
+    }
+
+    &:not(.disabled) {
+        &:hover:before {
+            background-color: $background-tertiary-hover;
+        }
+
+        &:active:before {
+            background-color: $background-tertiary-active;
         }
     }
 
