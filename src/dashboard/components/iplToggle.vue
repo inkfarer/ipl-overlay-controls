@@ -68,6 +68,31 @@ export default defineComponent({
         border-radius: $border-radius-inner;
         position: relative;
         cursor: pointer;
+        transition-duration: $transition-duration-low;
+
+        &:hover {
+            background-color: $background-tertiary-hover;
+
+            .ipl-toggle__button {
+                background-color: $red-hover;
+
+                &.is-true {
+                    background-color: $green-hover;
+                }
+            }
+        }
+
+        &:active {
+            background-color: $background-tertiary-active;
+
+            .ipl-toggle__button {
+                background-color: $red-active;
+
+                &.is-true {
+                    background-color: $green-active;
+                }
+            }
+        }
 
         .ipl-toggle__text {
             display: grid;
