@@ -96,10 +96,15 @@ export default defineComponent({
 .ipl-multi-select {
     position: relative;
     cursor: pointer;
+    transition-duration: $transition-duration-low;
 
     &:focus-within {
         .elem-display {
             border-color: $input-color-active;
+        }
+
+        label {
+            color: $input-color-active;
         }
     }
 
@@ -147,6 +152,10 @@ export default defineComponent({
 
             &:hover {
                 background-color: $background-secondary-hover;
+            }
+
+            &:active {
+                background-color: $background-secondary-active;
             }
         }
     }
