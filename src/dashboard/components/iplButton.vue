@@ -1,6 +1,7 @@
 <template>
     <a
         class="ipl-button"
+        href="#"
         :style="buttonStyle"
         :class="{ disabled: disabledInternal, 'has-icon': isIconButton, 'small': small }"
         @click="handleClick"
@@ -193,6 +194,7 @@ export default defineComponent({
     margin: 0;
     padding: 10px 0;
     position: relative;
+    outline-width: 0;
 
     transition-duration: $transition-duration-low;
 
@@ -237,6 +239,7 @@ export default defineComponent({
         width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0);
         transition-duration: $transition-duration-low;
+        pointer-events: none;
     }
 
     &:not(.disabled) {
@@ -250,6 +253,10 @@ export default defineComponent({
             &:after {
                 background-color: rgba(0, 0, 0, 0.2);
             }
+        }
+
+        &:focus {
+            outline: 2px solid white;
         }
     }
 }
