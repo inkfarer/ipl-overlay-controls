@@ -10,11 +10,22 @@
             />
         </ipl-space>
         <ipl-space
+            class="layout horizontal m-t-8"
+            color="light"
+        >
+            <div class="color-key color-key-active" /> Active
+            <div class="color-key color-key-next" /> Next
+        </ipl-space>
+        <ipl-space
             v-for="(round, key) in rounds"
             :key="`round_${key}`"
             color="light"
             class="m-t-8 round-option"
-            :class="{ selected: selectedRoundId === key }"
+            :class="{
+                selected: selectedRoundId === key,
+                'is-active-round': activeRoundId === key,
+                'is-next-round': nextRoundId === key
+            }"
             :data-test="`round-option-${key}`"
             @click="selectRound(key)"
         >
@@ -84,6 +95,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import IplExpandingSpace from '../components/iplExpandingSpace.vue';
+import { useActiveRoundStore } from '../store/activeRoundStore';
+import { useNextRoundStore } from '../store/nextRoundStore';
 
 library.add(faBars);
 
@@ -94,6 +107,8 @@ export default defineComponent({
 
     setup() {
         const store = useTournamentDataStore();
+        const activeRoundStore = useActiveRoundStore();
+        const nextRoundStore = useNextRoundStore();
         const rounds: Ref<RoundStore> = ref({});
         const selectedRoundId = ref(Object.keys(store.state.roundStore)[0]);
         const openRoundSidebar = ref(false);
@@ -141,7 +156,9 @@ export default defineComponent({
                 creatingNewRound.value = true;
             },
             creatingNewRound,
-            newRound
+            newRound,
+            activeRoundId: computed(() => activeRoundStore.state.activeRound.round.id),
+            nextRoundId: computed(() => nextRoundStore.state.nextRound.round.id)
         };
     }
 });
@@ -154,6 +171,25 @@ export default defineComponent({
 .top-bar-button {
     padding: 10px 20px;
     width: max-content;
+}
+
+.color-key {
+    height: 18px;
+    width: 18px;
+    border-radius: $border-radius-inner;
+    margin: 0 8px;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &.color-key-active {
+        background-color: $green;
+    }
+
+    &.color-key-next {
+        background-color: $yellow;
+    }
 }
 
 .round-option {
@@ -171,6 +207,14 @@ export default defineComponent({
         &:active {
             background-color: $blue-active;
         }
+    }
+
+    &.is-active-round {
+        border-right: 8px solid $green;
+    }
+
+    &.is-next-round:not(.is-active-round) {
+        border-right: 8px solid $yellow;
     }
 
     &:hover {
