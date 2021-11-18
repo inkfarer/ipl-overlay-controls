@@ -196,6 +196,7 @@ describe('iplButton', () => {
 
             expect(wrapper.vm.disabledInternal).toEqual(true);
             expect(button.classes()).toContain('disabled');
+            expect(button.classes()).toContain('is-loading');
             expect(button.text()).toEqual('Loading...');
         });
 

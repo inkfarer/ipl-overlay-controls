@@ -3,7 +3,12 @@
         class="ipl-button"
         href="#"
         :style="buttonStyle"
-        :class="{ disabled: disabledInternal, 'has-icon': isIconButton, 'small': small }"
+        :class="{
+            disabled: disabledInternal,
+            'has-icon': isIconButton,
+            'small': small,
+            'is-loading': buttonState === 'loading'
+        }"
         @click="handleClick"
     >
         <span
@@ -40,7 +45,7 @@ export default defineComponent({
             default: null
         },
         icon: {
-            type: [Array, String] as PropType<Array<string> | string>,
+            type: [ Array, String ] as PropType<Array<string> | string>,
             default: null
         },
         color: {
@@ -80,7 +85,7 @@ export default defineComponent({
         }
     },
 
-    emits: ['click'],
+    emits: [ 'click' ],
 
     setup(props, { emit }) {
         if (isEmpty(props.icon) && isEmpty(props.label)) {
@@ -240,6 +245,10 @@ export default defineComponent({
         background-color: rgba(0, 0, 0, 0);
         transition-duration: $transition-duration-low;
         pointer-events: none;
+    }
+
+    &.is-loading {
+        cursor: progress;
     }
 
     &:not(.disabled) {
