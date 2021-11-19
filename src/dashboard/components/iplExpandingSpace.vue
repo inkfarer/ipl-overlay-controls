@@ -112,6 +112,7 @@ export default defineComponent({
             flex-grow: 1;
             z-index: 1;
             pointer-events: none;
+            overflow-wrap: anywhere;
         }
 
         .ipl-expansion-panel__header-background {
