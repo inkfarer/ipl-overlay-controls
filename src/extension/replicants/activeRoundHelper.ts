@@ -94,16 +94,16 @@ export function setActiveRoundTeams(teamAId: string, teamBId: string): void {
     }
 
     const existingTeamA = clone(activeRound.value.teamA);
-    delete existingTeamA.logoUrl;
     const existingTeamB = clone(activeRound.value.teamB);
-    delete existingTeamB.logoUrl;
 
     activeRound.value.teamA = {
-        ...existingTeamA,
+        score: existingTeamA.score,
+        color: existingTeamA.color,
         ...teamA
     };
     activeRound.value.teamB = {
-        ...existingTeamB,
+        score: existingTeamB.score,
+        color: existingTeamB.color,
         ...teamB
     };
 }
