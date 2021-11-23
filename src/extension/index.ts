@@ -20,7 +20,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-    predictionStore.value.socketOpen = false;
+    predictionStore.value.status.socketOpen = false;
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
@@ -28,7 +28,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
             + 'Production API will not be possible.'
         );
         radiaSettings.value.enabled = false;
-        predictionStore.value.enablePrediction = false;
+        predictionStore.value.status.predictionsEnabled = false;
     } else {
         radiaSettings.value.enabled = true;
         require('./importers/casters');

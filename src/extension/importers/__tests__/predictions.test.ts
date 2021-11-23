@@ -60,9 +60,11 @@ describe('predictions', () => {
             beforeEach(() => {
                 setup();
                 nodecg.replicants.predictionStore.value = {
-                    enablePrediction: null,
+                    status: {
+                        predictionsEnabled: null,
+                        socketOpen: false
+                    },
                     currentPrediction: null,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 };
             });
@@ -74,9 +76,11 @@ describe('predictions', () => {
 
                 expect(mockHasPredictionSupport).toHaveBeenCalledWith('104928194082103');
                 expect(nodecg.replicants.predictionStore.value).toEqual({
+                    status: {
+                        predictionsEnabled: false,
+                        socketOpen: false,
+                    },
                     currentPrediction: null,
-                    enablePrediction: false,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 });
             });
@@ -98,9 +102,11 @@ describe('predictions', () => {
 
                 expect(mockHasPredictionSupport).toHaveBeenCalledWith('142235235');
                 expect(nodecg.replicants.predictionStore.value).toEqual({
+                    status: {
+                        socketOpen: false,
+                        predictionsEnabled: true,
+                    },
                     currentPrediction: null,
-                    enablePrediction: true,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 });
             });
@@ -138,27 +144,27 @@ describe('predictions', () => {
                 it('handles socket opening', () => {
                     const openCallback = mockSocketOn.mock.calls.find(call => call[0] === 'open')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = false;
+                    predictionStoreValue.status.socketOpen = false;
 
                     openCallback();
 
-                    expect(predictionStoreValue.socketOpen).toEqual(true);
+                    expect(predictionStoreValue.status.socketOpen).toEqual(true);
                 });
 
                 it('handles socket closing', () => {
                     const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = true;
+                    predictionStoreValue.status.socketOpen = true;
 
                     closeCallback();
 
-                    expect(predictionStoreValue.socketOpen).toEqual(false);
+                    expect(predictionStoreValue.status.socketOpen).toEqual(false);
                 });
 
                 it('handles socket errors', () => {
                     const errorCallback = mockSocketOn.mock.calls.find(call => call[0] === 'error')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = true;
+                    predictionStoreValue.status.socketOpen = true;
 
                     errorCallback({
                         code: '12345',
@@ -179,8 +185,11 @@ describe('predictions', () => {
                 it('ignores messages with old timestamps', () => {
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
 
-                    messageCallback(JSON.stringify({ subscription: {
-                        type: 'channel.prediction.begin' }, timestamp: '2021-09-10T13:52:28' }));
+                    messageCallback(JSON.stringify({
+                        subscription: {
+                            type: 'channel.prediction.begin'
+                        }, timestamp: '2021-09-10T13:52:28'
+                    }));
 
                     expect((nodecg.replicants.predictionStore.value as PredictionStore).currentPrediction).toBeNull();
                 });
@@ -263,7 +272,10 @@ describe('predictions', () => {
                         authentication: 'radia_auth'
                     }
                 });
-                nodecg.replicants.predictionStore.value = { enablePrediction: null, currentPrediction: null };
+                nodecg.replicants.predictionStore.value = {
+                    status: { predictionsEnabled: null },
+                    currentPrediction: null
+                };
             });
 
             it('does not start websocket', async () => {

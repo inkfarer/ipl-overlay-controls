@@ -34,7 +34,7 @@ function initSocket(guildId: string): void {
         { headers: { Authorization: radiaConfig.authentication } });
 
     socket.on('open', () => {
-        predictionStore.value.socketOpen = true;
+        predictionStore.value.status.socketOpen = true;
     });
 
     socket.on('error', err => {
@@ -50,7 +50,7 @@ function initSocket(guildId: string): void {
     });
 
     socket.on('close', () => {
-        predictionStore.value.socketOpen = false;
+        predictionStore.value.status.socketOpen = false;
     });
 
     socket.on('message', rawMsg => {
@@ -99,7 +99,7 @@ radiaSettings.on('change', async (newValue) => {
     }
 
     const predictionsSupported = await hasPredictionSupport(newValue.guildID);
-    predictionStore.value.enablePrediction = predictionsSupported;
+    predictionStore.value.status.predictionsEnabled = predictionsSupported;
 
     // If predictions are supported, fetch them
     if (predictionsSupported) {

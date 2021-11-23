@@ -19,8 +19,10 @@ describe('Predictions', () => {
         return createStore<PredictionDataStore>({
             state: {
                 predictionStore: {
-                    enablePrediction: true,
-                    socketOpen: true,
+                    status: {
+                        socketOpen: true,
+                        predictionsEnabled: true
+                    },
                     currentPrediction: {
                         id: 'prediction123',
                         broadcasterId: 'ipl',
@@ -60,7 +62,7 @@ describe('Predictions', () => {
 
     it('shows warning if predictions are not enabled', () => {
         const store = createPredictionDataStore();
-        store.state.predictionStore.enablePrediction = false;
+        store.state.predictionStore.status.predictionsEnabled = false;
         store.state.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {

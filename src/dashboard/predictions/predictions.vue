@@ -94,7 +94,7 @@ export default defineComponent({
     setup() {
         const store = usePredictionDataStore();
         const hasPredictionData = computed(() => !!store.state.predictionStore.currentPrediction);
-        const predictionsEnabled = computed(() => store.state.predictionStore.enablePrediction);
+        const predictionsEnabled = computed(() => store.state.predictionStore.status.predictionsEnabled);
 
         const currentPrediction = computed(() => store.state.predictionStore.currentPrediction);
 
