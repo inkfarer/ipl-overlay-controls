@@ -1,78 +1,89 @@
 <template>
     <ipl-message
-        v-if="!predictionsEnabled"
+        v-if="!predictionStatus.predictionsEnabled"
         type="warning"
         data-test="predictions-disabled-message"
     >
-        Unsupported Guild, unable to run predictions.
+        {{ predictionStatus.predictionStatusReason }}
     </ipl-message>
-    <ipl-message
-        v-if="!hasPredictionData && predictionsEnabled"
-        type="info"
-        data-test="no-prediction-data-message"
-    >
-        No prediction data loaded.
-    </ipl-message>
+    <template v-else>
+        <ipl-message
+            v-if="!hasPredictionData"
+            type="info"
+            data-test="no-prediction-data-message"
+        >
+            No prediction data loaded.
+        </ipl-message>
 
-    <prediction-data-display
-        v-if="hasPredictionData && predictionsEnabled"
-        class="m-t-8"
-        data-test="prediction-data-display"
-    />
+        <ipl-message
+            v-if="!predictionStatus.socketOpen"
+            type="warning"
+            data-test="socket-closed-message"
+        >
+            Prediction websocket is closed. Data may not be up to date.
+        </ipl-message>
 
-    <ipl-space
-        v-if="predictionsEnabled"
-        class="m-t-8"
-        data-test="prediction-management-space"
-    >
-        <ipl-data-row
-            label="Status"
-            :value="status"
+        <prediction-data-display
+            v-if="hasPredictionData"
+            class="m-t-8"
+            data-test="prediction-data-display"
         />
-        <div class="m-t-6 prediction-button-container">
-            <ipl-button
-                v-if="rawStatus === PredictionStatus.LOCKED"
-                label="Resolve"
-                color="green"
-                data-test="resolve-prediction-button"
-                @click="handleResolve"
+
+        <ipl-space
+            class="m-t-8"
+            data-test="prediction-management-space"
+        >
+            <ipl-data-row
+                label="Status"
+                :value="status"
             />
-            <ipl-button
-                v-if="!rawStatus || rawStatus === PredictionStatus.CANCELED || rawStatus === PredictionStatus.RESOLVED"
-                label="New"
-                color="green"
-                data-test="create-prediction-button"
-                @click="handleCreate"
-            />
-            <ipl-button
-                v-if="rawStatus === PredictionStatus.ACTIVE"
-                label="Lock"
-                color="red"
-                requires-confirmation
-                short-confirmation-message
-                async
-                progress-message="Locking..."
-                data-test="lock-prediction-button"
-                @click="handleLock"
-            />
-            <ipl-button
-                v-if="rawStatus === PredictionStatus.LOCKED || rawStatus === PredictionStatus.ACTIVE"
-                label="Cancel"
-                color="red"
-                requires-confirmation
-                short-confirmation-message
-                async
-                progress-message="Cancelling..."
-                data-test="cancel-prediction-button"
-                @click="handleCancel"
-            />
-            <ipl-button
-                label="Show"
-                data-test="show-prediction-button"
-                @click="handleShow"
-            />
-        </div>
-    </ipl-space>
+            <div class="m-t-6 prediction-button-container">
+                <ipl-button
+                    v-if="rawStatus === PredictionStatus.LOCKED"
+                    label="Resolve"
+                    color="green"
+                    data-test="resolve-prediction-button"
+                    @click="handleResolve"
+                />
+                <ipl-button
+                    v-if="!rawStatus ||
+                        rawStatus === PredictionStatus.CANCELED ||
+                        rawStatus === PredictionStatus.RESOLVED"
+                    label="New"
+                    color="green"
+                    data-test="create-prediction-button"
+                    @click="handleCreate"
+                />
+                <ipl-button
+                    v-if="rawStatus === PredictionStatus.ACTIVE"
+                    label="Lock"
+                    color="red"
+                    requires-confirmation
+                    short-confirmation-message
+                    async
+                    progress-message="Locking..."
+                    data-test="lock-prediction-button"
+                    @click="handleLock"
+                />
+                <ipl-button
+                    v-if="rawStatus === PredictionStatus.LOCKED || rawStatus === PredictionStatus.ACTIVE"
+                    label="Cancel"
+                    color="red"
+                    requires-confirmation
+                    short-confirmation-message
+                    async
+                    progress-message="Cancelling..."
+                    data-test="cancel-prediction-button"
+                    @click="handleCancel"
+                />
+                <ipl-button
+                    label="Show"
+                    data-test="show-prediction-button"
+                    @click="handleShow"
+                />
+            </div>
+        </ipl-space>
+    </template>
 </template>
 
 <script lang="ts">
@@ -94,8 +105,6 @@ export default defineComponent({
     setup() {
         const store = usePredictionDataStore();
         const hasPredictionData = computed(() => !!store.state.predictionStore.currentPrediction);
-        const predictionsEnabled = computed(() => store.state.predictionStore.status.predictionsEnabled);
-
         const currentPrediction = computed(() => store.state.predictionStore.currentPrediction);
 
         return {
@@ -103,10 +112,10 @@ export default defineComponent({
                 const status = currentPrediction.value?.status;
                 return status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : null;
             }),
-            rawStatus: computed(() => currentPrediction.value?.status),
+            rawStatus: computed(() => currentPrediction.value?.status as PredictionStatus),
             PredictionStatus,
             hasPredictionData,
-            predictionsEnabled,
+            predictionStatus: computed(() => store.state.predictionStore.status),
             handleResolve() {
                 (nodecg.getDialog('resolvePredictionDialog') as NodecgDialog).open();
             },

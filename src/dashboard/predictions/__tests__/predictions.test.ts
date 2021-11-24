@@ -63,6 +63,7 @@ describe('Predictions', () => {
     it('shows warning if predictions are not enabled', () => {
         const store = createPredictionDataStore();
         store.state.predictionStore.status.predictionsEnabled = false;
+        store.state.predictionStore.status.predictionStatusReason = 'Predictions are disabled!';
         store.state.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {
@@ -73,7 +74,10 @@ describe('Predictions', () => {
         expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="prediction-data-display"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="prediction-management-space"]').exists()).toEqual(false);
-        expect(wrapper.findComponent('[data-test="predictions-disabled-message"]').isVisible()).toEqual(true);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
+        const predictionsDisabledMessage = wrapper.findComponent('[data-test="predictions-disabled-message"]');
+        expect(predictionsDisabledMessage.isVisible()).toEqual(true);
+        expect(predictionsDisabledMessage.text()).toEqual('Predictions are disabled!');
     });
 
     it('shows message and management space if prediction data is missing', () => {
@@ -86,6 +90,7 @@ describe('Predictions', () => {
         });
 
         expect(wrapper.findComponent('[data-test="predictions-disabled-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="prediction-data-display"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').isVisible()).toEqual(true);
         expect(wrapper.findComponent('[data-test="prediction-management-space"]').isVisible()).toEqual(true);
@@ -100,9 +105,24 @@ describe('Predictions', () => {
         });
 
         expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="predictions-disabled-message"]').exists()).toEqual(false);
         expect(wrapper.findComponent('[data-test="prediction-data-display"]').isVisible()).toEqual(true);
         expect(wrapper.findComponent('[data-test="prediction-management-space"]').isVisible()).toEqual(true);
+    });
+
+    it('shows message if websocket is closed', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.status.socketOpen = false;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        const message = wrapper.findComponent('[data-test="socket-closed-message"]');
+        expect(message.exists()).toEqual(true);
+        expect(message.isVisible()).toEqual(true);
     });
 
     it('shows expected buttons if prediction status is RESOLVED', () => {

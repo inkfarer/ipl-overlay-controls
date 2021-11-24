@@ -95,14 +95,16 @@ function initSocket(guildId: string): void {
 radiaSettings.on('change', async (newValue) => {
     if (isEmpty(newValue.guildID)) {
         nodecg.log.warn('Radia guild ID is not configured!');
+        predictionStore.value.status.predictionsEnabled = false;
+        predictionStore.value.status.predictionStatusReason = 'Guild ID is missing.';
         return;
     }
 
     const predictionsSupported = await hasPredictionSupport(newValue.guildID);
     predictionStore.value.status.predictionsEnabled = predictionsSupported;
-
-    // If predictions are supported, fetch them
-    if (predictionsSupported) {
+    if (!predictionsSupported) {
+        predictionStore.value.status.predictionStatusReason = 'Predictions are not supported by the configured guild.';
+    } else {
         initSocket(newValue.guildID);
         try {
             const guildPredictions = await getPredictions(newValue.guildID);

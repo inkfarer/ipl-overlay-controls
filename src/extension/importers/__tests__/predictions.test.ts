@@ -79,10 +79,12 @@ describe('predictions', () => {
                     status: {
                         predictionsEnabled: false,
                         socketOpen: false,
+                        predictionStatusReason: 'Predictions are not supported by the configured guild.'
                     },
                     currentPrediction: null,
                     modificationTime: '2021-09-10T13:52:29'
                 });
+                expect(mockWebSocket).not.toHaveBeenCalled();
             });
 
             it('does nothing if guild ID is empty', async () => {
@@ -91,6 +93,11 @@ describe('predictions', () => {
                 await nodecg.replicantListeners.radiaSettings({ guildID: '' });
 
                 expect(nodecg.log.warn).toHaveBeenCalledWith('Radia guild ID is not configured!');
+                expect((nodecg.replicants.predictionStore.value as PredictionStore).status).toEqual({
+                    predictionsEnabled: false,
+                    predictionStatusReason: 'Guild ID is missing.',
+                    socketOpen: false
+                });
                 expect(mockHasPredictionSupport).not.toHaveBeenCalled();
                 expect(mockWebSocket).not.toHaveBeenCalled();
             });
