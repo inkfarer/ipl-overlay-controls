@@ -10,6 +10,11 @@ export const errorHandlerStore = createStore<ErrorHandlerStore>({
     state: {
         recentErrors: {}
     },
+    mutations: {
+        removeRecentError(state, { key }: { key: string }): void {
+            delete state.recentErrors[key];
+        }
+    },
     actions: {
         handleError(store, { err, info }: { err: unknown, info: string }): void {
             console.error(`Got error from '${info}': \n`, err);

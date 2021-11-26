@@ -2,13 +2,17 @@
 
 exports[`IplErrorDisplay matches snapshot with errors 1`] = `
 "<div class=\\"max-width layout vertical center-horizontal\\">
-  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2\\">
+  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2\\" data-test=\\"recent-error-a\\">
     <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div class=\\"message-content\\">Error!</div>
+    <div class=\\"message-content\\">
+      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\"></font-awesome-icon-stub>Error!
+    </div>
   </div>
-  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2 m-t-8\\">
+  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2 m-t-8\\" data-test=\\"recent-error-b\\">
     <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div class=\\"message-content\\">Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...</div>
+    <div class=\\"message-content\\">
+      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\"></font-awesome-icon-stub>Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...
+    </div>
   </div>
 </div>"
 `;

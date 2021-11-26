@@ -7,8 +7,11 @@
             v-for="(err, key, index) in recentErrors"
             :key="key"
             type="error"
+            closeable
             class="mw-2"
             :class="{'m-t-8': index > 0}"
+            :data-test="`recent-error-${key}`"
+            @close="removeMessage(key)"
         >
             {{ addDots(err.message ?? err, 256) }}
         </ipl-message>
@@ -31,6 +34,9 @@ export default defineComponent({
 
         return {
             recentErrors: computed(() => store.state.recentErrors),
+            removeMessage(key: string) {
+                store.commit('removeRecentError', { key });
+            },
             addDots
         };
     }

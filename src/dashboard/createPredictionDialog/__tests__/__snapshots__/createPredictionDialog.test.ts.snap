@@ -24,7 +24,9 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is act
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The active prediction has not been resolved! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The active prediction has not been resolved!
+  </div>
 </div>"
 `;
 
@@ -35,6 +37,8 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is loc
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The active prediction has not been resolved! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The active prediction has not been resolved!
+  </div>
 </div>"
 `;

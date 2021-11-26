@@ -6,6 +6,26 @@ describe('IplMessage', () => {
         FontAwesomeIcon: true
     };
 
+    it('matches snapshot', () => {
+        const wrapper = mount(IplMessage, { props: { type: 'info' } });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('matches snapshot when closeable', () => {
+        const wrapper = mount(IplMessage, { props: { type: 'info', closeable: true } });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('emits event on close button click', () => {
+        const wrapper = mount(IplMessage, { props: { type: 'info', closeable: true } });
+
+        wrapper.getComponent('.close-button').vm.$emit('click');
+
+        expect(wrapper.emitted('close').length).toEqual(1);
+    });
+
     it('has expected wrapper class and icon if type is error', () => {
         const wrapper = mount(IplMessage, { props: { type: 'error' } });
 

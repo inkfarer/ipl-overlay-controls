@@ -7,7 +7,9 @@ exports[`ResolvePredictionDialog matches snapshot when the current round is not 
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The current round has not been completed! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The current round has not been completed!
+  </div>
 </div>
 <!--v-if-->
 <div class=\\"ipl-space color-dark m-t-8\\"><label class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
@@ -20,7 +22,9 @@ exports[`ResolvePredictionDialog matches snapshot when the prediction is not loc
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\">
   <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> This prediction cannot be resolved right now. </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> This prediction cannot be resolved right now.
+  </div>
 </div>"
 `;
 
@@ -31,11 +35,15 @@ exports[`ResolvePredictionDialog matches snapshot when the winner cannot be dete
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The current round has not been completed! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The current round has not been completed!
+  </div>
 </div>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\">
   <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> Unable to determine the current round's winner. The leading team is unknown team b.</div>
+  <div class=\\"message-content\\">
+    <!--v-if--> Unable to determine the current round's winner. The leading team is unknown team b.
+  </div>
 </div>
 <div class=\\"ipl-space color-dark m-t-8\\"><label class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\"> Team B </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
@@ -47,7 +55,9 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The current round has not been completed! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The current round has not been completed!
+  </div>
 </div>
 <!--v-if-->
 <div class=\\"ipl-space color-dark m-t-8\\"><label class=\\"ipl-label winner-label\\">Winner - Team A </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\"> Team B </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
@@ -60,7 +70,9 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The current round has not been completed! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The current round has not been completed!
+  </div>
 </div>
 <!--v-if-->
 <div class=\\"ipl-space color-dark m-t-8\\"><label class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"#\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
@@ -73,11 +85,14 @@ exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> The current round has not been completed! </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> The current round has not been completed!
+  </div>
 </div>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\">
   <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> Unable to determine the current round's winner.
+  <div class=\\"message-content\\">
+    <!--v-if--> Unable to determine the current round's winner.
     <!--v-if-->
   </div>
 </div>
@@ -91,6 +106,8 @@ exports[`ResolvePredictionDialog matches snapshot with missing prediction data 1
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\"> No prediction data loaded. </div>
+  <div class=\\"message-content\\">
+    <!--v-if--> No prediction data loaded.
+  </div>
 </div>"
 `;

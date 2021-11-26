@@ -14,6 +14,19 @@ describe('errorHandlerStore', () => {
         jest.spyOn(global.console, 'error').mockImplementation(() => {});
     });
 
+    describe('removeRecentError', () => {
+        it('removes error from list', () => {
+            errorHandlerStore.state.recentErrors = {
+                err1: {},
+                err2: {}
+            };
+
+            errorHandlerStore.commit('removeRecentError', { key: 'err2' });
+
+            expect(errorHandlerStore.state.recentErrors).toEqual({ err1: {} });
+        });
+    });
+
     describe('handleError', () => {
         it('logs given error', () => {
             const error = new Error('yeehaw');

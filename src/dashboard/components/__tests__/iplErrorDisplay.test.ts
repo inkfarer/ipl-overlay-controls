@@ -4,6 +4,8 @@ import { ErrorHandlerStore, errorHandlerStoreKey } from '../../store/errorHandle
 import { config, mount } from '@vue/test-utils';
 
 describe('IplErrorDisplay', () => {
+    const mockRemoveRecentError = jest.fn();
+
     config.global.stubs = {
         FontAwesomeIcon: true
     };
@@ -12,12 +14,31 @@ describe('IplErrorDisplay', () => {
         return createStore<ErrorHandlerStore>({
             state: {
                 recentErrors: {}
-            } 
+            },
+            mutations: {
+                removeRecentError: mockRemoveRecentError
+            }
         });
     }
 
     it('throws error when missing store', () => {
         expect(() => mount(IplErrorDisplay)).toThrow('Missing error handler store.');
+    });
+
+    it('handles error being removed', () => {
+        const store = createErrorHandlerStore();
+        store.state.recentErrors = {
+            err: { message: 'Error!' }
+        };
+        const wrapper = mount(IplErrorDisplay, {
+            global: {
+                plugins: [[store, errorHandlerStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="recent-error-err"]').vm.$emit('close');
+
+        expect(mockRemoveRecentError).toHaveBeenCalledWith(expect.any(Object), { key: 'err' });
     });
 
     it('matches snapshot with errors', () => {
