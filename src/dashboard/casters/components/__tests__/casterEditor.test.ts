@@ -320,4 +320,43 @@ describe('CasterEditor', () => {
             expect(mockRemoveCaster).toHaveBeenCalledWith(expect.any(Object), 'casterid');
         });
     });
+
+    describe('formatters', () => {
+        const store = createCasterStore();
+        const wrapper = mount(CasterEditor, {
+            global: {
+                plugins: [ [ store, casterStoreKey ] ]
+            },
+            props: {
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                casterId: 'casterid',
+                uncommitted: false
+            }
+        });
+
+        describe('pronounFormatter', () => {
+            const formatter = (wrapper.getComponent('[name="pronouns"]')
+                .vm.$props as { formatter: (value: string) => string }).formatter;
+
+            it('converts input to lower case', () => {
+                expect(formatter('YEEHAW')).toEqual('yeehaw');
+                expect(formatter('tEST1234')).toEqual('test1234');
+            }); 
+        });
+
+        describe('twitterFormatter', () => {
+            const formatter = (wrapper.getComponent('[name="twitter"]')
+                .vm.$props as { formatter: (value: string) => string }).formatter;
+
+            it('adds @ symbol before text if it is not present', () => {
+                expect(formatter('Gamer')).toEqual('@Gamer');
+                expect(formatter('gaming')).toEqual('@gaming');
+            });
+
+            it('does nothing if input already starts with an @ symbol', () => {
+                expect(formatter('@yeehaw')).toEqual('@yeehaw');
+                expect(formatter('@TEST123')).toEqual('@TEST123');
+            });
+        });
+    });
 });
