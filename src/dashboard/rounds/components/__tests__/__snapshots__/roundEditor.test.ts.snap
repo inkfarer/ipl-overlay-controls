@@ -13,8 +13,8 @@ exports[`RoundEditor matches snapshot 1`] = `
   <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-selector-2\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Port Mackerel\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"stage-selector-2\\"></ipl-select-stub>
   <div class=\\"layout horizontal m-t-8\\">
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" data-test=\\"update-button\\"></ipl-button-stub>
-    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"update-button\\"></ipl-button-stub>
+    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
   </div>
 </div>"
 `;
@@ -38,8 +38,8 @@ exports[`RoundEditor matches snapshot when creating new round 1`] = `
   <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-selector-4\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Ancho-V Games\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"stage-selector-4\\"></ipl-select-stub>
   <div class=\\"layout horizontal m-t-8\\">
-    <ipl-button-stub label=\\"Save\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" data-test=\\"update-button\\"></ipl-button-stub>
-    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"Save\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"update-button\\"></ipl-button-stub>
+    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
   </div>
 </div>"
 `;

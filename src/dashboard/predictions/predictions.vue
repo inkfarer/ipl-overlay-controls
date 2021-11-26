@@ -79,6 +79,8 @@
                 <ipl-button
                     label="Show"
                     data-test="show-prediction-button"
+                    disable-on-success
+                    success-message="Sent!"
                     @click="handleShow"
                 />
             </div>

@@ -21,7 +21,7 @@ exports[`ActiveRoundEditor matches snapshot 1`] = `
       </div>
     </div>
     <ipl-select-stub modelvalue=\\"0387\\" label=\\"Round\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"round-selector\\"></ipl-select-stub>
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-8\\" data-test=\\"update-round-button\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-8\\" data-test=\\"update-round-button\\"></ipl-button-stub>
   </div>
 </div>"
 `;

@@ -198,6 +198,7 @@ describe('iplButton', () => {
             expect(button.classes()).toContain('disabled');
             expect(button.classes()).toContain('is-loading');
             expect(button.text()).toEqual('Loading...');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('applies label provided in props and uses appropriate color on success', async () => {
@@ -218,6 +219,7 @@ describe('iplButton', () => {
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('All good!');
             expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#00A651');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('uses different success color if idle color is already green', async () => {
@@ -239,6 +241,7 @@ describe('iplButton', () => {
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('All good!');
             expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#18C682');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('resets successful button state after a timeout period', async () => {
@@ -265,6 +268,7 @@ describe('iplButton', () => {
             expect(button.text()).toEqual('Button');
             expect(wrapper.vm.buttonState).toEqual('idle');
             expect(global.window.setTimeout).toHaveBeenCalled();
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('applies label provided in props and uses appropriate color on failure', async () => {
@@ -284,6 +288,7 @@ describe('iplButton', () => {
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('Error!');
             expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#e74e36');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('uses different failure color if idle color is already red', async () => {
@@ -304,6 +309,7 @@ describe('iplButton', () => {
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('Error!');
             expect((wrapper.vm.buttonStyle as { backgroundColor: string }).backgroundColor).toEqual('#FF682E');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
 
         it('resets unsuccessful button state after a timeout period', async () => {
@@ -328,6 +334,54 @@ describe('iplButton', () => {
             expect(button.text()).toEqual('Button');
             expect(wrapper.vm.buttonState).toEqual('idle');
             expect(global.window.setTimeout).toHaveBeenCalled();
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
+        });
+    });
+
+    describe('disableOnSuccess', () => {
+        it('applies label provided in props and uses appropriate color on click', async () => {
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    disableOnSuccess: true,
+                    successMessage: 'All good!'
+                }
+            });
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockReturnValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(true);
+            expect(button.text()).toEqual('All good!');
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
+        });
+
+        it('resets successful button state after a timeout period', async () => {
+            // @ts-ignore: Fine for testing
+            jest.spyOn(global.window, 'setTimeout').mockImplementation(handler => {
+                handler();
+            });
+            const wrapper = shallowMount(IplButton, {
+                props: {
+                    label: 'Button',
+                    disableOnSuccess: true,
+                    successMessage: 'All good!',
+                    color: 'green'
+                }
+            });
+            wrapper.vm.$.vnode.props.onClick = jest.fn().mockReturnValue({});
+            const button = wrapper.find('a');
+
+            await button.trigger('click');
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.disabledInternal).toEqual(false);
+            expect(button.text()).toEqual('Button');
+            expect(wrapper.vm.buttonState).toEqual('idle');
+            expect(global.window.setTimeout).toHaveBeenCalled();
+            expect(wrapper.vm.$.vnode.props.onClick).toHaveBeenCalled();
         });
     });
 });

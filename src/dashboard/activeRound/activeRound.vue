@@ -6,6 +6,8 @@
             <ipl-space class="m-t-8">
                 <ipl-button
                     label="Show casters"
+                    disable-on-success
+                    success-message="Message sent!"
                     @click="showCasters"
                 />
             </ipl-space>

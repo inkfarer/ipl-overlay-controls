@@ -5,7 +5,7 @@ exports[`HighlightedMatchViewer matches snapshot 1`] = `
   <ipl-select-stub modelvalue=\\"1234\\" label=\\"Match\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"match-selector\\"></ipl-select-stub>
   <ipl-data-row-stub label=\\"Team A\\" data-test=\\"team-a-name-display\\" value=\\"mock team\\"></ipl-data-row-stub>
   <ipl-data-row-stub label=\\"Team B\\" data-test=\\"team-b-name-display\\" value=\\"mock team\\"></ipl-data-row-stub>
-  <ipl-button-stub label=\\"Set next match\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-8\\" data-test=\\"set-next-match-button\\"></ipl-button-stub>
+  <ipl-button-stub label=\\"Set next match\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-8\\" data-test=\\"set-next-match-button\\"></ipl-button-stub>
 </div>"
 `;
 

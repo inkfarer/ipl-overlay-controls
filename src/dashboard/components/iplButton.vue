@@ -82,6 +82,10 @@ export default defineComponent({
         small: {
             type: Boolean,
             default: false
+        },
+        disableOnSuccess: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -103,7 +107,10 @@ export default defineComponent({
                 buttonState.value = 'idle';
             }, 5000);
         };
-        const disabledInternal = computed(() => props.disabled || (props.async && buttonState.value === 'loading'));
+        const disabledInternal = computed(() =>
+            props.disabled
+            || (props.async && buttonState.value === 'loading')
+            || (props.disableOnSuccess && buttonState.value === 'success'));
         const colorInternal = computed(() => {
             const warningColor = props.color === 'red' ? 'orange' : 'red';
             if (props.requiresConfirmation && isClicked.value) return warningColor;
@@ -143,11 +150,13 @@ export default defineComponent({
                     clearTimeout(confirmationResetTimeout);
                 }
 
-                if (!props.async) {
+                if (!props.async && !props.disableOnSuccess) {
                     emit('click');
                 } else {
                     try {
-                        buttonState.value = 'loading';
+                        if (props.async) {
+                            buttonState.value = 'loading';
+                        }
                         await instance.vnode.props.onClick();
                         setState('success');
                     } catch (e) {
@@ -163,7 +172,7 @@ export default defineComponent({
                 if (props.requiresConfirmation && isClicked.value) {
                     return props.shortConfirmationMessage ? 'Confirm?' : 'Are you sure?';
                 }
-                if (!props.async) return props.label;
+                if (!props.async && !props.disableOnSuccess) return props.label;
 
                 switch (buttonState.value) {
                     case 'error':
