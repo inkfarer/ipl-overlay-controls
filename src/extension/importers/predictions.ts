@@ -67,8 +67,6 @@ function initSocket(guildId: string): void {
     socket = new WebSocket(`${radiaConfig.socketUrl}/events/guild/${guildId}`,
         { headers: { Authorization: radiaConfig.authentication } });
 
-    console.log('what');
-
     socket.on('open', () => {
         nodecg.log.info('Radia websocket is open.');
         predictionStore.value.status.socketOpen = true;
