@@ -68,8 +68,8 @@ function initSocket(guildId: string): void {
         { headers: { Authorization: radiaConfig.authentication } });
 
     socket.on('open', () => {
-        nodecg.log.info('Radia websocket is open.');
         predictionStore.value.status.socketOpen = true;
+        clearTimeout(socketReconnectionTimeout);
         socketReconnectionCount = 0;
         heartbeat();
     });
