@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, getCurrentInstance, PropType, Ref, ref } from 'vue';
-import { buttonColors } from '../styles/colors';
+import { buttonColors, themeColors } from '../styles/colors';
 import isEmpty from 'lodash/isEmpty';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { getContrastingTextColor } from '../helpers/colorHelper';
@@ -124,33 +124,35 @@ export default defineComponent({
                 const buttonColor = buttonColors[colorInternal.value] ?? colorInternal.value;
                 return ({
                     backgroundColor: buttonColor,
-                    color: disabledInternal.value ? '#A9AAA9' : getContrastingTextColor(buttonColor)
+                    color: disabledInternal.value ? themeColors.disabledText : getContrastingTextColor(buttonColor)
                 });
             }),
             async handleClick() {
-                if (!disabledInternal.value) {
-                    if (props.requiresConfirmation && !isClicked.value) {
-                        isClicked.value = true;
-                        confirmationResetTimeout = window.setTimeout(() => {
-                            isClicked.value = false;
-                        }, 5000);
-                        return;
-                    } else if (props.requiresConfirmation && isClicked.value) {
+                if (disabledInternal.value) {
+                    return;
+                }
+                
+                if (props.requiresConfirmation && !isClicked.value) {
+                    isClicked.value = true;
+                    confirmationResetTimeout = window.setTimeout(() => {
                         isClicked.value = false;
-                        clearTimeout(confirmationResetTimeout);
-                    }
+                    }, 5000);
+                    return;
+                } else if (props.requiresConfirmation && isClicked.value) {
+                    isClicked.value = false;
+                    clearTimeout(confirmationResetTimeout);
+                }
 
-                    if (!props.async) {
-                        emit('click');
-                    } else {
-                        try {
-                            buttonState.value = 'loading';
-                            await instance.vnode.props.onClick();
-                            setState('success');
-                        } catch (e) {
-                            console.error(e);
-                            setState('error');
-                        }
+                if (!props.async) {
+                    emit('click');
+                } else {
+                    try {
+                        buttonState.value = 'loading';
+                        await instance.vnode.props.onClick();
+                        setState('success');
+                    } catch (e) {
+                        console.error(e);
+                        setState('error');
                     }
                 }
             },
