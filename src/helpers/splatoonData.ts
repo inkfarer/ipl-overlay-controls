@@ -6,6 +6,7 @@ export const splatStages = [
     'Arowana Mall',
     'Blackbelly Skatepark',
     'Camp Triggerfish',
+    'Counterpick',
     'Goby Arena',
     'Humpback Pump Track',
     'Inkblot Art Academy',
