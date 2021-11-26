@@ -231,7 +231,6 @@ describe('iplButton', () => {
                     color: 'green'
                 }
             });
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             wrapper.vm.$.vnode.props.onClick = jest.fn().mockResolvedValue({});
             const button = wrapper.find('a');
 
@@ -257,7 +256,6 @@ describe('iplButton', () => {
                     color: 'green'
                 }
             });
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             wrapper.vm.$.vnode.props.onClick = jest.fn().mockResolvedValue({});
             const button = wrapper.find('a');
 
@@ -278,12 +276,14 @@ describe('iplButton', () => {
                     async: true
                 }
             });
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
             const button = wrapper.find('a');
 
-            await button.trigger('click');
-            await wrapper.vm.$nextTick();
+            try {
+                // button.trigger('click') fails here, as the click handler rejects.
+                await (wrapper.vm as unknown as { handleClick: () => void }).handleClick();
+                await wrapper.vm.$nextTick();
+            } catch (e) {}
 
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('Error!');
@@ -299,12 +299,14 @@ describe('iplButton', () => {
                     color: 'red'
                 }
             });
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
             const button = wrapper.find('a');
 
-            await button.trigger('click');
-            await wrapper.vm.$nextTick();
+            try {
+                // button.trigger('click') fails here, as the click handler rejects.
+                await (wrapper.vm as unknown as { handleClick: () => void }).handleClick();
+                await wrapper.vm.$nextTick();
+            } catch (e) {}
 
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('Error!');
@@ -313,6 +315,7 @@ describe('iplButton', () => {
         });
 
         it('resets unsuccessful button state after a timeout period', async () => {
+            expect.assertions(5);
             // @ts-ignore: Fine for testing
             jest.spyOn(global.window, 'setTimeout').mockImplementation(handler => {
                 handler();
@@ -323,12 +326,14 @@ describe('iplButton', () => {
                     async: true
                 }
             });
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             wrapper.vm.$.vnode.props.onClick = jest.fn().mockRejectedValue({});
             const button = wrapper.find('a');
 
-            await button.trigger('click');
-            await wrapper.vm.$nextTick();
+            try {
+                // button.trigger('click') fails here, as the click handler rejects.
+                await (wrapper.vm as unknown as { handleClick: () => void }).handleClick();
+                await wrapper.vm.$nextTick();
+            } catch (e) {}
 
             expect(wrapper.vm.disabledInternal).toEqual(false);
             expect(button.text()).toEqual('Button');

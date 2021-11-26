@@ -9,7 +9,8 @@ import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 describe('CreatePredictionDialog', () => {
     config.global.stubs = {
         IplInput: true,
-        FontAwesomeIcon: true
+        FontAwesomeIcon: true,
+        IplErrorDisplay: true
     };
 
     const mockCreatePrediction = jest.fn();

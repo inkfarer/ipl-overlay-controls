@@ -92,7 +92,7 @@ describe('casters', () => {
 
             await nodecg.messageListeners.getLiveCommentators(null, ack);
 
-            expect(ack).toHaveBeenCalledWith('Got no commentators from API.');
+            expect(ack).toHaveBeenCalledWith(new Error('Got no commentators from API.'));
             expect(nodecg.replicants.casters.value).toBeUndefined();
         });
 

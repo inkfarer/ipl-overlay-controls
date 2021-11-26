@@ -86,5 +86,9 @@ export default defineComponent({
         border-color: $error-color;
         background-color: $error-background-color;
     }
+
+    > .message-content {
+        overflow-wrap: anywhere;
+    }
 }
 </style>

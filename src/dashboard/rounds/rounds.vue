@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-sidebar v-model:is-open="openRoundSidebar">
         <ipl-space color="light">
             <ipl-button
@@ -97,13 +98,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import IplExpandingSpace from '../components/iplExpandingSpace.vue';
 import { useActiveRoundStore } from '../store/activeRoundStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 library.add(faBars);
 
 export default defineComponent({
     name: 'Rounds',
 
-    components: { IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },
+    components: { IplErrorDisplay, IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },
 
     setup() {
         const store = useTournamentDataStore();

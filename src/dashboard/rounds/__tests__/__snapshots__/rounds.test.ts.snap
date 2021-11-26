@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Rounds matches snapshot 1`] = `
-"<!--v-if-->
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<!--v-if-->
 <div class=\\"ipl-expansion-panel__content\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
     <div class=\\"ipl-expansion-panel__header-background\\"></div>
@@ -24,7 +25,8 @@ exports[`Rounds matches snapshot 1`] = `
 `;
 
 exports[`Rounds matches snapshot when round sidebar is open 1`] = `
-"<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\">
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\">
   <div class=\\"background\\"></div>
   <div class=\\"content\\">
     <div class=\\"ipl-space color-light\\">

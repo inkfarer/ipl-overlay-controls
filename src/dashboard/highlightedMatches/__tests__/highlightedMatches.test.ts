@@ -9,6 +9,7 @@ describe('HighlightedMatches', () => {
     config.global.stubs = {
         HighlightedMatchImporter: true,
         HighlightedMatchViewer: true,
+        IplErrorDisplay: true
     };
 
     function createHighlightedMatchStore() {

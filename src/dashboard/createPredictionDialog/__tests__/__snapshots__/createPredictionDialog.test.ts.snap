@@ -4,6 +4,7 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
 "<div class=\\"ipl-dialog-title layout horizontal center-vertical\\"><span class=\\"ipl-dialog-title__title-text\\">Create Prediction</span>
   <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-icon\\" data-test=\\"close-button\\"></font-awesome-icon-stub>
 </div>
+<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
 <div class=\\"ipl-space color-dark m-t-8\\">
   <div class=\\"layout horizontal\\">
     <ipl-input-stub name=\\"title\\" label=\\"Title\\" modelvalue=\\"Who do you think will win this match?\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"title-input\\"></ipl-input-stub>
@@ -20,7 +21,8 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is act
 "<div class=\\"ipl-dialog-title layout horizontal center-vertical\\"><span class=\\"ipl-dialog-title__title-text\\">Create Prediction</span>
   <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-icon\\" data-test=\\"close-button\\"></font-awesome-icon-stub>
 </div>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning\\">
+<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
   <div class=\\"message-content\\"> The active prediction has not been resolved! </div>
 </div>"
@@ -30,7 +32,8 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is loc
 "<div class=\\"ipl-dialog-title layout horizontal center-vertical\\"><span class=\\"ipl-dialog-title__title-text\\">Create Prediction</span>
   <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-icon\\" data-test=\\"close-button\\"></font-awesome-icon-stub>
 </div>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning\\">
+<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\">
   <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
   <div class=\\"message-content\\"> The active prediction has not been resolved! </div>
 </div>"

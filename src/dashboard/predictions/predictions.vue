@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="!predictionStatus.predictionsEnabled"
         type="warning"
@@ -11,6 +12,7 @@
             v-if="!hasPredictionData"
             type="info"
             data-test="no-prediction-data-message"
+            class="m-b-8"
         >
             No prediction data loaded.
         </ipl-message>
@@ -19,20 +21,18 @@
             v-if="!predictionStatus.socketOpen"
             type="warning"
             data-test="socket-closed-message"
+            class="m-b-8"
         >
             Prediction websocket is closed. Data may not be up to date.
         </ipl-message>
 
         <prediction-data-display
             v-if="hasPredictionData"
-            class="m-t-8"
             data-test="prediction-data-display"
+            class="m-b-8"
         />
 
-        <ipl-space
-            class="m-t-8"
-            data-test="prediction-management-space"
-        >
+        <ipl-space data-test="prediction-management-space">
             <ipl-data-row
                 label="Status"
                 :value="status"
@@ -98,11 +98,12 @@ import IplButton from '../components/iplButton.vue';
 import { NodecgDialog } from '../types/dialog';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import PredictionDataDisplay from './components/predictionDataDisplay.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'Predictions',
 
-    components: { PredictionDataDisplay, IplButton, IplDataRow, IplMessage, IplSpace },
+    components: { IplErrorDisplay, PredictionDataDisplay, IplButton, IplDataRow, IplMessage, IplSpace },
 
     setup() {
         const store = usePredictionDataStore();

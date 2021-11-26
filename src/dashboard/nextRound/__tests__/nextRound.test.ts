@@ -8,7 +8,8 @@ describe('NextRound', () => {
     config.global.stubs = {
         IplSelect: true,
         IplCheckbox: true,
-        IplButton: true
+        IplButton: true,
+        IplErrorDisplay: true
     };
 
     function createNextRoundStore() {

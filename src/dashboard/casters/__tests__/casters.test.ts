@@ -10,7 +10,8 @@ describe('Casters', () => {
     config.global.stubs = {
         IplButton: true,
         CasterEditor: true,
-        IplExpandingSpaceGroup: true
+        IplExpandingSpaceGroup: true,
+        IplErrorDisplay: true
     };
 
     function createCasterStore() {

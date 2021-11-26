@@ -12,7 +12,8 @@ describe('Predictions', () => {
     config.global.stubs = {
         PredictionDataDisplay: true,
         IplDataRow: true,
-        IplButton: true
+        IplButton: true,
+        IplErrorDisplay: true
     };
 
     const createPredictionDataStore = () => {

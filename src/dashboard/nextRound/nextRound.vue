@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="roundHasProgress"
         type="info"
@@ -86,11 +87,12 @@ import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../helpers/stringHelper';
 import IplMessage from '../components/iplMessage.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'NextRound',
 
-    components: { IplMessage, IplButton, IplCheckbox, IplSelect, IplSpace },
+    components: { IplErrorDisplay, IplMessage, IplButton, IplCheckbox, IplSelect, IplSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();

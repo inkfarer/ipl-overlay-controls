@@ -8,7 +8,8 @@ describe('BreakScreen', () => {
         IplButton: true,
         IplInput: true,
         IplCheckbox: true,
-        NextStageTimeInput: true
+        NextStageTimeInput: true,
+        IplErrorDisplay: true
     };
 
     function createBreakScreenStore() {

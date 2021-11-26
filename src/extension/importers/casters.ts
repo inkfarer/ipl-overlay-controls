@@ -12,7 +12,7 @@ const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) => {
     try {
         const result = await getLiveCasters(radiaSettings.value.guildID);
-        if (result.length <= 0) return ack('Got no commentators from API.');
+        if (result.length <= 0) return ack(new Error('Got no commentators from API.'));
         const normalizedResult = result.map(normalizeCaster);
 
         const castersToAdd = normalizedResult.slice(0, 3);

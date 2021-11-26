@@ -160,8 +160,8 @@ export default defineComponent({
                         await instance.vnode.props.onClick();
                         setState('success');
                     } catch (e) {
-                        console.error(e);
                         setState('error');
+                        throw e;
                     }
                 }
             },
