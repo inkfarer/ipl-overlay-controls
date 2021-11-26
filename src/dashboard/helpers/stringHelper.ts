@@ -27,3 +27,10 @@ export function padNumber(value: number | string, minLength = 2): string {
 export function formatNumber(value: number): string {
     return new Intl.NumberFormat('en-US').format(value);
 }
+
+export function extractBattlefyTournamentId(input: string): string {
+    if (input.includes('/')) {
+        const idIndex = /^http(s?):\/\//.test(input) ? 5 : 3;
+        return input.split('/')[idIndex];
+    } else return input;
+}
