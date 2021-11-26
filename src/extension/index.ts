@@ -32,6 +32,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
         predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
     } else {
         radiaSettings.value.enabled = true;
+        predictionStore.value.status.socketOpen = false;
         require('./importers/casters');
         require('./importers/predictions');
     }
