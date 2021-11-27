@@ -14,7 +14,7 @@ const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 
-export function updateTeamData(data: TournamentData): void {
+export function updateTournamentDataReplicants(data: TournamentData): void {
     if (data.teams.length <= 0) {
         throw new Error('Tournament has no teams.');
     }

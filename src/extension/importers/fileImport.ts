@@ -3,7 +3,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import * as express from 'express';
 import { RoundStore } from 'schemas';
-import { parseUploadedTeamData, updateTeamData } from './tournamentDataHelper';
+import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
@@ -35,7 +35,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
             case 'teams': {
                 try {
                     const resolvedTeams = parseUploadedTeamData(content, file.name);
-                    updateTeamData(resolvedTeams);
+                    updateTournamentDataReplicants(resolvedTeams);
                 } catch (e) {
                     nodecg.log.error(`Team data parsing error: ${e}`);
                     return res.status(400).send('Got an error while parsing team data.');

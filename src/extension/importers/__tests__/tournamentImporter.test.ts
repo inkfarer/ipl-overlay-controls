@@ -27,7 +27,7 @@ describe('tournamentImporter', () => {
     });
 
     describe('with bundle configuration', () => {
-        const mockUpdateTeamData = jest.fn();
+        const mockUpdateTournamentDataReplicants = jest.fn();
         const mockGetBattlefyTournamentData = jest.fn();
         const mockGetSmashggData = jest.fn();
         const mockGetSmashggEvents = jest.fn();
@@ -37,7 +37,7 @@ describe('tournamentImporter', () => {
 
         jest.mock('../tournamentDataHelper', () => ({
             __esModule: true,
-            updateTeamData: mockUpdateTeamData,
+            updateTournamentDataReplicants: mockUpdateTournamentDataReplicants,
             parseUploadedTeamData: mockParseUploadedTeamData
         }));
 
@@ -78,7 +78,7 @@ describe('tournamentImporter', () => {
                 await nodecg.messageListeners.getTournamentData(
                     { id: 'bfytourney', method: TournamentDataSource.BATTLEFY }, ack);
 
-                expect(mockUpdateTeamData).toHaveBeenCalledWith(serviceResult);
+                expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith(serviceResult);
                 expect(ack).toHaveBeenCalledWith(null, { id: 'bfytourney' });
                 expect(mockGetBattlefyTournamentData).toHaveBeenCalledWith('bfytourney');
             });
@@ -94,7 +94,7 @@ describe('tournamentImporter', () => {
 
                 expect(mockGetSmashggEvents).toHaveBeenCalledWith('123123123', '190487208572340');
                 expect(mockGetSmashggData).toHaveBeenCalledWith(123123, '190487208572340');
-                expect(mockUpdateTeamData).toHaveBeenCalledWith(serviceResult);
+                expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith(serviceResult);
                 expect(ack).toHaveBeenCalledWith(null, { id: '123123123' });
             });
 
@@ -109,7 +109,7 @@ describe('tournamentImporter', () => {
 
                 expect(mockGetSmashggEvents).toHaveBeenCalledWith('123123123', '190487208572340');
                 expect(mockGetSmashggData).not.toHaveBeenCalled();
-                expect(mockUpdateTeamData).not.toHaveBeenCalled();
+                expect(mockUpdateTournamentDataReplicants).not.toHaveBeenCalled();
                 expect(ack).toHaveBeenCalledWith(null, { id: '123123123', events: [{ id: 123123 }, { id: 456456 }]});
             });
 
@@ -122,7 +122,7 @@ describe('tournamentImporter', () => {
                 await nodecg.messageListeners.getTournamentData(
                     { id: 'tourney://cool-tournament', method: TournamentDataSource.UPLOAD }, ack);
 
-                expect(mockUpdateTeamData).toHaveBeenCalledWith(serviceResult);
+                expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith(serviceResult);
                 expect(ack).toHaveBeenCalledWith(null, { id: 'tourney://cool-tournament' });
                 expect(mockGet).toHaveBeenCalledWith('tourney://cool-tournament');
             });
@@ -157,7 +157,7 @@ describe('tournamentImporter', () => {
                 await nodecg.messageListeners.getSmashggEvent({ eventId: 123123 }, ack);
 
                 expect(mockGetSmashggData).toHaveBeenCalledWith(123123, '190487208572340');
-                expect(mockUpdateTeamData).toHaveBeenCalledWith(tournamentData);
+                expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith(tournamentData);
                 expect(ack).toHaveBeenCalledWith(null, 123123);
             });
         });

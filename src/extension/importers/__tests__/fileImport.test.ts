@@ -3,7 +3,7 @@ import express from 'express';
 
 describe('fileImport', () => {
     const mockHandleRoundData = jest.fn();
-    const mockUpdateTeamData = jest.fn();
+    const mockUpdateTournamentDataReplicants = jest.fn();
     const mockParseUploadedTeamData = jest.fn();
     let nodecg: MockNodecg;
 
@@ -14,7 +14,7 @@ describe('fileImport', () => {
 
     jest.mock('../tournamentDataHelper', () => ({
         __esModule: true,
-        updateTeamData: mockUpdateTeamData,
+        updateTournamentDataReplicants: mockUpdateTournamentDataReplicants,
         parseUploadedTeamData: mockParseUploadedTeamData
     }));
 
@@ -123,7 +123,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
-            expect(mockUpdateTeamData).toHaveBeenCalledWith('TEAMS');
+            expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith('TEAMS');
         });
     });
 });

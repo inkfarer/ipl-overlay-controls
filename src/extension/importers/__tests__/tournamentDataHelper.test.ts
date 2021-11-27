@@ -43,9 +43,9 @@ describe('tournamentDataHelper', () => {
         nodecg.replicants.radiaSettings.value = { guildID: '', updateOnImport: false };
     });
 
-    describe('updateTeamData', () => {
+    describe('updateTournamentDataReplicants', () => {
         it('throws error if tournament is missing teams', () => {
-            expect(() => helper.updateTeamData({ teams: []}))
+            expect(() => helper.updateTournamentDataReplicants({ teams: []}))
                 .toThrow('Tournament has no teams.');
         });
 
@@ -75,7 +75,7 @@ describe('tournamentDataHelper', () => {
                 ]
             };
 
-            helper.updateTeamData(input);
+            helper.updateTournamentDataReplicants(input);
 
             expect(nodecg.replicants.tournamentData.value).toEqual(input);
             expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1111', '2222');
@@ -83,7 +83,7 @@ describe('tournamentDataHelper', () => {
         });
 
         it('assigns active and next round data if less than 4 teams are available', () => {
-            helper.updateTeamData({
+            helper.updateTournamentDataReplicants({
                 teams: [
                     {
                         id: '121212',
@@ -101,7 +101,7 @@ describe('tournamentDataHelper', () => {
         });
 
         it('assigns active and next round data if 1 team is available', () => {
-            helper.updateTeamData({
+            helper.updateTournamentDataReplicants({
                 teams: [
                     {
                         id: '121212',
@@ -115,7 +115,7 @@ describe('tournamentDataHelper', () => {
         });
 
         it('assigns active and next round data if 3 teams are available', () => {
-            helper.updateTeamData({
+            helper.updateTournamentDataReplicants({
                 teams: [
                     {
                         id: '121212',
@@ -140,7 +140,7 @@ describe('tournamentDataHelper', () => {
             nodecg.replicants.radiaSettings.value = { guildID: 'guild-id', updateOnImport: true };
             mockRadiaClient.updateTournamentData.mockResolvedValue({});
 
-            helper.updateTeamData({
+            helper.updateTournamentDataReplicants({
                 meta: {
                     name: 'Cool tournament',
                     url: 'tournament://cool'

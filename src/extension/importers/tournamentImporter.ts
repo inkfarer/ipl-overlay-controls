@@ -5,7 +5,7 @@ import { TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
-import { parseUploadedTeamData, updateTeamData } from './tournamentDataHelper';
+import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { GetSmashggEventRequest } from 'types/messages/tournamentData';
 
 const nodecg = nodecgContext.get();
@@ -31,7 +31,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         switch (data.method) {
             case TournamentDataSource.BATTLEFY: {
                 const serviceData = await getBattlefyTournamentData(data.id);
-                updateTeamData(serviceData);
+                updateTournamentDataReplicants(serviceData);
                 ack(null, { id: serviceData.meta.id });
                 break;
             }
@@ -52,7 +52,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
             }
             case TournamentDataSource.UPLOAD: {
                 const serviceData = await getRawData(data.id);
-                updateTeamData(serviceData);
+                updateTournamentDataReplicants(serviceData);
                 ack(null, { id: serviceData.meta.id });
                 break;
             }
@@ -72,7 +72,7 @@ nodecg.listenFor('getSmashggEvent', async (data: GetSmashggEventRequest, ack: Un
 
 async function getSmashggEventData(eventId: number): Promise<void> {
     const serviceData = await getSmashGGData(eventId, smashGGKey);
-    updateTeamData(serviceData);
+    updateTournamentDataReplicants(serviceData);
 }
 
 async function getRawData(url: string): Promise<TournamentData> {
