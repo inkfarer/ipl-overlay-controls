@@ -3,7 +3,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import * as express from 'express';
 import { RoundStore } from 'schemas';
-import { handleRawData, updateTeamDataReplicants } from './tournamentDataHelper';
+import { parseUploadedTeamData, updateTeamData } from './tournamentDataHelper';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
@@ -20,7 +20,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
             || !req.body.jsonType
             || (req.files.file as UploadedFile).mimetype !== 'application/json'
         ) {
-            return res.sendStatus(400);
+            return res.status(400).send('Invalid attached file or jsonType property provided.');
         }
 
         const file = req.files.file as UploadedFile;
@@ -33,12 +33,17 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
                 break;
             }
             case 'teams': {
-                const resolvedTeams = handleRawData(content, file.name);
-                updateTeamDataReplicants(resolvedTeams);
+                try {
+                    const resolvedTeams = parseUploadedTeamData(content, file.name);
+                    updateTeamData(resolvedTeams);
+                } catch (e) {
+                    nodecg.log.error(`Team data parsing error: ${e}`);
+                    return res.status(400).send('Got an error while parsing team data.');
+                }
                 break;
             }
             default:
-                return res.sendStatus(400);
+                return res.status(400).send('Invalid value provided for jsonType.');
         }
 
         res.sendStatus(200);

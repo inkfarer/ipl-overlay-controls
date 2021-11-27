@@ -3,8 +3,8 @@ import express from 'express';
 
 describe('fileImport', () => {
     const mockHandleRoundData = jest.fn();
-    const mockUpdateTeamDataReplicants = jest.fn();
-    const mockHandleRawData = jest.fn();
+    const mockUpdateTeamData = jest.fn();
+    const mockParseUploadedTeamData = jest.fn();
     let nodecg: MockNodecg;
 
     jest.mock('../roundDataHelper', () => ({
@@ -14,8 +14,8 @@ describe('fileImport', () => {
 
     jest.mock('../tournamentDataHelper', () => ({
         __esModule: true,
-        updateTeamDataReplicants: mockUpdateTeamDataReplicants,
-        handleRawData: mockHandleRawData
+        updateTeamData: mockUpdateTeamData,
+        parseUploadedTeamData: mockParseUploadedTeamData
     }));
 
     beforeEach(() => {
@@ -33,51 +33,59 @@ describe('fileImport', () => {
 
     describe('POST /upload-tournament-json', () => {
         it('responds with 400 if files are not given', () => {
-            const mockSendStatus = jest.fn();
+            const mockSend = jest.fn();
+            const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
             nodecg.requestHandlers['POST']['/upload-tournament-json'](
                 { body: { jsonType: 'rounds' } } as express.Request,
-                { sendStatus: mockSendStatus } as unknown as express.Response,
+                { status: mockStatus } as unknown as express.Response,
                 null);
 
-            expect(mockSendStatus).toHaveBeenCalledWith(400);
+            expect(mockStatus).toHaveBeenCalledWith(400);
+            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
         });
 
         it('responds with 400 if data type is not given', () => {
-            const mockSendStatus = jest.fn();
+            const mockSend = jest.fn();
+            const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
             nodecg.requestHandlers['POST']['/upload-tournament-json'](
                 { body: { }, files: { file: { mimetype: 'application/json' } } } as unknown as express.Request,
-                { sendStatus: mockSendStatus } as unknown as express.Response,
+                { status: mockStatus } as unknown as express.Response,
                 null);
 
-            expect(mockSendStatus).toHaveBeenCalledWith(400);
+            expect(mockStatus).toHaveBeenCalledWith(400);
+            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
         });
 
         it('responds with 400 if uploaded file is not json', () => {
-            const mockSendStatus = jest.fn();
+            const mockSend = jest.fn();
+            const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
             nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
                 files: { file: { mimetype: 'text/plain' } }
             } as unknown as express.Request,
-            { sendStatus: mockSendStatus } as unknown as express.Response,
+            { status: mockStatus } as unknown as express.Response,
             null);
 
-            expect(mockSendStatus).toHaveBeenCalledWith(400);
+            expect(mockStatus).toHaveBeenCalledWith(400);
+            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
         });
 
         it('responds with 400 if data type is unknown', () => {
-            const mockSendStatus = jest.fn();
+            const mockSend = jest.fn();
+            const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
             nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'something' },
                 files: { file: { mimetype: 'application/json', data: '{ }' } }
             } as unknown as express.Request,
-            { sendStatus: mockSendStatus } as unknown as express.Response,
+            { status: mockStatus } as unknown as express.Response,
             null);
 
-            expect(mockSendStatus).toHaveBeenCalledWith(400);
+            expect(mockStatus).toHaveBeenCalledWith(400);
+            expect(mockSend).toHaveBeenCalledWith('Invalid value provided for jsonType.');
         });
 
         it('imports round data', () => {
@@ -105,7 +113,7 @@ describe('fileImport', () => {
 
         it('imports team data', () => {
             const mockSendStatus = jest.fn();
-            mockHandleRawData.mockReturnValue('TEAMS');
+            mockParseUploadedTeamData.mockReturnValue('TEAMS');
 
             nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'teams' },
@@ -115,7 +123,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
-            expect(mockUpdateTeamDataReplicants).toHaveBeenCalledWith('TEAMS');
+            expect(mockUpdateTeamData).toHaveBeenCalledWith('TEAMS');
         });
     });
 });

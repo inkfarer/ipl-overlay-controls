@@ -68,12 +68,12 @@ describe('tournamentDataStore', () => {
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
             expectedFormData.append('jsonType', 'teams');
-            global.fetch = jest.fn().mockResolvedValue({ status: 500 });
+            global.fetch = jest.fn().mockResolvedValue({ status: 500, text: jest.fn().mockResolvedValue('Error!') });
 
             try {
                 await tournamentDataStore.dispatch('uploadTeamData', { file });
             } catch (e) {
-                expect(e.message).toEqual('Import failed with status 500');
+                expect(e.message).toEqual('Import failed with status 500: Error!');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                     method: 'POST',
                     body: expectedFormData
@@ -105,12 +105,12 @@ describe('tournamentDataStore', () => {
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
             expectedFormData.append('jsonType', 'rounds');
-            global.fetch = jest.fn().mockResolvedValue({ status: 500 });
+            global.fetch = jest.fn().mockResolvedValue({ status: 401, text: jest.fn().mockResolvedValue('Error!!') });
 
             try {
                 await tournamentDataStore.dispatch('uploadRoundData', { file });
             } catch (e) {
-                expect(e.message).toEqual('Import failed with status 500');
+                expect(e.message).toEqual('Import failed with status 401: Error!!');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                     method: 'POST',
                     body: expectedFormData

@@ -64,7 +64,8 @@ async function sendLocalFile(dataType: 'teams' | 'rounds', file: File): Promise<
     const response = await fetch('/ipl-overlay-controls/upload-tournament-json', { method: 'POST', body: formData });
 
     if (response.status !== 200) {
-        throw new Error(`Import failed with status ${response.status}`);
+        const responseText = await response.text();
+        throw new Error(`Import failed with status ${response.status}: ${responseText}`);
     }
 }
 
