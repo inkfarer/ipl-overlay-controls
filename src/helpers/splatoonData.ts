@@ -1,5 +1,4 @@
 import { ColorGroup } from '../types/colors';
-import kebabCase from 'lodash/kebabCase';
 
 export const splatStages = [
     'Ancho-V Games',
@@ -183,7 +182,3 @@ export const colors: ColorGroup[] = [
         ]
     }
 ];
-
-export function getColorOptionName(index: number, categoryName: string): string {
-    return `${kebabCase(categoryName)}_${index}`;
-}
