@@ -68,7 +68,7 @@ import IplSpace from '../components/iplSpace.vue';
 import IplInput from '../components/iplInput.vue';
 import IplButton from '../components/iplButton.vue';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { addDots } from '../helpers/stringHelper';
+import { addDots } from '../../helpers/stringHelper';
 import { allValid, validator } from '../helpers/validation/validator';
 import { maxLength } from '../helpers/validation/stringValidators';
 import { maxValue, minValue } from '../helpers/validation/numberValidators';

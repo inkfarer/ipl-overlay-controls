@@ -88,7 +88,7 @@ import { ColorInfo } from 'types/colors';
 import { colors } from '../../../helpers/splatoonData';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { themeColors } from '../../styles/colors';
-import { addDots } from '../../helpers/stringHelper';
+import { addDots } from '../../../helpers/stringHelper';
 
 library.add(faChevronRight, faChevronLeft);
 

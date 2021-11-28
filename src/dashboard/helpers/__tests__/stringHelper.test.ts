@@ -1,16 +1,6 @@
-import { addDots, extractBattlefyTournamentId, padNumber, pluralize } from '../stringHelper';
+import { extractBattlefyTournamentId, padNumber, pluralize } from '../stringHelper';
 
 describe('stringHelper', () => {
-    describe('addDots', () => {
-        it('cuts off long strings', () => {
-            expect(addDots('abcdefghijklmn', 10)).toEqual('abcdefg...');
-        });
-
-        it('does not cut off short strings', () => {
-            expect(addDots('A', 2)).toEqual('A');
-        });
-    });
-
     describe('pluralize', () => {
         it('gives singular form if required', () => {
             expect(pluralize('knife', 1, 'knives')).toEqual('1 knife');

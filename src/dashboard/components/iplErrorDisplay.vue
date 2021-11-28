@@ -22,7 +22,7 @@
 import { computed, defineComponent } from 'vue';
 import { useErrorHandlerStore } from '../store/errorHandlerStore';
 import IplMessage from './iplMessage.vue';
-import { addDots } from '../helpers/stringHelper';
+import { addDots } from '../../helpers/stringHelper';
 
 export default defineComponent({
     name: 'IplErrorDisplay',

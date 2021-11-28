@@ -69,7 +69,7 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import IplSelect from '../../components/iplSelect.vue';
 import IplCheckbox from '../../components/iplCheckbox.vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { addDots } from '../../helpers/stringHelper';
+import { addDots } from '../../../helpers/stringHelper';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import IplButton from '../../components/iplButton.vue';
 import IplMessage from '../../components/iplMessage.vue';

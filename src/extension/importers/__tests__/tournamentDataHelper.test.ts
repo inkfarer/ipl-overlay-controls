@@ -54,7 +54,7 @@ describe('tournamentDataHelper', () => {
                 teams: [
                     {
                         id: '2222',
-                        name: 'BBBBBBBBBBBB',
+                        name: 'BBBBBBBBBBBB'
                     },
                     {
                         id: '1111',
@@ -112,6 +112,34 @@ describe('tournamentDataHelper', () => {
 
             expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '121212');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('121212', '121212');
+        });
+
+        it('shortens overlong team and player names', () => {
+            helper.updateTournamentDataReplicants({
+                teams: [
+                    {
+                        id: '121212',
+                        name: 'Cool Tea' + 'a'.repeat(1000),
+                        players: [
+                            { name: 'a'.repeat(999) },
+                            { name: 'b'.repeat(900) }
+                        ]
+                    }
+                ]
+            });
+
+            expect(nodecg.replicants.tournamentData.value).toEqual({
+                teams: [
+                    {
+                        id: '121212',
+                        name: 'Cool Tea' + 'a'.repeat(501) + '...',
+                        players: [
+                            { name: 'a'.repeat(509) + '...' },
+                            { name: 'b'.repeat(509) + '...' }
+                        ]
+                    }
+                ]
+            });
         });
 
         it('assigns active and next round data if 3 teams are available', () => {
@@ -177,18 +205,22 @@ describe('tournamentDataHelper', () => {
                 {
                     id: '5091758327590',
                     showLogo: false,
-                    name: 'Team w/ Props'
+                    name: 'Team w/ Props',
+                    players: []
                 },
                 {
                     showLogo: false,
-                    name: 'Team w/o ID'
+                    name: 'Team w/o ID',
+                    players: []
                 },
                 {
                     id: '5902853092',
-                    name: 'Team w/o showLogo'
+                    name: 'Team w/o showLogo',
+                    players: []
                 },
                 {
-                    name: 'Team w/o properties'
+                    name: 'Team w/o properties',
+                    players: []
                 }
             ], 'tournament://cool-tourney');
 
@@ -201,22 +233,26 @@ describe('tournamentDataHelper', () => {
                     {
                         id: '5091758327590',
                         showLogo: false,
-                        name: 'Team w/ Props'
+                        name: 'Team w/ Props',
+                        players: []
                     },
                     {
                         id: '111111',
                         showLogo: false,
-                        name: 'Team w/o ID'
+                        name: 'Team w/o ID',
+                        players: []
                     },
                     {
                         id: '5902853092',
                         showLogo: true,
-                        name: 'Team w/o showLogo'
+                        name: 'Team w/o showLogo',
+                        players: []
                     },
                     {
                         id: '222222',
                         showLogo: true,
-                        name: 'Team w/o properties'
+                        name: 'Team w/o properties',
+                        players: []
                     }
                 ]
             });
@@ -232,18 +268,22 @@ describe('tournamentDataHelper', () => {
                     {
                         id: '5091758327590',
                         showLogo: false,
-                        name: 'Team w/ Props'
+                        name: 'Team w/ Props',
+                        players: []
                     },
                     {
                         showLogo: false,
-                        name: 'Team w/o ID'
+                        name: 'Team w/o ID',
+                        players: []
                     },
                     {
                         id: '5902853092',
-                        name: 'Team w/o showLogo'
+                        name: 'Team w/o showLogo',
+                        players: []
                     },
                     {
-                        name: 'Team w/o properties'
+                        name: 'Team w/o properties',
+                        players: []
                     }
                 ]}, 'tournament://rad-tournament');
 
@@ -256,22 +296,26 @@ describe('tournamentDataHelper', () => {
                     {
                         id: '5091758327590',
                         showLogo: false,
-                        name: 'Team w/ Props'
+                        name: 'Team w/ Props',
+                        players: []
                     },
                     {
                         id: '111111',
                         showLogo: false,
-                        name: 'Team w/o ID'
+                        name: 'Team w/o ID',
+                        players: []
                     },
                     {
                         id: '5902853092',
                         showLogo: true,
-                        name: 'Team w/o showLogo'
+                        name: 'Team w/o showLogo',
+                        players: []
                     },
                     {
                         id: '222222',
                         showLogo: true,
-                        name: 'Team w/o properties'
+                        name: 'Team w/o properties',
+                        players: []
                     }
                 ]
             });
@@ -284,7 +328,8 @@ describe('tournamentDataHelper', () => {
                     {
                         id: '5091758327590',
                         showLogo: false,
-                        name: 'Team w/ Props'
+                        name: 'Team w/ Props',
+                        players: []
                     }
                 ]
             }, 'tournament://rad-tournament')).toEqual({
@@ -296,7 +341,39 @@ describe('tournamentDataHelper', () => {
                     {
                         id: '5091758327590',
                         showLogo: false,
-                        name: 'Team w/ Props'
+                        name: 'Team w/ Props',
+                        players: []
+                    }
+                ]
+            });
+        });
+
+        it('shortens overlong team and player names', () => {
+            expect(helper.parseUploadedTeamData({
+                meta: {},
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'T'.repeat(999),
+                        players: [
+                            { name: 'g'.repeat(1234) }
+                        ]
+                    }
+                ]
+            }, 'tournament://rad-tournament')).toEqual({
+                meta: {
+                    id: 'tournament://rad-tournament',
+                    source: TournamentDataSource.UPLOAD
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'T'.repeat(509) + '...',
+                        players: [
+                            { name: 'g'.repeat(509) + '...' }
+                        ]
                     }
                 ]
             });
@@ -306,7 +383,7 @@ describe('tournamentDataHelper', () => {
             expect(() => helper.parseUploadedTeamData({
                 meta: {
                     id: '123123',
-                    source: 'SMASHGG'
+                    source: 'SMASHGG',
                 },
                 teams: undefined
             }, 'tournament://rad-tournament')).toThrow('Provided data is missing teams.');

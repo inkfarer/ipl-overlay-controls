@@ -8,6 +8,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
 import { RadiaSettings } from '../../types/schemas';
+import { addDots } from '../../helpers/stringHelper';
 
 const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -31,6 +32,8 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
         }
         return 0;
     });
+
+    data.teams = normalizeNames(data.teams);
 
     tournamentData.value = data;
     highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
@@ -85,7 +88,7 @@ export function parseUploadedTeamData(data: Team[] | TournamentData, dataUrl: st
 }
 
 function normalizeTeams(teams: Team[]): Team[] {
-    return teams.map(team => {
+    return normalizeNames(teams).map(team => {
         if (team.id == null) {
             team.id = generateId();
         }
@@ -95,6 +98,15 @@ function normalizeTeams(teams: Team[]): Team[] {
 
         return team;
     });
+}
+
+const NAME_LENGTH_CAP = 512;
+function normalizeNames(teams: Team[]): Team[] {
+    return teams.map(team => ({
+        ...team,
+        name: addDots(team.name, NAME_LENGTH_CAP),
+        players: team.players?.map(player => ({ ...player, name: addDots(player.name, NAME_LENGTH_CAP) }))
+    }));
 }
 
 export async function updateRadiaTournamentData(tournamentUrl: string, tournamentName: string): Promise<void> {
