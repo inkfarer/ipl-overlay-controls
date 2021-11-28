@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActiveRoundEditor matches snapshot 1`] = `
+exports[`ActiveRoundEditor matches snapshot and has expected values for select options 1`] = `
 "<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
     <div class=\\"ipl-expansion-panel__header-background\\"></div>

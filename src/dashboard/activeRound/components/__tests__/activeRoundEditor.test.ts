@@ -84,7 +84,7 @@ describe('ActiveRoundEditor', () => {
                 tournamentData: {
                     meta: { id: '1093478', source: 'SMASHGG' },
                     teams: [
-                        { id: '123123', name: 'cool team A', players: [], showLogo: true },
+                        { id: '123123', name: 'cool team A (test long name long name long name long name long name long name long name)', players: [], showLogo: true },
                         { id: '345345', name: 'cool team B', players: [], showLogo: false }
                     ]
                 },
@@ -101,7 +101,7 @@ describe('ActiveRoundEditor', () => {
         });
     }
 
-    it('matches snapshot', () => {
+    it('matches snapshot and has expected values for select options', () => {
         const tournamentDataStore = createTournamentDataStore();
         const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
@@ -111,6 +111,23 @@ describe('ActiveRoundEditor', () => {
         });
 
         expect(wrapper.html()).toMatchSnapshot();
+        const teamASelector = wrapper.getComponent('[data-test="team-a-selector"]');
+        expect(teamASelector.attributes().modelvalue).toEqual('123123');
+        expect((teamASelector.vm.$props as { options: unknown }).options).toEqual([
+            { name: 'cool team A (test long name long name long na...', value: '123123' },
+            { name: 'cool team B', value: '345345' }
+        ]);
+        const teamBSelector = wrapper.getComponent('[data-test="team-b-selector"]');
+        expect(teamBSelector.attributes().modelvalue).toEqual('345345');
+        expect((teamBSelector.vm.$props as { options: unknown }).options).toEqual([
+            { name: 'cool team A (test long name long name long na...', value: '123123' },
+            { name: 'cool team B', value: '345345' }
+        ]);
+        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
+        expect(roundSelector.attributes().modelvalue).toEqual('0387');
+        expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
+            { name: 'dope round', value: '0387' }
+        ]);
     });
 
     it('handles store data updating', async () => {
@@ -270,7 +287,7 @@ describe('ActiveRoundEditor', () => {
         tournamentDataStore.state.roundStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false },
-                teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
+                teamA: { id: '123123', name: 'Cool Team (long name long name long name long name long name)', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
             }
@@ -286,7 +303,7 @@ describe('ActiveRoundEditor', () => {
 
         const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team vs Cool Team 2)');
+        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team (long name long name long name long... vs Cool Team 2)');
     });
 
     it('displays message if selected round is completed', async () => {
