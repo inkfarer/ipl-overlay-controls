@@ -198,6 +198,8 @@ export default defineComponent({
     user-select: none;
     cursor: pointer;
     transition-duration: $transition-duration-low;
+    position: relative;
+    overflow-wrap: anywhere;
 
     &.selected {
         background-color: $blue;
@@ -216,7 +218,11 @@ export default defineComponent({
     }
 
     &.is-next-round:not(.is-active-round) {
-        border-right: 8px solid $yellow;
+        padding-right: 16px;
+
+        &:after {
+            border-radius: 0 $border-radius-outer $border-radius-outer 0;
+        }
     }
 
     &:hover {
@@ -225,6 +231,16 @@ export default defineComponent({
 
     &:active {
         background-color: $background-secondary-active;
+    }
+
+    &.is-next-round:after {
+        content: '';
+        position: absolute;
+        width: calc(100% - 8px);
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-right: 8px solid $yellow;
     }
 }
 
