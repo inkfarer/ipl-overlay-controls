@@ -2,7 +2,7 @@
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
 "<div class=\\"ipl-space color-dark\\">
-  <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name\\">Team One</span><span class=\\"max-width text-small team-name text-right m-l-6\\">Team Two (Really long name for te...</span></div>
+  <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name wrap-anywhere\\">Team One</span><span class=\\"max-width text-small team-name wrap-anywhere text-right m-l-6\\">Team Two (Really long name for te...</span></div>
   <div class=\\"layout horizontal m-t-4\\">
     <div class=\\"color-display\\" data-test=\\"team-a-color-display\\"></div>
     <div class=\\"color-display m-l-6\\" data-test=\\"team-b-color-display\\"></div>
