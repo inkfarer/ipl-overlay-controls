@@ -1,10 +1,10 @@
 <template>
     <ipl-space>
         <div class="layout horizontal">
-            <span class="max-width text-small team-name">
+            <span class="max-width text-small team-name wrap-anywhere">
                 {{ addDots(activeRound.teamA.name, 36) }}
             </span>
-            <span class="max-width text-small team-name text-right m-l-6">
+            <span class="max-width text-small team-name wrap-anywhere text-right m-l-6">
                 {{ addDots(activeRound.teamB.name, 36) }}
             </span>
         </div>

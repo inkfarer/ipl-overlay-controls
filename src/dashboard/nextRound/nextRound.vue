@@ -9,7 +9,7 @@
         {{ selectedRound.meta.isCompleted
             ? `'${selectedRound.meta.name}' is already completed.`
             : `'${selectedRound.meta.name}' already has saved progress.` }}
-        {{ `(${selectedRound.teamA.name} vs ${selectedRound.teamB.name})` }}
+        {{ `(${addDots(selectedRound.teamA.name)} vs ${addDots(selectedRound.teamB.name)})` }}
     </ipl-message>
     <ipl-space>
         <div class="layout horizontal">
@@ -181,7 +181,8 @@ export default defineComponent({
                 }
             }),
             selectedRound,
-            roundHasProgress
+            roundHasProgress,
+            addDots
         };
     }
 });
