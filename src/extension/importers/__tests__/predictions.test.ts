@@ -14,7 +14,13 @@ describe('predictions', () => {
         static applyEndEvent = jest.fn();
     };
     const mockSocketOn = jest.fn();
-    const mockWebSocket = jest.fn().mockReturnValue({ on: mockSocketOn });
+    const mockSocketClose = jest.fn();
+    const mockSocketTerminate = jest.fn();
+    const mockWebSocket = jest.fn().mockReturnValue({
+        on: mockSocketOn,
+        close: mockSocketClose,
+        terminate: mockSocketTerminate
+    });
     let nodecg: MockNodecg;
 
     jest.mock('ws', () => ({
@@ -60,9 +66,11 @@ describe('predictions', () => {
             beforeEach(() => {
                 setup();
                 nodecg.replicants.predictionStore.value = {
-                    enablePrediction: null,
+                    status: {
+                        predictionsEnabled: null,
+                        socketOpen: false
+                    },
                     currentPrediction: null,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 };
             });
@@ -74,11 +82,15 @@ describe('predictions', () => {
 
                 expect(mockHasPredictionSupport).toHaveBeenCalledWith('104928194082103');
                 expect(nodecg.replicants.predictionStore.value).toEqual({
+                    status: {
+                        predictionsEnabled: false,
+                        socketOpen: false,
+                        predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                    },
                     currentPrediction: null,
-                    enablePrediction: false,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 });
+                expect(mockWebSocket).not.toHaveBeenCalled();
             });
 
             it('does nothing if guild ID is empty', async () => {
@@ -87,6 +99,11 @@ describe('predictions', () => {
                 await nodecg.replicantListeners.radiaSettings({ guildID: '' });
 
                 expect(nodecg.log.warn).toHaveBeenCalledWith('Radia guild ID is not configured!');
+                expect((nodecg.replicants.predictionStore.value as PredictionStore).status).toEqual({
+                    predictionsEnabled: false,
+                    predictionStatusReason: 'Guild ID is missing.',
+                    socketOpen: false
+                });
                 expect(mockHasPredictionSupport).not.toHaveBeenCalled();
                 expect(mockWebSocket).not.toHaveBeenCalled();
             });
@@ -98,9 +115,11 @@ describe('predictions', () => {
 
                 expect(mockHasPredictionSupport).toHaveBeenCalledWith('142235235');
                 expect(nodecg.replicants.predictionStore.value).toEqual({
+                    status: {
+                        socketOpen: false,
+                        predictionsEnabled: true,
+                    },
                     currentPrediction: null,
-                    enablePrediction: true,
-                    socketOpen: false,
                     modificationTime: '2021-09-10T13:52:29'
                 });
             });
@@ -122,43 +141,154 @@ describe('predictions', () => {
 
             describe('socket', () => {
                 beforeEach(async () => {
+                    jest.useFakeTimers();
                     mockHasPredictionSupport.mockResolvedValue(true);
                     mockGetPredictions.mockResolvedValue([]);
                     mockPredictionDataMapper.fromApiResponse.mockReturnValue(null);
                     await nodecg.replicantListeners.radiaSettings({ guildID: '1422352354' });
                 });
 
+                afterEach(() => {
+                    jest.clearAllTimers();
+                    jest.useRealTimers();
+                });
+
                 it('starts websocket', async () => {
                     expect(mockWebSocket).toHaveBeenCalledWith('ws://radia/api/events/guild/1422352354', {
                         headers: { Authorization: 'radia_auth' }
                     });
-                    expect(mockSocketOn).toHaveBeenCalledTimes(4);
+                    expect(mockSocketOn).toHaveBeenCalledTimes(5);
                 });
 
-                it('handles socket opening', () => {
+                it('closes websocket if new guild has no prediction support', async () => {
+                    mockHasPredictionSupport.mockResolvedValue(false);
+
+                    await nodecg.replicantListeners.radiaSettings({ guildID: '1422352355' });
+
+                    expect(mockWebSocket).toHaveBeenCalledWith('ws://radia/api/events/guild/1422352354', {
+                        headers: { Authorization: 'radia_auth' }
+                    });
+                    expect(mockSocketOn).toHaveBeenCalledTimes(5);
+                    expect(mockSocketClose).toHaveBeenCalled();
+                });
+
+                it('handles socket opening', async () => {
                     const openCallback = mockSocketOn.mock.calls.find(call => call[0] === 'open')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = false;
+                    predictionStoreValue.status.socketOpen = false;
 
                     openCallback();
 
-                    expect(predictionStoreValue.socketOpen).toEqual(true);
+                    expect(predictionStoreValue.status.socketOpen).toEqual(true);
                 });
 
-                it('handles socket closing', () => {
+                it('terminates socket if no ping is received after socket has been open for a set amount of time', async () => {
+                    const openCallback = mockSocketOn.mock.calls.find(call => call[0] === 'open')[1];
+
+                    openCallback();
+
+                    expect(mockSocketTerminate).not.toHaveBeenCalled();
+
+                    jest.advanceTimersByTime(21000);
+
+                    expect(mockSocketTerminate).toHaveBeenCalledTimes(1);
+                });
+
+                it('terminates socket if time between pings is too long', async () => {
+                    const openCallback = mockSocketOn.mock.calls.find(call => call[0] === 'open')[1];
+                    const pingCallback = mockSocketOn.mock.calls.find(call => call[0] === 'ping')[1];
+
+                    openCallback();
+
+                    expect(mockSocketTerminate).not.toHaveBeenCalled();
+
+                    jest.advanceTimersByTime(19008);
+                    pingCallback();
+
+                    expect(mockSocketTerminate).not.toHaveBeenCalled();
+
+                    jest.advanceTimersByTime(21000);
+
+                    expect(mockSocketTerminate).toHaveBeenCalledTimes(1);
+                });
+
+                it('handles socket closing', async () => {
                     const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = true;
+                    predictionStoreValue.status.socketOpen = true;
 
                     closeCallback();
 
-                    expect(predictionStoreValue.socketOpen).toEqual(false);
+                    expect(predictionStoreValue.status.socketOpen).toEqual(false);
                 });
 
-                it('handles socket errors', () => {
+                it('attempts to reconnect to socket when socket is closed', async () => {
+                    const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
+
+                    closeCallback();
+                    jest.advanceTimersByTime(1000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(2);
+                    closeCallback();
+                    jest.advanceTimersByTime(2500);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(3);
+                    closeCallback();
+                    jest.advanceTimersByTime(5000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(4);
+                    closeCallback();
+                    jest.advanceTimersByTime(10000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(5);
+                    closeCallback();
+                    jest.advanceTimersByTime(25000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(6);
+                    expect(mockWebSocket.mock.calls.every(call => call[0] === 'ws://radia/api/events/guild/1422352354'))
+                        .toEqual(true);
+                });
+
+                it('resets reconnection timer when socket opens', async () => {
+                    const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
+                    const openCallback = mockSocketOn.mock.calls.find(call => call[0] === 'open')[1];
+
+                    closeCallback();
+                    jest.advanceTimersByTime(1000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(2);
+                    openCallback();
+                    closeCallback();
+                    jest.advanceTimersByTime(1000);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(3);
+                    expect(mockWebSocket.mock.calls.every(call => call[0] === 'ws://radia/api/events/guild/1422352354'))
+                        .toEqual(true);
+                });
+
+                it('resets reconnection timer when settings change', async () => {
+                    const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
+
+                    closeCallback();
+                    jest.advanceTimersByTime(1000);
+                    expect(mockWebSocket).toHaveBeenNthCalledWith(2,
+                        'ws://radia/api/events/guild/1422352354',
+                        expect.any(Object));
+                    mockSocketOn.mockClear();
+                    await nodecg.replicantListeners.radiaSettings({ guildID: '1422352355' });
+                    const newCloseCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
+                    newCloseCallback();
+                    jest.advanceTimersByTime(1000);
+                    expect(mockWebSocket).toHaveBeenNthCalledWith(4,
+                        'ws://radia/api/events/guild/1422352355',
+                        expect.any(Object));
+                });
+
+                it('does not attempt to reconnect to socket if closing code is 4001', async () => {
+                    const closeCallback = mockSocketOn.mock.calls.find(call => call[0] === 'close')[1];
+
+                    closeCallback(4001);
+                    jest.advanceTimersByTime(2500);
+                    expect(mockWebSocket).toHaveBeenCalledTimes(1);
+                });
+
+                it('handles socket errors', async () => {
                     const errorCallback = mockSocketOn.mock.calls.find(call => call[0] === 'error')[1];
                     const predictionStoreValue = nodecg.replicants.predictionStore.value as PredictionStore;
-                    predictionStoreValue.socketOpen = true;
+                    predictionStoreValue.status.socketOpen = true;
 
                     errorCallback({
                         code: '12345',
@@ -168,7 +298,7 @@ describe('predictions', () => {
                     expect(nodecg.log.error).toHaveBeenCalledWith('Received error from Radia websocket. Code: 12345, Message: Error!');
                 });
 
-                it('handles unknown socket message', () => {
+                it('handles unknown socket message', async () => {
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
 
                     messageCallback(JSON.stringify({ subscription: { type: 'something' } }));
@@ -176,16 +306,19 @@ describe('predictions', () => {
                     expect((nodecg.replicants.predictionStore.value as PredictionStore).currentPrediction).toBeNull();
                 });
 
-                it('ignores messages with old timestamps', () => {
+                it('ignores messages with old timestamps', async () => {
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
 
-                    messageCallback(JSON.stringify({ subscription: {
-                        type: 'channel.prediction.begin' }, timestamp: '2021-09-10T13:52:28' }));
+                    messageCallback(JSON.stringify({
+                        subscription: {
+                            type: 'channel.prediction.begin'
+                        }, timestamp: '2021-09-10T13:52:28'
+                    }));
 
                     expect((nodecg.replicants.predictionStore.value as PredictionStore).currentPrediction).toBeNull();
                 });
 
-                it('handles begin event', () => {
+                it('handles begin event', async () => {
                     const event = { foo: 'bar' };
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
                     mockPredictionDataMapper.fromBeginEvent.mockReturnValue({ id: '1234567' });
@@ -202,7 +335,7 @@ describe('predictions', () => {
                     expect(mockPredictionDataMapper.fromBeginEvent).toHaveBeenCalledWith(event);
                 });
 
-                it('handles progress event', () => {
+                it('handles progress event', async () => {
                     const event = { foo: 'bar' };
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
                     mockPredictionDataMapper.fromProgressEvent.mockReturnValue({ id: '1234567' });
@@ -219,7 +352,7 @@ describe('predictions', () => {
                     expect(mockPredictionDataMapper.fromProgressEvent).toHaveBeenCalledWith(event);
                 });
 
-                it('handles lock event', () => {
+                it('handles lock event', async () => {
                     const event = { foo: 'bar' };
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
                     mockPredictionDataMapper.fromLockEvent.mockReturnValue({ id: '12345678' });
@@ -236,7 +369,7 @@ describe('predictions', () => {
                     expect(mockPredictionDataMapper.fromLockEvent).toHaveBeenCalledWith(event);
                 });
 
-                it('handles end event', () => {
+                it('handles end event', async () => {
                     const event = { foo: 'bar' };
                     const messageCallback = mockSocketOn.mock.calls.find(call => call[0] === 'message')[1];
                     mockPredictionDataMapper.applyEndEvent.mockReturnValue({ id: '12345678' });
@@ -263,7 +396,10 @@ describe('predictions', () => {
                         authentication: 'radia_auth'
                     }
                 });
-                nodecg.replicants.predictionStore.value = { enablePrediction: null, currentPrediction: null };
+                nodecg.replicants.predictionStore.value = {
+                    status: { predictionsEnabled: null },
+                    currentPrediction: null
+                };
             });
 
             it('does not start websocket', async () => {

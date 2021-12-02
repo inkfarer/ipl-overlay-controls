@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="roundHasProgress"
         type="info"
@@ -8,7 +9,7 @@
         {{ selectedRound.meta.isCompleted
             ? `'${selectedRound.meta.name}' is already completed.`
             : `'${selectedRound.meta.name}' already has saved progress.` }}
-        {{ `(${selectedRound.teamA.name} vs ${selectedRound.teamB.name})` }}
+        {{ `(${addDots(selectedRound.teamA.name)} vs ${addDots(selectedRound.teamB.name)})` }}
     </ipl-message>
     <ipl-space>
         <div class="layout horizontal">
@@ -84,13 +85,14 @@ import IplCheckbox from '../components/iplCheckbox.vue';
 import IplButton from '../components/iplButton.vue';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { addDots } from '../helpers/stringHelper';
+import { addDots } from '../../helpers/stringHelper';
 import IplMessage from '../components/iplMessage.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'NextRound',
 
-    components: { IplMessage, IplButton, IplCheckbox, IplSelect, IplSpace },
+    components: { IplErrorDisplay, IplMessage, IplButton, IplCheckbox, IplSelect, IplSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -179,7 +181,8 @@ export default defineComponent({
                 }
             }),
             selectedRound,
-            roundHasProgress
+            roundHasProgress,
+            addDots
         };
     }
 });

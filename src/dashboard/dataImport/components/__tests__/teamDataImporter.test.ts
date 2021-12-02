@@ -4,6 +4,7 @@ import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tour
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { mockBundleConfig } from '../../../__mocks__/mockNodecg';
+import * as stringHelper from '../../../helpers/stringHelper';
 
 describe('teamDataImporter', () => {
     config.global.stubs = {
@@ -162,6 +163,26 @@ describe('teamDataImporter', () => {
             method: TournamentDataSource.SMASHGG,
             id: 'cool-tourney'
         });
+    });
+
+    it('extracts battlefy tournament URL on import', () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+        jest.spyOn(stringHelper, 'extractBattlefyTournamentId').mockReturnValue('battlefy-tournament-id');
+
+        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
+        wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
+        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+
+        expect(mockGetTournamentData).toHaveBeenCalledWith(expect.any(Object), {
+            method: TournamentDataSource.BATTLEFY,
+            id: 'battlefy-tournament-id'
+        });
+        expect(stringHelper.extractBattlefyTournamentId).toHaveBeenCalled();
     });
 
     it('dispatches to store on import if file upload is enabled but source is not set to UPLOAD', async () => {

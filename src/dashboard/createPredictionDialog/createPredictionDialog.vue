@@ -3,9 +3,11 @@
         title="Create Prediction"
         dialog-name="createPredictionDialog"
     />
+    <ipl-error-display class="m-t-8" />
     <ipl-message
         v-if="isActivePredictionUnresolved"
         type="warning"
+        class="m-t-8"
     >
         The active prediction has not been resolved!
     </ipl-message>
@@ -66,7 +68,7 @@ import IplSpace from '../components/iplSpace.vue';
 import IplInput from '../components/iplInput.vue';
 import IplButton from '../components/iplButton.vue';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { addDots } from '../helpers/stringHelper';
+import { addDots } from '../../helpers/stringHelper';
 import { allValid, validator } from '../helpers/validation/validator';
 import { maxLength } from '../helpers/validation/stringValidators';
 import { maxValue, minValue } from '../helpers/validation/numberValidators';
@@ -74,11 +76,12 @@ import { usePredictionDataStore } from '../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import IplMessage from '../components/iplMessage.vue';
 import { NodecgDialog } from '../types/dialog';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
 
-    components: { IplMessage, IplButton, IplInput, IplSpace, IplDialogTitle },
+    components: { IplErrorDisplay, IplMessage, IplButton, IplInput, IplSpace, IplDialogTitle },
 
     setup() {
         const nextRoundStore = useNextRoundStore();

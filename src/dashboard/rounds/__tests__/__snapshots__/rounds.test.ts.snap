@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Rounds matches snapshot 1`] = `
-"<!--v-if-->
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<!--v-if-->
 <div class=\\"ipl-expansion-panel__content\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
     <div class=\\"ipl-expansion-panel__header-background\\"></div>
@@ -11,10 +12,10 @@ exports[`Rounds matches snapshot 1`] = `
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
-      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
-      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
     </div>
-    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
   </div>
 </div>
 <div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\">
@@ -24,11 +25,12 @@ exports[`Rounds matches snapshot 1`] = `
 `;
 
 exports[`Rounds matches snapshot when round sidebar is open 1`] = `
-"<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\">
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\">
   <div class=\\"background\\"></div>
   <div class=\\"content\\">
     <div class=\\"ipl-space color-light\\">
-      <ipl-button-stub label=\\"Reset rounds\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" data-test=\\"reset-rounds-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Reset rounds\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"reset-rounds-button\\"></ipl-button-stub>
     </div>
     <div class=\\"ipl-space color-light layout horizontal m-t-8\\">
       <div class=\\"color-key color-key-active\\"></div> Active <div class=\\"color-key color-key-next\\"></div> Next
@@ -47,10 +49,10 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
   </div>
   <div class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
-      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
-      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
     </div>
-    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
   </div>
 </div>
 <div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\">

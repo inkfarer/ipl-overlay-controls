@@ -1,8 +1,6 @@
 <template>
-    <ipl-expanding-space
-        title="Main Scene"
-        class="m-t-8"
-    >
+    <ipl-error-display class="m-b-8" />
+    <ipl-expanding-space title="Main Scene">
         <template #header-extra>
             <ipl-button
                 class="show-scene-button m-l-8"
@@ -74,11 +72,12 @@ import IplInput from '../components/iplInput.vue';
 import isEqual from 'lodash/isEqual';
 import NextStageTimeInput from './components/nextStageTimeInput.vue';
 import IplCheckbox from '../components/iplCheckbox.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'BreakScreen',
 
-    components: { IplCheckbox, NextStageTimeInput, IplInput, IplExpandingSpace, IplButton, IplSpace },
+    components: { IplErrorDisplay, IplCheckbox, NextStageTimeInput, IplInput, IplExpandingSpace, IplButton, IplSpace },
 
     setup() {
         const store = useBreakScreenStore();

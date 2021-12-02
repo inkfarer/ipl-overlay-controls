@@ -10,7 +10,8 @@ import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 describe('ResolvePredictionDialog', () => {
     config.global.stubs = {
         FontAwesomeIcon: true,
-        IplPanelTitle: true
+        IplPanelTitle: true,
+        IplErrorDisplay: true
     };
 
     const mockResolvePrediction = jest.fn();
@@ -19,8 +20,10 @@ describe('ResolvePredictionDialog', () => {
         return createStore<PredictionDataStore>({
             state: {
                 predictionStore: {
-                    enablePrediction: true,
-                    socketOpen: true,
+                    status: {
+                        socketOpen: true,
+                        predictionsEnabled: true
+                    },
                     currentPrediction: {
                         id: 'prediction123',
                         broadcasterId: 'ipl',

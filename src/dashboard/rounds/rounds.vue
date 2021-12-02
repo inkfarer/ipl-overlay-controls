@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-sidebar v-model:is-open="openRoundSidebar">
         <ipl-space color="light">
             <ipl-button
@@ -97,13 +98,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import IplExpandingSpace from '../components/iplExpandingSpace.vue';
 import { useActiveRoundStore } from '../store/activeRoundStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 library.add(faBars);
 
 export default defineComponent({
     name: 'Rounds',
 
-    components: { IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },
+    components: { IplErrorDisplay, IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },
 
     setup() {
         const store = useTournamentDataStore();
@@ -196,6 +198,8 @@ export default defineComponent({
     user-select: none;
     cursor: pointer;
     transition-duration: $transition-duration-low;
+    position: relative;
+    overflow-wrap: anywhere;
 
     &.selected {
         background-color: $blue;
@@ -214,7 +218,11 @@ export default defineComponent({
     }
 
     &.is-next-round:not(.is-active-round) {
-        border-right: 8px solid $yellow;
+        padding-right: 16px;
+
+        &:after {
+            border-radius: 0 $border-radius-outer $border-radius-outer 0;
+        }
     }
 
     &:hover {
@@ -223,6 +231,16 @@ export default defineComponent({
 
     &:active {
         background-color: $background-secondary-active;
+    }
+
+    &.is-next-round:after {
+        content: '';
+        position: absolute;
+        width: calc(100% - 8px);
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-right: 8px solid $yellow;
     }
 }
 

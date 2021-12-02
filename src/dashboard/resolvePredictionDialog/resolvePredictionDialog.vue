@@ -3,6 +3,7 @@
         title="Resolve Prediction"
         dialog-name="resolvePredictionDialog"
     />
+    <ipl-error-display class="m-t-8" />
     <ipl-message
         v-if="!outcomes"
         type="warning"
@@ -76,11 +77,12 @@ import IplMessage from '../components/iplMessage.vue';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NodecgDialog } from '../types/dialog';
 import IplDialogTitle from '../components/iplDialogTitle.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'ResolvePredictionDialog',
 
-    components: { IplDialogTitle, IplMessage, IplButton, IplLabel, IplSpace },
+    components: { IplErrorDisplay, IplDialogTitle, IplMessage, IplButton, IplLabel, IplSpace },
 
     setup() {
         const predictionDataStore = usePredictionDataStore();

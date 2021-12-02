@@ -1,10 +1,10 @@
 <template>
     <ipl-space>
         <div class="layout horizontal">
-            <span class="max-width text-small team-name">
+            <span class="max-width text-small team-name wrap-anywhere">
                 {{ addDots(activeRound.teamA.name, 36) }}
             </span>
-            <span class="max-width text-small team-name text-right m-l-6">
+            <span class="max-width text-small team-name wrap-anywhere text-right m-l-6">
                 {{ addDots(activeRound.teamB.name, 36) }}
             </span>
         </div>
@@ -88,7 +88,7 @@ import { ColorInfo } from 'types/colors';
 import { colors } from '../../../helpers/splatoonData';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { themeColors } from '../../styles/colors';
-import { addDots } from '../../helpers/stringHelper';
+import { addDots } from '../../../helpers/stringHelper';
 
 library.add(faChevronRight, faChevronLeft);
 

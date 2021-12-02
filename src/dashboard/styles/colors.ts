@@ -5,7 +5,8 @@ export const themeColors = {
     yellow: '#FFC700',
     orange: '#FF682E',
     backgroundColorSecondary: '#2F3A4F',
-    backgroundColorTertiary: '#181e29'
+    backgroundColorTertiary: '#181e29',
+    disabledText: '#A9AAA9'
 };
 
 export const buttonColors: Record<string, string> = {

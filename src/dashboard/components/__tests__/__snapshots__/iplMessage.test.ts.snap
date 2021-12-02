@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IplMessage matches snapshot 1`] = `
+"<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\">
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`IplMessage matches snapshot when closeable 1`] = `
+"<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\">
+    <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\"></font-awesome-icon-stub>
+  </div>
+</div>"
+`;

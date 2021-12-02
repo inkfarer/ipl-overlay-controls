@@ -21,12 +21,14 @@
             v-model="internalCaster.twitter"
             name="twitter"
             label="Twitter"
+            :formatter="twitterFormatter"
             @focuschange="setFocused"
         />
         <ipl-input
             v-model="internalCaster.pronouns"
             name="pronouns"
             label="Pronouns"
+            :formatter="pronounFormatter"
             @focuschange="setFocused"
         />
         <div class="layout horizontal m-t-8">
@@ -126,7 +128,9 @@ export default defineComponent({
             }),
             isEdited,
             buttonColor: computed(() => props.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
-            updateButtonLabel: computed(() => props.uncommitted ? 'Save' : 'Update')
+            updateButtonLabel: computed(() => props.uncommitted ? 'Save' : 'Update'),
+            pronounFormatter: (input: string) => input.toLowerCase(),
+            twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input
         };
     }
 });

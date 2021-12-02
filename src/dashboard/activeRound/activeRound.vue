@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <div class="layout horizontal">
         <div class="max-width">
             <score-display />
@@ -6,6 +7,8 @@
             <ipl-space class="m-t-8">
                 <ipl-button
                     label="Show casters"
+                    disable-on-success
+                    success-message="Message sent!"
                     @click="showCasters"
                 />
             </ipl-space>
@@ -31,11 +34,13 @@ import IplSpace from '../components/iplSpace.vue';
 import IplButton from '../components/iplButton.vue';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'ActiveRound',
 
     components: {
+        IplErrorDisplay,
         ScoreboardEditor,
         IplButton,
         IplSpace,

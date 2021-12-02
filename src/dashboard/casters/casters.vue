@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-space class="layout horizontal">
         <ipl-button
             :icon="addCasterIcon"
@@ -54,13 +55,14 @@ import CasterEditor from './components/casterEditor.vue';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 library.add(faPlus);
 
 export default defineComponent({
     name: 'Casters',
 
-    components: { CasterEditor, IplExpandingSpaceGroup, IplButton, IplSpace },
+    components: { IplErrorDisplay, CasterEditor, IplExpandingSpaceGroup, IplButton, IplSpace },
 
     setup() {
         const store = useCasterStore();

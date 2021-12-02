@@ -101,6 +101,7 @@ import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import IplUpload from '../../components/iplUpload.vue';
 import IplCheckbox from '../../components/iplCheckbox.vue';
+import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
 
 export default defineComponent({
     name: 'TeamDataImporter',
@@ -148,7 +149,7 @@ export default defineComponent({
             idLabel: computed(() => {
                 switch (dataSource.value) {
                     case TournamentDataSource.BATTLEFY:
-                        return 'Tournament ID';
+                        return 'Tournament URL';
                     case TournamentDataSource.SMASHGG:
                         return 'Tournament Slug';
                     case TournamentDataSource.UPLOAD:
@@ -161,9 +162,13 @@ export default defineComponent({
                 if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
                     return tournamentDataStore.dispatch('uploadTeamData', { file: teamDataFile.value });
                 } else {
+                    const id = dataSource.value === TournamentDataSource.BATTLEFY
+                        ? extractBattlefyTournamentId(tournamentId.value)
+                        : tournamentId.value;
+
                     const result: GetTournamentDataResponse = await tournamentDataStore.dispatch('getTournamentData', {
                         method: dataSource.value,
-                        id: tournamentId.value
+                        id
                     });
 
                     if (result?.events?.length > 1) {

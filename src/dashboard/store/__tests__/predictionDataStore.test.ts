@@ -6,8 +6,10 @@ describe('predictionDataStore', () => {
     beforeEach(() => {
         predictionDataStore.replaceState({
             predictionStore: {
-                enablePrediction: true,
-                socketOpen: true,
+                status: {
+                    socketOpen: true,
+                    predictionsEnabled: true
+                },
                 currentPrediction: {
                     id: 'prediction123',
                     broadcasterId: 'ipl',

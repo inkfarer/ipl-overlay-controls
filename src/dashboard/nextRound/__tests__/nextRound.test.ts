@@ -8,7 +8,8 @@ describe('NextRound', () => {
     config.global.stubs = {
         IplSelect: true,
         IplCheckbox: true,
-        IplButton: true
+        IplButton: true,
+        IplErrorDisplay: true
     };
 
     function createNextRoundStore() {
@@ -38,7 +39,7 @@ describe('NextRound', () => {
                 tournamentData: {
                     meta: { id: '1093478', source: 'SMASHGG' },
                     teams: [
-                        { id: '123123', name: 'cool team A', players: [], showLogo: true },
+                        { id: '123123', name: 'cool team A (test long name long name long name long name long name long name long name)', players: [], showLogo: true },
                         { id: '345345', name: 'cool team B', players: [], showLogo: false }
                     ]
                 },
@@ -70,13 +71,13 @@ describe('NextRound', () => {
         const teamASelector = wrapper.getComponent('[data-test="team-a-selector"]');
         expect(teamASelector.attributes().modelvalue).toEqual('123123');
         expect((teamASelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'cool team A', value: '123123' },
+            { name: 'cool team A (test long name long name long na...', value: '123123' },
             { name: 'cool team B', value: '345345' }
         ]);
         const teamBSelector = wrapper.getComponent('[data-test="team-b-selector"]');
         expect(teamBSelector.attributes().modelvalue).toEqual('345345');
         expect((teamBSelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'cool team A', value: '123123' },
+            { name: 'cool team A (test long name long name long na...', value: '123123' },
             { name: 'cool team B', value: '345345' }
         ]);
         const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
@@ -261,7 +262,7 @@ describe('NextRound', () => {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
+                teamB: { id: '345345', name: 'Cool Team 2 (long name long name long name long name long name)', score: 1, showLogo: true, players: []},
                 games: []
             }
         };
@@ -277,7 +278,7 @@ describe('NextRound', () => {
         const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
         expect(roundProgressMessage.isVisible()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team vs Cool Team 2)');
+        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team vs Cool Team 2 (long name long name long name lo...)');
     });
 
     it('displays message if selected round is completed', () => {

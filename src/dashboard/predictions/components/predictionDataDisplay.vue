@@ -18,7 +18,7 @@
                 class="outcome"
                 :class="{ 'is-winner': firstOutcome.isWinner }"
             >
-                <span class="team-name">{{ firstOutcome.title }}</span>
+                <span class="team-name wrap-anywhere">{{ firstOutcome.title }}</span>
                 <div>
                     <span>{{ pluralize('point', firstOutcome.pointsUsed) }}</span>
                     <span style="float: right">
@@ -49,7 +49,7 @@
                         {{ secondOutcome.percentage }}%
                     </span>
                 </div>
-                <span class="team-name">{{ secondOutcome.title }}</span>
+                <span class="team-name wrap-anywhere">{{ secondOutcome.title }}</span>
             </div>
         </ipl-space>
     </ipl-space>

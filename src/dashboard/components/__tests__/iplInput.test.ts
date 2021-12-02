@@ -51,6 +51,16 @@ describe('IplInput', () => {
         expect(events[2]).toEqual([true]);
     });
 
+    it('sets input value to match v-model value on blur', () => {
+        const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input', modelValue: 'value!' } });
+        const innerInput = wrapper.get('input');
+
+        innerInput.element.value = 'value!!!!!!!!!';
+        innerInput.trigger('blur');
+
+        expect(innerInput.element.value).toEqual('value!');
+    });
+
     it('sends event and updates v-model on input', async () => {
         const wrapper = mount(IplInput, { props: { label: 'Label', name: 'input' } });
         const innerInput = wrapper.get('input');

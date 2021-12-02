@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="!canImportData"
         type="warning"
@@ -19,11 +20,12 @@ import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/to
 import IplMessage from '../components/iplMessage.vue';
 import HighlightedMatchImporter from './components/highlightedMatchImporter.vue';
 import HighlightedMatchViewer from './components/highlightedMatchViewer.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'HighlightedMatches',
 
-    components: { HighlightedMatchViewer, HighlightedMatchImporter, IplMessage },
+    components: { IplErrorDisplay, HighlightedMatchViewer, HighlightedMatchImporter, IplMessage },
 
     setup() {
         const store = useHighlightedMatchStore();

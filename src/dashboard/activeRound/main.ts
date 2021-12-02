@@ -6,6 +6,7 @@ import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from 
 import { activeRoundReps, activeRoundStore, activeRoundStoreKey } from '../store/activeRoundStore';
 import { castersReps, casterStore, casterStoreKey } from '../store/casterStore';
 import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/scoreboardStore';
+import { setUpErrorHandler } from '../store/errorHandlerStore';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
@@ -13,6 +14,7 @@ import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/sc
     await setUpReplicants(castersReps, casterStore);
     await setUpReplicants(scoreboardReps, scoreboardStore);
     const app = createApp(Panel);
+    setUpErrorHandler(app);
     app.use(tournamentDataStore, tournamentDataStoreKey);
     app.use(activeRoundStore, activeRoundStoreKey);
     app.use(casterStore, casterStoreKey);

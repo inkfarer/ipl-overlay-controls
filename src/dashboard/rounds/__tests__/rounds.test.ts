@@ -9,7 +9,8 @@ describe('Rounds', () => {
     config.global.stubs = {
         FontAwesomeIcon: true,
         IplButton: true,
-        RoundEditor: true
+        RoundEditor: true,
+        IplErrorDisplay: true
     };
 
     const mockResetRoundStore = jest.fn();

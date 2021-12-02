@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-space>
         <ipl-toggle
             v-model="musicShown"
@@ -21,10 +22,11 @@ import IplToggle from '../components/iplToggle.vue';
 import IplLabel from '../components/iplLabel.vue';
 import isEmpty from 'lodash/isEmpty';
 import ManualSongEditor from './components/manualSongEditor.vue';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
     name: 'Music',
-    components: { ManualSongEditor, IplLabel, IplToggle, IplSpace },
+    components: { IplErrorDisplay, ManualSongEditor, IplLabel, IplToggle, IplSpace },
     setup() {
         const musicStore = useMusicStore();
         const nowPlayingSourceLabels: Record<NowPlayingSource, string> = {

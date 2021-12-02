@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, getCurrentInstance, PropType, Ref, ref } from 'vue';
-import { buttonColors } from '../styles/colors';
+import { buttonColors, themeColors } from '../styles/colors';
 import isEmpty from 'lodash/isEmpty';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { getContrastingTextColor } from '../helpers/colorHelper';
@@ -82,6 +82,10 @@ export default defineComponent({
         small: {
             type: Boolean,
             default: false
+        },
+        disableOnSuccess: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -103,7 +107,10 @@ export default defineComponent({
                 buttonState.value = 'idle';
             }, 5000);
         };
-        const disabledInternal = computed(() => props.disabled || (props.async && buttonState.value === 'loading'));
+        const disabledInternal = computed(() =>
+            props.disabled
+            || (props.async && buttonState.value === 'loading')
+            || (props.disableOnSuccess && buttonState.value === 'success'));
         const colorInternal = computed(() => {
             const warningColor = props.color === 'red' ? 'orange' : 'red';
             if (props.requiresConfirmation && isClicked.value) return warningColor;
@@ -124,33 +131,37 @@ export default defineComponent({
                 const buttonColor = buttonColors[colorInternal.value] ?? colorInternal.value;
                 return ({
                     backgroundColor: buttonColor,
-                    color: disabledInternal.value ? '#A9AAA9' : getContrastingTextColor(buttonColor)
+                    color: disabledInternal.value ? themeColors.disabledText : getContrastingTextColor(buttonColor)
                 });
             }),
             async handleClick() {
-                if (!disabledInternal.value) {
-                    if (props.requiresConfirmation && !isClicked.value) {
-                        isClicked.value = true;
-                        confirmationResetTimeout = window.setTimeout(() => {
-                            isClicked.value = false;
-                        }, 5000);
-                        return;
-                    } else if (props.requiresConfirmation && isClicked.value) {
+                if (disabledInternal.value) {
+                    return;
+                }
+                
+                if (props.requiresConfirmation && !isClicked.value) {
+                    isClicked.value = true;
+                    confirmationResetTimeout = window.setTimeout(() => {
                         isClicked.value = false;
-                        clearTimeout(confirmationResetTimeout);
-                    }
+                    }, 5000);
+                    return;
+                } else if (props.requiresConfirmation && isClicked.value) {
+                    isClicked.value = false;
+                    clearTimeout(confirmationResetTimeout);
+                }
 
-                    if (!props.async) {
-                        emit('click');
-                    } else {
-                        try {
+                if (!props.async && !props.disableOnSuccess) {
+                    emit('click');
+                } else {
+                    try {
+                        if (props.async) {
                             buttonState.value = 'loading';
-                            await instance.vnode.props.onClick();
-                            setState('success');
-                        } catch (e) {
-                            console.error(e);
-                            setState('error');
                         }
+                        await instance.vnode.props.onClick();
+                        setState('success');
+                    } catch (e) {
+                        setState('error');
+                        throw e;
                     }
                 }
             },
@@ -161,7 +172,7 @@ export default defineComponent({
                 if (props.requiresConfirmation && isClicked.value) {
                     return props.shortConfirmationMessage ? 'Confirm?' : 'Are you sure?';
                 }
-                if (!props.async) return props.label;
+                if (!props.async && !props.disableOnSuccess) return props.label;
 
                 switch (buttonState.value) {
                     case 'error':

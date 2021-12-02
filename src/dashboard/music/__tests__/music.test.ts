@@ -6,7 +6,8 @@ import { config, mount } from '@vue/test-utils';
 describe('Music', () => {
     config.global.stubs = {
         IplToggle: true,
-        ManualSongEditor: true
+        ManualSongEditor: true,
+        IplErrorDisplay: true
     };
 
     function createMusicStore() {

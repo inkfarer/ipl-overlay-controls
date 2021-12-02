@@ -93,7 +93,7 @@ export default defineComponent({
     emits: [ 'update:modelValue', 'focuschange', 'input' ],
 
     setup(props, { emit }) {
-        const input: Ref<HTMLElement> = ref(null);
+        const input: Ref<HTMLInputElement> = ref(null);
 
         return {
             model: computed({
@@ -108,6 +108,9 @@ export default defineComponent({
                 return !props.validator ? true : props.validator?.isValid ?? true;
             }),
             handleFocusEvent(e: Event) {
+                if (e.type === 'blur') {
+                    input.value.value = props.modelValue.toString();
+                }
                 emit('focuschange', e.type !== 'blur');
             },
             handleInputEvent() {

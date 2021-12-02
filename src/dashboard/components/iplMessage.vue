@@ -8,6 +8,12 @@
             :icon="icon"
         />
         <div class="message-content">
+            <font-awesome-icon
+                v-if="closeable"
+                icon="times"
+                class="close-button"
+                @click="close"
+            />
             <slot />
         </div>
     </div>
@@ -20,8 +26,9 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 
-library.add(faInfoCircle, faExclamationTriangle, faExclamationCircle);
+library.add(faInfoCircle, faExclamationTriangle, faExclamationCircle, faTimes);
 
 export default defineComponent({
     name: 'IplMessage',
@@ -35,10 +42,16 @@ export default defineComponent({
             validator: (value: string): boolean => {
                 return ['error', 'info', 'warning'].includes(value);
             }
+        },
+        closeable: {
+            type: Boolean,
+            default: false
         }
     },
 
-    setup(props) {
+    emits: ['close'],
+
+    setup(props, { emit }) {
         return {
             icon: computed(() => {
                 switch (props.type) {
@@ -51,7 +64,10 @@ export default defineComponent({
                     default:
                         throw new Error(`No icon found for type '${props.type}'`);
                 }
-            })
+            }),
+            close() {
+                emit('close');
+            }
         };
     }
 });
@@ -70,6 +86,15 @@ export default defineComponent({
     > .icon {
         font-size: 25px;
         margin-right: 8px;
+    }
+
+    > .message-content {
+        overflow-wrap: anywhere;
+
+        > .close-button {
+            float: right;
+            cursor: pointer;
+        }
     }
 
     &.ipl-message__type-info {
