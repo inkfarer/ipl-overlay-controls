@@ -121,10 +121,10 @@ export default defineComponent({
             newValue => roundId.value = newValue,
             { immediate: true });
 
-        watch(selectedRound, newValue => {
+        watch(roundId, () => {
             if (roundHasProgress.value) {
-                teamAId.value = newValue.teamA.id;
-                teamBId.value = newValue.teamB.id;
+                teamAId.value = selectedRound.value.teamA.id;
+                teamBId.value = selectedRound.value.teamB.id;
             } else {
                 teamAId.value = nextRoundStore.state.nextRound.teamA.id;
                 teamBId.value = nextRoundStore.state.nextRound.teamB.id;
