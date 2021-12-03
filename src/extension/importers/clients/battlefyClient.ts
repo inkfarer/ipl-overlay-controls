@@ -49,6 +49,10 @@ export async function getBattlefyMatches(
     }
 }
 
+export function getBattlefyTournamentUrl(tournament: BattlefyTournamentData): string {
+    return `https://battlefy.com/${tournament.organization.slug}/${tournament.slug}/${tournament._id}/info?infoTab=details`;
+}
+
 export async function getBattlefyTournamentData(id: string): Promise<TournamentData> {
     const tournamentInfo = await getBattlefyTournamentInfo(id);
 
@@ -68,7 +72,7 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                         id,
                         source: TournamentDataSource.BATTLEFY,
                         name: tournamentInfo.name,
-                        url: `https://battlefy.com/${tournamentInfo.organization.slug}/${tournamentInfo.slug}/${tournamentInfo._id}/info?infoTab=details`
+                        url: getBattlefyTournamentUrl(tournamentInfo)
                     },
                     teams: [],
                     stages: mapBattlefyStagesToTournamentData(tournamentInfo.stages)
@@ -102,7 +106,7 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
     });
 }
 
-async function getBattlefyTournamentInfo(id: string): Promise<BattlefyTournamentData> {
+export async function getBattlefyTournamentInfo(id: string): Promise<BattlefyTournamentData> {
     // API link gets all the details on a battlefy tournament
     const url = `https://api.battlefy.com/tournaments/${id}?extend%5Bcampaign%5D%5Bsponsor%5D=true&extend%5Bstages%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false&extend%5Bstages%5D%5B%24opts%5D%5Bname%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bbracket%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BstartTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BendTime%5D=1&extend%5Bstages%5D%5B%24opts%5D%5Bschedule%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BmatchCheckinDuration%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasCheckinTimer%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasStarted%5D=1&extend%5Bstages%5D%5B%24opts%5D%5BhasMatchCheckin%5D=1&extend%5Borganization%5D%5Bowner%5D%5B%24opts%5D%5Btimezone%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bname%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bslug%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BownerID%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BlogoUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5BbannerUrl%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfeatures%5D=1&extend%5Borganization%5D%5B%24opts%5D%5Bfollowers%5D=1&extend%5Bgame%5D=true&extend%5Bstreams%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false`;
     const response = await axios.get(url);

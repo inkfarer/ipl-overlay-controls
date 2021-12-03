@@ -9,6 +9,8 @@ import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
 import { RadiaSettings } from '../../types/schemas';
 import { addDots } from '../../helpers/stringHelper';
+import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
+import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
 
 const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -53,7 +55,7 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
     }
 }
 
-export function parseUploadedTeamData(data: Team[] | TournamentData, dataUrl: string): TournamentData {
+export async function parseUploadedTeamData(data: Team[] | TournamentData, dataUrl: string): Promise<TournamentData> {
     if (Array.isArray(data)) {
         if (isEmpty(data)) {
             throw new Error('Provided data is missing teams.');
@@ -78,10 +80,33 @@ export function parseUploadedTeamData(data: Team[] | TournamentData, dataUrl: st
             data.meta.source = TournamentDataSource.UPLOAD;
         }
 
-        return {
+        const result = {
             ...data,
             teams: normalizeTeams(data.teams)
         };
+
+        if (data.meta.source === TournamentDataSource.BATTLEFY
+            && (data.stages == null
+            || isEmpty(data.meta.name)
+            || isEmpty(data.meta.url))
+        ) {
+            try {
+                const battlefyData = await getBattlefyTournamentInfo(data.meta.id);
+                if (data.stages == null) {
+                    result.stages = mapBattlefyStagesToTournamentData(battlefyData.stages);
+                }
+                if (isEmpty(data.meta.name)) {
+                    result.meta.name = battlefyData.name;
+                }
+                if (isEmpty(data.meta.url)) {
+                    data.meta.url = getBattlefyTournamentUrl(battlefyData);
+                }
+            } catch (e) {
+                nodecg.log.warn(`Could not fetch Battlefy data for tournament ${data.meta.id}`, e);
+            }
+        }
+
+        return result;
     } else {
         throw new Error('Invalid data provided to parseUploadedTeamData()');
     }

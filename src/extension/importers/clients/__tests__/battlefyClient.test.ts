@@ -1,6 +1,8 @@
+import { BattlefyTournamentData } from '../../../types/battlefyTournamentData';
+
 jest.mock('../../mappers/battlefyDataMapper');
 
-import { getBattlefyMatches, getBattlefyTournamentData } from '../battlefyClient';
+import { getBattlefyMatches, getBattlefyTournamentData, getBattlefyTournamentUrl } from '../battlefyClient';
 import * as battlefyDataMapper from '../../mappers/battlefyDataMapper';
 import axios from 'axios';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
@@ -13,10 +15,20 @@ describe('battlefyClient', () => {
         axios.get = mockGet;
     });
 
+    describe('getBattlefyTournamentUrl', () => {
+        it('creates URL from tournament data', () => {
+            expect(getBattlefyTournamentUrl({
+                organization: { slug: 'organizer' },
+                slug: 'cool-tournament',
+                _id: '123456ABC'
+            } as BattlefyTournamentData)).toEqual('https://battlefy.com/organizer/cool-tournament/123456ABC/info?infoTab=details');
+        });
+    });
+
     describe('getBattlefyMatches', () => {
         it('fetches highlighted matches', async () => {
             (battlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
-            mockGet.mockResolvedValue({ data: [{ stages: 'battlefy stages' }]});
+            mockGet.mockResolvedValue({ data: [ { stages: 'battlefy stages' } ]});
 
             const result = await getBattlefyMatches('aaaa', undefined, true);
 
@@ -38,9 +50,9 @@ describe('battlefyClient', () => {
 
         it('fetches specified highlighted matches', async () => {
             (battlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
-            mockGet.mockResolvedValue({ data: [{ stages: [{ _id: 'swiswsiswis' }, { _id: '123123' }]}]});
+            mockGet.mockResolvedValue({ data: [ { stages: [ { _id: 'swiswsiswis' }, { _id: '123123' } ]} ]});
 
-            const result = await getBattlefyMatches('aaaa', ['swiswsiswis']);
+            const result = await getBattlefyMatches('aaaa', [ 'swiswsiswis' ]);
 
             expect(mockGet).toHaveBeenCalledWith('https://api.battlefy.com/tournaments/aaaa'
                 + '?extend[stages][$query][deletedAt][$exists]=false'
@@ -54,7 +66,7 @@ describe('battlefyClient', () => {
                 + '&extend[stages.matches.bottom.team.persistentTeam]=1'
                 + '&extend[stages.matches.top.team.players]=1'
                 + '&extend[stages.matches.bottom.team.players]=1');
-            expect(battlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith([{ _id: 'swiswsiswis' }]);
+            expect(battlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith([ { _id: 'swiswsiswis' } ]);
             expect(result).toEqual('parsed battlefy data');
         });
 
@@ -66,7 +78,7 @@ describe('battlefyClient', () => {
         });
 
         it('handles missing data', async () => {
-            mockGet.mockResolvedValue({ data: [ ]});
+            mockGet.mockResolvedValue({ data: []});
 
             await expect(getBattlefyMatches('aaaa')).rejects
                 .toThrow('Couldn\'t get tournament data from Battlefy.');
@@ -142,7 +154,7 @@ describe('battlefyClient', () => {
                         id: 'akfwehjopru48902ujr',
                         logoUrl: 'logo://url',
                         name: 'Team One',
-                        players:  [
+                        players: [
                             {
                                 name: 'useruser',
                                 username: 'userusername',
@@ -158,7 +170,7 @@ describe('battlefyClient', () => {
                         id: 'jn2307d589275',
                         logoUrl: 'logo://url/2',
                         name: 'Team Two',
-                        players:  [
+                        players: [
                             {
                                 name: 'ingameingame',
                                 username: 'useruser',
@@ -194,7 +206,7 @@ describe('battlefyClient', () => {
 
         it('handles errors from Battlefy', async () => {
             mockGet.mockResolvedValueOnce({
-                data: [{ }]
+                data: [ {} ]
             }).mockResolvedValueOnce({
                 data: {
                     error: 'An error has occurred.'

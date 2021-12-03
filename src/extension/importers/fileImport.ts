@@ -13,7 +13,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
 (router as express.Router).post(
     '/upload-tournament-json',
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }),
-    (req: express.Request, res: express.Response) => {
+    async (req: express.Request, res: express.Response) => {
         if (
             !req.files
             || !req.files.file
@@ -34,7 +34,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
             }
             case 'teams': {
                 try {
-                    const resolvedTeams = parseUploadedTeamData(content, file.name);
+                    const resolvedTeams = await parseUploadedTeamData(content, file.name);
                     updateTournamentDataReplicants(resolvedTeams);
                 } catch (e) {
                     nodecg.log.error(`Team data parsing error: ${e}`);

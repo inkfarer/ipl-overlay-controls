@@ -111,11 +111,11 @@ describe('fileImport', () => {
             });
         });
 
-        it('imports team data', () => {
+        it('imports team data', async () => {
             const mockSendStatus = jest.fn();
             mockParseUploadedTeamData.mockReturnValue('TEAMS');
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json']({
+            await nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'teams' },
                 files: { file: { mimetype: 'application/json', data: '{ }' } }
             } as unknown as express.Request,

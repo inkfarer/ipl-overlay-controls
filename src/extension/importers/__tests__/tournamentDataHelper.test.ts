@@ -10,6 +10,14 @@ describe('tournamentDataHelper', () => {
         __esModule: true,
         updateTournamentData: jest.fn()
     };
+    const mockBattlefyClient = {
+        __esModule: true,
+        getBattlefyTournamentInfo: jest.fn()
+    };
+    const mockBattlefyDataMapper = {
+        __esModule: true,
+        mapBattlefyStagesToTournamentData: jest.fn()
+    };
     let helper: Module;
     let nodecg: MockNodecg;
 
@@ -31,6 +39,10 @@ describe('tournamentDataHelper', () => {
     }));
 
     jest.mock('../clients/radiaClient', () => mockRadiaClient);
+
+    jest.mock('../clients/battlefyClient', () => mockBattlefyClient);
+
+    jest.mock('../mappers/battlefyDataMapper', () => mockBattlefyDataMapper);
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -196,12 +208,12 @@ describe('tournamentDataHelper', () => {
     });
 
     describe('parseUploadedTeamData', () => {
-        it('throws error if empty array is given', () => {
-            expect(() => helper.parseUploadedTeamData([])).toThrow('Provided data is missing teams.');
+        it('throws error if empty array is given', async () => {
+            await expect(() => helper.parseUploadedTeamData([])).rejects.toThrow('Provided data is missing teams.');
         });
 
-        it('assigns missing ID and showLogo props to teams if necessary', () => {
-            const result = helper.parseUploadedTeamData([
+        it('assigns missing ID and showLogo props to teams if necessary', async () => {
+            const result = await helper.parseUploadedTeamData([
                 {
                     id: '5091758327590',
                     showLogo: false,
@@ -258,8 +270,8 @@ describe('tournamentDataHelper', () => {
             });
         });
 
-        it('handles full tournament data object as input', () => {
-            const result = helper.parseUploadedTeamData({
+        it('handles full tournament data object as input', async () => {
+            const result = await helper.parseUploadedTeamData({
                 meta: {
                     id: '123123',
                     source: 'SMASHGG'
@@ -321,8 +333,79 @@ describe('tournamentDataHelper', () => {
             });
         });
 
-        it('replaces missing source and id with defaults', () => {
-            expect(helper.parseUploadedTeamData({
+        it('fetches additional data for battlefy tournaments', async () => {
+            mockBattlefyClient.getBattlefyTournamentInfo.mockResolvedValue({
+                stages: 'battlefy stages',
+                name: 'Cool Tournament'
+            });
+            mockBattlefyDataMapper.mapBattlefyStagesToTournamentData.mockReturnValue('parsed battlefy stages');
+
+            const result = await helper.parseUploadedTeamData({
+                meta: {
+                    id: '123123',
+                    source: TournamentDataSource.BATTLEFY
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'Team w/ Props',
+                        players: []
+                    },
+                    {
+                        showLogo: false,
+                        name: 'Team w/o ID',
+                        players: []
+                    },
+                    {
+                        id: '5902853092',
+                        name: 'Team w/o showLogo',
+                        players: []
+                    },
+                    {
+                        name: 'Team w/o properties',
+                        players: []
+                    }
+                ]}, 'tournament://rad-tournament');
+
+            expect(result).toEqual({
+                meta: {
+                    id: '123123',
+                    source: TournamentDataSource.BATTLEFY,
+                    name: 'Cool Tournament'
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'Team w/ Props',
+                        players: []
+                    },
+                    {
+                        id: '111111',
+                        showLogo: false,
+                        name: 'Team w/o ID',
+                        players: []
+                    },
+                    {
+                        id: '5902853092',
+                        showLogo: true,
+                        name: 'Team w/o showLogo',
+                        players: []
+                    },
+                    {
+                        id: '222222',
+                        showLogo: true,
+                        name: 'Team w/o properties',
+                        players: []
+                    }
+                ],
+                stages: 'parsed battlefy stages'
+            });
+        });
+
+        it('replaces missing source and id with defaults', async () => {
+            await expect(helper.parseUploadedTeamData({
                 meta: {},
                 teams: [
                     {
@@ -332,7 +415,7 @@ describe('tournamentDataHelper', () => {
                         players: []
                     }
                 ]
-            }, 'tournament://rad-tournament')).toEqual({
+            }, 'tournament://rad-tournament')).resolves.toEqual({
                 meta: {
                     id: 'tournament://rad-tournament',
                     source: TournamentDataSource.UPLOAD
@@ -348,8 +431,8 @@ describe('tournamentDataHelper', () => {
             });
         });
 
-        it('shortens overlong team and player names', () => {
-            expect(helper.parseUploadedTeamData({
+        it('shortens overlong team and player names', async () => {
+            await expect(helper.parseUploadedTeamData({
                 meta: {},
                 teams: [
                     {
@@ -361,7 +444,7 @@ describe('tournamentDataHelper', () => {
                         ]
                     }
                 ]
-            }, 'tournament://rad-tournament')).toEqual({
+            }, 'tournament://rad-tournament')).resolves.toEqual({
                 meta: {
                     id: 'tournament://rad-tournament',
                     source: TournamentDataSource.UPLOAD
@@ -379,32 +462,32 @@ describe('tournamentDataHelper', () => {
             });
         });
 
-        it('throws error if input is missing teams', () => {
-            expect(() => helper.parseUploadedTeamData({
+        it('throws error if input is missing teams', async () => {
+            await expect(() => helper.parseUploadedTeamData({
                 meta: {
                     id: '123123',
                     source: 'SMASHGG',
                 },
                 teams: undefined
-            }, 'tournament://rad-tournament')).toThrow('Provided data is missing teams.');
+            }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');
         });
 
-        it('throws error if input has no teams', () => {
-            expect(() => helper.parseUploadedTeamData({
+        it('throws error if input has no teams', async () => {
+            await expect(() => helper.parseUploadedTeamData({
                 meta: {
                     id: '123123',
                     source: 'SMASHGG'
                 },
                 teams: []
-            }, 'tournament://rad-tournament')).toThrow('Provided data is missing teams.');
+            }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');
         });
 
-        it('throws error if input is not array or object', () => {
+        it('throws error if input is not array or object', async () => {
             const expectedError = 'Invalid data provided to parseUploadedTeamData()';
 
-            expect(() => helper.parseUploadedTeamData('foobar', '')).toThrow(expectedError);
-            expect(() => helper.parseUploadedTeamData(1234, '')).toThrow(expectedError);
-            expect(() => helper.parseUploadedTeamData(null, '')).toThrow(expectedError);
+            await expect(() => helper.parseUploadedTeamData('foobar', '')).rejects.toThrow(expectedError);
+            await expect(() => helper.parseUploadedTeamData(1234, '')).rejects.toThrow(expectedError);
+            await expect(() => helper.parseUploadedTeamData(null, '')).rejects.toThrow(expectedError);
         });
     });
 
