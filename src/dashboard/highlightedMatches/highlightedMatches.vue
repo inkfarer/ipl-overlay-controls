@@ -7,6 +7,13 @@
     >
         Cannot import data from source '{{ formattedDataSource }}'.
     </ipl-message>
+    <ipl-message
+        v-else-if="!stageDataPresent"
+        type="info"
+        data-test="missing-stages-message"
+    >
+        No stages present to import from.
+    </ipl-message>
     <template v-else>
         <highlighted-match-importer />
         <highlighted-match-viewer class="m-t-8" />
@@ -21,6 +28,7 @@ import IplMessage from '../components/iplMessage.vue';
 import HighlightedMatchImporter from './components/highlightedMatchImporter.vue';
 import HighlightedMatchViewer from './components/highlightedMatchViewer.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import isEmpty from 'lodash/isEmpty';
 
 export default defineComponent({
     name: 'HighlightedMatches',
@@ -35,6 +43,7 @@ export default defineComponent({
             canImportData: computed(() => [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
                 .includes(tournamentDataSource.value)),
             formattedDataSource: computed(() => TournamentDataSourceHelper.toPrettyString(tournamentDataSource.value )),
+            stageDataPresent: computed(() => !isEmpty(store.state.tournamentData.stages))
         };
     }
 });
