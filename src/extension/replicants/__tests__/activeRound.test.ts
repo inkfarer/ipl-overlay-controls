@@ -262,8 +262,8 @@ describe('activeRound', () => {
     describe('beginNextMatch', () => {
         it('replaces active teams with next teams and commits them', () => {
             nodecg.replicants.nextRound.value = {
-                teamA: { id: '123123' },
-                teamB: { id: '345354' },
+                teamA: { id: '123123', testCustomProp: 'hello :)', name: 'Team Three' },
+                teamB: { id: '345354', testCustomProp2: 'hello! ;)', name: 'Team Four' },
                 games: [
                     { stage: 'MakoMart', mode: 'Rainmaker' },
                     { stage: 'Manta Maria', mode: 'Tower Control' }
@@ -274,15 +274,15 @@ describe('activeRound', () => {
                 showOnStream: true
             };
             nodecg.replicants.activeRound.value = {
-                teamA: { name: 'Team One' },
-                teamB: { name: 'Team Two' }
+                teamA: { name: 'Team One', score: 99, foo: 'bar', color: '#222' },
+                teamB: { name: 'Team Two', score: 98, yee: 'haw', color: '#333' }
             };
 
             nodecg.messageListeners.beginNextMatch();
 
             expect(nodecg.replicants.activeRound.value).toEqual({
-                teamA: { id: '123123', name: 'Team One', score: 0 },
-                teamB: { id: '345354', name: 'Team Two', score: 0 },
+                teamA: { id: '123123', name: 'Team Three', score: 0, testCustomProp: 'hello :)', color: '#222' },
+                teamB: { id: '345354', name: 'Team Four', score: 0, testCustomProp2: 'hello! ;)', color: '#333' },
                 games: [
                     { stage: 'MakoMart', mode: 'Rainmaker', winner: GameWinner.NO_WINNER, color: undefined },
                     { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER, color: undefined }

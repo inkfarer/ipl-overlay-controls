@@ -79,12 +79,12 @@ nodecg.listenFor('beginNextMatch', () => {
     activeRound.value = {
         ...activeRound.value,
         teamA: {
-            ...activeRound.value.teamA,
+            color: activeRound.value.teamA.color,
             ...clone(nextRound.value.teamA),
             score: 0
         },
         teamB: {
-            ...activeRound.value.teamB,
+            color: activeRound.value.teamB.color,
             ...clone(nextRound.value.teamB),
             score: 0
         },
