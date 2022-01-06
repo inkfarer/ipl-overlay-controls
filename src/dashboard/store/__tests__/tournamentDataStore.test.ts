@@ -13,7 +13,7 @@ describe('tournamentDataStore', () => {
 
     describe('setTeamImageHidden', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.commit('setTeamImageHidden', { teamId: '1234', isVisible: true });
+            tournamentDataStore.dispatch('setTeamImageHidden', { teamId: '1234', isVisible: true });
 
             expect(mockSendMessage).toHaveBeenCalledWith('toggleTeamImage', { teamId: '1234', isVisible: true });
         });
@@ -129,7 +129,7 @@ describe('tournamentDataStore', () => {
 
     describe('removeRound', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.commit('removeRound', { roundId: 'round123' });
+            tournamentDataStore.dispatch('removeRound', { roundId: 'round123' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('removeRound', { roundId: 'round123' });
         });

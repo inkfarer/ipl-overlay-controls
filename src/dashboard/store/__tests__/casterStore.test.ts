@@ -37,14 +37,6 @@ describe('casterStore', () => {
             });
         });
 
-        describe('removeCaster', () => {
-            it('sends message to remove caster', () => {
-                casterStore.commit('removeCaster', 'oldcaster');
-
-                expect(mockSendMessage).toHaveBeenCalledWith('removeCaster', { id: 'oldcaster' });
-            });
-        });
-
         describe('addUncommittedCaster', () => {
             it('adds uncommitted casters to state', () => {
                 casterStore.commit('addUncommittedCaster', { id: '4095687', caster: 'cool caster' });
@@ -64,6 +56,14 @@ describe('casterStore', () => {
     });
 
     describe('actions', () => {
+        describe('removeCaster', () => {
+            it('sends message to remove caster', () => {
+                casterStore.dispatch('removeCaster', 'oldcaster');
+
+                expect(mockSendMessage).toHaveBeenCalledWith('removeCaster', { id: 'oldcaster' });
+            });
+        });
+
         describe('addUncommittedCaster', () => {
             it('creates caster and returns it\'s id', async () => {
                 jest.spyOn(generateId, 'generateId').mockReturnValue('new caster id');

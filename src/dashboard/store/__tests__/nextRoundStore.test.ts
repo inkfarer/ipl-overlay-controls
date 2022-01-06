@@ -13,7 +13,7 @@ describe('nextRoundStore', () => {
 
     describe('setNextRound', () => {
         it('sends message to extension', () => {
-            nextRoundStore.commit('setNextRound', { teamAId: '123123', teamBId: '456456', roundId: '340857' });
+            nextRoundStore.dispatch('setNextRound', { teamAId: '123123', teamBId: '456456', roundId: '340857' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound',
                 { teamAId: '123123', teamBId: '456456', roundId: '340857' });

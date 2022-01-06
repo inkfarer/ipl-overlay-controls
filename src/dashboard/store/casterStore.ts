@@ -39,9 +39,6 @@ export const casterStore = createStore<CasterStore>({
         updateCaster(store, { id, newValue }: { id: string, newValue: Caster }): void {
             casters.value[id] = newValue;
         },
-        removeCaster(store, id: string): void {
-            nodecg.sendMessage('removeCaster', { id });
-        },
         addUncommittedCaster(store, { id, caster }: { id: string, caster?: Caster }): void {
             store.uncommittedCasters[id] = caster ?? defaultCaster;
         },
@@ -73,6 +70,9 @@ export const casterStore = createStore<CasterStore>({
         },
         showCasters() {
             nodecg.sendMessage('mainShowCasters');
+        },
+        removeCaster(store, id: string): void {
+            nodecg.sendMessage('removeCaster', { id });
         }
     }
 });

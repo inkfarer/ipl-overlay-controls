@@ -70,10 +70,8 @@ describe('ActiveRoundEditor', () => {
             },
             actions: {
                 swapColors: mockSwapColors,
-                setActiveColor: mockSetActiveColor
-            },
-            mutations: {
-                setActiveRound: mockSetActiveRound,
+                setActiveColor: mockSetActiveColor,
+                setActiveRound: mockSetActiveRound
             }
         });
     }
@@ -95,7 +93,7 @@ describe('ActiveRoundEditor', () => {
                     }
                 }
             },
-            mutations: {
+            actions: {
                 setTeamImageHidden: jest.fn()
             }
         });
@@ -163,7 +161,7 @@ describe('ActiveRoundEditor', () => {
 
     it('sends commit to store if team A image toggle is changed', () => {
         const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'commit');
+        jest.spyOn(tournamentDataStore, 'dispatch');
         const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
@@ -174,7 +172,7 @@ describe('ActiveRoundEditor', () => {
 
         teamAImageToggle.vm.$emit('update:modelValue', false);
 
-        expect(tournamentDataStore.commit).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
             teamId: '123123',
             isVisible: false
         });
@@ -182,7 +180,7 @@ describe('ActiveRoundEditor', () => {
 
     it('sends commit to store if team B image toggle is changed', () => {
         const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'commit');
+        jest.spyOn(tournamentDataStore, 'dispatch');
         const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
@@ -193,7 +191,7 @@ describe('ActiveRoundEditor', () => {
 
         teamBImageToggle.vm.$emit('update:modelValue', true);
 
-        expect(tournamentDataStore.commit).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
             teamId: '345345',
             isVisible: true
         });
@@ -202,7 +200,7 @@ describe('ActiveRoundEditor', () => {
     it('updates round data on update button click', () => {
         const tournamentDataStore = createTournamentDataStore();
         const activeRoundStore = createActiveRoundStore();
-        jest.spyOn(activeRoundStore, 'commit');
+        jest.spyOn(activeRoundStore, 'dispatch');
         const wrapper = mount(ActiveRoundEditor, {
             global: {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
@@ -212,7 +210,7 @@ describe('ActiveRoundEditor', () => {
 
         updateButton.vm.$emit('click');
 
-        expect(activeRoundStore.commit).toHaveBeenCalledWith('setActiveRound', {
+        expect(activeRoundStore.dispatch).toHaveBeenCalledWith('setActiveRound', {
             teamAId: '123123',
             teamBId: '345345',
             roundId: '0387'

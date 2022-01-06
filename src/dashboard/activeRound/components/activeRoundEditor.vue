@@ -132,7 +132,7 @@ export default defineComponent({
                     return activeRoundStore.state.activeRound.teamA.showLogo;
                 },
                 set(value: boolean) {
-                    tournamentDataStore.commit('setTeamImageHidden',
+                    tournamentDataStore.dispatch('setTeamImageHidden',
                         { teamId: activeRoundStore.state.activeRound.teamA.id, isVisible: value });
                 }
             }),
@@ -141,7 +141,7 @@ export default defineComponent({
                     return activeRoundStore.state.activeRound.teamB.showLogo;
                 },
                 set(value: boolean) {
-                    tournamentDataStore.commit('setTeamImageHidden',
+                    tournamentDataStore.dispatch('setTeamImageHidden',
                         { teamId: activeRoundStore.state.activeRound.teamB.id, isVisible: value });
                 }
             }),
@@ -151,7 +151,7 @@ export default defineComponent({
             }))),
             isChanged,
             updateRound() {
-                activeRoundStore.commit('setActiveRound', {
+                activeRoundStore.dispatch('setActiveRound', {
                     roundId: roundId.value,
                     teamAId: teamAId.value,
                     teamBId: teamBId.value

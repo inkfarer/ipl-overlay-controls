@@ -115,7 +115,7 @@ export default defineComponent({
                 if (props.uncommitted) {
                     store.commit('removeUncommittedCaster', props.casterId);
                 } else {
-                    store.commit('removeCaster', props.casterId);
+                    store.dispatch('removeCaster', props.casterId);
                 }
             },
             setFocused(focused: boolean) {

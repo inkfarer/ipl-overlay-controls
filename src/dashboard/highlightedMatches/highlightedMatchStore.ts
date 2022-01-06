@@ -27,9 +27,6 @@ export const highlightedMatchStore = createStore<HighlightedMatchStore>({
     mutations: {
         setState(store, { name, val }: { name: string, val: unknown }): void {
             this.state[name] = cloneDeep(val);
-        },
-        setNextMatch(store, { teamAId, teamBId }: { teamAId: string, teamBId: string }): void {
-            nodecg.sendMessage('setNextRound', { teamAId, teamBId });
         }
     },
     actions: {
@@ -56,6 +53,9 @@ export const highlightedMatchStore = createStore<HighlightedMatchStore>({
                         throw new Error(`Cannot import data from source '${store.state.tournamentData.meta.source}'`);
                 }
             }
+        },
+        async setNextMatch(store, { teamAId, teamBId }: { teamAId: string, teamBId: string }): Promise<void> {
+            return nodecg.sendMessage('setNextRound', { teamAId, teamBId });
         }
     }
 });

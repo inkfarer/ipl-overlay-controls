@@ -25,15 +25,6 @@ export const activeRoundStore = createStore<ActiveRoundStore>({
     mutations: {
         setState(store, { name, val }: { name: string, val: unknown }): void {
             this.state[name] = cloneDeep(val);
-        },
-        setActiveRound(store, request: SetRoundRequest): void {
-            nodecg.sendMessage('setActiveRound', request);
-        },
-        swapRoundColor(store, request: SwapRoundColorRequest): void {
-            nodecg.sendMessage('swapRoundColor', request);
-        },
-        updateActiveGames(store, games: ActiveRoundGame[]): void {
-            nodecg.sendMessage('updateActiveGames', { games });
         }
     },
     actions: {
@@ -54,6 +45,15 @@ export const activeRoundStore = createStore<ActiveRoundStore>({
         },
         resetActiveRound(): void {
             nodecg.sendMessage('resetActiveRound');
+        },
+        setActiveRound(store, request: SetRoundRequest): void {
+            nodecg.sendMessage('setActiveRound', request);
+        },
+        swapRoundColor(store, request: SwapRoundColorRequest): void {
+            nodecg.sendMessage('swapRoundColor', request);
+        },
+        updateActiveGames(store, games: ActiveRoundGame[]): void {
+            nodecg.sendMessage('updateActiveGames', { games });
         }
     }
 });

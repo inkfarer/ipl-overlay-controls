@@ -116,7 +116,7 @@ export default defineComponent({
                 if (props.isNewRound) {
                     emit('cancelNewRound');
                 } else {
-                    store.commit('removeRound', { roundId: props.roundId });
+                    store.dispatch('removeRound', { roundId: props.roundId });
                 }
             },
             isChanged: computed(() => {

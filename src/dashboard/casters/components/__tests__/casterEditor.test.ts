@@ -28,11 +28,11 @@ describe('CasterEditor', () => {
             },
             mutations: {
                 updateCaster: mockUpdateCaster,
-                removeUncommittedCaster: mockRemoveUncommittedCaster,
-                removeCaster: mockRemoveCaster
+                removeUncommittedCaster: mockRemoveUncommittedCaster
             },
             actions: {
-                saveUncommittedCaster: mockSaveUncommittedCaster
+                saveUncommittedCaster: mockSaveUncommittedCaster,
+                removeCaster: mockRemoveCaster
             }
         });
     }
@@ -341,7 +341,7 @@ describe('CasterEditor', () => {
             it('converts input to lower case', () => {
                 expect(formatter('YEEHAW')).toEqual('yeehaw');
                 expect(formatter('tEST1234')).toEqual('test1234');
-            }); 
+            });
         });
 
         describe('twitterFormatter', () => {

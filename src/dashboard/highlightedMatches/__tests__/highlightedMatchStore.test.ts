@@ -13,7 +13,7 @@ describe('highlightedMatchStore', () => {
 
     describe('setNextMatch', () => {
         it('sends message to extension', () => {
-            highlightedMatchStore.commit('setNextMatch', { teamAId: 'teama123', teamBId: 'teamb3409587' });
+            highlightedMatchStore.dispatch('setNextMatch', { teamAId: 'teama123', teamBId: 'teamb3409587' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound', {
                 teamAId: 'teama123',
@@ -86,7 +86,7 @@ describe('highlightedMatchStore', () => {
                     { value: '4059678', name: 'Cooler Stream' }
                 ]
             })).rejects.toThrow('Cannot import data from source \'UPLOAD\'');
-            
+
             expect(mockSendMessage).not.toHaveBeenCalled();
         });
     });

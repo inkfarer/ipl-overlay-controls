@@ -38,11 +38,9 @@ describe('RoundEditor', () => {
                     }
                 }
             },
-            mutations: {
-                removeRound: mockRemoveRound
-            },
             actions: {
-                updateRound: mockUpdateRound
+                updateRound: mockUpdateRound,
+                removeRound: mockRemoveRound
             }
         });
     }

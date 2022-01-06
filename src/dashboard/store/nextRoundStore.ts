@@ -20,13 +20,6 @@ export const nextRoundStore = createStore<NextRoundStore>({
         setState(store, { name, val }: { name: string, val: unknown }): void {
             this.state[name] = cloneDeep(val);
         },
-        setNextRound(store, {
-            teamAId,
-            teamBId,
-            roundId
-        }: { teamAId: string, teamBId: string, roundId: string }): void {
-            nodecg.sendMessage('setNextRound', { teamAId, teamBId, roundId } as SetRoundRequest);
-        },
         setShowOnStream(store, newValue: boolean) {
             nextRound.value.showOnStream = newValue;
         }
@@ -34,7 +27,14 @@ export const nextRoundStore = createStore<NextRoundStore>({
     actions: {
         beginNextMatch(): void {
             nodecg.sendMessage('beginNextMatch');
-        }
+        },
+        setNextRound(store, {
+            teamAId,
+            teamBId,
+            roundId
+        }: { teamAId: string, teamBId: string, roundId: string }): void {
+            nodecg.sendMessage('setNextRound', { teamAId, teamBId, roundId } as SetRoundRequest);
+        },
     }
 });
 

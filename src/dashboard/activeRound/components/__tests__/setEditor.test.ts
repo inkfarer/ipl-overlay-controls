@@ -100,9 +100,7 @@ describe('setEditor', () => {
             },
             actions: {
                 setWinnerForIndex: mockSetWinnerForIndex,
-                resetActiveRound: mockResetActiveRound
-            },
-            mutations: {
+                resetActiveRound: mockResetActiveRound,
                 swapRoundColor: mockSwapRoundColor,
                 updateActiveGames: mockUpdateActiveGames
             }

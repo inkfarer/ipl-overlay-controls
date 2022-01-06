@@ -59,7 +59,7 @@ describe('activeRoundStore', () => {
 
     describe('setActiveRound', () => {
         it('sends message to extension', () => {
-            activeRoundStore.commit('setActiveRound', {
+            activeRoundStore.dispatch('setActiveRound', {
                 teamAId: 'teama123',
                 teamBId: 'teamb234',
                 roundId: 'round2'
@@ -75,7 +75,7 @@ describe('activeRoundStore', () => {
 
     describe('swapRoundColor', () => {
         it('sends message to extension', () => {
-            activeRoundStore.commit('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
+            activeRoundStore.dispatch('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
 
             expect(mockSendMessage).toHaveBeenCalledWith('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
         });
@@ -83,7 +83,7 @@ describe('activeRoundStore', () => {
 
     describe('updateActiveGames', () => {
         it('sends message to extension', () => {
-            activeRoundStore.commit('updateActiveGames', [ { foo: 'bar' }, { biz: 'boz' } ]);
+            activeRoundStore.dispatch('updateActiveGames', [ { foo: 'bar' }, { biz: 'boz' } ]);
 
             expect(mockSendMessage).toHaveBeenCalledWith('updateActiveGames', {
                 games: [ { foo: 'bar' }, { biz: 'boz' } ]

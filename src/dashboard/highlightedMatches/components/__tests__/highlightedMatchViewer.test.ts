@@ -27,7 +27,7 @@ describe('HighlightedMatchViewer', () => {
                 },
                 highlightedMatches: null
             },
-            mutations: {
+            actions: {
                 setNextMatch: mockSetNextMatch
             }
         });

@@ -31,11 +31,11 @@ describe('CreatePredictionDialog', () => {
                 }
             },
             mutations: {
-                setNextRound: jest.fn(),
                 setShowOnStream: jest.fn()
             },
             actions: {
-                beginNextMatch: jest.fn()
+                beginNextMatch: jest.fn(),
+                setNextRound: jest.fn()
             }
         });
     }

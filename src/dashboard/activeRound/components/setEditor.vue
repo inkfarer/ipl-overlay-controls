@@ -242,7 +242,7 @@ export default defineComponent({
                 };
             },
             setColorsSwapped(index: number, colorsSwapped: boolean): void {
-                activeRoundStore.commit('swapRoundColor', { roundIndex: index, colorsSwapped });
+                activeRoundStore.dispatch('swapRoundColor', { roundIndex: index, colorsSwapped });
             },
             setIsCustomColor(index: number, isCustom: boolean): void {
                 if (!games.value[index].color) return;
@@ -266,7 +266,7 @@ export default defineComponent({
             },
             swapColorsInternally: computed(() => activeRoundStore.state.swapColorsInternally),
             handleUpdate(): void {
-                activeRoundStore.commit('updateActiveGames', games.value);
+                activeRoundStore.dispatch('updateActiveGames', games.value);
             },
             handleReset(): void {
                 activeRoundStore.dispatch('resetActiveRound');

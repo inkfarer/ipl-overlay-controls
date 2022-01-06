@@ -24,11 +24,11 @@ describe('NextRound', () => {
                 }
             },
             mutations: {
-                setNextRound: jest.fn(),
                 setShowOnStream: jest.fn()
             },
             actions: {
-                beginNextMatch: jest.fn()
+                beginNextMatch: jest.fn(),
+                setNextRound: jest.fn()
             }
         });
     }
@@ -50,7 +50,7 @@ describe('NextRound', () => {
                     }
                 }
             },
-            mutations: {
+            actions: {
                 setTeamImageHidden: jest.fn()
             }
         });
@@ -130,7 +130,7 @@ describe('NextRound', () => {
     it('sends commit to store if team A image toggle is changed', () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'commit');
+        jest.spyOn(tournamentDataStore, 'dispatch');
         const wrapper = mount(NextRound, {
             global: {
                 plugins: [
@@ -143,7 +143,7 @@ describe('NextRound', () => {
 
         teamAImageToggle.vm.$emit('update:modelValue', false);
 
-        expect(tournamentDataStore.commit).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
             teamId: '123123',
             isVisible: false
         });
@@ -152,7 +152,7 @@ describe('NextRound', () => {
     it('sends commit to store if team B image toggle is changed', () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'commit');
+        jest.spyOn(tournamentDataStore, 'dispatch');
         const wrapper = mount(NextRound, {
             global: {
                 plugins: [
@@ -165,7 +165,7 @@ describe('NextRound', () => {
 
         teamBImageToggle.vm.$emit('update:modelValue', true);
 
-        expect(tournamentDataStore.commit).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
             teamId: '345345',
             isVisible: true
         });
@@ -173,7 +173,7 @@ describe('NextRound', () => {
 
     it('updates round data on update button click', () => {
         const nextRoundStore = createNextRoundStore();
-        jest.spyOn(nextRoundStore, 'commit');
+        jest.spyOn(nextRoundStore, 'dispatch');
         const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(NextRound, {
             global: {
@@ -187,7 +187,7 @@ describe('NextRound', () => {
 
         updateButton.vm.$emit('click');
 
-        expect(nextRoundStore.commit).toHaveBeenCalledWith('setNextRound', {
+        expect(nextRoundStore.dispatch).toHaveBeenCalledWith('setNextRound', {
             teamAId: '123123',
             teamBId: '345345',
             roundId: '0387'

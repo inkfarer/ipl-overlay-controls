@@ -65,8 +65,8 @@ export default defineComponent({
             selectedMatch,
             selectedMatchData,
             disableSetNextMatch: computed(() => !selectedMatchData.value),
-            handleSetNextMatch() {
-                store.commit('setNextMatch', {
+            async handleSetNextMatch() {
+                await store.dispatch('setNextMatch', {
                     teamAId: selectedMatchData.value.teamA.id,
                     teamBId: selectedMatchData.value.teamB.id
                 });

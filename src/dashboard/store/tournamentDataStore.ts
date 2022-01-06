@@ -23,12 +23,6 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
     mutations: {
         setState(store, { name, val }: { name: string, val: unknown }): void {
             this.state[name] = cloneDeep(val);
-        },
-        setTeamImageHidden(store, { teamId, isVisible }: { teamId: string, isVisible: boolean }): void {
-            nodecg.sendMessage('toggleTeamImage', { teamId, isVisible } as ToggleTeamImageRequest);
-        },
-        removeRound(store, { roundId }: { roundId: string }): void {
-            nodecg.sendMessage('removeRound', { roundId });
         }
     },
     actions: {
@@ -52,6 +46,12 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         },
         resetRoundStore() {
             nodecg.sendMessage('resetRoundStore');
+        },
+        setTeamImageHidden(store, { teamId, isVisible }: { teamId: string, isVisible: boolean }): Promise<void> {
+            return nodecg.sendMessage('toggleTeamImage', { teamId, isVisible } as ToggleTeamImageRequest);
+        },
+        removeRound(store, { roundId }: { roundId: string }): Promise<void> {
+            return nodecg.sendMessage('removeRound', { roundId });
         }
     }
 });
