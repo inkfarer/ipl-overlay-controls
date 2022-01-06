@@ -34,12 +34,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplSelect from '../../components/iplSelect.vue';
-import IplDataRow from '../../components/iplDataRow.vue';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplSpace, IplSelect, IplDataRow, IplMessage } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
-import IplMessage from '../../components/iplMessage.vue';
 
 export default defineComponent({
     name: 'HighlightedMatchViewer',

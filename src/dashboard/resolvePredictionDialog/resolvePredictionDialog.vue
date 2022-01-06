@@ -1,7 +1,7 @@
 <template>
     <ipl-dialog-title
         title="Resolve Prediction"
-        dialog-name="resolvePredictionDialog"
+        @close="closeDialog('resolvePredictionDialog')"
     />
     <ipl-error-display class="m-t-8" />
     <ipl-message
@@ -67,17 +67,14 @@
 
 <script lang="ts">
 import { computed, ComputedRef, defineComponent } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplLabel from '../components/iplLabel.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplLabel, IplMessage, IplDialogTitle } from '@iplsplatoon/vue-components';
 import { usePredictionDataStore } from '../store/predictionDataStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { useActiveRoundStore } from '../store/activeRoundStore';
-import IplMessage from '../components/iplMessage.vue';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NodecgDialog } from '../types/dialog';
-import IplDialogTitle from '../components/iplDialogTitle.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { closeDialog } from '../helpers/dialogHelper';
 
 export default defineComponent({
     name: 'ResolvePredictionDialog',
@@ -129,7 +126,8 @@ export default defineComponent({
             async resolvePrediction(winningOutcomeIndex: number): Promise<void> {
                 await predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex });
                 (nodecg.getDialog('resolvePredictionDialog') as NodecgDialog).close();
-            }
+            },
+            closeDialog
         };
     }
 });

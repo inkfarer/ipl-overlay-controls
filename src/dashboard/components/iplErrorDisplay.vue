@@ -21,7 +21,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useErrorHandlerStore } from '../store/errorHandlerStore';
-import IplMessage from './iplMessage.vue';
+import { IplMessage } from '@iplsplatoon/vue-components';
 import { addDots } from '../../helpers/stringHelper';
 
 export default defineComponent({

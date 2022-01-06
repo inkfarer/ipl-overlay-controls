@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ColorEditor matches snapshot 1`] = `
-"<div class=\\"ipl-expansion-panel__content\\">
-  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
-    <div class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\">More colors</div><svg class=\\"svg-inline--fa fa-chevron-left fa-w-10 icon\\" aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"chevron-left\\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 320 512\\">
+"<div class=\\"ipl-expansion-panel__content\\" data-v-40cedb04=\\"\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
+    <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">More colors</div><svg class=\\"svg-inline--fa fa-chevron-left fa-w-10 icon\\" aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"chevron-left\\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 320 512\\" data-v-40cedb04=\\"\\">
       <path class=\\"\\" fill=\\"currentColor\\" d=\\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\\"></path>
     </svg>
-    <div class=\\"header-extra\\"></div>
+    <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
   </div>
-  <div class=\\"content\\" style=\\"display: none;\\">
+  <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
     <div class=\\"colors-container\\">
       <div class=\\"layout horizontal center-horizontal\\">
         <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\"></ipl-checkbox-stub>
@@ -122,15 +122,15 @@ exports[`ColorEditor matches snapshot 1`] = `
 `;
 
 exports[`ColorEditor matches snapshot when using custom color 1`] = `
-"<div class=\\"ipl-expansion-panel__content\\">
-  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
-    <div class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\">More colors</div><svg class=\\"svg-inline--fa fa-chevron-left fa-w-10 icon\\" aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"chevron-left\\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 320 512\\">
+"<div class=\\"ipl-expansion-panel__content\\" data-v-40cedb04=\\"\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
+    <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">More colors</div><svg class=\\"svg-inline--fa fa-chevron-left fa-w-10 icon\\" aria-hidden=\\"true\\" focusable=\\"false\\" data-prefix=\\"fas\\" data-icon=\\"chevron-left\\" role=\\"img\\" xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 320 512\\" data-v-40cedb04=\\"\\">
       <path class=\\"\\" fill=\\"currentColor\\" d=\\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\\"></path>
     </svg>
-    <div class=\\"header-extra\\"></div>
+    <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
   </div>
-  <div class=\\"content\\" style=\\"display: none;\\">
+  <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
     <div class=\\"colors-container\\">
       <div class=\\"layout horizontal center-horizontal\\">
         <ipl-checkbox-stub label=\\"Use custom color\\" modelvalue=\\"true\\" small=\\"true\\" disabled=\\"false\\"></ipl-checkbox-stub>

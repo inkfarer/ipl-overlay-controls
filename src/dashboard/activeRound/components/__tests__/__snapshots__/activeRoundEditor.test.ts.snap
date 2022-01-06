@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveRoundEditor matches snapshot and has expected values for select options 1`] = `
-"<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\">
-  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\">
-    <div class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\">Teams &amp; Rounds</div>
-    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div class=\\"header-extra\\"></div>
+"<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\" data-v-40cedb04=\\"\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
+    <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Teams &amp; Rounds</div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-40cedb04=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
   </div>
-  <div class=\\"content\\" style=\\"display: none;\\">
+  <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
     <!--v-if-->
     <div class=\\"layout horizontal\\">
       <div class=\\"layout vertical center-horizontal max-width\\">

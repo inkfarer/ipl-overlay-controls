@@ -5,12 +5,16 @@ import { PredictionDataStore, predictionDataStoreKey } from '../../store/predict
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
+import { closeDialog } from '../../helpers/dialogHelper';
+
+jest.mock('../../helpers/dialogHelper');
 
 describe('CreatePredictionDialog', () => {
     config.global.stubs = {
         IplInput: true,
         FontAwesomeIcon: true,
-        IplErrorDisplay: true
+        IplErrorDisplay: true,
+        IplDialogTitle: true
     };
 
     const mockCreatePrediction = jest.fn();
@@ -157,5 +161,19 @@ describe('CreatePredictionDialog', () => {
         });
         expect(mockGetDialog).toHaveBeenCalledWith('createPredictionDialog');
         expect(mockDialog.close).toHaveBeenCalledTimes(1);
+    });
+
+    it('closes dialog on dialog title close event', () => {
+        const predictionDataStore = createPredictionDataStore();
+        const nextRoundStore = createNextRoundStore();
+        const wrapper = mount(CreatePredictionDialog, {
+            global: {
+                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('ipl-dialog-title-stub').vm.$emit('close');
+
+        expect(closeDialog).toHaveBeenCalledWith('createPredictionDialog');
     });
 });

@@ -63,15 +63,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplExpandingSpace, IplInput, IplCheckbox } from '@iplsplatoon/vue-components';
 import { useBreakScreenStore } from './breakScreenStore';
 import { ActiveBreakScene } from 'schemas';
-import IplExpandingSpace from '../components/iplExpandingSpace.vue';
-import IplInput from '../components/iplInput.vue';
 import isEqual from 'lodash/isEqual';
 import NextStageTimeInput from './components/nextStageTimeInput.vue';
-import IplCheckbox from '../components/iplCheckbox.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({

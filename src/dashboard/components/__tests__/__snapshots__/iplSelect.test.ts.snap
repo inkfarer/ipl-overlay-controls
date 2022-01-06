@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`IplSelect applies given option groups to select element 1`] = `"<select><optgroup label=\\"Group A\\"><option value=\\"opt\\">Option</option><option value=\\"opt2\\">Option the Second</option><option value=\\"optthree\\">Opt 3</option></optgroup><optgroup label=\\"Group B\\"><option value=\\"opt4\\">Another Option</option><option value=\\"opt5\\">Option the Fifth</option><option disabled=\\"\\" value=\\"opt6\\">Opt 6</option></optgroup></select>"`;
-
-exports[`IplSelect applies given options to select element 1`] = `"<select><option value=\\"opt\\">Option</option><option value=\\"opt2\\">Option the Second</option><option disabled=\\"\\" value=\\"optthree\\">Opt 3</option></select>"`;

@@ -143,19 +143,14 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { colors, splatModes, splatStages } from '../../../helpers/splatoonData';
-import IplSelect from '../../components/iplSelect.vue';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplSelect, IplCheckbox, IplToggleButton, IplInput, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { GameWinner } from 'types/enums/gameWinner';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
-import IplToggleButton from '../../components/iplToggleButton.vue';
-import IplCheckbox from '../../components/iplCheckbox.vue';
-import IplInput from '../../components/iplInput.vue';
 
 library.add(faTimes);
 

@@ -79,14 +79,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplSelect from '../components/iplSelect.vue';
-import IplCheckbox from '../components/iplCheckbox.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplSelect, IplCheckbox, IplMessage } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../../helpers/stringHelper';
-import IplMessage from '../components/iplMessage.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({

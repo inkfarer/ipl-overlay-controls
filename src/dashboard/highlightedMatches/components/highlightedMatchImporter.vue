@@ -19,9 +19,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, Ref } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplButton from '../../components/iplButton.vue';
-import IplMultiSelect from '../../components/iplMultiSelect.vue';
+import { IplButton, IplMultiSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import { SelectOptions } from '../../types/select';
 import { BracketType } from 'types/enums/bracketType';

@@ -28,10 +28,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplInput from '../../components/iplInput.vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplButton from '../../components/iplButton.vue';
-import IplCheckbox from '../../components/iplCheckbox.vue';
+import { IplButton, IplInput, IplSpace, IplCheckbox } from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';

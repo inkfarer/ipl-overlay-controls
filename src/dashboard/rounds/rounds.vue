@@ -84,18 +84,15 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplSidebar, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { RoundStore } from 'schemas';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import RoundEditor from './components/roundEditor.vue';
-import IplSidebar from '../components/iplSidebar.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import IplExpandingSpace from '../components/iplExpandingSpace.vue';
 import { useActiveRoundStore } from '../store/activeRoundStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';

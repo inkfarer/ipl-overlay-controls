@@ -6,11 +6,14 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
+import { closeDialog } from '../../helpers/dialogHelper';
+
+jest.mock('../../helpers/dialogHelper');
 
 describe('ResolvePredictionDialog', () => {
     config.global.stubs = {
         FontAwesomeIcon: true,
-        IplPanelTitle: true,
+        IplDialogTitle: true,
         IplErrorDisplay: true
     };
 
@@ -270,5 +273,19 @@ describe('ResolvePredictionDialog', () => {
         expect(mockResolvePrediction).toHaveBeenCalledWith(expect.any(Object), { winningOutcomeIndex: 1 });
         expect(mockGetDialog).toHaveBeenCalledWith('resolvePredictionDialog');
         expect(mockDialog.close).toHaveBeenCalledTimes(1);
+    });
+
+    it('closes dialog on dialog title close event', () => {
+        const predictionDataStore = createPredictionDataStore();
+        const activeRoundStore = createActiveRoundStore();
+        const wrapper = mount(ResolvePredictionDialog, {
+            global: {
+                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('ipl-dialog-title-stub').vm.$emit('close');
+
+        expect(closeDialog).toHaveBeenCalledWith('resolvePredictionDialog');
     });
 });

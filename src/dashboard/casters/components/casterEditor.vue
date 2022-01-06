@@ -51,9 +51,7 @@
 </template>
 
 <script lang="ts">
-import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
-import IplButton from '../../components/iplButton.vue';
-import IplInput from '../../components/iplInput.vue';
+import { IplButton, IplInput, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { computed, defineComponent, getCurrentInstance, PropType, Ref, ref, watch } from 'vue';
 import { Caster } from 'schemas';
 import { useCasterStore } from '../../store/casterStore';

@@ -60,8 +60,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';

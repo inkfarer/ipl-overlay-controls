@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`IplMultiSelect applies given options to select element 1`] = `"<select><option value=\\"opt\\">Option</option><option value=\\"opt2\\">Option the Second</option><option value=\\"optthree\\">Opt 3</option></select>"`;
-
-exports[`IplMultiSelect creates element for each selected option 1`] = `"<div class=\\"elem-display\\"><div class=\\"option\\">Option</div><div class=\\"option\\">Opt 3</div></div>"`;

@@ -1,7 +1,7 @@
 <template>
     <ipl-dialog-title
         title="Create Prediction"
-        dialog-name="createPredictionDialog"
+        @close="closeDialog('createPredictionDialog')"
     />
     <ipl-error-display class="m-t-8" />
     <ipl-message
@@ -63,10 +63,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import IplDialogTitle from '../components/iplDialogTitle.vue';
-import IplSpace from '../components/iplSpace.vue';
-import IplInput from '../components/iplInput.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplInput, IplDialogTitle, IplMessage } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../../helpers/stringHelper';
 import { allValid, validator } from '../helpers/validation/validator';
@@ -74,9 +71,9 @@ import { maxLength } from '../helpers/validation/stringValidators';
 import { maxValue, minValue } from '../helpers/validation/numberValidators';
 import { usePredictionDataStore } from '../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import IplMessage from '../components/iplMessage.vue';
 import { NodecgDialog } from '../types/dialog';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { closeDialog } from '../helpers/dialogHelper';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
@@ -120,7 +117,8 @@ export default defineComponent({
                     teamBName: teamBName.value
                 });
                 (nodecg.getDialog('createPredictionDialog') as NodecgDialog).close();
-            }
+            },
+            closeDialog
         };
     }
 });

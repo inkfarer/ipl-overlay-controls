@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`IplUpload shows file data if a file is uploaded 1`] = `
-"<label class=\\"ipl-upload layout horizontal center-vertical center-horizontal\\">
-  <font-awesome-icon-stub icon=\\"file\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub><span>mock-file.jpg</span><input type=\\"file\\">
-</label>"
-`;
-
-exports[`IplUpload shows message if no file is uploaded 1`] = `"<label class=\\"ipl-upload layout horizontal center-vertical center-horizontal\\"><span> Drag a file here or<br> click to browse... </span><input type=\\"file\\"></label>"`;

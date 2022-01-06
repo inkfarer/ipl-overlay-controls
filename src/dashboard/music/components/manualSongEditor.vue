@@ -30,11 +30,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
-import IplCheckbox from '../../components/iplCheckbox.vue';
 import { useMusicStore } from '../musicStore';
-import IplInput from '../../components/iplInput.vue';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplInput, IplCheckbox, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 

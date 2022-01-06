@@ -27,10 +27,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplExpandingSpace from '../../components/iplExpandingSpace.vue';
-import IplInput from '../../components/iplInput.vue';
-import IplToggle from '../../components/iplToggle.vue';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplInput, IplToggle, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { useScoreboardStore } from '../../store/scoreboardStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';

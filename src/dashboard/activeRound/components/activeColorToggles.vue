@@ -77,12 +77,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
 import { colors } from '../../../helpers/splatoonData';

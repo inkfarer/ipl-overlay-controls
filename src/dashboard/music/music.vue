@@ -17,12 +17,10 @@
 import { computed, defineComponent } from 'vue';
 import { useMusicStore } from './musicStore';
 import { NowPlayingSource } from 'schemas';
-import IplSpace from '../components/iplSpace.vue';
-import IplToggle from '../components/iplToggle.vue';
-import IplLabel from '../components/iplLabel.vue';
 import isEmpty from 'lodash/isEmpty';
 import ManualSongEditor from './components/manualSongEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { IplLabel, IplSpace, IplToggle } from '@iplsplatoon/vue-components';
 
 export default defineComponent({
     name: 'Music',

@@ -45,14 +45,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, Ref, watch } from 'vue';
 import type { Round } from 'schemas';
-import IplInput from '../../components/iplInput.vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplInput, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { splatModes, splatStages } from '../../../helpers/splatoonData';
-import IplSelect from '../../components/iplSelect.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import IplSpace from '../../components/iplSpace.vue';
 import cloneDeep from 'lodash/cloneDeep';
 
 library.add(faTimes);

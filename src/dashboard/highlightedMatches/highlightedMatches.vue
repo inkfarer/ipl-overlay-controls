@@ -24,7 +24,7 @@
 import { computed, defineComponent } from 'vue';
 import { useHighlightedMatchStore } from './highlightedMatchStore';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
-import IplMessage from '../components/iplMessage.vue';
+import { IplMessage } from '@iplsplatoon/vue-components';
 import HighlightedMatchImporter from './components/highlightedMatchImporter.vue';
 import HighlightedMatchViewer from './components/highlightedMatchViewer.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';

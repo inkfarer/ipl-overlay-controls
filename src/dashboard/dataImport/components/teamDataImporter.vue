@@ -87,20 +87,15 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplSelect from '../../components/iplSelect.vue';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
-import IplInput from '../../components/iplInput.vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import IplButton from '../../components/iplButton.vue';
+import { IplButton, IplSpace, IplSelect, IplInput, IplUpload, IplCheckbox } from '@iplsplatoon/vue-components';
 import { allValid, validator } from '../../helpers/validation/validator';
 import { notBlank } from '../../helpers/validation/stringValidators';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
-import IplUpload from '../../components/iplUpload.vue';
-import IplCheckbox from '../../components/iplCheckbox.vue';
 import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
 
 export default defineComponent({

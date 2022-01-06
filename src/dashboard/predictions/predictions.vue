@@ -91,10 +91,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { usePredictionDataStore } from '../store/predictionDataStore';
-import IplSpace from '../components/iplSpace.vue';
-import IplMessage from '../components/iplMessage.vue';
-import IplDataRow from '../components/iplDataRow.vue';
-import IplButton from '../components/iplButton.vue';
+import { IplButton, IplSpace, IplMessage, IplDataRow } from '@iplsplatoon/vue-components';
 import { NodecgDialog } from '../types/dialog';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import PredictionDataDisplay from './components/predictionDataDisplay.vue';

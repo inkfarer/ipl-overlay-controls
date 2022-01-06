@@ -36,11 +36,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import IplSpace from '../../components/iplSpace.vue';
-import IplInput from '../../components/iplInput.vue';
-import IplCheckbox from '../../components/iplCheckbox.vue';
-import IplButton from '../../components/iplButton.vue';
-import IplUpload from '../../components/iplUpload.vue';
+import { IplButton, IplSpace, IplInput, IplCheckbox, IplUpload } from '@iplsplatoon/vue-components';
 import { allValid, validator } from '../../helpers/validation/validator';
 import { notBlank } from '../../helpers/validation/stringValidators';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
