@@ -36,6 +36,11 @@ export const settingsStore = createStore<SettingsStore>({
         setUpdateOnImport(store, updateOnImport: boolean): void {
             radiaSettings.value.updateOnImport = updateOnImport;
         }
+    },
+    actions: {
+        async attemptRadiaConnection(): Promise<void> {
+            return nodecg.sendMessage('retryRadiaAvailabilityCheck');
+        }
     }
 });
 

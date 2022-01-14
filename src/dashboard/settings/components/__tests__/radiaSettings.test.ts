@@ -23,6 +23,9 @@ describe('radiaSettings', () => {
             mutations: {
                 setRadiaSettings: jest.fn(),
                 setUpdateOnImport: jest.fn()
+            },
+            actions: {
+                attemptRadiaConnection: jest.fn()
             }
         });
     };
@@ -39,6 +42,24 @@ describe('radiaSettings', () => {
         const message = wrapper.findComponent('[data-test="radia-disabled-warning"]');
         expect(message.exists()).toEqual(true);
         expect(message.isVisible()).toEqual(true);
+        const radiaConnectionButton = wrapper.findComponent('[data-test="radia-connect-button"]');
+        expect(radiaConnectionButton.exists()).toEqual(true);
+        expect(radiaConnectionButton.isVisible()).toEqual(true);
+    });
+
+    it('dispatches to store when reconnecting to radia', async () => {
+        const store = createSettingsStore();
+        jest.spyOn(store, 'dispatch');
+        store.state.radiaSettings.enabled = false;
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [ [ store, settingsStoreKey ] ]
+            }
+        });
+
+        wrapper.getComponent('[data-test="radia-connect-button"]').vm.$emit('click');
+
+        expect(store.dispatch).toHaveBeenCalledWith('attemptRadiaConnection');
     });
 
     it('hides message if radia is enabled', async () => {
@@ -52,6 +73,8 @@ describe('radiaSettings', () => {
 
         const message = wrapper.findComponent('[data-test="radia-disabled-warning"]');
         expect(message.exists()).toEqual(false);
+        const radiaConnectionButton = wrapper.findComponent('[data-test="radia-connect-button"]');
+        expect(radiaConnectionButton.exists()).toEqual(false);
     });
 
     it('updates inputs on store change if unfocused', async () => {

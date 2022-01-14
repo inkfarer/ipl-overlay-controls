@@ -7,6 +7,15 @@
             data-test="radia-disabled-warning"
         >
             Radia integration is disabled.
+            <ipl-button
+                small
+                label="Attempt to connect"
+                class="m-t-6"
+                color="yellow"
+                data-test="radia-connect-button"
+                async
+                @click="attemptRadiaReconnect"
+            />
         </ipl-message>
         <div class="title">Radia</div>
         <ipl-input
@@ -96,12 +105,11 @@ export default defineComponent({
             setUpdateOnImport(value: boolean) {
                 store.commit('setUpdateOnImport', value);
             },
+            async attemptRadiaReconnect(): Promise<void> {
+                return store.dispatch('attemptRadiaConnection');
+            },
             v: validators
         };
     }
 });
 </script>
-
-<style scoped>
-
-</style>
