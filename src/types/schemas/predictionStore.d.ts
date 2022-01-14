@@ -10,7 +10,6 @@ export interface PredictionStore {
 		predictionsEnabled: boolean;
 		predictionStatusReason?: string;
 		socketOpen: boolean;
-		[k: string]: unknown;
 	};
 	modificationTime?: string;
 	currentPrediction?: Prediction;

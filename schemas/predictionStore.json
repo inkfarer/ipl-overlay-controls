@@ -164,6 +164,7 @@
     "properties": {
 		"status": {
 			"type": "object",
+            "additionalProperties": false,
 			"properties": {
 				"predictionsEnabled": {
 					"type": "boolean"
