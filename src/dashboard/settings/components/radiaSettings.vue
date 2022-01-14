@@ -1,5 +1,13 @@
 <template>
     <ipl-space>
+        <ipl-message
+            v-if="!radiaEnabled"
+            type="warning"
+            class="m-b-8"
+            data-test="radia-disabled-warning"
+        >
+            Radia integration is disabled.
+        </ipl-message>
         <div class="title">Radia</div>
         <ipl-input
             v-model="settings.guildID"
@@ -28,7 +36,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import { IplButton, IplInput, IplSpace, IplCheckbox } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSpace, IplCheckbox, IplMessage } from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
@@ -44,7 +52,8 @@ export default defineComponent({
         IplCheckbox,
         IplButton,
         IplInput,
-        IplSpace
+        IplSpace,
+        IplMessage
     },
 
     setup() {
@@ -70,6 +79,7 @@ export default defineComponent({
         });
 
         return {
+            radiaEnabled: computed(() => store.state.radiaSettings.enabled),
             focused: isFocused,
             handleFocusEvent(event: boolean) {
                 isFocused.value = event;

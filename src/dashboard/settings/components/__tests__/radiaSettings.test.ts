@@ -27,6 +27,33 @@ describe('radiaSettings', () => {
         });
     };
 
+    it('shows message if radia is disabled', async () => {
+        const store = createSettingsStore();
+        store.state.radiaSettings.enabled = false;
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [ [ store, settingsStoreKey ] ]
+            }
+        });
+
+        const message = wrapper.findComponent('[data-test="radia-disabled-warning"]');
+        expect(message.exists()).toEqual(true);
+        expect(message.isVisible()).toEqual(true);
+    });
+
+    it('hides message if radia is enabled', async () => {
+        const store = createSettingsStore();
+        store.state.radiaSettings.enabled = true;
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [ [ store, settingsStoreKey ] ]
+            }
+        });
+
+        const message = wrapper.findComponent('[data-test="radia-disabled-warning"]');
+        expect(message.exists()).toEqual(false);
+    });
+
     it('updates inputs on store change if unfocused', async () => {
         const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {

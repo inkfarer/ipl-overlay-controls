@@ -9,4 +9,5 @@ export interface RadiaSettings {
 	guildID: string;
 	enabled: boolean;
 	updateOnImport: boolean;
+	connectedChannel?: string;
 }

@@ -162,11 +162,13 @@ async function attemptSocketConnection(guildId: string): Promise<void> {
     }
 }
 
-radiaSettings.on('change', async (newValue) => {
-    try {
-        await attemptSocketConnection(newValue.guildID);
-    } catch (e) {
-        nodecg.log.warn(`Unable to get prediction data: ${e?.toString()}`);
+radiaSettings.on('change', async (newValue, oldValue) => {
+    if (newValue.guildID !== oldValue?.guildID) {
+        try {
+            await attemptSocketConnection(newValue.guildID);
+        } catch (e) {
+            nodecg.log.warn(`Unable to get prediction data: ${e?.toString()}`);
+        }
     }
 });
 
