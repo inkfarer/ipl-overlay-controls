@@ -22,18 +22,9 @@ function dashboardConfig(): webpack.Configuration {
     }
 
     const entries = getEntries(['*/main.ts']);
-    const legacyEntries = getEntries(['*/main_legacy.ts']);
 
     let plugins: any[] = [
         new VueLoaderPlugin(),
-        ...Object.keys(legacyEntries).map((entryName) =>
-            new HtmlWebpackPlugin({
-                filename: `${entryName}.html`,
-                chunks: [entryName],
-                title: entryName,
-                template: `./${entryName}/${entryName}.html`
-            })
-        ),
         ...Object.keys(entries).map((entryName) =>
             new HtmlWebpackPlugin({
                 filename: `${entryName}.html`,
@@ -69,8 +60,7 @@ function dashboardConfig(): webpack.Configuration {
         mode: isProd ? 'production' : 'development',
         target: 'web',
         entry: {
-            ...entries,
-            ...legacyEntries
+            ...entries
         },
         output: {
             path: path.resolve(__dirname, 'dashboard'),
