@@ -24,6 +24,15 @@
             class="m-b-8"
         >
             Prediction websocket is closed. Data may not be up to date.
+            <ipl-button
+                small
+                label="Reconnect"
+                class="m-t-6"
+                color="yellow"
+                data-test="socket-reconnect-button"
+                async
+                @click="handleReconnect"
+            />
         </ipl-message>
 
         <prediction-data-display
@@ -130,6 +139,9 @@ export default defineComponent({
             },
             handleShow() {
                 nodecg.sendMessage('showPredictionData');
+            },
+            async handleReconnect() {
+                return store.dispatch('reconnect');
             }
         };
     }

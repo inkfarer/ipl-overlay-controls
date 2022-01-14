@@ -98,10 +98,10 @@ describe('predictions', () => {
 
                 await nodecg.replicantListeners.radiaSettings({ guildID: '' });
 
-                expect(nodecg.log.warn).toHaveBeenCalledWith('Radia guild ID is not configured!');
+                expect(nodecg.log.warn).toHaveBeenCalledWith('Unable to get prediction data: Error: Radia guild ID is not configured!');
                 expect((nodecg.replicants.predictionStore.value as PredictionStore).status).toEqual({
                     predictionsEnabled: false,
-                    predictionStatusReason: 'Guild ID is missing.',
+                    predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
                     socketOpen: false
                 });
                 expect(mockHasPredictionSupport).not.toHaveBeenCalled();
@@ -409,6 +409,86 @@ describe('predictions', () => {
 
                 expect(mockWebSocket).not.toHaveBeenCalled();
             });
+        });
+    });
+
+    describe('reconnectToRadiaSocket', () => {
+        beforeEach(() => {
+            setup();
+            nodecg.replicants.predictionStore.value = {
+                status: {
+                    predictionsEnabled: null,
+                    socketOpen: false
+                },
+                currentPrediction: null,
+                modificationTime: '2021-09-10T13:52:29'
+            };
+            nodecg.replicants.radiaSettings.value = { guildID: '1422352355' };
+        });
+
+        it('sets replicant data if predictions are not supported', async () => {
+            const ack = jest.fn();
+            mockHasPredictionSupport.mockResolvedValue(false);
+
+            await nodecg.messageListeners.reconnectToRadiaSocket(null, ack);
+
+            expect(mockHasPredictionSupport).toHaveBeenCalledWith('1422352355');
+            expect(nodecg.replicants.predictionStore.value).toEqual({
+                status: {
+                    predictionsEnabled: false,
+                    socketOpen: false,
+                    predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                },
+                currentPrediction: null,
+                modificationTime: '2021-09-10T13:52:29'
+            });
+            expect(mockWebSocket).not.toHaveBeenCalled();
+            expect(ack).toHaveBeenCalledWith(new Error('Unable to proceed as some Radia configuration is missing.'), null);
+        });
+
+        it('does nothing if guild ID is empty', async () => {
+            nodecg.replicants.radiaSettings.value = { guildID: '' };
+            const ack = jest.fn();
+            mockHasPredictionSupport.mockResolvedValue(false);
+
+            await nodecg.messageListeners.reconnectToRadiaSocket(null, ack);
+
+            expect((nodecg.replicants.predictionStore.value as PredictionStore).status).toEqual({
+                predictionsEnabled: false,
+                predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
+                socketOpen: false
+            });
+            expect(mockHasPredictionSupport).not.toHaveBeenCalled();
+            expect(mockWebSocket).not.toHaveBeenCalled();
+            expect(ack).toHaveBeenCalledWith(new Error('Radia guild ID is not configured!'), null);
+        });
+
+        it('fetches prediction data if supported and starts socket', async () => {
+            const ack = jest.fn();
+            mockHasPredictionSupport.mockResolvedValue(true);
+            const expectedPrediction = { id: 'FIRST-PREDICTION', outcomes: [{}]};
+            mockGetPredictions.mockResolvedValue([
+                expectedPrediction,
+                { id: 'SECOND-PREDICTION', outcomes: []}
+            ]);
+            mockPredictionDataMapper.fromApiResponse.mockReturnValue(expectedPrediction);
+
+            await nodecg.messageListeners.reconnectToRadiaSocket(null, ack);
+
+            expect(mockHasPredictionSupport).toHaveBeenCalledWith('1422352355');
+            expect(nodecg.replicants.predictionStore.value).toEqual({
+                status: {
+                    socketOpen: false,
+                    predictionsEnabled: true,
+                },
+                currentPrediction: { id: 'FIRST-PREDICTION', outcomes: [{}]},
+                modificationTime: '2021-09-10T13:52:29'
+            });
+            expect(mockWebSocket).toHaveBeenCalledWith('ws://radia/api/events/guild/1422352355', {
+                headers: { Authorization: 'radia_auth' }
+            });
+            expect(mockSocketOn).toHaveBeenCalledTimes(5);
+            expect(ack).toHaveBeenCalledWith(null, null);
         });
     });
 

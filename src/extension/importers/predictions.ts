@@ -68,6 +68,7 @@ function initSocket(guildId: string): void {
         { headers: { Authorization: radiaConfig.authentication } });
 
     socket.on('open', () => {
+        nodecg.log.info('Radia websocket is open.');
         predictionStore.value.status.socketOpen = true;
         clearTimeout(socketReconnectionTimeout);
         socketReconnectionCount = 0;
@@ -137,31 +138,45 @@ function initSocket(guildId: string): void {
     });
 }
 
-radiaSettings.on('change', async (newValue) => {
-    if (isEmpty(newValue.guildID)) {
-        nodecg.log.warn('Radia guild ID is not configured!');
+async function attemptSocketConnection(guildId: string): Promise<void> {
+    if (isEmpty(guildId) || isEmpty(radiaConfig.socketUrl)) {
         predictionStore.value.status.predictionsEnabled = false;
-        predictionStore.value.status.predictionStatusReason = 'Guild ID is missing.';
+        predictionStore.value.status.predictionStatusReason = 'Missing Radia configuration. Check your guild ID and socket URL.';
         predictionStore.value.status.socketOpen = false;
-        return;
+        throw new Error('Radia guild ID is not configured!');
     }
 
-    const predictionsSupported = await hasPredictionSupport(newValue.guildID);
+    const predictionsSupported = await hasPredictionSupport(guildId);
     predictionStore.value.status.predictionsEnabled = predictionsSupported;
     if (!predictionsSupported) {
         predictionStore.value.status.predictionStatusReason = 'Predictions are not supported by the configured guild.';
         if (socket) {
             socket.close(expectedSocketClosureCode);
         }
+        throw new Error('Unable to proceed as some Radia configuration is missing.');
     } else {
         socketReconnectionCount = 0;
-        initSocket(newValue.guildID);
-        try {
-            const guildPredictions = await getPredictions(newValue.guildID);
-            assignPredictionData(guildPredictions[0]);
-        } catch (e) {
-            nodecg.log.error(e.toString());
-        }
+        initSocket(guildId);
+        const guildPredictions = await getPredictions(guildId);
+        assignPredictionData(guildPredictions[0]);
+    }
+}
+
+radiaSettings.on('change', async (newValue) => {
+    try {
+        await attemptSocketConnection(newValue.guildID);
+    } catch (e) {
+        nodecg.log.warn(`Unable to get prediction data: ${e?.toString()}`);
+    }
+});
+
+nodecg.listenFor('reconnectToRadiaSocket', async (data: never, ack: UnhandledListenForCb) => {
+    try {
+        await attemptSocketConnection(radiaSettings.value.guildID);
+        ack(null, null);
+    } catch (e) {
+        nodecg.log.warn(`Unable to reconnect to Radia websocket: ${e.toString()}`);
+        return ack(e, null);
     }
 });
 

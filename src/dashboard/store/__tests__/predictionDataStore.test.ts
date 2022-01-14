@@ -171,5 +171,13 @@ describe('predictionDataStore', () => {
                 });
             });
         });
+
+        describe('reconnect', () => {
+            it('sends message', () => {
+                predictionDataStore.dispatch('reconnect');
+
+                expect(mockSendMessage).toHaveBeenCalledWith('reconnectToRadiaSocket');
+            });
+        });
     });
 });

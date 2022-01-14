@@ -70,6 +70,9 @@ export const predictionDataStore = createStore<PredictionDataStore>({
                 ],
                 prediction_window: duration
             });
+        },
+        async reconnect() {
+            return nodecg.sendMessage('reconnectToRadiaSocket');
         }
     }
 });
