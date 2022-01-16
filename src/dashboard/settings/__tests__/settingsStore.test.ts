@@ -1,5 +1,5 @@
 import { settingsStore } from '../settingsStore';
-import { replicants } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 
 describe('settingsStore', () => {
     describe('setState', () => {
@@ -23,6 +23,14 @@ describe('settingsStore', () => {
             settingsStore.commit('setRadiaSettings', { newValue: { new: 'value' } });
 
             expect(replicants.radiaSettings).toEqual({ new: 'value' });
+        });
+    });
+
+    describe('attemptRadiaConnection', () => {
+        it('sends message', () => {
+            settingsStore.dispatch('attemptRadiaConnection');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('retryRadiaAvailabilityCheck');
         });
     });
 });
