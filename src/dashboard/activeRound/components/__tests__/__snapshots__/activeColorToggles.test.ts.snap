@@ -12,7 +12,7 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
       <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-left\\"></font-awesome-icon-stub>
       <div class=\\"color\\" style=\\"background-color: rgb(254, 242, 50); border-color: #181e29;\\"></div>
       <div class=\\"color\\" style=\\"background-color: rgb(46, 210, 254); border-color: #181e29;\\"></div>
-    </div><a class=\\"ipl-button m-l-6\\" href=\\"#\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"swap-colors-button\\"><span class=\\"label\\">Swap</span></a>
+    </div><a class=\\"ipl-button m-l-6\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"swap-colors-button\\"><span class=\\"label\\">Swap</span></a>
     <div class=\\"color-toggle layout horizontal center-vertical center-horizontal m-l-6\\" data-test=\\"color-toggle-next\\">
       <div class=\\"color\\" style=\\"background-color: rgb(4, 217, 118); border-color: #181e29;\\"></div>
       <div class=\\"color\\" style=\\"background-color: rgb(214, 0, 171); border-color: white;\\"></div>
