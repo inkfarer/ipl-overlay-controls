@@ -1,43 +1,19 @@
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { hideMessage, showMessage } from '../helpers/messageHelper';
-import { appendElementAfter } from '../helpers/elemHelper';
-import { elementById } from '../helpers/elemHelper';
-import { autoResolveWinner, resolvePrediction, setUI } from './resolvePredictionDialog';
-import {
-    activeRound, autoResolveBtn, predictionStore, resolveOptionABtn, resolveOptionBBtn, winningOption
-} from './elements';
+import '../styles/globalStyles.scss';
+import '../styles/dialogStyles.scss';
+import { setUpReplicants } from '../helpers/storeHelper';
+import Panel from './resolvePredictionDialog.vue';
+import { createApp } from 'vue';
+import { predictionDataStore, predictionDataStoreKey, predictionReps } from '../store/predictionDataStore';
+import { activeRoundReps, activeRoundStore, activeRoundStoreKey } from '../store/activeRoundStore';
+import { setUpErrorHandler } from '../store/errorHandlerStore';
 
-library.add(faExclamationTriangle, faInfoCircle);
-dom.watch();
+(async () => {
+    await setUpReplicants(predictionReps, predictionDataStore);
+    await setUpReplicants(activeRoundReps, activeRoundStore);
 
-import '../styles/globalStyles.css';
-import '../styles/statusDisplay.css';
-import './resolvePredictionDialog.css';
-
-NodeCG.waitForReplicants(predictionStore, activeRound).then(() => {
-    predictionStore.on('change', newValue => {
-        autoResolveWinner(activeRound.value, newValue);
-        setUI(newValue);
-    });
-
-    activeRound.on('change', newValue => {
-        autoResolveWinner(newValue, predictionStore.value);
-        setUI(predictionStore.value);
-        if (!newValue.round.isCompleted) {
-            showMessage(
-                'round-completed-warning',
-                'warning',
-                'The active round has not yet completed!',
-                (elem) => appendElementAfter(elem, elementById('resolve-space-title')));
-        } else {
-            hideMessage('round-completed-warning');
-        }
-    });
-});
-
-// Assign onclick functions to buttons
-autoResolveBtn.addEventListener('click', () => resolvePrediction(winningOption.optionIndex));
-resolveOptionABtn.addEventListener('click', () => resolvePrediction(0));
-resolveOptionBBtn.addEventListener('click', () => resolvePrediction(1));
+    const app = createApp(Panel);
+    setUpErrorHandler(app);
+    app.use(predictionDataStore, predictionDataStoreKey);
+    app.use(activeRoundStore, activeRoundStoreKey);
+    app.mount('#app');
+})();

@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`messageHelper showMessage creates message if one does not exist 1`] = `"<div class=\\"space info layout message\\" id=\\"msg\\"><i class=\\"icon fas fa-info-circle\\"></i><div class=\\"content\\">Message!</div></div>"`;
-
-exports[`messageHelper showMessage edits existing message to match given parameters 1`] = `"<div class=\\"space layout message warning\\" id=\\"msg1212\\"><i class=\\"icon fas fa-info-circle\\"></i><div class=\\"content\\">Message?</div></div>"`;

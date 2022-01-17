@@ -6,11 +6,11 @@
  */
 
 export interface PredictionStore {
-	/**
-	 * If Predictions should be enabled for current settings
-	 */
-	enablePrediction: boolean;
-	socketOpen: boolean;
+	status: {
+		predictionsEnabled: boolean;
+		predictionStatusReason?: string;
+		socketOpen: boolean;
+	};
 	modificationTime?: string;
 	currentPrediction?: Prediction;
 }

@@ -1,13 +1,13 @@
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import '../styles/globalStyles.scss';
+import { setUpReplicants } from '../helpers/storeHelper';
+import Panel from './highlightedMatches.vue';
+import { createApp } from 'vue';
+import { highlightedMatchReps, highlightedMatchStore, highlightedMatchStoreKey } from './highlightedMatchStore';
+import { setUpErrorHandler } from '../store/errorHandlerStore';
 
-library.add(faExclamationTriangle, faInfoCircle);
-dom.watch();
-
-import '../components/multiSelect';
-
-import '../styles/globalStyles.css';
-import '../styles/statusDisplay.css';
-
-import './matchData';
+setUpReplicants(highlightedMatchReps, highlightedMatchStore).then(() => {
+    const app = createApp(Panel);
+    setUpErrorHandler(app);
+    app.use(highlightedMatchStore, highlightedMatchStoreKey);
+    app.mount('#app');
+});

@@ -4,7 +4,7 @@ import { PredictionStore, RadiaSettings } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export default (nodecg: NodeCG & NodeCGStatic): void => {
+export = (nodecg: NodeCG & NodeCGStatic): void => {
     nodecgContext.set(nodecg);
 
     require('./importers/music');
@@ -15,11 +15,12 @@ export default (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/activeRound');
     require('./replicants/nextRound');
     require('./replicants/tournamentData');
+    require('./replicants/casters');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
-    predictionStore.value.socketOpen = false;
+    predictionStore.value.status.socketOpen = false;
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
@@ -27,9 +28,12 @@ export default (nodecg: NodeCG & NodeCGStatic): void => {
             + 'Production API will not be possible.'
         );
         radiaSettings.value.enabled = false;
-        predictionStore.value.enablePrediction = false;
+        predictionStore.value.status.predictionsEnabled = false;
+        predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
     } else {
-        radiaSettings.value.enabled = true;
+        radiaSettings.value.enabled = false;
+        predictionStore.value.status.socketOpen = false;
+        require('./importers/radiaAvailabilityCheck');
         require('./importers/casters');
         require('./importers/predictions');
     }

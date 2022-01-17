@@ -1,11 +1,11 @@
 import { ColorGroup } from '../types/colors';
-import kebabCase from 'lodash/kebabCase';
 
 export const splatStages = [
     'Ancho-V Games',
     'Arowana Mall',
     'Blackbelly Skatepark',
     'Camp Triggerfish',
+    'Counterpick',
     'Goby Arena',
     'Humpback Pump Track',
     'Inkblot Art Academy',
@@ -182,7 +182,3 @@ export const colors: ColorGroup[] = [
         ]
     }
 ];
-
-export function getColorOptionName(index: number, categoryName: string): string {
-    return `${kebabCase(categoryName)}_${index}`;
-}

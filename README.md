@@ -40,7 +40,8 @@ ipl-overlay-controls for your own graphics.
     "apiKey": "Your smash.gg API key"
   },
   "radia": {
-    "url": "URL to Radia Production API ",
+    "url": "https://radia-production",
+    "socketUrl": "wss://radia-websocket",
     "authentication": "Your Authentication Key"
   }
 }
@@ -64,6 +65,10 @@ For development, a number of npm scripts are provided:
 - `watch` - Runs a development build when code changes are detected.
 - `schema-types` - Generates TS type definitions for replicant schemas (Defined in the `/schemas` directory)
 - `lint` - Runs ESLint to check for code issues.
+- `fix` - Automatically fixes some ESLint errors
+- `test` - Runs unit tests
+- `test:update` - Runs unit tests while updating snapshots
+- `test:ci` - Runs unit tests and creates a result file for Continuous Integration systems to parse
 
 This repository uses GitHub actions to automatically verify with ESLint and create builds from the master branch. 
 New releases should be created off the `build` branch, which contains the built files.
@@ -79,16 +84,17 @@ To create a debuggable development build, run `npm run watch` or `npm run devbui
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2021-09-05:
+The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2022-01-14:
 
 - [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
+- [sj-overlay](https://github.com/IPLSplatoon/sj-overlays)
+- [sos-overlays](https://github.com/inkfarer/sos-overlays)
 
-The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2021-09-05:
+The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2022-01-14:
 
 - [reef-rushdown-overlays](https://github.com/IPLSplatoon/reef-rushdown-overlays)
 - [kotc-overlays](https://github.com/IPLSplatoon/kotc-overlays)
 - [checkpoint-overlays](https://github.com/inkfarer/checkpoint-overlays)
-- [sos-overlays](https://github.com/inkfarer/sos-overlays)
 - [ut-overlays](https://github.com/inkfarer/ut-overlays)
 
 The following bundles depend on version **1.x.x** (latest: 1.3.2) of ipl-overlay-controls as of 2021-06-11:

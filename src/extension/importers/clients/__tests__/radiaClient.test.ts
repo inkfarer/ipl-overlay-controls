@@ -33,6 +33,27 @@ describe('radiaClient', () => {
         });
     });
 
+    describe('getGuildInfo', () => {
+        it('returns the API response', async () => {
+            const expectedResult = { twitch_channel: 'iplsplatoon' };
+            mockGet.mockResolvedValue({ data: expectedResult });
+
+            const result = await client.getGuildInfo('1705897320');
+
+            expect(mockGet).toHaveBeenCalledWith(
+                'radia://api/organisation/guild/1705897320',
+                { headers: { Authorization: 'radia_auth' } }
+            );
+            expect(result).toEqual(expectedResult);
+        });
+
+        it('handles errors', async () => {
+            mockGet.mockRejectedValue('err');
+
+            await expect(client.getGuildInfo('5208957')).rejects.toThrow('err');
+        });
+    });
+
     describe('hasPredictionSupport', () => {
         it('returns false if bundle config does not have an auth key', async () => {
             init({ radia: { } });

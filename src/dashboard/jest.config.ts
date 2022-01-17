@@ -1,12 +1,15 @@
 export default {
     clearMocks: true,
     testEnvironment: 'jsdom',
+    moduleFileExtensions: [ 'ts', 'js', 'json', 'vue' ],
     moduleNameMapper: {
         '\\.(css|scss)$': '<rootDir>/__mocks__/emptyModule.ts'
     },
     preset: 'ts-jest',
     transform: {
-        '^.+\\.(ts|tsx)?$': 'ts-jest'
+        '^.+\\.(ts|tsx)?$': 'ts-jest',
+        '.*\\.(vue)$': '@vue/vue3-jest'
     },
-    moduleDirectories: ['node_modules', 'src']
+    moduleDirectories: ['node_modules', 'src'],
+    setupFilesAfterEnv: ['./__mocks__/mockNodecg.ts']
 };

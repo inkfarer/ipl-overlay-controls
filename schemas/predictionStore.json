@@ -162,13 +162,25 @@
     },
     "type": "object",
     "properties": {
-        "enablePrediction": {
-            "description": "If Predictions should be enabled for current settings",
-            "type": "boolean"
-        },
-        "socketOpen": {
-            "type": "boolean"
-        },
+		"status": {
+			"type": "object",
+            "additionalProperties": false,
+			"properties": {
+				"predictionsEnabled": {
+					"type": "boolean"
+				},
+				"predictionStatusReason": {
+					"type": "string"
+				},
+				"socketOpen": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"predictionsEnabled",
+				"socketOpen"
+			]
+		},
         "modificationTime": {
             "type": "string",
             "format": "date-time"
@@ -178,12 +190,14 @@
         }
     },
     "required": [
-        "enablePrediction",
-        "socketOpen"
+		"status"
     ],
     "default": {
-        "enablePrediction": false,
-        "socketOpen": false
+        "status": {
+			"predictionsEnabled": false,
+			"socketOpen": false,
+			"predictionStatusReason": "?"
+		}
     },
     "additionalProperties": false
 }

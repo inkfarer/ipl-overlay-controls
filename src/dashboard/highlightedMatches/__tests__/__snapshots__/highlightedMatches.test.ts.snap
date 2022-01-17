@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HighlightedMatches displays warning for source UNKNOWN 1`] = `"Cannot import data from source 'Unknown'."`;
+
+exports[`HighlightedMatches displays warning for source UPLOAD 1`] = `"Cannot import data from source 'Uploaded file'."`;

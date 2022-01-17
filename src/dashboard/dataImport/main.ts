@@ -1,6 +1,13 @@
-import '../styles/globalStyles.css';
-import '../styles/statusDisplay.css';
-import './dataImport.css';
+import '../styles/globalStyles.scss';
+import { setUpReplicants } from '../helpers/storeHelper';
+import { createApp } from 'vue';
+import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';
+import DataImport from './dataImport.vue';
+import { setUpErrorHandler } from '../store/errorHandlerStore';
 
-import './teamData';
-import './roundData';
+setUpReplicants(tournamentDataReps, tournamentDataStore).then(() => {
+    const app = createApp(DataImport);
+    setUpErrorHandler(app);
+    app.use(tournamentDataStore, tournamentDataStoreKey);
+    app.mount('#app');
+});

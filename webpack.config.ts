@@ -5,56 +5,72 @@ import LiveReloadPlugin from 'webpack-livereload-plugin';
 import nodeExternals from 'webpack-node-externals';
 import * as globby from 'globby';
 import * as path from 'path';
-import webpack from 'webpack';
+import webpack, { DefinePlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import { VueLoaderPlugin } from 'vue-loader';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 
 function dashboardConfig(): webpack.Configuration {
-    const entries: { [key: string]: string } = globby
-        .sync(['*/main.js', '*/main.ts'], { cwd: 'src/dashboard' })
-        .reduce((prev, curr) => {
-            prev[path.basename(path.dirname(curr))] = `./${curr}`;
-            return prev;
-        }, {});
+    function getEntries(patterns: string[]): { [key: string]: string } {
+        return globby.sync(patterns, { cwd: 'src/dashboard' })
+            .reduce((prev, curr) => {
+                prev[path.basename(path.dirname(curr))] = `./${curr}`;
+                return prev;
+            }, {});
+    }
 
-    let plugins = [];
+    const entries = getEntries(['*/main.ts']);
 
-    plugins = plugins.concat(
-        [
-            ...Object.keys(entries)
-                .map(
-                    (entryName) =>
-                        new HtmlWebpackPlugin({
-                            filename: `${entryName}.html`,
-                            chunks: [entryName],
-                            title: entryName,
-                            template: `./${entryName}/${entryName}.html`
-                        })
-                )
-        ]
-    );
-
-    if (!isProd) {
-        plugins.push(
+    let plugins: any[] = [
+        new VueLoaderPlugin(),
+        ...Object.keys(entries).map((entryName) =>
+            new HtmlWebpackPlugin({
+                filename: `${entryName}.html`,
+                chunks: [entryName],
+                title: entryName,
+                template: 'template.html'
+            })
+        ),
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                extensions: {
+                    vue: {
+                        enabled: true,
+                        compiler: '@vue/compiler-sfc'
+                    }
+                }
+            }
+        }),
+        new DefinePlugin({
+            __VUE_OPTIONS_API__: JSON.stringify(false),
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(!isProd)
+        }),
+        ...(isProd ? [] : [
             new LiveReloadPlugin({
                 port: 0,
                 appendScriptTag: true
             })
-        );
-    }
+        ])
+    ];
 
     return {
         context: path.resolve(__dirname, 'src/dashboard'),
         mode: isProd ? 'production' : 'development',
         target: 'web',
-        entry: entries,
+        entry: {
+            ...entries
+        },
         output: {
             path: path.resolve(__dirname, 'dashboard'),
             filename: 'js/[name].js'
         },
         resolve: {
-            extensions: ['.js', '.ts', '.json'],
+            extensions: ['.js', '.ts', '.tsx', '.json'],
+            alias: {
+                vue: 'vue/dist/vue.runtime.esm-bundler.js',
+            },
             plugins: [
                 new TsconfigPathsPlugin({
                     configFile: 'tsconfig-browser.json'
@@ -63,6 +79,10 @@ function dashboardConfig(): webpack.Configuration {
         },
         module: {
             rules: [
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader'
+                },
                 {
                     test: /\.css$/,
                     use: [
@@ -76,23 +96,20 @@ function dashboardConfig(): webpack.Configuration {
                     ]
                 },
                 {
-                    test: /\.js$/,
-                    exclude: '/node_modules',
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env']
-                        }
-                    }
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
                 },
                 {
-                    test: /\.ts$/,
-                    exclude: '/node_modules',
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-typescript']
-                        }
+                    test: /\.tsx?$/,
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true,
+                        appendTsSuffixTo: [/\.vue$/],
+                        configFile: 'tsconfig-browser.json'
                     }
                 }
             ]
@@ -133,25 +150,11 @@ const extensionConfig: webpack.Configuration = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: '/node_modules',
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['@babel/preset-env', { modules: 'commonjs' }]],
-                        plugins: ['add-module-exports']
-                    }
-                }
-            },
-            {
                 test: /\.ts$/,
                 exclude: '/node_modules',
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['@babel/preset-env', { modules: 'commonjs' }], '@babel/preset-typescript'],
-                        plugins: ['add-module-exports']
-                    }
+                loader: 'ts-loader',
+                options: {
+                    configFile: 'tsconfig-extension.json'
                 }
             }
         ]

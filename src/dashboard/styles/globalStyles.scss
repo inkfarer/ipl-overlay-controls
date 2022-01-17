@@ -1,0 +1,62 @@
+@import './layout.scss';
+@import './colors.scss';
+@import './badges.scss';
+@import './constants.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+body {
+    margin: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+    display: block;
+}
+
+p {
+    margin: 2px 0;
+}
+
+a {
+    color: #0090FF;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: $background-tertiary rgba(0, 0, 0, 0);
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $background-tertiary;
+        border-radius: 3px;
+    }
+}
+
+.text-small {
+    font-size: 0.75em;
+    font-weight: 400;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.wrap-anywhere {
+    overflow-wrap: anywhere;
+}

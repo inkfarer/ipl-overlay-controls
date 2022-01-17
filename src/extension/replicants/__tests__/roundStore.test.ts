@@ -28,6 +28,13 @@ describe('roundStore', () => {
         setNextRoundGames: mockSetNextRoundGames
     }));
 
+    const mockGenerateId = jest.fn();
+
+    jest.mock('../../../helpers/generateId', () => ({
+        __esModule: true,
+        generateId: mockGenerateId
+    }));
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.resetModules();
@@ -42,6 +49,7 @@ describe('roundStore', () => {
             nodecg.replicants.roundStore.value = { };
             nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            const ack = jest.fn();
 
             nodecg.messageListeners.updateRoundStore({
                 id: '234234',
@@ -51,8 +59,19 @@ describe('roundStore', () => {
                     { stage: 'Moray Towers', mode: 'Rainmaker' },
                     { stage: 'Manta Maria', mode: 'Tower Control' }
                 ]
-            });
+            }, ack);
 
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: '234234',
+                round: {
+                    games: [
+                        { stage: 'Blackbelly Skatepark', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
+                        { stage: 'Moray Towers', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
+                        { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ],
+                    meta: { name: 'Cool Round' }
+                }
+            });
             expect(nodecg.replicants.roundStore.value).toEqual({
                 '234234': {
                     meta: {
@@ -84,6 +103,7 @@ describe('roundStore', () => {
             };
             nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            const ack = jest.fn();
 
             nodecg.messageListeners.updateRoundStore({
                 id: 'aaaaaa',
@@ -93,8 +113,19 @@ describe('roundStore', () => {
                     { stage: 'Port Mackerel', mode: 'Clam Blitz' },
                     { stage: 'Humpback Pump Track', mode: 'Tower Control' }
                 ]
-            });
+            }, ack);
 
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: 'aaaaaa',
+                round: {
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ],
+                    meta: { name: 'Rad Round (Updated)' }
+                }
+            });
             expect(nodecg.replicants.roundStore.value).toEqual({
                 aaaaaa: {
                     meta: {
@@ -126,6 +157,7 @@ describe('roundStore', () => {
             };
             nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '234' } };
+            const ack = jest.fn();
 
             nodecg.messageListeners.updateRoundStore({
                 id: '123',
@@ -135,8 +167,19 @@ describe('roundStore', () => {
                     { stage: 'Port Mackerel', mode: 'Clam Blitz' },
                     { stage: 'Humpback Pump Track', mode: 'Tower Control' }
                 ]
-            });
+            }, ack);
 
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: '123',
+                round: {
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ],
+                    meta: { name: 'R' }
+                }
+            });
             expect(mockSetActiveRoundGames).toHaveBeenCalledWith('123');
             expect(mockSetNextRoundGames).not.toHaveBeenCalled();
         });
@@ -157,6 +200,7 @@ describe('roundStore', () => {
             };
             nodecg.replicants.activeRound.value = { round: { id: '234' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            const ack = jest.fn();
 
             nodecg.messageListeners.updateRoundStore({
                 id: '123',
@@ -166,10 +210,63 @@ describe('roundStore', () => {
                     { stage: 'Port Mackerel', mode: 'Clam Blitz' },
                     { stage: 'Humpback Pump Track', mode: 'Tower Control' }
                 ]
-            });
+            }, ack);
 
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: '123',
+                round: {
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ],
+                    meta: { name: 'R' }
+                }
+            });
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('123');
             expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
+        });
+
+        it('generates id for round if it is not given', () => {
+            mockGenerateId.mockReturnValue('new round id');
+            nodecg.replicants.roundStore.value = {};
+            nodecg.replicants.activeRound.value = { round: { id: '123' } };
+            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            const ack = jest.fn();
+
+            nodecg.messageListeners.updateRoundStore({
+                roundName: 'Rad Round (Updated)',
+                games: [
+                    { stage: 'MakoMart', mode: 'Clam Blitz' },
+                    { stage: 'Port Mackerel', mode: 'Clam Blitz' },
+                    { stage: 'Humpback Pump Track', mode: 'Tower Control' }
+                ]
+            }, ack);
+
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: 'new round id',
+                round: {
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ],
+                    meta: { name: 'Rad Round (Updated)' }
+                }
+            });
+            expect(nodecg.replicants.roundStore.value).toEqual({
+                'new round id': {
+                    meta: {
+                        name: 'Rad Round (Updated)',
+                        isCompleted: false
+                    },
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                    ]
+                }
+            });
         });
     });
 

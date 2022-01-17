@@ -1,0 +1,19 @@
+@import './colors.scss';
+
+span.badge {
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 0.75em;
+    display: inline-block;
+    margin-right: 4px;
+    transform: translate(0, -1px);
+
+    &.badge-blue {
+        background-color: $blue
+    }
+
+    &.badge-red {
+        background-color: $red;
+    }
+}

@@ -1,6 +1,11 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, SwapColorsInternally } from 'schemas';
-import { SetActiveColorRequest, SetWinnerRequest, UpdateActiveGamesRequest } from 'types/messages/activeRound';
+import {
+    SetActiveColorRequest,
+    SetWinnerRequest,
+    UpdateActiveGamesRequest,
+    SwapRoundColorRequest
+} from 'types/messages/activeRound';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
@@ -74,12 +79,12 @@ nodecg.listenFor('beginNextMatch', () => {
     activeRound.value = {
         ...activeRound.value,
         teamA: {
-            ...activeRound.value.teamA,
+            color: activeRound.value.teamA.color,
             ...clone(nextRound.value.teamA),
             score: 0
         },
         teamB: {
-            ...activeRound.value.teamB,
+            color: activeRound.value.teamB.color,
             ...clone(nextRound.value.teamB),
             score: 0
         },
@@ -104,4 +109,17 @@ nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
     };
     activeRound.value.teamA.color = data.color.clrA;
     activeRound.value.teamB.color = data.color.clrB;
+});
+
+nodecg.listenFor('swapRoundColor', (data: SwapRoundColorRequest) => {
+    const existingColor = activeRound.value.games[data.roundIndex]?.color;
+
+    if (!existingColor || existingColor.colorsSwapped === data.colorsSwapped) return;
+
+    activeRound.value.games[data.roundIndex].color = {
+        ...existingColor,
+        clrA: existingColor.clrB,
+        clrB: existingColor.clrA,
+        colorsSwapped: !existingColor.colorsSwapped
+    };
 });
