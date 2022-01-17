@@ -23,3 +23,10 @@ export interface RadiaSocketMessage {
     event: unknown;
     timestamp?: string;
 }
+
+export interface GuildInfo {
+    guild_id: string;
+    twitch_channel: string;
+    bracket_link: string;
+    tournament_name: string;
+}

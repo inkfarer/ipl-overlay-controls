@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`multiSelect handles deletions of selected options 1`] = `"<div class=\\"option\\" data-option-value=\\"opt-three\\"></div>"`;
-
-exports[`multiSelect handles multiple values being selected 1`] = `"<div class=\\"option\\" data-option-value=\\"opt-two\\"></div><div class=\\"option\\" data-option-value=\\"opt-three\\"></div>"`;
-
-exports[`multiSelect handles the same value being selected more than once 1`] = `"<div class=\\"option\\" data-option-value=\\"opt-two\\"></div>"`;
-
-exports[`multiSelect handles values being selected 1`] = `"<div class=\\"option\\" data-option-value=\\"opt-two\\"></div>"`;

@@ -1,286 +1,270 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
-import { dispatch, elementById } from '../../helpers/elemHelper';
+import Predictions from '../predictions.vue';
+import { config, mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
+import { PredictionStatus } from 'types/enums/predictionStatus';
+import { mockDialog, mockGetDialog, mockSendMessage } from '../../__mocks__/mockNodecg';
 
-describe('predictions', () => {
-    let nodecg: MockNodecg;
+describe('Predictions', () => {
+    const mockLockPrediction = jest.fn();
+    const mockCancelPrediction = jest.fn();
 
-    beforeEach(() => {
-        jest.resetModules();
-        jest.resetAllMocks();
+    config.global.stubs = {
+        PredictionDataDisplay: true,
+        IplDataRow: true,
+        IplButton: true,
+        IplErrorDisplay: true
+    };
 
-        nodecg = new MockNodecg();
-        nodecg.init();
+    const createPredictionDataStore = () => {
+        return createStore<PredictionDataStore>({
+            state: {
+                predictionStore: {
+                    status: {
+                        socketOpen: true,
+                        predictionsEnabled: true
+                    },
+                    currentPrediction: {
+                        id: 'prediction123',
+                        broadcasterId: 'ipl',
+                        broadcasterName: 'IPL',
+                        broadcasterLogin: 'eye pee el',
+                        title: 'Who will win?',
+                        outcomes: [
+                            {
+                                id: 'outcome-1',
+                                title: 'First Team',
+                                users: 5,
+                                pointsUsed: 10000,
+                                topPredictors: [],
+                                color: 'BLUE'
+                            },
+                            {
+                                id: 'outcome-2',
+                                title: 'Second Team',
+                                users: 1,
+                                pointsUsed: 1,
+                                topPredictors: [],
+                                color: 'PINK'
+                            }
+                        ],
+                        duration: 60,
+                        status: PredictionStatus.ACTIVE,
+                        creationTime: '2020'
+                    }
+                }
+            },
+            actions: {
+                lockPrediction: mockLockPrediction,
+                cancelPrediction: mockCancelPrediction,
+                reconnect: jest.fn()
+            }
+        });
+    };
 
-        document.body.innerHTML = `
-            <div id="prediction-data-status"></div>
-            <div id="option-wrapper-a">
-                <div id="option-data-wrapper-a" class="option-data-wrapper">
-                    <div id="option-title-a" class="option-title"></div>
-                    <div id="percent-a" class="percent"></div>
-                    <div id="bar-a" class="bar"></div>
-                    <label id="label-a"></label>
-                </div>
-            </div>
-            <div id="option-wrapper-b">
-                <div id="option-data-wrapper-b" class="option-data-wrapper">
-                    <div id="option-title-b" class="option-title"></div>
-                    <div id="percent-b" class="percent"></div>
-                    <div id="bar-b" class="bar"></div>
-                    <label id="label-b"></label>
-                </div>
-            </div>
-            <div id="get-prediction-status"></div>
-            <div id="prediction-point-count"></div>
-            <div id="prediction-title"></div>
-            <div id="no-prediction-message"></div>
-            <div id="unsupported-service-message"></div>
-            <div id="current-prediction-space"></div>
-            <div id="prediction-get-space"></div>
-            <div id="prediction-request-status"></div>
-            <button id="create-prediction-btn"></button>
-            <button id="resolve-prediction-btn"></button>
-            <button id="lock-prediction-btn"></button>
-            <button id="cancel-prediction-btn"></button>
-            <button id="get-predictions-btn"></button>
-            <button id="show-prediction-btn"></button>
-        `;
+    it('shows warning if predictions are not enabled', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.status.predictionsEnabled = false;
+        store.state.predictionStore.status.predictionStatusReason = 'Predictions are disabled!';
+        store.state.predictionStore.currentPrediction = undefined;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
 
-        require('../predictions');
+        expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="prediction-data-display"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="prediction-management-space"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-reconnect-button"]').exists()).toEqual(false);
+        const predictionsDisabledMessage = wrapper.findComponent('[data-test="predictions-disabled-message"]');
+        expect(predictionsDisabledMessage.isVisible()).toEqual(true);
+        expect(predictionsDisabledMessage.text()).toEqual('Predictions are disabled!');
     });
 
-    describe('predictionStore: change', () => {
-        it('displays message if predictions are not enabled', () => {
-            nodecg.listeners.predictionStore({ enablePrediction: false });
-
-            expect(elementById('unsupported-service-message').style.display).toEqual('');
-            expect(elementById('current-prediction-space').style.display).toEqual('none');
-            expect(elementById('prediction-get-space').style.display).toEqual('none');
+    it('shows message and management space if prediction data is missing', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction = undefined;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
         });
 
-        it('displays message if no current prediction exists', () => {
-            nodecg.listeners.predictionStore({ enablePrediction: true, currentPrediction: undefined });
-
-            expect(elementById('no-prediction-message').style.display).toEqual('');
-            expect(elementById('current-prediction-space').style.display).toEqual('none');
-            expect(elementById('unsupported-service-message').style.display).toEqual('none');
-            expect(elementById('prediction-get-space').style.display).toEqual('');
-        });
-
-        it('hides option to fetch prediction data if websocket is open', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: undefined,
-                socketOpen: true
-            });
-
-            expect(elementById('prediction-get-space').style.display).toEqual('none');
-        });
-
-        it('shows option to fetch prediction data if websocket is closed', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: undefined,
-                socketOpen: false
-            });
-
-            expect(elementById('prediction-get-space').style.display).toEqual('');
-        });
-
-        it('updates prediction data displays', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { pointsUsed: 12000, title: 'Team A', id: '111', users: 10 },
-                        { pointsUsed: 9999, title: 'Team Bravo', id: '222', users: 11 }
-                    ],
-                    status: 'ACTIVE',
-                    title: 'Who will win?'
-                },
-                socketOpen: true
-            });
-
-            expect(elementById('prediction-point-count').innerText).toEqual('21999 points predicted by 21 users');
-            expect(elementById('get-prediction-status').innerText).toEqual('active');
-            expect(elementById('prediction-title').innerText).toEqual('Who will win?');
-
-            expect(elementById('option-title-a').innerText).toEqual('Team A');
-            expect(elementById('percent-a').innerText).toEqual('55%');
-            expect(elementById('label-a').innerText).toEqual('Option A');
-            expect(elementById('bar-a').style.width).toEqual('55%');
-            expect(elementById('option-wrapper-a').dataset.outcomeId).toEqual('111');
-
-            expect(elementById('option-title-b').innerText).toEqual('Team Bravo');
-            expect(elementById('percent-b').innerText).toEqual('45%');
-            expect(elementById('label-b').innerText).toEqual('Option B');
-            expect(elementById('bar-b').style.width).toEqual('45%');
-            expect(elementById('option-wrapper-b').dataset.outcomeId).toEqual('222');
-        });
-
-        it('updates prediction data displays when the first outcome is the winner', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { pointsUsed: 182390, title: 'Team A', id: 'aaa111' },
-                        { pointsUsed: 12313, title: 'Team Bravo', id: '222' }
-                    ],
-                    status: 'ACTIVE',
-                    title: 'Who will win?',
-                    winningOutcome: 'aaa111'
-                }
-            });
-
-            expect(elementById('option-data-wrapper-a').classList).toContain('winner');
-            expect(elementById('option-title-a').innerText).toEqual('Team A');
-            expect(elementById('percent-a').innerText).toEqual('94%');
-            const labelA = elementById('label-a');
-            expect(labelA.innerText).toEqual('Winner - Option A');
-            expect(labelA.classList).toContain('winner');
-            expect(elementById('bar-a').style.width).toEqual('94%');
-            expect(elementById('option-wrapper-a').dataset.outcomeId).toEqual('aaa111');
-
-            expect(elementById('option-data-wrapper-b').classList).not.toContain('winner');
-            expect(elementById('option-title-b').innerText).toEqual('Team Bravo');
-            expect(elementById('percent-b').innerText).toEqual('6%');
-            const labelB = elementById('label-b');
-            expect(labelB.innerText).toEqual('Option B');
-            expect(labelB.classList).not.toContain('winner');
-            expect(elementById('bar-b').style.width).toEqual('6%');
-            expect(elementById('option-wrapper-b').dataset.outcomeId).toEqual('222');
-        });
-
-        it('updates prediction data displays when the second outcome is the winner', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { pointsUsed: 585833, title: 'Team Alpha', id: '1212' },
-                        { pointsUsed: 1029387, title: 'The Second Team', id: 'bbb123' }
-                    ],
-                    status: 'ACTIVE',
-                    title: 'Who will win?',
-                    winningOutcome: 'bbb123'
-                }
-            });
-
-            expect(elementById('option-data-wrapper-a').classList).not.toContain('winner');
-            expect(elementById('option-title-a').innerText).toEqual('Team Alpha');
-            expect(elementById('percent-a').innerText).toEqual('36%');
-            const labelA = elementById('label-a');
-            expect(labelA.innerText).toEqual('Option A');
-            expect(labelA.classList).not.toContain('winner');
-            expect(elementById('bar-a').style.width).toEqual('36%');
-            expect(elementById('option-wrapper-a').dataset.outcomeId).toEqual('1212');
-
-            expect(elementById('option-data-wrapper-b').classList).toContain('winner');
-            expect(elementById('option-title-b').innerText).toEqual('The Second Team');
-            expect(elementById('percent-b').innerText).toEqual('64%');
-            const labelB = elementById('label-b');
-            expect(labelB.innerText).toEqual('Winner - Option B');
-            expect(labelB.classList).toContain('winner');
-            expect(elementById('bar-b').style.width).toEqual('64%');
-            expect(elementById('option-wrapper-b').dataset.outcomeId).toEqual('bbb123');
-        });
-
-        it('hides appropriate buttons if status is ACTIVE', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { channel_points: 585833, title: 'Team Alpha', id: '1212' },
-                        { channel_points: 1029387, title: 'The Second Team', id: 'bbb123' }
-                    ],
-                    status: 'ACTIVE',
-                    title: 'Who will win?',
-                    winning_outcome_id: 'bbb123'
-                }
-            });
-
-            expect(elementById('lock-prediction-btn').style.display).toEqual('');
-            expect(elementById('cancel-prediction-btn').style.display).toEqual('');
-            expect(elementById('prediction-request-status').style.display).toEqual('');
-            expect(elementById('resolve-prediction-btn').style.display).toEqual('none');
-            expect(elementById('create-prediction-btn').style.display).toEqual('none');
-        });
-
-        it('hides appropriate buttons if status is LOCKED', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { channel_points: 585833, title: 'Team Alpha', id: '1212' },
-                        { channel_points: 1029387, title: 'The Second Team', id: 'bbb123' }
-                    ],
-                    status: 'LOCKED',
-                    title: 'Who will win?',
-                    winning_outcome_id: 'bbb123'
-                }
-            });
-
-            expect(elementById('lock-prediction-btn').style.display).toEqual('none');
-            expect(elementById('cancel-prediction-btn').style.display).toEqual('');
-            expect(elementById('prediction-request-status').style.display).toEqual('');
-            expect(elementById('resolve-prediction-btn').style.display).toEqual('');
-            expect(elementById('create-prediction-btn').style.display).toEqual('none');
-        });
-
-        it('hides appropriate buttons if status is RESOLVED', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { channel_points: 585833, title: 'Team Alpha', id: '1212' },
-                        { channel_points: 1029387, title: 'The Second Team', id: 'bbb123' }
-                    ],
-                    status: 'RESOLVED',
-                    title: 'Who will win?',
-                    winning_outcome_id: 'bbb123'
-                }
-            });
-
-            expect(elementById('lock-prediction-btn').style.display).toEqual('none');
-            expect(elementById('cancel-prediction-btn').style.display).toEqual('none');
-            expect(elementById('prediction-request-status').style.display).toEqual('none');
-            expect(elementById('resolve-prediction-btn').style.display).toEqual('none');
-            expect(elementById('create-prediction-btn').style.display).toEqual('');
-        });
-
-        it('hides appropriate buttons if status is CANCELED', () => {
-            nodecg.listeners.predictionStore({
-                enablePrediction: true,
-                currentPrediction: {
-                    outcomes: [
-                        { channel_points: 585833, title: 'Team Alpha', id: '1212' },
-                        { channel_points: 1029387, title: 'The Second Team', id: 'bbb123' }
-                    ],
-                    status: 'CANCELED',
-                    title: 'Who will win?',
-                    winning_outcome_id: 'bbb123'
-                }
-            });
-
-            expect(elementById('lock-prediction-btn').style.display).toEqual('none');
-            expect(elementById('cancel-prediction-btn').style.display).toEqual('none');
-            expect(elementById('prediction-request-status').style.display).toEqual('none');
-            expect(elementById('resolve-prediction-btn').style.display).toEqual('none');
-            expect(elementById('create-prediction-btn').style.display).toEqual('');
-        });
+        expect(wrapper.findComponent('[data-test="predictions-disabled-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-reconnect-button"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="prediction-data-display"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').isVisible()).toEqual(true);
+        expect(wrapper.findComponent('[data-test="prediction-management-space"]').isVisible()).toEqual(true);
     });
 
-    describe('get-predictions-btn: click', () => {
-        it('sends message', () => {
-            dispatch(elementById('get-predictions-btn'), 'click');
-
-            expect(nodecg.sendMessage).toHaveBeenCalledWith('getPredictions', {}, expect.any(Function));
+    it('shows prediction data if predictions are enabled and data is present', () => {
+        const store = createPredictionDataStore();
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
         });
+
+        expect(wrapper.findComponent('[data-test="no-prediction-data-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-closed-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="socket-reconnect-button"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="predictions-disabled-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="prediction-data-display"]').isVisible()).toEqual(true);
+        expect(wrapper.findComponent('[data-test="prediction-management-space"]').isVisible()).toEqual(true);
     });
 
-    describe('show-prediction-btn: click', () => {
-        it('sends a message', () => {
-            dispatch(elementById('show-prediction-btn'), 'click');
-
-            expect(nodecg.sendMessage).toHaveBeenCalledWith('showPredictionData');
+    it('shows message if websocket is closed', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.status.socketOpen = false;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
         });
+
+        const message = wrapper.findComponent('[data-test="socket-closed-message"]');
+        expect(message.exists()).toEqual(true);
+        expect(message.isVisible()).toEqual(true);
+        const reconnectButton = wrapper.findComponent('[data-test="socket-reconnect-button"]');
+        expect(reconnectButton.exists()).toEqual(true);
+        expect(reconnectButton.isVisible()).toEqual(true);
+    });
+
+    it('dispatches to store on reconnect', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.status.socketOpen = false;
+        jest.spyOn(store, 'dispatch');
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="socket-reconnect-button"]').vm.$emit('click');
+
+        expect(store.dispatch).toHaveBeenCalledWith('reconnect');
+    });
+
+    it('shows expected buttons if prediction status is RESOLVED', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        expect(wrapper.get('.prediction-button-container').html()).toMatchSnapshot();
+    });
+
+    it('shows expected buttons if prediction status is LOCKED', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        expect(wrapper.get('.prediction-button-container').html()).toMatchSnapshot();
+    });
+
+    it('shows expected buttons if prediction status is CANCELED', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.CANCELED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        expect(wrapper.get('.prediction-button-container').html()).toMatchSnapshot();
+    });
+
+    it('shows expected buttons if prediction status is ACTIVE', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        expect(wrapper.get('.prediction-button-container').html()).toMatchSnapshot();
+    });
+
+    it('shows dialog when resolving prediction', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="resolve-prediction-button"]').vm.$emit('click');
+
+        expect(mockDialog.open).toHaveBeenCalled();
+        expect(mockGetDialog).toHaveBeenCalledWith('resolvePredictionDialog');
+    });
+
+    it('shows dialog when creating prediction', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="create-prediction-button"]').vm.$emit('click');
+
+        expect(mockDialog.open).toHaveBeenCalled();
+        expect(mockGetDialog).toHaveBeenCalledWith('createPredictionDialog');
+    });
+
+    it('dispatches action when locking prediction', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="lock-prediction-button"]').vm.$emit('click');
+
+        expect(mockLockPrediction).toHaveBeenCalled();
+    });
+
+    it('dispatches action when cancelling prediction', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="cancel-prediction-button"]').vm.$emit('click');
+
+        expect(mockCancelPrediction).toHaveBeenCalled();
+    });
+
+    it('sends message when showing prediction data', () => {
+        const store = createPredictionDataStore();
+        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const wrapper = mount(Predictions, {
+            global: {
+                plugins: [[store, predictionDataStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="show-prediction-button"]').vm.$emit('click');
+
+        expect(mockSendMessage).toHaveBeenCalledWith('showPredictionData');
     });
 });

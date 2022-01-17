@@ -1,11 +1,19 @@
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import '../styles/globalStyles.scss';
+import '../styles/dialogStyles.scss';
+import { setUpReplicants } from '../helpers/storeHelper';
+import Panel from './createPredictionDialog.vue';
+import { createApp } from 'vue';
+import { predictionDataStore, predictionDataStoreKey, predictionReps } from '../store/predictionDataStore';
+import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextRoundStore';
+import { setUpErrorHandler } from '../store/errorHandlerStore';
 
-library.add(faExclamationTriangle, faInfoCircle);
-dom.watch();
+(async () => {
+    await setUpReplicants(predictionReps, predictionDataStore);
+    await setUpReplicants(nextRoundReps, nextRoundStore);
 
-import '../styles/globalStyles.css';
-import '../styles/statusDisplay.css';
-
-import './createPredictionDialog';
+    const app = createApp(Panel);
+    setUpErrorHandler(app);
+    app.use(predictionDataStore, predictionDataStoreKey);
+    app.use(nextRoundStore, nextRoundStoreKey);
+    app.mount('#app');
+})();

@@ -1,44 +1,48 @@
-import Mock = jest.Mock;
+import { NodeCGBrowser } from 'nodecg/browser';
+import { Configschema } from 'schemas';
 
-export type ReplicantChangeHandler = (newValue?: unknown, oldValue?: unknown) => void;
-export type MockReplicant = { value: unknown };
-type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
-
-export class MockNodecg {
-    replicants: {[key: string]: MockReplicant};
-    listeners: {[key: string]: ReplicantChangeHandler};
-    sendMessage: Mock
-
-    constructor() {
-        this.replicants = {};
-        this.listeners = {};
-        this.sendMessage = jest.fn();
+const defaultBundleConfig = {
+    lastfm: {
+        apiKey: 'lastfmkey123',
+        secret: 'lastfmsecret456'
+    },
+    smashgg: {
+        apiKey: 'smashggkey789'
+    },
+    radia: {
+        url: 'radia://url',
+        socketUrl: 'ws://radia.url',
+        authentication: 'radia-auth-12345'
     }
+};
 
-    init(): void {
-        const self = this;
-        window.nodecg = {
-            // @ts-ignore: Just a mock
-            Replicant(name: string) {
-                const replicantValue: { value: unknown, on: OnFunction } = {
-                    value: undefined,
-                    on: (event: string, handler: ReplicantChangeHandler) => {
-                        self.listeners[name] = handler;
-                    }
-                };
-                self.replicants[name] = replicantValue;
-                return replicantValue;
+export const mockDialog = {
+    open: jest.fn(),
+    close: jest.fn()
+};
+export const mockGetDialog = jest.fn().mockReturnValue(mockDialog);
+export const mockSendMessage = jest.fn();
+export let replicants: {[key: string]: unknown} = {};
+export let mockBundleConfig: Configschema = defaultBundleConfig;
+
+beforeEach(() => {
+    replicants = {};
+    mockBundleConfig = defaultBundleConfig;
+});
+
+window.nodecg = {
+    Replicant(name: string) {
+        return {
+            get value() {
+                return replicants[name];
             },
-            sendMessage: self.sendMessage,
-            // @ts-ignore: Just a mock
-            log: {
-                info: jest.fn()
-            }
+            set value(newValue: unknown) {
+                replicants[name] = newValue;
+            },
+            on: jest.fn()
         };
-
-        // @ts-ignore: It's a mock.
-        window.NodeCG = {
-            waitForReplicants: jest.fn().mockResolvedValue(true)
-        };
-    }
-}
+    },
+    sendMessage: mockSendMessage,
+    getDialog: mockGetDialog,
+    bundleConfig: mockBundleConfig
+} as unknown as NodeCGBrowser;

@@ -254,16 +254,18 @@ describe('activeRoundHelper', () => {
     });
 
     describe('setActiveRoundTeams', () => {
-        it('find team data from tournamentData and combines it with team data in activeRound', () => {
+        it('finds team data from tournamentData and combines it with team data in activeRound', () => {
             nodecg.replicants.tournamentData.value = {
                 teams: [
                     {
                         id: '123123',
-                        name: 'Team One'
+                        name: 'Team One',
+                        logoUrl: 'logo://cool_team'
                     },
                     {
                         id: '234234',
-                        name: 'Team Two'
+                        name: 'Team Two',
+                        customAttr: 'foobar'
                     }
                 ]
             };
@@ -274,7 +276,8 @@ describe('activeRoundHelper', () => {
                 },
                 teamB: {
                     score: 90,
-                    logoUrl: 'logo://team_two'
+                    logoUrl: 'logo://team_two',
+                    differentCustomAttr: 'yeehaw'
                 }
             };
 
@@ -284,12 +287,14 @@ describe('activeRoundHelper', () => {
                 teamA: {
                     id: '123123',
                     name: 'Team One',
-                    score: 10
+                    score: 10,
+                    logoUrl: 'logo://cool_team'
                 },
                 teamB: {
                     id: '234234',
                     name: 'Team Two',
-                    score: 90
+                    score: 90,
+                    customAttr: 'foobar'
                 }
             });
         });

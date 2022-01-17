@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rounds matches snapshot 1`] = `
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<!---->
+<div class=\\"ipl-expansion-panel__content\\" data-v-40cedb04=\\"\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
+    <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Create Round</div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-40cedb04=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
+  </div>
+  <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
+    <div class=\\"layout horizontal\\">
+      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
+    </div>
+    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
+  </div>
+</div>
+<div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11398c0e=\\"\\">
+  <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"menu-icon\\"></font-awesome-icon-stub> All Rounds
+</div>
+<round-editor-stub roundid=\\"2426\\" round=\\"[object Object]\\" isnewround=\\"false\\" class=\\"m-t-8\\" data-test=\\"round-editor\\"></round-editor-stub>"
+`;
+
+exports[`Rounds matches snapshot when round sidebar is open 1`] = `
+"<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
+<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\" data-v-2b6fb510=\\"\\">
+  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
+  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
+    <div class=\\"ipl-space color-light\\" data-v-11398c0e=\\"\\">
+      <ipl-button-stub label=\\"Reset rounds\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"reset-rounds-button\\"></ipl-button-stub>
+    </div>
+    <div class=\\"ipl-space color-light layout horizontal m-t-8\\" data-v-11398c0e=\\"\\">
+      <div class=\\"color-key color-key-active\\"></div> Active <div class=\\"color-key color-key-next\\"></div> Next
+    </div>
+    <div class=\\"ipl-space color-light m-t-8 round-option selected is-next-round\\" data-test=\\"round-option-2426\\" data-v-11398c0e=\\"\\">dope round the third</div>
+    <div class=\\"ipl-space color-light m-t-8 round-option is-active-round\\" data-test=\\"round-option-9573\\" data-v-11398c0e=\\"\\">dope round the second</div>
+    <div class=\\"ipl-space color-light m-t-8 round-option\\" data-test=\\"round-option-0387\\" data-v-11398c0e=\\"\\">dope round</div>
+  </div>
+</div>
+<div class=\\"ipl-expansion-panel__content\\" data-v-40cedb04=\\"\\">
+  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
+    <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Create Round</div>
+    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-40cedb04=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
+  </div>
+  <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
+    <div class=\\"layout horizontal\\">
+      <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
+    </div>
+    <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
+  </div>
+</div>
+<div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11398c0e=\\"\\">
+  <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"menu-icon\\"></font-awesome-icon-stub> All Rounds
+</div>
+<round-editor-stub roundid=\\"2426\\" round=\\"[object Object]\\" isnewround=\\"false\\" class=\\"m-t-8\\" data-test=\\"round-editor\\"></round-editor-stub>"
+`;

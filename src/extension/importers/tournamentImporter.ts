@@ -1,17 +1,14 @@
 import axios from 'axios';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
-import { RadiaSettings, TournamentData } from 'schemas';
+import { TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
-import { handleRawData, updateTeamDataReplicants } from './tournamentDataHelper';
+import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { GetSmashggEventRequest } from 'types/messages/tournamentData';
-import { updateTournamentData } from './clients/radiaClient';
-import isEmpty from 'lodash/isEmpty';
 
 const nodecg = nodecgContext.get();
-const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 
 let smashGGKey: string;
 
@@ -34,8 +31,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
         switch (data.method) {
             case TournamentDataSource.BATTLEFY: {
                 const serviceData = await getBattlefyTournamentData(data.id);
-                updateTeamDataReplicants(serviceData);
-                await updateRadiaTournamentData(serviceData.meta.url, serviceData.meta.name);
+                updateTournamentDataReplicants(serviceData);
                 ack(null, { id: serviceData.meta.id });
                 break;
             }
@@ -56,7 +52,7 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
             }
             case TournamentDataSource.UPLOAD: {
                 const serviceData = await getRawData(data.id);
-                updateTeamDataReplicants(serviceData);
+                updateTournamentDataReplicants(serviceData);
                 ack(null, { id: serviceData.meta.id });
                 break;
             }
@@ -76,25 +72,14 @@ nodecg.listenFor('getSmashggEvent', async (data: GetSmashggEventRequest, ack: Un
 
 async function getSmashggEventData(eventId: number): Promise<void> {
     const serviceData = await getSmashGGData(eventId, smashGGKey);
-    updateTeamDataReplicants(serviceData);
-    await updateRadiaTournamentData(serviceData.meta.url, serviceData.meta.name);
+    updateTournamentDataReplicants(serviceData);
 }
 
 async function getRawData(url: string): Promise<TournamentData> {
     const response = await axios.get(url);
     if (response.status === 200) {
-        return handleRawData(response.data, url);
+        return parseUploadedTeamData(response.data, url);
     } else {
         throw new Error(`Got response code ${response.status} from URL ${url}`);
-    }
-}
-
-async function updateRadiaTournamentData(tournamentUrl: string, tournamentName: string): Promise<void> {
-    if (radiaSettings.value.updateOnImport && !isEmpty(radiaSettings.value.guildID)) {
-        try {
-            await updateTournamentData(radiaSettings.value.guildID, tournamentUrl, tournamentName);
-        } catch (e) {
-            nodecg.log.warn(`Radia tournament data update failed: ${e}`);
-        }
     }
 }

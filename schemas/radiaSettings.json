@@ -10,6 +10,9 @@
         },
         "updateOnImport": {
             "type": "boolean"
+        },
+        "connectedChannel": {
+            "type": ["string", "null"]
         }
     },
     "required": ["guildID", "enabled", "updateOnImport"],

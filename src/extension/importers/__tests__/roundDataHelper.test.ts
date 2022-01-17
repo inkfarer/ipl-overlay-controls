@@ -1,15 +1,34 @@
-import { handleRoundData } from '../roundDataHelper';
-import * as generateId from '../../../helpers/generateId';
 import { GameWinner } from 'types/enums/gameWinner';
+import { Module } from '../../../helpers/__mocks__/module';
+import { MockNodecg } from '../../__mocks__/mockNodecg';
 
 describe('roundDataHelper', () => {
+    let helper: Module;
+    let nodecg: MockNodecg;
+
+    const mockGenerateId = {
+        __esModule: true,
+        generateId: jest.fn()
+    };
+    jest.mock('../../../helpers/generateId', () => mockGenerateId);
+
+    beforeEach(() => {
+        jest.resetAllMocks();
+        jest.resetModules();
+
+        nodecg = new MockNodecg({});
+        nodecg.init();
+
+        helper = require('../roundDataHelper');
+    });
+
     describe('handleRoundData', () => {
         it('generates normalized RoundStore object from rounds', () => {
-            jest.spyOn(generateId, 'generateId')
+            mockGenerateId.generateId
                 .mockReturnValueOnce('111111')
                 .mockReturnValueOnce('222222');
 
-            const result = handleRoundData([
+            const result = helper.handleRoundData([
                 {
                     name: 'Round 1',
                     games: [
@@ -47,6 +66,49 @@ describe('roundDataHelper', () => {
                     games: [
                         { stage: 'Humpback Pump Track', mode: 'Splat Zones', winner: GameWinner.NO_WINNER }
                     ]
+                }
+            });
+        });
+    });
+
+    describe('clearProgressForUnknownTeams', () => {
+        it('deletes progress for stored rounds where no matching team can be found in tournament data', () => {
+            nodecg.replicants.roundStore.value = {
+                aaaa: {
+                    teamA: { id: 'aaa' },
+                    teamB: { id: 'bbb' },
+                    meta: { name: 'Round 1', isCompleted: true, completionTime: '2020-01-01' }
+                },
+                bbbb: {
+                    teamA: { id: 'aaa' },
+                    teamB: { id: 'ccc' },
+                    meta: { name: 'Round 2', isCompleted: true, completionTime: '2020-01-02' }
+                },
+                cccc: {
+                    teamA: { id: 'ddd' },
+                    teamB: { id: 'bbb' },
+                    meta: { name: 'Round 3', isCompleted: false }
+                }
+            };
+
+            helper.clearProgressForUnknownTeams({
+                teams: [
+                    { id: 'aaa' },
+                    { id: 'bbb' }
+                ]
+            });
+
+            expect(nodecg.replicants.roundStore.value).toEqual({
+                aaaa: {
+                    teamA: { id: 'aaa' },
+                    teamB: { id: 'bbb' },
+                    meta: { name: 'Round 1', isCompleted: true, completionTime: '2020-01-01' }
+                },
+                bbbb: {
+                    meta: { name: 'Round 2', isCompleted: false }
+                },
+                cccc: {
+                    meta: { name: 'Round 3', isCompleted: false }
                 }
             });
         });

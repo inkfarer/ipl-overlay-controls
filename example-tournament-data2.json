@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "id": "6154a11821cea533c019c03e",
+    "source": "BATTLEFY",
+    "name": "Low Ink October 2021",
+    "url": "https://battlefy.com/inkling-performance-labs/low-ink-october-2021/6154a11821cea533c019c03e/info?infoTab=details"
+  },
+  "teams": [
+    {
+      "id": "61708f63bda3c053cdfb7ba3",
+      "name": "Unlimited Woomy United",
+      "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F604c2062c3003717893d773f%2F1618916682314.png?alt=media&token=3bc7a282-b71c-48e9-abd7-1624f6118c98",
+      "showLogo": true,
+      "players": [
+        {
+          "name": "UwU Axiom",
+          "username": "Ūw Axiom"
+        },
+        {
+          "name": "UwU Nothv",
+          "username": "Nothingv"
+        },
+        {
+          "name": "CD_UwUmy",
+          "username": "CD_Woomy"
+        },
+        {
+          "name": "UwU UwUzi",
+          "username": "UwUzi"
+        },
+        {
+          "name": "Akashi",
+          "username": "coolwing179"
+        }
+      ]
+    },
+    {
+      "id": "615cdaa6812acc2dbe1b8af1",
+      "name": "Up the Ante!",
+      "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F60822695b5f77b3b6e4391cb%2F1626376757502.png?alt=media&token=fdc43cfa-aed5-42bc-9676-d7b3e0036cb1",
+      "showLogo": true,
+      "players": [
+        {
+          "name": "↑Toes↑",
+          "username": "Toetinos"
+        },
+        {
+          "name": "↑grace^^↑",
+          "username": "tub-nug"
+        },
+        {
+          "name": "↑DeeGee↑",
+          "username": "DeeGee"
+        },
+        {
+          "name": "↑Lemon π↑",
+          "username": "Lemon Pies"
+        },
+        {
+          "name": "↑juicenox↑",
+          "username": "juicenox"
+        }
+      ]
+    },
+    {
+      "id": "61733f046bfaf4737fe88de0",
+      "name": "vivace",
+      "logoUrl": "",
+      "showLogo": true,
+      "players": [
+        {
+          "name": "dre",
+          "username": "persimmon"
+        },
+        {
+          "name": "Tako",
+          "username": "Wasutaki"
+        },
+        {
+          "name": "Eight",
+          "username": "miles4963"
+        },
+        {
+          "name": "gibs",
+          "username": "lirbig0322"
+        }
+      ]
+    },
+    {
+      "id": "616a5c7495148f116849f7aa",
+      "name": "Wipeout Punks",
+      "logoUrl": "https://firebasestorage.googleapis.com/v0/b/battlefy-2f59d.appspot.com/o/user-imgs%2F60749f809b322d11728c0f12%2F1624858256602.jpg?alt=media&token=fdec3100-7ac7-4dd8-9a91-03f3f00a74b1",
+      "showLogo": true,
+      "players": [
+        {
+          "name": "Rin™",
+          "username": "Hajime83"
+        },
+        {
+          "name": "Raven ^^",
+          "username": "RedCannon"
+        },
+        {
+          "name": "LiLStanley",
+          "username": "smoran17"
+        },
+        {
+          "name": "Jonjon :>",
+          "username": "Jon_jon"
+        },
+        {
+          "name": "ianboi/ian",
+          "username": "ianboi910do"
+        },
+        {
+          "name": "Chad POV",
+          "username": "purple7941"
+        },
+        {
+          "name": "LOSER",
+          "username": "RESOL"
+        },
+        {
+          "name": "MLG_Rafael",
+          "username": "rafailo630331"
+        },
+        {
+          "name": "Chara"
+        }
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "name": "Day 1: Group A",
+      "id": "6154a14721cea533c019c0c7",
+      "type": "SWISS"
+    },
+    {
+      "name": "Day 1: Group B",
+      "id": "6154a1600683ae6a300aa766",
+      "type": "SWISS"
+    },
+    {
+      "name": "Day 2: Alpha Bracket",
+      "id": "6154a18f21cea533c019c0e2",
+      "type": "DOUBLE_ELIMINATION"
+    },
+    {
+      "name": "Day 2: Beta Bracket",
+      "id": "6154a1a9b58f5e6a4124b009",
+      "type": "DOUBLE_ELIMINATION"
+    },
+    {
+      "name": "Day 2: Gamma Bracket",
+      "id": "6154a1c37bfb7e3d52b93824",
+      "type": "DOUBLE_ELIMINATION"
+    }
+  ]
+}

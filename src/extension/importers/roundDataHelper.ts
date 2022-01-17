@@ -3,6 +3,14 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { generateId } from '../../helpers/generateId';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { ImporterRound } from 'types/importer';
+import { TournamentData } from '../../types/schemas';
+import * as nodecgContext from '../helpers/nodecg';
+import cloneDeep from 'lodash/cloneDeep';
+import isEmpty from 'lodash/isEmpty';
+
+const nodecg = nodecgContext.get();
+
+const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 
 const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
 const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
@@ -58,4 +66,22 @@ function normalizeModeName(name: string): string {
     }
 
     return splatModes[lowerCaseSplatModes.indexOf(name)];
+}
+
+export function clearProgressForUnknownTeams(tournamentData: TournamentData): void {
+    const teamIds = tournamentData.teams.map(team => team.id);
+
+    const newRounds = cloneDeep(roundStore.value);
+    Object.values(newRounds).forEach(round => {
+        if (!isEmpty(round.teamA) || !isEmpty(round.teamB)) {
+            if (!teamIds.includes(round.teamA.id) || !teamIds.includes(round.teamB.id)) {
+                delete round.meta.completionTime;
+                round.meta.isCompleted = false;
+                delete round.teamA;
+                delete round.teamB;
+            }
+        }
+    });
+
+    roundStore.value = newRounds;
 }

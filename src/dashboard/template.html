@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+        body {
+            background-color: #2F3A4F;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app"></div>
+</body>
+
+<script>
+    window.addEventListener('drop', e => {
+        e.preventDefault();
+    });
+    window.addEventListener('dragover', e => {
+        e.preventDefault();
+    });
+</script>
+
+</html>

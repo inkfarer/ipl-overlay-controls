@@ -7,6 +7,7 @@ import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setActiveRoundGames } from './activeRoundHelper';
 import { setNextRoundGames } from './nextRoundHelper';
 import { DateTime } from 'luxon';
+import { generateId } from '../../helpers/generateId';
 
 const nodecg = nodecgContext.get();
 
@@ -14,15 +15,16 @@ const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
-nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
-    const roundStoreValue = roundStore.value[data.id];
+nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+    const id = data.id ?? generateId();
+    const roundStoreValue = roundStore.value[id];
     const originalValue = clone(roundStoreValue);
 
     const mappedGames = clone(data.games).map((game, index) =>
         ({ ...game, winner: originalValue?.games[index]?.winner || GameWinner.NO_WINNER }));
 
     if (!roundStoreValue) {
-        roundStore.value[data.id] = {
+        roundStore.value[id] = {
             games: mappedGames,
             meta: {
                 name: data.roundName,
@@ -34,12 +36,22 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest) => {
         roundStoreValue.meta.name = data.roundName;
     }
 
-    if (activeRound.value.round.id === data.id) {
-        setActiveRoundGames(data.id);
+    if (activeRound.value.round.id === id) {
+        setActiveRoundGames(id);
     }
-    if (nextRound.value.round.id === data.id) {
-        setNextRoundGames(data.id);
+    if (nextRound.value.round.id === id) {
+        setNextRoundGames(id);
     }
+
+    return ack(null, {
+        id,
+        round: {
+            games: mappedGames,
+            meta: {
+                name: data.roundName
+            }
+        }
+    });
 });
 
 nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenForCb) => {

@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { GuildServices, RadiaApiCaster } from '../../types/radiaApi';
+import { GuildInfo, GuildServices, RadiaApiCaster } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
@@ -9,6 +9,18 @@ import { SetGuildInfoResponse } from 'types/radia';
 
 const nodecg = nodecgContext.get();
 const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
+
+export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
+    try {
+        const result = await axios.get<GuildInfo>(
+            `${radiaConfig.url}/organisation/guild/${guildId}`,
+            { headers: { Authorization: radiaConfig.authentication } });
+
+        return result.data;
+    } catch (e) {
+        handleAxiosError(e);
+    }
+}
 
 export async function hasPredictionSupport(guildId: string): Promise<boolean> {
     if (isEmpty(radiaConfig.authentication)) {
