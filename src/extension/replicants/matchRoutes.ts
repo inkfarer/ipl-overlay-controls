@@ -12,7 +12,7 @@ const matchStore = nodecg.Replicant<MatchStore>('matchStore');
     '/match-data',
     (req: express.Request, res: express.Response) => {
         res.set({ 'Content-Disposition': `attachment; filename="iploc-match-data_${DateTime.now().setZone('utc').toFormat('yyyy-LL-dd\'T\'T')}.json"` });
-        res.json(matchStore.value);
+        res.send(JSON.stringify(matchStore.value, null, 4));
     }
 );
 

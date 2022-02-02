@@ -32,7 +32,7 @@ describe('matchRoutes', () => {
         it('responds with match store value as file', () => {
             const res = {} as express.Response;
             res.set = jest.fn().mockReturnValue(res);
-            res.json = jest.fn().mockReturnValue(res);
+            res.send = jest.fn().mockReturnValue(res);
             nodecg.replicants.matchStore.value = { foo: 'bar' };
 
             nodecg.requestHandlers['GET']['/match-data']({} as express.Request, res, null);
@@ -40,7 +40,7 @@ describe('matchRoutes', () => {
             expect(res.set).toHaveBeenCalledWith({
                 'Content-Disposition': 'attachment; filename="iploc-match-data_2022-02-02T20:33.json"'
             });
-            expect(res.json).toHaveBeenCalledWith({ foo: 'bar' });
+            expect(res.send).toHaveBeenCalledWith(JSON.stringify({ foo: 'bar' }, null, 4));
         });
     });
 });
