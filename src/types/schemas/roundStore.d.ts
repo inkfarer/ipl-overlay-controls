@@ -5,51 +5,19 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type RoundTeam = {
-	id: string;
-	name: string;
-	logoUrl?: string;
-	showLogo: boolean;
-	players: {
-		name: string;
-		[k: string]: unknown;
-	}[];
-	[k: string]: unknown;
-} & {
-	score: number;
-	[k: string]: unknown;
-};
-
 export interface RoundStore {
 	[k: string]: Round;
 }
 export interface Round {
 	meta: {
 		name: string;
-		isCompleted: boolean;
-		completionTime?: string;
 		[k: string]: unknown;
 	};
 	games: Game[];
-	teamA?: RoundTeam;
-	teamB?: RoundTeam;
 	[k: string]: unknown;
 }
 export interface Game {
-	winner: 'none' | 'alpha' | 'bravo';
 	stage: string;
 	mode: string;
-	color?: {
-		index: number;
-		title: string;
-		clrA: string;
-		clrB: string;
-		categoryName: string;
-		isCustom: boolean;
-		[k: string]: unknown;
-	} & {
-		colorsSwapped: boolean;
-		[k: string]: unknown;
-	};
 	[k: string]: unknown;
 }

@@ -5,14 +5,14 @@
         data-test="active-round-editor"
     >
         <ipl-message
-            v-if="isChanged && roundHasProgress"
+            v-if="isChanged && matchHasProgress"
             type="info"
             data-test="round-progress-message"
         >
-            {{ selectedRound.meta.isCompleted
-                ? `'${selectedRound.meta.name}' is already completed.`
-                : `'${selectedRound.meta.name}' already has saved progress.` }}
-            {{ `(${addDots(selectedRound.teamA.name)} vs ${addDots(selectedRound.teamB.name)})` }}
+            {{ selectedMatch.meta.isCompleted
+                ? `'${selectedMatch.meta.name}' is already completed.`
+                : `'${selectedMatch.meta.name}' already has saved progress.` }}
+            {{ `(${addDots(selectedMatch.teamA.name)} vs ${addDots(selectedMatch.teamB.name)})` }}
         </ipl-message>
 
         <div class="layout horizontal">
@@ -48,9 +48,9 @@
             </div>
         </div>
         <ipl-select
-            v-model="roundId"
+            v-model="matchId"
             class="m-t-6"
-            :options="rounds"
+            :options="matches"
             data-test="round-selector"
             label="Round"
         />
@@ -84,14 +84,14 @@ export default defineComponent({
 
         const teamAId = ref('');
         const teamBId = ref('');
-        const roundId = ref('');
+        const matchId = ref('');
 
-        const selectedRound = computed(() => tournamentDataStore.state.roundStore[roundId.value]);
-        const roundHasProgress = computed(() => selectedRound.value.teamA?.score > 0
-            || selectedRound.value.teamB?.score > 0);
+        const selectedMatch = computed(() => tournamentDataStore.state.matchStore[matchId.value]);
+        const matchHasProgress = computed(() => selectedMatch.value.teamA?.score > 0
+            || selectedMatch.value.teamB?.score > 0);
 
-        watch(selectedRound, newValue => {
-            if (roundHasProgress.value) {
+        watch(selectedMatch, newValue => {
+            if (matchHasProgress.value) {
                 teamAId.value = newValue.teamA.id;
                 teamBId.value = newValue.teamB.id;
             } else {
@@ -103,7 +103,7 @@ export default defineComponent({
         const isChanged = computed(() =>
             teamAId.value !== activeRoundStore.state.activeRound.teamA.id
             || teamBId.value !== activeRoundStore.state.activeRound.teamB.id
-            || roundId.value !== activeRoundStore.state.activeRound.round.id);
+            || matchId.value !== activeRoundStore.state.activeRound.round.id);
 
         activeRoundStore.watch(
             store => store.activeRound.teamA.id,
@@ -115,7 +115,7 @@ export default defineComponent({
             { immediate: true });
         activeRoundStore.watch(
             store => store.activeRound.round.id,
-            newValue => roundId.value = newValue,
+            newValue => matchId.value = newValue,
             { immediate: true });
 
         return {
@@ -125,7 +125,7 @@ export default defineComponent({
             }))),
             teamAId,
             teamBId,
-            roundId,
+            matchId,
             activeRound,
             teamAImageShown: computed({
                 get() {
@@ -145,20 +145,18 @@ export default defineComponent({
                         { teamId: activeRoundStore.state.activeRound.teamB.id, isVisible: value });
                 }
             }),
-            rounds: computed(() => Object.entries(tournamentDataStore.state.roundStore).map(([ key, value ]) => ({
-                value: key,
-                name: value.meta.name
-            }))),
+            matches: computed(() => Object.entries(tournamentDataStore.state.matchStore).map(([ key, value ]) =>
+                ({ value: key, name: value.meta.name }))),
             isChanged,
             updateRound() {
                 activeRoundStore.dispatch('setActiveRound', {
-                    roundId: roundId.value,
+                    roundId: matchId.value,
                     teamAId: teamAId.value,
                     teamBId: teamBId.value
                 });
             },
-            selectedRound,
-            roundHasProgress,
+            selectedMatch,
+            matchHasProgress,
             addDots
         };
     }

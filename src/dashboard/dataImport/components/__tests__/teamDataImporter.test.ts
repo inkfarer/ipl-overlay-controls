@@ -28,7 +28,8 @@ describe('teamDataImporter', () => {
                     },
                     teams: []
                 },
-                roundStore: {}
+                roundStore: {},
+                matchStore: {}
             },
             actions: {
                 getSmashggEvent: mockGetSmashggEvent,

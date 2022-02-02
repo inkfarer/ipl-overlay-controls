@@ -9,7 +9,7 @@ import {
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
-import { commitActiveRoundToRoundStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './roundStore';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
@@ -59,7 +59,7 @@ nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenF
         return ack(e);
     }
 
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
 nodecg.listenFor('resetActiveRound', () => {
@@ -67,12 +67,12 @@ nodecg.listenFor('resetActiveRound', () => {
     activeRound.value.teamB.score = 0;
     activeRound.value.games = activeRound.value.games.map(game =>
         ({ ...game, winner: GameWinner.NO_WINNER, color: undefined }));
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
 nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     activeRound.value.games = clone(data.games);
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
 nodecg.listenFor('beginNextMatch', () => {
@@ -96,7 +96,7 @@ nodecg.listenFor('beginNextMatch', () => {
         }
     };
 
-    commitActiveRoundToRoundStore(true);
+    commitActiveRoundToMatchStore();
     nextRound.value.showOnStream = false;
 });
 

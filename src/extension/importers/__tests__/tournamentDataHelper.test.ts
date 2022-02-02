@@ -20,7 +20,7 @@ describe('tournamentDataHelper', () => {
     };
     const mockRoundDataHelper = {
         __esModule: true,
-        clearProgressForUnknownTeams: jest.fn()
+        clearMatchesWithUnknownTeams: jest.fn()
     };
     let helper: Module;
     let nodecg: MockNodecg;
@@ -98,7 +98,7 @@ describe('tournamentDataHelper', () => {
             expect(nodecg.replicants.tournamentData.value).toEqual(input);
             expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1111', '2222');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('3333', '4444');
-            expect(mockRoundDataHelper.clearProgressForUnknownTeams).toHaveBeenCalled();
+            expect(mockRoundDataHelper.clearMatchesWithUnknownTeams).toHaveBeenCalled();
         });
 
         it('assigns active and next round data if less than 4 teams are available', () => {

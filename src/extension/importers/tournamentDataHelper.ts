@@ -11,7 +11,7 @@ import { RadiaSettings } from '../../types/schemas';
 import { addDots } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
-import { clearProgressForUnknownTeams } from './roundDataHelper';
+import { clearMatchesWithUnknownTeams } from './roundDataHelper';
 
 const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -40,7 +40,7 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
 
     tournamentData.value = data;
     highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed
-    clearProgressForUnknownTeams(data);
+    clearMatchesWithUnknownTeams(data);
     updateRadiaTournamentData(data.meta?.url, data.meta?.name);
 
     const firstTeam = data.teams[0];

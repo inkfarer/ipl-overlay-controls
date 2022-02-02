@@ -1,16 +1,5 @@
 <template>
     <ipl-error-display class="m-b-8" />
-    <ipl-message
-        v-if="roundHasProgress"
-        type="info"
-        data-test="round-progress-message"
-        class="m-b-8"
-    >
-        {{ selectedRound.meta.isCompleted
-            ? `'${selectedRound.meta.name}' is already completed.`
-            : `'${selectedRound.meta.name}' already has saved progress.` }}
-        {{ `(${addDots(selectedRound.teamA.name)} vs ${addDots(selectedRound.teamB.name)})` }}
-    </ipl-message>
     <ipl-space>
         <div class="layout horizontal">
             <div class="layout vertical center-horizontal max-width">
@@ -78,8 +67,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
-import { IplButton, IplSpace, IplSelect, IplCheckbox, IplMessage } from '@iplsplatoon/vue-components';
+import { computed, defineComponent, ref } from 'vue';
+import { IplButton, IplSpace, IplSelect, IplCheckbox } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../../helpers/stringHelper';
@@ -88,7 +77,7 @@ import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 export default defineComponent({
     name: 'NextRound',
 
-    components: { IplErrorDisplay, IplMessage, IplButton, IplCheckbox, IplSelect, IplSpace },
+    components: { IplErrorDisplay, IplButton, IplCheckbox, IplSelect, IplSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -101,8 +90,6 @@ export default defineComponent({
             || teamBId.value !== nextRoundStore.state.nextRound.teamB.id
             || roundId.value !== nextRoundStore.state.nextRound.round.id);
         const selectedRound = computed(() => tournamentDataStore.state.roundStore[roundId.value]);
-        const roundHasProgress = computed(() => selectedRound.value.teamA?.score > 0
-            || selectedRound.value.teamB?.score > 0);
 
         nextRoundStore.watch(
             store => store.nextRound.teamA.id,
@@ -116,16 +103,6 @@ export default defineComponent({
             store => store.nextRound.round.id,
             newValue => roundId.value = newValue,
             { immediate: true });
-
-        watch(roundId, () => {
-            if (roundHasProgress.value) {
-                teamAId.value = selectedRound.value.teamA.id;
-                teamBId.value = selectedRound.value.teamB.id;
-            } else {
-                teamAId.value = nextRoundStore.state.nextRound.teamA.id;
-                teamBId.value = nextRoundStore.state.nextRound.teamB.id;
-            }
-        });
 
         return {
             teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team => ({
@@ -177,7 +154,6 @@ export default defineComponent({
                 }
             }),
             selectedRound,
-            roundHasProgress,
             addDots
         };
     }

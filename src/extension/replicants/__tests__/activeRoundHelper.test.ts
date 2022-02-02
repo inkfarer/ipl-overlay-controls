@@ -14,7 +14,7 @@ describe('activeRoundHelper', () => {
     jest.mock('../roundStore', () => {
         return {
             __esModule: true,
-            commitActiveRoundToRoundStore: commitActiveRoundMock
+            commitActiveRoundToMatchStore: commitActiveRoundMock
         };
     });
 
@@ -177,7 +177,7 @@ describe('activeRoundHelper', () => {
                 { stage: 'MakoMart', mode: 'Tower Control' },
                 { stage: 'Wahoo World', mode: 'Turf War' }
             ];
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 aaaaaa: {
                     meta: { name: 'Cool Round' },
                     games
@@ -206,7 +206,7 @@ describe('activeRoundHelper', () => {
         });
 
         it('sets scores if they exist in the stored round', () => {
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 aaa: {
                     meta: { },
                     teamA: { score: 5 },
@@ -226,7 +226,7 @@ describe('activeRoundHelper', () => {
         });
 
         it('resets scores if they do not exist in the stored round', () => {
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 roundround: {
                     meta: { },
                 }
@@ -244,12 +244,12 @@ describe('activeRoundHelper', () => {
         });
 
         it('throws error if round is not found', () => {
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 roundroundround: { }
             };
 
-            expect(() => helper.setActiveRoundGames('this round does not exist'))
-                .toThrow('Could not find round \'this round does not exist\'.');
+            expect(() => helper.setActiveRoundGames('this match does not exist'))
+                .toThrow('Could not find match \'this match does not exist\'.');
         });
     });
 

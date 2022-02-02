@@ -45,10 +45,11 @@ describe('NextRound', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round', isCompleted: false },
+                        meta: { name: 'dope round' },
                         games: []
                     }
-                }
+                },
+                matchStore: {}
             },
             actions: {
                 setTeamImageHidden: jest.fn()
@@ -230,163 +231,5 @@ describe('NextRound', () => {
         beginNextMatchButton.vm.$emit('click');
 
         expect(nextRoundStore.dispatch).toHaveBeenCalledWith('beginNextMatch');
-    });
-
-    it('does not display message if selected round has no progress', () => {
-        const nextRoundStore = createNextRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: false },
-                teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 0, showLogo: true, players: []},
-                games: []
-            }
-        };
-        const wrapper = mount(NextRound, {
-            global: {
-                plugins: [
-                    [ nextRoundStore, nextRoundStoreKey ],
-                    [ tournamentDataStore, tournamentDataStoreKey ]
-                ]
-            }
-        });
-
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
-    });
-
-    it('displays message if selected round has progress', () => {
-        const nextRoundStore = createNextRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: false },
-                teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2 (long name long name long name long name long name)', score: 1, showLogo: true, players: []},
-                games: []
-            }
-        };
-        const wrapper = mount(NextRound, {
-            global: {
-                plugins: [
-                    [ nextRoundStore, nextRoundStoreKey ],
-                    [ tournamentDataStore, tournamentDataStoreKey ]
-                ]
-            }
-        });
-
-        const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
-        expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.isVisible()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team vs Cool Team 2 (long name long name long name lo...)');
-    });
-
-    it('displays message if selected round is completed', () => {
-        const nextRoundStore = createNextRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: true },
-                teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
-                games: []
-            }
-        };
-        const wrapper = mount(NextRound, {
-            global: {
-                plugins: [
-                    [ nextRoundStore, nextRoundStoreKey ],
-                    [ tournamentDataStore, tournamentDataStoreKey ]
-                ]
-            }
-        });
-
-        const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
-        expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.isVisible()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' is already completed. (Cool Team vs Cool Team 2)');
-    });
-
-    it('changes selected teams if a new round with progress is selected', async () => {
-        const nextRoundStore = createNextRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: true },
-                teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
-                games: []
-            },
-            '12345': {
-                meta: { name: 'dope round 2', isCompleted: false },
-                teamA: { id: '789789', name: 'Cool Team 3', score: 2, showLogo: true, players: []},
-                teamB: { id: '678678', name: 'Cool Team 4', score: 1, showLogo: true, players: []},
-                games: []
-            }
-        };
-        const wrapper = mount(NextRound, {
-            global: {
-                plugins: [
-                    [ nextRoundStore, nextRoundStoreKey ],
-                    [ tournamentDataStore, tournamentDataStoreKey ]
-                ]
-            }
-        });
-        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
-
-        roundSelector.vm.$emit('update:modelValue', '12345');
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').text()).toEqual('\'dope round 2\' already has saved progress. (Cool Team 3 vs Cool Team 4)');
-        expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('789789');
-        expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('678678');
-    });
-
-    it('changes selected teams to next round teams if a new round without progress is selected', async () => {
-        const nextRoundStore = createNextRoundStore();
-        nextRoundStore.state.nextRound = {
-            teamA: { id: '567234', name: 'cool team G', showLogo: true, players: []},
-            teamB: { id: '123098', name: 'cool team Z', showLogo: false, players: []},
-            round: { id: '0387', name: 'dope round' },
-            showOnStream: true,
-            games: []
-        };
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: true },
-                teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
-                games: []
-            },
-            '12345': {
-                meta: { name: 'dope round 2', isCompleted: false },
-                teamA: { id: '789789', name: 'Cool Team 3', score: 2, showLogo: true, players: []},
-                teamB: { id: '678678', name: 'Cool Team 4', score: 1, showLogo: true, players: []},
-                games: []
-            },
-            '123456': {
-                meta: { name: 'dope round 3', isCompleted: false },
-                games: []
-            }
-        };
-        const wrapper = mount(NextRound, {
-            global: {
-                plugins: [
-                    [ nextRoundStore, nextRoundStoreKey ],
-                    [ tournamentDataStore, tournamentDataStoreKey ]
-                ]
-            }
-        });
-        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
-
-        roundSelector.vm.$emit('update:modelValue', '12345');
-        await wrapper.vm.$nextTick();
-        roundSelector.vm.$emit('update:modelValue', '123456');
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
-        expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('567234');
-        expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('123098');
     });
 });

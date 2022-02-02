@@ -24,7 +24,8 @@ describe('roundImporter', () => {
                     },
                     teams: []
                 },
-                roundStore: {}
+                roundStore: {},
+                matchStore: {}
             },
             actions: {
                 fetchRoundData: mockFetchRoundData,

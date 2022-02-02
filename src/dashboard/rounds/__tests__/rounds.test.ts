@@ -27,18 +27,19 @@ describe('Rounds', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round', isCompleted: false },
+                        meta: { name: 'dope round' },
                         games: []
                     },
                     '9573': {
-                        meta: { name: 'dope round the second', isCompleted: false },
+                        meta: { name: 'dope round the second' },
                         games: []
                     },
                     '2426': {
-                        meta: { name: 'dope round the third', isCompleted: false },
+                        meta: { name: 'dope round the third' },
                         games: []
                     }
-                }
+                },
+                matchStore: {}
             },
             actions: {
                 resetRoundStore: mockResetRoundStore
@@ -145,7 +146,6 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                isCompleted: false,
                 name: 'dope round the third'
             }
         });
@@ -175,7 +175,6 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                isCompleted: false,
                 name: 'dope round the second'
             }
         });
@@ -327,7 +326,7 @@ describe('Rounds', () => {
         expect(roundEditor.props().isNewRound).toEqual(false);
         expect(roundEditor.props().roundId).toEqual('0387');
         expect(roundEditor.props().round).toEqual({
-            meta: { name: 'dope round', isCompleted: false },
+            meta: { name: 'dope round' },
             games: []
         });
     });

@@ -1,16 +1,17 @@
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
-import { commitActiveRoundToRoundStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './roundStore';
 import * as nodecgContext from '../helpers/nodecg';
-import { ActiveRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
+import { ActiveRound, SwapColorsInternally, TournamentData } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from '../helpers/tournamentDataHelper';
+import { MatchStore } from '../../types/schemas';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
-const roundStore = nodecg.Replicant<RoundStore>('roundStore');
+const matchStore = nodecg.Replicant<MatchStore>('matchStore');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 export function setWinner(index: number, winner: GameWinner): void {
@@ -61,17 +62,17 @@ export function setWinner(index: number, winner: GameWinner): void {
     newValue.round.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
 
     activeRound.value = newValue;
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 }
 
-export function setActiveRoundGames(roundId: string): void {
-    const round = roundStore.value[roundId];
+export function setActiveRoundGames(matchId: string): void {
+    const round = matchStore.value[matchId];
     if (isEmpty(round)) {
-        throw new Error(`Could not find round '${roundId}'.`);
+        throw new Error(`Could not find match '${matchId}'.`);
     }
 
     activeRound.value.round = {
-        id: roundId,
+        id: matchId,
         name: round.meta.name,
         isCompleted: round.meta.isCompleted
     };

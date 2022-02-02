@@ -9,7 +9,7 @@ describe('roundStore', () => {
     const mockSetNextRoundGames = jest.fn();
     let nodecg: MockNodecg;
     let extension: {
-        commitActiveRoundToRoundStore: (forceSetTeams: boolean) => void
+        commitActiveRoundToMatchStore: () => void
     };
 
     const mockDateTime = mocked(DateTime, true);
@@ -351,47 +351,39 @@ describe('roundStore', () => {
             expect(nodecg.replicants.roundStore.value).toEqual({
                 '00000': {
                     meta: {
-                        name: 'Default Round 1',
-                        isCompleted: false
+                        name: 'Default Round 1'
                     },
                     games: [
                         {
                             stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Clam Blitz'
                         },
                         {
                             stage: 'Ancho-V Games',
-                            mode: 'Tower Control',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Tower Control'
                         },
                         {
                             stage: 'Wahoo World',
-                            mode: 'Rainmaker',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Rainmaker'
                         }
                     ]
                 },
                 '11111': {
                     meta: {
-                        name: 'Default Round 2',
-                        isCompleted: false
+                        name: 'Default Round 2'
                     },
                     games: [
                         {
                             stage: 'Inkblot Art Academy',
-                            mode: 'Turf War',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Turf War'
                         },
                         {
                             stage: 'Ancho-V Games',
-                            mode: 'Tower Control',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Tower Control'
                         },
                         {
                             stage: 'Wahoo World',
-                            mode: 'Rainmaker',
-                            winner: GameWinner.NO_WINNER
+                            mode: 'Rainmaker'
                         }
                     ]
                 }
@@ -402,7 +394,7 @@ describe('roundStore', () => {
         });
     });
 
-    describe('commitActiveRoundToRoundStore', () => {
+    describe('commitActiveRoundToMatchStore', () => {
         it('updates value in round store', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1, name: 'Team Alpha' },
@@ -428,7 +420,7 @@ describe('roundStore', () => {
                     }
                 ]
             };
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 aaaaaa: {
                     meta: {
                         name: 'Round Round',
@@ -459,9 +451,9 @@ describe('roundStore', () => {
                 }
             };
 
-            extension.commitActiveRoundToRoundStore(false);
+            extension.commitActiveRoundToMatchStore();
 
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(nodecg.replicants.matchStore.value).toEqual({
                 aaaaaa: {
                     meta: {
                         name: 'Cool Round',
@@ -494,184 +486,6 @@ describe('roundStore', () => {
             });
         });
 
-        it('does not store teams if round has not started', () => {
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 0, name: 'Team Alpha' },
-                teamB: { score: 0, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false },
-                games: [
-                    {
-                        stage: 'Walleye Warehouse',
-                        mode: 'Splat Zones',
-                        winner: GameWinner.NO_WINNER
-                    },
-                    {
-                        stage: 'Wahoo World',
-                        mode: 'Rainmaker',
-                        winner: GameWinner.NO_WINNER
-                    },
-                    {
-                        stage: 'MakoMart',
-                        mode: 'Clam Blitz',
-                        winner: GameWinner.NO_WINNER
-                    }
-                ]
-            };
-            nodecg.replicants.roundStore.value = {
-                aaaaaa: {
-                    meta: {
-                        name: 'Round Round',
-                        isCompleted: true,
-                        completionTime: '21:25'
-                    },
-                    teamA: { score: 0, name: 'Team Alpha (Old)' },
-                    teamB: { score: 2, name: 'Team Bravo (Old)' },
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Cool Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Grainmaker',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Color Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER
-                        }
-                    ]
-                }
-            };
-
-            extension.commitActiveRoundToRoundStore(false);
-
-            expect(nodecg.replicants.roundStore.value).toEqual({
-                aaaaaa: {
-                    meta: {
-                        name: 'Cool Round',
-                        isCompleted: false,
-                        completionTime: undefined
-                    },
-                    teamA: undefined,
-                    teamB: undefined,
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        }
-                    ]
-                }
-            });
-        });
-
-        it('stores teams if forceSetTeams is true', () => {
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 0, name: 'Team Alpha' },
-                teamB: { score: 0, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false },
-                games: [
-                    {
-                        stage: 'Walleye Warehouse',
-                        mode: 'Splat Zones',
-                        winner: GameWinner.NO_WINNER
-                    },
-                    {
-                        stage: 'Wahoo World',
-                        mode: 'Rainmaker',
-                        winner: GameWinner.NO_WINNER
-                    },
-                    {
-                        stage: 'MakoMart',
-                        mode: 'Clam Blitz',
-                        winner: GameWinner.NO_WINNER
-                    }
-                ]
-            };
-            nodecg.replicants.roundStore.value = {
-                aaaaaa: {
-                    meta: {
-                        name: 'Round Round',
-                        isCompleted: true,
-                        completionTime: '21:25'
-                    },
-                    teamA: { score: 0, name: 'Team Alpha (Old)' },
-                    teamB: { score: 2, name: 'Team Bravo (Old)' },
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Cool Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Grainmaker',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Color Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER
-                        }
-                    ]
-                }
-            };
-
-            extension.commitActiveRoundToRoundStore(true);
-
-            expect(nodecg.replicants.roundStore.value).toEqual({
-                aaaaaa: {
-                    meta: {
-                        name: 'Cool Round',
-                        isCompleted: false,
-                        completionTime: undefined
-                    },
-                    teamA: { score: 0, name: 'Team Alpha' },
-                    teamB: { score: 0, name: 'Team Bravo' },
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        }
-                    ]
-                }
-            });
-        });
-
         it('removes round completion time if active round is incomplete', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1 },
@@ -679,7 +493,7 @@ describe('roundStore', () => {
                 round: { name: 'Cool Round', id: '123123', isCompleted: false },
                 games: [{ }, { }, { }]
             };
-            nodecg.replicants.roundStore.value = {
+            nodecg.replicants.matchStore.value = {
                 '123123': {
                     meta: {
                         isCompleted: true,
@@ -688,11 +502,11 @@ describe('roundStore', () => {
                 }
             };
 
-            extension.commitActiveRoundToRoundStore(false);
+            extension.commitActiveRoundToMatchStore();
 
-            const roundStoreValue = (nodecg.replicants.roundStore.value as RoundStore)['123123'];
-            expect(roundStoreValue.meta.isCompleted).toBe(false);
-            expect(roundStoreValue.meta.completionTime).toBeUndefined();
+            const matchStoreValue = (nodecg.replicants.matchStore.value as RoundStore)['123123'];
+            expect(matchStoreValue.meta.isCompleted).toBe(false);
+            expect(matchStoreValue.meta.completionTime).toBeUndefined();
         });
     });
 });

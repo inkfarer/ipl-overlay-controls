@@ -11,7 +11,7 @@ describe('activeRound', () => {
 
     jest.mock('../roundStore', () => ({
         __esModule: true,
-        commitActiveRoundToRoundStore: mockCommitActiveRound
+        commitActiveRoundToMatchStore: mockCommitActiveRound
     }));
 
     jest.mock('../activeRoundHelper', () => ({
@@ -292,7 +292,7 @@ describe('activeRound', () => {
                     isCompleted: false
                 }
             });
-            expect(mockCommitActiveRound).toHaveBeenCalledWith(true);
+            expect(mockCommitActiveRound).toHaveBeenCalled();
             expect((nodecg.replicants.nextRound.value as NextRound).showOnStream).toEqual(false);
         });
     });

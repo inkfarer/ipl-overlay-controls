@@ -71,9 +71,9 @@ describe('roundDataHelper', () => {
         });
     });
 
-    describe('clearProgressForUnknownTeams', () => {
-        it('deletes progress for stored rounds where no matching team can be found in tournament data', () => {
-            nodecg.replicants.roundStore.value = {
+    describe('clearMatchesWithUnknownTeams', () => {
+        it('deletes progress for stored matches where no matching team can be found in tournament data', () => {
+            nodecg.replicants.matchStore.value = {
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
@@ -91,24 +91,18 @@ describe('roundDataHelper', () => {
                 }
             };
 
-            helper.clearProgressForUnknownTeams({
+            helper.clearMatchesWithUnknownTeams({
                 teams: [
                     { id: 'aaa' },
                     { id: 'bbb' }
                 ]
             });
 
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(nodecg.replicants.matchStore.value).toEqual({
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
                     meta: { name: 'Round 1', isCompleted: true, completionTime: '2020-01-01' }
-                },
-                bbbb: {
-                    meta: { name: 'Round 2', isCompleted: false }
-                },
-                cccc: {
-                    meta: { name: 'Round 3', isCompleted: false }
                 }
             });
         });

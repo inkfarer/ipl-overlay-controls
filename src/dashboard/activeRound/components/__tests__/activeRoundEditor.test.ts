@@ -86,12 +86,13 @@ describe('ActiveRoundEditor', () => {
                         { id: '345345', name: 'cool team B', players: [], showLogo: false }
                     ]
                 },
-                roundStore: {
+                matchStore: {
                     '0387': {
                         meta: { name: 'dope round', isCompleted: false },
                         games: []
                     }
-                }
+                },
+                roundStore: {}
             },
             actions: {
                 setTeamImageHidden: jest.fn()
@@ -282,7 +283,7 @@ describe('ActiveRoundEditor', () => {
     it('displays message if selected round has progress', async () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        tournamentDataStore.state.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false },
                 teamA: { id: '123123', name: 'Cool Team (long name long name long name long name long name)', score: 0, showLogo: true, players: []},
@@ -307,7 +308,7 @@ describe('ActiveRoundEditor', () => {
     it('displays message if selected round is completed', async () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        tournamentDataStore.state.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: true },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
@@ -332,7 +333,7 @@ describe('ActiveRoundEditor', () => {
     it('changes selected teams if a new round with progress is selected', async () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        tournamentDataStore.state.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: true },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
@@ -376,7 +377,7 @@ describe('ActiveRoundEditor', () => {
             },
         };
         const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        tournamentDataStore.state.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: true },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},

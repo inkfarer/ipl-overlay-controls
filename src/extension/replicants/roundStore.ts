@@ -8,10 +8,12 @@ import { setActiveRoundGames } from './activeRoundHelper';
 import { setNextRoundGames } from './nextRoundHelper';
 import { DateTime } from 'luxon';
 import { generateId } from '../../helpers/generateId';
+import { MatchStore } from '../../types/schemas';
 
 const nodecg = nodecgContext.get();
 
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
+const matchStore = nodecg.Replicant<MatchStore>('matchStore');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
@@ -80,47 +82,39 @@ nodecg.listenFor('resetRoundStore', () => {
     roundStore.value = {
         [defaultRoundId]: {
             meta: {
-                name: 'Default Round 1',
-                isCompleted: false
+                name: 'Default Round 1'
             },
             games: [
                 {
                     stage: 'MakoMart',
-                    mode: 'Clam Blitz',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Clam Blitz'
                 },
                 {
                     stage: 'Ancho-V Games',
-                    mode: 'Tower Control',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Tower Control'
                 },
                 {
                     stage: 'Wahoo World',
-                    mode: 'Rainmaker',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Rainmaker'
                 }
             ]
         },
         [secondDefaultRoundId]: {
             meta: {
-                name: 'Default Round 2',
-                isCompleted: false
+                name: 'Default Round 2'
             },
             games: [
                 {
                     stage: 'Inkblot Art Academy',
-                    mode: 'Turf War',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Turf War'
                 },
                 {
                     stage: 'Ancho-V Games',
-                    mode: 'Tower Control',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Tower Control'
                 },
                 {
                     stage: 'Wahoo World',
-                    mode: 'Rainmaker',
-                    winner: GameWinner.NO_WINNER
+                    mode: 'Rainmaker'
                 }
             ]
         }
@@ -130,21 +124,20 @@ nodecg.listenFor('resetRoundStore', () => {
     setNextRoundGames(secondDefaultRoundId);
 });
 
-export function commitActiveRoundToRoundStore(forceSetTeams = false): void {
+export function commitActiveRoundToMatchStore(): void {
     const currentActiveRound = clone(activeRound.value);
 
-    const isStarted = currentActiveRound.teamA.score + currentActiveRound.teamB.score > 0;
     const completionTime = currentActiveRound.round.isCompleted ? DateTime.utc().toISO() : undefined;
 
-    roundStore.value[currentActiveRound.round.id] = {
-        ...(roundStore.value[currentActiveRound.round.id]),
+    matchStore.value[currentActiveRound.round.id] = {
+        ...(matchStore.value[currentActiveRound.round.id]),
         meta: {
             name: currentActiveRound.round.name,
             isCompleted: currentActiveRound.round.isCompleted,
             completionTime
         },
-        teamA: (isStarted || forceSetTeams) ? currentActiveRound.teamA : undefined,
-        teamB: (isStarted || forceSetTeams) ? currentActiveRound.teamB : undefined,
+        teamA: currentActiveRound.teamA,
+        teamB: currentActiveRound.teamB,
         games: currentActiveRound.games.map((game) =>
             ({ stage: game.stage, mode: game.mode, winner: game.winner, color: game.color }))
     };
