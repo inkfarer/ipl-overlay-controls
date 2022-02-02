@@ -90,10 +90,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "battlefyimport",
-                "title": "Data importer",
+                "name": "dataIO",
+                "title": "Data import/export",
                 "width": 2,
-                "file": "dataImport.html",
+                "file": "dataIO.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             },
@@ -135,7 +135,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
-        "@iplsplatoon/vue-components": "^1.1.0",
+        "@iplsplatoon/vue-components": "1.2.0",
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",

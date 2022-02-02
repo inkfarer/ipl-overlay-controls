@@ -44,5 +44,6 @@ window.nodecg = {
     },
     sendMessage: mockSendMessage,
     getDialog: mockGetDialog,
-    bundleConfig: mockBundleConfig
+    bundleConfig: mockBundleConfig,
+    bundleName: 'ipl-overlay-controls'
 } as unknown as NodeCGBrowser;

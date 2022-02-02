@@ -13,6 +13,7 @@ export class MockNodecg {
     mount: jest.Mock;
     bundleConfig: unknown;
     log: { warn: jest.Mock, info: jest.Mock, error: jest.Mock }
+    bundleName: string;
 
     constructor(bundleConfig?: unknown) {
         this.replicants = {};
@@ -26,6 +27,7 @@ export class MockNodecg {
             info: jest.fn(),
             error: jest.fn()
         };
+        this.bundleName = 'ipl-overlay-controls';
     }
 
     init(): void {
@@ -48,6 +50,9 @@ export class MockNodecg {
             Router: () => ({
                 post(path: string, ...handlers: express.RequestHandler[]) {
                     self.requestHandlers['POST'][path] = last(handlers);
+                },
+                get(path: string, ...handlers: express.RequestHandler[]) {
+                    self.requestHandlers['GET'][path] = last(handlers);
                 }
             }),
             mount: self.mount,
