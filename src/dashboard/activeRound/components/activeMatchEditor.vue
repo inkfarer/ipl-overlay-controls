@@ -87,17 +87,13 @@ export default defineComponent({
         const matchId = ref('');
 
         const selectedMatch = computed(() => tournamentDataStore.state.matchStore[matchId.value]);
-        const matchHasProgress = computed(() => selectedMatch.value?.teamA?.score > 0
+        const matchHasProgress = computed(() =>
+            selectedMatch.value?.teamA?.score > 0
             || selectedMatch.value?.teamB?.score > 0);
 
         watch(selectedMatch, newValue => {
-            if (matchHasProgress.value) {
-                teamAId.value = newValue.teamA.id;
-                teamBId.value = newValue.teamB.id;
-            } else {
-                teamAId.value = activeRoundStore.state.activeRound.teamA.id;
-                teamBId.value = activeRoundStore.state.activeRound.teamB.id;
-            }
+            teamAId.value = newValue.teamA?.id;
+            teamBId.value = newValue.teamB?.id;
         });
 
         const isChanged = computed(() =>
@@ -150,7 +146,7 @@ export default defineComponent({
             isChanged,
             updateRound() {
                 activeRoundStore.dispatch('setActiveRound', {
-                    roundId: matchId.value,
+                    matchId: matchId.value,
                     teamAId: teamAId.value,
                     teamBId: teamBId.value
                 });

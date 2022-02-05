@@ -89,6 +89,22 @@ describe('ActiveRoundEditor', () => {
                 matchStore: {
                     '0387': {
                         meta: { name: 'dope round', isCompleted: false },
+                        teamA: {
+                            score: 0,
+                            id: '123123',
+                            name: null,
+                            showLogo: true,
+                            players: null,
+                            color: null
+                        },
+                        teamB: {
+                            score: 2,
+                            id: '345345',
+                            name: null,
+                            showLogo: false,
+                            players: null,
+                            color: null
+                        },
                         games: []
                     }
                 },
@@ -214,7 +230,7 @@ describe('ActiveRoundEditor', () => {
         expect(activeRoundStore.dispatch).toHaveBeenCalledWith('setActiveRound', {
             teamAId: '123123',
             teamBId: '345345',
-            roundId: '0387'
+            matchId: '0387'
         });
     });
 
@@ -241,7 +257,7 @@ describe('ActiveRoundEditor', () => {
     it('does not display message if selected round has no progress', async () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        tournamentDataStore.state.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
@@ -330,7 +346,7 @@ describe('ActiveRoundEditor', () => {
         expect(roundProgressMessage.text()).toEqual('\'dope round\' is already completed. (Cool Team vs Cool Team 2)');
     });
 
-    it('changes selected teams if a new round with progress is selected', async () => {
+    it('changes selected teams if a new round is selected', async () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
@@ -360,55 +376,5 @@ describe('ActiveRoundEditor', () => {
         expect(wrapper.findComponent('[data-test="match-progress-message"]').text()).toEqual('\'dope round 2\' already has saved progress. (Cool Team 3 vs Cool Team 4)');
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('789789');
         expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('678678');
-    });
-
-    it('changes selected teams to active round teams if a new round without progress is selected', async () => {
-        const activeRoundStore = createActiveRoundStore();
-        activeRoundStore.state.activeRound = {
-            teamA: { id: '567234', name: 'cool team G', showLogo: true, players: [], score: 0, color: null },
-            teamB: { id: '123098', name: 'cool team Z', showLogo: false, players: [], score: 0, color: null },
-            round: { id: '0387', name: 'dope round', isCompleted: false },
-            games: [],
-            activeColor: {
-                categoryName: 'Ranked Modes',
-                index: 0,
-                title: 'coolest color',
-                isCustom: false
-            },
-        };
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.matchStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: true },
-                teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
-                teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
-                games: []
-            },
-            '12345': {
-                meta: { name: 'dope round 2', isCompleted: false },
-                teamA: { id: '789789', name: 'Cool Team 3', score: 2, showLogo: true, players: []},
-                teamB: { id: '678678', name: 'Cool Team 4', score: 1, showLogo: true, players: []},
-                games: []
-            },
-            '123456': {
-                meta: { name: 'dope round 3', isCompleted: false },
-                games: []
-            }
-        };
-        const wrapper = mount(ActiveRoundEditor, {
-            global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
-            }
-        });
-        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
-
-        roundSelector.vm.$emit('update:modelValue', '12345');
-        await wrapper.vm.$nextTick();
-        roundSelector.vm.$emit('update:modelValue', '123456');
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
-        expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('567234');
-        expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('123098');
     });
 });

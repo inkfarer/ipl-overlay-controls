@@ -52,8 +52,8 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb
 nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
     try {
         setActiveRoundTeams(data.teamAId, data.teamBId);
-        if (data.roundId) {
-            setActiveRoundGames(data.roundId);
+        if (data.matchId) {
+            setActiveRoundGames(data.matchId);
         }
     } catch (e) {
         return ack(e);

@@ -168,8 +168,8 @@ describe('activeRound', () => {
             expect(mockCommitActiveRound).toHaveBeenCalled();
         });
 
-        it('sets games if round id is given', () => {
-            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', roundId: '234' });
+        it('sets games if match id is given', () => {
+            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234' });
 
             expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1231234', '123123');
             expect(mockSetActiveRoundGames).toHaveBeenCalledWith('234');
