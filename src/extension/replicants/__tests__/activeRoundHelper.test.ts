@@ -7,8 +7,8 @@ describe('activeRoundHelper', () => {
     let nodecg: MockNodecg;
     let helper: {
         setWinner: (index: number, winner: GameWinner) => void,
-        setActiveRoundGames: (roundId: string) => void,
-        setActiveRoundTeams: (teamAId: string, teamBId: string) => void
+        setActiveRoundGames: (activeRound: ActiveRound, matchId: string) => void,
+        setActiveRoundTeams: (activeRound: ActiveRound, teamAId: string, teamBId: string) => void
     };
 
     jest.mock('../roundStore', () => {
@@ -176,58 +176,7 @@ describe('activeRoundHelper', () => {
     });
 
     describe('setActiveRoundGames', () => {
-        it('updates active round', () => {
-            const games = [
-                { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
-                { stage: 'MakoMart', mode: 'Tower Control' },
-                { stage: 'Wahoo World', mode: 'Turf War' }
-            ];
-            nodecg.replicants.matchStore.value = {
-                aaaaaa: {
-                    meta: { name: 'Cool Round', relatedRoundId: 'gggg' },
-                    games
-                },
-                bbbbbb: {
-                    meta: { name: 'Other Round' },
-                    games: [
-                        {
-                            stage: 'Manta Maria',
-                            mode: 'Boat'
-                        }
-                    ]
-                }
-            };
-            nodecg.replicants.roundStore.value = {
-                gggg: {
-                    meta: {
-                        name: 'Cool Round'
-                    }
-                }
-            };
-            nodecg.replicants.activeRound.value = {
-                round: { id: 'roundround', name: 'A round' },
-                teamA: {},
-                teamB: {}
-            };
-
-            helper.setActiveRoundGames('aaaaaa');
-
-            expect(nodecg.replicants.activeRound.value as ActiveRound).toEqual({
-                games,
-                match: {
-                    id: 'aaaaaa',
-                    name: 'Cool Round'
-                },
-                round: {
-                    id: 'gggg',
-                    name: 'Cool Round'
-                },
-                teamA: { score: 0 },
-                teamB: { score: 0 }
-            });
-        });
-
-        it('sets scores if they exist in the stored round', () => {
+        it('updates active round data', () => {
             nodecg.replicants.matchStore.value = {
                 aaa: {
                     meta: { relatedRoundId: 'gggg' },
@@ -242,41 +191,15 @@ describe('activeRoundHelper', () => {
                     }
                 }
             };
-            nodecg.replicants.activeRound.value = {
+            const activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 0 }
             };
 
-            helper.setActiveRoundGames('aaa');
+            helper.setActiveRoundGames((activeRound as ActiveRound), 'aaa');
 
-            const activeRound = nodecg.replicants.activeRound.value as ActiveRound;
             expect(activeRound.teamA.score).toBe(5);
             expect(activeRound.teamB.score).toBe(10);
-        });
-
-        it('resets scores if they do not exist in the stored round', () => {
-            nodecg.replicants.matchStore.value = {
-                roundround: {
-                    meta: { relatedRoundId: 'gggg' },
-                }
-            };
-            nodecg.replicants.roundStore.value = {
-                gggg: {
-                    meta: {
-                        name: 'Cool Round'
-                    }
-                }
-            };
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 100 },
-                teamB: { score: 101 }
-            };
-
-            helper.setActiveRoundGames('roundround');
-
-            const activeRound = nodecg.replicants.activeRound.value as ActiveRound;
-            expect(activeRound.teamA.score).toBe(0);
-            expect(activeRound.teamB.score).toBe(0);
         });
 
         it('throws error if match is not found', () => {
@@ -284,7 +207,7 @@ describe('activeRoundHelper', () => {
                 roundroundround: { }
             };
 
-            expect(() => helper.setActiveRoundGames('this match does not exist'))
+            expect(() => helper.setActiveRoundGames(({} as ActiveRound), 'this match does not exist'))
                 .toThrow('Could not find match \'this match does not exist\'.');
         });
 
@@ -304,7 +227,7 @@ describe('activeRoundHelper', () => {
                 }
             };
 
-            expect(() => helper.setActiveRoundGames('roundroundround'))
+            expect(() => helper.setActiveRoundGames(({} as ActiveRound), 'roundroundround'))
                 .toThrow('Could not find related round \'this round does not exist\'.');
         });
     });
@@ -325,7 +248,7 @@ describe('activeRoundHelper', () => {
                     }
                 ]
             };
-            nodecg.replicants.activeRound.value = {
+            const activeRound = {
                 teamA: {
                     score: 10,
                     logoUrl: 'logo://team_one'
@@ -337,9 +260,9 @@ describe('activeRoundHelper', () => {
                 }
             };
 
-            helper.setActiveRoundTeams('123123', '234234');
+            helper.setActiveRoundTeams((activeRound as unknown as ActiveRound), '123123', '234234');
 
-            expect(nodecg.replicants.activeRound.value).toEqual({
+            expect(activeRound).toEqual({
                 teamA: {
                     id: '123123',
                     name: 'Team One',
@@ -362,7 +285,7 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            expect(() => helper.setActiveRoundTeams('456456', '123123'))
+            expect(() => helper.setActiveRoundTeams(({} as ActiveRound), '456456', '123123'))
                 .toThrow('Could not find a team.');
         });
     });

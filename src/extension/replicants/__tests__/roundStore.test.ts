@@ -180,7 +180,7 @@ describe('roundStore', () => {
                     meta: { name: 'R' }
                 }
             });
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith('123');
+            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ round: { id: '123' } }, '123');
             expect(mockSetNextRoundGames).not.toHaveBeenCalled();
         });
 
@@ -328,7 +328,7 @@ describe('roundStore', () => {
 
             nodecg.messageListeners.removeRound({ roundId: 'bbbbbb' });
 
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith('aaaaaa');
+            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ round: { id: 'bbbbbb' } }, 'aaaaaa');
             expect(mockSetNextRoundGames).not.toHaveBeenCalled();
         });
 
@@ -382,6 +382,8 @@ describe('roundStore', () => {
 
     describe('resetRoundStore', () => {
         it('updates round store, active and next rounds', () => {
+            nodecg.replicants.activeRound.value = { active: 'round' };
+
             nodecg.messageListeners.resetRoundStore();
 
             expect(nodecg.replicants.roundStore.value).toEqual({
@@ -425,7 +427,7 @@ describe('roundStore', () => {
                 }
             });
 
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith('00000');
+            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ active: 'round' }, '00000');
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('11111');
         });
     });

@@ -168,17 +168,13 @@ describe('activeRound', () => {
 
     describe('setActiveRound', () => {
         beforeEach(() => {
-            nodecg.replicants.activeRound.value = {
-                match: {
-                    name: 'cool match'
-                }
-            };
+            nodecg.replicants.activeRound.value = { match: { name: 'cool match' } };
         });
 
         it('sets team data and updates round store data', () => {
             nodecg.messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('123123', '456456');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '123123', '456456');
             expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
             expect(mockCommitActiveRound).toHaveBeenCalled();
         });
@@ -186,12 +182,12 @@ describe('activeRound', () => {
         it('sets games if match id is given', () => {
             nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1231234', '123123');
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith('234');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '1231234', '123123');
+            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '234');
             expect(mockCommitActiveRound).toHaveBeenCalled();
         });
 
-        it('sets match id if it differs from the current one', () => {
+        it('sets match name if it differs from the current one', () => {
             nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234', matchName: 'New Match' });
 
             expect(nodecg.replicants.activeRound.value).toEqual({ match: { name: 'New Match' } });

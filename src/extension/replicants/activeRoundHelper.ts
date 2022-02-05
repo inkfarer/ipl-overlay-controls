@@ -1,11 +1,11 @@
 import { GameWinner } from 'types/enums/gameWinner';
-import clone from 'clone';
 import { commitActiveRoundToMatchStore } from './roundStore';
 import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, SwapColorsInternally, TournamentData } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from '../helpers/tournamentDataHelper';
 import { MatchStore, RoundStore } from '../../types/schemas';
+import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();
 
@@ -20,8 +20,8 @@ export function setWinner(index: number, winner: GameWinner): void {
         throw new Error(`Cannot set winner for game ${index + 1} as it does not exist.`);
     }
 
-    const newValue = clone(activeRound.value);
-    const activeGame = clone(activeRound.value.games[index]);
+    const newValue = cloneDeep(activeRound.value);
+    const activeGame = cloneDeep(activeRound.value.games[index]);
 
     if (winner === GameWinner.NO_WINNER) {
         if (activeGame.winner === GameWinner.ALPHA) {
@@ -66,7 +66,7 @@ export function setWinner(index: number, winner: GameWinner): void {
     commitActiveRoundToMatchStore();
 }
 
-export function setActiveRoundGames(matchId: string): void {
+export function setActiveRoundGames(activeRound: ActiveRound, matchId: string): void {
     const match = matchStore.value[matchId];
     if (isEmpty(match)) {
         throw new Error(`Could not find match '${matchId}'.`);
@@ -76,46 +76,37 @@ export function setActiveRoundGames(matchId: string): void {
         throw new Error(`Could not find related round '${match.meta.relatedRoundId}'.`);
     }
 
-    const newActiveRound = clone(activeRound.value);
-
-    newActiveRound.round = {
+    activeRound.round = {
         id: match.meta.relatedRoundId,
         name: relatedRound.meta.name
     };
-    newActiveRound.match = {
+    activeRound.match = {
         id: matchId,
         name: match.meta.name,
         isCompleted: match.meta.isCompleted
     };
-    newActiveRound.games = clone(match.games);
+    activeRound.games = cloneDeep(match.games);
 
-    if (match.teamA && match.teamB) {
-        newActiveRound.teamA.score = match.teamA.score;
-        newActiveRound.teamB.score = match.teamB.score;
-    } else {
-        newActiveRound.teamA.score = 0;
-        newActiveRound.teamB.score = 0;
-    }
-
-    activeRound.value = newActiveRound;
+    activeRound.teamA.score = match.teamA.score;
+    activeRound.teamB.score = match.teamB.score;
 }
 
-export function setActiveRoundTeams(teamAId: string, teamBId: string): void {
+export function setActiveRoundTeams(activeRound: ActiveRound, teamAId: string, teamBId: string): void {
     const teamA = getTeam(teamAId, tournamentData.value);
     const teamB = getTeam(teamBId, tournamentData.value);
     if ([teamA, teamB].filter(isEmpty).length > 0) {
         throw new Error('Could not find a team.');
     }
 
-    const existingTeamA = clone(activeRound.value.teamA);
-    const existingTeamB = clone(activeRound.value.teamB);
+    const existingTeamA = cloneDeep(activeRound.teamA);
+    const existingTeamB = cloneDeep(activeRound.teamB);
 
-    activeRound.value.teamA = {
+    activeRound.teamA = {
         score: existingTeamA.score,
         color: existingTeamA.color,
         ...teamA
     };
-    activeRound.value.teamB = {
+    activeRound.teamB = {
         score: existingTeamB.score,
         color: existingTeamB.color,
         ...teamB

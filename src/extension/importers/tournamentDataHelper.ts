@@ -7,7 +7,7 @@ import { generateId } from '../../helpers/generateId';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
-import { RadiaSettings } from '../../types/schemas';
+import { ActiveRound, RadiaSettings } from '../../types/schemas';
 import { addDots } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
@@ -17,6 +17,7 @@ const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
+const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 
 export function updateTournamentDataReplicants(data: TournamentData): void {
     if (data.teams.length <= 0) {
@@ -44,9 +45,9 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
     updateRadiaTournamentData(data.meta?.url, data.meta?.name);
 
     const firstTeam = data.teams[0];
-    const secondTeam = data.teams[1] || data.teams[0];
+    const secondTeam = data.teams[1] ?? data.teams[0];
 
-    setActiveRoundTeams(firstTeam.id, secondTeam.id);
+    setActiveRoundTeams(activeRound.value, firstTeam.id, secondTeam.id);
 
     if (data.teams.length < 5) {
         setNextRoundTeams(

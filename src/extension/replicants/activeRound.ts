@@ -16,6 +16,7 @@ import findLastIndex from 'lodash/findLastIndex';
 import { generateId } from '../../helpers/generateId';
 import { BeginNextMatchRequest } from '../../types/messages/activeRound';
 import { isBlank } from '../../helpers/stringHelper';
+import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();
 
@@ -54,13 +55,16 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb
 
 nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
     try {
-        setActiveRoundTeams(data.teamAId, data.teamBId);
+        const newActiveRound = cloneDeep(activeRound.value);
+        setActiveRoundTeams(newActiveRound, data.teamAId, data.teamBId);
         if (data.matchId) {
-            setActiveRoundGames(data.matchId);
+            setActiveRoundGames(newActiveRound, data.matchId);
         }
-        if (activeRound.value.match.name !== data.matchName) {
+        if (!isBlank(data.matchName) && activeRound.value.match.name !== data.matchName) {
             activeRound.value.match.name = data.matchName;
+            newActiveRound.match.name = data.matchName;
         }
+        activeRound.value = newActiveRound;
     } catch (e) {
         return ack(e);
     }

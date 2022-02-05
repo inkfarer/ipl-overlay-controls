@@ -39,7 +39,7 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: Unhand
     }
 
     if (activeRound.value.round.id === id) {
-        setActiveRoundGames(id);
+        setActiveRoundGames(activeRound.value, id);
     }
     if (nextRound.value.round.id === id) {
         setNextRoundGames(id);
@@ -68,7 +68,7 @@ nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenF
 
     const firstRoundId = Object.keys(roundStore.value)[0];
     if (activeRound.value.round.id === data.roundId) {
-        setActiveRoundGames(firstRoundId);
+        setActiveRoundGames(activeRound.value, firstRoundId);
     }
     if (nextRound.value.round.id === data.roundId) {
         setNextRoundGames(firstRoundId);
@@ -129,7 +129,7 @@ nodecg.listenFor('resetRoundStore', () => {
         }
     };
 
-    setActiveRoundGames(defaultRoundId);
+    setActiveRoundGames(activeRound.value, defaultRoundId);
     setNextRoundGames(secondDefaultRoundId);
 });
 

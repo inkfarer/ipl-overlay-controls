@@ -62,6 +62,10 @@ describe('tournamentDataHelper', () => {
     });
 
     describe('updateTournamentDataReplicants', () => {
+        beforeEach(() => {
+            nodecg.replicants.activeRound.value = { active: 'round' };
+        });
+
         it('throws error if tournament is missing teams', () => {
             expect(() => helper.updateTournamentDataReplicants({ teams: []}))
                 .toThrow('Tournament has no teams.');
@@ -96,7 +100,7 @@ describe('tournamentDataHelper', () => {
             helper.updateTournamentDataReplicants(input);
 
             expect(nodecg.replicants.tournamentData.value).toEqual(input);
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1111', '2222');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '1111', '2222');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('3333', '4444');
             expect(mockRoundDataHelper.clearMatchesWithUnknownTeams).toHaveBeenCalled();
         });
@@ -115,7 +119,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '232323');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '232323');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('121212', '232323');
         });
 
@@ -129,7 +133,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '121212');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '121212');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('121212', '121212');
         });
 
@@ -179,7 +183,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '232323');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '232323');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('232323', '343434');
         });
 
