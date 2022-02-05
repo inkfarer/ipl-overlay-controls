@@ -50,18 +50,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "activeround",
-                "title": "Current Round",
+                "name": "matchmanager",
+                "title": "Match Manager",
                 "width": 4,
-                "file": "activeRound.html",
-                "workspace": "ipl",
-                "headerColor": "#262F40"
-            },
-            {
-                "name": "nextround",
-                "title": "Upcoming Round",
-                "width": 2,
-                "file": "nextRound.html",
+                "file": "matchManager.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },

@@ -1,7 +1,7 @@
 <template>
     <ipl-expanding-space
         key="teams-rounds"
-        title="Teams & Matches"
+        title="Active Match"
         data-test="active-match-editor"
     >
         <ipl-message

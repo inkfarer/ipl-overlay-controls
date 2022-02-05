@@ -4,7 +4,7 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
 "<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-match-editor\\" data-v-40cedb04=\\"\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
     <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Teams &amp; Matches</div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Active Match</div>
     <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-40cedb04=\\"\\"></font-awesome-icon-stub>
     <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
   </div>

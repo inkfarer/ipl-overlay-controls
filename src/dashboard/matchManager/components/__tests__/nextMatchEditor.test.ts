@@ -1,10 +1,10 @@
-import NextRound from '../nextRound.vue';
+import NextMatchEditor from '../nextMatchEditor.vue';
 import { createStore } from 'vuex';
-import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
-import { TournamentDataStore, tournamentDataStoreKey } from '../../store/tournamentDataStore';
+import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
+import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';
 
-describe('NextRound', () => {
+describe('NextMatchEditor', () => {
     config.global.stubs = {
         IplSelect: true,
         IplCheckbox: true,
@@ -61,7 +61,7 @@ describe('NextRound', () => {
     it('sets expected values and options for selectors and checkboxes', () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -95,7 +95,7 @@ describe('NextRound', () => {
     it('handles store data updating', async () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -113,7 +113,7 @@ describe('NextRound', () => {
     it('has expected update button color if data is locally changed', async () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -133,7 +133,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         jest.spyOn(tournamentDataStore, 'dispatch');
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -155,7 +155,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         jest.spyOn(tournamentDataStore, 'dispatch');
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -177,7 +177,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         jest.spyOn(nextRoundStore, 'dispatch');
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -200,7 +200,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         jest.spyOn(nextRoundStore, 'commit');
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -219,7 +219,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         jest.spyOn(nextRoundStore, 'dispatch');
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],
@@ -239,7 +239,7 @@ describe('NextRound', () => {
         const nextRoundStore = createNextRoundStore();
         jest.spyOn(nextRoundStore, 'dispatch');
         const tournamentDataStore = createTournamentDataStore();
-        const wrapper = mount(NextRound, {
+        const wrapper = mount(NextMatchEditor, {
             global: {
                 plugins: [
                     [ nextRoundStore, nextRoundStoreKey ],

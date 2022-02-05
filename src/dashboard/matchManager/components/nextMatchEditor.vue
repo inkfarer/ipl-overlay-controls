@@ -1,6 +1,8 @@
 <template>
-    <ipl-error-display class="m-b-8" />
-    <ipl-space>
+    <ipl-expanding-space
+        key="next-round"
+        title="Next Match"
+    >
         <div class="layout horizontal">
             <div class="layout vertical center-horizontal max-width">
                 <ipl-select
@@ -71,24 +73,23 @@
                 data-test="show-on-stream-toggle"
             />
         </div>
-    </ipl-space>
+    </ipl-expanding-space>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue';
-import { IplButton, IplSpace, IplSelect, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
-import { useTournamentDataStore } from '../store/tournamentDataStore';
-import { useNextRoundStore } from '../store/nextRoundStore';
-import { addDots } from '../../helpers/stringHelper';
-import IplErrorDisplay from '../components/iplErrorDisplay.vue';
-import { allValid, validator } from '../helpers/validation/validator';
-import { notBlank } from '../helpers/validation/stringValidators';
-import { generateMatchNameForRound } from '../../helpers/nextRound';
+import { IplButton, IplSelect, IplCheckbox, IplInput, IplExpandingSpace } from '@iplsplatoon/vue-components';
+import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import { useNextRoundStore } from '../../store/nextRoundStore';
+import { addDots } from '../../../helpers/stringHelper';
+import { allValid, validator } from '../../helpers/validation/validator';
+import { notBlank } from '../../helpers/validation/stringValidators';
+import { generateMatchNameForRound } from '../../../helpers/nextRound';
 
 export default defineComponent({
-    name: 'NextRound',
+    name: 'NextMatchEditor',
 
-    components: { IplInput, IplErrorDisplay, IplButton, IplCheckbox, IplSelect, IplSpace },
+    components: { IplInput, IplButton, IplCheckbox, IplSelect, IplExpandingSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
