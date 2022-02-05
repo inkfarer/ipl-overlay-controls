@@ -10,7 +10,8 @@ describe('ActiveRoundEditor', () => {
         IplSelect: true,
         IplCheckbox: true,
         FontAwesomeIcon: true,
-        IplButton: true
+        IplButton: true,
+        IplInput: true
     };
 
     const mockSetActiveColor = jest.fn();
@@ -227,6 +228,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
+        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
         const updateButton = wrapper.getComponent('[data-test="update-match-button"]');
 
         updateButton.vm.$emit('click');
@@ -234,7 +236,8 @@ describe('ActiveRoundEditor', () => {
         expect(activeRoundStore.dispatch).toHaveBeenCalledWith('setActiveRound', {
             teamAId: '123123',
             teamBId: '345345',
-            matchId: '01010'
+            matchId: '01010',
+            matchName: 'Match Name'
         });
     });
 

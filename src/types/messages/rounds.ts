@@ -2,6 +2,7 @@ export interface SetRoundRequest {
     teamAId: string;
     teamBId: string;
     matchId?: string;
+    matchName: string;
 }
 
 export interface SetNextRoundRequest {

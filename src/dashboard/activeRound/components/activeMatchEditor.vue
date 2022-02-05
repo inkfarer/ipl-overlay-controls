@@ -54,6 +54,13 @@
             data-test="match-selector"
             label="Match"
         />
+        <ipl-input
+            v-model="matchName"
+            name="matchName"
+            label="Match Name"
+            class="m-t-6"
+            :validator="validators.matchName"
+        />
         <ipl-button
             class="m-t-8"
             label="Update"
@@ -69,12 +76,14 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { addDots } from '../../../helpers/stringHelper';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { IplButton, IplSelect, IplCheckbox, IplMessage, IplExpandingSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSelect, IplCheckbox, IplMessage, IplExpandingSpace, IplInput } from '@iplsplatoon/vue-components';
+import { validator } from '../../helpers/validation/validator';
+import { notBlank } from '../../helpers/validation/stringValidators';
 
 export default defineComponent({
     name: 'ActiveRoundEditor',
 
-    components: { IplExpandingSpace, IplMessage, IplButton, IplCheckbox, IplSelect },
+    components: { IplExpandingSpace, IplMessage, IplButton, IplCheckbox, IplSelect, IplInput },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -85,6 +94,7 @@ export default defineComponent({
         const teamAId = ref('');
         const teamBId = ref('');
         const matchId = ref('');
+        const matchName = ref('');
 
         const selectedMatch = computed(() => tournamentDataStore.state.matchStore[matchId.value]);
         const matchHasProgress = computed(() =>
@@ -94,12 +104,14 @@ export default defineComponent({
         watch(selectedMatch, newValue => {
             teamAId.value = newValue?.teamA?.id;
             teamBId.value = newValue?.teamB?.id;
+            matchName.value = newValue?.meta?.name;
         });
 
         const isChanged = computed(() =>
             teamAId.value !== activeRoundStore.state.activeRound.teamA.id
             || teamBId.value !== activeRoundStore.state.activeRound.teamB.id
-            || matchId.value !== activeRoundStore.state.activeRound.match.id);
+            || matchId.value !== activeRoundStore.state.activeRound.match.id
+            || matchName.value !== activeRoundStore.state.activeRound.match.name);
 
         activeRoundStore.watch(
             store => store.activeRound.teamA.id,
@@ -113,6 +125,14 @@ export default defineComponent({
             store => store.activeRound.match.id,
             newValue => matchId.value = newValue,
             { immediate: true });
+        activeRoundStore.watch(
+            store => store.activeRound.match.name,
+            newValue => matchName.value = newValue,
+            { immediate: true });
+
+        const validators = {
+            matchName: validator(matchName, false, notBlank)
+        };
 
         return {
             teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team => ({
@@ -122,6 +142,7 @@ export default defineComponent({
             teamAId,
             teamBId,
             matchId,
+            matchName,
             activeRound,
             teamAImageShown: computed({
                 get() {
@@ -147,13 +168,15 @@ export default defineComponent({
             updateRound() {
                 activeRoundStore.dispatch('setActiveRound', {
                     matchId: matchId.value,
+                    matchName: matchName.value,
                     teamAId: teamAId.value,
                     teamBId: teamBId.value
                 });
             },
             selectedMatch,
             matchHasProgress,
-            addDots
+            addDots,
+            validators
         };
     }
 });

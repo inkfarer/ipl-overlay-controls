@@ -58,6 +58,9 @@ nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenF
         if (data.matchId) {
             setActiveRoundGames(data.matchId);
         }
+        if (activeRound.value.match.name !== data.matchName) {
+            activeRound.value.match.name = data.matchName;
+        }
     } catch (e) {
         return ack(e);
     }
