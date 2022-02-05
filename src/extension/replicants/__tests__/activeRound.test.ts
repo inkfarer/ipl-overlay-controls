@@ -266,6 +266,16 @@ describe('activeRound', () => {
     });
 
     describe('beginNextMatch', () => {
+        it('returns error when no match name is given', () => {
+            nodecg.replicants.activeRound.value = {};
+            const ack = jest.fn();
+
+            nodecg.messageListeners.beginNextMatch({ }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
+            expect(nodecg.replicants.activeRound.value).toEqual({});
+        });
+
         it('replaces active teams with next teams and commits them to a new match', () => {
             mockGenerateId.mockReturnValue('new match id');
             nodecg.replicants.nextRound.value = {
@@ -285,7 +295,7 @@ describe('activeRound', () => {
                 teamB: { name: 'Team Two', score: 98, yee: 'haw', color: '#333' }
             };
 
-            nodecg.messageListeners.beginNextMatch();
+            nodecg.messageListeners.beginNextMatch({ matchName: 'Cool Match' });
 
             expect(nodecg.replicants.activeRound.value).toEqual({
                 teamA: { id: '123123', name: 'Team Three', score: 0, testCustomProp: 'hello :)', color: '#222' },
@@ -298,7 +308,7 @@ describe('activeRound', () => {
                     name: 'Cool Next Round'
                 },
                 match: {
-                    name: 'Cool Next Round',
+                    name: 'Cool Match',
                     id: 'new match id',
                     isCompleted: false
                 }

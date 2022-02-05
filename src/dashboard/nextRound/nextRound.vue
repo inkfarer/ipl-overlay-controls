@@ -47,12 +47,20 @@
             data-test="update-next-round-button"
             @click="handleUpdate"
         />
+        <ipl-input
+            v-model="matchName"
+            name="matchName"
+            label="Match Name"
+            class="m-t-6"
+            :validator="validators.matchName"
+        />
         <ipl-button
             label="Begin next match"
             color="red"
             class="m-t-8"
             requires-confirmation
             data-test="begin-next-match-button"
+            :disabled="!allValid"
             @click="beginNextMatch"
         />
         <div class="layout horizontal center-horizontal">
@@ -67,17 +75,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
-import { IplButton, IplSpace, IplSelect, IplCheckbox } from '@iplsplatoon/vue-components';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { IplButton, IplSpace, IplSelect, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import { addDots } from '../../helpers/stringHelper';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { allValid, validator } from '../helpers/validation/validator';
+import { notBlank } from '../helpers/validation/stringValidators';
+import { generateMatchNameForRound } from '../../helpers/nextRound';
 
 export default defineComponent({
     name: 'NextRound',
 
-    components: { IplErrorDisplay, IplButton, IplCheckbox, IplSelect, IplSpace },
+    components: { IplInput, IplErrorDisplay, IplButton, IplCheckbox, IplSelect, IplSpace },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -85,11 +96,23 @@ export default defineComponent({
         const teamAId = ref('');
         const teamBId = ref('');
         const roundId = ref('');
+        const matchName = ref('');
         const isChanged = computed(() =>
             teamAId.value !== nextRoundStore.state.nextRound.teamA.id
             || teamBId.value !== nextRoundStore.state.nextRound.teamB.id
             || roundId.value !== nextRoundStore.state.nextRound.round.id);
         const selectedRound = computed(() => tournamentDataStore.state.roundStore[roundId.value]);
+
+        watch(selectedRound, (newValue, oldValue) => {
+            if (!!newValue && newValue.meta.name !== oldValue?.meta.name) {
+                matchName.value = generateMatchNameForRound(
+                    tournamentDataStore.state.matchStore, roundId.value, newValue.meta.name);
+            }
+        });
+
+        const validators = {
+            matchName: validator(matchName, false, notBlank)
+        };
 
         nextRoundStore.watch(
             store => store.nextRound.teamA.id,
@@ -116,6 +139,9 @@ export default defineComponent({
             teamAId,
             teamBId,
             roundId,
+            matchName,
+            validators,
+            allValid: computed(() => allValid(validators)),
             teamAImageShown: computed({
                 get() {
                     return nextRoundStore.state.nextRound.teamA.showLogo;
@@ -143,7 +169,7 @@ export default defineComponent({
                 });
             },
             beginNextMatch() {
-                nextRoundStore.dispatch('beginNextMatch');
+                nextRoundStore.dispatch('beginNextMatch', { matchName: matchName.value });
             },
             showOnStream: computed({
                 get() {

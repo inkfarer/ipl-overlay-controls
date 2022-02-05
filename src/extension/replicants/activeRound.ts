@@ -14,6 +14,8 @@ import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
 import { generateId } from '../../helpers/generateId';
+import { BeginNextMatchRequest } from '../../types/messages/activeRound';
+import { isBlank } from '../../helpers/stringHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -76,7 +78,11 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     commitActiveRoundToMatchStore();
 });
 
-nodecg.listenFor('beginNextMatch', () => {
+nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledListenForCb) => {
+    if (isBlank(data.matchName)) {
+        return ack(new Error('Match name must not be blank'));
+    }
+
     activeRound.value = {
         ...activeRound.value,
         teamA: {
@@ -96,8 +102,7 @@ nodecg.listenFor('beginNextMatch', () => {
         },
         match: {
             id: generateId(),
-            // TODO: can be overridden
-            name: nextRound.value.round.name,
+            name: data.matchName,
             isCompleted: false
         }
     };
