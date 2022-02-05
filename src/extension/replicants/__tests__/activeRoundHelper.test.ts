@@ -34,12 +34,13 @@ describe('activeRoundHelper', () => {
                 teamA: { score: 0 },
                 teamB: { score: 1 },
                 round: { id: 'asdasdasd' },
+                match: {},
                 games: [
                     { winner: GameWinner.NO_WINNER },
                     { winner: GameWinner.BRAVO },
                     { winner: GameWinner.NO_WINNER }
                 ]
-            };
+            } as ActiveRound;
 
             let activeRound: ActiveRound;
 
@@ -71,6 +72,7 @@ describe('activeRoundHelper', () => {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
                 round: { id: 'asdasdasd' },
+                match: {},
                 activeColor: {
                     name: 'Cool Color'
                 },
@@ -103,6 +105,7 @@ describe('activeRoundHelper', () => {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
                 round: { id: 'asdasdasd' },
+                match: {},
                 activeColor: {
                     name: 'Cool Color'
                 },
@@ -127,6 +130,7 @@ describe('activeRoundHelper', () => {
                 activeColor: {
                     name: 'Cool Color'
                 },
+                match: {},
                 games: [
                     { winner: GameWinner.NO_WINNER },
                     { winner: GameWinner.BRAVO, color: { name: 'Cool Color 2' } },
@@ -157,6 +161,7 @@ describe('activeRoundHelper', () => {
                 teamA: { score: 0 },
                 teamB: { score: 0 },
                 round: { id: 'asdasdasd' },
+                match: {},
                 games: [
                     { winner: GameWinner.NO_WINNER },
                     { winner: GameWinner.BRAVO },
@@ -179,7 +184,7 @@ describe('activeRoundHelper', () => {
             ];
             nodecg.replicants.matchStore.value = {
                 aaaaaa: {
-                    meta: { name: 'Cool Round' },
+                    meta: { name: 'Cool Round', relatedRoundId: 'gggg' },
                     games
                 },
                 bbbbbb: {
@@ -192,6 +197,13 @@ describe('activeRoundHelper', () => {
                     ]
                 }
             };
+            nodecg.replicants.roundStore.value = {
+                gggg: {
+                    meta: {
+                        name: 'Cool Round'
+                    }
+                }
+            };
             nodecg.replicants.activeRound.value = {
                 round: { id: 'roundround', name: 'A round' },
                 teamA: {},
@@ -200,17 +212,34 @@ describe('activeRoundHelper', () => {
 
             helper.setActiveRoundGames('aaaaaa');
 
-            const activeRound = nodecg.replicants.activeRound.value as ActiveRound;
-            expect(activeRound.round).toEqual({ name: 'Cool Round', id: 'aaaaaa' });
-            expect(activeRound.games).toEqual(games);
+            expect(nodecg.replicants.activeRound.value as ActiveRound).toEqual({
+                games,
+                match: {
+                    id: 'aaaaaa',
+                    name: 'Cool Round'
+                },
+                round: {
+                    id: 'gggg',
+                    name: 'Cool Round'
+                },
+                teamA: { score: 0 },
+                teamB: { score: 0 }
+            });
         });
 
         it('sets scores if they exist in the stored round', () => {
             nodecg.replicants.matchStore.value = {
                 aaa: {
-                    meta: { },
+                    meta: { relatedRoundId: 'gggg' },
                     teamA: { score: 5 },
                     teamB: { score: 10 }
+                }
+            };
+            nodecg.replicants.roundStore.value = {
+                gggg: {
+                    meta: {
+                        name: 'Cool Round'
+                    }
                 }
             };
             nodecg.replicants.activeRound.value = {
@@ -228,7 +257,14 @@ describe('activeRoundHelper', () => {
         it('resets scores if they do not exist in the stored round', () => {
             nodecg.replicants.matchStore.value = {
                 roundround: {
-                    meta: { },
+                    meta: { relatedRoundId: 'gggg' },
+                }
+            };
+            nodecg.replicants.roundStore.value = {
+                gggg: {
+                    meta: {
+                        name: 'Cool Round'
+                    }
                 }
             };
             nodecg.replicants.activeRound.value = {
@@ -243,13 +279,33 @@ describe('activeRoundHelper', () => {
             expect(activeRound.teamB.score).toBe(0);
         });
 
-        it('throws error if round is not found', () => {
+        it('throws error if match is not found', () => {
             nodecg.replicants.matchStore.value = {
                 roundroundround: { }
             };
 
             expect(() => helper.setActiveRoundGames('this match does not exist'))
                 .toThrow('Could not find match \'this match does not exist\'.');
+        });
+
+        it('throws error if related round is not found', () => {
+            nodecg.replicants.matchStore.value = {
+                roundroundround: {
+                    meta: {
+                        relatedRoundId: 'this round does not exist'
+                    }
+                }
+            };
+            nodecg.replicants.roundStore.value = {
+                gggg: {
+                    meta: {
+                        name: 'Cool Round'
+                    }
+                }
+            };
+
+            expect(() => helper.setActiveRoundGames('roundroundround'))
+                .toThrow('Could not find related round \'this round does not exist\'.');
         });
     });
 

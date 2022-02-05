@@ -20,7 +20,7 @@
     </ipl-message>
     <template v-else>
         <ipl-message
-            v-if="!roundIsCompleted"
+            v-if="!matchIsCompleted"
             class="m-t-8"
             type="warning"
         >
@@ -116,7 +116,7 @@ export default defineComponent({
         });
 
         return {
-            roundIsCompleted: computed(() => activeRoundStore.state.activeRound.round.isCompleted),
+            matchIsCompleted: computed(() => activeRoundStore.state.activeRound.match.isCompleted),
             outcomes,
             status: computed(() => predictionDataStore.state.predictionStore.currentPrediction?.status),
             PredictionStatus,

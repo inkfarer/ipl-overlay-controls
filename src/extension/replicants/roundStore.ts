@@ -127,13 +127,14 @@ nodecg.listenFor('resetRoundStore', () => {
 export function commitActiveRoundToMatchStore(): void {
     const currentActiveRound = clone(activeRound.value);
 
-    const completionTime = currentActiveRound.round.isCompleted ? DateTime.utc().toISO() : undefined;
+    const completionTime = currentActiveRound.match.isCompleted ? DateTime.utc().toISO() : undefined;
 
-    matchStore.value[currentActiveRound.round.id] = {
+    matchStore.value[currentActiveRound.match.id] = {
         ...(matchStore.value[currentActiveRound.round.id]),
         meta: {
-            name: currentActiveRound.round.name,
-            isCompleted: currentActiveRound.round.isCompleted,
+            name: currentActiveRound.match.name,
+            isCompleted: currentActiveRound.match.isCompleted,
+            relatedRoundId: currentActiveRound.round.id,
             completionTime
         },
         teamA: currentActiveRound.teamA,

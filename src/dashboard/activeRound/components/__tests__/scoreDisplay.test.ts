@@ -34,6 +34,7 @@ describe('ScoreDisplay', () => {
                     },
                     activeColor: null,
                     round: null,
+                    match: null,
                     games: [
                         {
                             winner: GameWinner.BRAVO,

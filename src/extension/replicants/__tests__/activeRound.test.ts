@@ -8,6 +8,7 @@ describe('activeRound', () => {
     const mockSetWinner = jest.fn();
     const mockSetActiveRoundTeams = jest.fn();
     const mockSetActiveRoundGames = jest.fn();
+    const mockGenerateId = jest.fn();
 
     jest.mock('../roundStore', () => ({
         __esModule: true,
@@ -19,6 +20,11 @@ describe('activeRound', () => {
         setWinner: mockSetWinner,
         setActiveRoundTeams: mockSetActiveRoundTeams,
         setActiveRoundGames: mockSetActiveRoundGames
+    }));
+
+    jest.mock('../../../helpers/generateId', () => ({
+        __esModule: true,
+        generateId: mockGenerateId
     }));
 
     beforeEach(() => {
@@ -260,7 +266,8 @@ describe('activeRound', () => {
     });
 
     describe('beginNextMatch', () => {
-        it('replaces active teams with next teams and commits them', () => {
+        it('replaces active teams with next teams and commits them to a new match', () => {
+            mockGenerateId.mockReturnValue('new match id');
             nodecg.replicants.nextRound.value = {
                 teamA: { id: '123123', testCustomProp: 'hello :)', name: 'Team Three' },
                 teamB: { id: '345354', testCustomProp2: 'hello! ;)', name: 'Team Four' },
@@ -288,7 +295,11 @@ describe('activeRound', () => {
                     { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER, color: undefined }
                 ],
                 round: {
+                    name: 'Cool Next Round'
+                },
+                match: {
                     name: 'Cool Next Round',
+                    id: 'new match id',
                     isCompleted: false
                 }
             });

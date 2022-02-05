@@ -30,7 +30,7 @@
             "properties": {
                 "meta": {
                     "type": "object",
-                    "required": ["name", "isCompleted"],
+                    "required": ["name", "isCompleted", "relatedRoundId"],
                     "properties": {
                         "name": {
                             "type": "string"
@@ -41,6 +41,9 @@
                         "completionTime": {
                             "type": "string",
                             "format": "date-time"
+                        },
+                        "relatedRoundId": {
+                            "type": "string"
                         }
                     }
                 },
@@ -109,7 +112,8 @@
         "00000": {
             "meta": {
                 "name": "Default Match 1",
-                "isCompleted": false
+                "isCompleted": false,
+                "relatedRoundId": "00000"
             },
             "teamA": {
                 "id": "AAA",

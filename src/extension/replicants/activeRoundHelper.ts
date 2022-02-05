@@ -5,13 +5,14 @@ import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, SwapColorsInternally, TournamentData } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from '../helpers/tournamentDataHelper';
-import { MatchStore } from '../../types/schemas';
+import { MatchStore, RoundStore } from '../../types/schemas';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 const matchStore = nodecg.Replicant<MatchStore>('matchStore');
+const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 export function setWinner(index: number, winner: GameWinner): void {
@@ -59,32 +60,45 @@ export function setWinner(index: number, winner: GameWinner): void {
     }
 
     const winThreshold = newValue.games.length / 2;
-    newValue.round.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
+    newValue.match.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
 
     activeRound.value = newValue;
     commitActiveRoundToMatchStore();
 }
 
 export function setActiveRoundGames(matchId: string): void {
-    const round = matchStore.value[matchId];
-    if (isEmpty(round)) {
+    const match = matchStore.value[matchId];
+    if (isEmpty(match)) {
         throw new Error(`Could not find match '${matchId}'.`);
     }
-
-    activeRound.value.round = {
-        id: matchId,
-        name: round.meta.name,
-        isCompleted: round.meta.isCompleted
-    };
-    activeRound.value.games = clone(round.games);
-
-    if (round.teamA && round.teamB) {
-        activeRound.value.teamA.score = round.teamA.score;
-        activeRound.value.teamB.score = round.teamB.score;
-    } else {
-        activeRound.value.teamA.score = 0;
-        activeRound.value.teamB.score = 0;
+    // TODO: automatically delete associated matches on round deletion
+    const relatedRound = roundStore.value[match?.meta.relatedRoundId];
+    if (isEmpty(relatedRound)) {
+        throw new Error(`Could not find related round '${match.meta.relatedRoundId}'.`);
     }
+
+    const newActiveRound = clone(activeRound.value);
+
+    newActiveRound.round = {
+        id: match.meta.relatedRoundId,
+        name: relatedRound.meta.name
+    };
+    newActiveRound.match = {
+        id: matchId,
+        name: match.meta.name,
+        isCompleted: match.meta.isCompleted
+    };
+    newActiveRound.games = clone(match.games);
+
+    if (match.teamA && match.teamB) {
+        newActiveRound.teamA.score = match.teamA.score;
+        newActiveRound.teamB.score = match.teamB.score;
+    } else {
+        newActiveRound.teamA.score = 0;
+        newActiveRound.teamB.score = 0;
+    }
+
+    activeRound.value = newActiveRound;
 }
 
 export function setActiveRoundTeams(teamAId: string, teamBId: string): void {

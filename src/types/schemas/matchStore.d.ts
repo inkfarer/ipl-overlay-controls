@@ -28,6 +28,7 @@ export interface Round {
 		name: string;
 		isCompleted: boolean;
 		completionTime?: string;
+		relatedRoundId: string;
 		[k: string]: unknown;
 	};
 	games: Game[];

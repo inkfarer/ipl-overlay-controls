@@ -40,6 +40,7 @@ describe('ColorEditor', () => {
                         isCustom: false
                     },
                     round: null,
+                    match: null,
                     games: [
                         {
                             winner: GameWinner.BRAVO,

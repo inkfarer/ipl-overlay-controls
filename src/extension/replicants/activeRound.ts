@@ -13,6 +13,7 @@ import { commitActiveRoundToMatchStore } from './roundStore';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
+import { generateId } from '../../helpers/generateId';
 
 const nodecg = nodecgContext.get();
 
@@ -92,6 +93,11 @@ nodecg.listenFor('beginNextMatch', () => {
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
         round: {
             ...clone(nextRound.value.round),
+        },
+        match: {
+            id: generateId(),
+            // TODO: can be overridden
+            name: nextRound.value.round.name,
             isCompleted: false
         }
     };

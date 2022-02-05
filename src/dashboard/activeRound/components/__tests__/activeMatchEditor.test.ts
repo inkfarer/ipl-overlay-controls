@@ -46,6 +46,10 @@ describe('ActiveRoundEditor', () => {
                     round: {
                         id: '0387',
                         name: 'cool round',
+                    },
+                    match: {
+                        id: '01010',
+                        name: 'Rad Match',
                         isCompleted: false
                     },
                     games: [
@@ -87,8 +91,8 @@ describe('ActiveRoundEditor', () => {
                     ]
                 },
                 matchStore: {
-                    '0387': {
-                        meta: { name: 'dope round', isCompleted: false },
+                    '01010': {
+                        meta: { name: 'dope round', isCompleted: false, relatedRoundId: '0864' },
                         teamA: {
                             score: 0,
                             id: '123123',
@@ -139,9 +143,9 @@ describe('ActiveRoundEditor', () => {
             { name: 'cool team B', value: '345345' }
         ]);
         const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
-        expect(roundSelector.attributes().modelvalue).toEqual('0387');
+        expect(roundSelector.attributes().modelvalue).toEqual('01010');
         expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'dope round', value: '0387' }
+            { name: 'dope round', value: '01010' }
         ]);
     });
 
@@ -230,7 +234,7 @@ describe('ActiveRoundEditor', () => {
         expect(activeRoundStore.dispatch).toHaveBeenCalledWith('setActiveRound', {
             teamAId: '123123',
             teamBId: '345345',
-            matchId: '0387'
+            matchId: '01010'
         });
     });
 
@@ -259,7 +263,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: false },
+                meta: { name: 'dope round', isCompleted: false, relatedRoundId: '0389457' },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 0, showLogo: true, players: []},
                 games: []
@@ -300,8 +304,8 @@ describe('ActiveRoundEditor', () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: false },
+            '01010': {
+                meta: { name: 'dope round', isCompleted: false, relatedRoundId: '01875' },
                 teamA: { id: '123123', name: 'Cool Team (long name long name long name long name long name)', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
@@ -325,8 +329,8 @@ describe('ActiveRoundEditor', () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
-            '0387': {
-                meta: { name: 'dope round', isCompleted: true },
+            '01010': {
+                meta: { name: 'dope round', isCompleted: true, relatedRoundId: '8458' },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
@@ -351,13 +355,13 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: true },
+                meta: { name: 'dope round', isCompleted: true, relatedRoundId: '000' },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
             },
             '12345': {
-                meta: { name: 'dope round 2', isCompleted: false },
+                meta: { name: 'dope round 2', isCompleted: false, relatedRoundId: '111' },
                 teamA: { id: '789789', name: 'Cool Team 3', score: 2, showLogo: true, players: []},
                 teamB: { id: '678678', name: 'Cool Team 4', score: 1, showLogo: true, players: []},
                 games: []

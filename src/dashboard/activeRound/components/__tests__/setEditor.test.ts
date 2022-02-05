@@ -47,7 +47,11 @@ describe('setEditor', () => {
                     },
                     round: {
                         id: '0387',
-                        name: 'cool round',
+                        name: 'cool round'
+                    },
+                    match: {
+                        id: '01010',
+                        name: 'Rad Match',
                         isCompleted: false
                     },
                     games: [

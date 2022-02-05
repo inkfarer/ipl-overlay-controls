@@ -99,7 +99,7 @@ export default defineComponent({
         const isChanged = computed(() =>
             teamAId.value !== activeRoundStore.state.activeRound.teamA.id
             || teamBId.value !== activeRoundStore.state.activeRound.teamB.id
-            || matchId.value !== activeRoundStore.state.activeRound.round.id);
+            || matchId.value !== activeRoundStore.state.activeRound.match.id);
 
         activeRoundStore.watch(
             store => store.activeRound.teamA.id,
@@ -110,7 +110,7 @@ export default defineComponent({
             newValue => teamBId.value = newValue,
             { immediate: true });
         activeRoundStore.watch(
-            store => store.activeRound.round.id,
+            store => store.activeRound.match.id,
             newValue => matchId.value = newValue,
             { immediate: true });
 

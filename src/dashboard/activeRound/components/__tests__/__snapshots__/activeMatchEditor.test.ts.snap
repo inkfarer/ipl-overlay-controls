@@ -20,7 +20,7 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
       </div>
     </div>
-    <ipl-select-stub modelvalue=\\"0387\\" label=\\"Match\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"match-selector\\"></ipl-select-stub>
+    <ipl-select-stub modelvalue=\\"01010\\" label=\\"Match\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"match-selector\\"></ipl-select-stub>
     <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-match-button\\"></ipl-button-stub>
   </div>
 </div>"

@@ -17,7 +17,8 @@ describe('MatchExporter', () => {
                     aaa: {
                         meta: {
                             name: 'Round One',
-                            isCompleted: false
+                            isCompleted: false,
+                            relatedRoundId: '2322',
                         },
                         teamA: {
                             score: 0,
@@ -40,7 +41,8 @@ describe('MatchExporter', () => {
                     bbb: {
                         meta: {
                             name: 'Round Two',
-                            isCompleted: false
+                            isCompleted: false,
+                            relatedRoundId: '333',
                         },
                         teamA: {
                             score: 0,
@@ -82,6 +84,7 @@ describe('MatchExporter', () => {
             ccc: {
                 meta: {
                     name: 'Round Three',
+                    relatedRoundId: '2222',
                     isCompleted: false
                 },
                 teamA: {

@@ -33,6 +33,10 @@ export interface ActiveRound {
 	round: {
 		id: string;
 		name: string;
+	};
+	match: {
+		id: string;
+		name: string;
 		isCompleted: boolean;
 	};
 	games: {

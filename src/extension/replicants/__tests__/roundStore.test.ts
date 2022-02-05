@@ -399,7 +399,8 @@ describe('roundStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1, name: 'Team Alpha' },
                 teamB: { score: 1, name: 'Team Bravo' },
-                round: { id: 'aaaaaa', name: 'Cool Round', isCompleted: false, },
+                round: { name: 'Cool Round', id: 'roundround' },
+                match: { isCompleted: false, id: 'aaaaaa', name: 'Cool Match' },
                 games: [
                     {
                         stage: 'Walleye Warehouse',
@@ -456,9 +457,10 @@ describe('roundStore', () => {
             expect(nodecg.replicants.matchStore.value).toEqual({
                 aaaaaa: {
                     meta: {
-                        name: 'Cool Round',
+                        name: 'Cool Match',
                         isCompleted: false,
-                        completionTime: undefined
+                        completionTime: undefined,
+                        relatedRoundId: 'roundround'
                     },
                     teamA: { score: 1, name: 'Team Alpha' },
                     teamB: { score: 1, name: 'Team Bravo' },
@@ -490,7 +492,8 @@ describe('roundStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1 },
                 teamB: { score: 0 },
-                round: { name: 'Cool Round', id: '123123', isCompleted: false },
+                round: { name: 'Cool Round' },
+                match: { isCompleted: false, id: '123123' },
                 games: [{ }, { }, { }]
             };
             nodecg.replicants.matchStore.value = {

@@ -91,7 +91,11 @@ describe('ResolvePredictionDialog', () => {
                     },
                     round: {
                         id: '0387',
-                        name: 'cool round',
+                        name: 'cool round'
+                    },
+                    match: {
+                        id: '01010',
+                        name: 'Rad Match',
                         isCompleted: false
                     },
                     games: [
@@ -165,7 +169,7 @@ describe('ResolvePredictionDialog', () => {
         const predictionDataStore = createPredictionDataStore();
         const activeRoundStore = createActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.round.isCompleted = false;
+        activeRoundStore.state.activeRound.match.isCompleted = false;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
                 plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]

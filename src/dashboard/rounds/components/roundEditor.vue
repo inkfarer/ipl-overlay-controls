@@ -82,6 +82,7 @@ export default defineComponent({
 
         watch(() => props.round, (newValue, oldValue) => {
             roundInternal.value = {
+                ...newValue,
                 meta: cloneDeep(newValue.meta),
                 games: newValue.games.map((game, index) => {
                     const oldGame = oldValue?.games[index];
