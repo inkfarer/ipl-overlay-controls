@@ -9,7 +9,8 @@ describe('NextRound', () => {
         IplSelect: true,
         IplCheckbox: true,
         IplButton: true,
-        IplErrorDisplay: true
+        IplErrorDisplay: true,
+        IplInput: true
     };
 
     function createNextRoundStore() {
@@ -226,10 +227,30 @@ describe('NextRound', () => {
                 ]
             }
         });
+        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
         const beginNextMatchButton = wrapper.getComponent('[data-test="begin-next-match-button"]');
 
         beginNextMatchButton.vm.$emit('click');
 
-        expect(nextRoundStore.dispatch).toHaveBeenCalledWith('beginNextMatch');
+        expect(nextRoundStore.dispatch).toHaveBeenCalledWith('beginNextMatch', { matchName: 'Match Name' });
+    });
+
+    it('disables begin next match button if match name field is invalid', async () => {
+        const nextRoundStore = createNextRoundStore();
+        jest.spyOn(nextRoundStore, 'dispatch');
+        const tournamentDataStore = createTournamentDataStore();
+        const wrapper = mount(NextRound, {
+            global: {
+                plugins: [
+                    [ nextRoundStore, nextRoundStoreKey ],
+                    [ tournamentDataStore, tournamentDataStoreKey ]
+                ]
+            }
+        });
+
+        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', '');
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="begin-next-match-button"]').attributes().disabled).toEqual('true');
     });
 });
