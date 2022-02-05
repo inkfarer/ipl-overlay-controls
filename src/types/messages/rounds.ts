@@ -3,3 +3,9 @@ export interface SetRoundRequest {
     teamBId: string;
     matchId?: string;
 }
+
+export interface SetNextRoundRequest {
+    teamAId: string;
+    teamBId: string;
+    roundId?: string;
+}

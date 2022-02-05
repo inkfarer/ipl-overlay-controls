@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "definitions": {
-        "roundTeam": {
+        "matchTeam": {
             "allOf": [
                 {
                     "$ref": "./defs/team.json#/team"
@@ -23,7 +23,9 @@
             "type": "object",
             "required": [
                 "meta",
-                "games"
+                "games",
+                "teamA",
+                "teamB"
             ],
             "properties": {
                 "meta": {
@@ -49,10 +51,10 @@
                     }
                 },
                 "teamA": {
-                    "$ref": "#/definitions/roundTeam"
+                    "$ref": "#/definitions/matchTeam"
                 },
                 "teamB": {
-                    "$ref": "#/definitions/roundTeam"
+                    "$ref": "#/definitions/matchTeam"
                 }
             }
         },
@@ -109,33 +111,38 @@
                 "name": "Default Match 1",
                 "isCompleted": false
             },
+            "teamA": {
+                "id": "AAA",
+                "name": "Placeholder Team A",
+                "showLogo": true,
+                "score": 0,
+                "players": [
+                    {
+                        "name": "Player 1"
+                    },
+                    {
+                        "name": "Player 2"
+                    }
+                ]
+            },
+            "teamB": {
+                "id": "BBB",
+                "name": "Placeholder Team B",
+                "showLogo": true,
+                "score": 0,
+                "players": [
+                    {
+                        "name": "Player 3"
+                    },
+                    {
+                        "name": "Player 4"
+                    }
+                ]
+            },
             "games": [
                 {
                     "stage": "MakoMart",
                     "mode": "Clam Blitz",
-                    "winner": "none"
-                },
-                {
-                    "stage": "Ancho-V Games",
-                    "mode": "Tower Control",
-                    "winner": "none"
-                },
-                {
-                    "stage": "Wahoo World",
-                    "mode": "Rainmaker",
-                    "winner": "none"
-                }
-            ]
-        },
-        "11111": {
-            "meta": {
-                "name": "Default Match 2",
-                "isCompleted": false
-            },
-            "games": [
-                {
-                    "stage": "Inkblot Art Academy",
-                    "mode": "Turf War",
                     "winner": "none"
                 },
                 {

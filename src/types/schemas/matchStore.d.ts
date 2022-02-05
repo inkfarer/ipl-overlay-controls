@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type RoundTeam = {
+export type MatchTeam = {
 	id: string;
 	name: string;
 	logoUrl?: string;
@@ -31,8 +31,8 @@ export interface Round {
 		[k: string]: unknown;
 	};
 	games: Game[];
-	teamA?: RoundTeam;
-	teamB?: RoundTeam;
+	teamA: MatchTeam;
+	teamB: MatchTeam;
 	[k: string]: unknown;
 }
 export interface Game {
