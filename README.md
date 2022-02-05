@@ -87,7 +87,7 @@ To create a debuggable development build, run `npm run watch` or `npm run devbui
 The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2022-01-14:
 
 - [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
-- [sj-overlay](https://github.com/IPLSplatoon/sj-overlays)
+- [sj-overlays](https://github.com/IPLSplatoon/sj-overlays)
 - [sos-overlays](https://github.com/inkfarer/sos-overlays)
 
 The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2022-01-14:
