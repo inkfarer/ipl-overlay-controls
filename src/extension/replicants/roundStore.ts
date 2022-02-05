@@ -73,6 +73,15 @@ nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenF
     if (nextRound.value.round.id === data.roundId) {
         setNextRoundGames(firstRoundId);
     }
+
+    const newMatches = clone(matchStore.value);
+    Object.entries(newMatches).forEach(([key, match]) => {
+        if (match.meta.relatedRoundId === data.roundId) {
+            delete newMatches[key];
+        }
+    });
+
+    matchStore.value = newMatches;
 });
 
 nodecg.listenFor('resetRoundStore', () => {

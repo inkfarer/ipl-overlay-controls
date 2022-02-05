@@ -71,7 +71,6 @@ export function setActiveRoundGames(matchId: string): void {
     if (isEmpty(match)) {
         throw new Error(`Could not find match '${matchId}'.`);
     }
-    // TODO: automatically delete associated matches on round deletion
     const relatedRound = roundStore.value[match?.meta.relatedRoundId];
     if (isEmpty(relatedRound)) {
         throw new Error(`Could not find related round '${match.meta.relatedRoundId}'.`);

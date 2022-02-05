@@ -271,6 +271,10 @@ describe('roundStore', () => {
     });
 
     describe('removeRound', () => {
+        beforeEach(() => {
+            nodecg.replicants.matchStore.value = {};
+        });
+
         it('deletes the given round', () => {
             nodecg.replicants.roundStore.value = {
                 aaaaaa: { },
@@ -341,6 +345,38 @@ describe('roundStore', () => {
 
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('aaaaaa');
             expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
+        });
+
+        it('deletes any matches associated with the deleted round', () => {
+            nodecg.replicants.roundStore.value = {
+                aaaaaa: { },
+                bbbbbb: { },
+                gggggg: { }
+            };
+            nodecg.replicants.matchStore.value = {
+                zzzzzz: {
+                    meta: {
+                        relatedRoundId: 'gggggg'
+                    }
+                },
+                llllll: {
+                    meta: {
+                        relatedRoundId: 'mmmmmm'
+                    }
+                }
+            };
+            nodecg.replicants.activeRound.value = { round: { id: '123' } };
+            nodecg.replicants.nextRound.value = { round: { id: 'bbbbbb' } };
+
+            nodecg.messageListeners.removeRound({ roundId: 'gggggg' });
+
+            expect(nodecg.replicants.matchStore.value).toEqual({
+                llllll: {
+                    meta: {
+                        relatedRoundId: 'mmmmmm'
+                    }
+                }
+            });
         });
     });
 
