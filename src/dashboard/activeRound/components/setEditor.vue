@@ -1,7 +1,7 @@
 <template>
     <ipl-expanding-space>
         <template #title>
-            Edit round
+            Edit match
             <template v-if="!!nextGame">
                 <span class="badge badge-blue m-l-6">Next up</span>
                 <span class="text-small">{{ nextGame.mode }} on {{ nextGame.stage }}</span>

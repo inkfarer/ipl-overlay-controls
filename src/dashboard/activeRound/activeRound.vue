@@ -15,7 +15,7 @@
         </div>
         <ipl-expanding-space-group class="max-width m-l-8">
             <color-editor />
-            <active-round-editor class="m-t-8" />
+            <active-match-editor class="m-t-8" />
             <scoreboard-editor class="m-t-8" />
         </ipl-expanding-space-group>
     </div>
@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ScoreDisplay from './components/scoreDisplay.vue';
-import ActiveRoundEditor from './components/activeRoundEditor.vue';
+import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
 import SetEditor from './components/setEditor.vue';
 import ActiveColorToggles from './components/activeColorToggles.vue';
@@ -45,7 +45,7 @@ export default defineComponent({
         ActiveColorToggles,
         IplExpandingSpaceGroup,
         ColorEditor,
-        ActiveRoundEditor,
+        ActiveMatchEditor,
         ScoreDisplay,
         SetEditor
     },

@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveRoundEditor matches snapshot and has expected values for select options 1`] = `
-"<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-round-editor\\" data-v-40cedb04=\\"\\">
+"<div class=\\"ipl-expansion-panel__content\\" data-test=\\"active-match-editor\\" data-v-40cedb04=\\"\\">
   <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-40cedb04=\\"\\">
     <div class=\\"ipl-expansion-panel__header-background\\" data-v-40cedb04=\\"\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Teams &amp; Rounds</div>
+    <div class=\\"ipl-expansion-panel__title\\" data-v-40cedb04=\\"\\">Teams &amp; Matches</div>
     <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-40cedb04=\\"\\"></font-awesome-icon-stub>
     <div class=\\"header-extra\\" data-v-40cedb04=\\"\\"></div>
   </div>
@@ -20,8 +20,8 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
         <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"false\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-b-image-toggle\\"></ipl-checkbox-stub>
       </div>
     </div>
-    <ipl-select-stub modelvalue=\\"0387\\" label=\\"Round\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"round-selector\\"></ipl-select-stub>
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-round-button\\"></ipl-button-stub>
+    <ipl-select-stub modelvalue=\\"0387\\" label=\\"Match\\" options=\\"[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"match-selector\\"></ipl-select-stub>
+    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-match-button\\"></ipl-button-stub>
   </div>
 </div>"
 `;

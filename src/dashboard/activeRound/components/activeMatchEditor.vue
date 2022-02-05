@@ -1,13 +1,13 @@
 <template>
     <ipl-expanding-space
         key="teams-rounds"
-        title="Teams & Rounds"
-        data-test="active-round-editor"
+        title="Teams & Matches"
+        data-test="active-match-editor"
     >
         <ipl-message
             v-if="isChanged && matchHasProgress"
             type="info"
-            data-test="round-progress-message"
+            data-test="match-progress-message"
         >
             {{ selectedMatch.meta.isCompleted
                 ? `'${selectedMatch.meta.name}' is already completed.`
@@ -51,14 +51,14 @@
             v-model="matchId"
             class="m-t-6"
             :options="matches"
-            data-test="round-selector"
-            label="Round"
+            data-test="match-selector"
+            label="Match"
         />
         <ipl-button
             class="m-t-8"
             label="Update"
             :color="isChanged ? 'red' : 'blue'"
-            data-test="update-round-button"
+            data-test="update-match-button"
             @click="updateRound"
         />
     </ipl-expanding-space>
@@ -87,8 +87,8 @@ export default defineComponent({
         const matchId = ref('');
 
         const selectedMatch = computed(() => tournamentDataStore.state.matchStore[matchId.value]);
-        const matchHasProgress = computed(() => selectedMatch.value.teamA?.score > 0
-            || selectedMatch.value.teamB?.score > 0);
+        const matchHasProgress = computed(() => selectedMatch.value?.teamA?.score > 0
+            || selectedMatch.value?.teamB?.score > 0);
 
         watch(selectedMatch, newValue => {
             if (matchHasProgress.value) {

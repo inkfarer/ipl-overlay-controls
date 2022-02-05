@@ -1,4 +1,4 @@
-import ActiveRoundEditor from '../activeRoundEditor.vue';
+import ActiveRoundEditor from '../activeMatchEditor.vue';
 import { createStore } from 'vuex';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
@@ -122,7 +122,7 @@ describe('ActiveRoundEditor', () => {
             { name: 'cool team A (test long name long name long na...', value: '123123' },
             { name: 'cool team B', value: '345345' }
         ]);
-        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
+        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
         expect(roundSelector.attributes().modelvalue).toEqual('0387');
         expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'dope round', value: '0387' }
@@ -157,7 +157,7 @@ describe('ActiveRoundEditor', () => {
         teamASelector.vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="update-round-button"]').attributes().color).toEqual('red');
+        expect(wrapper.getComponent('[data-test="update-match-button"]').attributes().color).toEqual('red');
     });
 
     it('sends commit to store if team A image toggle is changed', () => {
@@ -207,7 +207,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
-        const updateButton = wrapper.getComponent('[data-test="update-round-button"]');
+        const updateButton = wrapper.getComponent('[data-test="update-match-button"]');
 
         updateButton.vm.$emit('click');
 
@@ -235,7 +235,7 @@ describe('ActiveRoundEditor', () => {
             }
         });
 
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
     });
 
     it('does not display message if selected round has no progress', async () => {
@@ -257,7 +257,7 @@ describe('ActiveRoundEditor', () => {
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
     });
 
     it('does not display message if selected round has progress but data is not changed', () => {
@@ -277,7 +277,7 @@ describe('ActiveRoundEditor', () => {
             }
         });
 
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
     });
 
     it('displays message if selected round has progress', async () => {
@@ -300,7 +300,7 @@ describe('ActiveRoundEditor', () => {
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
-        const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
+        const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
         expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team (long name long name long name long... vs Cool Team 2)');
     });
@@ -325,7 +325,7 @@ describe('ActiveRoundEditor', () => {
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
-        const roundProgressMessage = wrapper.findComponent('[data-test="round-progress-message"]');
+        const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
         expect(roundProgressMessage.text()).toEqual('\'dope round\' is already completed. (Cool Team vs Cool Team 2)');
     });
@@ -352,12 +352,12 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
-        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
+        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
 
         roundSelector.vm.$emit('update:modelValue', '12345');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').text()).toEqual('\'dope round 2\' already has saved progress. (Cool Team 3 vs Cool Team 4)');
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').text()).toEqual('\'dope round 2\' already has saved progress. (Cool Team 3 vs Cool Team 4)');
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('789789');
         expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('678678');
     });
@@ -400,14 +400,14 @@ describe('ActiveRoundEditor', () => {
                 plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
             }
         });
-        const roundSelector = wrapper.getComponent('[data-test="round-selector"]');
+        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
 
         roundSelector.vm.$emit('update:modelValue', '12345');
         await wrapper.vm.$nextTick();
         roundSelector.vm.$emit('update:modelValue', '123456');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findComponent('[data-test="round-progress-message"]').exists()).toEqual(false);
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('567234');
         expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('123098');
     });
