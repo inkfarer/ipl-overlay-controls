@@ -14,7 +14,7 @@
             class="layout horizontal m-t-8"
             color="light"
         >
-            <div class="color-key color-key-next" /> Next
+            <div class="color-key color-key-next" /> Next round
         </ipl-space>
         <ipl-space
             v-for="(round, key) in rounds"

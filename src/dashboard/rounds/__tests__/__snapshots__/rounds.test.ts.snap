@@ -33,7 +33,7 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
       <ipl-button-stub label=\\"Reset rounds\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"reset-rounds-button\\"></ipl-button-stub>
     </div>
     <div class=\\"ipl-space color-light layout horizontal m-t-8\\" data-v-11398c0e=\\"\\">
-      <div class=\\"color-key color-key-next\\"></div> Next
+      <div class=\\"color-key color-key-next\\"></div> Next round
     </div>
     <div class=\\"ipl-space color-light m-t-8 round-option selected is-next-round\\" data-test=\\"round-option-2426\\" data-v-11398c0e=\\"\\">dope round the third</div>
     <div class=\\"ipl-space color-light m-t-8 round-option\\" data-test=\\"round-option-9573\\" data-v-11398c0e=\\"\\">dope round the second</div>
