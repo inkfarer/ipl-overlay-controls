@@ -3,7 +3,6 @@ import { config, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../store/tournamentDataStore';
 import { nextRoundStoreKey } from '../../store/nextRoundStore';
-import { activeRoundStoreKey } from '../../store/activeRoundStore';
 
 describe('Rounds', () => {
     config.global.stubs = {
@@ -27,33 +26,22 @@ describe('Rounds', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round', isCompleted: false },
+                        meta: { name: 'dope round' },
                         games: []
                     },
                     '9573': {
-                        meta: { name: 'dope round the second', isCompleted: false },
+                        meta: { name: 'dope round the second' },
                         games: []
                     },
                     '2426': {
-                        meta: { name: 'dope round the third', isCompleted: false },
+                        meta: { name: 'dope round the third' },
                         games: []
                     }
-                }
+                },
+                matchStore: {}
             },
             actions: {
                 resetRoundStore: mockResetRoundStore
-            }
-        });
-    }
-
-    function createActiveRoundStore() {
-        return createStore({
-            state: {
-                activeRound: {
-                    round: {
-                        id: '9573'
-                    }
-                }
             }
         });
     }
@@ -73,13 +61,11 @@ describe('Rounds', () => {
     it('matches snapshot', () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -90,13 +76,11 @@ describe('Rounds', () => {
     it('matches snapshot when round sidebar is open', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -109,13 +93,11 @@ describe('Rounds', () => {
     it('resets round store on reset button click', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -129,13 +111,11 @@ describe('Rounds', () => {
     it('selects expected round by default', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -145,7 +125,6 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                isCompleted: false,
                 name: 'dope round the third'
             }
         });
@@ -155,13 +134,11 @@ describe('Rounds', () => {
     it('switches selected round when round is selected from sidebar', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -175,7 +152,6 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                isCompleted: false,
                 name: 'dope round the second'
             }
         });
@@ -185,13 +161,11 @@ describe('Rounds', () => {
     it('handles new 3-game round being created', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -216,13 +190,11 @@ describe('Rounds', () => {
     it('handles new 5-game round being created', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -249,13 +221,11 @@ describe('Rounds', () => {
     it('handles new 7-game round being created', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -284,13 +254,11 @@ describe('Rounds', () => {
     it('handles round creation being cancelled', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -307,13 +275,11 @@ describe('Rounds', () => {
     it('handles round being created', async () => {
         const store = createTournamentDataStore();
         const nextRoundStore = createNextRoundStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(Rounds, {
             global: {
                 plugins: [
                     [store, tournamentDataStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [activeRoundStore, activeRoundStoreKey]
+                    [nextRoundStore, nextRoundStoreKey]
                 ]
             }
         });
@@ -327,7 +293,7 @@ describe('Rounds', () => {
         expect(roundEditor.props().isNewRound).toEqual(false);
         expect(roundEditor.props().roundId).toEqual('0387');
         expect(roundEditor.props().round).toEqual({
-            meta: { name: 'dope round', isCompleted: false },
+            meta: { name: 'dope round' },
             games: []
         });
     });

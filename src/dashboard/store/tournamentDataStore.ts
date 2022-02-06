@@ -1,4 +1,4 @@
-import { RoundStore, TournamentData } from 'schemas';
+import { MatchStore, RoundStore, TournamentData } from 'schemas';
 import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
@@ -7,18 +7,21 @@ import { UpdateRoundStoreRequest, UpdateRoundStoreResponse } from 'types/message
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
+const matchStore = nodecg.Replicant<MatchStore>('matchStore');
 
-export const tournamentDataReps = [ tournamentData, roundStore ];
+export const tournamentDataReps = [ tournamentData, roundStore, matchStore ];
 
 export interface TournamentDataStore {
     tournamentData: TournamentData;
     roundStore: RoundStore;
+    matchStore: MatchStore;
 }
 
 export const tournamentDataStore = createStore<TournamentDataStore>({
     state: {
         tournamentData: null,
-        roundStore: null
+        roundStore: null,
+        matchStore: null
     },
     mutations: {
         setState(store, { name, val }: { name: string, val: unknown }): void {

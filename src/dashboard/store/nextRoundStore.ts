@@ -2,7 +2,8 @@ import { NextRound } from 'schemas';
 import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
-import { SetRoundRequest } from 'types/messages/rounds';
+import { SetNextRoundRequest } from 'types/messages/rounds';
+import { BeginNextMatchRequest } from 'types/messages/activeRound';
 
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
@@ -25,15 +26,15 @@ export const nextRoundStore = createStore<NextRoundStore>({
         }
     },
     actions: {
-        beginNextMatch(): void {
-            nodecg.sendMessage('beginNextMatch');
+        beginNextMatch(store, request: BeginNextMatchRequest): void {
+            nodecg.sendMessage('beginNextMatch', request);
         },
         setNextRound(store, {
             teamAId,
             teamBId,
             roundId
         }: { teamAId: string, teamBId: string, roundId: string }): void {
-            nodecg.sendMessage('setNextRound', { teamAId, teamBId, roundId } as SetRoundRequest);
+            nodecg.sendMessage('setNextRound', { teamAId, teamBId, roundId } as SetNextRoundRequest);
         },
     }
 });

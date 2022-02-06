@@ -16,23 +16,25 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/nextRound');
     require('./replicants/tournamentData');
     require('./replicants/casters');
+    require('./replicants/matchRoutes');
+    require('./replicants/matchStore');
+    require('./replicants/roundStore');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
     predictionStore.value.status.socketOpen = false;
+    radiaSettings.value.enabled = false;
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
             `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
             + 'Production API will not be possible.'
         );
-        radiaSettings.value.enabled = false;
+
         predictionStore.value.status.predictionsEnabled = false;
         predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
     } else {
-        radiaSettings.value.enabled = false;
-        predictionStore.value.status.socketOpen = false;
         require('./importers/radiaAvailabilityCheck');
         require('./importers/casters');
         require('./importers/predictions');

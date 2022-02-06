@@ -20,3 +20,7 @@ export interface SwapRoundColorRequest {
     roundIndex: number;
     colorsSwapped: boolean;
 }
+
+export interface BeginNextMatchRequest {
+    matchName: string;
+}

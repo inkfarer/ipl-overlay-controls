@@ -2,13 +2,11 @@ import { handleRoundData } from './roundDataHelper';
 import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import * as express from 'express';
-import { RoundStore } from 'schemas';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
+import { updateRounds } from './roundImporter';
 
 const nodecg = nodecgContext.get();
 const router = nodecg.Router();
-
-const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
 (router as express.Router).post(
     '/upload-tournament-json',
@@ -28,8 +26,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
         switch (req.body.jsonType) {
             case 'rounds': {
-                const resolvedRounds = handleRoundData(content);
-                rounds.value = { ...rounds.value, ...resolvedRounds };
+                updateRounds(handleRoundData(content));
                 break;
             }
             case 'teams': {

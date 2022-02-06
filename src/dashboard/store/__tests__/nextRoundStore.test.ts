@@ -31,9 +31,9 @@ describe('nextRoundStore', () => {
 
     describe('beginNextMatch', () => {
         it('sends message to extension', () => {
-            nextRoundStore.dispatch('beginNextMatch');
+            nextRoundStore.dispatch('beginNextMatch', { matchName: 'cool match' });
 
-            expect(mockSendMessage).toHaveBeenCalledWith('beginNextMatch');
+            expect(mockSendMessage).toHaveBeenCalledWith('beginNextMatch', { matchName: 'cool match' });
         });
     });
 });

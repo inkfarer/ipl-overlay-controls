@@ -30,7 +30,7 @@ export interface ActiveRound {
 		categoryName: string;
 		isCustom: boolean;
 	};
-	round: {
+	match: {
 		id: string;
 		name: string;
 		isCompleted: boolean;

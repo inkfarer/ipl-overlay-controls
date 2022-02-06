@@ -7,6 +7,6 @@ describe('generateId', () => {
             .mockReturnValueOnce(0.589375);
 
         expect(generateId()).toBe('1jgbeqlc8');
-        expect(generateId()).toBe('l7tvoha2v')
+        expect(generateId()).toBe('l7tvoha2v');
     });
 });

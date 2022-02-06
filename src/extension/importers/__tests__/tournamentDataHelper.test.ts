@@ -18,9 +18,9 @@ describe('tournamentDataHelper', () => {
         __esModule: true,
         mapBattlefyStagesToTournamentData: jest.fn()
     };
-    const mockRoundDataHelper = {
+    const mockMatchStoreModule = {
         __esModule: true,
-        clearProgressForUnknownTeams: jest.fn()
+        clearMatchesWithUnknownTeams: jest.fn()
     };
     let helper: Module;
     let nodecg: MockNodecg;
@@ -48,7 +48,7 @@ describe('tournamentDataHelper', () => {
 
     jest.mock('../mappers/battlefyDataMapper', () => mockBattlefyDataMapper);
 
-    jest.mock('../roundDataHelper', () => mockRoundDataHelper);
+    jest.mock('../../replicants/matchStore', () => mockMatchStoreModule);
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -62,6 +62,10 @@ describe('tournamentDataHelper', () => {
     });
 
     describe('updateTournamentDataReplicants', () => {
+        beforeEach(() => {
+            nodecg.replicants.activeRound.value = { active: 'round' };
+        });
+
         it('throws error if tournament is missing teams', () => {
             expect(() => helper.updateTournamentDataReplicants({ teams: []}))
                 .toThrow('Tournament has no teams.');
@@ -96,9 +100,9 @@ describe('tournamentDataHelper', () => {
             helper.updateTournamentDataReplicants(input);
 
             expect(nodecg.replicants.tournamentData.value).toEqual(input);
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1111', '2222');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '1111', '2222');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('3333', '4444');
-            expect(mockRoundDataHelper.clearProgressForUnknownTeams).toHaveBeenCalled();
+            expect(mockMatchStoreModule.clearMatchesWithUnknownTeams).toHaveBeenCalled();
         });
 
         it('assigns active and next round data if less than 4 teams are available', () => {
@@ -115,7 +119,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '232323');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '232323');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('121212', '232323');
         });
 
@@ -129,7 +133,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '121212');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '121212');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('121212', '121212');
         });
 
@@ -179,7 +183,7 @@ describe('tournamentDataHelper', () => {
                 ]
             });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('121212', '232323');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '121212', '232323');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('232323', '343434');
         });
 

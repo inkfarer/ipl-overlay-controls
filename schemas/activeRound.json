@@ -26,7 +26,7 @@
     },
     "type": "object",
     "additionalProperties": false,
-    "required": ["teamA", "teamB", "games", "activeColor", "round"],
+    "required": ["teamA", "teamB", "games", "activeColor", "match"],
     "properties": {
         "teamA": {
             "$ref": "#/definitions/activeRoundTeam"
@@ -53,7 +53,7 @@
             },
             "required": ["index", "title", "categoryName", "isCustom"]
         },
-        "round": {
+        "match": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -153,9 +153,9 @@
             "categoryName": "Ranked Modes",
             "isCustom": false
         },
-        "round": {
+        "match": {
             "id": "00000",
-            "name": "Default Round 1",
+            "name": "Default Match 1",
             "isCompleted": false
         },
         "games": [

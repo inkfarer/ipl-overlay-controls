@@ -1,6 +1,6 @@
 {
     "name": "ipl-overlay-controls",
-    "version": "3.2.0",
+    "version": "4.0.0",
     "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
     "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
     "author": {
@@ -23,7 +23,7 @@
         "start": "node ../..",
         "watch": "webpack -w",
         "schema-types": "nodecg schema-types",
-        "lint": "eslint ./src",
+        "lint": "eslint --ext .js,.vue,.ts ./src",
         "fix": "eslint ./src --fix",
         "devbuild": "webpack",
         "test": "jest",
@@ -50,18 +50,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "activeround",
-                "title": "Current Round",
+                "name": "matchmanager",
+                "title": "Match Manager",
                 "width": 4,
-                "file": "activeRound.html",
-                "workspace": "ipl",
-                "headerColor": "#262F40"
-            },
-            {
-                "name": "nextround",
-                "title": "Upcoming Round",
-                "width": 2,
-                "file": "nextRound.html",
+                "file": "matchManager.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
@@ -74,10 +66,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "highlightedMatches",
-                "title": "Highlighted Matches",
+                "name": "nextMatch",
+                "title": "Next Match",
                 "width": 2,
-                "file": "highlightedMatches.html",
+                "file": "nextMatch.html",
                 "workspace": "ipl",
                 "headerColor": "#262F40"
             },
@@ -90,10 +82,10 @@
                 "headerColor": "#262F40"
             },
             {
-                "name": "battlefyimport",
-                "title": "Data importer",
+                "name": "dataIO",
+                "title": "Data import/export",
                 "width": 2,
-                "file": "dataImport.html",
+                "file": "dataIO.html",
                 "workspace": "ipl setup",
                 "headerColor": "#262F40"
             },
@@ -135,7 +127,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
-        "@iplsplatoon/vue-components": "^1.1.0",
+        "@iplsplatoon/vue-components": "1.2.1",
         "axios": "^0.21.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",

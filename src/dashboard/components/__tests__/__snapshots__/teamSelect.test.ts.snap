@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TeamSelect matches snapshot 1`] = `
+"<div class=\\"layout vertical center-horizontal max-width\\">
+  <ipl-select-stub modelvalue=\\"teamone\\" label=\\"Team A\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"team-selector\\"></ipl-select-stub>
+  <ipl-checkbox-stub label=\\"Show image\\" modelvalue=\\"true\\" small=\\"true\\" disabled=\\"false\\" class=\\"m-t-6\\" data-test=\\"team-image-toggle\\"></ipl-checkbox-stub>
+</div>"
+`;
+
+exports[`TeamSelect matches snapshot 2`] = `
+Array [
+  Object {
+    "name": "Team One",
+    "value": "teamone",
+  },
+  Object {
+    "name": "Team Two",
+    "value": "teamtwo",
+  },
+]
+`;

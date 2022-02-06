@@ -18,6 +18,11 @@ describe('fileImport', () => {
         parseUploadedTeamData: mockParseUploadedTeamData
     }));
 
+    const mockRoundImporter = {
+        updateRounds: jest.fn()
+    };
+    jest.mock('../roundImporter', () => mockRoundImporter);
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.resetModules();
@@ -90,25 +95,18 @@ describe('fileImport', () => {
 
         it('imports round data', () => {
             const mockSendStatus = jest.fn();
-            mockHandleRoundData.mockReturnValue({
-                aaaaaa: { meta: { name: 'Cool Round' } }
-            });
-            nodecg.replicants.roundStore.value = {
-                bbbbbb: { meta: { name: 'Rad Round' } }
-            };
+            mockHandleRoundData.mockReturnValue('round data');
 
             nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
-                files: { file: { mimetype: 'application/json', data: '{ }' } }
+                files: { file: { mimetype: 'application/json', data: '{ "tournament": "data" }' } }
             } as unknown as express.Request,
             { sendStatus: mockSendStatus } as unknown as express.Response,
             null);
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
-            expect(nodecg.replicants.roundStore.value).toEqual({
-                aaaaaa: { meta: { name: 'Cool Round' } },
-                bbbbbb: { meta: { name: 'Rad Round' } }
-            });
+            expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' });
+            expect(mockRoundImporter.updateRounds).toHaveBeenCalledWith('round data');
         });
 
         it('imports team data', async () => {
@@ -117,11 +115,12 @@ describe('fileImport', () => {
 
             await nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'teams' },
-                files: { file: { mimetype: 'application/json', data: '{ }' } }
+                files: { file: { mimetype: 'application/json', data: '{ "team": "data" }', name: 'file.json' } }
             } as unknown as express.Request,
             { sendStatus: mockSendStatus } as unknown as express.Response,
             null);
 
+            expect(mockParseUploadedTeamData).toHaveBeenCalledWith({ team: 'data' }, 'file.json');
             expect(mockSendStatus).toHaveBeenCalledWith(200);
             expect(mockUpdateTournamentDataReplicants).toHaveBeenCalledWith('TEAMS');
         });

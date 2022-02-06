@@ -25,18 +25,19 @@ describe('RoundEditor', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round', isCompleted: false },
+                        meta: { name: 'dope round' },
                         games: []
                     },
                     '9573': {
-                        meta: { name: 'dope round the second', isCompleted: false },
+                        meta: { name: 'dope round the second' },
                         games: []
                     },
                     '2426': {
-                        meta: { name: 'dope round the third', isCompleted: false },
+                        meta: { name: 'dope round the third' },
                         games: []
                     }
-                }
+                },
+                matchStore: {}
             },
             actions: {
                 updateRound: mockUpdateRound,
