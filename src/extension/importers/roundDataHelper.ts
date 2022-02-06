@@ -3,14 +3,6 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { generateId } from '../../helpers/generateId';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { ImporterRound } from 'types/importer';
-import { MatchStore, TournamentData } from '../../types/schemas';
-import * as nodecgContext from '../helpers/nodecg';
-import cloneDeep from 'lodash/cloneDeep';
-import isEmpty from 'lodash/isEmpty';
-
-const nodecg = nodecgContext.get();
-
-const matchStore = nodecg.Replicant<MatchStore>('matchStore');
 
 const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
 const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
@@ -66,20 +58,4 @@ function normalizeModeName(name: string): string {
     }
 
     return splatModes[lowerCaseSplatModes.indexOf(name)];
-}
-
-export function clearMatchesWithUnknownTeams(tournamentData: TournamentData): void {
-    const teamIds = tournamentData.teams.map(team => team.id);
-
-    const newMatches = cloneDeep(matchStore.value);
-
-    Object.entries(newMatches).forEach(([key, round]) => {
-        if (!isEmpty(round.teamA) || !isEmpty(round.teamB)) {
-            if (!teamIds.includes(round.teamA.id) || !teamIds.includes(round.teamB.id)) {
-                delete newMatches[key];
-            }
-        }
-    });
-
-    matchStore.value = newMatches;
 }

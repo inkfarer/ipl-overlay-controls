@@ -18,7 +18,7 @@ describe('tournamentDataHelper', () => {
         __esModule: true,
         mapBattlefyStagesToTournamentData: jest.fn()
     };
-    const mockRoundDataHelper = {
+    const mockMatchStoreModule = {
         __esModule: true,
         clearMatchesWithUnknownTeams: jest.fn()
     };
@@ -48,7 +48,7 @@ describe('tournamentDataHelper', () => {
 
     jest.mock('../mappers/battlefyDataMapper', () => mockBattlefyDataMapper);
 
-    jest.mock('../roundDataHelper', () => mockRoundDataHelper);
+    jest.mock('../../replicants/matchStore', () => mockMatchStoreModule);
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -102,7 +102,7 @@ describe('tournamentDataHelper', () => {
             expect(nodecg.replicants.tournamentData.value).toEqual(input);
             expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ active: 'round' }, '1111', '2222');
             expect(mockSetNextRoundTeams).toHaveBeenCalledWith('3333', '4444');
-            expect(mockRoundDataHelper.clearMatchesWithUnknownTeams).toHaveBeenCalled();
+            expect(mockMatchStoreModule.clearMatchesWithUnknownTeams).toHaveBeenCalled();
         });
 
         it('assigns active and next round data if less than 4 teams are available', () => {

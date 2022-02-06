@@ -11,7 +11,7 @@ import { ActiveRound, RadiaSettings } from '../../types/schemas';
 import { addDots } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
-import { clearMatchesWithUnknownTeams } from './roundDataHelper';
+import { clearMatchesWithUnknownTeams } from '../replicants/matchStore';
 
 const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
