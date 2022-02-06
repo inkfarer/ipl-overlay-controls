@@ -4,7 +4,7 @@ export function generateMatchNameForRound(matchStore: MatchStore, roundId: strin
     const matchCountForId = Object.values(matchStore).filter(match => match.meta.relatedRoundId === roundId).length;
 
     if (matchCountForId <= 0) {
-        return roundName
+        return roundName;
     } else {
         return `${roundName} (${matchCountForId + 1})`;
     }

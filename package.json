@@ -23,7 +23,7 @@
         "start": "node ../..",
         "watch": "webpack -w",
         "schema-types": "nodecg schema-types",
-        "lint": "eslint ./src",
+        "lint": "eslint --ext .js,.vue,.ts ./src",
         "fix": "eslint ./src --fix",
         "devbuild": "webpack",
         "test": "jest",
