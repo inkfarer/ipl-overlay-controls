@@ -16,7 +16,7 @@
         <ipl-expanding-space-group class="max-width m-l-8">
             <color-editor />
             <active-match-editor class="m-t-8" />
-            <next-match-editor class="m-t-8" />
+            <next-match-starter class="m-t-8" />
             <scoreboard-editor class="m-t-8" />
         </ipl-expanding-space-group>
     </div>
@@ -34,13 +34,13 @@ import { IplButton, IplSpace, IplExpandingSpaceGroup } from '@iplsplatoon/vue-co
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
-import NextMatchEditor from './components/nextMatchEditor.vue';
+import NextMatchStarter from './components/nextMatchStarter.vue';
 
 export default defineComponent({
     name: 'ActiveRound',
 
     components: {
-        NextMatchEditor,
+        NextMatchStarter,
         IplErrorDisplay,
         ScoreboardEditor,
         IplButton,

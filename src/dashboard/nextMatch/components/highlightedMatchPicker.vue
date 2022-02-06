@@ -1,5 +1,4 @@
 <template>
-    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="!canImportData"
         type="warning"
@@ -15,25 +14,27 @@
         No stages present to import from.
     </ipl-message>
     <template v-else>
-        <highlighted-match-importer />
-        <highlighted-match-viewer class="m-t-8" />
+        <div>
+            <highlighted-match-importer />
+            <highlighted-match-viewer class="m-t-8" />
+        </div>
     </template>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { useHighlightedMatchStore } from './highlightedMatchStore';
-import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
+import { defineComponent } from '@vue/runtime-core';
+import HighlightedMatchViewer from './highlightedMatchViewer.vue';
+import HighlightedMatchImporter from './highlightedMatchImporter.vue';
 import { IplMessage } from '@iplsplatoon/vue-components';
-import HighlightedMatchImporter from './components/highlightedMatchImporter.vue';
-import HighlightedMatchViewer from './components/highlightedMatchViewer.vue';
-import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { useHighlightedMatchStore } from '../highlightedMatchStore';
+import { computed } from 'vue';
+import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 
 export default defineComponent({
-    name: 'HighlightedMatches',
+    name: 'HighlightedMatchPicker',
 
-    components: { IplErrorDisplay, HighlightedMatchViewer, HighlightedMatchImporter, IplMessage },
+    components: { HighlightedMatchViewer, HighlightedMatchImporter, IplMessage },
 
     setup() {
         const store = useHighlightedMatchStore();
@@ -42,7 +43,7 @@ export default defineComponent({
         return {
             canImportData: computed(() => [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
                 .includes(tournamentDataSource.value)),
-            formattedDataSource: computed(() => TournamentDataSourceHelper.toPrettyString(tournamentDataSource.value )),
+            formattedDataSource: computed(() => TournamentDataSourceHelper.toPrettyString(tournamentDataSource.value)),
             stageDataPresent: computed(() => !isEmpty(store.state.tournamentData.stages))
         };
     }

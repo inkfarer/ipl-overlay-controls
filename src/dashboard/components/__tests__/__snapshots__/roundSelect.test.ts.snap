@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RoundSelect matches snapshot 1`] = `
+"<div>
+  <ipl-select-stub modelvalue=\\"roundtwo\\" label=\\"Round\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"round-selector\\"></ipl-select-stub>
+</div>"
+`;
+
+exports[`RoundSelect matches snapshot 2`] = `
+Array [
+  Object {
+    "name": "Round One",
+    "value": "roundone",
+  },
+  Object {
+    "name": "Round Two",
+    "value": "roundtwo",
+  },
+]
+`;

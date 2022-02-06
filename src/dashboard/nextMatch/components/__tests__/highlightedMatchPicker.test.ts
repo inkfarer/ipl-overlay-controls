@@ -1,15 +1,15 @@
-import HighlightedMatches from '../highlightedMatches.vue';
-import { createStore } from 'vuex';
-import { HighlightedMatchStore, highlightedMatchStoreKey } from '../highlightedMatchStore';
-import difference from 'lodash/difference';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import difference from 'lodash/difference';
 import { config, mount } from '@vue/test-utils';
+import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlightedMatchStore';
+import { createStore } from 'vuex';
+import HighlightedMatchPicker from '../highlightedMatchPicker.vue';
 
-describe('HighlightedMatches', () => {
+describe('HighlightedMatchPicker', () => {
     config.global.stubs = {
         HighlightedMatchImporter: true,
         HighlightedMatchViewer: true,
-        IplErrorDisplay: true
+        FontAwesomeIcon: true
     };
 
     function createHighlightedMatchStore() {
@@ -36,7 +36,7 @@ describe('HighlightedMatches', () => {
                 },
                 teams: []
             };
-            const wrapper = mount(HighlightedMatches, {
+            const wrapper = mount(HighlightedMatchPicker, {
                 global: {
                     plugins: [[store, highlightedMatchStoreKey]]
                 }
@@ -60,7 +60,7 @@ describe('HighlightedMatches', () => {
                 teams: [],
                 stages: [{ name: 'Cool Stage', id: '123123', type: 'SWISS' }]
             };
-            const wrapper = mount(HighlightedMatches, {
+            const wrapper = mount(HighlightedMatchPicker, {
                 global: {
                     plugins: [[store, highlightedMatchStoreKey]]
                 }
@@ -82,7 +82,7 @@ describe('HighlightedMatches', () => {
                 teams: [],
                 stages: undefined
             };
-            const wrapper = mount(HighlightedMatches, {
+            const wrapper = mount(HighlightedMatchPicker, {
                 global: {
                     plugins: [[store, highlightedMatchStoreKey]]
                 }

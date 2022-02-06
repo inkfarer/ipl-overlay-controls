@@ -8,6 +8,7 @@ import {
 } from 'schemas';
 import { SelectOptions } from '../types/select';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { SetNextRoundRequest } from 'types/messages/rounds';
 
 const highlightedMatches = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -54,8 +55,8 @@ export const highlightedMatchStore = createStore<HighlightedMatchStore>({
                 }
             }
         },
-        async setNextMatch(store, { teamAId, teamBId }: { teamAId: string, teamBId: string }): Promise<void> {
-            return nodecg.sendMessage('setNextRound', { teamAId, teamBId });
+        async setNextMatch(store, data: SetNextRoundRequest): Promise<void> {
+            return nodecg.sendMessage('setNextRound', data);
         }
     }
 });
