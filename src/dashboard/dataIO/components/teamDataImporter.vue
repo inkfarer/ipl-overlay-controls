@@ -1,6 +1,6 @@
 <template>
     <ipl-space>
-        <div class="title">Team data</div>
+        <div class="title">Tournament data</div>
         <template v-if="smashggEvents.length > 1">
             <ipl-select
                 v-model="smashggEvent"
