@@ -33,14 +33,14 @@ describe('matchRoutes', () => {
             const res = {} as express.Response;
             res.set = jest.fn().mockReturnValue(res);
             res.send = jest.fn().mockReturnValue(res);
-            nodecg.replicants.matchStore.value = { foo: 'bar' };
+            nodecg.replicants.matchStore.value = { foo: 'bar', yee: 'haw' };
 
             nodecg.requestHandlers['GET']['/match-data']({} as express.Request, res, null);
 
             expect(res.set).toHaveBeenCalledWith({
                 'Content-Disposition': 'attachment; filename="iploc-match-data_2022-02-02T20:33.json"'
             });
-            expect(res.send).toHaveBeenCalledWith(JSON.stringify({ foo: 'bar' }, null, 4));
+            expect(res.send).toHaveBeenCalledWith(JSON.stringify(['bar', 'haw'], null, 4));
         });
     });
 });
