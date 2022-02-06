@@ -67,7 +67,7 @@
                 />
             </div>
             <ipl-button
-                label="Submit"
+                label="Update"
                 class="m-t-8"
                 :color="customColorChanged ? 'red' : 'blue'"
                 data-test="custom-color-submit-btn"
@@ -167,7 +167,7 @@ export default defineComponent({
 @import './src/dashboard/styles/constants';
 
 .colors-container {
-    max-height: 140px;
+    max-height: 180px;
     overflow: auto;
 }
 
