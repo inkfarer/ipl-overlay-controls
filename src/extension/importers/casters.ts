@@ -31,7 +31,7 @@ nodecg.listenFor('getLiveCommentators', async (data, ack: UnhandledListenForCb) 
         ack(null, { add: castersToAdd, extra: extraCasters });
     } catch (e) {
         // If the API gives us a 404, just ignore it :)
-        if (e.response.status === 404) {
+        if (e?.response?.status === 404) {
             return ack(null, null);
         }
 
