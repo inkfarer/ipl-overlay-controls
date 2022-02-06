@@ -82,6 +82,7 @@ export default defineComponent({
 
         watch(() => props.round, (newValue, oldValue) => {
             roundInternal.value = {
+                ...newValue,
                 meta: cloneDeep(newValue.meta),
                 games: newValue.games.map((game, index) => {
                     const oldGame = oldValue?.games[index];
@@ -116,7 +117,7 @@ export default defineComponent({
                 if (props.isNewRound) {
                     emit('cancelNewRound');
                 } else {
-                    store.dispatch('removeRound', { roundId: props.roundId });
+                    return store.dispatch('removeRound', { roundId: props.roundId });
                 }
             },
             isChanged: computed(() => {

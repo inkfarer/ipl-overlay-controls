@@ -9,10 +9,14 @@ import {
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
-import { commitActiveRoundToRoundStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './matchStore';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
+import { generateId } from '../../helpers/generateId';
+import { BeginNextMatchRequest } from '../../types/messages/activeRound';
+import { isBlank } from '../../helpers/stringHelper';
+import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();
 
@@ -51,15 +55,21 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb
 
 nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
     try {
-        setActiveRoundTeams(data.teamAId, data.teamBId);
-        if (data.roundId) {
-            setActiveRoundGames(data.roundId);
+        const newActiveRound = cloneDeep(activeRound.value);
+        setActiveRoundTeams(newActiveRound, data.teamAId, data.teamBId);
+        if (data.matchId) {
+            setActiveRoundGames(newActiveRound, data.matchId);
         }
+        if (!isBlank(data.matchName) && activeRound.value.match.name !== data.matchName) {
+            activeRound.value.match.name = data.matchName;
+            newActiveRound.match.name = data.matchName;
+        }
+        activeRound.value = newActiveRound;
     } catch (e) {
         return ack(e);
     }
 
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
 nodecg.listenFor('resetActiveRound', () => {
@@ -67,15 +77,19 @@ nodecg.listenFor('resetActiveRound', () => {
     activeRound.value.teamB.score = 0;
     activeRound.value.games = activeRound.value.games.map(game =>
         ({ ...game, winner: GameWinner.NO_WINNER, color: undefined }));
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
 nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     activeRound.value.games = clone(data.games);
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 });
 
-nodecg.listenFor('beginNextMatch', () => {
+nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledListenForCb) => {
+    if (isBlank(data.matchName)) {
+        return ack(new Error('Match name must not be blank'));
+    }
+
     activeRound.value = {
         ...activeRound.value,
         teamA: {
@@ -90,13 +104,14 @@ nodecg.listenFor('beginNextMatch', () => {
         },
         games: nextRound.value.games.map(game =>
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
-        round: {
-            ...clone(nextRound.value.round),
+        match: {
+            id: generateId(),
+            name: data.matchName,
             isCompleted: false
         }
     };
 
-    commitActiveRoundToRoundStore(true);
+    commitActiveRoundToMatchStore();
     nextRound.value.showOnStream = false;
 });
 

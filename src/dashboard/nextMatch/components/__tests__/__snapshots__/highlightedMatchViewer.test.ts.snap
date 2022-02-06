@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HighlightedMatchViewer matches snapshot 1`] = `
+"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+  <ipl-select-stub modelvalue=\\"1234\\" label=\\"Match\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"match-selector\\"></ipl-select-stub>
+  <ipl-data-row-stub label=\\"Team A\\" data-test=\\"team-a-name-display\\" value=\\"mock team\\"></ipl-data-row-stub>
+  <ipl-data-row-stub label=\\"Team B\\" data-test=\\"team-b-name-display\\" value=\\"mock team\\"></ipl-data-row-stub>
+  <round-select-stub modelvalue=\\"0387\\" class=\\"m-t-4\\"></round-select-stub>
+  <ipl-button-stub label=\\"Update\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"set-next-match-button\\"></ipl-button-stub>
+</div>"
+`;
+
+exports[`HighlightedMatchViewer matches snapshot when no matches are loaded 1`] = `
+"<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info\\" data-v-13b37b8d=\\"\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+    <!----> No matches loaded.
+  </div>
+</div>"
+`;

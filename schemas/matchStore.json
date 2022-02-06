@@ -1,0 +1,161 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "matchTeam": {
+            "allOf": [
+                {
+                    "$ref": "./defs/team.json#/team"
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "score"
+                    ],
+                    "properties": {
+                        "score": {
+                            "type": "number"
+                        }
+                    }
+                }
+            ]
+        },
+        "match": {
+            "type": "object",
+            "required": [
+                "meta",
+                "games",
+                "teamA",
+                "teamB"
+            ],
+            "properties": {
+                "meta": {
+                    "type": "object",
+                    "required": ["name", "isCompleted"],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "isCompleted": {
+                            "type": "boolean"
+                        },
+                        "completionTime": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                },
+                "games": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/matchGame"
+                    }
+                },
+                "teamA": {
+                    "$ref": "#/definitions/matchTeam"
+                },
+                "teamB": {
+                    "$ref": "#/definitions/matchTeam"
+                }
+            }
+        },
+        "matchGame": {
+            "type": "object",
+            "properties": {
+                "winner": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "alpha",
+                        "bravo"
+                    ]
+                },
+                "stage": {
+                    "type": "string"
+                },
+                "mode": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "object",
+                    "allOf": [
+                        {
+                            "$ref": "defs/color.json#/color"
+                        },
+                        {
+                            "properties": {
+                                "colorsSwapped": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "colorsSwapped"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "winner",
+                "stage",
+                "mode"
+            ]
+        }
+    },
+    "type": "object",
+    "additionalProperties": {
+        "$ref": "#/definitions/match"
+    },
+    "default": {
+        "00000": {
+            "meta": {
+                "name": "Default Match 1",
+                "isCompleted": false
+            },
+            "teamA": {
+                "id": "AAA",
+                "name": "Placeholder Team A",
+                "showLogo": true,
+                "score": 0,
+                "players": [
+                    {
+                        "name": "Player 1"
+                    },
+                    {
+                        "name": "Player 2"
+                    }
+                ]
+            },
+            "teamB": {
+                "id": "BBB",
+                "name": "Placeholder Team B",
+                "showLogo": true,
+                "score": 0,
+                "players": [
+                    {
+                        "name": "Player 3"
+                    },
+                    {
+                        "name": "Player 4"
+                    }
+                ]
+            },
+            "games": [
+                {
+                    "stage": "MakoMart",
+                    "mode": "Clam Blitz",
+                    "winner": "none"
+                },
+                {
+                    "stage": "Ancho-V Games",
+                    "mode": "Tower Control",
+                    "winner": "none"
+                },
+                {
+                    "stage": "Wahoo World",
+                    "mode": "Rainmaker",
+                    "winner": "none"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MatchExporter matches snapshot 1`] = `
+"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+  <div class=\\"title\\">Match data</div>
+  <div class=\\"text-small text-center\\">Storing data for 2 matches</div>
+  <ipl-button-stub label=\\"Export\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"/ipl-overlay-controls/match-data\\" class=\\"m-t-4\\"></ipl-button-stub>
+</div>"
+`;
+
+exports[`MatchExporter matches snapshot with one match 1`] = `
+"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+  <div class=\\"title\\">Match data</div>
+  <div class=\\"text-small text-center\\">Storing data for 1 match</div>
+  <ipl-button-stub label=\\"Export\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"/ipl-overlay-controls/match-data\\" class=\\"m-t-4\\"></ipl-button-stub>
+</div>"
+`;

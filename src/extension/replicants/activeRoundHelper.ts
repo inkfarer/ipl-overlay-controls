@@ -1,16 +1,16 @@
 import { GameWinner } from 'types/enums/gameWinner';
-import clone from 'clone';
-import { commitActiveRoundToRoundStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './matchStore';
 import * as nodecgContext from '../helpers/nodecg';
-import { ActiveRound, RoundStore, SwapColorsInternally, TournamentData } from 'schemas';
+import { ActiveRound, SwapColorsInternally, TournamentData, MatchStore } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from '../helpers/tournamentDataHelper';
+import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
-const roundStore = nodecg.Replicant<RoundStore>('roundStore');
+const matchStore = nodecg.Replicant<MatchStore>('matchStore');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 export function setWinner(index: number, winner: GameWinner): void {
@@ -18,8 +18,8 @@ export function setWinner(index: number, winner: GameWinner): void {
         throw new Error(`Cannot set winner for game ${index + 1} as it does not exist.`);
     }
 
-    const newValue = clone(activeRound.value);
-    const activeGame = clone(activeRound.value.games[index]);
+    const newValue = cloneDeep(activeRound.value);
+    const activeGame = cloneDeep(activeRound.value.games[index]);
 
     if (winner === GameWinner.NO_WINNER) {
         if (activeGame.winner === GameWinner.ALPHA) {
@@ -58,50 +58,45 @@ export function setWinner(index: number, winner: GameWinner): void {
     }
 
     const winThreshold = newValue.games.length / 2;
-    newValue.round.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
+    newValue.match.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
 
     activeRound.value = newValue;
-    commitActiveRoundToRoundStore();
+    commitActiveRoundToMatchStore();
 }
 
-export function setActiveRoundGames(roundId: string): void {
-    const round = roundStore.value[roundId];
-    if (isEmpty(round)) {
-        throw new Error(`Could not find round '${roundId}'.`);
+export function setActiveRoundGames(activeRound: ActiveRound, matchId: string): void {
+    const match = matchStore.value[matchId];
+    if (isEmpty(match)) {
+        throw new Error(`Could not find match '${matchId}'.`);
     }
 
-    activeRound.value.round = {
-        id: roundId,
-        name: round.meta.name,
-        isCompleted: round.meta.isCompleted
+    activeRound.match = {
+        id: matchId,
+        name: match.meta.name,
+        isCompleted: match.meta.isCompleted
     };
-    activeRound.value.games = clone(round.games);
+    activeRound.games = cloneDeep(match.games);
 
-    if (round.teamA && round.teamB) {
-        activeRound.value.teamA.score = round.teamA.score;
-        activeRound.value.teamB.score = round.teamB.score;
-    } else {
-        activeRound.value.teamA.score = 0;
-        activeRound.value.teamB.score = 0;
-    }
+    activeRound.teamA.score = match.teamA.score;
+    activeRound.teamB.score = match.teamB.score;
 }
 
-export function setActiveRoundTeams(teamAId: string, teamBId: string): void {
+export function setActiveRoundTeams(activeRound: ActiveRound, teamAId: string, teamBId: string): void {
     const teamA = getTeam(teamAId, tournamentData.value);
     const teamB = getTeam(teamBId, tournamentData.value);
     if ([teamA, teamB].filter(isEmpty).length > 0) {
         throw new Error('Could not find a team.');
     }
 
-    const existingTeamA = clone(activeRound.value.teamA);
-    const existingTeamB = clone(activeRound.value.teamB);
+    const existingTeamA = cloneDeep(activeRound.teamA);
+    const existingTeamB = cloneDeep(activeRound.teamB);
 
-    activeRound.value.teamA = {
+    activeRound.teamA = {
         score: existingTeamA.score,
         color: existingTeamA.color,
         ...teamA
     };
-    activeRound.value.teamB = {
+    activeRound.teamB = {
         score: existingTeamB.score,
         color: existingTeamB.color,
         ...teamB

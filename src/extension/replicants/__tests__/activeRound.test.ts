@@ -8,10 +8,11 @@ describe('activeRound', () => {
     const mockSetWinner = jest.fn();
     const mockSetActiveRoundTeams = jest.fn();
     const mockSetActiveRoundGames = jest.fn();
+    const mockGenerateId = jest.fn();
 
-    jest.mock('../roundStore', () => ({
+    jest.mock('../matchStore', () => ({
         __esModule: true,
-        commitActiveRoundToRoundStore: mockCommitActiveRound
+        commitActiveRoundToMatchStore: mockCommitActiveRound
     }));
 
     jest.mock('../activeRoundHelper', () => ({
@@ -19,6 +20,11 @@ describe('activeRound', () => {
         setWinner: mockSetWinner,
         setActiveRoundTeams: mockSetActiveRoundTeams,
         setActiveRoundGames: mockSetActiveRoundGames
+    }));
+
+    jest.mock('../../../helpers/generateId', () => ({
+        __esModule: true,
+        generateId: mockGenerateId
     }));
 
     beforeEach(() => {
@@ -161,19 +167,30 @@ describe('activeRound', () => {
     });
 
     describe('setActiveRound', () => {
+        beforeEach(() => {
+            nodecg.replicants.activeRound.value = { match: { name: 'cool match' } };
+        });
+
         it('sets team data and updates round store data', () => {
             nodecg.messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('123123', '456456');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '123123', '456456');
+            expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
             expect(mockCommitActiveRound).toHaveBeenCalled();
         });
 
-        it('sets games if round id is given', () => {
-            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', roundId: '234' });
+        it('sets games if match id is given', () => {
+            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith('1231234', '123123');
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith('234');
+            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '1231234', '123123');
+            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '234');
             expect(mockCommitActiveRound).toHaveBeenCalled();
+        });
+
+        it('sets match name if it differs from the current one', () => {
+            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234', matchName: 'New Match' });
+
+            expect(nodecg.replicants.activeRound.value).toEqual({ match: { name: 'New Match' } });
         });
 
         it('sends a callback on error', () => {
@@ -260,7 +277,18 @@ describe('activeRound', () => {
     });
 
     describe('beginNextMatch', () => {
-        it('replaces active teams with next teams and commits them', () => {
+        it('returns error when no match name is given', () => {
+            nodecg.replicants.activeRound.value = {};
+            const ack = jest.fn();
+
+            nodecg.messageListeners.beginNextMatch({ }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
+            expect(nodecg.replicants.activeRound.value).toEqual({});
+        });
+
+        it('replaces active teams with next teams and commits them to a new match', () => {
+            mockGenerateId.mockReturnValue('new match id');
             nodecg.replicants.nextRound.value = {
                 teamA: { id: '123123', testCustomProp: 'hello :)', name: 'Team Three' },
                 teamB: { id: '345354', testCustomProp2: 'hello! ;)', name: 'Team Four' },
@@ -278,7 +306,7 @@ describe('activeRound', () => {
                 teamB: { name: 'Team Two', score: 98, yee: 'haw', color: '#333' }
             };
 
-            nodecg.messageListeners.beginNextMatch();
+            nodecg.messageListeners.beginNextMatch({ matchName: 'Cool Match' });
 
             expect(nodecg.replicants.activeRound.value).toEqual({
                 teamA: { id: '123123', name: 'Team Three', score: 0, testCustomProp: 'hello :)', color: '#222' },
@@ -287,12 +315,13 @@ describe('activeRound', () => {
                     { stage: 'MakoMart', mode: 'Rainmaker', winner: GameWinner.NO_WINNER, color: undefined },
                     { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER, color: undefined }
                 ],
-                round: {
-                    name: 'Cool Next Round',
+                match: {
+                    name: 'Cool Match',
+                    id: 'new match id',
                     isCompleted: false
                 }
             });
-            expect(mockCommitActiveRound).toHaveBeenCalledWith(true);
+            expect(mockCommitActiveRound).toHaveBeenCalled();
             expect((nodecg.replicants.nextRound.value as NextRound).showOnStream).toEqual(false);
         });
     });

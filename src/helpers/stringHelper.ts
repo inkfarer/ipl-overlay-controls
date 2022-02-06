@@ -8,3 +8,7 @@ export function addDots(value: string, maxLength = 48): string {
 
     return value;
 }
+
+export function isBlank(value?: string | null): boolean {
+    return value === null || value === undefined || value.trim() === '';
+}

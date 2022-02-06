@@ -1,24 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "definitions": {
-        "roundTeam": {
-            "allOf": [
-                {
-                    "$ref": "./defs/team.json#/team"
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "score"
-                    ],
-                    "properties": {
-                        "score": {
-                            "type": "number"
-                        }
-                    }
-                }
-            ]
-        },
         "round": {
             "type": "object",
             "required": [
@@ -28,72 +10,32 @@
             "properties": {
                 "meta": {
                     "type": "object",
-                    "required": ["name", "isCompleted"],
+                    "required": ["name"],
                     "properties": {
                         "name": {
                             "type": "string"
-                        },
-                        "isCompleted": {
-                            "type": "boolean"
-                        },
-                        "completionTime": {
-                            "type": "string",
-                            "format": "date-time"
                         }
                     }
                 },
                 "games": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/game"
+                        "$ref": "#/definitions/roundGame"
                     }
-                },
-                "teamA": {
-                    "$ref": "#/definitions/roundTeam"
-                },
-                "teamB": {
-                    "$ref": "#/definitions/roundTeam"
                 }
             }
         },
-        "game": {
+        "roundGame": {
             "type": "object",
             "properties": {
-                "winner": {
-                    "type": "string",
-                    "enum": [
-                        "none",
-                        "alpha",
-                        "bravo"
-                    ]
-                },
                 "stage": {
                     "type": "string"
                 },
                 "mode": {
                     "type": "string"
-                },
-                "color": {
-                    "type": "object",
-                    "allOf": [
-                        {
-                            "$ref": "defs/color.json#/color"
-                        },
-                        {
-                            "properties": {
-                                "colorsSwapped": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "required": [
-                                "colorsSwapped"
-                            ]
-                        }
-                    ]
                 }
             },
             "required": [
-                "winner",
                 "stage",
                 "mode"
             ]
@@ -106,47 +48,20 @@
     "default": {
         "00000": {
             "meta": {
-                "name": "Default Round 1",
-                "isCompleted": false
+                "name": "Default Round 1"
             },
             "games": [
                 {
                     "stage": "MakoMart",
-                    "mode": "Clam Blitz",
-                    "winner": "none"
+                    "mode": "Clam Blitz"
                 },
                 {
                     "stage": "Ancho-V Games",
-                    "mode": "Tower Control",
-                    "winner": "none"
+                    "mode": "Tower Control"
                 },
                 {
                     "stage": "Wahoo World",
-                    "mode": "Rainmaker",
-                    "winner": "none"
-                }
-            ]
-        },
-        "11111": {
-            "meta": {
-                "name": "Default Round 2",
-                "isCompleted": false
-            },
-            "games": [
-                {
-                    "stage": "Inkblot Art Academy",
-                    "mode": "Turf War",
-                    "winner": "none"
-                },
-                {
-                    "stage": "Ancho-V Games",
-                    "mode": "Tower Control",
-                    "winner": "none"
-                },
-                {
-                    "stage": "Wahoo World",
-                    "mode": "Rainmaker",
-                    "winner": "none"
+                    "mode": "Rainmaker"
                 }
             ]
         }
