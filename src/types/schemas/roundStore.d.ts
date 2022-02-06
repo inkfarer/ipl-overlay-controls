@@ -13,10 +13,10 @@ export interface Round {
 		name: string;
 		[k: string]: unknown;
 	};
-	games: Game[];
+	games: RoundGame[];
 	[k: string]: unknown;
 }
-export interface Game {
+export interface RoundGame {
 	stage: string;
 	mode: string;
 	[k: string]: unknown;

@@ -21,22 +21,21 @@ export type MatchTeam = {
 };
 
 export interface MatchStore {
-	[k: string]: Round;
+	[k: string]: Match;
 }
-export interface Round {
+export interface Match {
 	meta: {
 		name: string;
 		isCompleted: boolean;
 		completionTime?: string;
-		relatedRoundId: string;
 		[k: string]: unknown;
 	};
-	games: Game[];
+	games: MatchGame[];
 	teamA: MatchTeam;
 	teamB: MatchTeam;
 	[k: string]: unknown;
 }
-export interface Game {
+export interface MatchGame {
 	winner: 'none' | 'alpha' | 'bravo';
 	stage: string;
 	mode: string;

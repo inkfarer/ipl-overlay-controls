@@ -16,7 +16,6 @@
             :value="roundData.name"
         />
         <begin-next-match
-            :round-id="roundData.id"
             :round-name="roundData.name"
             class="m-t-4"
         />
@@ -40,7 +39,6 @@ export default defineComponent({
 
         return {
             roundData: computed(() => ({
-                id: nextRoundStore.state.nextRound.round.id,
                 name: nextRoundStore.state.nextRound.round.name,
                 teamAName: addDots(nextRoundStore.state.nextRound.teamA.name),
                 teamBName: addDots(nextRoundStore.state.nextRound.teamB.name)

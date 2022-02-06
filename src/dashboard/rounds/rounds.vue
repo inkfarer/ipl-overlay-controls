@@ -14,7 +14,6 @@
             class="layout horizontal m-t-8"
             color="light"
         >
-            <div class="color-key color-key-active" /> Active
             <div class="color-key color-key-next" /> Next
         </ipl-space>
         <ipl-space
@@ -24,7 +23,6 @@
             class="m-t-8 round-option"
             :class="{
                 selected: selectedRoundId === key,
-                'is-active-round': activeRoundId === key,
                 'is-next-round': nextRoundId === key
             }"
             :data-test="`round-option-${key}`"
@@ -93,7 +91,6 @@ import RoundEditor from './components/roundEditor.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useActiveRoundStore } from '../store/activeRoundStore';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
@@ -106,7 +103,6 @@ export default defineComponent({
 
     setup() {
         const store = useTournamentDataStore();
-        const activeRoundStore = useActiveRoundStore();
         const nextRoundStore = useNextRoundStore();
         const rounds: Ref<RoundStore> = ref({});
         const selectedRoundId = ref(Object.keys(store.state.roundStore)[0]);
@@ -156,7 +152,6 @@ export default defineComponent({
             },
             creatingNewRound,
             newRound,
-            activeRoundId: computed(() => activeRoundStore.state.activeRound.round.id),
             nextRoundId: computed(() => nextRoundStore.state.nextRound.round.id)
         };
     }
@@ -180,10 +175,6 @@ export default defineComponent({
 
     &:first-child {
         margin-left: 0;
-    }
-
-    &.color-key-active {
-        background-color: $green;
     }
 
     &.color-key-next {
@@ -210,15 +201,18 @@ export default defineComponent({
         }
     }
 
-    &.is-active-round {
-        border-right: 8px solid $green;
-    }
-
-    &.is-next-round:not(.is-active-round) {
+    &.is-next-round {
         padding-right: 16px;
 
         &:after {
             border-radius: 0 $border-radius-outer $border-radius-outer 0;
+            content: '';
+            position: absolute;
+            width: calc(100% - 8px);
+            height: 100%;
+            left: 0;
+            top: 0;
+            border-right: 8px solid $yellow;
         }
     }
 
@@ -228,16 +222,6 @@ export default defineComponent({
 
     &:active {
         background-color: $background-secondary-active;
-    }
-
-    &.is-next-round:after {
-        content: '';
-        position: absolute;
-        width: calc(100% - 8px);
-        height: 100%;
-        left: 0;
-        top: 0;
-        border-right: 8px solid $yellow;
     }
 }
 

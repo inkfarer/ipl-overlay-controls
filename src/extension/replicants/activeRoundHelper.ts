@@ -1,10 +1,9 @@
 import { GameWinner } from 'types/enums/gameWinner';
-import { commitActiveRoundToMatchStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './matchStore';
 import * as nodecgContext from '../helpers/nodecg';
-import { ActiveRound, SwapColorsInternally, TournamentData } from 'schemas';
+import { ActiveRound, SwapColorsInternally, TournamentData, MatchStore } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from '../helpers/tournamentDataHelper';
-import { MatchStore, RoundStore } from '../../types/schemas';
 import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();
@@ -12,7 +11,6 @@ const nodecg = nodecgContext.get();
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 const matchStore = nodecg.Replicant<MatchStore>('matchStore');
-const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 export function setWinner(index: number, winner: GameWinner): void {
@@ -71,15 +69,7 @@ export function setActiveRoundGames(activeRound: ActiveRound, matchId: string): 
     if (isEmpty(match)) {
         throw new Error(`Could not find match '${matchId}'.`);
     }
-    const relatedRound = roundStore.value[match?.meta.relatedRoundId];
-    if (isEmpty(relatedRound)) {
-        throw new Error(`Could not find related round '${match.meta.relatedRoundId}'.`);
-    }
 
-    activeRound.round = {
-        id: match.meta.relatedRoundId,
-        name: relatedRound.meta.name
-    };
     activeRound.match = {
         id: matchId,
         name: match.meta.name,

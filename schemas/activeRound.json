@@ -26,7 +26,7 @@
     },
     "type": "object",
     "additionalProperties": false,
-    "required": ["teamA", "teamB", "games", "activeColor", "round", "match"],
+    "required": ["teamA", "teamB", "games", "activeColor", "match"],
     "properties": {
         "teamA": {
             "$ref": "#/definitions/activeRoundTeam"
@@ -52,19 +52,6 @@
                 }
             },
             "required": ["index", "title", "categoryName", "isCustom"]
-        },
-        "round": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                }
-            },
-            "required": ["id", "name"]
         },
         "match": {
             "type": "object",
@@ -165,10 +152,6 @@
             "title": "Green vs Grape",
             "categoryName": "Ranked Modes",
             "isCustom": false
-        },
-        "round": {
-            "id": "00000",
-            "name": "Default Round 1"
         },
         "match": {
             "id": "00000",

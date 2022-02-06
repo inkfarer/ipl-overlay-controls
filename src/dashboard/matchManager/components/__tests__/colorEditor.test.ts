@@ -39,7 +39,6 @@ describe('ColorEditor', () => {
                         categoryName: 'Ranked Modes',
                         isCustom: false
                     },
-                    round: null,
                     match: null,
                     games: [
                         {

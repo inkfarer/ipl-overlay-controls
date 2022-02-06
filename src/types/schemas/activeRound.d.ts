@@ -30,10 +30,6 @@ export interface ActiveRound {
 		categoryName: string;
 		isCustom: boolean;
 	};
-	round: {
-		id: string;
-		name: string;
-	};
 	match: {
 		id: string;
 		name: string;

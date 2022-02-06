@@ -33,7 +33,6 @@ describe('ScoreDisplay', () => {
                         color: null
                     },
                     activeColor: null,
-                    round: null,
                     match: null,
                     games: [
                         {

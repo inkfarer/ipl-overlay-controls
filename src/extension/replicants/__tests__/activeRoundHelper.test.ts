@@ -11,7 +11,7 @@ describe('activeRoundHelper', () => {
         setActiveRoundTeams: (activeRound: ActiveRound, teamAId: string, teamBId: string) => void
     };
 
-    jest.mock('../roundStore', () => {
+    jest.mock('../matchStore', () => {
         return {
             __esModule: true,
             commitActiveRoundToMatchStore: commitActiveRoundMock
@@ -33,7 +33,6 @@ describe('activeRoundHelper', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 0 },
                 teamB: { score: 1 },
-                round: { id: 'asdasdasd' },
                 match: {},
                 games: [
                     { winner: GameWinner.NO_WINNER },
@@ -179,16 +178,9 @@ describe('activeRoundHelper', () => {
         it('updates active round data', () => {
             nodecg.replicants.matchStore.value = {
                 aaa: {
-                    meta: { relatedRoundId: 'gggg' },
+                    meta: { name: 'Cool Match' },
                     teamA: { score: 5 },
                     teamB: { score: 10 }
-                }
-            };
-            nodecg.replicants.roundStore.value = {
-                gggg: {
-                    meta: {
-                        name: 'Cool Round'
-                    }
                 }
             };
             const activeRound = {
@@ -209,26 +201,6 @@ describe('activeRoundHelper', () => {
 
             expect(() => helper.setActiveRoundGames(({} as ActiveRound), 'this match does not exist'))
                 .toThrow('Could not find match \'this match does not exist\'.');
-        });
-
-        it('throws error if related round is not found', () => {
-            nodecg.replicants.matchStore.value = {
-                roundroundround: {
-                    meta: {
-                        relatedRoundId: 'this round does not exist'
-                    }
-                }
-            };
-            nodecg.replicants.roundStore.value = {
-                gggg: {
-                    meta: {
-                        name: 'Cool Round'
-                    }
-                }
-            };
-
-            expect(() => helper.setActiveRoundGames(({} as ActiveRound), 'roundroundround'))
-                .toThrow('Could not find related round \'this round does not exist\'.');
         });
     });
 

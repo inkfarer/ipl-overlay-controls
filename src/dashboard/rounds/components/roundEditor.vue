@@ -117,7 +117,7 @@ export default defineComponent({
                 if (props.isNewRound) {
                     emit('cancelNewRound');
                 } else {
-                    store.dispatch('removeRound', { roundId: props.roundId });
+                    return store.dispatch('removeRound', { roundId: props.roundId });
                 }
             },
             isChanged: computed(() => {

@@ -1,11 +1,11 @@
 import { MatchStore } from '../types/schemas';
 
-export function generateMatchNameForRound(matchStore: MatchStore, roundId: string, roundName: string): string {
-    const matchCountForId = Object.values(matchStore).filter(match => match.meta.relatedRoundId === roundId).length;
+export function generateMatchNameForRound(matchStore: MatchStore, roundName: string): string {
+    const matchCountForName = Object.values(matchStore).filter(match => match.meta.name === roundName).length;
 
-    if (matchCountForId <= 0) {
+    if (matchCountForName <= 0) {
         return roundName;
     } else {
-        return `${roundName} (${matchCountForId + 1})`;
+        return `${roundName} (${matchCountForName + 1})`;
     }
 }

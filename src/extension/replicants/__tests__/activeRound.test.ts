@@ -10,7 +10,7 @@ describe('activeRound', () => {
     const mockSetActiveRoundGames = jest.fn();
     const mockGenerateId = jest.fn();
 
-    jest.mock('../roundStore', () => ({
+    jest.mock('../matchStore', () => ({
         __esModule: true,
         commitActiveRoundToMatchStore: mockCommitActiveRound
     }));
@@ -315,9 +315,6 @@ describe('activeRound', () => {
                     { stage: 'MakoMart', mode: 'Rainmaker', winner: GameWinner.NO_WINNER, color: undefined },
                     { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER, color: undefined }
                 ],
-                round: {
-                    name: 'Cool Next Round'
-                },
                 match: {
                     name: 'Cool Match',
                     id: 'new match id',

@@ -20,12 +20,12 @@
                 "games": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/game"
+                        "$ref": "#/definitions/roundGame"
                     }
                 }
             }
         },
-        "game": {
+        "roundGame": {
             "type": "object",
             "properties": {
                 "stage": {

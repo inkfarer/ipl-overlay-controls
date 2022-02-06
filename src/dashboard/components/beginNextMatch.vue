@@ -34,10 +34,6 @@ export default defineComponent({
     components: { IplInput, IplButton },
 
     props: {
-        roundId: {
-            type: String,
-            required: true
-        },
         roundName: {
             type: String,
             required: true
@@ -54,10 +50,7 @@ export default defineComponent({
         };
 
         watchEffect(() => {
-            matchName.value = generateMatchNameForRound(
-                tournamentDataStore.state.matchStore,
-                props.roundId,
-                props.roundName);
+            matchName.value = generateMatchNameForRound(tournamentDataStore.state.matchStore, props.roundName);
         });
 
         return {

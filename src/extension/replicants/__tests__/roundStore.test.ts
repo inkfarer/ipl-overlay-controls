@@ -1,27 +1,9 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { GameWinner } from 'types/enums/gameWinner';
-import { RoundStore } from 'schemas';
-import { DateTime } from 'luxon';
-import { mocked } from 'ts-jest/utils';
 
 describe('roundStore', () => {
-    const mockSetActiveRoundGames = jest.fn();
     const mockSetNextRoundGames = jest.fn();
     let nodecg: MockNodecg;
-    let extension: {
-        commitActiveRoundToMatchStore: () => void
-    };
-
-    const mockDateTime = mocked(DateTime, true);
-    jest.mock('luxon', () => ({
-        __esModule: true,
-        DateTime: mockDateTime
-    }));
-
-    jest.mock('../activeRoundHelper', () => ({
-        __esModule: true,
-        setActiveRoundGames: mockSetActiveRoundGames
-    }));
 
     jest.mock('../nextRoundHelper', () => ({
         __esModule: true,
@@ -41,13 +23,12 @@ describe('roundStore', () => {
         nodecg = new MockNodecg();
         nodecg.init();
 
-        extension = require('../roundStore');
+        require('../roundStore');
     });
 
     describe('updateRoundStore', () => {
         it('creates new round if needed', () => {
             nodecg.replicants.roundStore.value = { };
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -101,7 +82,6 @@ describe('roundStore', () => {
                     ]
                 }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -155,7 +135,6 @@ describe('roundStore', () => {
                     ]
                 }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '234' } };
             const ack = jest.fn();
 
@@ -180,7 +159,6 @@ describe('roundStore', () => {
                     meta: { name: 'R' }
                 }
             });
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ round: { id: '123' } }, '123');
             expect(mockSetNextRoundGames).not.toHaveBeenCalled();
         });
 
@@ -198,7 +176,6 @@ describe('roundStore', () => {
                     ]
                 }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '234' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -224,13 +201,11 @@ describe('roundStore', () => {
                 }
             });
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('123');
-            expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
         });
 
         it('generates id for round if it is not given', () => {
             mockGenerateId.mockReturnValue('new round id');
             nodecg.replicants.roundStore.value = {};
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -271,16 +246,11 @@ describe('roundStore', () => {
     });
 
     describe('removeRound', () => {
-        beforeEach(() => {
-            nodecg.replicants.matchStore.value = {};
-        });
-
         it('deletes the given round', () => {
             nodecg.replicants.roundStore.value = {
                 aaaaaa: { },
                 bbbbbb: { }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '234' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
 
             nodecg.messageListeners.removeRound({ roundId: 'aaaaaa' });
@@ -294,7 +264,6 @@ describe('roundStore', () => {
             nodecg.replicants.roundStore.value = {
                 gggggg: { }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '234' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -308,7 +277,6 @@ describe('roundStore', () => {
                 aaaaaa: { },
                 bbbbbb: { }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '234' } };
             nodecg.replicants.nextRound.value = { round: { id: '123' } };
             const ack = jest.fn();
 
@@ -317,72 +285,22 @@ describe('roundStore', () => {
             expect(ack).toHaveBeenCalledWith(new Error('Couldn\'t find round with id \'gggggg\'.'));
         });
 
-        it('sets active round to first round if active round is being deleted', () => {
-            nodecg.replicants.roundStore.value = {
-                aaaaaa: { },
-                bbbbbb: { },
-                gggggg: { }
-            };
-            nodecg.replicants.activeRound.value = { round: { id: 'bbbbbb' } };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
-
-            nodecg.messageListeners.removeRound({ roundId: 'bbbbbb' });
-
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ round: { id: 'bbbbbb' } }, 'aaaaaa');
-            expect(mockSetNextRoundGames).not.toHaveBeenCalled();
-        });
-
         it('sets next round to first round if active round is being deleted', () => {
             nodecg.replicants.roundStore.value = {
                 aaaaaa: { },
                 bbbbbb: { },
                 gggggg: { }
             };
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
             nodecg.replicants.nextRound.value = { round: { id: 'gggggg' } };
 
             nodecg.messageListeners.removeRound({ roundId: 'gggggg' });
 
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('aaaaaa');
-            expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
-        });
-
-        it('deletes any matches associated with the deleted round', () => {
-            nodecg.replicants.roundStore.value = {
-                aaaaaa: { },
-                bbbbbb: { },
-                gggggg: { }
-            };
-            nodecg.replicants.matchStore.value = {
-                zzzzzz: {
-                    meta: {
-                        relatedRoundId: 'gggggg'
-                    }
-                },
-                llllll: {
-                    meta: {
-                        relatedRoundId: 'mmmmmm'
-                    }
-                }
-            };
-            nodecg.replicants.activeRound.value = { round: { id: '123' } };
-            nodecg.replicants.nextRound.value = { round: { id: 'bbbbbb' } };
-
-            nodecg.messageListeners.removeRound({ roundId: 'gggggg' });
-
-            expect(nodecg.replicants.matchStore.value).toEqual({
-                llllll: {
-                    meta: {
-                        relatedRoundId: 'mmmmmm'
-                    }
-                }
-            });
         });
     });
 
     describe('resetRoundStore', () => {
         it('updates round store, active and next rounds', () => {
-            nodecg.replicants.activeRound.value = { active: 'round' };
 
             nodecg.messageListeners.resetRoundStore();
 
@@ -427,127 +345,7 @@ describe('roundStore', () => {
                 }
             });
 
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ active: 'round' }, '00000');
             expect(mockSetNextRoundGames).toHaveBeenCalledWith('11111');
-        });
-    });
-
-    describe('commitActiveRoundToMatchStore', () => {
-        it('updates value in round store', () => {
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 1, name: 'Team Alpha' },
-                teamB: { score: 1, name: 'Team Bravo' },
-                round: { name: 'Cool Round', id: 'roundround' },
-                match: { isCompleted: false, id: 'aaaaaa', name: 'Cool Match' },
-                games: [
-                    {
-                        stage: 'Walleye Warehouse',
-                        mode: 'Splat Zones',
-                        winner: GameWinner.ALPHA,
-                        color: { name: 'Cool Color' }
-                    },
-                    {
-                        stage: 'Wahoo World',
-                        mode: 'Rainmaker',
-                        winner: GameWinner.BRAVO,
-                        color: { name: 'Neat Color' }
-                    },
-                    {
-                        stage: 'MakoMart',
-                        mode: 'Clam Blitz',
-                        winner: GameWinner.NO_WINNER
-                    }
-                ]
-            };
-            nodecg.replicants.matchStore.value = {
-                aaaaaa: {
-                    meta: {
-                        name: 'Round Round',
-                        isCompleted: true,
-                        completionTime: '21:25'
-                    },
-                    teamA: { score: 0, name: 'Team Alpha (Old)' },
-                    teamB: { score: 2, name: 'Team Bravo (Old)' },
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Cool Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Grainmaker',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Color Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER
-                        }
-                    ]
-                }
-            };
-
-            extension.commitActiveRoundToMatchStore();
-
-            expect(nodecg.replicants.matchStore.value).toEqual({
-                aaaaaa: {
-                    meta: {
-                        name: 'Cool Match',
-                        isCompleted: false,
-                        completionTime: undefined,
-                        relatedRoundId: 'roundround'
-                    },
-                    teamA: { score: 1, name: 'Team Alpha' },
-                    teamB: { score: 1, name: 'Team Bravo' },
-                    games: [
-                        {
-                            stage: 'Walleye Warehouse',
-                            mode: 'Splat Zones',
-                            winner: GameWinner.ALPHA,
-                            color: { name: 'Cool Color' }
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker',
-                            winner: GameWinner.BRAVO,
-                            color: { name: 'Neat Color' }
-                        },
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz',
-                            winner: GameWinner.NO_WINNER,
-                            color: undefined
-                        }
-                    ]
-                }
-            });
-        });
-
-        it('removes round completion time if active round is incomplete', () => {
-            nodecg.replicants.activeRound.value = {
-                teamA: { score: 1 },
-                teamB: { score: 0 },
-                round: { name: 'Cool Round' },
-                match: { isCompleted: false, id: '123123' },
-                games: [{ }, { }, { }]
-            };
-            nodecg.replicants.matchStore.value = {
-                '123123': {
-                    meta: {
-                        isCompleted: true,
-                        completionTime: '23:00'
-                    }
-                }
-            };
-
-            extension.commitActiveRoundToMatchStore();
-
-            const matchStoreValue = (nodecg.replicants.matchStore.value as RoundStore)['123123'];
-            expect(matchStoreValue.meta.isCompleted).toBe(false);
-            expect(matchStoreValue.meta.completionTime).toBeUndefined();
         });
     });
 });

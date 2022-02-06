@@ -38,10 +38,6 @@ describe('ActiveColorToggles', () => {
                         title: 'coolest color',
                         isCustom: false
                     },
-                    round: {
-                        id: '0387',
-                        name: 'cool round',
-                    },
                     match: {
                         id: '01010',
                         name: 'Rad Match',

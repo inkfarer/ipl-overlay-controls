@@ -19,7 +19,7 @@
                 }
             ]
         },
-        "round": {
+        "match": {
             "type": "object",
             "required": [
                 "meta",
@@ -30,7 +30,7 @@
             "properties": {
                 "meta": {
                     "type": "object",
-                    "required": ["name", "isCompleted", "relatedRoundId"],
+                    "required": ["name", "isCompleted"],
                     "properties": {
                         "name": {
                             "type": "string"
@@ -41,16 +41,13 @@
                         "completionTime": {
                             "type": "string",
                             "format": "date-time"
-                        },
-                        "relatedRoundId": {
-                            "type": "string"
                         }
                     }
                 },
                 "games": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/game"
+                        "$ref": "#/definitions/matchGame"
                     }
                 },
                 "teamA": {
@@ -61,7 +58,7 @@
                 }
             }
         },
-        "game": {
+        "matchGame": {
             "type": "object",
             "properties": {
                 "winner": {
@@ -106,14 +103,13 @@
     },
     "type": "object",
     "additionalProperties": {
-        "$ref": "#/definitions/round"
+        "$ref": "#/definitions/match"
     },
     "default": {
         "00000": {
             "meta": {
                 "name": "Default Match 1",
-                "isCompleted": false,
-                "relatedRoundId": "00000"
+                "isCompleted": false
             },
             "teamA": {
                 "id": "AAA",

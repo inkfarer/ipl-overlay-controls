@@ -30,7 +30,7 @@ describe('BeginNextMatch', () => {
             state: {
                 matchStore: {
                     match1: {
-                        meta: { relatedRoundId: 'round1' }
+                        meta: { name: 'Cool Round' }
                     }
                 }
             }
@@ -52,7 +52,6 @@ describe('BeginNextMatch', () => {
                 ]
             },
             props: {
-                roundId: 'round1',
                 roundName: 'Cool Round'
             }
         });
@@ -72,7 +71,6 @@ describe('BeginNextMatch', () => {
                 ]
             },
             props: {
-                roundId: 'round1',
                 roundName: 'Cool Round'
             }
         });
@@ -95,7 +93,6 @@ describe('BeginNextMatch', () => {
                 ]
             },
             props: {
-                roundId: 'round1',
                 roundName: 'Cool Round'
             }
         });

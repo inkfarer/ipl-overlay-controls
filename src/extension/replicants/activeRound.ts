@@ -9,7 +9,7 @@ import {
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
-import { commitActiveRoundToMatchStore } from './roundStore';
+import { commitActiveRoundToMatchStore } from './matchStore';
 import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
@@ -104,9 +104,6 @@ nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledL
         },
         games: nextRound.value.games.map(game =>
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
-        round: {
-            ...clone(nextRound.value.round),
-        },
         match: {
             id: generateId(),
             name: data.matchName,
