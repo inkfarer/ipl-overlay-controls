@@ -102,9 +102,11 @@ export default defineComponent({
             || selectedMatch.value?.teamB?.score > 0);
 
         watch(selectedMatch, newValue => {
-            teamAId.value = newValue?.teamA?.id;
-            teamBId.value = newValue?.teamB?.id;
-            matchName.value = newValue?.meta?.name;
+            if (newValue) {
+                teamAId.value = newValue.teamA.id;
+                teamBId.value = newValue.teamB.id;
+                matchName.value = newValue.meta.name;
+            }
         });
 
         const isChanged = computed(() =>
