@@ -15,6 +15,7 @@ import { defineComponent } from '@vue/runtime-core';
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { pluralize } from '../../helpers/stringHelper';
+import { computed } from 'vue';
 
 export default defineComponent({
     name: 'MatchExporter',
@@ -26,7 +27,7 @@ export default defineComponent({
 
         return {
             pluralize,
-            matchCount: Object.keys(tournamentDataStore.state.matchStore).length,
+            matchCount: computed(() => Object.keys(tournamentDataStore.state.matchStore).length),
             bundleName: nodecg.bundleName
         };
     }
