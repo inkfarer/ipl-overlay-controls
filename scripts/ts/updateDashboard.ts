@@ -10,6 +10,6 @@ import semver from 'semver';
         console.log('Could not get version list.');
         return;
     }
-    execSync(`git checkout ${version}`);
+    execSync(`git checkout ${version}`, { cwd: '../' });
     console.log(`Done! (Checked out version ${version})`);
 })();
