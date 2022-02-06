@@ -16,7 +16,7 @@ nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
 
     try {
         const roundData = await getUrl(data.url);
-        rounds.value = { ...rounds.value, ...roundData.rounds };
+        rounds.value = roundData.rounds;
         ack(null, roundData.url);
     } catch (e) {
         ack(e);
@@ -32,10 +32,7 @@ async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
             .then(response => {
                 const rounds = handleRoundData(response.data);
 
-                resolve({
-                    rounds,
-                    url
-                });
+                resolve({ rounds, url });
             })
             .catch(err => {
                 reject(err);

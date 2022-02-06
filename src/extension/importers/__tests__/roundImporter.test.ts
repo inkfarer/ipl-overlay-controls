@@ -24,7 +24,7 @@ describe('roundImporter', () => {
     });
 
     describe('getRound', () => {
-        it('fetches data from the given URL, normalizes it and merges it to the round store', async () => {
+        it('fetches data from the given URL and normalizes it', async () => {
             nodecg.replicants.roundStore.value = { oldroundoldround: { name: 'Old Round' } };
             mockHandleRoundData.mockReturnValue({ newroundnewround: { name: 'New Round' } });
             mockGet.mockResolvedValue([]);
@@ -33,7 +33,6 @@ describe('roundImporter', () => {
             await nodecg.messageListeners.getRounds({ url: 'tournament://data/' }, ack);
 
             expect(nodecg.replicants.roundStore.value).toEqual({
-                oldroundoldround: { name: 'Old Round' },
                 newroundnewround: { name: 'New Round' }
             });
         });

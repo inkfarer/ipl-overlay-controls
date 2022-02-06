@@ -28,8 +28,7 @@ const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
         switch (req.body.jsonType) {
             case 'rounds': {
-                const resolvedRounds = handleRoundData(content);
-                rounds.value = { ...rounds.value, ...resolvedRounds };
+                rounds.value = handleRoundData(content);
                 break;
             }
             case 'teams': {
