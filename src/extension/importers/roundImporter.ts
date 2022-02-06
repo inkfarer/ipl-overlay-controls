@@ -3,6 +3,7 @@ import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
 import { RoundStore } from 'schemas';
 import { handleRoundData } from './roundDataHelper';
+import { setNextRoundGames } from '../replicants/nextRoundHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -16,7 +17,7 @@ nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
 
     try {
         const roundData = await getUrl(data.url);
-        rounds.value = roundData.rounds;
+        updateRounds(roundData.rounds);
         ack(null, roundData.url);
     } catch (e) {
         ack(e);
@@ -38,4 +39,9 @@ async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
                 reject(err);
             });
     });
+}
+
+export function updateRounds(newValue: RoundStore): void {
+    rounds.value = newValue;
+    setNextRoundGames(Object.keys(newValue)[0]);
 }

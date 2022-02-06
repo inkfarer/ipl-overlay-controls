@@ -18,6 +18,11 @@ describe('fileImport', () => {
         parseUploadedTeamData: mockParseUploadedTeamData
     }));
 
+    const mockRoundImporter = {
+        updateRounds: jest.fn()
+    };
+    jest.mock('../roundImporter', () => mockRoundImporter);
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.resetModules();
@@ -90,12 +95,7 @@ describe('fileImport', () => {
 
         it('imports round data', () => {
             const mockSendStatus = jest.fn();
-            mockHandleRoundData.mockReturnValue({
-                aaaaaa: { meta: { name: 'Cool Round' } }
-            });
-            nodecg.replicants.roundStore.value = {
-                bbbbbb: { meta: { name: 'Rad Round' } }
-            };
+            mockHandleRoundData.mockReturnValue('round data');
 
             nodecg.requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
@@ -106,9 +106,7 @@ describe('fileImport', () => {
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
             expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' });
-            expect(nodecg.replicants.roundStore.value).toEqual({
-                aaaaaa: { meta: { name: 'Cool Round' } }
-            });
+            expect(mockRoundImporter.updateRounds).toHaveBeenCalledWith('round data');
         });
 
         it('imports team data', async () => {
