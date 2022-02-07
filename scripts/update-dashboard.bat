@@ -1,2 +1,2 @@
-ts-node ./ts/updateDashboard.ts
+ts-node ./ts/updateDashboard.ts %*
 pause
