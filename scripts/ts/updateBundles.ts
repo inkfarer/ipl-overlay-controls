@@ -3,12 +3,16 @@ import { fetchTags } from './gitHelper';
 import semver from 'semver';
 import { execSync } from 'child_process';
 import { isVerbose } from './argsHelper';
+import * as path from 'path';
 
 let hasErrors = false;
 const verbose = isVerbose();
-const bundlesDir = '../..';
+const bundlesDir = path.join(__dirname, '..', '..', '..');
 const bundles = readdirSync(bundlesDir, { withFileTypes: true })
     .filter(dir => dir.isDirectory() && dir.name !== 'ipl-overlay-controls');
+
+console.log(__dirname);
+console.log(bundlesDir);
 
 bundles.forEach(bundle => {
     const bundlePath = `${bundlesDir}/${bundle.name}`;
@@ -21,36 +25,28 @@ bundles.forEach(bundle => {
             console.log('Fetching versions...');
             const tags = fetchTags(bundlePath);
             const latestVersion = semver.maxSatisfying(tags, '');
-            if (tags.length <= 0 || !latestVersion) {
-                console.log('No versions found. Pulling changes from git...');
-                try {
+            try {
+                if (tags.length <= 0 || !latestVersion) {
+                    console.log('No versions found. Pulling changes from git...');
                     execSync(`git pull`, { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
-                } catch (e) {
-                    hasErrors = true;
-                    if (verbose) {
-                        console.log(`Failed to update ${bundle.name}:`, e);
-                    } else {
-                        console.log(`Failed to update ${bundle.name}`);
-                    }
-                    return;
-                }
-            } else {
-                console.log(`Checking out version ${latestVersion}...`);
-                try {
+                } else {
+                    console.log(`Checking out version ${latestVersion}...`);
                     execSync(
                         `git checkout ${latestVersion}`,
                         { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
-                } catch (e) {
-                    hasErrors = true;
-                    if (verbose) {
-                        console.log(`Failed to update ${bundle.name}:`, e);
-                    } else {
-                        console.log(`Failed to update ${bundle.name}`);
-                    }
-                    return;
                 }
+                console.log('Updating dependencies...');
+                execSync('npm i --production', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                console.log(`Updated ${bundle.name}`);
+            } catch (e) {
+                hasErrors = true;
+                if (verbose) {
+                    console.log(`Failed to update ${bundle.name}:`, e);
+                } else {
+                    console.log(`Failed to update ${bundle.name}`);
+                }
+                return;
             }
-            console.log(`Updated ${bundle.name}`);
         }
     }
 });
