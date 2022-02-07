@@ -56,5 +56,5 @@ bundles.forEach(bundle => {
 });
 console.log('Done!');
 if (hasErrors && !verbose) {
-    console.log('Found errors during update. Re-run the script with the argument --verbose to log more information.');
+    console.log('Found errors during update. Re-run the script with the --verbose argument to log more information.');
 }
