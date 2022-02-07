@@ -1,2 +1,2 @@
-ts-node ./ts/clearReplicants.ts %*
+../node_modules/.bin/ts-node.cmd ./ts/clearReplicants.ts %*
 pause

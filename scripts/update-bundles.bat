@@ -1,2 +1,2 @@
-ts-node ./ts/updateBundles.ts %*
+../node_modules/.bin/ts-node.cmd ./ts/updateBundles.ts %*
 pause
