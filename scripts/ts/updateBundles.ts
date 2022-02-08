@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
-import { fetchTags } from './gitHelper';
+import { fetchTags, getDefaultBranch } from './gitHelper';
 import semver from 'semver';
 import { execSync } from 'child_process';
 import { isVerbose } from './argsHelper';
@@ -28,7 +28,10 @@ bundles.forEach(bundle => {
             try {
                 if (tags.length <= 0 || !latestVersion) {
                     console.log('No versions found. Pulling changes from git...');
-                    execSync(`git pull`, { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                    const branch = getDefaultBranch(bundlePath);
+                    console.log(`Using branch '${branch}'`);
+                    execSync(`git checkout ${branch}`, { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                    execSync('git pull', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
                 } else {
                     console.log(`Checking out version ${latestVersion}...`);
                     execSync(
