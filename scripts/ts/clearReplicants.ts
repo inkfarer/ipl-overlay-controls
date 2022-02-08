@@ -7,7 +7,7 @@ const verbose = isVerbose();
 
 askYesNo('This will clear all overlay data. Are you sure you want to continue?').then(doDelete => {
     if (!doDelete) {
-        process.exit(0);
+        return;
     }
     console.log('Clearing ipl-overlay-controls replicant data...');
     try {
@@ -20,5 +20,4 @@ askYesNo('This will clear all overlay data. Are you sure you want to continue?')
             console.log('Encountered an error. Re-run the script with the --verbose argument to log more information.');
         }
     }
-    process.exit(0);
 });
