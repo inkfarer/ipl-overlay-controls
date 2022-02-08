@@ -15,4 +15,4 @@ Attempts to update NodeCG bundles depending on ipl-overlay-controls.
 ## clear-replicants.bat
 
 Clears ipl-overlay-controls replicant data (Saved teams/matches/rounds, some configuration, etc.). 
-Only use if you know what you are doing or you have been specifically instructed to execute this script!
+Only use if you know what you are doing, or if you have been specifically instructed to execute this script!
