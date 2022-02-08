@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
-import { fetchTags, getDefaultBranch } from './gitHelper';
+import { attemptCheckout, fetchTags, getDefaultBranch } from './gitHelper';
 import semver from 'semver';
 import { execSync } from 'child_process';
 import { isVerbose } from './argsHelper';
@@ -14,7 +14,7 @@ const bundles = readdirSync(bundlesDir, { withFileTypes: true })
 console.log(__dirname);
 console.log(bundlesDir);
 
-bundles.forEach(bundle => {
+bundles.forEach(async (bundle) => {
     const bundlePath = `${bundlesDir}/${bundle.name}`;
     const bundlePackagePath = `${bundlePath}/package.json`;
     if (existsSync(bundlePackagePath)) {
@@ -30,13 +30,11 @@ bundles.forEach(bundle => {
                     console.log('No versions found. Pulling changes from git...');
                     const branch = getDefaultBranch(bundlePath);
                     console.log(`Using branch '${branch}'`);
-                    execSync(`git checkout ${branch}`, { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                    await attemptCheckout(bundlePath, branch);
                     execSync('git pull', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
                 } else {
                     console.log(`Checking out version ${latestVersion}...`);
-                    execSync(
-                        `git checkout ${latestVersion}`,
-                        { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                    await attemptCheckout(bundlePath, latestVersion);
                 }
                 console.log('Updating dependencies...');
                 execSync('npm ci --production', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
