@@ -39,7 +39,7 @@ bundles.forEach(bundle => {
                         { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
                 }
                 console.log('Updating dependencies...');
-                execSync('npm i --production', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
+                execSync('npm ci --production', { cwd: bundlePath, stdio: [ 'ignore', 'ignore', 'pipe' ] });
                 console.log(`Updated ${bundle.name}`);
             } catch (e) {
                 hasErrors = true;

@@ -19,7 +19,7 @@ const verbose = isVerbose();
         execSync(`git checkout ${version}`, { cwd: bundleDir });
         console.log(`Checked out version ${version}`);
         console.log('Installing dependencies...');
-        execSync(`npm i --production`, { cwd: bundleDir });
+        execSync(`npm ci --production`, { cwd: bundleDir });
         console.log(`Done!`);
     } catch (e) {
         if (verbose) {
