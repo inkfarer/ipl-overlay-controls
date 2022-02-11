@@ -16,3 +16,7 @@ Attempts to update NodeCG bundles depending on ipl-overlay-controls.
 
 Clears ipl-overlay-controls replicant data (Saved teams/matches/rounds, some configuration, etc.). 
 Only use if you know what you are doing, or if you have been specifically instructed to execute this script!
+
+## start.bat
+
+Launches NodeCG. It is recommended to create a shortcut to this file somewhere easy to access.
