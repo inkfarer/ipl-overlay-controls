@@ -1,5 +1,6 @@
 import { settingsStore } from '../settingsStore';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { RuntimeConfig } from 'schemas';
 
 describe('settingsStore', () => {
     describe('setState', () => {
@@ -31,6 +32,16 @@ describe('settingsStore', () => {
             settingsStore.dispatch('attemptRadiaConnection');
 
             expect(mockSendMessage).toHaveBeenCalledWith('retryRadiaAvailabilityCheck');
+        });
+    });
+
+    describe('setGameVersion', () => {
+        it('sets replicant value', () => {
+            replicants.runtimeConfig = { gameVersion: 'SPLATOON_2' };
+
+            settingsStore.dispatch('setGameVersion', 'SPLATOON_3');
+
+            expect((replicants.runtimeConfig as RuntimeConfig).gameVersion).toEqual('SPLATOON_3');
         });
     });
 });
