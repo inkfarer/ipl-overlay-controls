@@ -73,7 +73,8 @@ export function setActiveRoundGames(activeRound: ActiveRound, matchId: string): 
     activeRound.match = {
         id: matchId,
         name: match.meta.name,
-        isCompleted: match.meta.isCompleted
+        isCompleted: match.meta.isCompleted,
+        type: match.meta.type
     };
     activeRound.games = cloneDeep(match.games);
 

@@ -2,6 +2,7 @@ import ManualTeamPicker from '../manualTeamPicker.vue';
 import { createStore } from 'vuex';
 import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
 import { config, mount } from '@vue/test-utils';
+import { PlayType } from 'types/enums/playType';
 
 describe('ManualTeamPicker', () => {
     config.global.stubs = {
@@ -16,7 +17,7 @@ describe('ManualTeamPicker', () => {
                 nextRound: {
                     teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
                     teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round' },
+                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
                     showOnStream: true,
                     games: []
                 }

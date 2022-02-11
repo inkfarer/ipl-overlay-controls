@@ -6,6 +6,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setNextRoundGames } from './nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
+import { PlayType } from '../../types/enums/playType';
 
 const nodecg = nodecgContext.get();
 
@@ -25,7 +26,8 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: Unhand
             games: mappedGames,
             meta: {
                 name: data.roundName,
-                isCompleted: false
+                isCompleted: false,
+                type: data.type
             }
         };
     } else {
@@ -75,7 +77,8 @@ nodecg.listenFor('resetRoundStore', () => {
     roundStore.value = {
         [defaultRoundId]: {
             meta: {
-                name: 'Default Round 1'
+                name: 'Default Round 1',
+                type: PlayType.BEST_OF
             },
             games: [
                 {
@@ -94,7 +97,8 @@ nodecg.listenFor('resetRoundStore', () => {
         },
         [secondDefaultRoundId]: {
             meta: {
-                name: 'Default Round 2'
+                name: 'Default Round 2',
+                type: PlayType.BEST_OF
             },
             games: [
                 {

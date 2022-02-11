@@ -1,5 +1,6 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { GameWinner } from 'types/enums/gameWinner';
+import { PlayType } from '../../../types/enums/playType';
 
 describe('roundStore', () => {
     const mockSetNextRoundGames = jest.fn();
@@ -307,7 +308,8 @@ describe('roundStore', () => {
             expect(nodecg.replicants.roundStore.value).toEqual({
                 '00000': {
                     meta: {
-                        name: 'Default Round 1'
+                        name: 'Default Round 1',
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         {
@@ -326,7 +328,8 @@ describe('roundStore', () => {
                 },
                 '11111': {
                     meta: {
-                        name: 'Default Round 2'
+                        name: 'Default Round 2',
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         {

@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
+import { PlayType } from 'types/enums/playType';
 
 describe('ActiveColorToggles', () => {
     config.global.stubs = {
@@ -42,7 +43,8 @@ describe('ActiveColorToggles', () => {
                     match: {
                         id: '01010',
                         name: 'Rad Match',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         {

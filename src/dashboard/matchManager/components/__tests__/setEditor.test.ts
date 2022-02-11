@@ -4,6 +4,7 @@ import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoun
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { ActiveRoundGame } from 'types/activeRoundGame';
+import { PlayType } from 'types/enums/playType';
 
 describe('setEditor', () => {
     config.global.stubs = {
@@ -49,7 +50,8 @@ describe('setEditor', () => {
                     match: {
                         id: '01010',
                         name: 'Rad Match',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         {

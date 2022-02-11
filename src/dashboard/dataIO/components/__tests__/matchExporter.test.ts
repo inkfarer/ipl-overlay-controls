@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';
 import MatchExporter from '../matchExporter.vue';
+import { PlayType } from 'types/enums/playType';
 
 describe('MatchExporter', () => {
     config.global.stubs = {
@@ -18,6 +19,7 @@ describe('MatchExporter', () => {
                         meta: {
                             name: 'Round One',
                             isCompleted: false,
+                            type: PlayType.BEST_OF
                         },
                         teamA: {
                             score: 0,
@@ -41,6 +43,7 @@ describe('MatchExporter', () => {
                         meta: {
                             name: 'Round Two',
                             isCompleted: false,
+                            type: PlayType.PLAY_ALL
                         },
                         teamA: {
                             score: 0,
@@ -82,7 +85,8 @@ describe('MatchExporter', () => {
             ccc: {
                 meta: {
                     name: 'Round Three',
-                    isCompleted: false
+                    isCompleted: false,
+                    type: PlayType.BEST_OF
                 },
                 teamA: {
                     score: 0,

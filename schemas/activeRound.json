@@ -66,11 +66,14 @@
                 "name": {
                     "type": "string"
                 },
+                "type": {
+                    "$ref": "defs/round.json#/$defs/type"
+                },
                 "isCompleted": {
                     "type": "boolean"
                 }
             },
-            "required": ["id", "name", "isCompleted"]
+            "required": ["id", "name", "isCompleted", "type"]
         },
         "games": {
             "type": "array",
@@ -160,6 +163,7 @@
         "match": {
             "id": "00000",
             "name": "Default Match 1",
+            "type": "BEST_OF",
             "isCompleted": false
         },
         "games": [

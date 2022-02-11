@@ -6,6 +6,7 @@ import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
+import { PlayType } from 'types/enums/playType';
 
 jest.mock('../../helpers/dialogHelper');
 
@@ -25,7 +26,7 @@ describe('CreatePredictionDialog', () => {
                 nextRound: {
                     teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
                     teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round' },
+                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
                     showOnStream: true,
                     games: []
                 }

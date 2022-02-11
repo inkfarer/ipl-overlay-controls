@@ -11,6 +11,7 @@ export interface RoundStore {
 export interface Round {
 	meta: {
 		name: string;
+		type: 'BEST_OF' | 'PLAY_ALL';
 		[k: string]: unknown;
 	};
 	games: RoundGame[];

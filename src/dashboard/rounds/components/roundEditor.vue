@@ -51,6 +51,7 @@ import { splatModes, splatStages } from '../../../helpers/splatoonData';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
+import { PlayType } from 'types/enums/playType';
 
 library.add(faTimes);
 
@@ -106,6 +107,8 @@ export default defineComponent({
                 const result = await store.dispatch('updateRound', {
                     ...!props.isNewRound && { id: props.roundId },
                     roundName: roundInternal.value.meta.name,
+                    // todo: allow to change
+                    type: PlayType.BEST_OF,
                     games: roundInternal.value.games.map(game => ({ mode: game.mode, stage: game.stage }))
                 });
 

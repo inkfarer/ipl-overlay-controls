@@ -30,10 +30,13 @@
             "properties": {
                 "meta": {
                     "type": "object",
-                    "required": ["name", "isCompleted"],
+                    "required": ["name", "isCompleted", "type"],
                     "properties": {
                         "name": {
                             "type": "string"
+                        },
+                        "type": {
+                            "$ref": "defs/round.json#/$defs/type"
                         },
                         "isCompleted": {
                             "type": "boolean"
@@ -109,6 +112,7 @@
         "00000": {
             "meta": {
                 "name": "Default Match 1",
+                "type": "BEST_OF",
                 "isCompleted": false
             },
             "teamA": {
