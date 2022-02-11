@@ -44,6 +44,7 @@ export interface MatchGame {
 		title: string;
 		clrA: string;
 		clrB: string;
+		clrNeutral: string;
 		categoryName: string;
 		isCustom: boolean;
 		[k: string]: unknown;

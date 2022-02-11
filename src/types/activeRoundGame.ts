@@ -9,6 +9,7 @@ export interface ActiveRoundGame {
         title: string;
         clrA: string;
         clrB: string;
+        clrNeutral: string;
         categoryName: string;
         colorsSwapped: boolean;
         isCustom: boolean;
