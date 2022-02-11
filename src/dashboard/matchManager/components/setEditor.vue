@@ -11,7 +11,8 @@
             v-for="(game, index) in games"
             :key="`set-editor-${index}`"
             :data-test="`set-editor-${index}`"
-            class="layout horizontal center-vertical m-t-4"
+            class="layout horizontal center-vertical game-editor"
+            :class="{ 'is-next-game': index === nextGameIndex }"
         >
             <span class="set-number">{{ index + 1 }}</span>
             <ipl-select
@@ -145,7 +146,14 @@
 import { computed, defineComponent, ref } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { colors, splatModes, splatStages } from '../../../helpers/splatoonData';
-import { IplButton, IplSelect, IplCheckbox, IplToggleButton, IplInput, IplExpandingSpace } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplCheckbox,
+    IplExpandingSpace,
+    IplInput,
+    IplSelect,
+    IplToggleButton
+} from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { GameWinner } from 'types/enums/gameWinner';
@@ -194,8 +202,10 @@ export default defineComponent({
             clrB: activeRoundStore.state.activeRound.teamB.color
         }));
 
+        const nextGameIndex = computed(() =>
+            activeRoundStore.state.activeRound.games.findIndex(game => game.winner === GameWinner.NO_WINNER));
         const nextGame = computed(() =>
-            activeRoundStore.state.activeRound.games.find(game => game.winner === GameWinner.NO_WINNER));
+            nextGameIndex.value === -1 ? null : activeRoundStore.state.activeRound.games[nextGameIndex.value]);
 
         return {
             games,
@@ -271,7 +281,8 @@ export default defineComponent({
             handleReset(): void {
                 activeRoundStore.dispatch('resetActiveRound');
             },
-            nextGame
+            nextGame,
+            nextGameIndex
         };
     }
 });
@@ -279,6 +290,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import './src/dashboard/styles/constants';
+@import './src/dashboard/styles/colors';
 
 .no-winner-button {
     height: 32px !important;
@@ -313,6 +325,17 @@ export default defineComponent({
         &:last-child {
             border-radius: 0 $border-radius-inner $border-radius-inner 0;
         }
+    }
+}
+
+.game-editor {
+    border-radius: $border-radius-inner;
+    transition-duration: $transition-duration-med;
+    padding: 2px 6px;
+
+    &.is-next-game {
+        background-color: $background-secondary;
+        padding: 4px 6px;
     }
 }
 </style>
