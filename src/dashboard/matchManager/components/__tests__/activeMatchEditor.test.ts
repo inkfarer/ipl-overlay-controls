@@ -42,7 +42,8 @@ describe('ActiveRoundEditor', () => {
                         categoryName: 'Ranked Modes',
                         index: 0,
                         title: 'coolest color',
-                        isCustom: false
+                        isCustom: false,
+                        clrNeutral: '#FFF',
                     },
                     match: {
                         id: '01010',

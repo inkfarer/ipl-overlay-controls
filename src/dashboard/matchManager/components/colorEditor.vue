@@ -141,6 +141,7 @@ export default defineComponent({
                         title: 'Custom Color',
                         clrA: customColorA.value,
                         clrB: customColorB.value,
+                        clrNeutral: '#FFFFFF',
                         isCustom: true
                     }
                 });

@@ -37,7 +37,8 @@ describe('ColorEditor', () => {
                         title: 'Dark Blue vs Green',
                         index: 5,
                         categoryName: 'Ranked Modes',
-                        isCustom: false
+                        isCustom: false,
+                        clrNeutral: '#333'
                     },
                     match: null,
                     games: [
@@ -104,6 +105,7 @@ describe('ColorEditor', () => {
             color: {
                 clrA: '#37FC00',
                 clrB: '#7D28FC',
+                clrNeutral: '#F4067E',
                 index: 0,
                 isCustom: false,
                 title: 'Green vs Grape'
@@ -146,6 +148,7 @@ describe('ColorEditor', () => {
                 title: 'Custom Color',
                 clrA: '#123123',
                 clrB: '#345345',
+                clrNeutral: '#FFFFFF',
                 isCustom: true
             }
         });

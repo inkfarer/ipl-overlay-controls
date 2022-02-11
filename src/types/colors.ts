@@ -3,6 +3,7 @@ export interface ColorInfo {
     title: string;
     clrA: string;
     clrB: string;
+    clrNeutral: string;
     isCustom: boolean;
 }
 
@@ -14,6 +15,7 @@ export interface ColorGroup {
 export interface GameColor {
     clrA: string;
     clrB: string;
+    clrNeutral: string;
     index: number;
     categoryName: string;
     colorsSwapped: boolean;

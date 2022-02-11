@@ -15,6 +15,9 @@
             "clrB": {
                 "type": "string"
             },
+            "clrNeutral": {
+                "type": "string"
+            },
             "categoryName": {
                 "type": "string"
             },
@@ -22,6 +25,6 @@
                 "type": "boolean"
             }
         },
-        "required": ["index", "title", "clrA", "clrB", "categoryName", "isCustom"]
+        "required": ["index", "title", "clrA", "clrB", "clrNeutral", "categoryName", "isCustom"]
     }
 }

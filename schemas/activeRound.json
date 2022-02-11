@@ -49,9 +49,12 @@
                 },
                 "isCustom": {
                     "type": "boolean"
+                },
+                "clrNeutral": {
+                    "type": "string"
                 }
             },
-            "required": ["index", "title", "categoryName", "isCustom"]
+            "required": ["index", "title", "categoryName", "isCustom", "clrNeutral"]
         },
         "match": {
             "type": "object",

@@ -43,7 +43,8 @@ describe('setEditor', () => {
                         categoryName: 'Ranked Modes',
                         index: 0,
                         title: 'coolest color',
-                        isCustom: false
+                        isCustom: false,
+                        clrNeutral: '#00AAA0',
                     },
                     match: {
                         id: '01010',
@@ -60,6 +61,7 @@ describe('setEditor', () => {
                                 title: 'Cool Color',
                                 clrA: '#123123',
                                 clrB: '#345345',
+                                clrNeutral: '#FF00FF',
                                 categoryName: 'Cool Colors',
                                 isCustom: false,
                                 colorsSwapped: false
@@ -74,6 +76,7 @@ describe('setEditor', () => {
                                 title: 'Cool Color',
                                 clrA: '#837693',
                                 clrB: '#206739',
+                                clrNeutral: '#FF8563',
                                 categoryName: 'Custom Color',
                                 isCustom: true,
                                 colorsSwapped: true
@@ -130,6 +133,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#123123',
                     clrB: '#345345',
+                    clrNeutral: '#00BB00',
                     categoryName: 'Cool Colors',
                     isCustom: false,
                     colorsSwapped: false
@@ -144,6 +148,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#00EE00',
                     categoryName: 'Custom Color',
                     isCustom: true,
                     colorsSwapped: true
@@ -158,6 +163,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#00FFF0',
                     categoryName: 'Custom Color',
                     isCustom: true,
                     colorsSwapped: true
@@ -218,6 +224,7 @@ describe('setEditor', () => {
                     categoryName: 'Cool Colors',
                     clrA: '#123123',
                     clrB: '#345345',
+                    clrNeutral: '#FF00FF',
                     colorsSwapped: false,
                     index: 2,
                     isCustom: false,
@@ -232,6 +239,7 @@ describe('setEditor', () => {
                     categoryName: 'Custom Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#FF8563',
                     colorsSwapped: true,
                     index: 0,
                     isCustom: true,
@@ -362,6 +370,7 @@ describe('setEditor', () => {
             categoryName: 'Ranked Modes',
             clrA: '#04D976',
             clrB: '#D600AB',
+            clrNeutral: '#D2E500',
             colorsSwapped: false,
             index: 1,
             isCustom: false,
@@ -386,6 +395,7 @@ describe('setEditor', () => {
             categoryName: 'Cool Colors',
             clrA: '#234234',
             clrB: '#567567',
+            clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 2,
             isCustom: false,
@@ -408,6 +418,7 @@ describe('setEditor', () => {
             categoryName: 'Custom Color',
             clrA: '#123123',
             clrB: '#345345',
+            clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 0,
             isCustom: true,
@@ -430,6 +441,7 @@ describe('setEditor', () => {
             categoryName: 'Custom Color',
             clrA: '#123123',
             clrB: '#345345',
+            clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 0,
             isCustom: false,
@@ -475,6 +487,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#123123',
                     clrB: '#345345',
+                    clrNeutral: '#FF00FF',
                     categoryName: 'Cool Colors',
                     isCustom: false,
                     colorsSwapped: false
@@ -489,6 +502,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#FF8563',
                     categoryName: 'Custom Color',
                     isCustom: true,
                     colorsSwapped: true
@@ -511,6 +525,7 @@ describe('setEditor', () => {
                 title: 'Turquoise vs Orange',
                 clrA: '#10E38F',
                 clrB: '#FB7B08',
+                clrNeutral: '#6912CD',
                 categoryName: 'Ranked Modes',
                 isCustom: false,
                 colorsSwapped: false
@@ -536,6 +551,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#123123',
                     clrB: '#345345',
+                    clrNeutral: '#00FF00',
                     categoryName: 'Cool Colors',
                     isCustom: false,
                     colorsSwapped: false
@@ -550,6 +566,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#00AA00',
                     categoryName: 'Custom Color',
                     isCustom: true,
                     colorsSwapped: true
@@ -584,6 +601,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#123123',
                     clrB: '#345345',
+                    clrNeutral: '#00FF00',
                     categoryName: 'Cool Colors',
                     isCustom: false,
                     colorsSwapped: false
@@ -598,6 +616,7 @@ describe('setEditor', () => {
                     title: 'Cool Color',
                     clrA: '#837693',
                     clrB: '#206739',
+                    clrNeutral: '#00AA00',
                     categoryName: 'Custom Color',
                     isCustom: true,
                     colorsSwapped: true
