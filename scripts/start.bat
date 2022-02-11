@@ -1,3 +1,3 @@
-cd %~dp0/../../..
+cd %~dp0..\..\..
 node index.js
 pause
