@@ -7,6 +7,7 @@ import { ActiveRoundStore, activeRoundStoreKey } from '../../store/activeRoundSt
 import { GameWinner } from 'types/enums/gameWinner';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
+import { PlayType } from 'types/enums/playType';
 
 jest.mock('../../helpers/dialogHelper');
 
@@ -93,7 +94,8 @@ describe('ResolvePredictionDialog', () => {
                     match: {
                         id: '01010',
                         name: 'Rad Match',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         {

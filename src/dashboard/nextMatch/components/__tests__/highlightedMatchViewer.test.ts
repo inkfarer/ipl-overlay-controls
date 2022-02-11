@@ -5,6 +5,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, mount } from '@vue/test-utils';
 import { Team } from 'types/team';
 import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
+import { PlayType } from 'types/enums/playType';
 
 describe('HighlightedMatchViewer', () => {
     config.global.stubs = {
@@ -24,7 +25,7 @@ describe('HighlightedMatchViewer', () => {
                 nextRound: {
                     teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
                     teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round' },
+                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
                     showOnStream: true,
                     games: []
                 }

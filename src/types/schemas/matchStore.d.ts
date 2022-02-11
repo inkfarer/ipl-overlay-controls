@@ -26,6 +26,7 @@ export interface MatchStore {
 export interface Match {
 	meta: {
 		name: string;
+		type: 'BEST_OF' | 'PLAY_ALL';
 		isCompleted: boolean;
 		completionTime?: string;
 		[k: string]: unknown;

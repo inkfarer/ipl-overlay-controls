@@ -31,6 +31,7 @@ export interface NextRound {
 	round: {
 		id: string;
 		name: string;
+		type: 'BEST_OF' | 'PLAY_ALL';
 	};
 	showOnStream: boolean;
 	games: {

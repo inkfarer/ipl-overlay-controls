@@ -4,6 +4,7 @@ import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoun
 import { GameWinner } from 'types/enums/gameWinner';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';
+import { PlayType } from 'types/enums/playType';
 
 describe('ActiveRoundEditor', () => {
     config.global.stubs = {
@@ -48,7 +49,8 @@ describe('ActiveRoundEditor', () => {
                     match: {
                         id: '01010',
                         name: 'Rad Match',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         {
@@ -90,7 +92,7 @@ describe('ActiveRoundEditor', () => {
                 },
                 matchStore: {
                     '01010': {
-                        meta: { name: 'dope round', isCompleted: false },
+                        meta: { name: 'dope round', isCompleted: false, type: PlayType.PLAY_ALL },
                         teamA: {
                             score: 0,
                             id: '123123',
@@ -243,7 +245,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.roundStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: false },
+                meta: { name: 'dope round', isCompleted: false, type: PlayType.PLAY_ALL },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 0, showLogo: true, players: []},
                 games: []
@@ -263,7 +265,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: false },
+                meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 0, showLogo: true, players: []},
                 games: []
@@ -285,7 +287,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.roundStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: false },
+                meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
@@ -305,7 +307,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '01010': {
-                meta: { name: 'dope round', isCompleted: false },
+                meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team (long name long name long name long name long name)', score: 0, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
@@ -330,7 +332,7 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '01010': {
-                meta: { name: 'dope round', isCompleted: true },
+                meta: { name: 'dope round', isCompleted: true, type: PlayType.PLAY_ALL },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
@@ -355,13 +357,13 @@ describe('ActiveRoundEditor', () => {
         const tournamentDataStore = createTournamentDataStore();
         tournamentDataStore.state.matchStore = {
             '0387': {
-                meta: { name: 'dope round', isCompleted: true },
+                meta: { name: 'dope round', isCompleted: true, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
                 teamB: { id: '345345', name: 'Cool Team 2', score: 1, showLogo: true, players: []},
                 games: []
             },
             '12345': {
-                meta: { name: 'dope round 2', isCompleted: false },
+                meta: { name: 'dope round 2', isCompleted: false, type: PlayType.PLAY_ALL },
                 teamA: { id: '789789', name: 'Cool Team 3', score: 2, showLogo: true, players: []},
                 teamB: { id: '678678', name: 'Cool Team 4', score: 1, showLogo: true, players: []},
                 games: []

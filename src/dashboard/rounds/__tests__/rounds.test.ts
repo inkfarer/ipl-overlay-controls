@@ -3,6 +3,7 @@ import { config, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../store/tournamentDataStore';
 import { nextRoundStoreKey } from '../../store/nextRoundStore';
+import { PlayType } from 'types/enums/playType';
 
 describe('Rounds', () => {
     config.global.stubs = {
@@ -26,15 +27,15 @@ describe('Rounds', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round' },
+                        meta: { name: 'dope round', type: PlayType.BEST_OF },
                         games: []
                     },
                     '9573': {
-                        meta: { name: 'dope round the second' },
+                        meta: { name: 'dope round the second', type: PlayType.PLAY_ALL },
                         games: []
                     },
                     '2426': {
-                        meta: { name: 'dope round the third' },
+                        meta: { name: 'dope round the third', type: PlayType.BEST_OF },
                         games: []
                     }
                 },
@@ -125,7 +126,8 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                name: 'dope round the third'
+                name: 'dope round the third',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(false);
@@ -152,7 +154,8 @@ describe('Rounds', () => {
         expect(roundEditor.props().round).toEqual({
             games: [],
             meta: {
-                name: 'dope round the second'
+                name: 'dope round the second',
+                type: PlayType.PLAY_ALL
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(false);
@@ -181,7 +184,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);
@@ -212,7 +216,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);
@@ -245,7 +250,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);
@@ -293,7 +299,7 @@ describe('Rounds', () => {
         expect(roundEditor.props().isNewRound).toEqual(false);
         expect(roundEditor.props().roundId).toEqual('0387');
         expect(roundEditor.props().round).toEqual({
-            meta: { name: 'dope round' },
+            meta: { name: 'dope round', type: PlayType.BEST_OF },
             games: []
         });
     });

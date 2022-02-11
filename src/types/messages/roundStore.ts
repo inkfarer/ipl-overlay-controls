@@ -1,6 +1,9 @@
+import { PlayType } from '../enums/playType';
+
 export interface UpdateRoundStoreRequest {
     id?: string;
     roundName: string;
+    type: PlayType;
     games: { stage: string, mode: string }[];
 }
 
