@@ -20,3 +20,10 @@ Only use if you know what you are doing, or if you have been specifically instru
 ## start.bat
 
 Launches NodeCG. It is recommended to create a shortcut to this file somewhere easy to access.
+
+---
+
+### Notice
+
+The "Clapperboard" icon (included in this repository as `icon.ico`) is property of Inkling Performance Labs.
+Its intended use is as a file icon to make shortcuts more easily recognizable. Other unauthorized usage is forbidden.
