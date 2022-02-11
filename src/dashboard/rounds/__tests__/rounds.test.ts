@@ -184,7 +184,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);
@@ -215,7 +216,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);
@@ -248,7 +250,8 @@ describe('Rounds', () => {
                 { mode: 'Unknown Mode', stage: 'Unknown Stage' }
             ],
             meta: {
-                name: 'New Round'
+                name: 'New Round',
+                type: PlayType.BEST_OF
             }
         });
         expect(roundEditor.props().isNewRound).toEqual(true);

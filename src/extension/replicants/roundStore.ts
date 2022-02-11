@@ -33,6 +33,7 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: Unhand
     } else {
         roundStoreValue.games = mappedGames;
         roundStoreValue.meta.name = data.roundName;
+        roundStoreValue.meta.type = data.type;
     }
 
     if (nextRound.value.round.id === id) {
@@ -44,7 +45,8 @@ nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: Unhand
         round: {
             games: mappedGames,
             meta: {
-                name: data.roundName
+                name: data.roundName,
+                type: data.type
             }
         }
     });

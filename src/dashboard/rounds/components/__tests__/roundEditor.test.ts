@@ -58,7 +58,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'Cool Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -85,7 +86,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -115,7 +117,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -135,7 +138,7 @@ describe('RoundEditor', () => {
         expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
             id: 'round-456',
             roundName: 'New Round',
-            type: PlayType.BEST_OF,
+            type: PlayType.PLAY_ALL,
             games: [
                 { stage: 'Blackbelly Skatepark', mode: 'Splat Zones' },
                 { stage: 'Moray Towers', mode: 'Clam Blitz' },
@@ -157,7 +160,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -176,7 +180,7 @@ describe('RoundEditor', () => {
 
         expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
             roundName: 'New Round',
-            type: PlayType.BEST_OF,
+            type: PlayType.PLAY_ALL,
             games: [
                 { stage: 'Blackbelly Skatepark', mode: 'Splat Zones' },
                 { stage: 'Moray Towers', mode: 'Clam Blitz' },
@@ -199,7 +203,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -230,7 +235,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -260,7 +266,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },

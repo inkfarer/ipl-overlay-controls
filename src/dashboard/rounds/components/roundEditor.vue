@@ -5,6 +5,12 @@
             label="Name"
             name="round-name"
         />
+        <ipl-select
+            v-model="roundInternal.meta.type"
+            label="Type"
+            class="m-t-6"
+            :options="typeOptions"
+        />
         <template
             v-for="(game, index) in roundInternal.games"
             :key="`game-editor-${index}`"
@@ -51,7 +57,7 @@ import { splatModes, splatStages } from '../../../helpers/splatoonData';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
-import { PlayType } from 'types/enums/playType';
+import { PlayType, PlayTypeHelper } from 'types/enums/playType';
 
 library.add(faTimes);
 
@@ -107,8 +113,7 @@ export default defineComponent({
                 const result = await store.dispatch('updateRound', {
                     ...!props.isNewRound && { id: props.roundId },
                     roundName: roundInternal.value.meta.name,
-                    // todo: allow to change
-                    type: PlayType.BEST_OF,
+                    type: roundInternal.value.meta.type,
                     games: roundInternal.value.games.map(game => ({ mode: game.mode, stage: game.stage }))
                 });
 
@@ -125,10 +130,17 @@ export default defineComponent({
             },
             isChanged: computed(() => {
                 return props.round.meta.name !== roundInternal.value?.meta.name
+                    || props.round.meta.type !== roundInternal.value?.meta.type
                     || props.round.games.some((game, index) => {
                         const internalGame = roundInternal.value?.games[index];
                         return game.mode !== internalGame.mode || game.stage !== internalGame.stage;
                     });
+            }),
+            typeOptions: computed(() => {
+                return Object.values(PlayType).map(type => ({
+                    value: type,
+                    name: PlayTypeHelper.toPrettyString(type, roundInternal.value.games.length)
+                }));
             })
         };
     }
