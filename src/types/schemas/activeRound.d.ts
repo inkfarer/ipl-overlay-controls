@@ -29,6 +29,7 @@ export interface ActiveRound {
 		title: string;
 		categoryName: string;
 		isCustom: boolean;
+		clrNeutral: string;
 	};
 	match: {
 		id: string;
@@ -44,6 +45,7 @@ export interface ActiveRound {
 			title: string;
 			clrA: string;
 			clrB: string;
+			clrNeutral: string;
 			categoryName: string;
 			isCustom: boolean;
 			[k: string]: unknown;

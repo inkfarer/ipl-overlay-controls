@@ -87,7 +87,8 @@ describe('ResolvePredictionDialog', () => {
                         categoryName: 'Ranked Modes',
                         index: 0,
                         title: 'coolest color',
-                        isCustom: false
+                        isCustom: false,
+                        clrNeutral: '#222'
                     },
                     match: {
                         id: '01010',
@@ -104,6 +105,7 @@ describe('ResolvePredictionDialog', () => {
                                 title: 'Cool Color',
                                 clrA: '#123123',
                                 clrB: '#345345',
+                                clrNeutral: '#00FF00',
                                 categoryName: 'Cool Colors',
                                 isCustom: false,
                                 colorsSwapped: false
@@ -118,6 +120,7 @@ describe('ResolvePredictionDialog', () => {
                                 title: 'Cool Color',
                                 clrA: '#837693',
                                 clrB: '#206739',
+                                clrNeutral: '#00AA00',
                                 categoryName: 'Custom Color',
                                 isCustom: true,
                                 colorsSwapped: true

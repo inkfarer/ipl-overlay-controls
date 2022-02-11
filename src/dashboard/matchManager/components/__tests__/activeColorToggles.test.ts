@@ -36,7 +36,8 @@ describe('ActiveColorToggles', () => {
                         categoryName: 'Ranked Modes',
                         index: 0,
                         title: 'coolest color',
-                        isCustom: false
+                        isCustom: false,
+                        clrNeutral: '#0FAA00',
                     },
                     match: {
                         id: '01010',
@@ -97,6 +98,7 @@ describe('ActiveColorToggles', () => {
             color: {
                 clrA: '#FEF232',
                 clrB: '#2ED2FE',
+                clrNeutral: '#FD5600',
                 index: 6,
                 isCustom: false,
                 title: 'Yellow vs Blue'
@@ -120,6 +122,7 @@ describe('ActiveColorToggles', () => {
             color: {
                 clrA: '#04D976',
                 clrB: '#D600AB',
+                clrNeutral: '#D2E500',
                 index: 1,
                 isCustom: false,
                 title: 'Green vs Magenta'
