@@ -19,9 +19,12 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "defs/round.json#/$defs/type"
                 }
             },
-            "required": ["id", "name"]
+            "required": ["id", "name", "type"]
         },
         "showOnStream": {
             "type": "boolean"
@@ -75,7 +78,8 @@
         },
         "round": {
             "id": "11111",
-            "name": "Default Round 2"
+            "name": "Default Round 2",
+            "type": "BEST_OF"
         },
         "showOnStream": false,
         "games": [

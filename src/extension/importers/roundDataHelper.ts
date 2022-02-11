@@ -3,6 +3,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { generateId } from '../../helpers/generateId';
 import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { ImporterRound } from 'types/importer';
+import { PlayType } from '../../types/enums/playType';
 
 const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
 const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
@@ -31,7 +32,8 @@ export function handleRoundData(rounds: ImporterRound[]): RoundStore {
         result[generateId()] = {
             meta: {
                 name: round.name,
-                isCompleted: false
+                isCompleted: false,
+                type: Object.values(PlayType).includes(round.type) ? round.type : PlayType.BEST_OF
             },
             games
         };

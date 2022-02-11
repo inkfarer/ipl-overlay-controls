@@ -17,7 +17,8 @@ export function setNextRoundGames(roundId: string): void {
 
     nextRound.value.round = {
         id: roundId,
-        name: round.meta.name
+        name: round.meta.name,
+        type: round.meta.type
     };
     nextRound.value.games = round.games.map(game => ({ stage: game.stage, mode: game.mode }));
 }

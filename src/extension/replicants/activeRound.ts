@@ -107,7 +107,8 @@ nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledL
         match: {
             id: generateId(),
             name: data.matchName,
-            isCompleted: false
+            isCompleted: false,
+            type: nextRound.value.round.type
         }
     };
 

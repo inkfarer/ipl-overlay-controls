@@ -3,6 +3,7 @@ import { mocked } from 'ts-jest/utils';
 import { DateTime } from 'luxon';
 import { GameWinner } from '../../../types/enums/gameWinner';
 import { RoundStore, TournamentData } from '../../../types/schemas';
+import { PlayType } from '../../../types/enums/playType';
 
 describe('matchStore', () => {
     let nodecg: MockNodecg;
@@ -39,8 +40,7 @@ describe('matchStore', () => {
             nodecg.replicants.activeRound.value = {
                 teamA: { score: 1, name: 'Team Alpha' },
                 teamB: { score: 1, name: 'Team Bravo' },
-                round: { name: 'Cool Round', id: 'roundround' },
-                match: { isCompleted: false, id: 'aaaaaa', name: 'Cool Match' },
+                match: { isCompleted: false, id: 'aaaaaa', name: 'Cool Match', type: PlayType.BEST_OF },
                 games: [
                     {
                         stage: 'Walleye Warehouse',
@@ -66,7 +66,8 @@ describe('matchStore', () => {
                     meta: {
                         name: 'Round Round',
                         isCompleted: true,
-                        completionTime: '21:25'
+                        completionTime: '21:25',
+                        type: PlayType.PLAY_ALL
                     },
                     teamA: { score: 0, name: 'Team Alpha (Old)' },
                     teamB: { score: 2, name: 'Team Bravo (Old)' },
@@ -99,7 +100,8 @@ describe('matchStore', () => {
                     meta: {
                         name: 'Cool Match',
                         isCompleted: false,
-                        completionTime: undefined
+                        completionTime: undefined,
+                        type: PlayType.BEST_OF
                     },
                     teamA: { score: 1, name: 'Team Alpha' },
                     teamB: { score: 1, name: 'Team Bravo' },
@@ -257,7 +259,7 @@ describe('matchStore', () => {
             };
             nodecg.replicants.roundStore.value = {
                 aaaa: {
-                    meta: { name: 'Round 1' },
+                    meta: { name: 'Round 1', type: PlayType.BEST_OF },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
                         { stage: 'MakoMart', mode: 'Clam Blitz' }
@@ -285,7 +287,8 @@ describe('matchStore', () => {
                     },
                     meta: {
                         isCompleted: false,
-                        name: 'Round 1'
+                        name: 'Round 1',
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },

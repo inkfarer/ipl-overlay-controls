@@ -1,6 +1,7 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { ActiveRound, NextRound } from 'schemas';
 import { GameWinner } from 'types/enums/gameWinner';
+import { PlayType } from '../../../types/enums/playType';
 
 describe('activeRound', () => {
     let nodecg: MockNodecg;
@@ -297,7 +298,8 @@ describe('activeRound', () => {
                     { stage: 'Manta Maria', mode: 'Tower Control' }
                 ],
                 round: {
-                    name: 'Cool Next Round'
+                    name: 'Cool Next Round',
+                    type: PlayType.PLAY_ALL
                 },
                 showOnStream: true
             };
@@ -318,7 +320,8 @@ describe('activeRound', () => {
                 match: {
                     name: 'Cool Match',
                     id: 'new match id',
-                    isCompleted: false
+                    isCompleted: false,
+                    type: PlayType.PLAY_ALL
                 }
             });
             expect(mockCommitActiveRound).toHaveBeenCalled();

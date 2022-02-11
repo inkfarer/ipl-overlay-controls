@@ -1,6 +1,7 @@
 import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { GameWinner } from 'types/enums/gameWinner';
 import { ActiveRound } from 'schemas';
+import { PlayType } from '../../../types/enums/playType';
 
 describe('activeRoundHelper', () => {
     const commitActiveRoundMock = jest.fn();
@@ -178,7 +179,7 @@ describe('activeRoundHelper', () => {
         it('updates active round data', () => {
             nodecg.replicants.matchStore.value = {
                 aaa: {
-                    meta: { name: 'Cool Match' },
+                    meta: { name: 'Cool Match', type: PlayType.BEST_OF },
                     teamA: { score: 5 },
                     teamB: { score: 10 }
                 }
@@ -190,8 +191,15 @@ describe('activeRoundHelper', () => {
 
             helper.setActiveRoundGames((activeRound as ActiveRound), 'aaa');
 
-            expect(activeRound.teamA.score).toBe(5);
-            expect(activeRound.teamB.score).toBe(10);
+            expect(activeRound).toEqual({
+                match: {
+                    id: 'aaa',
+                    name: 'Cool Match',
+                    type: PlayType.BEST_OF
+                },
+                teamA: { score: 5 },
+                teamB: { score: 10 }
+            });
         });
 
         it('throws error if match is not found', () => {

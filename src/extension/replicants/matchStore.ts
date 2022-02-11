@@ -39,7 +39,8 @@ export function clearMatchesWithUnknownTeams(tournamentData: TournamentData): vo
             [matchId]: {
                 meta: {
                     name: firstRound.meta.name,
-                    isCompleted: false
+                    isCompleted: false,
+                    type: firstRound.meta.type
                 },
                 teamA: {
                     ...firstTeam,
@@ -81,7 +82,8 @@ export function commitActiveRoundToMatchStore(): void {
         meta: {
             name: currentActiveRound.match.name,
             isCompleted: currentActiveRound.match.isCompleted,
-            completionTime
+            completionTime,
+            type: currentActiveRound.match.type
         },
         teamA: currentActiveRound.teamA,
         teamB: currentActiveRound.teamB,

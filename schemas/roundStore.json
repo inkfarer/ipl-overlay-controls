@@ -10,10 +10,13 @@
             "properties": {
                 "meta": {
                     "type": "object",
-                    "required": ["name"],
+                    "required": ["name", "type"],
                     "properties": {
                         "name": {
                             "type": "string"
+                        },
+                        "type": {
+                            "$ref": "defs/round.json#/$defs/type"
                         }
                     }
                 },
@@ -48,7 +51,8 @@
     "default": {
         "00000": {
             "meta": {
-                "name": "Default Round 1"
+                "name": "Default Round 1",
+                "type": "BEST_OF"
             },
             "games": [
                 {

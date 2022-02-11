@@ -1,6 +1,7 @@
 [
     {
         "name": "Round 1",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "sturgeon shipyard",
@@ -18,6 +19,7 @@
     },
     {
         "name": "Round 2",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "MakoMart",
@@ -35,6 +37,7 @@
     },
     {
         "name": "Round 3",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "New Albacore Hotel",
@@ -52,6 +55,7 @@
     },
     {
         "name": "Round 4",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "Sturgeon Shipyard",
@@ -69,6 +73,7 @@
     },
     {
         "name": "Round 5",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "Blackbelly Skatepark",
@@ -86,6 +91,7 @@
     },
     {
         "name": "Round 6",
+        "type": "PLAY_ALL",
         "maps": [
             {
                 "map": "Shellendorf Institute",
@@ -103,6 +109,7 @@
     },
     {
         "name": "Winners Round 1",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Sturgeon Shipyard",
@@ -128,6 +135,7 @@
     },
     {
         "name": "Winners Round 2",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Wahoo World",
@@ -153,6 +161,7 @@
     },
     {
         "name": "Winners Round 3",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Snapper Canal",
@@ -178,6 +187,7 @@
     },
     {
         "name": "Winners Round 4",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Wahoo World",
@@ -203,6 +213,7 @@
     },
     {
         "name": "Grand Finals",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Starfish Mainstage",
@@ -236,6 +247,7 @@
     },
     {
         "name": "Bracket Reset",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Shellendorf Institute",
@@ -269,6 +281,7 @@
     },
     {
         "name": "Losers Round 1",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Ancho-V Games",
@@ -286,6 +299,7 @@
     },
     {
         "name": "Losers Round 2",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Humpback Pump Track",
@@ -303,6 +317,7 @@
     },
     {
         "name": "Losers Round 3",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Sturgeon Shipyard",
@@ -320,6 +335,7 @@
     },
     {
         "name": "Losers Round 4",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Piranha Pit",
@@ -336,7 +352,8 @@
         ]
     },
     {
-        "name": "Losers Round 4",
+        "name": "Losers Round 5",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "Sturgeon Shipyard",
@@ -354,6 +371,7 @@
     },
     {
         "name": "Losers Round 6",
+        "type": "BEST_OF",
         "maps": [
             {
                 "map": "MakoMart",

@@ -93,6 +93,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { PlayType } from 'types/enums/playType';
 
 library.add(faBars);
 
@@ -144,7 +145,8 @@ export default defineComponent({
             createRound(gameCount: 3 | 5 | 7): void {
                 newRound.value = {
                     meta: {
-                        name: 'New Round'
+                        name: 'New Round',
+                        type: PlayType.BEST_OF
                     },
                     games: Array(gameCount).fill({ mode: 'Unknown Mode', stage: 'Unknown Stage' })
                 };

@@ -2,6 +2,7 @@ import RoundEditor from '../roundEditor.vue';
 import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
+import { PlayType } from 'types/enums/playType';
 
 describe('RoundEditor', () => {
     config.global.stubs = {
@@ -25,15 +26,15 @@ describe('RoundEditor', () => {
                 },
                 roundStore: {
                     '0387': {
-                        meta: { name: 'dope round' },
+                        meta: { name: 'dope round', type: PlayType.BEST_OF },
                         games: []
                     },
                     '9573': {
-                        meta: { name: 'dope round the second' },
+                        meta: { name: 'dope round the second', type: PlayType.BEST_OF },
                         games: []
                     },
                     '2426': {
-                        meta: { name: 'dope round the third' },
+                        meta: { name: 'dope round the third', type: PlayType.BEST_OF },
                         games: []
                     }
                 },
@@ -57,7 +58,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'Cool Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -84,7 +86,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.BEST_OF
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -114,7 +117,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -134,6 +138,7 @@ describe('RoundEditor', () => {
         expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
             id: 'round-456',
             roundName: 'New Round',
+            type: PlayType.PLAY_ALL,
             games: [
                 { stage: 'Blackbelly Skatepark', mode: 'Splat Zones' },
                 { stage: 'Moray Towers', mode: 'Clam Blitz' },
@@ -155,7 +160,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -174,6 +180,7 @@ describe('RoundEditor', () => {
 
         expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
             roundName: 'New Round',
+            type: PlayType.PLAY_ALL,
             games: [
                 { stage: 'Blackbelly Skatepark', mode: 'Splat Zones' },
                 { stage: 'Moray Towers', mode: 'Clam Blitz' },
@@ -196,7 +203,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -227,7 +235,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
@@ -257,7 +266,8 @@ describe('RoundEditor', () => {
                 round: {
                     meta: {
                         name: 'New Round',
-                        isCompleted: false
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
                     },
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
