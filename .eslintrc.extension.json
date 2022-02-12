@@ -84,7 +84,8 @@
             "files": ["*.test.ts", "mockNodecg.ts"],
             "rules": {
                 "@typescript-eslint/no-var-requires": 0,
-                "@typescript-eslint/no-this-alias": 0
+                "@typescript-eslint/no-this-alias": 0,
+                "@typescript-eslint/ban-ts-comment": "off"
             }
         }
     ]

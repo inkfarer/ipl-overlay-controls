@@ -12,12 +12,6 @@ const nodecg = nodecgContext.get();
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
-let smashGGKey: string;
-
-if (nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg !== 'undefined') {
-    smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
-}
-
 nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMessage, ack: UnhandledListenForCb) => {
     switch (tournamentData.value.meta.source) {
         case TournamentDataSource.BATTLEFY:
@@ -41,8 +35,8 @@ nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMess
                 ack(err);
             });
             break;
-        case TournamentDataSource.SMASHGG:
-            // if smashGGKey is empty, we raise a failure
+        case TournamentDataSource.SMASHGG: {
+            const smashGGKey = nodecg.bundleConfig?.smashgg?.apiKey;
             if (!smashGGKey) {
                 return ack(new Error('No Smash.gg API key found.'));
             }
@@ -72,6 +66,7 @@ nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMess
                 ack(err);
             });
             break;
+        }
         default:
             ack(new Error(`Invalid source '${tournamentData.value.meta.source}' given.`));
     }

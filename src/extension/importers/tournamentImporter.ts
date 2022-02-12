@@ -10,15 +10,11 @@ import { GetSmashggEventRequest } from 'types/messages/tournamentData';
 
 const nodecg = nodecgContext.get();
 
-let smashGGKey: string;
-
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
     nodecg.log.warn(
         `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! `
         + 'Importing tournament data from smash.gg will not be possible.'
     );
-} else {
-    smashGGKey = nodecg.bundleConfig.smashgg.apiKey;
 }
 
 nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) => {
@@ -36,12 +32,12 @@ nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) =>
                 break;
             }
             case TournamentDataSource.SMASHGG: {
-                if (!smashGGKey) {
+                if (!nodecg.bundleConfig?.smashgg?.apiKey) {
                     ack(new Error('No smash.gg token provided.'));
                     break;
                 }
 
-                const events = await getSmashGGEvents(data.id, smashGGKey);
+                const events = await getSmashGGEvents(data.id, nodecg.bundleConfig?.smashgg?.apiKey);
 
                 if (events.length === 1) {
                     await getSmashggEventData(events[0].id);
@@ -71,7 +67,7 @@ nodecg.listenFor('getSmashggEvent', async (data: GetSmashggEventRequest, ack: Un
 });
 
 async function getSmashggEventData(eventId: number): Promise<void> {
-    const serviceData = await getSmashGGData(eventId, smashGGKey);
+    const serviceData = await getSmashGGData(eventId, nodecg.bundleConfig?.smashgg?.apiKey);
     updateTournamentDataReplicants(serviceData);
 }
 

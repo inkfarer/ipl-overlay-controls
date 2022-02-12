@@ -6,7 +6,6 @@ import { handleRoundData } from './roundDataHelper';
 import { setNextRoundGames } from '../replicants/nextRoundHelper';
 
 const nodecg = nodecgContext.get();
-
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 
 nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {

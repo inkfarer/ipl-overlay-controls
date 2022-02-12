@@ -1,64 +1,73 @@
 import express from 'express';
 import last from 'lodash/last';
+import { Configschema } from '../../types/schemas';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type ReplicantChangeHandler = (newValue?: unknown, oldValue?: unknown) => void;
-export type MockReplicant = { value: unknown };
 type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
 
-export class MockNodecg {
-    replicants: {[key: string]: MockReplicant};
-    replicantListeners: {[key: string]: ReplicantChangeHandler};
-    messageListeners: {[key: string]: (message?: unknown, cb?: () => void) => void};
-    requestHandlers: {[type in 'POST' | 'GET']: {[path: string]: express.RequestHandler}};
-    mount: jest.Mock;
-    bundleConfig: unknown;
-    log: { warn: jest.Mock, info: jest.Mock, error: jest.Mock }
-    bundleName: string;
+const defaultBundleConfig = Object.freeze({
+    lastfm: {
+        apiKey: 'lastfmkey123',
+        secret: 'lastfmsecret456'
+    },
+    smashgg: {
+        apiKey: 'smashggkey789'
+    },
+    radia: {
+        url: 'radia://url',
+        socketUrl: 'ws://radia.url',
+        authentication: 'radia-auth-12345'
+    }
+});
 
-    constructor(bundleConfig?: unknown) {
-        this.replicants = {};
-        this.replicantListeners = {};
-        this.messageListeners = {};
-        this.requestHandlers = { POST: {}, GET: {} };
-        this.mount = jest.fn();
-        this.bundleConfig = bundleConfig;
-        this.log = {
-            warn: jest.fn(),
-            info: jest.fn(),
-            error: jest.fn()
+export let replicants: {[key: string]: unknown} = {};
+export const replicantChangeListeners: {[key: string]: ReplicantChangeHandler} = {};
+export const requestHandlers: {[type in 'POST' | 'GET']: {[path: string]: express.RequestHandler}}
+    = { POST: {}, GET: {} };
+export const mockBundleConfig: Configschema = cloneDeep(defaultBundleConfig);
+export const messageListeners: {[key: string]: (message?: unknown, cb?: () => void) => void} = {};
+export const mockMount = jest.fn();
+export const mockNodecgLog = {
+    warn: jest.fn(),
+    info: jest.fn(),
+    error: jest.fn()
+};
+
+beforeEach(() => {
+    replicants = {};
+    Object.assign(mockBundleConfig, cloneDeep(defaultBundleConfig));
+});
+
+require('../helpers/nodecg').set({
+    Replicant(name: string) {
+        const replicantValue: { value: unknown, on: OnFunction } = {
+            get value() {
+                return replicants[name];
+            },
+            set value(newValue: unknown) {
+                replicants[name] = newValue;
+            },
+            on: (event: string, handler: ReplicantChangeHandler) => {
+                replicantChangeListeners[name] = handler;
+            }
         };
-        this.bundleName = 'ipl-overlay-controls';
-    }
-
-    init(): void {
-        const self = this;
-        require('../helpers/nodecg').set({
-            // @ts-ignore: Just a test, improve mocks as needed.
-            Replicant(name: string) {
-                const replicantValue: { value: unknown, on: OnFunction } = {
-                    value: undefined,
-                    on: (event: string, handler: ReplicantChangeHandler) => {
-                        self.replicantListeners[name] = handler;
-                    }
-                };
-                self.replicants[name] = replicantValue;
-                return replicantValue;
-            },
-            listenFor: (messageName: string, handler: () => void) => {
-                self.messageListeners[messageName] = handler as (message: unknown, cb?: () => void) => void;
-            },
-            Router: () => ({
-                post(path: string, ...handlers: express.RequestHandler[]) {
-                    self.requestHandlers['POST'][path] = last(handlers);
-                },
-                get(path: string, ...handlers: express.RequestHandler[]) {
-                    self.requestHandlers['GET'][path] = last(handlers);
-                }
-            }),
-            mount: self.mount,
-            log: self.log,
-            bundleConfig: self.bundleConfig,
-            bundleName: 'ipl-overlay-controls'
-        });
-    }
-}
+        replicants[name] = replicantValue;
+        return replicantValue;
+    },
+    listenFor: (messageName: string, handler: () => void) => {
+        messageListeners[messageName] = handler as (message: unknown, cb?: () => void) => void;
+    },
+    Router: () => ({
+        post(path: string, ...handlers: express.RequestHandler[]) {
+            requestHandlers['POST'][path] = last(handlers);
+        },
+        get(path: string, ...handlers: express.RequestHandler[]) {
+            requestHandlers['GET'][path] = last(handlers);
+        }
+    }),
+    mount: mockMount,
+    log: mockNodecgLog,
+    bundleConfig: mockBundleConfig,
+    bundleName: 'ipl-overlay-controls'
+});

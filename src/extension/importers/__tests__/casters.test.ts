@@ -1,40 +1,33 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { mock } from 'jest-mock-extended';
+import type * as RadiaClient from '../clients/radiaClient';
+import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
+const mockRadiaClient = mock<typeof RadiaClient>();
+jest.mock('../clients/radiaClient', () => mockRadiaClient);
 
 describe('casters', () => {
-    const mockGetLiveCasters = jest.fn();
-    let nodecg: MockNodecg;
-
-    jest.mock('../clients/radiaClient', () => ({
-        __esModule: true,
-        getLiveCasters: mockGetLiveCasters
-    }));
+    require('../casters');
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        require('../casters');
     });
 
     describe('getLiveCommentators', () => {
         beforeEach(() => {
-            nodecg.replicants.radiaSettings.value = {
+            replicants.radiaSettings = {
                 guildID: '019578380257832'
             };
         });
 
         it('gets caster data from the API, normalizes it and updates the casters replicant', async () => {
-            mockGetLiveCasters.mockResolvedValue([
+            mockRadiaClient.getLiveCasters.mockResolvedValue([
                 { discord_user_id: '109578102', twitter: 'joecaster', pronouns: 'He/Him', name: 'Joe Caster' },
                 { discord_user_id: '2938765', twitter: 'JaneCaster', pronouns: 'she/her', name: 'Jane Caster' }
             ]);
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getLiveCommentators(null, ack);
+            await messageListeners.getLiveCommentators(null, ack);
 
-            expect(nodecg.replicants.casters.value).toEqual({
+            expect(replicants.casters).toEqual({
                 '109578102': {
                     twitter: '@joecaster',
                     pronouns: 'he/him',
@@ -63,12 +56,12 @@ describe('casters', () => {
                 { discord_user_id: '0569237840', twitter: 'JaneCaster', pronouns: 'shE/her', name: 'Jane Caster' },
                 { discord_user_id: '-5123908', twitter: 'joecaster', pronouns: 'He/Him', name: 'Joe Caster' }
             ];
-            mockGetLiveCasters.mockResolvedValue(apiResponse);
+            mockRadiaClient.getLiveCasters.mockResolvedValue(apiResponse);
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getLiveCommentators(null, ack);
+            await messageListeners.getLiveCommentators(null, ack);
 
-            expect(nodecg.replicants.casters.value).toEqual({
+            expect(replicants.casters).toEqual({
                 '109578102': { twitter: '@joecaster', pronouns: 'he/him', name: 'Joe Caster' },
                 '2938765': { twitter: '@JaneCaster', pronouns: 'she/her', name: 'Jane Caster' },
                 '-5123908': { twitter: '@joecaster', pronouns: 'he/him', name: 'joe caster' }
@@ -87,31 +80,31 @@ describe('casters', () => {
         });
 
         it('acknowledges if no commentators were found', async () => {
-            mockGetLiveCasters.mockResolvedValue([]);
+            mockRadiaClient.getLiveCasters.mockResolvedValue([]);
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getLiveCommentators(null, ack);
+            await messageListeners.getLiveCommentators(null, ack);
 
             expect(ack).toHaveBeenCalledWith(new Error('Got no commentators from API.'));
-            expect(nodecg.replicants.casters.value).toBeUndefined();
+            expect(replicants.casters).toBeUndefined();
         });
 
         it('acknowledges if an error is thrown', async () => {
             const apiResponse = { response: { status: 401 } };
-            mockGetLiveCasters.mockRejectedValue(apiResponse);
+            mockRadiaClient.getLiveCasters.mockRejectedValue(apiResponse);
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getLiveCommentators(null, ack);
+            await messageListeners.getLiveCommentators(null, ack);
 
             expect(ack).toHaveBeenCalledWith(apiResponse);
-            expect(nodecg.replicants.casters.value).toBeUndefined();
+            expect(replicants.casters).toBeUndefined();
         });
 
         it('acknowledges with nothing if a 404 error is thrown', async () => {
-            mockGetLiveCasters.mockRejectedValue({ response: { status: 404 } });
+            mockRadiaClient.getLiveCasters.mockRejectedValue({ response: { status: 404 } });
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getLiveCommentators(null, ack);
+            await messageListeners.getLiveCommentators(null, ack);
 
             expect(ack).toHaveBeenCalledWith(null, null);
         });

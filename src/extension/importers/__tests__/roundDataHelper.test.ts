@@ -1,26 +1,16 @@
 import { GameWinner } from 'types/enums/gameWinner';
-import { Module } from '../../../helpers/__mocks__/module';
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { PlayType } from '../../../types/enums/playType';
+import * as GenerateId from '../../../helpers/generateId';
+import { mock } from 'jest-mock-extended';
+
+const mockGenerateId = mock<typeof GenerateId>();
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
+
+import { handleRoundData } from '../roundDataHelper';
 
 describe('roundDataHelper', () => {
-    let helper: Module;
-    let nodecg: MockNodecg;
-
-    const mockGenerateId = {
-        __esModule: true,
-        generateId: jest.fn()
-    };
-    jest.mock('../../../helpers/generateId', () => mockGenerateId);
-
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-
-        nodecg = new MockNodecg({});
-        nodecg.init();
-
-        helper = require('../roundDataHelper');
     });
 
     describe('handleRoundData', () => {
@@ -30,7 +20,7 @@ describe('roundDataHelper', () => {
                 .mockReturnValueOnce('222222')
                 .mockReturnValueOnce('333333');
 
-            const result = helper.handleRoundData([
+            const result = handleRoundData([
                 {
                     name: 'Round 1',
                     type: PlayType.PLAY_ALL,
@@ -43,6 +33,7 @@ describe('roundDataHelper', () => {
                 { name: 'Round ???' },
                 {
                     name: 'Round 2',
+                    // @ts-ignore
                     type: 'some play type that does not exist',
                     maps: [
                         { map: 'HuMpBaCk PuMp TrAcK', mode: 'SpLaT zOnEs' }
