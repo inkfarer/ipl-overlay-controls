@@ -45,8 +45,8 @@ export const settingsStore = createStore<SettingsStore>({
         async attemptRadiaConnection(): Promise<void> {
             return nodecg.sendMessage('retryRadiaAvailabilityCheck');
         },
-        setGameVersion(store, newValue: GameVersion): void {
-            runtimeConfig.value.gameVersion = newValue;
+        setGameVersion(store, newValue: GameVersion): Promise<void> {
+            return nodecg.sendMessage('setGameVersion', { version: newValue });
         }
     }
 });

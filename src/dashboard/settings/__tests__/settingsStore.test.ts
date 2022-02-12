@@ -1,6 +1,5 @@
 import { settingsStore } from '../settingsStore';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
-import { RuntimeConfig } from 'schemas';
 
 describe('settingsStore', () => {
     describe('setState', () => {
@@ -36,12 +35,10 @@ describe('settingsStore', () => {
     });
 
     describe('setGameVersion', () => {
-        it('sets replicant value', () => {
-            replicants.runtimeConfig = { gameVersion: 'SPLATOON_2' };
-
+        it('sends message', () => {
             settingsStore.dispatch('setGameVersion', 'SPLATOON_3');
 
-            expect((replicants.runtimeConfig as RuntimeConfig).gameVersion).toEqual('SPLATOON_3');
+            expect(mockSendMessage).toHaveBeenCalledWith('setGameVersion', { version: 'SPLATOON_3' });
         });
     });
 });

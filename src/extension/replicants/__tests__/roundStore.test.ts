@@ -2,11 +2,14 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
 import { mock } from 'jest-mock-extended';
 import type * as NextRoundHelper from '../nextRoundHelper';
+import type * as RoundStoreHelper from '../../helpers/roundStoreHelper';
 import type * as GenerateId from '../../../helpers/generateId';
 const mockNextRoundHelper = mock<typeof NextRoundHelper>();
 const mockGenerateId = mock<typeof GenerateId>();
+const mockRoundStoreHelper = mock<typeof RoundStoreHelper>();
 jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
+jest.mock('../../helpers/roundStoreHelper', () => mockRoundStoreHelper);
 
 import '../roundStore';
 import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
@@ -254,54 +257,10 @@ describe('roundStore', () => {
     });
 
     describe('resetRoundStore', () => {
-        it('updates round store, active and next rounds', () => {
-
+        it('resets round store', () => {
             messageListeners.resetRoundStore();
 
-            expect(replicants.roundStore).toEqual({
-                '00000': {
-                    meta: {
-                        name: 'Default Round 1',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz'
-                        },
-                        {
-                            stage: 'Ancho-V Games',
-                            mode: 'Tower Control'
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker'
-                        }
-                    ]
-                },
-                '11111': {
-                    meta: {
-                        name: 'Default Round 2',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            stage: 'Inkblot Art Academy',
-                            mode: 'Turf War'
-                        },
-                        {
-                            stage: 'Ancho-V Games',
-                            mode: 'Tower Control'
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker'
-                        }
-                    ]
-                }
-            });
-
-            expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('11111');
+            expect(mockRoundStoreHelper.resetRoundStore).toHaveBeenCalled();
         });
     });
 });

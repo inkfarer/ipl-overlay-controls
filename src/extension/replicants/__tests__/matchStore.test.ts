@@ -2,17 +2,20 @@ import { DateTime } from 'luxon';
 import { GameWinner } from '../../../types/enums/gameWinner';
 import { RoundStore, TournamentData } from '../../../types/schemas';
 import { PlayType } from '../../../types/enums/playType';
-import * as ActiveRoundHelper from '../activeRoundHelper';
 import { mock } from 'jest-mock-extended';
-import * as GenerateId from '../../../helpers/generateId';
+import type * as ActiveRoundHelper from '../activeRoundHelper';
+import type * as GenerateId from '../../../helpers/generateId';
+import type * as MatchStoreHelper from '../../helpers/matchStoreHelper';
 import { replicants } from '../../__mocks__/mockNodecg';
 
 const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
 const mockDateTime = mock<typeof DateTime>();
 const mockGenerateId = mock<typeof GenerateId>();
+const mockMatchStoreHelper = mock<typeof MatchStoreHelper>();
 jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
 jest.mock('luxon', () => ({ __esModule: true, DateTime: mockDateTime }));
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
+jest.mock('../../helpers/matchStoreHelper', () => mockMatchStoreHelper);
 
 import { clearMatchesWithUnknownTeams, commitActiveRoundToMatchStore } from '../matchStore';
 
@@ -213,10 +216,7 @@ describe('matchStore', () => {
                 ]
             } as TournamentData);
 
-            expect(mockActiveRoundHelper.setActiveRoundGames)
-                .toHaveBeenCalledWith(replicants.activeRound, 'aaaa');
-            expect(mockActiveRoundHelper.setActiveRoundTeams)
-                .toHaveBeenCalledWith(replicants.activeRound, 'aaa', 'bbb');
+            expect(mockMatchStoreHelper.setActiveRoundToFirstMatch).toHaveBeenCalled();
         });
 
         it('creates match from first round if all matches are to be deleted', () => {
@@ -261,31 +261,7 @@ describe('matchStore', () => {
                 ]
             } as TournamentData);
 
-            expect(replicants.matchStore).toEqual({
-                idid: {
-                    teamA: {
-                        id: 'ggg',
-                        score: 0
-                    },
-                    teamB: {
-                        id: 'mmm',
-                        score: 0
-                    },
-                    meta: {
-                        isCompleted: false,
-                        name: 'Round 1',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER }
-                    ]
-                }
-            });
-            expect(mockActiveRoundHelper.setActiveRoundGames)
-                .toHaveBeenCalledWith(replicants.activeRound, 'idid');
-            expect(mockActiveRoundHelper.setActiveRoundTeams)
-                .toHaveBeenCalledWith(replicants.activeRound, 'ggg', 'mmm');
+            expect(mockMatchStoreHelper.resetMatchStore).toHaveBeenCalled();
         });
     });
 });

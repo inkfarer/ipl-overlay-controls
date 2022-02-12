@@ -1,5 +1,13 @@
 <template>
     <ipl-space>
+        <ipl-message
+            v-if="isChanged"
+            type="warning"
+            data-test="version-change-warning"
+            class="m-b-8"
+        >
+            Changing game versions will reset round and match data!
+        </ipl-message>
         <ipl-select
             v-model="gameVersion"
             label="Game version"
@@ -18,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core';
-import { IplButton, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { GameVersion, GameVersionHelper } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../settingsStore';
 import { computed, ref } from 'vue';
@@ -26,7 +34,7 @@ import { computed, ref } from 'vue';
 export default defineComponent({
     name: 'RuntimeConfig',
 
-    components: { IplButton, IplSelect, IplSpace },
+    components: { IplMessage, IplButton, IplSelect, IplSpace },
 
     setup() {
         const store = useSettingsStore();

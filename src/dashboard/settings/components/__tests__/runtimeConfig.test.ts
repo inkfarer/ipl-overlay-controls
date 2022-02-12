@@ -36,6 +36,19 @@ describe('RuntimeConfig', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    it('matches snapshot when changing data', () => {
+        const store = createSettingsStore();
+        const wrapper = mount(RuntimeConfig, {
+            global: {
+                plugins: [[store, settingsStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it('handles submitting', () => {
         const store = createSettingsStore();
         jest.spyOn(store, 'dispatch');
