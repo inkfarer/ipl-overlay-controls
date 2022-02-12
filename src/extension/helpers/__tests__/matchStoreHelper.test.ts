@@ -10,6 +10,7 @@ const mockGenerateId = mock<typeof GenerateId>();
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 
 import { resetMatchStore, setActiveRoundToFirstMatch } from '../matchStoreHelper';
+import { GameVersion } from '../../../types/enums/gameVersion';
 
 describe('matchStoreHelper', () => {
     describe('resetMatchStore', () => {
@@ -68,7 +69,7 @@ describe('matchStoreHelper', () => {
 
     describe('setActiveRoundToFirstMatch', () => {
         it('updates active round data', () => {
-            replicants.activeRound = 'active round value';
+            replicants.activeRound = {};
             replicants.matchStore = {
                 matchone: {
                     teamA: { id: 'teamone' },
@@ -79,9 +80,116 @@ describe('matchStoreHelper', () => {
 
             setActiveRoundToFirstMatch();
 
-            expect(mockActiveRoundHelper.setActiveRoundGames).toHaveBeenCalledWith('active round value', 'matchone');
+            expect(mockActiveRoundHelper.setActiveRoundGames).toHaveBeenCalledWith({}, 'matchone');
             expect(mockActiveRoundHelper.setActiveRoundTeams)
-                .toHaveBeenCalledWith('active round value', 'teamone', 'teamtwo');
+                .toHaveBeenCalledWith({}, 'teamone', 'teamtwo');
+            expect(replicants.activeRound).toEqual({});
+        });
+
+        it('resets color data if required', () => {
+            const activeRound = {
+                teamA: {
+                    id: 'teamone',
+                    color: '#fff'
+                },
+                teamB: {
+                    id: 'teamtwo',
+                    color: '#ddd'
+                },
+                activeColor: {
+                    index: 1,
+                    title: 'Cool Color',
+                    categoryName: 'Cool Category',
+                    isCustom: false,
+                    clrNeutral: '#aaa'
+                }
+            };
+            replicants.activeRound = activeRound;
+            replicants.matchStore = {
+                matchone: {
+                    teamA: { id: 'teamone' },
+                    teamB: { id: 'teamtwo' }
+                },
+                matchtwo: {}
+            };
+            replicants.swapColorsInternally = false;
+            replicants.runtimeConfig = { gameVersion: GameVersion.SPLATOON_2 };
+
+            setActiveRoundToFirstMatch(true);
+
+            expect(mockActiveRoundHelper.setActiveRoundGames).toHaveBeenCalledWith(expect.anything(), 'matchone');
+            expect(mockActiveRoundHelper.setActiveRoundTeams)
+                .toHaveBeenCalledWith(expect.anything(), 'teamone', 'teamtwo');
+            expect(replicants.activeRound).toEqual({
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    clrNeutral: '#F4067E',
+                    index: 0,
+                    title: 'Green vs Grape',
+                    isCustom: false
+                },
+                teamA: {
+                    color: '#37FC00',
+                    id: 'teamone'
+                },
+                teamB: {
+                    color: '#7D28FC',
+                    id: 'teamtwo'
+                }
+            });
+        });
+
+        it('resets color data if required and colors are swapped', () => {
+            const activeRound = {
+                teamA: {
+                    id: 'teamone',
+                    color: '#fff'
+                },
+                teamB: {
+                    id: 'teamtwo',
+                    color: '#ddd'
+                },
+                activeColor: {
+                    index: 1,
+                    title: 'Cool Color',
+                    categoryName: 'Cool Category',
+                    isCustom: false,
+                    clrNeutral: '#aaa'
+                }
+            };
+            replicants.activeRound = activeRound;
+            replicants.matchStore = {
+                matchone: {
+                    teamA: { id: 'teamone' },
+                    teamB: { id: 'teamtwo' }
+                },
+                matchtwo: {}
+            };
+            replicants.swapColorsInternally = true;
+            replicants.runtimeConfig = { gameVersion: GameVersion.SPLATOON_2 };
+
+            setActiveRoundToFirstMatch(true);
+
+            expect(mockActiveRoundHelper.setActiveRoundGames).toHaveBeenCalledWith(expect.anything(), 'matchone');
+            expect(mockActiveRoundHelper.setActiveRoundTeams)
+                .toHaveBeenCalledWith(expect.anything(), 'teamone', 'teamtwo');
+            expect(replicants.activeRound).toEqual({
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    clrNeutral: '#F4067E',
+                    index: 0,
+                    title: 'Green vs Grape',
+                    isCustom: false
+                },
+                teamA: {
+                    color: '#7D28FC',
+                    id: 'teamone'
+                },
+                teamB: {
+                    color: '#37FC00',
+                    id: 'teamtwo'
+                }
+            });
         });
     });
 });

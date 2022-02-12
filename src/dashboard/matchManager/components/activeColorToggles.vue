@@ -34,15 +34,15 @@
                 <div
                     class="color"
                     :style="{
-                        backgroundColor: previousColor.clrA,
-                        borderColor: getBorderColor(previousColor.clrA)
+                        backgroundColor: previousColor?.clrA,
+                        borderColor: getBorderColor(previousColor?.clrA)
                     }"
                 />
                 <div
                     class="color"
                     :style="{
-                        backgroundColor: previousColor.clrB,
-                        borderColor: getBorderColor(previousColor.clrB)
+                        backgroundColor: previousColor?.clrB,
+                        borderColor: getBorderColor(previousColor?.clrB)
                     }"
                 />
             </div>
@@ -60,11 +60,11 @@
             >
                 <div
                     class="color"
-                    :style="{ backgroundColor: nextColor.clrA, borderColor: getBorderColor(nextColor.clrA) }"
+                    :style="{ backgroundColor: nextColor?.clrA, borderColor: getBorderColor(nextColor?.clrA) }"
                 />
                 <div
                     class="color"
-                    :style="{ backgroundColor: nextColor.clrB, borderColor: getBorderColor(nextColor.clrB) }"
+                    :style="{ backgroundColor: nextColor?.clrB, borderColor: getBorderColor(nextColor?.clrB) }"
                 />
                 <font-awesome-icon
                     icon="chevron-right"
@@ -84,10 +84,11 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
-import { colors } from '../../../helpers/splatoonData';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { themeColors } from '../../styles/colors';
 import { addDots } from '../../../helpers/stringHelper';
+import { useSettingsStore } from '../../settings/settingsStore';
+import { perGameData } from '../../../helpers/gameData/gameData';
 
 library.add(faChevronRight, faChevronLeft);
 
@@ -98,13 +99,15 @@ export default defineComponent({
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
+        const settingsStore = useSettingsStore();
+        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
 
         const activeRound = computed(() => activeRoundStore.state.activeRound);
 
         const colorTogglesDisabled = computed(() =>
             activeRoundStore.state.activeRound.activeColor.categoryName === 'Custom Color');
         const selectedColorGroup = computed(() => {
-            return colors.find(group => group.meta.name === activeRound.value.activeColor.categoryName);
+            return gameData.value.colors.find(group => group.meta.name === activeRound.value.activeColor.categoryName);
         });
         const selectedIndex = computed(() => activeRound.value.activeColor.index);
 
@@ -117,19 +120,21 @@ export default defineComponent({
         }
 
         const nextColor = computed(() => {
-            const color = selectedColorGroup.value.colors.find(color => {
+            const color = selectedColorGroup.value?.colors.find(color => {
                 return color.index === (selectedIndex.value + 1 === selectedColorGroup.value.colors.length
                     ? 0
                     : selectedIndex.value + 1);
             });
+            if (!color) return null;
             return activeRoundStore.state.swapColorsInternally ? swapColors(color) : color;
         });
         const previousColor = computed(() => {
-            const color = selectedColorGroup.value.colors.find(color => {
+            const color = selectedColorGroup.value?.colors.find(color => {
                 return color.index === (selectedIndex.value === 0
                     ? selectedColorGroup.value.colors.length - 1
                     : selectedIndex.value - 1);
             });
+            if (!color) return null;
             return activeRoundStore.state.swapColorsInternally ? swapColors(color) : color;
         });
 

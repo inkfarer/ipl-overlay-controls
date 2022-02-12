@@ -16,6 +16,6 @@ nodecg.listenFor('setGameVersion', (data: SetGameVersionMessage, ack: UnhandledL
 
     runtimeConfig.value.gameVersion = data.version;
     resetRoundStore();
-    resetMatchStore();
+    resetMatchStore(true);
     ack(null);
 });

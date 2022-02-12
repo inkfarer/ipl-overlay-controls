@@ -1,5 +1,6 @@
 import express from 'express';
-import { mockMount, requestHandlers } from '../../__mocks__/mockNodecg';
+import { mockMount, replicants, requestHandlers } from '../../__mocks__/mockNodecg';
+import { GameVersion } from '../../../types/enums/gameVersion';
 
 describe('fileImport', () => {
     const mockHandleRoundData = jest.fn();
@@ -24,6 +25,10 @@ describe('fileImport', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+
+        replicants.runtimeConfig = {
+            gameVersion: GameVersion.SPLATOON_2
+        };
     });
 
     it('mounts', () => {
@@ -101,7 +106,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
-            expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' });
+            expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' }, GameVersion.SPLATOON_2);
             expect(mockRoundImporter.updateRounds).toHaveBeenCalledWith('round data');
         });
 

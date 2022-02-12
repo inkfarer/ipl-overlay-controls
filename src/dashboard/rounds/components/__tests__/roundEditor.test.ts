@@ -3,6 +3,8 @@ import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
+import { GameVersion } from 'types/enums/gameVersion';
+import { settingsStoreKey } from '../../../settings/settingsStore';
 
 describe('RoundEditor', () => {
     config.global.stubs = {
@@ -13,6 +15,16 @@ describe('RoundEditor', () => {
 
     const mockUpdateRound = jest.fn();
     const mockRemoveRound = jest.fn();
+
+    function createSettingsStore() {
+        return createStore({
+            state: {
+                runtimeConfig: {
+                    gameVersion: GameVersion.SPLATOON_2
+                }
+            }
+        });
+    }
 
     function createTournamentDataStore() {
         return createStore<TournamentDataStore>({
@@ -49,10 +61,14 @@ describe('RoundEditor', () => {
 
     it('matches snapshot', () => {
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -77,10 +93,14 @@ describe('RoundEditor', () => {
 
     it('matches snapshot when creating new round', () => {
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -108,10 +128,14 @@ describe('RoundEditor', () => {
     it('updates round on update button click', async () => {
         mockUpdateRound.mockResolvedValue({});
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -151,10 +175,14 @@ describe('RoundEditor', () => {
     it('updates round on update button click if round is new', async () => {
         mockUpdateRound.mockResolvedValue({ id: 'new-round-id' });
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -194,10 +222,14 @@ describe('RoundEditor', () => {
 
     it('removes round on remove button click', async () => {
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -226,10 +258,14 @@ describe('RoundEditor', () => {
 
     it('cancels new round creation on remove button click when round is new', async () => {
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {
@@ -257,10 +293,14 @@ describe('RoundEditor', () => {
 
     it('changes button color when data is changed and round is already saved', async () => {
         const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             },
             props: {
                 round: {

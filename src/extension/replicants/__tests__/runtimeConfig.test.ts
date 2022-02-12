@@ -31,7 +31,7 @@ describe('runtimeConfig', () => {
 
             expect((replicants.runtimeConfig as RuntimeConfig).gameVersion).toEqual('SPLATOON_2');
             expect(mockRoundStoreHelper.resetRoundStore).toHaveBeenCalledTimes(1);
-            expect(mockMatchStoreHelper.resetMatchStore).toHaveBeenCalledTimes(1);
+            expect(mockMatchStoreHelper.resetMatchStore).toHaveBeenCalledWith(true);
             expect(ack).toHaveBeenCalledWith(null);
         });
     });

@@ -13,8 +13,15 @@ jest.mock('../../replicants/nextRoundHelper', () => mockNextRoundHelper);
 jest.mock('axios', () => ({ __esModule: true, default: mockAxios }));
 
 import { updateRounds } from '../roundImporter';
+import { GameVersion } from '../../../types/enums/gameVersion';
 
 describe('roundImporter', () => {
+    beforeEach(() => {
+        replicants.runtimeConfig = {
+            gameVersion: GameVersion.SPLATOON_2
+        };
+    });
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.resetModules();

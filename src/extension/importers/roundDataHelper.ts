@@ -1,14 +1,13 @@
 import { RoundStore } from 'schemas';
 import { GameWinner } from 'types/enums/gameWinner';
 import { generateId } from '../../helpers/generateId';
-import { splatModes, splatStages } from '../../helpers/splatoonData';
 import { ImporterRound } from 'types/importer';
 import { PlayType } from '../../types/enums/playType';
+import { GameVersion } from '../../types/enums/gameVersion';
+import { perGameData } from '../../helpers/gameData/gameData';
+import { toLower } from 'lodash';
 
-const lowerCaseSplatStages = splatStages.map(stage => stage.toLowerCase());
-const lowerCaseSplatModes = splatModes.map(mode => mode.toLowerCase());
-
-export function handleRoundData(rounds: ImporterRound[]): RoundStore {
+export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersion): RoundStore {
     const result: RoundStore = {};
 
     for (let i = 0; i < rounds.length; i++) {
@@ -23,8 +22,8 @@ export function handleRoundData(rounds: ImporterRound[]): RoundStore {
             const stageName = game.stage == null ? game.map : game.stage;
 
             games.push({
-                stage: normalizeStageName(stageName),
-                mode: normalizeModeName(game.mode),
+                stage: normalizeStageName(stageName, gameVersion),
+                mode: normalizeModeName(game.mode, gameVersion),
                 winner: GameWinner.NO_WINNER
             });
         }
@@ -42,22 +41,26 @@ export function handleRoundData(rounds: ImporterRound[]): RoundStore {
     return result;
 }
 
-function normalizeStageName(name: string): string {
+function normalizeStageName(name: string, game: GameVersion): string {
+    const stages = perGameData[game].stages;
+    const lowerCaseStages = stages.map(toLower);
     name = name.toLowerCase();
 
-    if (!lowerCaseSplatStages.includes(name)) {
+    if (!lowerCaseStages.includes(name)) {
         return 'Unknown Stage';
     }
 
-    return splatStages[lowerCaseSplatStages.indexOf(name)];
+    return stages[lowerCaseStages.indexOf(name)];
 }
 
-function normalizeModeName(name: string): string {
+function normalizeModeName(name: string, game: GameVersion): string {
+    const modes = perGameData[game].modes;
+    const lowerCaseModes = modes.map(toLower);
     name = name.toLowerCase();
 
-    if (!lowerCaseSplatModes.includes(name)) {
+    if (!lowerCaseModes.includes(name)) {
         return 'Unknown Mode';
     }
 
-    return splatModes[lowerCaseSplatModes.indexOf(name)];
+    return modes[lowerCaseModes.indexOf(name)];
 }
