@@ -24,7 +24,8 @@ describe('teamDataImporter', () => {
                 tournamentData: {
                     meta: {
                         id: '123123',
-                        source: TournamentDataSource.BATTLEFY
+                        source: TournamentDataSource.BATTLEFY,
+                        shortName: null
                     },
                     teams: []
                 },
@@ -34,10 +35,29 @@ describe('teamDataImporter', () => {
             actions: {
                 getSmashggEvent: mockGetSmashggEvent,
                 getTournamentData: mockGetTournamentData,
-                uploadTeamData: mockUploadTeamData
+                uploadTeamData: mockUploadTeamData,
+                setShortName: jest.fn()
             }
         });
     }
+
+    it('matches snapshot', () => {
+        const store = createTournamentDataStore();
+        store.state.tournamentData.meta = {
+            source: TournamentDataSource.BATTLEFY,
+            id: '123123asd',
+            name: 'Cool Tournament',
+            shortName: 'Cool Tournament',
+            url: 'tournament://cool-tournament'
+        };
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
 
     it('displays data of existing tournament', () => {
         const store = createTournamentDataStore();
@@ -45,6 +65,7 @@ describe('teamDataImporter', () => {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             name: 'Cool Tournament',
+            shortName: 'Cool Tournament',
             url: 'tournament://cool-tournament'
         };
         const wrapper = mount(TeamDataImporter, {
@@ -61,7 +82,8 @@ describe('teamDataImporter', () => {
         store.state.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
-            url: 'tounament://cool-tournament'
+            url: 'tounament://cool-tournament',
+            shortName: null
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
@@ -77,7 +99,8 @@ describe('teamDataImporter', () => {
         store.state.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
-            name: 'cool tournament'
+            name: 'cool tournament',
+            shortName: 'cool tournament'
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
@@ -94,6 +117,7 @@ describe('teamDataImporter', () => {
             source: TournamentDataSource.SMASHGG,
             id: '123123asd',
             name: 'cool tournament',
+            shortName: 'cool tournament',
             url: 'smashgg://cool-tournament',
             sourceSpecificData: {
                 smashgg: {
@@ -342,5 +366,21 @@ describe('teamDataImporter', () => {
 
         expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(false);
         expect(wrapper.findComponent('[name="tournament-id-input"]').isVisible()).toEqual(true);
+    });
+
+    it('handles updating short name', async () => {
+        const store = createTournamentDataStore();
+        jest.spyOn(store, 'dispatch');
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+
+        wrapper.getComponent('[name="shortName"]').vm.$emit('update:modelValue', 'Tournament Name');
+        wrapper.getComponent('[data-test="update-short-name-button"]').vm.$emit('click');
+        await wrapper.vm.$nextTick();
+
+        expect(store.dispatch).toHaveBeenCalledWith('setShortName', 'Tournament Name');
     });
 });

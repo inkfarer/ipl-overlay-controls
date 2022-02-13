@@ -82,6 +82,21 @@
                 ({{ tournamentMetadata.sourceSpecificData.smashgg.eventData.game }})
             </template>
         </div>
+        <ipl-input
+            v-model="shortName"
+            label="Short tournament name"
+            name="shortName"
+            class="m-t-4"
+            :validator="shortNameValidator"
+        />
+        <ipl-button
+            class="m-t-8"
+            label="Update"
+            data-test="update-short-name-button"
+            :color="shortNameChanged ? 'red' : 'blue'"
+            :disabled="!shortNameValidator.isValid"
+            @click="updateShortName"
+        />
     </ipl-space>
 </template>
 
@@ -113,6 +128,13 @@ export default defineComponent({
         const smashggEvent = ref('');
         const teamDataFile: Ref<File> = ref(null);
         const useFileUpload = ref(false);
+
+        const shortName = ref('');
+        const shortNameValidator = validator(shortName, false, notBlank);
+        tournamentDataStore.watch(
+            state => state.tournamentData.meta.shortName,
+            newValue => shortName.value = newValue,
+            { immediate: true });
 
         const validators = {
             tournamentId: validator(tournamentId, false, notBlank)
@@ -189,7 +211,15 @@ export default defineComponent({
             tournamentId,
             smashggEvents,
             smashggEvent,
-            TournamentDataSource
+            TournamentDataSource,
+
+            shortName,
+            shortNameValidator,
+            shortNameChanged: computed(() =>
+                tournamentDataStore.state.tournamentData.meta.shortName !== shortName.value),
+            updateShortName() {
+                tournamentDataStore.dispatch('setShortName', shortName.value);
+            }
         };
     }
 });

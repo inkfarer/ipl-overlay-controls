@@ -251,7 +251,8 @@ describe('tournamentDataHelper', () => {
             expect(result).toEqual({
                 meta: {
                     id: 'tournament://cool-tourney',
-                    source: TournamentDataSource.UPLOAD
+                    source: TournamentDataSource.UPLOAD,
+                    shortName: 'Unknown Tournament'
                 },
                 teams: [
                     {
@@ -286,7 +287,8 @@ describe('tournamentDataHelper', () => {
             const result = await parseUploadedTeamData({
                 meta: {
                     id: '123123',
-                    source: 'SMASHGG'
+                    source: 'SMASHGG',
+                    shortName: 'Cool Tournament'
                 },
                 teams: [
                     {
@@ -317,7 +319,8 @@ describe('tournamentDataHelper', () => {
             expect(result).toEqual({
                 meta: {
                     id: '123123',
-                    source: 'SMASHGG'
+                    source: 'SMASHGG',
+                    shortName: 'Cool Tournament'
                 },
                 teams: [
                     {
@@ -360,7 +363,8 @@ describe('tournamentDataHelper', () => {
             const result = await parseUploadedTeamData({
                 meta: {
                     id: '123123',
-                    source: TournamentDataSource.BATTLEFY
+                    source: TournamentDataSource.BATTLEFY,
+                    shortName: null
                 },
                 teams: [
                     {
@@ -392,7 +396,8 @@ describe('tournamentDataHelper', () => {
                 meta: {
                     id: '123123',
                     source: TournamentDataSource.BATTLEFY,
-                    name: 'Cool Tournament'
+                    name: 'Cool Tournament',
+                    shortName: 'Cool Tournament'
                 },
                 teams: [
                     {
@@ -439,7 +444,8 @@ describe('tournamentDataHelper', () => {
             }, 'tournament://rad-tournament')).resolves.toEqual({
                 meta: {
                     id: 'tournament://rad-tournament',
-                    source: TournamentDataSource.UPLOAD
+                    source: TournamentDataSource.UPLOAD,
+                    shortName: 'Unknown Tournament'
                 },
                 teams: [
                     {
@@ -469,7 +475,8 @@ describe('tournamentDataHelper', () => {
             }, 'tournament://rad-tournament')).resolves.toEqual({
                 meta: {
                     id: 'tournament://rad-tournament',
-                    source: TournamentDataSource.UPLOAD
+                    source: TournamentDataSource.UPLOAD,
+                    shortName: 'Unknown Tournament'
                 },
                 teams: [
                     {
@@ -484,11 +491,84 @@ describe('tournamentDataHelper', () => {
             });
         });
 
+        it('sets short tournament name if no name is present', async () => {
+            await expect(parseUploadedTeamData({
+                // @ts-ignore
+                meta: {
+                    source: TournamentDataSource.UPLOAD
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'team',
+                        players: [
+                            { name: 'player' }
+                        ]
+                    }
+                ]
+            }, 'tournament://rad-tournament')).resolves.toEqual({
+                meta: {
+                    id: 'tournament://rad-tournament',
+                    source: TournamentDataSource.UPLOAD,
+                    shortName: 'Unknown Tournament'
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'team',
+                        players: [
+                            { name: 'player' }
+                        ]
+                    }
+                ]
+            });
+        });
+
+        it('sets short tournament name to regular tournament name', async () => {
+            await expect(parseUploadedTeamData({
+                // @ts-ignore
+                meta: {
+                    source: TournamentDataSource.UPLOAD,
+                    name: 'Cool Tournament'
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'team',
+                        players: [
+                            { name: 'player' }
+                        ]
+                    }
+                ]
+            }, 'tournament://rad-tournament')).resolves.toEqual({
+                meta: {
+                    id: 'tournament://rad-tournament',
+                    source: TournamentDataSource.UPLOAD,
+                    name: 'Cool Tournament',
+                    shortName: 'Cool Tournament'
+                },
+                teams: [
+                    {
+                        id: '5091758327590',
+                        showLogo: false,
+                        name: 'team',
+                        players: [
+                            { name: 'player' }
+                        ]
+                    }
+                ]
+            });
+        });
+
         it('throws error if input is missing teams', async () => {
             await expect(() => parseUploadedTeamData({
                 meta: {
                     id: '123123',
                     source: 'SMASHGG',
+                    shortName: null
                 },
                 teams: undefined
             }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');
@@ -498,7 +578,8 @@ describe('tournamentDataHelper', () => {
             await expect(() => parseUploadedTeamData({
                 meta: {
                     id: '123123',
-                    source: 'SMASHGG'
+                    source: 'SMASHGG',
+                    shortName: null
                 },
                 teams: []
             }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');

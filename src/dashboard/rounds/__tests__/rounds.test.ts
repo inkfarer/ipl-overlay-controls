@@ -19,7 +19,7 @@ describe('Rounds', () => {
         return createStore<TournamentDataStore>({
             state: {
                 tournamentData: {
-                    meta: { id: '1093478', source: 'SMASHGG' },
+                    meta: { id: '1093478', source: 'SMASHGG', shortName: null },
                     teams: [
                         { id: '123123', name: 'cool team A', players: [], showLogo: true },
                         { id: '345345', name: 'cool team B', players: [], showLogo: false }

@@ -55,6 +55,7 @@ export async function getSmashGGData(eventId: number, token: string): Promise<To
             id: slug.substring(slug.indexOf('/') + 1),
             source: TournamentDataSource.SMASHGG,
             name: firstPageData.raw.data.event.tournament.name,
+            shortName: firstPageData.raw.data.event.tournament.name ?? 'Unknown Tournament',
             url: `https://smash.gg/${firstPageData.raw.data.event.tournament.slug}/details`,
             sourceSpecificData: {
                 smashgg: {

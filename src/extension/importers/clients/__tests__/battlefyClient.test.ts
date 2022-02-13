@@ -145,6 +145,7 @@ describe('battlefyClient', () => {
                 meta: {
                     id: 'pjaojrtipfj3w09quhf',
                     name: 'Cool Tournament',
+                    shortName: 'Cool Tournament',
                     source: TournamentDataSource.BATTLEFY,
                     url: 'https://battlefy.com/tournament-org/cool-tourney/123123345345/info?infoTab=details'
                 },

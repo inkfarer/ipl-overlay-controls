@@ -56,11 +56,14 @@
                 "name": {
                     "type": "string"
                 },
+                "shortName": {
+                    "type": "string"
+                },
                 "url": {
                     "type": "string"
                 }
             },
-            "required": ["id", "source"]
+            "required": ["id", "source", "shortName"]
         },
         "teams": {
             "type": "array",
@@ -93,7 +96,8 @@
         "meta": {
             "id": "No ID",
             "source": "UNKNOWN",
-            "name": "No tournament"
+            "name": "No tournament",
+            "shortName": "An Unknown Tournament"
         },
         "teams": [
             {

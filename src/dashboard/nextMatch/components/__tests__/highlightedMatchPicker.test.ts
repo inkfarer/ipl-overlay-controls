@@ -32,7 +32,8 @@ describe('HighlightedMatchPicker', () => {
             store.state.tournamentData = {
                 meta: {
                     source,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: []
             };
@@ -55,7 +56,8 @@ describe('HighlightedMatchPicker', () => {
             store.state.tournamentData = {
                 meta: {
                     source,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: [],
                 stages: [{ name: 'Cool Stage', id: '123123', type: 'SWISS' }]
@@ -77,7 +79,8 @@ describe('HighlightedMatchPicker', () => {
             store.state.tournamentData = {
                 meta: {
                     source,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: [],
                 stages: undefined

@@ -19,7 +19,8 @@ describe('HighlightedMatchImporter', () => {
                 tournamentData: {
                     meta: {
                         id: 'tournament123',
-                        source: TournamentDataSource.UNKNOWN
+                        source: TournamentDataSource.UNKNOWN,
+                        shortName: 'Unknown Tournament'
                     },
                     teams: []
                 },
@@ -36,7 +37,8 @@ describe('HighlightedMatchImporter', () => {
         store.state.tournamentData = {
             meta: {
                 id: 'tournament123',
-                source: TournamentDataSource.BATTLEFY
+                source: TournamentDataSource.BATTLEFY,
+                shortName: null
             },
             teams: [],
             stages: [
@@ -70,6 +72,7 @@ describe('HighlightedMatchImporter', () => {
             meta: {
                 id: 'tournament123',
                 source: TournamentDataSource.SMASHGG,
+                shortName: null,
                 sourceSpecificData: {
                     smashgg: {
                         streams: [
@@ -124,7 +127,7 @@ describe('HighlightedMatchImporter', () => {
         wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', []);
         await wrapper.vm.$nextTick();
         expect(wrapper.getComponent('[data-test="import-button"]').attributes().disabled).toEqual('true');
-        
+
         wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', [{ foo: 'bar' }]);
         await wrapper.vm.$nextTick();
         expect(wrapper.getComponent('[data-test="import-button"]').attributes().disabled).toEqual('false');

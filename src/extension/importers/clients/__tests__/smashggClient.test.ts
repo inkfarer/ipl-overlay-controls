@@ -153,6 +153,7 @@ describe('smashggClient', () => {
                 meta: {
                     id: 'ct',
                     name: 'Cool Tournament',
+                    shortName: 'Cool Tournament',
                     source: TournamentDataSource.SMASHGG,
                     sourceSpecificData: {
                         smashgg: {
@@ -388,6 +389,7 @@ describe('smashggClient', () => {
                 meta: {
                     id: 'ct',
                     name: 'Cool Tournament',
+                    shortName: 'Cool Tournament',
                     source: TournamentDataSource.SMASHGG,
                     sourceSpecificData: {
                         smashgg: {

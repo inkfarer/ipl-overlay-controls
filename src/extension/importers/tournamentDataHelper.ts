@@ -8,7 +8,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
 import { ActiveRound, RadiaSettings } from '../../types/schemas';
-import { addDots } from '../../helpers/stringHelper';
+import { addDots, isBlank } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
 import { clearMatchesWithUnknownTeams } from '../replicants/matchStore';
@@ -67,7 +67,8 @@ export async function parseUploadedTeamData(data: Team[] | TournamentData, dataU
         return {
             meta: {
                 id: dataUrl,
-                source: TournamentDataSource.UPLOAD
+                source: TournamentDataSource.UPLOAD,
+                shortName: 'Unknown Tournament'
             },
             teams: normalizeTeams(data)
         };
@@ -107,6 +108,10 @@ export async function parseUploadedTeamData(data: Team[] | TournamentData, dataU
             } catch (e) {
                 nodecg.log.warn(`Could not fetch Battlefy data for tournament ${data.meta.id}`, e);
             }
+        }
+
+        if (isBlank(data.meta.shortName)) {
+            data.meta.shortName = isBlank(data.meta.name) ? 'Unknown Tournament' : data.meta.name;
         }
 
         return result;
