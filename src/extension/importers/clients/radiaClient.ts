@@ -8,13 +8,11 @@ import isEmpty from 'lodash/isEmpty';
 import { SetGuildInfoResponse } from 'types/radia';
 
 const nodecg = nodecgContext.get();
-const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
-
 export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
     try {
         const result = await axios.get<GuildInfo>(
-            `${radiaConfig.url}/organisation/guild/${guildId}`,
-            { headers: { Authorization: radiaConfig.authentication } });
+            `${(nodecg.bundleConfig as Configschema).radia.url}/organisation/guild/${guildId}`,
+            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -23,14 +21,14 @@ export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
 }
 
 export async function hasPredictionSupport(guildId: string): Promise<boolean> {
-    if (isEmpty(radiaConfig.authentication)) {
+    if (isEmpty(nodecg.bundleConfig.radia.authentication)) {
         return false;
     }
 
     try {
         const result = await axios.get<GuildServices>(
-            `${radiaConfig.url}/predictions/check/${guildId}`,
-            { headers: { Authorization: radiaConfig.authentication } }
+            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/check/${guildId}`,
+            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } }
         );
 
         if (result.status === 200) {
@@ -52,8 +50,8 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
 export async function getPredictions(guildID: string): Promise<PredictionResponse[]> {
     try {
         const result = await axios.get<PredictionResponse[]>(
-            `${radiaConfig.url}/predictions/${guildID}`,
-            { headers: { Authorization: radiaConfig.authentication } });
+            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
+            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -69,9 +67,9 @@ export async function getPredictions(guildID: string): Promise<PredictionRespons
 export async function updatePrediction(guildID: string, data: PatchPrediction): Promise<PredictionResponse> {
     try {
         const result = await axios.patch<PredictionResponse>(
-            `${radiaConfig.url}/predictions/${guildID}`,
+            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
             data,
-            { headers: { Authorization: radiaConfig.authentication } });
+            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -87,9 +85,9 @@ export async function updatePrediction(guildID: string, data: PatchPrediction): 
 export async function createPrediction(guildID: string, data: CreatePrediction): Promise<PredictionResponse> {
     try {
         const result = await axios.post<PredictionResponse>(
-            `${radiaConfig.url}/predictions/${guildID}`,
+            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
             data,
-            { headers: { Authorization: radiaConfig.authentication } });
+            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -97,7 +95,7 @@ export async function createPrediction(guildID: string, data: CreatePrediction):
     }
 }
 
-export function handleAxiosError(e: AxiosError): void {
+export function handleAxiosError(e: AxiosError | Error): void {
     if ('response' in e) {
         let message = `Radia API call failed with response ${e.response.status}`;
         if (e.response.data?.detail) {
@@ -124,8 +122,8 @@ export function handleAxiosError(e: AxiosError): void {
  */
 export async function getLiveCasters(guildID: string): Promise<RadiaApiCaster[]> {
     return await axios.get<RadiaApiCaster[]>(
-        `${radiaConfig.url}/live/guild/${guildID}`,
-        { headers: { Authorization: radiaConfig.authentication } })
+        `${(nodecg.bundleConfig as Configschema).radia.url}/live/guild/${guildID}`,
+        { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } })
         .then(response => {
             if (response.status !== 200) {
                 throw new Error(`Radia API call failed with response ${response.status.toString()}`);
@@ -140,9 +138,9 @@ export async function updateTournamentData(
     tournamentName: string
 ): Promise<SetGuildInfoResponse> {
     const response = await axios.post<SetGuildInfoResponse>(
-        `${radiaConfig.url}/organisation/guild/${guildId}`,
+        `${(nodecg.bundleConfig as Configschema).radia.url}/organisation/guild/${guildId}`,
         { bracket_link: bracketLink, tournament_name: tournamentName },
-        { headers: { Authorization: radiaConfig.authentication } });
+        { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
 
     if (response.status !== 200) {
         throw new Error(`Radia API call failed with response ${response.status.toString()}`);

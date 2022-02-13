@@ -4,10 +4,12 @@ import * as nodecgContext from '../helpers/nodecg';
 import { RoundStore } from 'schemas';
 import { handleRoundData } from './roundDataHelper';
 import { setNextRoundGames } from '../replicants/nextRoundHelper';
+import { RuntimeConfig } from '../../types/schemas';
+import { GameVersion } from '../../types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
-
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
+const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 
 nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
     if (!data.url) {
@@ -31,7 +33,7 @@ async function getUrl(url: string): Promise<{rounds: RoundStore, url: string}> {
                 responseType: 'json'
             })
             .then(response => {
-                const rounds = handleRoundData(response.data);
+                const rounds = handleRoundData(response.data, runtimeConfig.value.gameVersion as GameVersion);
 
                 resolve({ rounds, url });
             })

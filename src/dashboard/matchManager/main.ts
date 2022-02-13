@@ -8,6 +8,7 @@ import { castersReps, casterStore, casterStoreKey } from '../store/casterStore';
 import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/scoreboardStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextRoundStore';
+import { settingsReps, settingsStore, settingsStoreKey } from '../settings/settingsStore';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
@@ -15,6 +16,7 @@ import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextR
     await setUpReplicants(castersReps, casterStore);
     await setUpReplicants(scoreboardReps, scoreboardStore);
     await setUpReplicants(nextRoundReps, nextRoundStore);
+    await setUpReplicants(settingsReps, settingsStore);
     const app = createApp(Panel);
     setUpErrorHandler(app);
     app.use(tournamentDataStore, tournamentDataStoreKey);
@@ -22,5 +24,6 @@ import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextR
     app.use(casterStore, casterStoreKey);
     app.use(scoreboardStore, scoreboardStoreKey);
     app.use(nextRoundStore, nextRoundStoreKey);
+    app.use(settingsStore, settingsStoreKey);
     app.mount('#app');
 })();

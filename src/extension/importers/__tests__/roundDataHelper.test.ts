@@ -1,26 +1,17 @@
 import { GameWinner } from 'types/enums/gameWinner';
-import { Module } from '../../../helpers/__mocks__/module';
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { PlayType } from '../../../types/enums/playType';
+import * as GenerateId from '../../../helpers/generateId';
+import { mock } from 'jest-mock-extended';
+import { GameVersion } from '../../../types/enums/gameVersion';
+
+const mockGenerateId = mock<typeof GenerateId>();
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
+
+import { handleRoundData } from '../roundDataHelper';
 
 describe('roundDataHelper', () => {
-    let helper: Module;
-    let nodecg: MockNodecg;
-
-    const mockGenerateId = {
-        __esModule: true,
-        generateId: jest.fn()
-    };
-    jest.mock('../../../helpers/generateId', () => mockGenerateId);
-
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-
-        nodecg = new MockNodecg({});
-        nodecg.init();
-
-        helper = require('../roundDataHelper');
     });
 
     describe('handleRoundData', () => {
@@ -30,7 +21,7 @@ describe('roundDataHelper', () => {
                 .mockReturnValueOnce('222222')
                 .mockReturnValueOnce('333333');
 
-            const result = helper.handleRoundData([
+            const result = handleRoundData([
                 {
                     name: 'Round 1',
                     type: PlayType.PLAY_ALL,
@@ -43,6 +34,7 @@ describe('roundDataHelper', () => {
                 { name: 'Round ???' },
                 {
                     name: 'Round 2',
+                    // @ts-ignore
                     type: 'some play type that does not exist',
                     maps: [
                         { map: 'HuMpBaCk PuMp TrAcK', mode: 'SpLaT zOnEs' }
@@ -54,7 +46,7 @@ describe('roundDataHelper', () => {
                         { map: 'HuMpBaCk PuMp TrAcK', mode: 'SpLaT zOnEs' }
                     ]
                 }
-            ]);
+            ], GameVersion.SPLATOON_2);
 
             expect(result).toEqual({
                 '111111': {
@@ -87,6 +79,37 @@ describe('roundDataHelper', () => {
                     },
                     games: [
                         { stage: 'Humpback Pump Track', mode: 'Splat Zones', winner: GameWinner.NO_WINNER }
+                    ]
+                }
+            });
+        });
+
+        it('only recognizes stage names from the given game version', () => {
+            mockGenerateId.generateId.mockReturnValueOnce('111111');
+
+            const result = handleRoundData([
+                {
+                    name: 'Round 1',
+                    type: PlayType.PLAY_ALL,
+                    games: [
+                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
+                        { stage: 'makomart', mode: 'clam blitz' },
+                        { map: 'Counterpick', mode: 'TOWER CONTROL' }
+                    ]
+                }
+            ], GameVersion.SPLATOON_3);
+
+            expect(result).toEqual({
+                '111111': {
+                    meta: {
+                        name: 'Round 1',
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
+                    },
+                    games: [
+                        { stage: 'Unknown Stage', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER },
+                        { stage: 'Unknown Stage', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER },
+                        { stage: 'Counterpick', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER }
                     ]
                 }
             });

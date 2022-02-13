@@ -1,11 +1,11 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import express from 'express';
+import { mockMount, replicants, requestHandlers } from '../../__mocks__/mockNodecg';
+import { GameVersion } from '../../../types/enums/gameVersion';
 
 describe('fileImport', () => {
     const mockHandleRoundData = jest.fn();
     const mockUpdateTournamentDataReplicants = jest.fn();
     const mockParseUploadedTeamData = jest.fn();
-    let nodecg: MockNodecg;
 
     jest.mock('../roundDataHelper', () => ({
         __esModule: true,
@@ -25,15 +25,16 @@ describe('fileImport', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
 
-        require('../fileImport');
+        replicants.runtimeConfig = {
+            gameVersion: GameVersion.SPLATOON_2
+        };
     });
 
     it('mounts', () => {
-        expect(nodecg.mount).toHaveBeenCalledWith('/ipl-overlay-controls', expect.anything());
+        require('../fileImport');
+
+        expect(mockMount).toHaveBeenCalledWith('/ipl-overlay-controls', expect.anything());
     });
 
     describe('POST /upload-tournament-json', () => {
@@ -41,7 +42,7 @@ describe('fileImport', () => {
             const mockSend = jest.fn();
             const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json'](
+            requestHandlers['POST']['/upload-tournament-json'](
                 { body: { jsonType: 'rounds' } } as express.Request,
                 { status: mockStatus } as unknown as express.Response,
                 null);
@@ -54,7 +55,7 @@ describe('fileImport', () => {
             const mockSend = jest.fn();
             const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json'](
+            requestHandlers['POST']['/upload-tournament-json'](
                 { body: { }, files: { file: { mimetype: 'application/json' } } } as unknown as express.Request,
                 { status: mockStatus } as unknown as express.Response,
                 null);
@@ -67,7 +68,7 @@ describe('fileImport', () => {
             const mockSend = jest.fn();
             const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json']({
+            requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
                 files: { file: { mimetype: 'text/plain' } }
             } as unknown as express.Request,
@@ -82,7 +83,7 @@ describe('fileImport', () => {
             const mockSend = jest.fn();
             const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json']({
+            requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'something' },
                 files: { file: { mimetype: 'application/json', data: '{ }' } }
             } as unknown as express.Request,
@@ -97,7 +98,7 @@ describe('fileImport', () => {
             const mockSendStatus = jest.fn();
             mockHandleRoundData.mockReturnValue('round data');
 
-            nodecg.requestHandlers['POST']['/upload-tournament-json']({
+            requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
                 files: { file: { mimetype: 'application/json', data: '{ "tournament": "data" }' } }
             } as unknown as express.Request,
@@ -105,7 +106,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockSendStatus).toHaveBeenCalledWith(200);
-            expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' });
+            expect(mockHandleRoundData).toHaveBeenCalledWith({ tournament: 'data' }, GameVersion.SPLATOON_2);
             expect(mockRoundImporter.updateRounds).toHaveBeenCalledWith('round data');
         });
 
@@ -113,7 +114,7 @@ describe('fileImport', () => {
             const mockSendStatus = jest.fn();
             mockParseUploadedTeamData.mockReturnValue('TEAMS');
 
-            await nodecg.requestHandlers['POST']['/upload-tournament-json']({
+            await requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'teams' },
                 files: { file: { mimetype: 'application/json', data: '{ "team": "data" }', name: 'file.json' } }
             } as unknown as express.Request,

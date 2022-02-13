@@ -6,7 +6,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setNextRoundGames } from './nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
-import { PlayType } from '../../types/enums/playType';
+import { resetRoundStore } from '../helpers/roundStoreHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -73,51 +73,5 @@ nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenF
 });
 
 nodecg.listenFor('resetRoundStore', () => {
-    const defaultRoundId = '00000';
-    const secondDefaultRoundId = '11111';
-
-    roundStore.value = {
-        [defaultRoundId]: {
-            meta: {
-                name: 'Default Round 1',
-                type: PlayType.BEST_OF
-            },
-            games: [
-                {
-                    stage: 'MakoMart',
-                    mode: 'Clam Blitz'
-                },
-                {
-                    stage: 'Ancho-V Games',
-                    mode: 'Tower Control'
-                },
-                {
-                    stage: 'Wahoo World',
-                    mode: 'Rainmaker'
-                }
-            ]
-        },
-        [secondDefaultRoundId]: {
-            meta: {
-                name: 'Default Round 2',
-                type: PlayType.BEST_OF
-            },
-            games: [
-                {
-                    stage: 'Inkblot Art Academy',
-                    mode: 'Turf War'
-                },
-                {
-                    stage: 'Ancho-V Games',
-                    mode: 'Tower Control'
-                },
-                {
-                    stage: 'Wahoo World',
-                    mode: 'Rainmaker'
-                }
-            ]
-        }
-    };
-
-    setNextRoundGames(secondDefaultRoundId);
+    resetRoundStore();
 });

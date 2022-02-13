@@ -19,7 +19,8 @@ describe('lastfmSettings', () => {
                     guildID: null,
                     enabled: null,
                     updateOnImport: null
-                }
+                },
+                runtimeConfig: null
             },
             mutations: {
                 setLastFmSettings: jest.fn()

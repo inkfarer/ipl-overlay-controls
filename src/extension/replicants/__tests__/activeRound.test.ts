@@ -1,52 +1,35 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { ActiveRound, NextRound } from 'schemas';
 import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
+import { messageListeners, replicantChangeListeners, replicants } from '../../__mocks__/mockNodecg';
+import { mock } from 'jest-mock-extended';
+import type * as MatchStoreModule from '../matchStore';
+import type * as ActiveRoundHelper from '../activeRoundHelper';
+import type * as GenerateId from '../../../helpers/generateId';
+const mockMatchStoreModule = mock<typeof MatchStoreModule>();
+const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
+const mockGenerateId = mock<typeof GenerateId>();
+jest.mock('../matchStore', () => mockMatchStoreModule);
+jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
+
+import '../activeRound';
 
 describe('activeRound', () => {
-    let nodecg: MockNodecg;
-    const mockCommitActiveRound = jest.fn();
-    const mockSetWinner = jest.fn();
-    const mockSetActiveRoundTeams = jest.fn();
-    const mockSetActiveRoundGames = jest.fn();
-    const mockGenerateId = jest.fn();
-
-    jest.mock('../matchStore', () => ({
-        __esModule: true,
-        commitActiveRoundToMatchStore: mockCommitActiveRound
-    }));
-
-    jest.mock('../activeRoundHelper', () => ({
-        __esModule: true,
-        setWinner: mockSetWinner,
-        setActiveRoundTeams: mockSetActiveRoundTeams,
-        setActiveRoundGames: mockSetActiveRoundGames
-    }));
-
-    jest.mock('../../../helpers/generateId', () => ({
-        __esModule: true,
-        generateId: mockGenerateId
-    }));
-
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        require('../activeRound');
     });
 
     describe('swapColorsInternally', () => {
         it('swaps colors on change', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { color: 'Team A Color' },
                 teamB: { color: 'Team B Color' }
             };
 
-            nodecg.replicantListeners.swapColorsInternally(true, false);
+            replicantChangeListeners.swapColorsInternally(true, false);
 
-            const activeRound = nodecg.replicants.activeRound.value as ActiveRound;
+            const activeRound = replicants.activeRound as ActiveRound;
             expect(activeRound.teamA.color).toBe('Team B Color');
             expect(activeRound.teamB.color).toBe('Team A Color');
         });
@@ -60,17 +43,17 @@ describe('activeRound', () => {
                     color: 'Team B Color'
                 }
             };
-            nodecg.replicants.activeRound.value = activeRoundValue;
+            replicants.activeRound = activeRoundValue;
 
-            nodecg.replicantListeners.swapColorsInternally(true, undefined);
+            replicantChangeListeners.swapColorsInternally(true, undefined);
 
-            expect(nodecg.replicants.activeRound.value).toEqual(activeRoundValue);
+            expect(replicants.activeRound).toEqual(activeRoundValue);
         });
     });
 
     describe('removeWinner', () => {
         it('tries to remove the last winner', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 games: [
                     { winner: GameWinner.BRAVO },
                     { winner: GameWinner.ALPHA },
@@ -82,13 +65,13 @@ describe('activeRound', () => {
                 ]
             };
 
-            nodecg.messageListeners.removeWinner();
+            messageListeners.removeWinner();
 
-            expect(mockSetWinner).toHaveBeenCalledWith(4, GameWinner.NO_WINNER);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(4, GameWinner.NO_WINNER);
         });
 
         it('removes the last winner if rounds were not played in order', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: {
                     score: 0
                 },
@@ -102,13 +85,13 @@ describe('activeRound', () => {
                 ]
             };
 
-            nodecg.messageListeners.removeWinner();
+            messageListeners.removeWinner();
 
-            expect(mockSetWinner).toHaveBeenCalledWith(2, GameWinner.NO_WINNER);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(2, GameWinner.NO_WINNER);
         });
 
         it('sends a callback when setWinner throws an error', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 games: [
                     { winner: GameWinner.ALPHA },
                     { winner: GameWinner.BRAVO },
@@ -119,87 +102,87 @@ describe('activeRound', () => {
             };
             const ack = jest.fn();
             const error = new Error();
-            mockSetWinner.mockImplementation(() => { throw error; });
+            mockActiveRoundHelper.setWinner.mockImplementation(() => { throw error; });
 
-            nodecg.messageListeners.removeWinner(undefined, ack);
+            messageListeners.removeWinner(undefined, ack);
 
-            expect(mockSetWinner).toHaveBeenCalledWith(2, GameWinner.NO_WINNER);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(2, GameWinner.NO_WINNER);
             expect(ack).toHaveBeenCalledWith(error);
         });
     });
 
     describe('setWinner', () => {
         it('sets the winner for the given index if given', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 1 },
                 teamB: { score: 3 }
             };
 
-            nodecg.messageListeners.setWinner({ roundIndex: 2, winner: GameWinner.BRAVO });
+            messageListeners.setWinner({ roundIndex: 2, winner: GameWinner.BRAVO });
 
-            expect(mockSetWinner).toHaveBeenCalledWith(2, GameWinner.BRAVO);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(2, GameWinner.BRAVO);
         });
 
         it('sets the winner for the latest match if index is not given', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 3 },
                 teamB: { score: 0 }
             };
 
-            nodecg.messageListeners.setWinner({ winner: GameWinner.ALPHA });
+            messageListeners.setWinner({ winner: GameWinner.ALPHA });
 
-            expect(mockSetWinner).toHaveBeenCalledWith(3, GameWinner.ALPHA);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(3, GameWinner.ALPHA);
         });
 
         it('sends a callback when setWinner throws an error', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 0 }
             };
             const ack = jest.fn();
             const error = new Error();
-            mockSetWinner.mockImplementation(() => { throw error; });
+            mockActiveRoundHelper.setWinner.mockImplementation(() => { throw error; });
 
-            nodecg.messageListeners.setWinner({ winner: GameWinner.BRAVO }, ack);
+            messageListeners.setWinner({ winner: GameWinner.BRAVO }, ack);
 
-            expect(mockSetWinner).toHaveBeenCalledWith(0, GameWinner.BRAVO);
+            expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(0, GameWinner.BRAVO);
             expect(ack).toHaveBeenCalledWith(error);
         });
     });
 
     describe('setActiveRound', () => {
         beforeEach(() => {
-            nodecg.replicants.activeRound.value = { match: { name: 'cool match' } };
+            replicants.activeRound = { match: { name: 'cool match' } };
         });
 
         it('sets team data and updates round store data', () => {
-            nodecg.messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' });
+            messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '123123', '456456');
-            expect(mockSetActiveRoundGames).not.toHaveBeenCalled();
-            expect(mockCommitActiveRound).toHaveBeenCalled();
+            expect(mockActiveRoundHelper.setActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '123123', '456456');
+            expect(mockActiveRoundHelper.setActiveRoundGames).not.toHaveBeenCalled();
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
         });
 
         it('sets games if match id is given', () => {
-            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234' });
+            messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234' });
 
-            expect(mockSetActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '1231234', '123123');
-            expect(mockSetActiveRoundGames).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '234');
-            expect(mockCommitActiveRound).toHaveBeenCalled();
+            expect(mockActiveRoundHelper.setActiveRoundTeams).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '1231234', '123123');
+            expect(mockActiveRoundHelper.setActiveRoundGames).toHaveBeenCalledWith({ match: { name: 'cool match' } }, '234');
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
         });
 
         it('sets match name if it differs from the current one', () => {
-            nodecg.messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234', matchName: 'New Match' });
+            messageListeners.setActiveRound({ teamAId: '1231234', teamBId: '123123', matchId: '234', matchName: 'New Match' });
 
-            expect(nodecg.replicants.activeRound.value).toEqual({ match: { name: 'New Match' } });
+            expect(replicants.activeRound).toEqual({ match: { name: 'New Match' } });
         });
 
         it('sends a callback on error', () => {
             const ack = jest.fn();
             const error = new Error();
-            mockSetActiveRoundTeams.mockImplementation(() => { throw error; });
+            mockActiveRoundHelper.setActiveRoundTeams.mockImplementation(() => { throw error; });
 
-            nodecg.messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' }, ack);
+            messageListeners.setActiveRound({ teamAId: '123123', teamBId: '456456' }, ack);
 
             expect(ack).toHaveBeenCalledWith(error);
         });
@@ -207,7 +190,7 @@ describe('activeRound', () => {
 
     describe('resetActiveRound', () => {
         it('resets activeRound data and commits it to the store', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 100 },
                 teamB: { score: 10 },
                 games: [
@@ -232,9 +215,9 @@ describe('activeRound', () => {
                 ]
             };
 
-            nodecg.messageListeners.resetActiveRound();
+            messageListeners.resetActiveRound();
 
-            expect(nodecg.replicants.activeRound.value).toEqual({
+            expect(replicants.activeRound).toEqual({
                 teamA: { score: 0 },
                 teamB: { score: 0 },
                 games: [
@@ -258,39 +241,39 @@ describe('activeRound', () => {
                     }
                 ]
             });
-            expect(mockCommitActiveRound).toHaveBeenCalled();
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
         });
     });
 
     describe('updateActiveGames', () => {
         it('updates active games and commits them to the store', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 games: [ ]
             };
 
             const newGames = [{ stage: 'MakoMart', mode: 'Rainmaker' }];
 
-            nodecg.messageListeners.updateActiveGames({ games: newGames });
+            messageListeners.updateActiveGames({ games: newGames });
 
-            expect(nodecg.replicants.activeRound.value).toEqual({ games: newGames });
-            expect(mockCommitActiveRound).toHaveBeenCalled();
+            expect(replicants.activeRound).toEqual({ games: newGames });
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
         });
     });
 
     describe('beginNextMatch', () => {
         it('returns error when no match name is given', () => {
-            nodecg.replicants.activeRound.value = {};
+            replicants.activeRound = {};
             const ack = jest.fn();
 
-            nodecg.messageListeners.beginNextMatch({ }, ack);
+            messageListeners.beginNextMatch({ }, ack);
 
             expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
-            expect(nodecg.replicants.activeRound.value).toEqual({});
+            expect(replicants.activeRound).toEqual({});
         });
 
         it('replaces active teams with next teams and commits them to a new match', () => {
-            mockGenerateId.mockReturnValue('new match id');
-            nodecg.replicants.nextRound.value = {
+            mockGenerateId.generateId.mockReturnValue('new match id');
+            replicants.nextRound = {
                 teamA: { id: '123123', testCustomProp: 'hello :)', name: 'Team Three' },
                 teamB: { id: '345354', testCustomProp2: 'hello! ;)', name: 'Team Four' },
                 games: [
@@ -303,14 +286,14 @@ describe('activeRound', () => {
                 },
                 showOnStream: true
             };
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { name: 'Team One', score: 99, foo: 'bar', color: '#222' },
                 teamB: { name: 'Team Two', score: 98, yee: 'haw', color: '#333' }
             };
 
-            nodecg.messageListeners.beginNextMatch({ matchName: 'Cool Match' });
+            messageListeners.beginNextMatch({ matchName: 'Cool Match' });
 
-            expect(nodecg.replicants.activeRound.value).toEqual({
+            expect(replicants.activeRound).toEqual({
                 teamA: { id: '123123', name: 'Team Three', score: 0, testCustomProp: 'hello :)', color: '#222' },
                 teamB: { id: '345354', name: 'Team Four', score: 0, testCustomProp2: 'hello! ;)', color: '#333' },
                 games: [
@@ -324,20 +307,20 @@ describe('activeRound', () => {
                     type: PlayType.PLAY_ALL
                 }
             });
-            expect(mockCommitActiveRound).toHaveBeenCalled();
-            expect((nodecg.replicants.nextRound.value as NextRound).showOnStream).toEqual(false);
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
+            expect((replicants.nextRound as NextRound).showOnStream).toEqual(false);
         });
     });
 
     describe('setActiveColor', () => {
         it('sets active color', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 activeColor: { title: 'Old Color' },
                 teamA: { color: '#234' },
                 teamB: { color: '#345' }
             };
 
-            nodecg.messageListeners.setActiveColor({
+            messageListeners.setActiveColor({
                 categoryName: 'Cool Colors',
                 color: {
                     index: 2,
@@ -347,7 +330,7 @@ describe('activeRound', () => {
                 }
             });
 
-            expect(nodecg.replicants.activeRound.value).toEqual({
+            expect(replicants.activeRound).toEqual({
                 activeColor: {
                     categoryName: 'Cool Colors',
                     index: 2,
@@ -361,15 +344,15 @@ describe('activeRound', () => {
 
     describe('swapRoundColor', () => {
         it('swaps colors for given round', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 games: [
                     { color: { clrA: '#123', clrB: '#234', colorsSwapped: false, title: 'Cool Color' } }
                 ]
             };
 
-            nodecg.messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
+            messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
 
-            expect((nodecg.replicants.activeRound.value as ActiveRound).games[0].color).toEqual({
+            expect((replicants.activeRound as ActiveRound).games[0].color).toEqual({
                 clrA: '#234',
                 clrB: '#123',
                 colorsSwapped: true,
@@ -384,11 +367,11 @@ describe('activeRound', () => {
                     { color: undefined }
                 ]
             };
-            nodecg.replicants.activeRound.value = activeRound;
+            replicants.activeRound = activeRound;
 
-            nodecg.messageListeners.swapRoundColor({ roundIndex: 1, colorsSwapped: true });
+            messageListeners.swapRoundColor({ roundIndex: 1, colorsSwapped: true });
 
-            expect(nodecg.replicants.activeRound.value).toEqual(activeRound);
+            expect(replicants.activeRound).toEqual(activeRound);
         });
 
         it('does not swap colors if request colorsSwapped matches value for saved game', () => {
@@ -397,11 +380,11 @@ describe('activeRound', () => {
                     { color: { clrA: '#123', clrB: '#234', colorsSwapped: true, title: 'Cool Color' } }
                 ]
             };
-            nodecg.replicants.activeRound.value = activeRound;
+            replicants.activeRound = activeRound;
 
-            nodecg.messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
+            messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
 
-            expect(nodecg.replicants.activeRound.value).toEqual(activeRound);
+            expect(replicants.activeRound).toEqual(activeRound);
         });
     });
 });

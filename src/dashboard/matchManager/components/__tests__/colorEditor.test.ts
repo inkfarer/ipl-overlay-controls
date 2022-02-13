@@ -3,6 +3,8 @@ import { createStore } from 'vuex';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
+import { GameVersion } from 'types/enums/gameVersion';
+import { settingsStoreKey } from '../../../settings/settingsStore';
 
 describe('ColorEditor', () => {
     config.global.stubs = {
@@ -12,6 +14,16 @@ describe('ColorEditor', () => {
     };
 
     const mockSetActiveColor = jest.fn();
+
+    function createSettingsStore() {
+        return createStore({
+            state: {
+                runtimeConfig: {
+                    gameVersion: GameVersion.SPLATOON_2
+                }
+            }
+        });
+    }
 
     function createActiveRoundStore() {
         return createStore<ActiveRoundStore>({
@@ -69,9 +81,13 @@ describe('ColorEditor', () => {
 
     it('matches snapshot', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -80,10 +96,14 @@ describe('ColorEditor', () => {
 
     it('matches snapshot when using custom color', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         store.state.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -92,9 +112,13 @@ describe('ColorEditor', () => {
 
     it('sets color on option click', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -115,10 +139,14 @@ describe('ColorEditor', () => {
 
     it('has expected button color when custom color is changed', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         store.state.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -130,10 +158,14 @@ describe('ColorEditor', () => {
 
     it('updates active color on custom color update button click', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         store.state.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -156,11 +188,15 @@ describe('ColorEditor', () => {
 
     it('swaps custom colors when swapColorsInternally is changed', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         store.state.activeRound.activeColor.isCustom = true;
         store.state.swapColorsInternally = false;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
         const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');
@@ -178,10 +214,14 @@ describe('ColorEditor', () => {
 
     it('handles team colors changing in store', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         store.state.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
         const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');

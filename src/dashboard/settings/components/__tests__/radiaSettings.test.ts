@@ -18,7 +18,8 @@ describe('radiaSettings', () => {
                     guildID: '123123',
                     enabled: null,
                     updateOnImport: null
-                }
+                },
+                runtimeConfig: null
             },
             mutations: {
                 setRadiaSettings: jest.fn(),

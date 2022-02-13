@@ -16,6 +16,7 @@ export * from './nowPlayingSource';
 export * from './predictionStore';
 export * from './radiaSettings';
 export * from './roundStore';
+export * from './runtimeConfig';
 export * from './scoreboardData';
 export * from './swapColorsInternally';
 export * from './tournamentData';

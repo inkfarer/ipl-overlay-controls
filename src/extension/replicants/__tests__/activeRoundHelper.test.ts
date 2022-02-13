@@ -1,37 +1,18 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { GameWinner } from 'types/enums/gameWinner';
 import { ActiveRound } from 'schemas';
 import { PlayType } from '../../../types/enums/playType';
+import { replicants } from '../../__mocks__/mockNodecg';
+import { mock } from 'jest-mock-extended';
+import type * as MatchStoreModule from '../matchStore';
+const mockMatchStoreModule = mock<typeof MatchStoreModule>();
+jest.mock('../matchStore', () => mockMatchStoreModule);
+
+import { setActiveRoundGames, setActiveRoundTeams, setWinner } from '../activeRoundHelper';
 
 describe('activeRoundHelper', () => {
-    const commitActiveRoundMock = jest.fn();
-    let nodecg: MockNodecg;
-    let helper: {
-        setWinner: (index: number, winner: GameWinner) => void,
-        setActiveRoundGames: (activeRound: ActiveRound, matchId: string) => void,
-        setActiveRoundTeams: (activeRound: ActiveRound, teamAId: string, teamBId: string) => void
-    };
-
-    jest.mock('../matchStore', () => {
-        return {
-            __esModule: true,
-            commitActiveRoundToMatchStore: commitActiveRoundMock
-        };
-    });
-
-    beforeEach(() => {
-        commitActiveRoundMock.mockClear();
-
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        helper = require('../activeRoundHelper');
-    });
-
     describe('setWinner', () => {
         it('sets winner and score', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 1 },
                 match: {},
@@ -44,31 +25,31 @@ describe('activeRoundHelper', () => {
 
             let activeRound: ActiveRound;
 
-            helper.setWinner(0, GameWinner.ALPHA);
-            activeRound = nodecg.replicants.activeRound.value as ActiveRound;
+            setWinner(0, GameWinner.ALPHA);
+            activeRound = replicants.activeRound as ActiveRound;
             expect(activeRound.games[0].winner).toBe(GameWinner.ALPHA);
             expect(activeRound.teamA.score).toBe(1);
 
-            helper.setWinner(2,GameWinner.BRAVO);
-            activeRound = nodecg.replicants.activeRound.value as ActiveRound;
+            setWinner(2,GameWinner.BRAVO);
+            activeRound = replicants.activeRound as ActiveRound;
             expect(activeRound.games[2].winner).toBe(GameWinner.BRAVO);
             expect(activeRound.teamB.score).toBe(2);
 
-            helper.setWinner(0,GameWinner.NO_WINNER);
-            activeRound = nodecg.replicants.activeRound.value as ActiveRound;
+            setWinner(0,GameWinner.NO_WINNER);
+            activeRound = replicants.activeRound as ActiveRound;
             expect(activeRound.games[0].winner).toBe(GameWinner.NO_WINNER);
             expect(activeRound.teamA.score).toBe(0);
 
-            helper.setWinner(1,GameWinner.ALPHA);
-            activeRound = nodecg.replicants.activeRound.value as ActiveRound;
+            setWinner(1,GameWinner.ALPHA);
+            activeRound = replicants.activeRound as ActiveRound;
             expect(activeRound.games[1].winner).toBe(GameWinner.ALPHA);
             expect(activeRound.teamA.score).toBe(1);
             expect(activeRound.teamB.score).toBe(1);
         });
 
         it('sets color if not already set', () => {
-            nodecg.replicants.swapColorsInternally.value = false;
-            nodecg.replicants.activeRound.value = {
+            replicants.swapColorsInternally = false;
+            replicants.activeRound = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
                 round: { id: 'asdasdasd' },
@@ -83,9 +64,9 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            helper.setWinner(1,GameWinner.ALPHA);
+            setWinner(1,GameWinner.ALPHA);
 
-            expect((nodecg.replicants.activeRound.value as ActiveRound).games[1].color).toEqual({
+            expect((replicants.activeRound as ActiveRound).games[1].color).toEqual({
                 name: 'Cool Color',
                 clrA: 'Team A Color',
                 clrB: 'Team B Color',
@@ -100,8 +81,8 @@ describe('activeRoundHelper', () => {
                 clrB: 'Team A Color 2',
                 colorsSwapped: true
             };
-            nodecg.replicants.swapColorsInternally.value = false;
-            nodecg.replicants.activeRound.value = {
+            replicants.swapColorsInternally = false;
+            replicants.activeRound = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
                 round: { id: 'asdasdasd' },
@@ -116,14 +97,14 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            helper.setWinner(1,GameWinner.BRAVO);
+            setWinner(1,GameWinner.BRAVO);
 
-            expect((nodecg.replicants.activeRound.value as ActiveRound).games[1].color).toEqual(existingColor);
+            expect((replicants.activeRound as ActiveRound).games[1].color).toEqual(existingColor);
         });
 
         it('removes color if setting winner to NO_WINNER', () => {
-            nodecg.replicants.swapColorsInternally.value = false;
-            nodecg.replicants.activeRound.value = {
+            replicants.swapColorsInternally = false;
+            replicants.activeRound = {
                 teamA: { score: 0, color: 'Team A Color' },
                 teamB: { score: 1, color: 'Team B Color' },
                 round: { id: 'asdasdasd' },
@@ -138,13 +119,13 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            helper.setWinner(1,GameWinner.NO_WINNER);
+            setWinner(1,GameWinner.NO_WINNER);
 
-            expect((nodecg.replicants.activeRound.value as ActiveRound).games[1].color).toBeUndefined();
+            expect((replicants.activeRound as ActiveRound).games[1].color).toBeUndefined();
         });
 
         it('acknowledges with error when trying to set winner for a game that does not exist', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 0 },
                 games: [
@@ -152,12 +133,12 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            expect(() => helper.setWinner(1,GameWinner.BRAVO))
+            expect(() => setWinner(1,GameWinner.BRAVO))
                 .toThrow('Cannot set winner for game 2 as it does not exist.');
         });
 
         it('updates round store', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 0 },
                 round: { id: 'asdasdasd' },
@@ -169,15 +150,15 @@ describe('activeRoundHelper', () => {
                 ]
             };
 
-            helper.setWinner(0,GameWinner.BRAVO);
+            setWinner(0,GameWinner.BRAVO);
 
-            expect(commitActiveRoundMock).toHaveBeenCalled();
+            expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
         });
     });
 
     describe('setActiveRoundGames', () => {
         it('updates active round data', () => {
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 aaa: {
                     meta: { name: 'Cool Match', type: PlayType.BEST_OF },
                     teamA: { score: 5 },
@@ -189,7 +170,7 @@ describe('activeRoundHelper', () => {
                 teamB: { score: 0 }
             };
 
-            helper.setActiveRoundGames((activeRound as ActiveRound), 'aaa');
+            setActiveRoundGames((activeRound as ActiveRound), 'aaa');
 
             expect(activeRound).toEqual({
                 match: {
@@ -203,18 +184,18 @@ describe('activeRoundHelper', () => {
         });
 
         it('throws error if match is not found', () => {
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 roundroundround: { }
             };
 
-            expect(() => helper.setActiveRoundGames(({} as ActiveRound), 'this match does not exist'))
+            expect(() => setActiveRoundGames(({} as ActiveRound), 'this match does not exist'))
                 .toThrow('Could not find match \'this match does not exist\'.');
         });
     });
 
     describe('setActiveRoundTeams', () => {
         it('finds team data from tournamentData and combines it with team data in activeRound', () => {
-            nodecg.replicants.tournamentData.value = {
+            replicants.tournamentData = {
                 teams: [
                     {
                         id: '123123',
@@ -240,7 +221,7 @@ describe('activeRoundHelper', () => {
                 }
             };
 
-            helper.setActiveRoundTeams((activeRound as unknown as ActiveRound), '123123', '234234');
+            setActiveRoundTeams((activeRound as unknown as ActiveRound), '123123', '234234');
 
             expect(activeRound).toEqual({
                 teamA: {
@@ -259,13 +240,13 @@ describe('activeRoundHelper', () => {
         });
 
         it('throws an error if it cannot find a team', () => {
-            nodecg.replicants.tournamentData.value = {
+            replicants.tournamentData = {
                 teams: [
                     { id: '456456' }
                 ]
             };
 
-            expect(() => helper.setActiveRoundTeams(({} as ActiveRound), '456456', '123123'))
+            expect(() => setActiveRoundTeams(({} as ActiveRound), '456456', '123123'))
                 .toThrow('Could not find a team.');
         });
     });

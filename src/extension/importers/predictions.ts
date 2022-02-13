@@ -1,8 +1,12 @@
 import * as nodecgContext from '../helpers/nodecg';
-import { Configschema, PredictionStore, RadiaSettings } from 'schemas';
+import { PredictionStore, RadiaSettings } from 'schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import {
-    PredictionBeginEvent, PredictionEndEvent, PredictionLockEvent, PredictionProgressEvent, PredictionResponse
+    PredictionBeginEvent,
+    PredictionEndEvent,
+    PredictionLockEvent,
+    PredictionProgressEvent,
+    PredictionResponse
 } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { createPrediction, getPredictions, hasPredictionSupport, updatePrediction } from './clients/radiaClient';
@@ -14,7 +18,6 @@ import isEmpty from 'lodash/isEmpty';
 
 const nodecg = nodecgContext.get();
 
-const radiaConfig = (nodecg.bundleConfig as Configschema).radia;
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
@@ -55,7 +58,7 @@ function initSocket(guildId: string): void {
         }, pingMessageInterval + 1000);
     }
 
-    if (isEmpty(radiaConfig.socketUrl)) {
+    if (isEmpty(nodecg.bundleConfig.radia.socketUrl)) {
         nodecg.log.warn('Bundle configuration is missing "radia.socketUrl" property! Predictions may not work as expected.');
         return;
     }
@@ -64,8 +67,8 @@ function initSocket(guildId: string): void {
         socket.close(expectedSocketClosureCode);
     }
 
-    socket = new WebSocket(`${radiaConfig.socketUrl}/events/guild/${guildId}`,
-        { headers: { Authorization: radiaConfig.authentication } });
+    socket = new WebSocket(`${nodecg.bundleConfig.radia.socketUrl}/events/guild/${guildId}`,
+        { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
     socket.on('open', () => {
         nodecg.log.info('Radia websocket is open.');
@@ -139,7 +142,7 @@ function initSocket(guildId: string): void {
 }
 
 async function attemptSocketConnection(guildId: string): Promise<void> {
-    if (isEmpty(guildId) || isEmpty(radiaConfig.socketUrl)) {
+    if (isEmpty(guildId) || isEmpty(nodecg.bundleConfig.radia.socketUrl)) {
         predictionStore.value.status.predictionsEnabled = false;
         predictionStore.value.status.predictionStatusReason = 'Missing Radia configuration. Check your guild ID and socket URL.';
         predictionStore.value.status.socketOpen = false;

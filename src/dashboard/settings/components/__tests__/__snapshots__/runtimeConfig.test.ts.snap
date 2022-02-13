@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RuntimeConfig matches snapshot 1`] = `
+"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+  <!--v-if-->
+  <!--v-if-->
+  <ipl-select-stub modelvalue=\\"SPLATOON_2\\" label=\\"Game version\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"game-version-select\\"></ipl-select-stub>
+  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-button\\"></ipl-button-stub>
+</div>"
+`;
+
+exports[`RuntimeConfig matches snapshot when changing data 1`] = `
+"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+  <!--v-if-->
+  <!--v-if-->
+  <ipl-select-stub modelvalue=\\"SPLATOON_2\\" label=\\"Game version\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"game-version-select\\"></ipl-select-stub>
+  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-button\\"></ipl-button-stub>
+</div>"
+`;

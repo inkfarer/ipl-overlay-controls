@@ -1,4 +1,4 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { messageListeners, replicantChangeListeners, replicants } from '../../__mocks__/mockNodecg';
 
 describe('radiaAvailabilityCheck', () => {
     const mockGetGuildInfo = jest.fn();
@@ -7,56 +7,48 @@ describe('radiaAvailabilityCheck', () => {
         getGuildInfo: mockGetGuildInfo
     }));
 
-    let nodecg: MockNodecg;
-
-    beforeEach(() => {
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        require('../radiaAvailabilityCheck');
-    });
+    require('../radiaAvailabilityCheck');
 
     describe('radiaSettings', () => {
         it('does nothing if guild id has not changed', async () => {
-            await nodecg.replicantListeners.radiaSettings({ guildID: '123123123' }, { guildID: '123123123' });
+            await replicantChangeListeners.radiaSettings({ guildID: '123123123' }, { guildID: '123123123' });
 
             expect(mockGetGuildInfo).not.toHaveBeenCalled();
         });
 
         it('gets guild info and sets radia to enabled on success', async () => {
-            nodecg.replicants.radiaSettings.value = {};
+            replicants.radiaSettings = {};
             mockGetGuildInfo.mockResolvedValue({ twitch_channel: 'iplsplatoon' });
 
-            await nodecg.replicantListeners.radiaSettings({ guildID: '123123123' });
+            await replicantChangeListeners.radiaSettings({ guildID: '123123123' });
 
-            expect(nodecg.replicants.radiaSettings.value).toEqual({ enabled: true, connectedChannel: 'iplsplatoon' });
+            expect(replicants.radiaSettings).toEqual({ enabled: true, connectedChannel: 'iplsplatoon' });
             expect(mockGetGuildInfo).toHaveBeenCalledWith('123123123');
         });
 
         it('gets guild info and sets radia to disabled on failure', async () => {
-            nodecg.replicants.radiaSettings.value = { enabled: true, connectedChannel: 'iplsplatoon' };
+            replicants.radiaSettings = { enabled: true, connectedChannel: 'iplsplatoon' };
             mockGetGuildInfo.mockRejectedValue({ });
 
-            await nodecg.replicantListeners.radiaSettings({ guildID: '234234' });
+            await replicantChangeListeners.radiaSettings({ guildID: '234234' });
 
-            expect(nodecg.replicants.radiaSettings.value).toEqual({ enabled: false, connectedChannel: null });
+            expect(replicants.radiaSettings).toEqual({ enabled: false, connectedChannel: null });
             expect(mockGetGuildInfo).toHaveBeenCalledWith('234234');
         });
     });
 
     describe('retryRadiaAvailabilityCheck', () => {
         beforeEach(() => {
-            nodecg.replicants.radiaSettings.value = { guildID: '123456' };
+            replicants.radiaSettings = { guildID: '123456' };
         });
 
         it('gets guild info and sets radia to enabled on success', async () => {
             mockGetGuildInfo.mockResolvedValue({ twitch_channel: 'iplsplatoon' });
             const ack = jest.fn();
 
-            await nodecg.messageListeners.retryRadiaAvailabilityCheck(null, ack);
+            await messageListeners.retryRadiaAvailabilityCheck(null, ack);
 
-            expect(nodecg.replicants.radiaSettings.value).toEqual({
+            expect(replicants.radiaSettings).toEqual({
                 enabled: true,
                 connectedChannel: 'iplsplatoon',
                 guildID: '123456'
@@ -69,9 +61,9 @@ describe('radiaAvailabilityCheck', () => {
             mockGetGuildInfo.mockRejectedValue({ });
             const ack = jest.fn();
 
-            await nodecg.messageListeners.retryRadiaAvailabilityCheck(null, ack);
+            await messageListeners.retryRadiaAvailabilityCheck(null, ack);
 
-            expect(nodecg.replicants.radiaSettings.value).toEqual({
+            expect(replicants.radiaSettings).toEqual({
                 enabled: false,
                 connectedChannel: null,
                 guildID: '123456'

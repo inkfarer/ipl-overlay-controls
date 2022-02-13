@@ -1,39 +1,31 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
+import { mock } from 'jest-mock-extended';
+import type * as NextRoundHelper from '../nextRoundHelper';
+import type * as RoundStoreHelper from '../../helpers/roundStoreHelper';
+import type * as GenerateId from '../../../helpers/generateId';
+const mockNextRoundHelper = mock<typeof NextRoundHelper>();
+const mockGenerateId = mock<typeof GenerateId>();
+const mockRoundStoreHelper = mock<typeof RoundStoreHelper>();
+jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
+jest.mock('../../helpers/roundStoreHelper', () => mockRoundStoreHelper);
+
+import '../roundStore';
+import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
 
 describe('roundStore', () => {
-    const mockSetNextRoundGames = jest.fn();
-    let nodecg: MockNodecg;
-
-    jest.mock('../nextRoundHelper', () => ({
-        __esModule: true,
-        setNextRoundGames: mockSetNextRoundGames
-    }));
-
-    const mockGenerateId = jest.fn();
-
-    jest.mock('../../../helpers/generateId', () => ({
-        __esModule: true,
-        generateId: mockGenerateId
-    }));
-
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        require('../roundStore');
     });
 
     describe('updateRoundStore', () => {
         it('creates new round if needed', () => {
-            nodecg.replicants.roundStore.value = { };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.roundStore = { };
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.updateRoundStore({
+            messageListeners.updateRoundStore({
                 id: '234234',
                 roundName: 'Cool Round',
                 type: PlayType.PLAY_ALL,
@@ -55,7 +47,7 @@ describe('roundStore', () => {
                     meta: { name: 'Cool Round', type: PlayType.PLAY_ALL }
                 }
             });
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(replicants.roundStore).toEqual({
                 '234234': {
                     meta: {
                         name: 'Cool Round',
@@ -72,7 +64,7 @@ describe('roundStore', () => {
         });
 
         it('updates existing rounds', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 aaaaaa: {
                     meta: {
                         name: 'Rad Round',
@@ -86,10 +78,10 @@ describe('roundStore', () => {
                     ]
                 }
             };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.updateRoundStore({
+            messageListeners.updateRoundStore({
                 id: 'aaaaaa',
                 roundName: 'Rad Round (Updated)',
                 type: PlayType.BEST_OF,
@@ -111,7 +103,7 @@ describe('roundStore', () => {
                     meta: { name: 'Rad Round (Updated)', type: PlayType.BEST_OF }
                 }
             });
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(replicants.roundStore).toEqual({
                 aaaaaa: {
                     meta: {
                         name: 'Rad Round (Updated)',
@@ -128,7 +120,7 @@ describe('roundStore', () => {
         });
 
         it('updates next round if needed', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 '123': {
                     meta: {
                         name: 'Rad Round',
@@ -141,10 +133,10 @@ describe('roundStore', () => {
                     ]
                 }
             };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.updateRoundStore({
+            messageListeners.updateRoundStore({
                 id: '123',
                 roundName: 'R',
                 games: [
@@ -165,16 +157,16 @@ describe('roundStore', () => {
                     meta: { name: 'R' }
                 }
             });
-            expect(mockSetNextRoundGames).toHaveBeenCalledWith('123');
+            expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('123');
         });
 
         it('generates id for round if it is not given', () => {
-            mockGenerateId.mockReturnValue('new round id');
-            nodecg.replicants.roundStore.value = {};
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            mockGenerateId.generateId.mockReturnValue('new round id');
+            replicants.roundStore = {};
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.updateRoundStore({
+            messageListeners.updateRoundStore({
                 roundName: 'Rad Round (Updated)',
                 games: [
                     { stage: 'MakoMart', mode: 'Clam Blitz' },
@@ -194,7 +186,7 @@ describe('roundStore', () => {
                     meta: { name: 'Rad Round (Updated)' }
                 }
             });
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(replicants.roundStore).toEqual({
                 'new round id': {
                     meta: {
                         name: 'Rad Round (Updated)',
@@ -212,107 +204,63 @@ describe('roundStore', () => {
 
     describe('removeRound', () => {
         it('deletes the given round', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 aaaaaa: { },
                 bbbbbb: { }
             };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.nextRound = { round: { id: '123' } };
 
-            nodecg.messageListeners.removeRound({ roundId: 'aaaaaa' });
+            messageListeners.removeRound({ roundId: 'aaaaaa' });
 
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(replicants.roundStore).toEqual({
                 bbbbbb: { }
             });
         });
 
         it('acknowledges with error if only one round exists', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 gggggg: { }
             };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.removeRound({ roundId: 'gggggg' }, ack);
+            messageListeners.removeRound({ roundId: 'gggggg' }, ack);
 
             expect(ack).toHaveBeenCalledWith(new Error('Cannot delete the last round.'));
         });
 
         it('acknowledges with error if the round cannot be found', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 aaaaaa: { },
                 bbbbbb: { }
             };
-            nodecg.replicants.nextRound.value = { round: { id: '123' } };
+            replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            nodecg.messageListeners.removeRound({ roundId: 'gggggg' }, ack);
+            messageListeners.removeRound({ roundId: 'gggggg' }, ack);
 
             expect(ack).toHaveBeenCalledWith(new Error('Couldn\'t find round with id \'gggggg\'.'));
         });
 
         it('sets next round to first round if active round is being deleted', () => {
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 aaaaaa: { },
                 bbbbbb: { },
                 gggggg: { }
             };
-            nodecg.replicants.nextRound.value = { round: { id: 'gggggg' } };
+            replicants.nextRound = { round: { id: 'gggggg' } };
 
-            nodecg.messageListeners.removeRound({ roundId: 'gggggg' });
+            messageListeners.removeRound({ roundId: 'gggggg' });
 
-            expect(mockSetNextRoundGames).toHaveBeenCalledWith('aaaaaa');
+            expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('aaaaaa');
         });
     });
 
     describe('resetRoundStore', () => {
-        it('updates round store, active and next rounds', () => {
+        it('resets round store', () => {
+            messageListeners.resetRoundStore();
 
-            nodecg.messageListeners.resetRoundStore();
-
-            expect(nodecg.replicants.roundStore.value).toEqual({
-                '00000': {
-                    meta: {
-                        name: 'Default Round 1',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            stage: 'MakoMart',
-                            mode: 'Clam Blitz'
-                        },
-                        {
-                            stage: 'Ancho-V Games',
-                            mode: 'Tower Control'
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker'
-                        }
-                    ]
-                },
-                '11111': {
-                    meta: {
-                        name: 'Default Round 2',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            stage: 'Inkblot Art Academy',
-                            mode: 'Turf War'
-                        },
-                        {
-                            stage: 'Ancho-V Games',
-                            mode: 'Tower Control'
-                        },
-                        {
-                            stage: 'Wahoo World',
-                            mode: 'Rainmaker'
-                        }
-                    ]
-                }
-            });
-
-            expect(mockSetNextRoundGames).toHaveBeenCalledWith('11111');
+            expect(mockRoundStoreHelper.resetRoundStore).toHaveBeenCalled();
         });
     });
 });

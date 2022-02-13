@@ -19,6 +19,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/matchRoutes');
     require('./replicants/matchStore');
     require('./replicants/roundStore');
+    require('./replicants/runtimeConfig');
     require('./versionChecker');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');

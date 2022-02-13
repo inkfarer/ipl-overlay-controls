@@ -79,12 +79,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import { colors } from '../../../helpers/splatoonData';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
 import { IplButton, IplExpandingSpace, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
+import { useSettingsStore } from '../../settings/settingsStore';
+import { perGameData } from '../../../helpers/gameData/gameData';
 
 export default defineComponent({
     name: 'ColorEditor',
@@ -93,6 +94,8 @@ export default defineComponent({
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
+        const settingsStore = useSettingsStore();
+        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
 
         const useCustomColor = ref(false);
         const customColorA = ref(null);
@@ -146,7 +149,8 @@ export default defineComponent({
                     }
                 });
             },
-            colorsWithoutCustom: colors.filter(color => color.meta.name !== 'Custom Color'),
+            colorsWithoutCustom: computed(() =>
+                gameData.value.colors.filter(color => color.meta.name !== 'Custom Color')),
             activeColor: computed(() => activeRoundStore.state.activeRound.activeColor.title),
             getBorderColor(color: string): string {
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);

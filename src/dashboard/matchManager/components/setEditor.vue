@@ -145,7 +145,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { colors, splatModes, splatStages } from '../../../helpers/splatoonData';
 import {
     IplButton,
     IplCheckbox,
@@ -159,6 +158,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { GameWinner } from 'types/enums/gameWinner';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
+import { useSettingsStore } from '../../settings/settingsStore';
+import { perGameData } from '../../../helpers/gameData/gameData';
 
 library.add(faTimes);
 
@@ -169,6 +170,8 @@ export default defineComponent({
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
+        const settingsStore = useSettingsStore();
+        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
 
         const editColorsEnabled = ref(false);
 
@@ -209,8 +212,8 @@ export default defineComponent({
 
         return {
             games,
-            stages: splatStages.map(stage => ({ value: stage, name: stage })),
-            modes: splatModes.map(mode => ({ value: mode, name: mode })),
+            stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
+            modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
             GameWinner,
             gamesChanged,
             getColorA(game: { color: { clrA: string } }): string {
@@ -224,18 +227,18 @@ export default defineComponent({
             },
             editColorsEnabled,
             activeColor,
-            colors: colors.map(group => ({
+            colors: computed(() => gameData.value.colors.map(group => ({
                 name: group.meta.name,
                 options: group.colors.map(color => ({
                     name: color.title,
                     value: `${group.meta.name}_${color.index}`,
                     disabled: group.meta.name === 'Custom Color'
                 }))
-            })),
+            }))),
             setGameColor(index: number, color: string): void {
                 const colorParts = color.split('_');
                 const colorIndex = parseInt(colorParts[1]);
-                const colorObject = colors
+                const colorObject = gameData.value.colors
                     .find(group => group.meta.name === colorParts[0])
                     .colors[colorIndex];
                 const colorsSwapped = games.value[index].color?.colorsSwapped

@@ -1,45 +1,44 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
-import { Module } from '../../../helpers/__mocks__/module';
+import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
+import { RoundStore } from '../../../types/schemas';
+import * as RoundDataHelper from '../roundDataHelper';
+import * as NextRoundHelper from '../../replicants/nextRoundHelper';
+import { mock } from 'jest-mock-extended';
+import axios from 'axios';
+
+const mockRoundDataHelper = mock<typeof RoundDataHelper>();
+const mockNextRoundHelper = mock<typeof NextRoundHelper>();
+const mockAxios = mock<typeof axios>();
+jest.mock('../roundDataHelper', () => mockRoundDataHelper);
+jest.mock('../../replicants/nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('axios', () => ({ __esModule: true, default: mockAxios }));
+
+import { updateRounds } from '../roundImporter';
+import { GameVersion } from '../../../types/enums/gameVersion';
 
 describe('roundImporter', () => {
-    const mockGet = jest.fn();
-    const mockHandleRoundData = jest.fn();
-    let nodecg: MockNodecg;
-    let importer: Module;
-
-    jest.mock('../roundDataHelper', () => ({
-        __esModule: true,
-        handleRoundData: mockHandleRoundData
-    }));
-
-    jest.mock('axios', () => ({
-        get: mockGet,
-    }));
-
-    const mockNextRoundHelper = {
-        setNextRoundGames: jest.fn()
-    };
-    jest.mock('../../replicants/nextRoundHelper', () => mockNextRoundHelper);
+    beforeEach(() => {
+        replicants.runtimeConfig = {
+            gameVersion: GameVersion.SPLATOON_2
+        };
+    });
 
     beforeEach(() => {
         jest.resetAllMocks();
         jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        importer = require('../roundImporter');
     });
 
     describe('getRounds', () => {
         it('fetches data from the given URL and normalizes it', async () => {
-            nodecg.replicants.roundStore.value = { oldroundoldround: { name: 'Old Round' } };
-            mockHandleRoundData.mockReturnValue({ newroundnewround: { name: 'New Round' } });
-            mockGet.mockResolvedValue([]);
+            replicants.roundStore = { oldroundoldround: { name: 'Old Round' } };
+            // @ts-ignore
+            mockRoundDataHelper.handleRoundData.mockReturnValue({ newroundnewround: { name: 'New Round' } });
+            mockAxios.get.mockResolvedValue([]);
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getRounds({ url: 'tournament://data/' }, ack);
+            await messageListeners.getRounds({ url: 'tournament://data/' }, ack);
 
-            expect(nodecg.replicants.roundStore.value).toEqual({
+            expect(ack).toHaveBeenCalledWith(null, 'tournament://data/');
+            expect(replicants.roundStore).toEqual({
                 newroundnewround: { name: 'New Round' }
             });
             expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('newroundnewround');
@@ -48,16 +47,16 @@ describe('roundImporter', () => {
         it('acknowledges with error when missing arguments', async () => {
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getRounds({ }, ack);
+            await messageListeners.getRounds({ }, ack);
 
             expect(ack).toHaveBeenCalledWith(new Error('Missing arguments.'));
         });
 
         it('acknowledges with received errors', async () => {
-            mockGet.mockRejectedValue('Error');
+            mockAxios.get.mockRejectedValue('Error');
             const ack = jest.fn();
 
-            await nodecg.messageListeners.getRounds({ url: 'tournament://data/' }, ack);
+            await messageListeners.getRounds({ url: 'tournament://data/' }, ack);
 
             expect(ack).toHaveBeenCalledWith('Error');
         });
@@ -67,9 +66,9 @@ describe('roundImporter', () => {
         it('updates round data and updates next round games', () => {
             const roundData = { roundone: 'Round One', roundtwo: 'Round Two' };
 
-            importer.updateRounds(roundData);
+            updateRounds(roundData as unknown as RoundStore);
 
-            expect(nodecg.replicants.roundStore.value).toEqual(roundData);
+            expect(replicants.roundStore).toEqual(roundData);
             expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('roundone');
         });
     });

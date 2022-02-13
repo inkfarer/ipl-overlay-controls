@@ -1,27 +1,20 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
+import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
+import * as GenerateId from '../../../helpers/generateId';
+import { mock } from 'jest-mock-extended';
+
+const mockGenerateId = mock<typeof GenerateId>();
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
 
 describe('casters', () => {
-    let nodecg: MockNodecg;
-
-    const mockGenerateId = jest.fn();
-
-    jest.mock('../../../helpers/generateId', () => ({
-        __esModule: true,
-        generateId: mockGenerateId
-    }));
+    require('../casters');
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        require('../casters');
     });
 
     describe('removeCaster', () => {
         it('removes caster', () => {
-            nodecg.replicants.casters.value = {
+            replicants.casters = {
                 '123123': {
                     name: 'cool caster'
                 },
@@ -30,9 +23,9 @@ describe('casters', () => {
                 }
             };
 
-            nodecg.messageListeners.removeCaster({ id: '567567' }, jest.fn());
+            messageListeners.removeCaster({ id: '567567' }, jest.fn());
 
-            expect(nodecg.replicants.casters.value).toEqual({
+            expect(replicants.casters).toEqual({
                 '123123': {
                     name: 'cool caster'
                 }
@@ -48,25 +41,25 @@ describe('casters', () => {
                     name: 'less cool caster'
                 }
             };
-            nodecg.replicants.casters.value = initialCasters;
+            replicants.casters = initialCasters;
             const ack = jest.fn();
 
-            nodecg.messageListeners.removeCaster({ id: 'some id that does not exist' }, ack);
+            messageListeners.removeCaster({ id: 'some id that does not exist' }, ack);
 
-            expect(nodecg.replicants.casters.value).toEqual(initialCasters);
+            expect(replicants.casters).toEqual(initialCasters);
             expect(ack).toHaveBeenCalledWith(new Error('Caster \'some id that does not exist\' not found.'));
         });
     });
 
     describe('saveCaster', () => {
         it('saves given data with random id and returns the id', () => {
-            mockGenerateId.mockReturnValue('new id');
-            nodecg.replicants.casters.value = {};
+            mockGenerateId.generateId.mockReturnValue('new id');
+            replicants.casters = {};
             const ack = jest.fn();
 
-            nodecg.messageListeners.saveCaster({ name: 'new caster' }, ack);
+            messageListeners.saveCaster({ name: 'new caster' }, ack);
 
-            expect(nodecg.replicants.casters.value).toEqual({
+            expect(replicants.casters).toEqual({
                 'new id': {
                     name: 'new caster'
                 }
