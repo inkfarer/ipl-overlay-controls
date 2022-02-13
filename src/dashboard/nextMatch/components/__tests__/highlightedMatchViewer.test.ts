@@ -39,7 +39,8 @@ describe('HighlightedMatchViewer', () => {
                 tournamentData: {
                     meta: {
                         id: 'tournament123',
-                        source: TournamentDataSource.UNKNOWN
+                        source: TournamentDataSource.UNKNOWN,
+                        shortName: null
                     },
                     teams: []
                 },

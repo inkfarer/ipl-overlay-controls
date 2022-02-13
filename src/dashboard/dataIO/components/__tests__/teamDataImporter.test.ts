@@ -24,7 +24,8 @@ describe('teamDataImporter', () => {
                 tournamentData: {
                     meta: {
                         id: '123123',
-                        source: TournamentDataSource.BATTLEFY
+                        source: TournamentDataSource.BATTLEFY,
+                        shortName: null
                     },
                     teams: []
                 },
@@ -45,6 +46,7 @@ describe('teamDataImporter', () => {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             name: 'Cool Tournament',
+            shortName: 'Cool Tournament',
             url: 'tournament://cool-tournament'
         };
         const wrapper = mount(TeamDataImporter, {
@@ -61,7 +63,8 @@ describe('teamDataImporter', () => {
         store.state.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
-            url: 'tounament://cool-tournament'
+            url: 'tounament://cool-tournament',
+            shortName: null
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
@@ -77,7 +80,8 @@ describe('teamDataImporter', () => {
         store.state.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
-            name: 'cool tournament'
+            name: 'cool tournament',
+            shortName: 'cool tournament'
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
@@ -94,6 +98,7 @@ describe('teamDataImporter', () => {
             source: TournamentDataSource.SMASHGG,
             id: '123123asd',
             name: 'cool tournament',
+            shortName: 'cool tournament',
             url: 'smashgg://cool-tournament',
             sourceSpecificData: {
                 smashgg: {

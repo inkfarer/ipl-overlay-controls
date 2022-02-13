@@ -24,6 +24,7 @@ export interface TournamentData {
 			};
 		};
 		name?: string;
+		shortName: string;
 		url?: string;
 	};
 	teams: {

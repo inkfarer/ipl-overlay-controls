@@ -33,7 +33,8 @@ describe('highlightedMatchStore', () => {
             highlightedMatchStore.state.tournamentData = {
                 meta: {
                     source: TournamentDataSource.BATTLEFY,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: []
             };
@@ -54,7 +55,8 @@ describe('highlightedMatchStore', () => {
             highlightedMatchStore.state.tournamentData = {
                 meta: {
                     source: TournamentDataSource.SMASHGG,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: []
             };
@@ -75,7 +77,8 @@ describe('highlightedMatchStore', () => {
             highlightedMatchStore.state.tournamentData = {
                 meta: {
                     source: TournamentDataSource.UPLOAD,
-                    id: 'tournament123'
+                    id: 'tournament123',
+                    shortName: null
                 },
                 teams: []
             };
