@@ -7,5 +7,4 @@
 
 export interface RuntimeConfig {
 	gameVersion: 'SPLATOON_2' | 'SPLATOON_3';
-	[k: string]: unknown;
 }
