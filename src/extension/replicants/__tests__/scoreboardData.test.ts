@@ -23,15 +23,17 @@ describe('scoreboardData', () => {
         });
     });
 
-    describe('activeRound:change', () => {
+    describe('tournamentData:change', () => {
         it('sets flavor text', () => {
-            replicantChangeListeners.tournamentData({ meta: { shortName: 'New Tournament Name' } });
+            replicantChangeListeners.tournamentData(
+                { meta: { shortName: 'New Tournament Name' } },
+                { meta: { shortName: 'Old Tournament Name' } });
 
             expect(replicants.scoreboardData).toEqual({ flavorText: 'New Tournament Name - Match Name' });
         });
 
         it('does nothing if match name is unchanged', () => {
-            replicantChangeListeners.activeRound(
+            replicantChangeListeners.tournamentData(
                 { meta: { shortName: 'Tournament Name' } },
                 { meta: { shortName: 'Tournament Name' } });
 
