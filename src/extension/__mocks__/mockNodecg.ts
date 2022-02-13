@@ -52,7 +52,6 @@ require('../helpers/nodecg').set({
                 replicantChangeListeners[name] = handler;
             }
         };
-        replicants[name] = replicantValue;
         return replicantValue;
     },
     listenFor: (messageName: string, handler: () => void) => {
