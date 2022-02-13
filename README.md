@@ -84,11 +84,15 @@ To create a debuggable development build, run `npm run watch` or `npm run devbui
 
 ## Repositories that depend on ipl-overlay-controls
 
-The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2022-01-14:
+The following bundles depend on version **4.x.x** of ipl-overlay-controls as of 2022-02-13:
 
 - [low-ink-overlays](https://github.com/inkfarer/low-ink-overlays)
-- [sj-overlays](https://github.com/IPLSplatoon/sj-overlays)
 - [sos-overlays](https://github.com/inkfarer/sos-overlays)
+- sac-overlays
+
+The following bundles depend on version **3.x.x** of ipl-overlay-controls as of 2022-02-13:
+
+- [sj-overlays](https://github.com/IPLSplatoon/sj-overlays)
 
 The following bundles depend on version **2.x.x** of ipl-overlay-controls as of 2022-01-14:
 
