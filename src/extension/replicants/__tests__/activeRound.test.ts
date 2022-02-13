@@ -261,6 +261,16 @@ describe('activeRound', () => {
     });
 
     describe('beginNextMatch', () => {
+        it('returns error when no arguments are given', () => {
+            replicants.activeRound = {};
+            const ack = jest.fn();
+
+            messageListeners.beginNextMatch(null, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
+            expect(replicants.activeRound).toEqual({});
+        });
+
         it('returns error when no match name is given', () => {
             replicants.activeRound = {};
             const ack = jest.fn();
