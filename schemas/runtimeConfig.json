@@ -8,6 +8,7 @@
         }
     },
     "required": ["gameVersion"],
+    "additionalProperties": false,
     "default": {
         "gameVersion": "SPLATOON_2"
     }

@@ -55,6 +55,9 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         },
         removeRound(store, { roundId }: { roundId: string }): Promise<void> {
             return nodecg.sendMessage('removeRound', { roundId });
+        },
+        setShortName(store, newValue: string): void {
+            tournamentData.value.meta.shortName = newValue;
         }
     }
 });

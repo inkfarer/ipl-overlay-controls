@@ -20,7 +20,8 @@ describe('roundImporter', () => {
                 tournamentData: {
                     meta: {
                         id: '123123',
-                        source: TournamentDataSource.BATTLEFY
+                        source: TournamentDataSource.BATTLEFY,
+                        shortName: 'A tournament'
                     },
                     teams: []
                 },

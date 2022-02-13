@@ -67,11 +67,12 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                     return;
                 }
 
-                const teams: TournamentData = {
+                const result: TournamentData = {
                     meta: {
                         id,
                         source: TournamentDataSource.BATTLEFY,
                         name: tournamentInfo.name,
+                        shortName: tournamentInfo.name ?? 'Unknown Tournament',
                         url: getBattlefyTournamentUrl(tournamentInfo)
                     },
                     teams: [],
@@ -95,10 +96,10 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                         teamInfo.players.push(playerInfo);
                     }
 
-                    teams.teams.push(teamInfo);
+                    result.teams.push(teamInfo);
                 }
 
-                resolve(teams);
+                resolve(result);
             })
             .catch(err => {
                 reject(err);
