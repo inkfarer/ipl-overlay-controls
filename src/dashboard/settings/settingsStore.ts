@@ -4,6 +4,7 @@ import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
 import { GameVersion } from 'types/enums/gameVersion';
+import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -45,7 +46,7 @@ export const settingsStore = createStore<SettingsStore>({
         async attemptRadiaConnection(): Promise<void> {
             return nodecg.sendMessage('retryRadiaAvailabilityCheck');
         },
-        setGameVersion(store, newValue: GameVersion): Promise<void> {
+        setGameVersion(store, newValue: GameVersion): Promise<SetGameVersionResponse> {
             return nodecg.sendMessage('setGameVersion', { version: newValue });
         }
     }
