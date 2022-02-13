@@ -86,7 +86,7 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
 });
 
 nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledListenForCb) => {
-    if (isBlank(data.matchName)) {
+    if (isBlank(data?.matchName)) {
         return ack(new Error('Match name must not be blank'));
     }
 
