@@ -5,7 +5,7 @@
     >
         <ipl-data-row
             label="Flavor Text"
-            :value="scoreboardData.flavorText"
+            :value="flavorText"
         />
         <ipl-toggle
             v-model="scoreboardData.isVisible"
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref } from 'vue';
 import { IplToggle, IplExpandingSpace, IplDataRow } from '@iplsplatoon/vue-components';
 import { useScoreboardStore } from '../../store/scoreboardStore';
 import { ScoreboardData } from 'schemas';
@@ -37,6 +37,7 @@ export default defineComponent({
         });
 
         return {
+            flavorText: computed(() => store.state.scoreboardData.flavorText),
             scoreboardData,
             setScoreboardVisible(value: boolean) {
                 store.commit('setScoreboardVisible', value);
