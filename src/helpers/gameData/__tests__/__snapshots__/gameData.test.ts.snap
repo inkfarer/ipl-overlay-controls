@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gameData perGameData matches snapshot 1`] = `
+Object {
+  "SPLATOON_2": Object {
+    "colors": Array [
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#37FC00",
+            "clrB": "#7D28FC",
+            "clrNeutral": "#F4067E",
+            "index": 0,
+            "isCustom": false,
+            "title": "Green vs Grape",
+          },
+          Object {
+            "clrA": "#04D976",
+            "clrB": "#D600AB",
+            "clrNeutral": "#D2E500",
+            "index": 1,
+            "isCustom": false,
+            "title": "Green vs Magenta",
+          },
+          Object {
+            "clrA": "#10E38F",
+            "clrB": "#FB7B08",
+            "clrNeutral": "#6912CD",
+            "index": 2,
+            "isCustom": false,
+            "title": "Turquoise vs Orange",
+          },
+          Object {
+            "clrA": "#FF9E03",
+            "clrB": "#B909E0",
+            "clrNeutral": "#08C66B",
+            "index": 3,
+            "isCustom": false,
+            "title": "Mustard vs Purple",
+          },
+          Object {
+            "clrA": "#2F27CC",
+            "clrB": "#37FC00",
+            "clrNeutral": "#EA01B7",
+            "index": 4,
+            "isCustom": false,
+            "title": "Dark Blue vs Green",
+          },
+          Object {
+            "clrA": "#B909E0",
+            "clrB": "#37FC00",
+            "clrNeutral": "#F87604",
+            "index": 5,
+            "isCustom": false,
+            "title": "Purple vs Green",
+          },
+          Object {
+            "clrA": "#FEF232",
+            "clrB": "#2ED2FE",
+            "clrNeutral": "#FD5600",
+            "index": 6,
+            "isCustom": false,
+            "title": "Yellow vs Blue",
+          },
+        ],
+        "meta": Object {
+          "name": "Ranked Modes",
+        },
+      },
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#D1E004",
+            "clrB": "#960CB2",
+            "clrNeutral": "#0EB962",
+            "index": 0,
+            "isCustom": false,
+            "title": "Yellow vs Purple",
+          },
+          Object {
+            "clrA": "#E61077",
+            "clrB": "#361CB8",
+            "clrNeutral": "#24C133",
+            "index": 1,
+            "isCustom": false,
+            "title": "Pink vs Blue",
+          },
+          Object {
+            "clrA": "#ED0C6A",
+            "clrB": "#D5E802",
+            "clrNeutral": "#08C24D",
+            "index": 2,
+            "isCustom": false,
+            "title": "Pink vs Yellow",
+          },
+          Object {
+            "clrA": "#6B10CC",
+            "clrB": "#08CC81",
+            "clrNeutral": "#EB246D",
+            "index": 3,
+            "isCustom": false,
+            "title": "Purple vs Turquoise",
+          },
+          Object {
+            "clrA": "#E30960",
+            "clrB": "#02ADCF",
+            "clrNeutral": "#DDE713",
+            "index": 4,
+            "isCustom": false,
+            "title": "Pink vs Light Blue",
+          },
+          Object {
+            "clrA": "#5617C2",
+            "clrB": "#FF5F03",
+            "clrNeutral": "#ACE81E",
+            "index": 5,
+            "isCustom": false,
+            "title": "Purple vs Orange",
+          },
+          Object {
+            "clrA": "#E60572",
+            "clrB": "#1BBF0F",
+            "clrNeutral": "#CCE50C",
+            "index": 6,
+            "isCustom": false,
+            "title": "Pink vs Green",
+          },
+        ],
+        "meta": Object {
+          "name": "Turf War",
+        },
+      },
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#FEF232",
+            "clrB": "#2F27CC",
+            "clrNeutral": "#DC1589",
+            "index": 0,
+            "isCustom": false,
+            "title": "Yellow vs Blue (Color Lock)",
+          },
+        ],
+        "meta": Object {
+          "name": "Color Lock",
+        },
+      },
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#000000",
+            "clrB": "#FFFFFF",
+            "clrNeutral": "#818181",
+            "index": 0,
+            "isCustom": true,
+            "title": "Custom Color",
+          },
+        ],
+        "meta": Object {
+          "name": "Custom Color",
+        },
+      },
+    ],
+    "modes": Array [
+      "Clam Blitz",
+      "Rainmaker",
+      "Splat Zones",
+      "Tower Control",
+      "Turf War",
+      "Unknown Mode",
+    ],
+    "stages": Array [
+      "Ancho-V Games",
+      "Arowana Mall",
+      "Blackbelly Skatepark",
+      "Camp Triggerfish",
+      "Counterpick",
+      "Goby Arena",
+      "Humpback Pump Track",
+      "Inkblot Art Academy",
+      "Kelp Dome",
+      "MakoMart",
+      "Manta Maria",
+      "Moray Towers",
+      "Musselforge Fitness",
+      "New Albacore Hotel",
+      "Piranha Pit",
+      "Port Mackerel",
+      "Shellendorf Institute",
+      "Shifty Station",
+      "Skipper Pavilion",
+      "Snapper Canal",
+      "Starfish Mainstage",
+      "Sturgeon Shipyard",
+      "The Reef",
+      "Unknown Stage",
+      "Wahoo World",
+      "Walleye Warehouse",
+    ],
+  },
+  "SPLATOON_3": Object {
+    "colors": Array [
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#5F3AE0",
+            "clrB": "#EDED3D",
+            "clrNeutral": "#FFFFFF",
+            "index": 0,
+            "isCustom": false,
+            "title": "Blue vs Yellow",
+          },
+        ],
+        "meta": Object {
+          "name": "Splatoon 3 colors",
+        },
+      },
+      Object {
+        "colors": Array [
+          Object {
+            "clrA": "#000000",
+            "clrB": "#FFFFFF",
+            "clrNeutral": "#818181",
+            "index": 0,
+            "isCustom": true,
+            "title": "Custom Color",
+          },
+        ],
+        "meta": Object {
+          "name": "Custom Color",
+        },
+      },
+    ],
+    "modes": Array [
+      "Turf War",
+      "Unknown Mode",
+    ],
+    "stages": Array [
+      "Counterpick",
+      "Eeltail Alley",
+      "Museum d'Alfonsino",
+      "Scorch Gorge",
+      "Unknown Stage",
+    ],
+  },
+}
+`;

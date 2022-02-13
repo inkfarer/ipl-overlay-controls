@@ -1,4 +1,5 @@
 export function getContrastingTextColor(backgroundColor: string, lightColor = 'white', darkColor = '#333'): string {
+    if (!backgroundColor) return null;
     const { r, g, b } = hexToRbg(backgroundColor);
     const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
     return (yiq >= 128) ? darkColor : lightColor;

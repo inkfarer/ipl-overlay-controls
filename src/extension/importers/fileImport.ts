@@ -4,8 +4,11 @@ import fileUpload, { UploadedFile } from 'express-fileupload';
 import * as express from 'express';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { updateRounds } from './roundImporter';
+import { RuntimeConfig } from '../../types/schemas';
+import { GameVersion } from '../../types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
+const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const router = nodecg.Router();
 
 (router as express.Router).post(
@@ -26,7 +29,7 @@ const router = nodecg.Router();
 
         switch (req.body.jsonType) {
             case 'rounds': {
-                updateRounds(handleRoundData(content));
+                updateRounds(handleRoundData(content, runtimeConfig.value.gameVersion as GameVersion));
                 break;
             }
             case 'teams': {

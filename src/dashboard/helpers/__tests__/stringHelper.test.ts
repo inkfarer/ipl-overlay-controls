@@ -1,4 +1,4 @@
-import { extractBattlefyTournamentId, padNumber, pluralize } from '../stringHelper';
+import { extractBattlefyTournamentId, padNumber, pluralize, pluralizeWithoutCount } from '../stringHelper';
 
 describe('stringHelper', () => {
     describe('pluralize', () => {
@@ -15,6 +15,18 @@ describe('stringHelper', () => {
         it('gives plural form if required', () => {
             expect(pluralize('knife', 2, 'knives')).toEqual('2 knives');
             expect(pluralize('user', 0)).toEqual('0 users');
+        });
+    });
+
+    describe('pluralizeWithoutCount', () => {
+        it('gives singular form if required', () => {
+            expect(pluralizeWithoutCount('knife', 1, 'knives')).toEqual('knife');
+            expect(pluralizeWithoutCount('user', 1)).toEqual('user');
+        });
+
+        it('gives plural form if required', () => {
+            expect(pluralizeWithoutCount('knife', 2, 'knives')).toEqual('knives');
+            expect(pluralizeWithoutCount('user', 0)).toEqual('users');
         });
     });
 

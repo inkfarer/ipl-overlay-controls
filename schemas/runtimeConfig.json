@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "gameVersion": {
+            "type": "string",
+            "enum": ["SPLATOON_2", "SPLATOON_3"]
+        }
+    },
+    "required": ["gameVersion"],
+    "default": {
+        "gameVersion": "SPLATOON_2"
+    }
+}

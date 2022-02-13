@@ -1,122 +1,100 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
 import { UnknownFunction } from '../../../helpers/__mocks__/module';
+import { mockBundleConfig, replicantChangeListeners, replicants } from '../../__mocks__/mockNodecg';
+
+const mockStopStream = jest.fn();
+const mockStartStream = jest.fn();
+let trackStreamEvents: {[event: string]: UnknownFunction} = { };
+
+beforeEach(() => {
+    trackStreamEvents = { };
+});
+
+jest.mock('lastfm', () => ({
+    LastFmNode: jest.fn().mockReturnValue({
+        stream: jest.fn().mockReturnValue({
+            stop: mockStopStream,
+            start: mockStartStream,
+            on: (event: string, cb: UnknownFunction) => {
+                trackStreamEvents[event] = cb;
+            }
+        })
+    })
+}));
 
 describe('music', () => {
-    let nodecg: MockNodecg;
-
-    const defaultBundleConfig = {
-        lastfm: {
-            apiKey: 'aiodwhjaqdoijw',
-            secret: 'piwhjf08y3q4yr8ih'
-        }
-    };
-
-    const setup = (bundleConfig: {[key: string]: unknown} = defaultBundleConfig) => {
-        nodecg = new MockNodecg(bundleConfig);
-        nodecg.init();
-
-        require('../music');
-    };
+    require('../music');
 
     beforeEach(() => {
-        jest.resetAllMocks();
-        jest.resetModules();
+        jest.clearAllMocks();
+        jest.restoreAllMocks();
     });
 
     describe('nowPlayingSource', () => {
-        beforeEach(() => {
-            setup();
-        });
-
         it('handles source changing to manual', () => {
             const expectedNowPlaying = { song: 'Cool Artist - Cool Song' };
-            nodecg.replicants.nowPlayingSource.value = 'lastfm';
-            nodecg.replicants.manualNowPlaying.value = expectedNowPlaying;
+            replicants.nowPlayingSource = 'lastfm';
+            replicants.manualNowPlaying = expectedNowPlaying;
 
-            nodecg.replicantListeners.nowPlayingSource('manual');
+            replicantChangeListeners.nowPlayingSource('manual');
 
-            expect(nodecg.replicants.nowPlaying.value).toEqual(expectedNowPlaying);
+            expect(replicants.nowPlaying).toEqual(expectedNowPlaying);
         });
 
         it('handles source changing to lastfm', () => {
             const expectedNowPlaying = { song: 'Cool Artist - Cool Song' };
-            nodecg.replicants.nowPlayingSource.value = 'manual';
-            nodecg.replicants.lastFmNowPlaying.value = expectedNowPlaying;
+            replicants.nowPlayingSource = 'manual';
+            replicants.lastFmNowPlaying = expectedNowPlaying;
 
-            nodecg.replicantListeners.nowPlayingSource('lastfm');
+            replicantChangeListeners.nowPlayingSource('lastfm');
 
-            expect(nodecg.replicants.nowPlaying.value).toEqual(expectedNowPlaying);
+            expect(replicants.nowPlaying).toEqual(expectedNowPlaying);
         });
 
         it('handles manual song changing', () => {
             const expectedNowPlaying = { song: 'Cool Artist - Cool Song' };
-            nodecg.replicants.nowPlayingSource.value = 'manual';
+            replicants.nowPlayingSource = 'manual';
 
-            nodecg.replicantListeners.manualNowPlaying(expectedNowPlaying);
+            replicantChangeListeners.manualNowPlaying(expectedNowPlaying);
 
-            expect(nodecg.replicants.nowPlaying.value).toEqual(expectedNowPlaying);
+            expect(replicants.nowPlaying).toEqual(expectedNowPlaying);
         });
 
         it('handles lastfm song changing', () => {
             const expectedNowPlaying = { song: 'Cool Artist - Cool Song' };
-            nodecg.replicants.nowPlayingSource.value = 'lastfm';
+            replicants.nowPlayingSource = 'lastfm';
 
-            nodecg.replicantListeners.lastFmNowPlaying(expectedNowPlaying);
+            replicantChangeListeners.lastFmNowPlaying(expectedNowPlaying);
 
-            expect(nodecg.replicants.nowPlaying.value).toEqual(expectedNowPlaying);
+            expect(replicants.nowPlaying).toEqual(expectedNowPlaying);
         });
     });
 
     describe('handleLastFm', () => {
-        const mockStopStream = jest.fn();
-        const mockStartStream = jest.fn();
-        let trackStreamEvents: {[event: string]: UnknownFunction} = { };
-
-        beforeEach(() => {
-            trackStreamEvents = { };
-        });
-
-        jest.mock('lastfm', () => ({
-            LastFmNode: jest.fn().mockReturnValue({
-                stream: jest.fn().mockReturnValue({
-                    stop: mockStopStream,
-                    start: mockStartStream,
-                    on: (event: string, cb: UnknownFunction) => {
-                        trackStreamEvents[event] = cb;
-                    }
-                })
-            })
-        }));
-
         it('does not start a stream if missing bundle configuration', () => {
-            setup({ lastfm: { } });
+            mockBundleConfig.lastfm = {};
 
-            nodecg.replicantListeners.lastFmSettings({});
+            replicantChangeListeners.lastFmSettings({});
 
             expect(mockStartStream).not.toHaveBeenCalled();
         });
 
         describe('with bundle configuration', () => {
-            beforeEach(() => {
-                setup();
-            });
-
             it('does not start a stream if missing replicant configuration', () => {
-                nodecg.replicantListeners.lastFmSettings({});
+                replicantChangeListeners.lastFmSettings({});
 
                 expect(mockStartStream).not.toHaveBeenCalled();
             });
 
             describe('with replicant configuration', () => {
                 beforeEach(() => {
-                    nodecg.replicantListeners.lastFmSettings({ username: 'lastfm-user' });
+                    replicantChangeListeners.lastFmSettings({ username: 'lastfm-user' });
                 });
 
                 it('stops existing track streams', () => {
-                    nodecg.replicantListeners.lastFmSettings({ username: 'new-lastfm-user' });
+                    replicantChangeListeners.lastFmSettings({ username: 'new-lastfm-user' });
 
                     expect(mockStartStream).toHaveBeenCalledTimes(2);
-                    expect(mockStopStream).toHaveBeenCalled();
+                    expect(mockStopStream).toHaveBeenCalledTimes(1);
                 });
 
                 it('handles new tracks being started', () => {
@@ -127,7 +105,7 @@ describe('music', () => {
                         image: [ { }, { }, { '#text': 'image://url' } ]
                     });
 
-                    expect(nodecg.replicants.lastFmNowPlaying.value).toEqual({
+                    expect(replicants.lastFmNowPlaying).toEqual({
                         artist: 'Artist',
                         song: 'Song',
                         album: 'Album',
@@ -143,6 +121,7 @@ describe('music', () => {
                 });
 
                 it('ignores other track stream errors', () => {
+                    mockStopStream.mockClear();
                     trackStreamEvents.error({ error: 5 });
                     trackStreamEvents.error({ error: 1 });
                     trackStreamEvents.error({ error: 7 });

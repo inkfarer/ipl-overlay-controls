@@ -4,6 +4,8 @@ import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoun
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
+import { GameVersion } from 'types/enums/gameVersion';
+import { settingsStoreKey } from '../../../settings/settingsStore';
 
 describe('ActiveColorToggles', () => {
     config.global.stubs = {
@@ -73,11 +75,25 @@ describe('ActiveColorToggles', () => {
         });
     }
 
+    function createSettingsStore() {
+        return createStore({
+            state: {
+                runtimeConfig: {
+                    gameVersion: GameVersion.SPLATOON_2
+                }
+            }
+        });
+    }
+
     it('matches snapshot', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [
+                    [store, activeRoundStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             }
         });
 
@@ -86,9 +102,13 @@ describe('ActiveColorToggles', () => {
 
     it('sets color when clicking previous color toggle', async () => {
         const activeRoundStore = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [[activeRoundStore, activeRoundStoreKey]]
+                plugins: [
+                    [activeRoundStore, activeRoundStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             }
         });
 
@@ -110,9 +130,13 @@ describe('ActiveColorToggles', () => {
 
     it('sets color when clicking next color toggle', async () => {
         const activeRoundStore = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [[activeRoundStore, activeRoundStoreKey]]
+                plugins: [
+                    [activeRoundStore, activeRoundStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             }
         });
 
@@ -134,9 +158,13 @@ describe('ActiveColorToggles', () => {
 
     it('swaps colors on swap button click', () => {
         const activeRoundStore = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [[activeRoundStore, activeRoundStoreKey]]
+                plugins: [
+                    [activeRoundStore, activeRoundStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
             }
         });
 

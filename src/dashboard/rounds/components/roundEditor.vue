@@ -53,11 +53,12 @@ import { computed, defineComponent, PropType, ref, Ref, watch } from 'vue';
 import type { Round } from 'schemas';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { IplButton, IplInput, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
-import { splatModes, splatStages } from '../../../helpers/splatoonData';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
 import { PlayType, PlayTypeHelper } from 'types/enums/playType';
+import { useSettingsStore } from '../../settings/settingsStore';
+import { perGameData } from '../../../helpers/gameData/gameData';
 
 library.add(faTimes);
 
@@ -85,6 +86,8 @@ export default defineComponent({
 
     setup(props, { emit }) {
         const store = useTournamentDataStore();
+        const settingsStore = useSettingsStore();
+        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
         const roundInternal: Ref<Round> = ref(null);
 
         watch(() => props.round, (newValue, oldValue) => {
@@ -107,8 +110,8 @@ export default defineComponent({
 
         return {
             roundInternal,
-            stages: splatStages.map(stage => ({ value: stage, name: stage })),
-            modes: splatModes.map(mode => ({ value: mode, name: mode })),
+            stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
+            modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
             async handleUpdate() {
                 const result = await store.dispatch('updateRound', {
                     ...!props.isNewRound && { id: props.roundId },

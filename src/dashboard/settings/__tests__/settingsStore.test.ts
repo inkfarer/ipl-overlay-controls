@@ -33,4 +33,12 @@ describe('settingsStore', () => {
             expect(mockSendMessage).toHaveBeenCalledWith('retryRadiaAvailabilityCheck');
         });
     });
+
+    describe('setGameVersion', () => {
+        it('sends message', () => {
+            settingsStore.dispatch('setGameVersion', 'SPLATOON_3');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setGameVersion', { version: 'SPLATOON_3' });
+        });
+    });
 });

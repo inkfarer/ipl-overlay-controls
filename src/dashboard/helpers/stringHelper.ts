@@ -1,7 +1,11 @@
 export function pluralize(word: string, count: number, pluralWord?: string): string {
     const formattedCount = formatNumber(count);
-    if (count === 1) return `${formattedCount} ${word}`;
-    else return !pluralWord ? `${formattedCount} ${word}s` : `${formattedCount} ${pluralWord}`;
+    return `${formattedCount} ${pluralizeWithoutCount(word, count, pluralWord)}`;
+}
+
+export function pluralizeWithoutCount(word: string, count: number, pluralWord?: string): string {
+    if (count === 1) return word;
+    else return !pluralWord ? `${word}s` : `${pluralWord}`;
 }
 
 export function padNumber(value: number | string, minLength = 2): string {

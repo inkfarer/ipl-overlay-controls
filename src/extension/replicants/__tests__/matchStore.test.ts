@@ -1,43 +1,32 @@
-import { MockNodecg } from '../../__mocks__/mockNodecg';
-import { mocked } from 'ts-jest/utils';
 import { DateTime } from 'luxon';
 import { GameWinner } from '../../../types/enums/gameWinner';
 import { RoundStore, TournamentData } from '../../../types/schemas';
 import { PlayType } from '../../../types/enums/playType';
+import { mock } from 'jest-mock-extended';
+import type * as ActiveRoundHelper from '../activeRoundHelper';
+import type * as GenerateId from '../../../helpers/generateId';
+import type * as MatchStoreHelper from '../../helpers/matchStoreHelper';
+import { replicants } from '../../__mocks__/mockNodecg';
+
+const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
+const mockDateTime = mock<typeof DateTime>();
+const mockGenerateId = mock<typeof GenerateId>();
+const mockMatchStoreHelper = mock<typeof MatchStoreHelper>();
+jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
+jest.mock('luxon', () => ({ __esModule: true, DateTime: mockDateTime }));
+jest.mock('../../../helpers/generateId', () => mockGenerateId);
+jest.mock('../../helpers/matchStoreHelper', () => mockMatchStoreHelper);
+
+import { clearMatchesWithUnknownTeams, commitActiveRoundToMatchStore } from '../matchStore';
 
 describe('matchStore', () => {
-    let nodecg: MockNodecg;
-    let extension: {
-        commitActiveRoundToMatchStore: () => void,
-        clearMatchesWithUnknownTeams: (tournamentData: TournamentData) => void
-    };
-
-    const mockActiveRoundHelper = { setActiveRoundGames: jest.fn(), setActiveRoundTeams: jest.fn() };
-    jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
-
-    const mockDateTime = mocked(DateTime, true);
-    jest.mock('luxon', () => ({
-        __esModule: true,
-        DateTime: mockDateTime
-    }));
-
-    const mockGenerateId = {
-        generateId: jest.fn()
-    };
-    jest.mock('../../../helpers/generateId', () => mockGenerateId);
-
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.resetModules();
-        nodecg = new MockNodecg();
-        nodecg.init();
-
-        extension = require('../matchStore');
     });
 
     describe('commitActiveRoundToMatchStore', () => {
         it('updates value in round store', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 1, name: 'Team Alpha' },
                 teamB: { score: 1, name: 'Team Bravo' },
                 match: { isCompleted: false, id: 'aaaaaa', name: 'Cool Match', type: PlayType.BEST_OF },
@@ -61,7 +50,7 @@ describe('matchStore', () => {
                     }
                 ]
             };
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 aaaaaa: {
                     meta: {
                         name: 'Round Round',
@@ -93,9 +82,9 @@ describe('matchStore', () => {
                 }
             };
 
-            extension.commitActiveRoundToMatchStore();
+            commitActiveRoundToMatchStore();
 
-            expect(nodecg.replicants.matchStore.value).toEqual({
+            expect(replicants.matchStore).toEqual({
                 aaaaaa: {
                     meta: {
                         name: 'Cool Match',
@@ -130,14 +119,14 @@ describe('matchStore', () => {
         });
 
         it('removes round completion time if active round is incomplete', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 teamA: { score: 1 },
                 teamB: { score: 0 },
                 round: { name: 'Cool Round' },
                 match: { isCompleted: false, id: '123123' },
                 games: [{ }, { }, { }]
             };
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 '123123': {
                     meta: {
                         isCompleted: true,
@@ -146,9 +135,9 @@ describe('matchStore', () => {
                 }
             };
 
-            extension.commitActiveRoundToMatchStore();
+            commitActiveRoundToMatchStore();
 
-            const matchStoreValue = (nodecg.replicants.matchStore.value as RoundStore)['123123'];
+            const matchStoreValue = (replicants.matchStore as RoundStore)['123123'];
             expect(matchStoreValue.meta.isCompleted).toBe(false);
             expect(matchStoreValue.meta.completionTime).toBeUndefined();
         });
@@ -156,12 +145,12 @@ describe('matchStore', () => {
 
     describe('clearMatchesWithUnknownTeams', () => {
         it('deletes progress for stored matches where no matching team can be found in tournament data', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 match: {
                     id: 'aaaa'
                 }
             };
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
@@ -179,14 +168,14 @@ describe('matchStore', () => {
                 }
             };
 
-            extension.clearMatchesWithUnknownTeams({
+            clearMatchesWithUnknownTeams({
                 teams: [
                     { id: 'aaa' },
                     { id: 'bbb' }
                 ]
             } as TournamentData);
 
-            expect(nodecg.replicants.matchStore.value).toEqual({
+            expect(replicants.matchStore).toEqual({
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
@@ -196,12 +185,12 @@ describe('matchStore', () => {
         });
 
         it('sets active round data if active round is using a now deleted match', () => {
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 match: {
                     id: 'cccc'
                 }
             };
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
@@ -219,7 +208,7 @@ describe('matchStore', () => {
                 }
             };
 
-            extension.clearMatchesWithUnknownTeams({
+            clearMatchesWithUnknownTeams({
                 teams: [
                     { id: 'aaa' },
                     { id: 'bbb' },
@@ -227,20 +216,17 @@ describe('matchStore', () => {
                 ]
             } as TournamentData);
 
-            expect(mockActiveRoundHelper.setActiveRoundGames)
-                .toHaveBeenCalledWith(nodecg.replicants.activeRound.value, 'aaaa');
-            expect(mockActiveRoundHelper.setActiveRoundTeams)
-                .toHaveBeenCalledWith(nodecg.replicants.activeRound.value, 'aaa', 'bbb');
+            expect(mockMatchStoreHelper.setActiveRoundToFirstMatch).toHaveBeenCalled();
         });
 
         it('creates match from first round if all matches are to be deleted', () => {
             mockGenerateId.generateId.mockReturnValue('idid');
-            nodecg.replicants.activeRound.value = {
+            replicants.activeRound = {
                 match: {
                     id: 'cccc'
                 }
             };
-            nodecg.replicants.matchStore.value = {
+            replicants.matchStore = {
                 aaaa: {
                     teamA: { id: 'aaa' },
                     teamB: { id: 'bbb' },
@@ -257,7 +243,7 @@ describe('matchStore', () => {
                     meta: { name: 'Round 3', isCompleted: false }
                 }
             };
-            nodecg.replicants.roundStore.value = {
+            replicants.roundStore = {
                 aaaa: {
                     meta: { name: 'Round 1', type: PlayType.BEST_OF },
                     games: [
@@ -267,7 +253,7 @@ describe('matchStore', () => {
                 }
             };
 
-            extension.clearMatchesWithUnknownTeams({
+            clearMatchesWithUnknownTeams({
                 teams: [
                     { id: 'ggg' },
                     { id: 'mmm' },
@@ -275,31 +261,7 @@ describe('matchStore', () => {
                 ]
             } as TournamentData);
 
-            expect(nodecg.replicants.matchStore.value).toEqual({
-                idid: {
-                    teamA: {
-                        id: 'ggg',
-                        score: 0
-                    },
-                    teamB: {
-                        id: 'mmm',
-                        score: 0
-                    },
-                    meta: {
-                        isCompleted: false,
-                        name: 'Round 1',
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER }
-                    ]
-                }
-            });
-            expect(mockActiveRoundHelper.setActiveRoundGames)
-                .toHaveBeenCalledWith(nodecg.replicants.activeRound.value, 'idid');
-            expect(mockActiveRoundHelper.setActiveRoundTeams)
-                .toHaveBeenCalledWith(nodecg.replicants.activeRound.value, 'ggg', 'mmm');
+            expect(mockMatchStoreHelper.resetMatchStore).toHaveBeenCalled();
         });
     });
 });

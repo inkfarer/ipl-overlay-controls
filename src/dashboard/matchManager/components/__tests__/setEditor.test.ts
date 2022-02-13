@@ -5,6 +5,8 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { PlayType } from 'types/enums/playType';
+import { GameVersion } from 'types/enums/gameVersion';
+import { settingsStoreKey } from '../../../settings/settingsStore';
 
 describe('setEditor', () => {
     config.global.stubs = {
@@ -19,6 +21,16 @@ describe('setEditor', () => {
     const mockSwapRoundColor = jest.fn();
     const mockUpdateActiveGames = jest.fn();
     const mockResetActiveRound = jest.fn();
+
+    function createSettingsStore() {
+        return createStore({
+            state: {
+                runtimeConfig: {
+                    gameVersion: GameVersion.SPLATOON_2
+                }
+            }
+        });
+    }
 
     function createActiveRoundStore() {
         return createStore<ActiveRoundStore>({
@@ -114,9 +126,13 @@ describe('setEditor', () => {
 
     it('matches snapshot', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -172,9 +188,13 @@ describe('setEditor', () => {
                 }
             },
         ];
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -183,9 +203,13 @@ describe('setEditor', () => {
 
     it('matches snapshot when editing colors', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -197,9 +221,13 @@ describe('setEditor', () => {
 
     it('handles round reset', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -210,9 +238,13 @@ describe('setEditor', () => {
 
     it('handles round update', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -271,9 +303,13 @@ describe('setEditor', () => {
 
     it('has expected button color after changing round data', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
         const updateButton = wrapper.getComponent('[data-test="update-button"]');
@@ -289,9 +325,13 @@ describe('setEditor', () => {
 
     it('handles stage change', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -303,9 +343,13 @@ describe('setEditor', () => {
 
     it('handles mode change', () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -317,9 +361,13 @@ describe('setEditor', () => {
 
     it('handles winner change to none', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -331,9 +379,13 @@ describe('setEditor', () => {
 
     it('handles winner change to alpha', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -345,9 +397,13 @@ describe('setEditor', () => {
 
     it('handles winner change to bravo', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -359,9 +415,13 @@ describe('setEditor', () => {
 
     it('handles color change', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -382,9 +442,13 @@ describe('setEditor', () => {
 
     it('handles custom color change', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -407,9 +471,13 @@ describe('setEditor', () => {
 
     it('handles game color being set to custom', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -430,9 +498,13 @@ describe('setEditor', () => {
 
     it('handles game color being set off custom', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -453,9 +525,13 @@ describe('setEditor', () => {
 
     it('handles game colors getting swapped', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -467,9 +543,13 @@ describe('setEditor', () => {
 
     it('does not revert local changes on store update', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -537,9 +617,13 @@ describe('setEditor', () => {
 
     it('matches snapshot when active round updates to one with less games than the previous one', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
@@ -587,9 +671,13 @@ describe('setEditor', () => {
 
     it('matches snapshot when active round updates to one with more games than the previous one', async () => {
         const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [ [ store, activeRoundStoreKey ] ]
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
             }
         });
 
