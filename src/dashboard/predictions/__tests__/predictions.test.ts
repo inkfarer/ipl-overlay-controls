@@ -3,7 +3,7 @@ import { config, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { mockDialog, mockGetDialog, mockSendMessage } from '../../__mocks__/mockNodecg';
+import { mockDialog, mockGetDialog, mockSendMessage } from '../../../browser/__mocks__/mockNodecg';
 
 describe('Predictions', () => {
     const mockLockPrediction = jest.fn();

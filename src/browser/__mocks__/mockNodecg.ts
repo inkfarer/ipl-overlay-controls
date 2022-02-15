@@ -1,5 +1,5 @@
+import { Configschema } from '../../types/schemas';
 import { NodeCGBrowser } from 'nodecg/browser';
-import { Configschema } from 'schemas';
 
 const defaultBundleConfig = {
     lastfm: {

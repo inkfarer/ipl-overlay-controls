@@ -1,5 +1,5 @@
 import { highlightedMatchStore } from '../highlightedMatchStore';
-import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { mockSendMessage } from '../../../browser/__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 
 describe('highlightedMatchStore', () => {

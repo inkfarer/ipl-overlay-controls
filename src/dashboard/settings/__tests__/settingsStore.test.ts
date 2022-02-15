@@ -1,5 +1,5 @@
 import { settingsStore } from '../settingsStore';
-import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../../browser/__mocks__/mockNodecg';
 
 describe('settingsStore', () => {
     describe('setState', () => {

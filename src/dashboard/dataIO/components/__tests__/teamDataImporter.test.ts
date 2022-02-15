@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { mockBundleConfig } from '../../../__mocks__/mockNodecg';
+import { mockBundleConfig } from '../../../../browser/__mocks__/mockNodecg';
 import * as stringHelper from '../../../helpers/stringHelper';
 
 describe('teamDataImporter', () => {

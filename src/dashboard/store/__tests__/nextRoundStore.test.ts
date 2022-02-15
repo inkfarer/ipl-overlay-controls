@@ -1,5 +1,5 @@
 import { nextRoundStore } from '../nextRoundStore';
-import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../../browser/__mocks__/mockNodecg';
 import { NextRound } from 'schemas';
 
 describe('nextRoundStore', () => {

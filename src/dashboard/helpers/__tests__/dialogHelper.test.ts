@@ -1,4 +1,4 @@
-import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
+import { mockDialog, mockGetDialog } from '../../../browser/__mocks__/mockNodecg';
 import { closeDialog } from '../dialogHelper';
 
 describe('dialogHelper', () => {

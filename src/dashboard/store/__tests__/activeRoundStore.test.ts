@@ -1,6 +1,6 @@
 import { activeRoundStore } from '../activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
-import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../../browser/__mocks__/mockNodecg';
 
 describe('activeRoundStore', () => {
     describe('setState', () => {

@@ -5,7 +5,7 @@ import { PredictionStatus } from 'types/enums/predictionStatus';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
-import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
+import { mockDialog, mockGetDialog } from '../../../browser/__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
 

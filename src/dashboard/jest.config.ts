@@ -11,5 +11,5 @@ export default {
         '.*\\.(vue)$': '@vue/vue3-jest'
     },
     moduleDirectories: ['node_modules', 'src'],
-    setupFilesAfterEnv: ['./__mocks__/mockNodecg.ts']
+    setupFilesAfterEnv: ['../browser/__mocks__/mockNodecg.ts']
 };

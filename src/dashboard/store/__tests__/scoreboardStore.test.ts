@@ -1,5 +1,5 @@
 import { scoreboardStore } from '../scoreboardStore';
-import { replicants } from '../../__mocks__/mockNodecg';
+import { replicants } from '../../../browser/__mocks__/mockNodecg';
 import { ScoreboardData } from 'schemas';
 
 describe('scoreboardStore', () => {

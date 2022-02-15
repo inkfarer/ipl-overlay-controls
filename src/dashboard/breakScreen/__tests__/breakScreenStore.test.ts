@@ -1,5 +1,5 @@
 import { breakScreenStore } from '../breakScreenStore';
-import { replicants } from '../../__mocks__/mockNodecg';
+import { replicants } from '../../../browser/__mocks__/mockNodecg';
 import { NextRoundStartTime } from 'schemas';
 
 describe('breakScreenStore', () => {

@@ -1,5 +1,5 @@
 import { tournamentDataStore } from '../tournamentDataStore';
-import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { mockSendMessage, replicants } from '../../../browser/__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { TournamentData } from 'schemas';
 

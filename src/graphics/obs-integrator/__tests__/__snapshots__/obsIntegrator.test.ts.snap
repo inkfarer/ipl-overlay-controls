@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ObsIntegrator matches snapshot if obs version is too low 1`] = `
+"<div class=\\"layout vertical center-horizontal\\">
+  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning width-cap m-t-8\\" data-test=\\"outdated-plugin-warning\\" data-v-13b37b8d=\\"\\">
+    <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+      <!---->
+      <div class=\\"title\\">Outdated OBS version!</div> The installed OBS browser source plugin is out of date.<br> Integrations may not work on this version of OBS Studio.<br> Please update your OBS Studio version.
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`ObsIntegrator matches snapshot outside obs 1`] = `
+"<div class=\\"layout vertical center-horizontal\\">
+  <div class=\\"ipl-space color-dark width-cap\\" data-v-11398c0e=\\"\\">
+    <div class=\\"title\\">IPL-OC obs-integrator</div> Integrates with OBS Studio to automate common tasks during broadcast.
+  </div>
+</div>"
+`;
+
+exports[`ObsIntegrator matches snapshot within obs 1`] = `
+"<div class=\\"layout vertical center-horizontal\\">
+  <!--v-if-->
+</div>"
+`;

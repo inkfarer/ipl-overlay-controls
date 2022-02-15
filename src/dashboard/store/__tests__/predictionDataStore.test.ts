@@ -1,6 +1,6 @@
 import { predictionDataStore } from '../predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { mockSendMessage } from '../../../browser/__mocks__/mockNodecg';
 
 describe('predictionDataStore', () => {
     beforeEach(() => {

@@ -198,6 +198,7 @@
     "jest": {
         "projects": [
             "<rootDir>/src/dashboard/jest.config.ts",
+            "<rootDir>/src/graphics/jest.config.ts",
             "<rootDir>/src/extension/jest.config.ts",
             "<rootDir>/src/helpers/jest.config.ts"
         ]

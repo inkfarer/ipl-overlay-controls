@@ -4,7 +4,7 @@ import { createStore } from 'vuex';
 import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
-import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
+import { mockDialog, mockGetDialog } from '../../../browser/__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
 
