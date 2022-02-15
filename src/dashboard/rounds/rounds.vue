@@ -161,8 +161,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/colors';
-@import './src/dashboard/styles/constants';
+@import '../../browser/styles/colors';
+@import '../../browser/styles/constants';
 
 .top-bar-button {
     padding: 10px 20px;

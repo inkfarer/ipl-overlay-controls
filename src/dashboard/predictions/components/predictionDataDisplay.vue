@@ -122,7 +122,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/constants';
+@import '../../../browser/styles/constants';
 
 span.team-name {
     font-size: 1.25em;

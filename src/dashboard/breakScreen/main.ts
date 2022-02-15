@@ -1,4 +1,4 @@
-import '../styles/globalStyles.scss';
+import '../../browser/styles/globalStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import { breakScreenReps, breakScreenStore, breakScreenStoreKey } from './breakScreenStore';
 import Panel from './breakScreen.vue';

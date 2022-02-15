@@ -151,7 +151,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/colors';
+@import '../../../browser/styles/colors';
 
 .separator {
     width: 100%;

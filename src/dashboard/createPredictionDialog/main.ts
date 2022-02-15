@@ -1,5 +1,5 @@
-import '../styles/globalStyles.scss';
-import '../styles/dialogStyles.scss';
+import '../../browser/styles/globalStyles.scss';
+import '../../browser/styles/dialogStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import Panel from './createPredictionDialog.vue';
 import { createApp } from 'vue';

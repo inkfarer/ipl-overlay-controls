@@ -83,7 +83,7 @@ import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
 import { IplButton, IplExpandingSpace, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
-import { themeColors } from '../../styles/colors';
+import { themeColors } from '../../../browser/styles/colors';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
 
@@ -168,8 +168,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/colors';
-@import './src/dashboard/styles/constants';
+@import '../../../browser/styles/colors';
+@import '../../../browser/styles/constants';
 
 .colors-container {
     max-height: 180px;

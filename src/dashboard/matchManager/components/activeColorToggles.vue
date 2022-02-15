@@ -85,7 +85,7 @@ import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
 import { getContrastingTextColor } from '../../helpers/colorHelper';
-import { themeColors } from '../../styles/colors';
+import { themeColors } from '../../../browser/styles/colors';
 import { addDots } from '../../../helpers/stringHelper';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
@@ -164,8 +164,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/colors';
-@import './src/dashboard/styles/constants';
+@import '../../../browser/styles/colors';
+@import '../../../browser/styles/constants';
 
 span.team-name {
     align-self: flex-end;

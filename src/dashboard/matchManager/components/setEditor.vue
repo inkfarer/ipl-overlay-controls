@@ -292,8 +292,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './src/dashboard/styles/constants';
-@import './src/dashboard/styles/colors';
+@import '../../../browser/styles/constants';
+@import '../../../browser/styles/colors';
 
 .no-winner-button {
     height: 32px !important;

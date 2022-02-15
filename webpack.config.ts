@@ -12,9 +12,9 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-function dashboardConfig(): webpack.Configuration {
+function browserConfig(type: 'dashboard' | 'graphics'): webpack.Configuration {
     function getEntries(patterns: string[]): { [key: string]: string } {
-        return globby.sync(patterns, { cwd: 'src/dashboard' })
+        return globby.sync(patterns, { cwd: `src/${type}` })
             .reduce((prev, curr) => {
                 prev[path.basename(path.dirname(curr))] = `./${curr}`;
                 return prev;
@@ -30,7 +30,7 @@ function dashboardConfig(): webpack.Configuration {
                 filename: `${entryName}.html`,
                 chunks: [entryName],
                 title: entryName,
-                template: 'template.html'
+                template: '../browser/template.html'
             })
         ),
         new ForkTsCheckerWebpackPlugin({
@@ -56,14 +56,14 @@ function dashboardConfig(): webpack.Configuration {
     ];
 
     return {
-        context: path.resolve(__dirname, 'src/dashboard'),
+        context: path.resolve(__dirname, `src/${type}`),
         mode: isProd ? 'production' : 'development',
         target: 'web',
         entry: {
             ...entries
         },
         output: {
-            path: path.resolve(__dirname, 'dashboard'),
+            path: path.resolve(__dirname, type),
             filename: 'js/[name].js'
         },
         resolve: {
@@ -166,6 +166,7 @@ const extensionConfig: webpack.Configuration = {
 };
 
 export default [
-    dashboardConfig(),
+    browserConfig('dashboard'),
+    browserConfig('graphics'),
     extensionConfig
 ];

@@ -1,13 +1,14 @@
-@import './layout.scss';
-@import './colors.scss';
-@import './badges.scss';
-@import './constants.scss';
+@import 'layout';
+@import 'colors';
+@import 'badges';
+@import 'constants';
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 body {
     margin: 8px;
     font-family: 'Roboto', sans-serif;
+    color: $text-color;
 }
 
 .title {
@@ -59,4 +60,8 @@ a {
 
 .wrap-anywhere {
     overflow-wrap: anywhere;
+}
+
+.width-cap {
+    max-width: 500px;
 }

@@ -1,4 +1,4 @@
-import '../styles/globalStyles.scss';
+import '../../browser/styles/globalStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import { createApp } from 'vue';
 import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';

@@ -1,4 +1,4 @@
-import '../styles/globalStyles.scss';
+import '../../browser/styles/globalStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import Panel from './nextMatch.vue';
 import { createApp } from 'vue';

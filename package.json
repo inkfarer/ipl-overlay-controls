@@ -119,6 +119,13 @@
                 "file": "resolvePredictionDialog.html",
                 "dialog": true
             }
+        ],
+        "graphics": [
+            {
+                "file": "obs-integrator.html",
+                "width": 1920,
+                "height": 1080
+            }
         ]
     },
     "repository": "https://github.com/nodecg/nodecg.git",

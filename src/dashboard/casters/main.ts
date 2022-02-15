@@ -1,4 +1,4 @@
-import '../styles/globalStyles.scss';
+import '../../browser/styles/globalStyles.scss';
 import { setUpReplicants } from '../helpers/storeHelper';
 import { castersReps, casterStore, casterStoreKey } from '../store/casterStore';
 import Panel from './casters.vue';
