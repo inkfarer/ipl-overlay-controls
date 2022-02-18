@@ -22,7 +22,6 @@
             v-model="settings.guildID"
             name="guild-id"
             label="Guild ID"
-            :validator="v.guildId"
             @focuschange="handleFocusEvent"
         />
         <ipl-button
@@ -45,7 +44,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import { IplButton, IplInput, IplSpace, IplCheckbox, IplMessage } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSpace, IplCheckbox, IplMessage, provideValidators } from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
@@ -74,8 +73,9 @@ export default defineComponent({
         ));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
         const validators = {
-            guildId: validator(() => settings.value.guildID, true, minLength(17), numeric)
+            'guild-id': validator(() => settings.value.guildID, true, minLength(17), numeric)
         };
+        provideValidators(validators);
 
         store.watch(store => store.radiaSettings.guildID, newValue => {
             if (!isFocused.value) {
@@ -107,8 +107,7 @@ export default defineComponent({
             },
             async attemptRadiaReconnect(): Promise<void> {
                 return store.dispatch('attemptRadiaConnection');
-            },
-            v: validators
+            }
         };
     }
 });

@@ -18,7 +18,7 @@ exports[`Rounds matches snapshot 1`] = `
     <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
   </div>
 </div>
-<div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11398c0e=\\"\\">
+<div class=\\"ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11cc5f1c=\\"\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"menu-icon\\"></font-awesome-icon-stub> All Rounds
 </div>
 <round-editor-stub roundid=\\"2426\\" round=\\"[object Object]\\" isnewround=\\"false\\" class=\\"m-t-8\\" data-test=\\"round-editor\\"></round-editor-stub>"
@@ -29,15 +29,15 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
 <div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active\\" data-v-2b6fb510=\\"\\">
   <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
   <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-light\\" data-v-11398c0e=\\"\\">
+    <div class=\\"ipl-space color-light\\" data-v-11cc5f1c=\\"\\">
       <ipl-button-stub label=\\"Reset rounds\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"reset-rounds-button\\"></ipl-button-stub>
     </div>
-    <div class=\\"ipl-space color-light layout horizontal m-t-8\\" data-v-11398c0e=\\"\\">
+    <div class=\\"ipl-space color-light layout horizontal m-t-8\\" data-v-11cc5f1c=\\"\\">
       <div class=\\"color-key color-key-next\\"></div> Next round
     </div>
-    <div class=\\"ipl-space color-light m-t-8 round-option selected is-next-round\\" data-test=\\"round-option-2426\\" data-v-11398c0e=\\"\\">dope round the third</div>
-    <div class=\\"ipl-space color-light m-t-8 round-option\\" data-test=\\"round-option-9573\\" data-v-11398c0e=\\"\\">dope round the second</div>
-    <div class=\\"ipl-space color-light m-t-8 round-option\\" data-test=\\"round-option-0387\\" data-v-11398c0e=\\"\\">dope round</div>
+    <div class=\\"ipl-space color-blue clickable m-t-8 round-option is-next-round\\" data-test=\\"round-option-2426\\" data-v-11cc5f1c=\\"\\">dope round the third</div>
+    <div class=\\"ipl-space color-light clickable m-t-8 round-option\\" data-test=\\"round-option-9573\\" data-v-11cc5f1c=\\"\\">dope round the second</div>
+    <div class=\\"ipl-space color-light clickable m-t-8 round-option\\" data-test=\\"round-option-0387\\" data-v-11cc5f1c=\\"\\">dope round</div>
   </div>
 </div>
 <div class=\\"ipl-expansion-panel__content\\" data-v-40cedb04=\\"\\">
@@ -55,7 +55,7 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
     <ipl-button-stub label=\\"7 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"new-7-game-round\\"></ipl-button-stub>
   </div>
 </div>
-<div class=\\"ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11398c0e=\\"\\">
+<div class=\\"ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8\\" data-test=\\"open-all-rounds-sidebar\\" data-v-11cc5f1c=\\"\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"menu-icon\\"></font-awesome-icon-stub> All Rounds
 </div>
 <round-editor-stub roundid=\\"2426\\" round=\\"[object Object]\\" isnewround=\\"false\\" class=\\"m-t-8\\" data-test=\\"round-editor\\"></round-editor-stub>"

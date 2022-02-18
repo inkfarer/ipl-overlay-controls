@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name wrap-anywhere\\">Team One</span><span class=\\"max-width text-small team-name wrap-anywhere text-right m-l-6\\">Team Two (Really long name for te...</span></div>
   <div class=\\"layout horizontal m-t-4\\">
     <div class=\\"color-display\\" data-test=\\"team-a-color-display\\"></div>

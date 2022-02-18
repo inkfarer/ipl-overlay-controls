@@ -19,12 +19,12 @@
         <ipl-space
             v-for="(round, key) in rounds"
             :key="`round_${key}`"
-            color="light"
+            :color="selectedRoundId === key ? 'blue' : 'light'"
             class="m-t-8 round-option"
             :class="{
-                selected: selectedRoundId === key,
                 'is-next-round': nextRoundId === key
             }"
+            clickable
             :data-test="`round-option-${key}`"
             @click="selectRound(key)"
         >
@@ -60,6 +60,7 @@
     <ipl-space
         class="layout horizontal center-vertical round-menu-space m-t-8"
         data-test="open-all-rounds-sidebar"
+        clickable
         @click="openRoundSidebar = true"
     >
         <font-awesome-icon
@@ -82,7 +83,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import { IplButton, IplSpace, IplSidebar, IplExpandingSpace } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplSpace,
+    IplSidebar,
+    IplExpandingSpace
+} from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { RoundStore } from 'schemas';
 import isEqual from 'lodash/isEqual';
@@ -185,23 +191,8 @@ export default defineComponent({
 }
 
 .round-option {
-    user-select: none;
-    cursor: pointer;
-    transition-duration: $transition-duration-low;
     position: relative;
     overflow-wrap: anywhere;
-
-    &.selected {
-        background-color: $blue;
-
-        &:hover {
-            background-color: $blue-hover;
-        }
-
-        &:active {
-            background-color: $blue-active;
-        }
-    }
 
     &.is-next-round {
         padding-right: 16px;
@@ -217,14 +208,6 @@ export default defineComponent({
             border-right: 8px solid $yellow;
         }
     }
-
-    &:hover {
-        background-color: $background-secondary-hover;
-    }
-
-    &:active {
-        background-color: $background-secondary-active;
-    }
 }
 
 .menu-icon {
@@ -233,8 +216,6 @@ export default defineComponent({
 }
 
 .round-menu-space {
-    user-select: none;
-    cursor: pointer;
     font-weight: 500;
 }
 </style>

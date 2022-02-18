@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ManualTeamPicker matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <div class=\\"layout horizontal\\">
     <team-select-stub modelvalue=\\"123123\\" label=\\"Team A\\" data-test=\\"team-a-selector\\"></team-select-stub>
     <team-select-stub modelvalue=\\"345345\\" label=\\"Team B\\" class=\\"m-l-8\\" data-test=\\"team-b-selector\\"></team-select-stub>

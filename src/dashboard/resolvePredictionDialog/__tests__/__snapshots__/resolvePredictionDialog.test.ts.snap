@@ -10,7 +10,7 @@ exports[`ResolvePredictionDialog matches snapshot when the current round is not 
   </div>
 </div>
 <!--v-if-->
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the prediction is not locked 1`] = `
@@ -39,7 +39,7 @@ exports[`ResolvePredictionDialog matches snapshot when the winner cannot be dete
     <!----> Unable to determine the current round's winner. The leading team is unknown team b.
   </div>
 </div>
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team A 1`] = `
@@ -52,7 +52,7 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
   </div>
 </div>
 <!--v-if-->
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\"><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\"><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team B 1`] = `
@@ -65,7 +65,7 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
   </div>
 </div>
 <!--v-if-->
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label winner-label\\" data-v-7e7be68d=\\"\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be determined 1`] = `
@@ -84,7 +84,7 @@ exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be
     <!--v-if-->
   </div>
 </div>
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\"><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label class=\\"ipl-label\\" data-v-7e7be68d=\\"\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot with missing prediction data 1`] = `

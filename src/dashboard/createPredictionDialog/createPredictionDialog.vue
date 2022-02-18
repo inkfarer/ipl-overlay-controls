@@ -21,7 +21,6 @@
                 label="Title"
                 name="title"
                 class="title-input"
-                :validator="validators.title"
             />
             <ipl-input
                 v-model="duration"
@@ -30,7 +29,6 @@
                 name="duration"
                 type="number"
                 class="m-l-6 duration-input"
-                :validator="validators.duration"
             />
         </div>
         <div class="layout horizontal m-t-4">
@@ -39,14 +37,12 @@
                 name="team-a-name"
                 class="max-width"
                 label="Team A"
-                :validator="validators.teamAName"
             />
             <ipl-input
                 v-model="teamBName"
                 name="team-b-name"
                 class="max-width m-l-6"
                 label="Team B"
-                :validator="validators.teamBName"
             />
         </div>
         <ipl-button
@@ -63,17 +59,26 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import { IplButton, IplSpace, IplInput, IplDialogTitle, IplMessage } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplSpace,
+    IplInput,
+    IplDialogTitle,
+    IplMessage,
+    validator,
+    maxLength,
+    minValue,
+    maxValue,
+    allValid,
+    provideValidators
+} from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { addDots } from '../../helpers/stringHelper';
-import { allValid, validator } from '../helpers/validation/validator';
-import { maxLength } from '../helpers/validation/stringValidators';
-import { maxValue, minValue } from '../helpers/validation/numberValidators';
 import { usePredictionDataStore } from '../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NodecgDialog } from '../types/dialog';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { closeDialog } from '../helpers/dialogHelper';
+import { addDots } from '../../helpers/stringHelper';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
@@ -91,9 +96,10 @@ export default defineComponent({
         const validators = {
             title: validator(title, true, maxLength(45)),
             duration: validator(duration, true, minValue(1), maxValue(1800)),
-            teamAName: validator(teamAName, false, maxLength(25)),
-            teamBName: validator(teamBName, false, maxLength(25))
+            'team-a-name': validator(teamAName, false, maxLength(25)),
+            'team-b-name': validator(teamBName, false, maxLength(25))
         };
+        provideValidators(validators);
 
         nextRoundStore.watch(state => state.nextRound, (newValue, oldValue) => {
             if (newValue.teamA.name !== oldValue?.teamA.name) teamAName.value = addDots(newValue.teamA.name, 25);
@@ -105,7 +111,6 @@ export default defineComponent({
             duration,
             teamAName,
             teamBName,
-            validators,
             allValid: computed(() => allValid(validators)),
             isActivePredictionUnresolved: computed(() => [PredictionStatus.ACTIVE, PredictionStatus.LOCKED]
                 .includes(predictionDataStore.state.predictionStore.currentPrediction?.status as PredictionStatus)),
