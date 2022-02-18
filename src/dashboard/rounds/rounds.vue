@@ -65,7 +65,7 @@
     >
         <font-awesome-icon
             icon="bars"
-            class="menu-icon"
+            class="large-icon m-r-8"
         />
         All Rounds
     </ipl-space>
@@ -208,14 +208,5 @@ export default defineComponent({
             border-right: 8px solid $yellow;
         }
     }
-}
-
-.menu-icon {
-    font-size: 1.25em;
-    margin-right: 8px;
-}
-
-.round-menu-space {
-    font-weight: 500;
 }
 </style>
