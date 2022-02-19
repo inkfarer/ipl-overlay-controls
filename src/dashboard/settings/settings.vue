@@ -30,11 +30,15 @@
         class="m-t-8"
     />
     <radia-settings
-        v-if="visibleSection === 'radia'"
+        v-else-if="visibleSection === 'radia'"
         class="m-t-8"
     />
     <runtime-config
-        v-if="visibleSection === 'gameVersion'"
+        v-else-if="visibleSection === 'gameVersion'"
+        class="m-t-8"
+    />
+    <obs-socket-settings
+        v-else-if="visibleSection === 'obs-socket'"
         class="m-t-8"
     />
 </template>
@@ -49,19 +53,22 @@ import { IplSidebar, IplSpace } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import ObsSocketSettings from './components/obsSocketSettings.vue';
 
 library.add(faBars);
 
 const settingsSections = {
     lastfm: 'Last.fm',
     radia: 'Radia',
-    gameVersion: 'Game version'
+    gameVersion: 'Game version',
+    'obs-socket': 'OBS Socket'
 };
 
 export default defineComponent({
     name: 'Settings',
 
     components: {
+        ObsSocketSettings,
         FontAwesomeIcon,
         IplSidebar,
         IplSpace,
@@ -73,7 +80,7 @@ export default defineComponent({
 
     setup() {
         return {
-            visibleSection: ref<keyof typeof settingsSections>('radia'),
+            visibleSection: ref<keyof typeof settingsSections>('obs-socket'),
             showSidebar: ref(false),
             settingsSections
         };

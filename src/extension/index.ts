@@ -2,6 +2,7 @@ import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
+import { ObsCredentials } from '../types/schemas';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG & NodeCGStatic): void => {
@@ -22,6 +23,9 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/runtimeConfig');
     require('./replicants/scoreboardData');
     require('./versionChecker');
+
+    const { connect } = require('./obsSocket');
+    connect(nodecg.Replicant<ObsCredentials>('obsCredentials').value);
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');

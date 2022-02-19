@@ -1,0 +1,20 @@
+import { obsStore } from '../obsStore';
+import { mockSendMessage } from '../../__mocks__/mockNodecg';
+
+describe('obsStore', () => {
+    describe('setState', () => {
+        it('updates state', () => {
+            obsStore.commit('setState', { name: 'obsData', val: { foo: 'bar' } });
+
+            expect(obsStore.state.obsData).toEqual({ foo: 'bar' });
+        });
+    });
+
+    describe('connect', () => {
+        it('sends message to connect to OBS', () => {
+            obsStore.dispatch('connect', { address: 'localhost', password: 'pwd' });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('connectToObs', { address: 'localhost', password: 'pwd' });
+        });
+    });
+});

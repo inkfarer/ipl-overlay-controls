@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "required": ["status"],
+    "properties": {
+        "status": {
+            "type": "string",
+            "enum": ["CONNECTED", "CONNECTING", "NOT_CONNECTED"]
+        },
+        "scenes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "transitions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "gameplayScene": {
+            "type": "string"
+        },
+        "intermissionScene": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "default": {
+        "status": "NOT_CONNECTED"
+    }
+}

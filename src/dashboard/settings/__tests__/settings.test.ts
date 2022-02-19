@@ -6,6 +6,7 @@ describe('Settings', () => {
         IplErrorDisplay: true,
         LastfmSettings: true,
         RadiaSettings: true,
+        ObsSocketSettings: true,
         RuntimeConfig: true,
         FontAwesomeIcon: true
     };
@@ -16,7 +17,7 @@ describe('Settings', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it.each(['lastfm', 'radia', 'gameVersion'])('matches snapshot when section %s is selected', async (section) => {
+    it.each(['lastfm', 'radia', 'gameVersion', 'obs-socket'])('matches snapshot when section %s is selected', async (section) => {
         const wrapper = mount(Settings);
 
         wrapper.getComponent('[data-test="open-sidebar-button"]').vm.$emit('click');
