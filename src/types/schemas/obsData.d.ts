@@ -9,6 +9,7 @@ export interface ObsData {
 	status: 'CONNECTED' | 'CONNECTING' | 'NOT_CONNECTED';
 	scenes?: string[];
 	transitions?: string[];
+	currentScene?: string;
 	gameplayScene?: string;
 	intermissionScene?: string;
 	transition?: string;

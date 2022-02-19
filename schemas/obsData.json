@@ -19,6 +19,9 @@
                 "type": "string"
             }
         },
+        "currentScene": {
+            "type": "string"
+        },
         "gameplayScene": {
             "type": "string"
         },

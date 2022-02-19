@@ -113,6 +113,16 @@ describe('obsSocket', () => {
         });
     });
 
+    describe('event: SwitchScenes', () => {
+        it('updates current scene', () => {
+            socketEventCallbacks.SwitchScenes({
+                'scene-name': 'New Scene'
+            });
+
+            expect((replicants.obsData as ObsData).currentScene).toEqual('New Scene');
+        });
+    });
+
     describe('connectToObs', () => {
         it('connects to OBS socket with provided credentials', async () => {
             const cb = jest.fn();
@@ -139,6 +149,11 @@ describe('obsSocket', () => {
                 messageId: '',
                 status: 'ok'
             });
+            mockObsWebSocket.send.calledWith('GetCurrentScene').mockResolvedValue({
+                name: 'Current Scene',
+                messageId: '',
+                status: 'ok'
+            });
 
             await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
 
@@ -146,9 +161,11 @@ describe('obsSocket', () => {
             const obsData = replicants.obsData as ObsData;
             expect(obsData.scenes).toEqual(['Scene One', 'Scene Two']);
             expect(obsData.transitions).toEqual(['Cut', 'Fade']);
-            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(2);
+            expect(obsData.currentScene).toEqual('Current Scene');
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetTransitionList');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
         });
 
         it('does not get scene and transition data if connecting to socket fails', async () => {

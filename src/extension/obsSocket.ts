@@ -36,6 +36,10 @@ socket.on('ScenesChanged', scenes => {
     obsData.value.scenes = scenes.scenes.map(scene => scene.name);
 });
 
+socket.on('SwitchScenes', event => {
+    obsData.value.currentScene = event['scene-name'];
+});
+
 socket.on('TransitionListChanged', transitions => {
     obsData.value.transitions = transitions.transitions.map(transition => transition.name);
 });
@@ -60,7 +64,7 @@ async function connect(credentials: ObsCredentials): Promise<void> {
             password: isBlank(credentials.password) ? undefined : credentials.password
         });
 
-        await getScenesAndTransitions();
+        await fetchObsData();
     } catch (e) {
         obsData.value.status = ObsStatus.NOT_CONNECTED;
         throw new Error(e.description ?? e.error ?? e);
@@ -81,11 +85,13 @@ export async function tryToConnect(credentials: ObsCredentials, doLog = true): P
     }
 }
 
-async function getScenesAndTransitions() {
+async function fetchObsData() {
     try {
         const scenes = await socket.send('GetSceneList');
         const transitions = await socket.send('GetTransitionList');
+        const currentScene = await socket.send('GetCurrentScene');
 
+        obsData.value.currentScene = currentScene.name;
         obsData.value.scenes = scenes.scenes.map(scene => scene.name);
         obsData.value.transitions = transitions.transitions.map(transition => transition.name);
     } catch (e) {
