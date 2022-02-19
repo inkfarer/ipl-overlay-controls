@@ -25,8 +25,8 @@ export const obsStore = createStore<ObsStore>({
         }
     },
     actions: {
-        connect(store, { address, password }: { address: string, password?: string }): void {
-            nodecg.sendMessage('connectToObs', { address, password });
+        async connect(store, { address, password }: { address: string, password?: string }): Promise<void> {
+            return nodecg.sendMessage('connectToObs', { address, password });
         }
     }
 });

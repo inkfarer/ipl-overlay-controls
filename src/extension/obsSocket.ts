@@ -18,8 +18,8 @@ socket.on('error', e => {
 });
 
 socket.on('ConnectionClosed', () => {
+    nodecg.log.info('OBS websocket is closed.');
     if (obsData.value.status === ObsStatus.CONNECTED) {
-        nodecg.log.info('OBS websocket is closed.');
         obsData.value.status = ObsStatus.NOT_CONNECTED;
         reconnect();
     }
@@ -41,7 +41,7 @@ socket.on('TransitionListChanged', transitions => {
 
 function reconnect() {
     stopReconnecting();
-    reconnectionInterval = setInterval(() => connect(obsCredentials.value), 5000);
+    reconnectionInterval = setInterval(() => tryToConnect(obsCredentials.value), 5000);
 }
 
 function stopReconnecting() {
@@ -49,11 +49,10 @@ function stopReconnecting() {
     reconnectionInterval = null;
 }
 
-export async function connect(credentials: ObsCredentials): Promise<void> {
+async function connect(credentials: ObsCredentials): Promise<void> {
     socket.disconnect();
     obsData.value.status = ObsStatus.CONNECTING;
 
-    nodecg.log.info('Connecting to OBS websocket...');
     try {
         await socket.connect({
             address: credentials.address,
@@ -62,8 +61,17 @@ export async function connect(credentials: ObsCredentials): Promise<void> {
 
         await getScenesAndTransitions();
     } catch (e) {
-        nodecg.log.error('Failed to connect to OBS websocket:', e.description ?? e.error ?? e);
         obsData.value.status = ObsStatus.NOT_CONNECTED;
+        throw new Error(e.description ?? e.error ?? e);
+    }
+}
+
+export async function tryToConnect(credentials: ObsCredentials): Promise<void> {
+    nodecg.log.info('Connecting to OBS websocket...');
+    try {
+        await connect(credentials);
+    } catch (e) {
+        nodecg.log.error('Failed to connect to OBS websocket:', e.message);
         reconnect();
     }
 }
@@ -83,6 +91,12 @@ async function getScenesAndTransitions() {
 nodecg.listenFor('connectToObs', async (data: ObsCredentials, callback: UnhandledListenForCb) => {
     obsCredentials.value = data;
     stopReconnecting();
-    await connect(data);
-    callback();
+    try {
+        await connect(data);
+    } catch (e) {
+        reconnect();
+        return callback(e);
+    }
+
+    callback(null);
 });

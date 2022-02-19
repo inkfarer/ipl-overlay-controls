@@ -19,6 +19,9 @@
             :color="isChanged ? 'red' : 'blue'"
             :disabled="!allValid"
             data-test="socket-connect-button"
+            async
+            progress-message="Connecting..."
+            success-message="Connected!"
             @click="connect"
         />
         <ipl-space
@@ -78,7 +81,7 @@ export default defineComponent({
             statusText: computed(() => ObsStatusHelper.toPrettyString(obsStore.state.obsData.status as ObsStatus)),
             status: computed(() => obsStore.state.obsData.status),
             connect() {
-                obsStore.dispatch('connect', { address: socketUrl.value, password: socketPassword.value });
+                return obsStore.dispatch('connect', { address: socketUrl.value, password: socketPassword.value });
             }
         };
     }
