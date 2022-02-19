@@ -3,9 +3,9 @@
 exports[`ResolvePredictionDialog matches snapshot when the current round is not completed 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The current round has not been completed!
   </div>
 </div>
@@ -16,9 +16,9 @@ exports[`ResolvePredictionDialog matches snapshot when the current round is not 
 exports[`ResolvePredictionDialog matches snapshot when the prediction is not locked 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> This prediction cannot be resolved right now.
   </div>
 </div>"
@@ -27,15 +27,15 @@ exports[`ResolvePredictionDialog matches snapshot when the prediction is not loc
 exports[`ResolvePredictionDialog matches snapshot when the winner cannot be determined automatically 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The current round has not been completed!
   </div>
 </div>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> Unable to determine the current round's winner. The leading team is unknown team b.
   </div>
 </div>
@@ -45,9 +45,9 @@ exports[`ResolvePredictionDialog matches snapshot when the winner cannot be dete
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team A 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The current round has not been completed!
   </div>
 </div>
@@ -58,9 +58,9 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team B 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The current round has not been completed!
   </div>
 </div>
@@ -71,15 +71,15 @@ exports[`ResolvePredictionDialog matches snapshot when the winner is determined 
 exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be determined 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The current round has not been completed!
   </div>
 </div>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> Unable to determine the current round's winner.
     <!--v-if-->
   </div>
@@ -90,9 +90,9 @@ exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be
 exports[`ResolvePredictionDialog matches snapshot with missing prediction data 1`] = `
 "<ipl-dialog-title-stub title=\\"Resolve Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> No prediction data loaded.
   </div>
 </div>"

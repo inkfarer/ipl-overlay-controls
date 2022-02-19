@@ -1,19 +1,21 @@
 <template>
     <div
         v-if="Object.keys(recentErrors).length > 0"
-        class="max-width layout vertical center-horizontal"
+        class="layout vertical center-horizontal"
     >
         <ipl-message
             v-for="(err, key, index) in recentErrors"
             :key="key"
             type="error"
             closeable
-            class="mw-2"
+            class="error-message"
             :class="{'m-t-8': index > 0}"
             :data-test="`recent-error-${key}`"
             @close="removeMessage(key)"
         >
-            {{ addDots(err.message ?? err, 256) }}
+            <div class="max-width">
+                {{ addDots(err.message ?? err, 256) }}
+            </div>
         </ipl-message>
     </div>
 </template>
@@ -42,3 +44,10 @@ export default defineComponent({
     }
 });
 </script>
+
+<style lang="scss">
+.error-message {
+    min-width: 236px;
+    max-width: 272px;
+}
+</style>

@@ -18,9 +18,9 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
 exports[`CreatePredictionDialog matches snapshot when existing prediction is active 1`] = `
 "<ipl-dialog-title-stub title=\\"Create Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"
@@ -29,9 +29,9 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is act
 exports[`CreatePredictionDialog matches snapshot when existing prediction is locked 1`] = `
 "<ipl-dialog-title-stub title=\\"Create Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"

@@ -11,9 +11,9 @@ exports[`HighlightedMatchViewer matches snapshot 1`] = `
 `;
 
 exports[`HighlightedMatchViewer matches snapshot when no matches are loaded 1`] = `
-"<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+"<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-info\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> No matches loaded.
   </div>
 </div>"

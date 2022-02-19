@@ -1,17 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`IplErrorDisplay matches snapshot with errors 1`] = `
-"<div class=\\"max-width layout vertical center-horizontal\\">
-  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2\\" data-test=\\"recent-error-a\\" data-v-13b37b8d=\\"\\">
-    <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-    <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
-      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>Error!
+"<div class=\\"mw-2\\">
+  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2\\" data-test=\\"recent-error-a\\" data-v-5541e800=\\"\\">
+    <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"message-content\\" data-v-5541e800=\\"\\">
+      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+      <div class=\\"max-width\\">Error!</div>
     </div>
   </div>
-  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2 m-t-8\\" data-test=\\"recent-error-b\\" data-v-13b37b8d=\\"\\">
-    <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-    <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
-      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...
+  <div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-error mw-2 m-t-8\\" data-test=\\"recent-error-b\\" data-v-5541e800=\\"\\">
+    <font-awesome-icon-stub icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+    <div class=\\"message-content\\" data-v-5541e800=\\"\\">
+      <font-awesome-icon-stub icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"close-button\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+      <div class=\\"max-width\\">Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...</div>
     </div>
   </div>
 </div>"
