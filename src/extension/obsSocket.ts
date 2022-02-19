@@ -18,15 +18,15 @@ socket.on('error', e => {
 });
 
 socket.on('ConnectionClosed', () => {
-    nodecg.log.info('OBS websocket is closed.');
     if (obsData.value.status === ObsStatus.CONNECTED) {
+        nodecg.log.info('OBS websocket is closed.');
         obsData.value.status = ObsStatus.NOT_CONNECTED;
         reconnect();
     }
 });
 
 socket.on('ConnectionOpened', () => {
-    nodecg.log.info('Connected to OBS websocket');
+    nodecg.log.info('OBS websocket is open.');
     obsData.value.status = ObsStatus.CONNECTED;
     stopReconnecting();
 });
@@ -41,7 +41,7 @@ socket.on('TransitionListChanged', transitions => {
 
 function reconnect() {
     stopReconnecting();
-    reconnectionInterval = setInterval(() => tryToConnect(obsCredentials.value), 5000);
+    reconnectionInterval = setInterval(() => tryToConnect(obsCredentials.value, false), 5000);
 }
 
 function stopReconnecting() {
@@ -66,12 +66,16 @@ async function connect(credentials: ObsCredentials): Promise<void> {
     }
 }
 
-export async function tryToConnect(credentials: ObsCredentials): Promise<void> {
-    nodecg.log.info('Connecting to OBS websocket...');
+export async function tryToConnect(credentials: ObsCredentials, doLog = true): Promise<void> {
+    if (doLog) {
+        nodecg.log.info('Connecting to OBS websocket...');
+    }
     try {
         await connect(credentials);
     } catch (e) {
-        nodecg.log.error('Failed to connect to OBS websocket:', e.message);
+        if (doLog) {
+            nodecg.log.error('Failed to connect to OBS websocket:', e.message);
+        }
         reconnect();
     }
 }
