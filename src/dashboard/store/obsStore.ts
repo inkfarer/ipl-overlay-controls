@@ -31,6 +31,12 @@ export const obsStore = createStore<ObsStore>({
         },
         async setData(store, data: SetObsDataRequest): Promise<void> {
             return nodecg.sendMessage('setObsData', data);
+        },
+        async startGame(): Promise<void> {
+            return nodecg.sendMessage('startGame');
+        },
+        async endGame(): Promise<void> {
+            return nodecg.sendMessage('endGame');
         }
     }
 });

@@ -1,9 +1,9 @@
 import OBSWebSocket from 'obs-websocket-js';
 import { mock } from 'jest-mock-extended';
-import { UnknownFunction } from '../../helpers/__mocks__/module';
-import { messageListeners, replicants } from '../__mocks__/mockNodecg';
-import { ObsStatus } from '../../types/enums/ObsStatus';
-import { ObsData } from '../../types/schemas';
+import { UnknownFunction } from '../../../helpers/__mocks__/module';
+import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
+import { ObsStatus } from '../../../types/enums/ObsStatus';
+import { ObsData } from '../../../types/schemas';
 const mockObsWebSocket = mock<OBSWebSocket>();
 const mockObsWebSocketClass = jest.fn().mockReturnValue(mockObsWebSocket);
 jest.mock('obs-websocket-js', () => ({ __esModule: true, default: mockObsWebSocketClass }));
@@ -16,6 +16,8 @@ describe('obsSocket', () => {
         return this;
     });
 
+    const { setCurrentScene } = require('../obsSocket');
+
     replicants.obsData = { status: ObsStatus.NOT_CONNECTED };
     beforeEach(() => {
         replicants.obsData = { status: ObsStatus.NOT_CONNECTED };
@@ -24,8 +26,6 @@ describe('obsSocket', () => {
         jest.restoreAllMocks();
         jest.clearAllMocks();
         jest.useFakeTimers();
-
-        require('../obsSocket');
     });
 
     afterEach(() => {
@@ -273,6 +273,14 @@ describe('obsSocket', () => {
                 intermissionScene: 'scene-two',
                 transition: 'transition-1'
             });
+        });
+    });
+
+    describe('setCurrentScene', () => {
+        it('sends message to set current scene', async () => {
+            await setCurrentScene('new-scene');
+
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('SetCurrentScene', { 'scene-name': 'new-scene' });
         });
     });
 });

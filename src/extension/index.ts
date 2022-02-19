@@ -24,8 +24,9 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/scoreboardData');
     require('./versionChecker');
 
-    const { tryToConnect } = require('./obsSocket');
+    const { tryToConnect } = require('./automation/obsSocket');
     tryToConnect(nodecg.Replicant<ObsCredentials>('obsCredentials').value);
+    require('./automation/endStartGame');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');

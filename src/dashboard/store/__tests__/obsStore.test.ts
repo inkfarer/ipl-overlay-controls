@@ -25,4 +25,20 @@ describe('obsStore', () => {
             expect(mockSendMessage).toHaveBeenCalledWith('setObsData', { address: '192.168.1.2' });
         });
     });
+
+    describe('startGame', () => {
+        it('sends message to extension', () => {
+            obsStore.dispatch('startGame');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('startGame');
+        });
+    });
+
+    describe('endGame', () => {
+        it('sends message to extension', () => {
+            obsStore.dispatch('endGame');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('endGame');
+        });
+    });
 });

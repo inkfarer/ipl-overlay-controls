@@ -1,10 +1,10 @@
-import * as nodecgContext from './helpers/nodecg';
-import { ObsCredentials, ObsData } from '../types/schemas';
+import * as nodecgContext from '../helpers/nodecg';
+import { ObsCredentials, ObsData } from '../../types/schemas';
 import OBSWebSocket from 'obs-websocket-js';
-import { isBlank } from '../helpers/stringHelper';
-import { ObsStatus } from '../types/enums/ObsStatus';
+import { isBlank } from '../../helpers/stringHelper';
+import { ObsStatus } from '../../types/enums/ObsStatus';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { SetObsDataRequest } from '../types/messages/obs';
+import { SetObsDataRequest } from '../../types/messages/obs';
 
 const nodecg = nodecgContext.get();
 
@@ -127,3 +127,7 @@ nodecg.listenFor('setObsData', (data: SetObsDataRequest, callback: UnhandledList
     };
     callback();
 });
+
+export async function setCurrentScene(scene: string): Promise<void> {
+    return socket.send('SetCurrentScene', { 'scene-name': scene });
+}
