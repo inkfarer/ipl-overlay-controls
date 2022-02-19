@@ -6,7 +6,8 @@ exports[`Settings matches snapshot 1`] = `
 <div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
-<obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>"
+<obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>
+<obs-data-picker-stub class=\\"m-t-8\\"></obs-data-picker-stub>"
 `;
 
 exports[`Settings matches snapshot when section gameVersion is selected 1`] = `
@@ -60,7 +61,8 @@ exports[`Settings matches snapshot when section obs-socket is selected 1`] = `
 <div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
-<obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>"
+<obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>
+<obs-data-picker-stub class=\\"m-t-8\\"></obs-data-picker-stub>"
 `;
 
 exports[`Settings matches snapshot when section radia is selected 1`] = `

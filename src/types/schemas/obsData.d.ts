@@ -11,4 +11,5 @@ export interface ObsData {
 	transitions?: string[];
 	gameplayScene?: string;
 	intermissionScene?: string;
+	transition?: string;
 }

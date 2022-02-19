@@ -24,6 +24,9 @@
         },
         "intermissionScene": {
             "type": "string"
+        },
+        "transition": {
+            "type": "string"
         }
     },
     "additionalProperties": false,

@@ -178,4 +178,84 @@ describe('obsSocket', () => {
             expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(2);
         });
     });
+
+    describe('setObsData', () => {
+        it('returns error if gameplay scene cannot be found in scene list', () => {
+            const cb = jest.fn();
+            replicants.obsData = { scenes: ['scene-one']};
+
+            messageListeners.setObsData({ gameplayScene: 'scene-two' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Could not find one or more of the provided scenes.'));
+        });
+
+        it('returns error if intermission scene cannot be found in scene list', () => {
+            const cb = jest.fn();
+            replicants.obsData = { scenes: ['scene-one']};
+
+            messageListeners.setObsData({ gameplayScene: 'scene-one', intermissionScene: 'scene-two' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Could not find one or more of the provided scenes.'));
+        });
+
+        it('returns error if no scenes are present', () => {
+            const cb = jest.fn();
+            replicants.obsData = { scenes: null };
+
+            messageListeners.setObsData({ gameplayScene: 'scene-one' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Could not find one or more of the provided scenes.'));
+        });
+
+        it('returns error if transition is not found', () => {
+            const cb = jest.fn();
+            replicants.obsData = { scenes: ['scene-one', 'scene-two'], transitions: ['transition-1']};
+
+            messageListeners.setObsData({
+                gameplayScene: 'scene-one',
+                intermissionScene: 'scene-two',
+                transition: 'foo'
+            }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Could not find the provided transition.'));
+        });
+
+        it('returns error if no transitions are present', () => {
+            const cb = jest.fn();
+            replicants.obsData = { scenes: ['scene-one', 'scene-two'], transitions: null };
+
+            messageListeners.setObsData({
+                gameplayScene: 'scene-one',
+                intermissionScene: 'scene-two',
+                transition: 'foo'
+            }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Could not find the provided transition.'));
+        });
+
+        it('updates obs data', () => {
+            const cb = jest.fn();
+            replicants.obsData = {
+                status: ObsStatus.CONNECTED,
+                scenes: ['scene-one', 'scene-two'],
+                transitions: ['transition-1']
+            };
+
+            messageListeners.setObsData({
+                gameplayScene: 'scene-one',
+                intermissionScene: 'scene-two',
+                transition: 'transition-1'
+            }, cb);
+
+            expect(cb).toHaveBeenCalledWith();
+            expect(replicants.obsData).toEqual({
+                status: ObsStatus.CONNECTED,
+                scenes: ['scene-one', 'scene-two'],
+                transitions: ['transition-1'],
+                gameplayScene: 'scene-one',
+                intermissionScene: 'scene-two',
+                transition: 'transition-1'
+            });
+        });
+    });
 });

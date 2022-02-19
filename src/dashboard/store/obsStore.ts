@@ -3,6 +3,7 @@ import { ObsCredentials, ObsData } from 'schemas';
 import { createStore, Store, useStore } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 import { InjectionKey } from 'vue';
+import { SetObsDataRequest } from 'types/messages/obs';
 
 const obsData = nodecg.Replicant<ObsData>('obsData');
 const obsCredentials = nodecg.Replicant<ObsCredentials>('obsCredentials');
@@ -27,6 +28,9 @@ export const obsStore = createStore<ObsStore>({
     actions: {
         async connect(store, { address, password }: { address: string, password?: string }): Promise<void> {
             return nodecg.sendMessage('connectToObs', { address, password });
+        },
+        async setData(store, data: SetObsDataRequest): Promise<void> {
+            return nodecg.sendMessage('setObsData', data);
         }
     }
 });

@@ -4,6 +4,7 @@ import OBSWebSocket from 'obs-websocket-js';
 import { isBlank } from '../helpers/stringHelper';
 import { ObsStatus } from '../types/enums/ObsStatus';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import { SetObsDataRequest } from '../types/messages/obs';
 
 const nodecg = nodecgContext.get();
 
@@ -103,4 +104,20 @@ nodecg.listenFor('connectToObs', async (data: ObsCredentials, callback: Unhandle
     }
 
     callback(null);
+});
+
+nodecg.listenFor('setObsData', (data: SetObsDataRequest, callback: UnhandledListenForCb) => {
+    if (!obsData.value.scenes?.some(scene => scene === data.gameplayScene)
+        || !obsData.value.scenes?.some(scene => scene === data.intermissionScene)) {
+        return callback(new Error('Could not find one or more of the provided scenes.'));
+    }
+    if (!obsData.value.transitions?.some(transition => transition === data.transition)) {
+        return callback(new Error('Could not find the provided transition.'));
+    }
+
+    obsData.value = {
+        ...obsData.value,
+        ...data
+    };
+    callback();
 });

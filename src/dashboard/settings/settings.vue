@@ -37,10 +37,10 @@
         v-else-if="visibleSection === 'gameVersion'"
         class="m-t-8"
     />
-    <obs-socket-settings
-        v-else-if="visibleSection === 'obs-socket'"
-        class="m-t-8"
-    />
+    <template v-else-if="visibleSection === 'obs-socket'">
+        <obs-socket-settings class="m-t-8" />
+        <obs-data-picker class="m-t-8" />
+    </template>
 </template>
 
 <script lang="ts">
@@ -54,6 +54,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ObsSocketSettings from './components/obsSocketSettings.vue';
+import ObsDataPicker from './components/obsDataPicker.vue';
 
 library.add(faBars);
 
@@ -68,6 +69,7 @@ export default defineComponent({
     name: 'Settings',
 
     components: {
+        ObsDataPicker,
         ObsSocketSettings,
         FontAwesomeIcon,
         IplSidebar,

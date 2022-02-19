@@ -17,4 +17,12 @@ describe('obsStore', () => {
             expect(mockSendMessage).toHaveBeenCalledWith('connectToObs', { address: 'localhost', password: 'pwd' });
         });
     });
+
+    describe('setData', () => {
+        it('sends message to extension', () => {
+            obsStore.dispatch('setData', { address: '192.168.1.2' });
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setObsData', { address: '192.168.1.2' });
+        });
+    });
 });

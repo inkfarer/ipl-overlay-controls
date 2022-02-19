@@ -7,6 +7,7 @@ describe('Settings', () => {
         LastfmSettings: true,
         RadiaSettings: true,
         ObsSocketSettings: true,
+        ObsDataPicker: true,
         RuntimeConfig: true,
         FontAwesomeIcon: true
     };
