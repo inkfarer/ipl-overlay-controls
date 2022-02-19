@@ -3,6 +3,7 @@ import { ObsData, RuntimeConfig, ScoreboardData } from '../../types/schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setCurrentScene } from './obsSocket';
 import { GameVersion } from '../../types/enums/gameVersion';
+import { switchToNextColor } from '../replicants/activeRound';
 
 const nodecg = nodecgContext.get();
 const obsData = nodecg.Replicant<ObsData>('obsData');
@@ -53,11 +54,11 @@ function cancelGameTimeouts(): void {
     gameEndTimeouts = [];
 }
 
-// todo: choose next color
 nodecg.listenFor('startGame', async (data: never, callback: UnhandledListenForCb) => {
     const timings = startTimings[runtimeConfig.value.gameVersion];
     cancelGameTimeouts();
 
+    switchToNextColor();
     await setCurrentScene(obsData.value.gameplayScene);
     gameStartTimeouts.push(setTimeout(() => {
         scoreboardData.value.isVisible = true;

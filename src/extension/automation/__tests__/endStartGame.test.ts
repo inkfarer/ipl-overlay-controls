@@ -3,7 +3,10 @@ import { mock } from 'jest-mock-extended';
 import { messageListeners, mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { GameVersion } from '../../../types/enums/gameVersion';
 import { ScoreboardData } from '../../../types/schemas';
+import type * as ActiveRoundModule from '../../replicants/activeRound';
 
+const mockActiveRoundModule = mock<typeof ActiveRoundModule>();
+jest.mock('../../replicants/activeRound', () => mockActiveRoundModule);
 const mockObsSocket = mock<typeof ObsSocketModule>();
 jest.mock('../obsSocket', () => mockObsSocket);
 
@@ -44,6 +47,7 @@ describe('endStartGame', () => {
             await messageListeners.startGame(null, cb);
 
             expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Gameplay Scene');
+            expect(mockActiveRoundModule.switchToNextColor).toHaveBeenCalled();
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
             expect(mockSendMessage).not.toHaveBeenCalled();
             expect(cb).not.toHaveBeenCalled();

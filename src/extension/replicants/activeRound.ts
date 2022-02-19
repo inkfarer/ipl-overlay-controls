@@ -17,10 +17,14 @@ import { generateId } from '../../helpers/generateId';
 import { BeginNextMatchRequest } from '../../types/messages/activeRound';
 import { isBlank } from '../../helpers/stringHelper';
 import cloneDeep from 'lodash/cloneDeep';
+import { perGameData } from '../../helpers/gameData/gameData';
+import { RuntimeConfig } from '../../types/schemas';
+import { ColorInfo } from '../../types/colors';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
+const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 
@@ -117,6 +121,10 @@ nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledL
 });
 
 nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
+    setActiveColor(data);
+});
+
+function setActiveColor(data: SetActiveColorRequest): void {
     activeRound.value.activeColor = {
         categoryName: data.categoryName,
         index: data.color.index,
@@ -126,7 +134,30 @@ nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
     };
     activeRound.value.teamA.color = data.color.clrA;
     activeRound.value.teamB.color = data.color.clrB;
-});
+}
+
+function swapColors(data: ColorInfo): ColorInfo {
+    return {
+        ...data,
+        clrA: data.clrB,
+        clrB: data.clrA
+    };
+}
+
+// todo: this duplicates logic from dashboard; refactor it to be in one place.
+export function switchToNextColor(): void {
+    const gameData = perGameData[runtimeConfig.value.gameVersion];
+    const selectedColorGroup = gameData.colors.find(group =>
+        group.meta.name === activeRound.value.activeColor.categoryName);
+    const selectedIndex = activeRound.value.activeColor.index;
+    const nextColor = selectedColorGroup.colors.find(color =>
+        color.index === (selectedIndex + 1 === selectedColorGroup.colors.length ? 0 : selectedIndex + 1));
+
+    setActiveColor({
+        color: swapColorsInternally.value ? swapColors(nextColor) : nextColor,
+        categoryName: selectedColorGroup.meta.name
+    });
+}
 
 nodecg.listenFor('swapRoundColor', (data: SwapRoundColorRequest) => {
     const existingColor = activeRound.value.games[data.roundIndex]?.color;
