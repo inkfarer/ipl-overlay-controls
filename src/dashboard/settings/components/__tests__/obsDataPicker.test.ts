@@ -18,8 +18,6 @@ describe('ObsDataPicker', () => {
                 obsData: {
                     status: ObsStatus.CONNECTED,
                     scenes: ['Scene One', 'Scene Two', 'Scene Three'],
-                    transitions: ['Fade', 'Cut'],
-                    transition: 'Fade',
                     gameplayScene: 'Scene One',
                     intermissionScene: 'Scene Two'
                 }
@@ -41,10 +39,9 @@ describe('ObsDataPicker', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('matches snapshot without scene or transition data', () => {
+    it('matches snapshot without scene data', () => {
         const store = createObsDataStore();
         store.state.obsData.scenes = null;
-        store.state.obsData.transitions = null;
         const wrapper = mount(ObsDataPicker, {
             global: {
                 plugins: [[store, obsStoreKey]]
@@ -83,8 +80,7 @@ describe('ObsDataPicker', () => {
 
         expect(store.dispatch).toHaveBeenCalledWith('setData', {
             gameplayScene: 'Scene One',
-            intermissionScene: 'Scene Three',
-            transition: 'Fade'
+            intermissionScene: 'Scene Three'
         });
     });
 });

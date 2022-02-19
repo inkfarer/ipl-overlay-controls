@@ -19,13 +19,6 @@
             data-test="intermission-scene-select"
             class="m-t-8"
         />
-        <ipl-select
-            v-model="transition"
-            :options="transitionOptions"
-            label="Scene transition"
-            data-test="transition-select"
-            class="m-t-8"
-        />
         <ipl-button
             label="Update"
             class="m-t-8"
@@ -52,7 +45,6 @@ export default defineComponent({
 
         const gameplayScene = ref('');
         const intermissionScene = ref('');
-        const transition = ref('');
 
         obsStore.watch(
             state => state.obsData.gameplayScene,
@@ -62,31 +54,20 @@ export default defineComponent({
             state => state.obsData.intermissionScene,
             scene => intermissionScene.value = scene,
             { immediate: true });
-        obsStore.watch(
-            state => state.obsData.transition,
-            newValue => transition.value = newValue,
-            { immediate: true });
 
         return {
             gameplayScene,
             intermissionScene,
-            transition,
-            hasObsData: computed(() =>
-                obsStore.state.obsData.scenes != null
-                || obsStore.state.obsData.transitions != null),
+            hasObsData: computed(() => obsStore.state.obsData.scenes != null),
             sceneOptions: computed(() => obsStore.state.obsData.scenes?.map(scene =>
                 ({ value: scene, name: scene })) ?? []),
-            transitionOptions: computed(() => obsStore.state.obsData.transitions?.map(transition =>
-                ({ value: transition, name: transition })) ?? []),
             isChanged: computed(() =>
                 gameplayScene.value !== obsStore.state.obsData.gameplayScene
-                || intermissionScene.value !== obsStore.state.obsData.intermissionScene
-                || transition.value !== obsStore.state.obsData.transition),
+                || intermissionScene.value !== obsStore.state.obsData.intermissionScene),
             update() {
                 obsStore.dispatch('setData', {
                     gameplayScene: gameplayScene.value,
-                    intermissionScene: intermissionScene.value,
-                    transition: transition.value
+                    intermissionScene: intermissionScene.value
                 });
             }
         };

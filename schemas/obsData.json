@@ -13,12 +13,6 @@
                 "type": "string"
             }
         },
-        "transitions": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
         "currentScene": {
             "type": "string"
         },
@@ -26,9 +20,6 @@
             "type": "string"
         },
         "intermissionScene": {
-            "type": "string"
-        },
-        "transition": {
             "type": "string"
         }
     },

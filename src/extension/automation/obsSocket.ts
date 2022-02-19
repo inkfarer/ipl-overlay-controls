@@ -40,10 +40,6 @@ socket.on('SwitchScenes', event => {
     obsData.value.currentScene = event['scene-name'];
 });
 
-socket.on('TransitionListChanged', transitions => {
-    obsData.value.transitions = transitions.transitions.map(transition => transition.name);
-});
-
 function reconnect() {
     stopReconnecting();
     reconnectionInterval = setInterval(() => tryToConnect(obsCredentials.value, false), 5000);
@@ -88,14 +84,12 @@ export async function tryToConnect(credentials: ObsCredentials, doLog = true): P
 async function fetchObsData() {
     try {
         const scenes = await socket.send('GetSceneList');
-        const transitions = await socket.send('GetTransitionList');
         const currentScene = await socket.send('GetCurrentScene');
 
         obsData.value.currentScene = currentScene.name;
         obsData.value.scenes = scenes.scenes.map(scene => scene.name);
-        obsData.value.transitions = transitions.transitions.map(transition => transition.name);
     } catch (e) {
-        nodecg.log.error('Failed to get data for scenes and transitions:', e.description ?? e.error ?? e);
+        nodecg.log.error('Failed to get data for scenes:', e.description ?? e.error ?? e);
     }
 }
 
@@ -116,9 +110,6 @@ nodecg.listenFor('setObsData', (data: SetObsDataRequest, callback: UnhandledList
     if (!obsData.value.scenes?.some(scene => scene === data.gameplayScene)
         || !obsData.value.scenes?.some(scene => scene === data.intermissionScene)) {
         return callback(new Error('Could not find one or more of the provided scenes.'));
-    }
-    if (!obsData.value.transitions?.some(transition => transition === data.transition)) {
-        return callback(new Error('Could not find the provided transition.'));
     }
 
     obsData.value = {

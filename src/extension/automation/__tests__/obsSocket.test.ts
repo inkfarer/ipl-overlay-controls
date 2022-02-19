@@ -99,20 +99,6 @@ describe('obsSocket', () => {
         });
     });
 
-    describe('event: TransitionListChanged', () => {
-        it('updates transition data', () => {
-            socketEventCallbacks.TransitionListChanged({
-                transitions: [
-                    { name: 'Fade' },
-                    { name: 'Cut' },
-                    { name: 'Stinger' }
-                ]
-            });
-
-            expect((replicants.obsData as ObsData).transitions).toEqual(['Fade', 'Cut', 'Stinger']);
-        });
-    });
-
     describe('event: SwitchScenes', () => {
         it('updates current scene', () => {
             socketEventCallbacks.SwitchScenes({
@@ -136,16 +122,11 @@ describe('obsSocket', () => {
             expect(replicants.obsCredentials).toEqual({ address: '192.168.1.222:2222' });
         });
 
-        it('gets scene and transition data after connecting', async () => {
+        it('gets scene data after connecting', async () => {
             const cb = jest.fn();
 
             mockObsWebSocket.send.calledWith('GetSceneList').mockResolvedValue({
                 scenes: [{ name: 'Scene One' }, { name: 'Scene Two' }] as unknown as OBSWebSocket.Scene[],
-                messageId: '',
-                status: 'ok'
-            });
-            mockObsWebSocket.send.calledWith('GetTransitionList').mockResolvedValue({
-                transitions: [{ name: 'Cut' }, { name: 'Fade' }],
                 messageId: '',
                 status: 'ok'
             });
@@ -160,15 +141,13 @@ describe('obsSocket', () => {
             expect(cb).toHaveBeenCalled();
             const obsData = replicants.obsData as ObsData;
             expect(obsData.scenes).toEqual(['Scene One', 'Scene Two']);
-            expect(obsData.transitions).toEqual(['Cut', 'Fade']);
             expect(obsData.currentScene).toEqual('Current Scene');
-            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(2);
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
-            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetTransitionList');
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
         });
 
-        it('does not get scene and transition data if connecting to socket fails', async () => {
+        it('does not get scene data if connecting to socket fails', async () => {
             const cb = jest.fn();
 
             mockObsWebSocket.connect.mockRejectedValue('Err');
@@ -224,54 +203,24 @@ describe('obsSocket', () => {
             expect(cb).toHaveBeenCalledWith(new Error('Could not find one or more of the provided scenes.'));
         });
 
-        it('returns error if transition is not found', () => {
-            const cb = jest.fn();
-            replicants.obsData = { scenes: ['scene-one', 'scene-two'], transitions: ['transition-1']};
-
-            messageListeners.setObsData({
-                gameplayScene: 'scene-one',
-                intermissionScene: 'scene-two',
-                transition: 'foo'
-            }, cb);
-
-            expect(cb).toHaveBeenCalledWith(new Error('Could not find the provided transition.'));
-        });
-
-        it('returns error if no transitions are present', () => {
-            const cb = jest.fn();
-            replicants.obsData = { scenes: ['scene-one', 'scene-two'], transitions: null };
-
-            messageListeners.setObsData({
-                gameplayScene: 'scene-one',
-                intermissionScene: 'scene-two',
-                transition: 'foo'
-            }, cb);
-
-            expect(cb).toHaveBeenCalledWith(new Error('Could not find the provided transition.'));
-        });
-
         it('updates obs data', () => {
             const cb = jest.fn();
             replicants.obsData = {
                 status: ObsStatus.CONNECTED,
-                scenes: ['scene-one', 'scene-two'],
-                transitions: ['transition-1']
+                scenes: ['scene-one', 'scene-two']
             };
 
             messageListeners.setObsData({
                 gameplayScene: 'scene-one',
-                intermissionScene: 'scene-two',
-                transition: 'transition-1'
+                intermissionScene: 'scene-two'
             }, cb);
 
             expect(cb).toHaveBeenCalledWith();
             expect(replicants.obsData).toEqual({
                 status: ObsStatus.CONNECTED,
                 scenes: ['scene-one', 'scene-two'],
-                transitions: ['transition-1'],
                 gameplayScene: 'scene-one',
-                intermissionScene: 'scene-two',
-                transition: 'transition-1'
+                intermissionScene: 'scene-two'
             });
         });
     });
