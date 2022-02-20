@@ -1,36 +1,55 @@
 <template>
-    <ipl-space>
-        <div class="title">OBS Socket</div>
-        <ipl-input
-            v-model="socketUrl"
-            name="socketUrl"
-            label="Socket address"
-        />
-        <ipl-input
-            v-model="socketPassword"
-            name="password"
-            label="Password (Optional)"
-            type="password"
-            class="m-t-4"
-        />
-        <ipl-button
-            label="Connect"
-            class="m-t-8"
-            :color="isChanged ? 'red' : 'blue'"
-            :disabled="!allValid"
-            data-test="socket-connect-button"
-            async
-            progress-message="Connecting..."
-            success-message="Connected!"
-            @click="connect"
-        />
-        <ipl-space
-            class="text-center m-t-8 text-semibold rounded-inner"
-            :class="`obs-status_${status}`"
-        >
-            {{ statusText }}
+    <div>
+        <ipl-space>
+            <div class="title">OBS Socket</div>
+            <ipl-toggle
+                v-model="socketEnabled"
+                true-label="Enable"
+                false-label="Disable"
+            />
         </ipl-space>
-    </ipl-space>
+        <ipl-space
+            v-if="socketEnabled"
+            class="m-t-8"
+        >
+            <ipl-input
+                v-model="socketUrl"
+                name="socketUrl"
+                label="Socket address"
+            />
+            <ipl-input
+                v-model="socketPassword"
+                name="password"
+                label="Password (Optional)"
+                type="password"
+                class="m-t-4"
+            />
+            <ipl-button
+                label="Connect"
+                class="m-t-8"
+                :color="isChanged ? 'red' : 'blue'"
+                :disabled="!allValid"
+                data-test="socket-connect-button"
+                async
+                progress-message="Connecting..."
+                success-message="Connected!"
+                @click="connect"
+            />
+            <ipl-space
+                class="text-center m-t-8 text-semibold rounded-inner"
+                :class="`obs-status_${status}`"
+            >
+                {{ statusText }}
+            </ipl-space>
+        </ipl-space>
+        <ipl-message
+            v-else
+            type="info"
+            class="m-t-8"
+        >
+            OBS websocket is disabled.
+        </ipl-message>
+    </div>
 </template>
 
 <script lang="ts">
@@ -42,7 +61,7 @@ import {
     validator,
     notBlank,
     provideValidators,
-    allValid
+    allValid, IplToggle, IplMessage
 } from '@iplsplatoon/vue-components';
 import { computed, ref } from 'vue';
 import { useObsStore } from '../../store/obsStore';
@@ -51,10 +70,19 @@ import { ObsStatus, ObsStatusHelper } from 'types/enums/ObsStatus';
 export default defineComponent({
     name: 'ObsSocketSettings',
 
-    components: { IplButton, IplSpace, IplInput },
+    components: { IplMessage, IplToggle, IplButton, IplSpace, IplInput },
 
     setup() {
         const obsStore = useObsStore();
+
+        const socketEnabled = computed({
+            get() {
+                return obsStore.state.obsData.enabled;
+            },
+            set(value: boolean): void {
+                obsStore.dispatch('setEnabled', value);
+            }
+        });
 
         const socketUrl = ref('');
         const socketPassword = ref('');
@@ -72,6 +100,7 @@ export default defineComponent({
         provideValidators(validators);
 
         return {
+            socketEnabled,
             socketUrl,
             socketPassword,
             isChanged: computed(() =>

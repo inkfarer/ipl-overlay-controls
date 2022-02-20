@@ -16,6 +16,7 @@ describe('ObsDataPicker', () => {
             state: {
                 obsCredentials: null,
                 obsData: {
+                    enabled: true,
                     status: ObsStatus.CONNECTED,
                     scenes: ['Scene One', 'Scene Two', 'Scene Three'],
                     gameplayScene: 'Scene One',

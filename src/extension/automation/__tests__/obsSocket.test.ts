@@ -18,9 +18,9 @@ describe('obsSocket', () => {
 
     const { setCurrentScene } = require('../obsSocket');
 
-    replicants.obsData = { status: ObsStatus.NOT_CONNECTED };
+    replicants.obsData = { status: ObsStatus.NOT_CONNECTED, enabled: true };
     beforeEach(() => {
-        replicants.obsData = { status: ObsStatus.NOT_CONNECTED };
+        replicants.obsData = { status: ObsStatus.NOT_CONNECTED, enabled: true };
         replicants.obsCredentials = { address: 'localhost:4444444', password: 'pwd' };
 
         jest.restoreAllMocks();
@@ -45,7 +45,7 @@ describe('obsSocket', () => {
 
     describe('event: ConnectionClosed', () => {
         it('reconnects to the socket if it was previously connected', () => {
-            replicants.obsData = { status: ObsStatus.CONNECTED };
+            replicants.obsData = { status: ObsStatus.CONNECTED, enabled: true };
 
             socketEventCallbacks.ConnectionClosed();
 
@@ -60,7 +60,22 @@ describe('obsSocket', () => {
         });
 
         it('does not reconnect if the socket is already not connected', () => {
-            replicants.obsData = { status: ObsStatus.NOT_CONNECTED };
+            replicants.obsData = { status: ObsStatus.NOT_CONNECTED, enabled: true };
+
+            socketEventCallbacks.ConnectionClosed();
+
+            expect((replicants.obsData as ObsData).status).toEqual(ObsStatus.NOT_CONNECTED);
+            expect(mockObsWebSocket.disconnect).toHaveBeenCalledTimes(0);
+            expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(0);
+
+            jest.advanceTimersByTime(5000);
+
+            expect(mockObsWebSocket.disconnect).toHaveBeenCalledTimes(0);
+            expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(0);
+        });
+
+        it('does not reconnect if the obs socket is disabled', () => {
+            replicants.obsData = { status: ObsStatus.CONNECTED, enabled: false };
 
             socketEventCallbacks.ConnectionClosed();
 
@@ -119,6 +134,18 @@ describe('obsSocket', () => {
             expect(mockObsWebSocket.disconnect).toHaveBeenCalledTimes(1);
             expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(1);
             expect(mockObsWebSocket.connect).toHaveBeenCalledWith({ address: '192.168.1.222:2222' });
+            expect(replicants.obsCredentials).toEqual({ address: '192.168.1.222:2222' });
+        });
+
+        it('returns error if obs socket is disabled', async () => {
+            (replicants.obsData as ObsData).enabled = false;
+            const cb = jest.fn();
+
+            await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('OBS integration is disabled.'));
+            expect(mockObsWebSocket.disconnect).not.toHaveBeenCalled();
+            expect(mockObsWebSocket.connect).not.toHaveBeenCalled();
             expect(replicants.obsCredentials).toEqual({ address: '192.168.1.222:2222' });
         });
 
@@ -222,6 +249,50 @@ describe('obsSocket', () => {
                 gameplayScene: 'scene-one',
                 intermissionScene: 'scene-two'
             });
+        });
+    });
+
+    describe('setObsSocketEnabled', () => {
+        it('returns error if provided argument is null', () => {
+            const cb = jest.fn();
+
+            messageListeners.setObsSocketEnabled(null, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Invalid arguments.'));
+            expect(mockObsWebSocket.disconnect).not.toHaveBeenCalled();
+            expect(mockObsWebSocket.connect).not.toHaveBeenCalled();
+        });
+
+        it('returns error if provided argument is undefined', () => {
+            const cb = jest.fn();
+
+            messageListeners.setObsSocketEnabled(undefined, cb);
+
+            expect(cb).toHaveBeenCalledWith(new Error('Invalid arguments.'));
+            expect(mockObsWebSocket.disconnect).not.toHaveBeenCalled();
+            expect(mockObsWebSocket.connect).not.toHaveBeenCalled();
+        });
+
+        it('disconnects from socket when disabling socket and stops reconnecting', async () => {
+            jest.spyOn(global, 'clearInterval');
+            const cb = jest.fn();
+
+            await messageListeners.setObsSocketEnabled(false, cb);
+
+            expect(cb).toHaveBeenCalledWith(null);
+            expect(mockObsWebSocket.disconnect).toHaveBeenCalledTimes(1);
+            expect(mockObsWebSocket.connect).not.toHaveBeenCalled();
+            expect(global.clearInterval).toHaveBeenCalledTimes(1);
+        });
+
+        it('connects to socket when enabling socket', async () => {
+            const cb = jest.fn();
+
+            await messageListeners.setObsSocketEnabled(true, cb);
+
+            expect(cb).toHaveBeenCalledWith(null);
+            expect(mockObsWebSocket.disconnect).toHaveBeenCalledTimes(1);
+            expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(1);
         });
     });
 

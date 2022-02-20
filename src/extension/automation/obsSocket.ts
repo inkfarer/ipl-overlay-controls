@@ -22,7 +22,9 @@ socket.on('ConnectionClosed', () => {
     if (obsData.value.status === ObsStatus.CONNECTED) {
         nodecg.log.info('OBS websocket is closed.');
         obsData.value.status = ObsStatus.NOT_CONNECTED;
-        reconnect();
+        if (obsData.value.enabled) {
+            reconnect();
+        }
     }
 });
 
@@ -95,6 +97,11 @@ async function fetchObsData() {
 
 nodecg.listenFor('connectToObs', async (data: ObsCredentials, callback: UnhandledListenForCb) => {
     obsCredentials.value = data;
+
+    if (!obsData.value.enabled) {
+        return callback(new Error('OBS integration is disabled.'));
+    }
+
     stopReconnecting();
     try {
         await connect(data);
@@ -117,6 +124,20 @@ nodecg.listenFor('setObsData', (data: SetObsDataRequest, callback: UnhandledList
         ...data
     };
     callback();
+});
+
+nodecg.listenFor('setObsSocketEnabled', async (enabled: boolean, callback: UnhandledListenForCb) => {
+    if (enabled == null) {
+        return callback(new Error('Invalid arguments.'));
+    }
+    obsData.value.enabled = enabled;
+    if (!enabled) {
+        socket.disconnect();
+        stopReconnecting();
+    } else {
+        await tryToConnect(obsCredentials.value, true);
+    }
+    callback(null);
 });
 
 export async function setCurrentScene(scene: string): Promise<void> {

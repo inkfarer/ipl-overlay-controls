@@ -39,12 +39,15 @@
     />
     <template v-else-if="visibleSection === 'obs-socket'">
         <obs-socket-settings class="m-t-8" />
-        <obs-data-picker class="m-t-8" />
+        <obs-data-picker
+            v-if="obsSocketEnabled"
+            class="m-t-8"
+        />
     </template>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import LastfmSettings from './components/lastfmSettings.vue';
 import RadiaSettings from './components/radiaSettings.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
@@ -55,6 +58,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ObsSocketSettings from './components/obsSocketSettings.vue';
 import ObsDataPicker from './components/obsDataPicker.vue';
+import { useObsStore } from '../store/obsStore';
 
 library.add(faBars);
 
@@ -81,7 +85,10 @@ export default defineComponent({
     },
 
     setup() {
+        const obsStore = useObsStore();
+
         return {
+            obsSocketEnabled: computed(() => obsStore.state.obsData.enabled),
             visibleSection: ref<keyof typeof settingsSections>('obs-socket'),
             showSidebar: ref(false),
             settingsSections

@@ -13,7 +13,7 @@ describe('ObsSocketSettings', () => {
     function createObsStore() {
         return createStore<ObsStore>({
             state: {
-                obsData: { status: ObsStatus.CONNECTED },
+                obsData: { status: ObsStatus.CONNECTED, enabled: true },
                 obsCredentials: {
                     address: 'localhost:4444',
                     password: 'pwd'
@@ -28,6 +28,18 @@ describe('ObsSocketSettings', () => {
     it.each(Object.values(ObsStatus))('matches snapshot when status is %s', status => {
         const store = createObsStore();
         store.state.obsData.status = status;
+        const wrapper = mount(ObsSocketSettings, {
+            global: {
+                plugins: [[store, obsStoreKey]]
+            }
+        });
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('matches snapshot when obs socket is disabled', () => {
+        const store = createObsStore();
+        store.state.obsData.enabled = false;
         const wrapper = mount(ObsSocketSettings, {
             global: {
                 plugins: [[store, obsStoreKey]]

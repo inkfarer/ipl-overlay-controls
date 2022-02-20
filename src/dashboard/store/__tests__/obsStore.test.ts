@@ -41,4 +41,12 @@ describe('obsStore', () => {
             expect(mockSendMessage).toHaveBeenCalledWith('endGame');
         });
     });
+
+    describe('setEnabled', () => {
+        it('sends message to extension', () => {
+            obsStore.dispatch('setEnabled', false);
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setObsSocketEnabled', false);
+        });
+    });
 });

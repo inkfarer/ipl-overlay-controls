@@ -37,6 +37,9 @@ export const obsStore = createStore<ObsStore>({
         },
         async endGame(): Promise<void> {
             return nodecg.sendMessage('endGame');
+        },
+        setEnabled(store, enabled: boolean): void {
+            nodecg.sendMessage('setObsSocketEnabled', enabled);
         }
     }
 });

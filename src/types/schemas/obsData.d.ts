@@ -6,6 +6,7 @@
  */
 
 export interface ObsData {
+	enabled: boolean;
 	status: 'CONNECTED' | 'CONNECTING' | 'NOT_CONNECTED';
 	scenes?: string[];
 	currentScene?: string;

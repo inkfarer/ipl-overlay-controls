@@ -1,8 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
-    "required": ["status"],
+    "required": ["status", "enabled"],
     "properties": {
+        "enabled": {
+            "type": "boolean"
+        },
         "status": {
             "type": "string",
             "enum": ["CONNECTED", "CONNECTING", "NOT_CONNECTED"]
@@ -25,6 +28,7 @@
     },
     "additionalProperties": false,
     "default": {
+        "enabled": false,
         "status": "NOT_CONNECTED"
     }
 }
