@@ -4,13 +4,13 @@ import { PlayType } from '../../../types/enums/playType';
 import { messageListeners, replicantChangeListeners, replicants } from '../../__mocks__/mockNodecg';
 import { mock } from 'jest-mock-extended';
 import type * as MatchStoreModule from '../matchStore';
-import type * as ActiveRoundHelper from '../activeRoundHelper';
+import type * as ActiveRoundHelper from '../../helpers/activeRoundHelper';
 import type * as GenerateId from '../../../helpers/generateId';
 const mockMatchStoreModule = mock<typeof MatchStoreModule>();
 const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
 const mockGenerateId = mock<typeof GenerateId>();
 jest.mock('../matchStore', () => mockMatchStoreModule);
-jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
+jest.mock('../../helpers/activeRoundHelper', () => mockActiveRoundHelper);
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 
 import '../activeRound';

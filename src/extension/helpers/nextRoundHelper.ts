@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
-import { getTeam } from '../helpers/tournamentDataHelper';
-import * as nodecgContext from '../helpers/nodecg';
+import { getTeam } from './tournamentDataHelper';
+import * as nodecgContext from './nodecg';
 import { NextRound, RoundStore, TournamentData } from 'schemas';
 
 const nodecg = nodecgContext.get();

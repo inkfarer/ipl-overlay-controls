@@ -1,7 +1,7 @@
 import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
 import { RoundStore } from '../../../types/schemas';
 import * as RoundDataHelper from '../roundDataHelper';
-import * as NextRoundHelper from '../../replicants/nextRoundHelper';
+import * as NextRoundHelper from '../../helpers/nextRoundHelper';
 import { mock } from 'jest-mock-extended';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const mockRoundDataHelper = mock<typeof RoundDataHelper>();
 const mockNextRoundHelper = mock<typeof NextRoundHelper>();
 const mockAxios = mock<typeof axios>();
 jest.mock('../roundDataHelper', () => mockRoundDataHelper);
-jest.mock('../../replicants/nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('../../helpers/nextRoundHelper', () => mockNextRoundHelper);
 jest.mock('axios', () => ({ __esModule: true, default: mockAxios }));
 
 import { updateRounds } from '../roundImporter';

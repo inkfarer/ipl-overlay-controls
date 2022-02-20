@@ -11,7 +11,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
 import { commitActiveRoundToMatchStore } from './matchStore';
 import { SetRoundRequest } from 'types/messages/rounds';
-import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
+import { setActiveRoundGames, setActiveRoundTeams, setWinner } from '../helpers/activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
 import { generateId } from '../../helpers/generateId';
 import { BeginNextMatchRequest } from '../../types/messages/activeRound';

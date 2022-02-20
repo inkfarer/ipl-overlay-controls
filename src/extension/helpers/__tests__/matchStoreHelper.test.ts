@@ -1,11 +1,11 @@
 import { replicants } from '../../__mocks__/mockNodecg';
 import { PlayType } from '../../../types/enums/playType';
 import { mock } from 'jest-mock-extended';
-import type * as ActiveRoundHelper from '../../replicants/activeRoundHelper';
+import type * as ActiveRoundHelper from '../activeRoundHelper';
 import type * as GenerateId from '../../../helpers/generateId';
 import { GameWinner } from '../../../types/enums/gameWinner';
 const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
-jest.mock('../../replicants/activeRoundHelper', () => mockActiveRoundHelper);
+jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
 const mockGenerateId = mock<typeof GenerateId>();
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 

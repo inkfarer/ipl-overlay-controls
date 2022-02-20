@@ -4,7 +4,7 @@ import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roun
 import clone from 'clone';
 import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { setNextRoundGames } from './nextRoundHelper';
+import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
 import { resetRoundStore } from '../helpers/roundStoreHelper';
 
