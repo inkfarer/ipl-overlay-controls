@@ -6,11 +6,14 @@ import { mock } from 'jest-mock-extended';
 import type * as MatchStoreModule from '../matchStore';
 import type * as ActiveRoundHelper from '../../helpers/activeRoundHelper';
 import type * as GenerateId from '../../../helpers/generateId';
+import type * as ActiveColorHelper from '../../helpers/activeColorHelper';
+const mockActiveColorHelper = mock<typeof ActiveColorHelper>();
+jest.mock('../../helpers/activeColorHelper', () => mockActiveColorHelper);
 const mockMatchStoreModule = mock<typeof MatchStoreModule>();
-const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
-const mockGenerateId = mock<typeof GenerateId>();
 jest.mock('../matchStore', () => mockMatchStoreModule);
+const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
 jest.mock('../../helpers/activeRoundHelper', () => mockActiveRoundHelper);
+const mockGenerateId = mock<typeof GenerateId>();
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 
 import '../activeRound';
@@ -324,12 +327,6 @@ describe('activeRound', () => {
 
     describe('setActiveColor', () => {
         it('sets active color', () => {
-            replicants.activeRound = {
-                activeColor: { title: 'Old Color' },
-                teamA: { color: '#234' },
-                teamB: { color: '#345' }
-            };
-
             messageListeners.setActiveColor({
                 categoryName: 'Cool Colors',
                 color: {
@@ -340,14 +337,14 @@ describe('activeRound', () => {
                 }
             });
 
-            expect(replicants.activeRound).toEqual({
-                activeColor: {
-                    categoryName: 'Cool Colors',
+            expect(mockActiveColorHelper.setActiveColor).toHaveBeenCalledWith({
+                categoryName: 'Cool Colors',
+                color: {
                     index: 2,
-                    title: 'Green vs Blue'
-                },
-                teamA: { color: '#567' },
-                teamB: { color: '#fff' }
+                    title: 'Green vs Blue',
+                    clrA: '#567',
+                    clrB: '#fff'
+                }
             });
         });
     });
@@ -395,6 +392,77 @@ describe('activeRound', () => {
             messageListeners.swapRoundColor({ roundIndex: 0, colorsSwapped: true });
 
             expect(replicants.activeRound).toEqual(activeRound);
+        });
+    });
+
+    describe('switchToNextColor', () => {
+        it('switches to next color', () => {
+            // @ts-ignore
+            mockActiveColorHelper.getNextColor.mockReturnValue({
+                categoryName: 'Cool Colors',
+                index: 10
+            });
+
+            messageListeners.switchToNextColor();
+
+            expect(mockActiveColorHelper.setActiveColor).toHaveBeenCalledWith({
+                color: {
+                    categoryName: 'Cool Colors',
+                    index: 10
+                },
+                categoryName: 'Cool Colors'
+            });
+            expect(mockActiveColorHelper.getNextColor).toHaveBeenCalled();
+        });
+    });
+
+    describe('switchToPreviousColor', () => {
+        it('switches to previous color', () => {
+            // @ts-ignore
+            mockActiveColorHelper.getPreviousColor.mockReturnValue({
+                categoryName: 'Cool Colors',
+                index: 99
+            });
+
+            messageListeners.switchToPreviousColor();
+
+            expect(mockActiveColorHelper.setActiveColor).toHaveBeenCalledWith({
+                color: {
+                    categoryName: 'Cool Colors',
+                    index: 99
+                },
+                categoryName: 'Cool Colors'
+            });
+            expect(mockActiveColorHelper.getPreviousColor).toHaveBeenCalled();
+        });
+    });
+
+    describe('getNextAndPreviousColors', () => {
+        it('returns next and previous colors', () => {
+            // @ts-ignore
+            mockActiveColorHelper.getPreviousColor.mockReturnValue({
+                categoryName: 'Cool Colors',
+                index: 99
+            });
+            // @ts-ignore
+            mockActiveColorHelper.getNextColor.mockReturnValue({
+                categoryName: 'Cool Colors?',
+                index: 10
+            });
+            const ack = jest.fn();
+
+            messageListeners.getNextAndPreviousColors(null, ack);
+
+            expect(ack).toHaveBeenCalledWith({
+                nextColor: {
+                    categoryName: 'Cool Colors?',
+                    index: 10
+                },
+                previousColor: {
+                    categoryName: 'Cool Colors',
+                    index: 99
+                }
+            });
         });
     });
 });
