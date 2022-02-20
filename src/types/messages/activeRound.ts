@@ -2,6 +2,8 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { ColorInfo } from 'types/colors';
 
+export type ColorWithCategory = ColorInfo & { categoryName: string };
+
 export interface UpdateActiveGamesRequest {
     games: ActiveRoundGame[];
 }
@@ -23,4 +25,9 @@ export interface SwapRoundColorRequest {
 
 export interface BeginNextMatchRequest {
     matchName: string;
+}
+
+export interface GetNextAndPreviousColorsResponse {
+    nextColor: ColorWithCategory
+    previousColor: ColorWithCategory
 }

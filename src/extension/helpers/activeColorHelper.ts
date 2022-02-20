@@ -1,4 +1,4 @@
-import { SetActiveColorRequest } from '../../types/messages/activeRound';
+import { ColorWithCategory, SetActiveColorRequest } from '../../types/messages/activeRound';
 import * as nodecgContext from './nodecg';
 import { ActiveRound, RuntimeConfig, SwapColorsInternally } from '../../types/schemas';
 import cloneDeep from 'lodash/cloneDeep';
@@ -37,8 +37,6 @@ function getSelectedColorGroup(): ColorGroup {
     return perGameData[runtimeConfig.value.gameVersion].colors.find(group =>
         group.meta.name === activeRound.value.activeColor.categoryName);
 }
-
-export type ColorWithCategory = ColorInfo & { categoryName: string };
 
 export function getNextColor(): ColorWithCategory {
     const selectedColorGroup = getSelectedColorGroup();

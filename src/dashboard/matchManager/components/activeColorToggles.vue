@@ -25,7 +25,7 @@
                 class="color-toggle layout horizontal center-vertical center-horizontal"
                 :class="{ disabled: colorTogglesDisabled }"
                 data-test="color-toggle-previous"
-                @click="setActiveColor(previousColor)"
+                @click="switchToPreviousColor"
             >
                 <font-awesome-icon
                     icon="chevron-left"
@@ -56,7 +56,7 @@
                 class="color-toggle layout horizontal center-vertical center-horizontal m-l-6"
                 :class="{ disabled: colorTogglesDisabled }"
                 data-test="color-toggle-next"
-                @click="setActiveColor(nextColor)"
+                @click="switchToNextColor"
             >
                 <div
                     class="color"
@@ -76,19 +76,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { ColorInfo } from 'types/colors';
-import { getContrastingTextColor } from '../../helpers/colorHelper';
+import { getContrastingTextColor } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
 import { addDots } from '../../../helpers/stringHelper';
-import { useSettingsStore } from '../../settings/settingsStore';
-import { perGameData } from '../../../helpers/gameData/gameData';
+import { ColorWithCategory, GetNextAndPreviousColorsResponse } from 'types/messages/activeRound';
 
 library.add(faChevronRight, faChevronLeft);
 
@@ -99,65 +97,46 @@ export default defineComponent({
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
-        const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
 
         const activeRound = computed(() => activeRoundStore.state.activeRound);
+        const nextColor = ref<ColorWithCategory>(null);
+        const previousColor = ref<ColorWithCategory>(null);
+
+        activeRoundStore.watch(
+            state => [state.activeRound.activeColor.index, state.activeRound.activeColor.categoryName],
+            async () => {
+                const colors: GetNextAndPreviousColorsResponse
+                    = await activeRoundStore.dispatch('getNextAndPreviousColors');
+
+                nextColor.value = colors.nextColor;
+                previousColor.value = colors.previousColor;
+            },
+            { immediate: true });
 
         const colorTogglesDisabled = computed(() =>
             activeRoundStore.state.activeRound.activeColor.categoryName === 'Custom Color');
-        const selectedColorGroup = computed(() => {
-            return gameData.value.colors.find(group => group.meta.name === activeRound.value.activeColor.categoryName);
-        });
-        const selectedIndex = computed(() => activeRound.value.activeColor.index);
-
-        function swapColors(data: ColorInfo): ColorInfo {
-            return {
-                ...data,
-                clrA: data.clrB,
-                clrB: data.clrA
-            };
-        }
-
-        const nextColor = computed(() => {
-            const color = selectedColorGroup.value?.colors.find(color => {
-                return color.index === (selectedIndex.value + 1 === selectedColorGroup.value.colors.length
-                    ? 0
-                    : selectedIndex.value + 1);
-            });
-            if (!color) return null;
-            return activeRoundStore.state.swapColorsInternally ? swapColors(color) : color;
-        });
-        const previousColor = computed(() => {
-            const color = selectedColorGroup.value?.colors.find(color => {
-                return color.index === (selectedIndex.value === 0
-                    ? selectedColorGroup.value.colors.length - 1
-                    : selectedIndex.value - 1);
-            });
-            if (!color) return null;
-            return activeRoundStore.state.swapColorsInternally ? swapColors(color) : color;
-        });
 
         return {
             activeRound,
             colorTogglesDisabled,
-            setActiveColor(color: ColorInfo) {
-                if (colorTogglesDisabled.value) return;
-
-                activeRoundStore.dispatch('setActiveColor', {
-                    color,
-                    categoryName: selectedColorGroup.value.meta.name
-                });
-            },
-            getBorderColor(color: string): string {
+            getBorderColor(color?: string): string {
+                if (!color) {
+                    return themeColors.backgroundColorTertiary;
+                }
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
             nextColor,
             previousColor,
+            addDots,
             swapColors() {
                 activeRoundStore.dispatch('swapColors');
             },
-            addDots
+            switchToNextColor() {
+                activeRoundStore.dispatch('switchToNextColor');
+            },
+            switchToPreviousColor() {
+                activeRoundStore.dispatch('switchToPreviousColor');
+            }
         };
     }
 });
@@ -191,6 +170,7 @@ span.team-name {
     border-radius: $border-radius-inner;
     transition-duration: $transition-duration-low;
     padding: 6px;
+    cursor: pointer;
 
     &:not(.disabled):hover {
         background-color: $background-secondary-hover;

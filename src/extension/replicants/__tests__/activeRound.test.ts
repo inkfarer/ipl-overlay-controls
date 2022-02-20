@@ -453,7 +453,7 @@ describe('activeRound', () => {
 
             messageListeners.getNextAndPreviousColors(null, ack);
 
-            expect(ack).toHaveBeenCalledWith({
+            expect(ack).toHaveBeenCalledWith(null, {
                 nextColor: {
                     categoryName: 'Cool Colors?',
                     index: 10

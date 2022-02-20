@@ -148,7 +148,7 @@ nodecg.listenFor('switchToPreviousColor', () => {
 });
 
 nodecg.listenFor('getNextAndPreviousColors', (data: never, ack: UnhandledListenForCb) => {
-    ack({
+    ack(null, {
         nextColor: getNextColor(),
         previousColor: getPreviousColor()
     });
