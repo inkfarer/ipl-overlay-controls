@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { casterStoreKey } from '../../store/casterStore';
 import { obsStoreKey } from '../../store/obsStore';
+import { messageListeners } from '../../__mocks__/mockNodecg';
 
 describe('MatchManager', () => {
     config.global.stubs = {
@@ -74,6 +75,33 @@ describe('MatchManager', () => {
         wrapper.getComponent('[data-test="show-casters-button"]').vm.$emit('click');
 
         expect(casterStore.dispatch).toHaveBeenCalledWith('showCasters');
+    });
+
+    it('disables showing casters when message to show casters is received from nodecg and enables it after a delay', async () => {
+        jest.useFakeTimers();
+        const casterStore = createCasterStore();
+        jest.spyOn(casterStore, 'dispatch');
+        const obsStore = createObsStore();
+        const wrapper = mount(MatchManager, {
+            global: {
+                plugins: [
+                    [casterStore, casterStoreKey],
+                    [obsStore, obsStoreKey]
+                ]
+            }
+        });
+
+        messageListeners.mainShowCasters();
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="show-casters-button"]').attributes().disabled).toEqual('true');
+
+        jest.advanceTimersByTime(5000);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="show-casters-button"]').attributes().disabled).toEqual('false');
+
+        jest.useRealTimers();
     });
 
     it('handles starting a game', () => {

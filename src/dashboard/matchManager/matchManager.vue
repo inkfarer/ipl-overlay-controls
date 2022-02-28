@@ -31,8 +31,7 @@
                 </div>
                 <ipl-button
                     label="Show casters"
-                    disable-on-success
-                    success-message="Message sent!"
+                    :disabled="disableShowCasters"
                     :small="isObsConnected"
                     data-test="show-casters-button"
                     @click="showCasters"
@@ -50,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import ScoreDisplay from './components/scoreDisplay.vue';
 import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
@@ -84,8 +83,19 @@ export default defineComponent({
     setup() {
         const casterStore = useCasterStore();
         const obsStore = useObsStore();
+        const disableShowCasters = ref(false);
+        let enableShowCastersTimeout: number;
+
+        nodecg.listenFor('mainShowCasters', () => {
+            disableShowCasters.value = true;
+            clearTimeout(enableShowCastersTimeout);
+            enableShowCastersTimeout = window.setTimeout(() => {
+                disableShowCasters.value = false;
+            }, 5000);
+        });
 
         return {
+            disableShowCasters,
             isObsConnected: computed(() => obsStore.state.obsData.status === ObsStatus.CONNECTED),
             showCasters() {
                 casterStore.dispatch('showCasters');

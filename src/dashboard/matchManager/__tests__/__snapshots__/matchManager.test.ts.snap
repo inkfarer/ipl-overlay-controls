@@ -11,7 +11,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTED 1`] = `
         <ipl-button-stub label=\\"Start\\" color=\\"green\\" disabled=\\"true\\" async=\\"true\\" progressmessage=\\"Starting...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"start-game-button\\"></ipl-button-stub>
         <ipl-button-stub label=\\"End\\" color=\\"red\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Ending...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-8\\" data-test=\\"end-game-button\\"></ipl-button-stub>
       </div>
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Message sent!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"true\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>
@@ -27,7 +27,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTING 1`] = `
     <active-color-toggles-stub class=\\"m-t-8\\"></active-color-toggles-stub>
     <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
       <!--v-if-->
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Message sent!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"true\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>
@@ -43,7 +43,7 @@ exports[`MatchManager matches snapshot if obs status is NOT_CONNECTED 1`] = `
     <active-color-toggles-stub class=\\"m-t-8\\"></active-color-toggles-stub>
     <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
       <!--v-if-->
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Message sent!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"true\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>

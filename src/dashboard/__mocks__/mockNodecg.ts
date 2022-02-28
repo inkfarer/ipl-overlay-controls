@@ -24,9 +24,11 @@ export const mockGetDialog = jest.fn().mockReturnValue(mockDialog);
 export const mockSendMessage = jest.fn();
 export let replicants: {[key: string]: unknown} = {};
 export let mockBundleConfig: Configschema = defaultBundleConfig;
+export let messageListeners: {[key: string]: (message?: unknown, cb?: () => void) => void} = {};
 
 beforeEach(() => {
     replicants = {};
+    messageListeners = {};
     mockBundleConfig = defaultBundleConfig;
 });
 
@@ -41,6 +43,9 @@ window.nodecg = {
             },
             on: jest.fn()
         };
+    },
+    listenFor: (messageName: string, handler: () => void) => {
+        messageListeners[messageName] = handler as (message: unknown, cb?: () => void) => void;
     },
     sendMessage: mockSendMessage,
     getDialog: mockGetDialog,
