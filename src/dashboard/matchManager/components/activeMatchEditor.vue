@@ -59,7 +59,6 @@
             name="matchName"
             label="Match Name"
             class="m-t-6"
-            :validator="validators.matchName"
         />
         <ipl-button
             class="m-t-8"
@@ -76,7 +75,15 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { addDots } from '../../../helpers/stringHelper';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { IplButton, IplSelect, IplCheckbox, IplMessage, IplExpandingSpace, IplInput } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplSelect,
+    IplCheckbox,
+    IplMessage,
+    IplExpandingSpace,
+    IplInput,
+    provideValidators
+} from '@iplsplatoon/vue-components';
 import { validator } from '../../helpers/validation/validator';
 import { notBlank } from '../../helpers/validation/stringValidators';
 
@@ -135,6 +142,7 @@ export default defineComponent({
         const validators = {
             matchName: validator(matchName, false, notBlank)
         };
+        provideValidators(validators);
 
         return {
             teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team => ({

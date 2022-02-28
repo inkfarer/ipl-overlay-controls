@@ -3,14 +3,14 @@
 exports[`CreatePredictionDialog matches snapshot 1`] = `
 "<ipl-dialog-title-stub title=\\"Create Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-space color-dark m-t-8\\" data-v-11398c0e=\\"\\">
+<div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
   <div class=\\"layout horizontal\\">
-    <ipl-input-stub name=\\"title\\" label=\\"Title\\" modelvalue=\\"Who do you think will win this match?\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"title-input\\"></ipl-input-stub>
-    <ipl-input-stub name=\\"duration\\" label=\\"Duration\\" modelvalue=\\"120\\" type=\\"number\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" extra=\\"seconds\\" class=\\"m-l-6 duration-input\\"></ipl-input-stub>
+    <ipl-input-stub name=\\"title\\" label=\\"Title\\" modelvalue=\\"Who do you think will win this match?\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"title-input\\"></ipl-input-stub>
+    <ipl-input-stub name=\\"duration\\" label=\\"Duration\\" modelvalue=\\"120\\" type=\\"number\\" centered=\\"false\\" disabled=\\"false\\" extra=\\"seconds\\" class=\\"m-l-6 duration-input\\"></ipl-input-stub>
   </div>
   <div class=\\"layout horizontal m-t-4\\">
-    <ipl-input-stub name=\\"team-a-name\\" label=\\"Team A\\" modelvalue=\\"cool team A\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width\\"></ipl-input-stub>
-    <ipl-input-stub name=\\"team-b-name\\" label=\\"Team B\\" modelvalue=\\"cool team B\\" type=\\"text\\" validator=\\"[object Object]\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width m-l-6\\"></ipl-input-stub>
+    <ipl-input-stub name=\\"team-a-name\\" label=\\"Team A\\" modelvalue=\\"cool team A\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width\\"></ipl-input-stub>
+    <ipl-input-stub name=\\"team-b-name\\" label=\\"Team B\\" modelvalue=\\"cool team B\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width m-l-6\\"></ipl-input-stub>
   </div><a class=\\"ipl-button m-t-8\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(0, 166, 81); color: white;\\" data-test=\\"create-prediction-button\\"><span class=\\"label\\">Create</span></a>
 </div>"
 `;
@@ -18,9 +18,9 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
 exports[`CreatePredictionDialog matches snapshot when existing prediction is active 1`] = `
 "<ipl-dialog-title-stub title=\\"Create Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"
@@ -29,9 +29,9 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is act
 exports[`CreatePredictionDialog matches snapshot when existing prediction is locked 1`] = `
 "<ipl-dialog-title-stub title=\\"Create Prediction\\"></ipl-dialog-title-stub>
 <ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-13b37b8d=\\"\\">
-  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-13b37b8d=\\"\\"></font-awesome-icon-stub>
-  <div class=\\"message-content\\" data-v-13b37b8d=\\"\\">
+<div class=\\"ipl-message__wrapper layout horizontal center-vertical ipl-message__type-warning m-t-8\\" data-v-5541e800=\\"\\">
+  <font-awesome-icon-stub icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-5541e800=\\"\\"></font-awesome-icon-stub>
+  <div class=\\"message-content\\" data-v-5541e800=\\"\\">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"

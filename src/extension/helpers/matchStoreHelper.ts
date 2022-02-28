@@ -10,7 +10,7 @@ import {
     SwapColorsInternally,
     TournamentData
 } from '../../types/schemas';
-import { setActiveRoundGames, setActiveRoundTeams } from '../replicants/activeRoundHelper';
+import { setActiveRoundGames, setActiveRoundTeams } from './activeRoundHelper';
 import { perGameData } from '../../helpers/gameData/gameData';
 
 const nodecg = nodecgContext.get();

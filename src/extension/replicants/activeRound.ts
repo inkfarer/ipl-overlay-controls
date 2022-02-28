@@ -11,12 +11,13 @@ import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
 import { commitActiveRoundToMatchStore } from './matchStore';
 import { SetRoundRequest } from 'types/messages/rounds';
-import { setActiveRoundGames, setActiveRoundTeams, setWinner } from './activeRoundHelper';
+import { setActiveRoundGames, setActiveRoundTeams, setWinner } from '../helpers/activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
 import { generateId } from '../../helpers/generateId';
 import { BeginNextMatchRequest } from '../../types/messages/activeRound';
 import { isBlank } from '../../helpers/stringHelper';
 import cloneDeep from 'lodash/cloneDeep';
+import { getNextColor, getPreviousColor, setActiveColor } from '../helpers/activeColorHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -117,15 +118,40 @@ nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledL
 });
 
 nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
-    activeRound.value.activeColor = {
-        categoryName: data.categoryName,
-        index: data.color.index,
-        title: data.color.title,
-        isCustom: data.color.isCustom,
-        clrNeutral: data.color.clrNeutral
-    };
-    activeRound.value.teamA.color = data.color.clrA;
-    activeRound.value.teamB.color = data.color.clrB;
+    setActiveColor(data);
+});
+
+export function switchToNextColor(): void {
+    const nextColor = getNextColor();
+
+    setActiveColor({
+        color: nextColor,
+        categoryName: nextColor.categoryName
+    });
+}
+
+export function switchToPreviousColor(): void {
+    const previousColor = getPreviousColor();
+
+    setActiveColor({
+        color: previousColor,
+        categoryName: previousColor.categoryName
+    });
+}
+
+nodecg.listenFor('switchToNextColor', () => {
+    switchToNextColor();
+});
+
+nodecg.listenFor('switchToPreviousColor', () => {
+    switchToPreviousColor();
+});
+
+nodecg.listenFor('getNextAndPreviousColors', (data: never, ack: UnhandledListenForCb) => {
+    ack(null, {
+        nextColor: getNextColor(),
+        previousColor: getPreviousColor()
+    });
 });
 
 nodecg.listenFor('swapRoundColor', (data: SwapRoundColorRequest) => {

@@ -1,7 +1,7 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { SetNextRoundRequest } from 'types/messages/rounds';
-import { setNextRoundGames, setNextRoundTeams } from './nextRoundHelper';
+import { setNextRoundGames, setNextRoundTeams } from '../helpers/nextRoundHelper';
 
 const nodecg = nodecgContext.get();
 

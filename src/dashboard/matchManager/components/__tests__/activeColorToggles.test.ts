@@ -2,7 +2,7 @@ import ActiveColorToggles from '../activeColorToggles.vue';
 import { createStore } from 'vuex';
 import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
-import { config, mount } from '@vue/test-utils';
+import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { settingsStoreKey } from '../../../settings/settingsStore';
@@ -13,7 +13,28 @@ describe('ActiveColorToggles', () => {
     };
 
     const mockSwapColors = jest.fn();
-    const mockSetActiveColor = jest.fn();
+    const mockSwitchToNextColor = jest.fn();
+    const mockSwitchToPreviousColor = jest.fn();
+    const mockGetNextAndPreviousColors = jest.fn().mockResolvedValue({
+        nextColor: {
+            categoryName: 'Ranked Modes',
+            clrA: '#FEF232',
+            clrB: '#2ED2FE',
+            clrNeutral: '#FD5600',
+            index: 6,
+            isCustom: false,
+            title: 'Yellow vs Blue'
+        },
+        previousColor: {
+            categoryName: 'Ranked Modes',
+            clrA: '#04D976',
+            clrB: '#D600AB',
+            clrNeutral: '#D2E500',
+            index: 1,
+            isCustom: false,
+            title: 'Green vs Magenta'
+        }
+    });
 
     function createActiveRoundStore() {
         return createStore<ActiveRoundStore>({
@@ -70,7 +91,9 @@ describe('ActiveColorToggles', () => {
             },
             actions: {
                 swapColors: mockSwapColors,
-                setActiveColor: mockSetActiveColor
+                switchToNextColor: mockSwitchToNextColor,
+                switchToPreviousColor: mockSwitchToPreviousColor,
+                getNextAndPreviousColors: mockGetNextAndPreviousColors,
             }
         });
     }
@@ -85,7 +108,7 @@ describe('ActiveColorToggles', () => {
         });
     }
 
-    it('matches snapshot', () => {
+    it('matches snapshot', async () => {
         const store = createActiveRoundStore();
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
@@ -96,6 +119,7 @@ describe('ActiveColorToggles', () => {
                 ]
             }
         });
+        await flushPromises();
 
         expect(wrapper.html()).toMatchSnapshot();
     });
@@ -115,17 +139,7 @@ describe('ActiveColorToggles', () => {
         const toggle = wrapper.get('[data-test="color-toggle-previous"]');
         await toggle.trigger('click');
 
-        expect(mockSetActiveColor).toHaveBeenCalledWith(expect.any(Object), {
-            categoryName: 'Ranked Modes',
-            color: {
-                clrA: '#FEF232',
-                clrB: '#2ED2FE',
-                clrNeutral: '#FD5600',
-                index: 6,
-                isCustom: false,
-                title: 'Yellow vs Blue'
-            }
-        });
+        expect(mockSwitchToPreviousColor).toHaveBeenCalled();
     });
 
     it('sets color when clicking next color toggle', async () => {
@@ -143,17 +157,7 @@ describe('ActiveColorToggles', () => {
         const toggle = wrapper.get('[data-test="color-toggle-next"]');
         await toggle.trigger('click');
 
-        expect(mockSetActiveColor).toHaveBeenCalledWith(expect.any(Object), {
-            categoryName: 'Ranked Modes',
-            color: {
-                clrA: '#04D976',
-                clrB: '#D600AB',
-                clrNeutral: '#D2E500',
-                index: 1,
-                isCustom: false,
-                title: 'Green vs Magenta'
-            }
-        });
+        expect(mockSwitchToNextColor).toHaveBeenCalled();
     });
 
     it('swaps colors on swap button click', () => {

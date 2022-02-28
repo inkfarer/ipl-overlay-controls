@@ -1,11 +1,11 @@
-import { GameWinner } from 'types/enums/gameWinner';
+import { GameWinner } from '../../../types/enums/gameWinner';
 import { ActiveRound } from 'schemas';
 import { PlayType } from '../../../types/enums/playType';
 import { replicants } from '../../__mocks__/mockNodecg';
 import { mock } from 'jest-mock-extended';
-import type * as MatchStoreModule from '../matchStore';
+import type * as MatchStoreModule from '../../replicants/matchStore';
 const mockMatchStoreModule = mock<typeof MatchStoreModule>();
-jest.mock('../matchStore', () => mockMatchStoreModule);
+jest.mock('../../replicants/matchStore', () => mockMatchStoreModule);
 
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from '../activeRoundHelper';
 

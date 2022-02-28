@@ -9,6 +9,7 @@ import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/sc
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextRoundStore';
 import { settingsReps, settingsStore, settingsStoreKey } from '../settings/settingsStore';
+import { obsReps, obsStore, obsStoreKey } from '../store/obsStore';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
@@ -17,6 +18,7 @@ import { settingsReps, settingsStore, settingsStoreKey } from '../settings/setti
     await setUpReplicants(scoreboardReps, scoreboardStore);
     await setUpReplicants(nextRoundReps, nextRoundStore);
     await setUpReplicants(settingsReps, settingsStore);
+    await setUpReplicants(obsReps, obsStore);
     const app = createApp(Panel);
     setUpErrorHandler(app);
     app.use(tournamentDataStore, tournamentDataStoreKey);
@@ -25,5 +27,6 @@ import { settingsReps, settingsStore, settingsStoreKey } from '../settings/setti
     app.use(scoreboardStore, scoreboardStoreKey);
     app.use(nextRoundStore, nextRoundStoreKey);
     app.use(settingsStore, settingsStoreKey);
+    app.use(obsStore, obsStoreKey);
     app.mount('#app');
 })();

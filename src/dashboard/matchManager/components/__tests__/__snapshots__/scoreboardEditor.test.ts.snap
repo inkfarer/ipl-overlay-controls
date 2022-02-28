@@ -11,7 +11,7 @@ exports[`ScoreboardEditor matches snapshot 1`] = `
   </div>
   <div class=\\"content\\" data-v-40cedb04=\\"\\" style=\\"display: none;\\">
     <ipl-data-row-stub label=\\"Flavor Text\\" value=\\"whoa\\"></ipl-data-row-stub>
-    <ipl-toggle-stub modelvalue=\\"false\\" class=\\"m-t-8\\" data-test=\\"scoreboard-visible-toggle\\"></ipl-toggle-stub>
+    <ipl-toggle-stub modelvalue=\\"false\\" truelabel=\\"Show\\" falselabel=\\"Hide\\" class=\\"m-t-8\\" data-test=\\"scoreboard-visible-toggle\\"></ipl-toggle-stub>
   </div>
 </div>"
 `;

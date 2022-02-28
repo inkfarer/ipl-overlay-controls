@@ -3,16 +3,13 @@ import { GameWinner } from '../../../types/enums/gameWinner';
 import { RoundStore, TournamentData } from '../../../types/schemas';
 import { PlayType } from '../../../types/enums/playType';
 import { mock } from 'jest-mock-extended';
-import type * as ActiveRoundHelper from '../activeRoundHelper';
 import type * as GenerateId from '../../../helpers/generateId';
 import type * as MatchStoreHelper from '../../helpers/matchStoreHelper';
 import { replicants } from '../../__mocks__/mockNodecg';
 
-const mockActiveRoundHelper = mock<typeof ActiveRoundHelper>();
 const mockDateTime = mock<typeof DateTime>();
 const mockGenerateId = mock<typeof GenerateId>();
 const mockMatchStoreHelper = mock<typeof MatchStoreHelper>();
-jest.mock('../activeRoundHelper', () => mockActiveRoundHelper);
 jest.mock('luxon', () => ({ __esModule: true, DateTime: mockDateTime }));
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 jest.mock('../../helpers/matchStoreHelper', () => mockMatchStoreHelper);

@@ -1,6 +1,6 @@
 {
     "name": "ipl-overlay-controls",
-    "version": "4.0.0",
+    "version": "4.1.0",
     "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
     "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
     "author": {
@@ -127,7 +127,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
-        "@iplsplatoon/vue-components": "1.2.1",
+        "@iplsplatoon/vue-components": "2.2.0",
         "@types/fs-extra": "^9.0.13",
         "axios": "^0.21.1",
         "clone": "^2.1.2",
@@ -173,6 +173,7 @@
         "jest-mock-extended": "^2.0.4",
         "jest-when": "^3.3.1",
         "json-schema-to-typescript": "^10.1.4",
+        "obs-websocket-js": "^4.0.3",
         "sass": "^1.42.1",
         "sass-loader": "^12.1.0",
         "style-loader": "^2.0.0",

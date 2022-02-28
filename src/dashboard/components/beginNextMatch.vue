@@ -4,7 +4,6 @@
             v-model="matchName"
             name="matchName"
             label="Match Name"
-            :validator="validators.matchName"
         />
         <ipl-button
             label="Begin next match"
@@ -20,10 +19,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core';
-import { IplButton, IplInput } from '@iplsplatoon/vue-components';
+import { allValid, IplButton, IplInput, notBlank, provideValidators, validator } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { allValid, validator } from '../helpers/validation/validator';
-import { notBlank } from '../helpers/validation/stringValidators';
 import { computed, ref, watchEffect } from 'vue';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { generateMatchNameForRound } from '../../helpers/nextRound';
@@ -48,13 +45,13 @@ export default defineComponent({
         const validators = {
             matchName: validator(matchName, false, notBlank)
         };
+        provideValidators(validators);
 
         watchEffect(() => {
             matchName.value = generateMatchNameForRound(tournamentDataStore.state.matchStore, props.roundName);
         });
 
         return {
-            validators,
             matchName,
             allValid: computed(() => allValid(validators)),
             beginNextMatch() {

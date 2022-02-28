@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name wrap-anywhere\\">Team One</span><span class=\\"max-width text-small team-name wrap-anywhere text-right m-l-6\\">Team Two (Really long name for te...</span></div>
   <div class=\\"layout horizontal m-t-4\\">
     <div class=\\"color-display\\" data-test=\\"team-a-color-display\\"></div>
@@ -10,12 +10,12 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
   <div class=\\"layout horizontal m-t-6 color-toggle-container\\">
     <div class=\\"color-toggle layout horizontal center-vertical center-horizontal\\" data-test=\\"color-toggle-previous\\">
       <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-left\\"></font-awesome-icon-stub>
-      <div class=\\"color\\" style=\\"background-color: rgb(254, 242, 50); border-color: #181e29;\\"></div>
-      <div class=\\"color\\" style=\\"background-color: rgb(46, 210, 254); border-color: #181e29;\\"></div>
+      <div class=\\"color\\" style=\\"border-color: #181e29; background-color: rgb(4, 217, 118);\\"></div>
+      <div class=\\"color\\" style=\\"border-color: white; background-color: rgb(214, 0, 171);\\"></div>
     </div><a class=\\"ipl-button m-l-6\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"swap-colors-button\\"><span class=\\"label\\">Swap</span></a>
     <div class=\\"color-toggle layout horizontal center-vertical center-horizontal m-l-6\\" data-test=\\"color-toggle-next\\">
-      <div class=\\"color\\" style=\\"background-color: rgb(4, 217, 118); border-color: #181e29;\\"></div>
-      <div class=\\"color\\" style=\\"background-color: rgb(214, 0, 171); border-color: white;\\"></div>
+      <div class=\\"color\\" style=\\"border-color: #181e29; background-color: rgb(254, 242, 50);\\"></div>
+      <div class=\\"color\\" style=\\"border-color: #181e29; background-color: rgb(46, 210, 254);\\"></div>
       <font-awesome-icon-stub icon=\\"chevron-right\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon-right\\"></font-awesome-icon-stub>
     </div>
   </div>

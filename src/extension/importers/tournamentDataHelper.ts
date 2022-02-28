@@ -1,6 +1,6 @@
 import { HighlightedMatches, TournamentData } from 'schemas';
-import { setActiveRoundTeams } from '../replicants/activeRoundHelper';
-import { setNextRoundTeams } from '../replicants/nextRoundHelper';
+import { setActiveRoundTeams } from '../helpers/activeRoundHelper';
+import { setNextRoundTeams } from '../helpers/nextRoundHelper';
 import * as nodecgContext from '../helpers/nodecg';
 import { Team } from 'types/team';
 import { generateId } from '../../helpers/generateId';

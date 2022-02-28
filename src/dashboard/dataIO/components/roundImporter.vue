@@ -6,7 +6,6 @@
             v-model="dataUrl"
             name="round-data-url"
             label="Data URL"
-            :validator="validators.dataUrl"
         />
         <ipl-upload
             v-show="useFileUpload"
@@ -36,8 +35,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import { IplButton, IplSpace, IplInput, IplCheckbox, IplUpload } from '@iplsplatoon/vue-components';
-import { allValid, validator } from '../../helpers/validation/validator';
+import {
+    IplButton,
+    IplSpace,
+    IplInput,
+    IplCheckbox,
+    IplUpload,
+    provideValidators,
+    validator,
+    allValid
+} from '@iplsplatoon/vue-components';
 import { notBlank } from '../../helpers/validation/stringValidators';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
@@ -52,14 +59,14 @@ export default defineComponent({
         const roundFile: Ref<File> = ref(null);
         const dataUrl: Ref<string> = ref(null);
         const validators = {
-            dataUrl: validator(dataUrl, false, notBlank)
+            'round-data-url': validator(dataUrl, false, notBlank)
         };
+        provideValidators(validators);
 
         return {
             useFileUpload,
             roundFile,
             dataUrl,
-            validators,
             allValid: computed(() => allValid(validators)),
             async handleImport() {
                 if (useFileUpload.value) {

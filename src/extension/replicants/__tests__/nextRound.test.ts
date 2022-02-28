@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended';
-import type * as NextRoundHelper from '../nextRoundHelper';
+import type * as NextRoundHelper from '../../helpers/nextRoundHelper';
 const mockNextRoundHelper = mock<typeof NextRoundHelper>();
-jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('../../helpers/nextRoundHelper', () => mockNextRoundHelper);
 
 import '../nextRound';
 import { messageListeners } from '../../__mocks__/mockNodecg';

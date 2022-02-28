@@ -13,6 +13,8 @@ export * from './nextRound';
 export * from './nextRoundStartTime';
 export * from './nowPlaying';
 export * from './nowPlayingSource';
+export * from './obsCredentials';
+export * from './obsData';
 export * from './predictionStore';
 export * from './radiaSettings';
 export * from './roundStore';
