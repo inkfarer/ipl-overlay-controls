@@ -10,15 +10,25 @@
         </div>
         <div class="layout horizontal m-t-4">
             <div
-                class="color-display"
-                :style="{ backgroundColor: activeRound.teamA.color }"
+                class="color-display text-right"
+                :style="{
+                    backgroundColor: activeRound.teamA.color,
+                    color: getBorderColor(activeRound.teamA.color)
+                }"
                 data-test="team-a-color-display"
-            />
+            >
+                {{ colorsSwapped ? 'β' : 'α' }}
+            </div>
             <div
                 class="color-display m-l-6"
-                :style="{ backgroundColor: activeRound.teamB.color }"
+                :style="{
+                    backgroundColor: activeRound.teamB.color,
+                    color: getBorderColor(activeRound.teamB.color)
+                }"
                 data-test="team-b-color-display"
-            />
+            >
+                {{ colorsSwapped ? 'α' : 'β' }}
+            </div>
         </div>
         <div class="layout horizontal m-t-6 color-toggle-container">
             <div
@@ -125,6 +135,7 @@ export default defineComponent({
                 }
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
+            colorsSwapped: computed(() => activeRoundStore.state.swapColorsInternally),
             nextColor,
             previousColor,
             addDots,
@@ -152,7 +163,8 @@ span.team-name {
 
 .color-display {
     width: 100%;
-    height: 20px;
+    height: 18px;
+    padding: 2px 4px;
     border-radius: 3px;
     transition-duration: $transition-duration-med;
 }
