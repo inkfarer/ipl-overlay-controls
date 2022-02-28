@@ -33,6 +33,7 @@ export const mockNodecgLog = {
     info: jest.fn(),
     error: jest.fn()
 };
+export const mockSendMessage = jest.fn();
 
 beforeEach(() => {
     replicants = {};
@@ -68,5 +69,6 @@ require('../helpers/nodecg').set({
     mount: mockMount,
     log: mockNodecgLog,
     bundleConfig: mockBundleConfig,
-    bundleName: 'ipl-overlay-controls'
+    bundleName: 'ipl-overlay-controls',
+    sendMessage: mockSendMessage
 });

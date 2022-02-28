@@ -1,9 +1,9 @@
-import { GameWinner } from 'types/enums/gameWinner';
+import { GameWinner } from '../../../types/enums/gameWinner';
 import { mock } from 'jest-mock-extended';
-import type * as TournamentDataHelper from '../../helpers/tournamentDataHelper';
+import type * as TournamentDataHelper from '../tournamentDataHelper';
 import { replicants } from '../../__mocks__/mockNodecg';
 const mockTournamentDataHelper = mock<typeof TournamentDataHelper>();
-jest.mock('../../helpers/tournamentDataHelper', () => mockTournamentDataHelper);
+jest.mock('../tournamentDataHelper', () => mockTournamentDataHelper);
 
 import { setNextRoundGames, setNextRoundTeams } from '../nextRoundHelper';
 

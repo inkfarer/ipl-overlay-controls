@@ -1,9 +1,9 @@
-import { GameWinner } from 'types/enums/gameWinner';
-import { commitActiveRoundToMatchStore } from './matchStore';
-import * as nodecgContext from '../helpers/nodecg';
+import { GameWinner } from '../../types/enums/gameWinner';
+import { commitActiveRoundToMatchStore } from '../replicants/matchStore';
+import * as nodecgContext from './nodecg';
 import { ActiveRound, SwapColorsInternally, TournamentData, MatchStore } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
-import { getTeam } from '../helpers/tournamentDataHelper';
+import { getTeam } from './tournamentDataHelper';
 import cloneDeep from 'lodash/cloneDeep';
 
 const nodecg = nodecgContext.get();

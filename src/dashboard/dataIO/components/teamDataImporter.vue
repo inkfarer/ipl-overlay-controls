@@ -37,7 +37,6 @@
                 :label="idLabel"
                 name="tournament-id-input"
                 class="m-t-4"
-                :validator="validators.tournamentId"
             />
             <ipl-upload
                 v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
@@ -87,7 +86,6 @@
             label="Short tournament name"
             name="shortName"
             class="m-t-4"
-            :validator="shortNameValidator"
         />
         <ipl-button
             class="m-t-8"
@@ -106,7 +104,15 @@ import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { IplButton, IplSpace, IplSelect, IplInput, IplUpload, IplCheckbox } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplSpace,
+    IplSelect,
+    IplInput,
+    IplUpload,
+    IplCheckbox,
+    provideValidators
+} from '@iplsplatoon/vue-components';
 import { allValid, validator } from '../../helpers/validation/validator';
 import { notBlank } from '../../helpers/validation/stringValidators';
 import { SelectOptions } from '../../types/select';
@@ -131,14 +137,20 @@ export default defineComponent({
 
         const shortName = ref('');
         const shortNameValidator = validator(shortName, false, notBlank);
+
         tournamentDataStore.watch(
             state => state.tournamentData.meta.shortName,
             newValue => shortName.value = newValue,
             { immediate: true });
 
         const validators = {
-            tournamentId: validator(tournamentId, false, notBlank)
+            'tournament-id-input': validator(tournamentId, false, notBlank)
         };
+
+        provideValidators({
+            ...validators,
+            shortName: shortNameValidator
+        });
 
         return {
             teamDataFile,
@@ -207,7 +219,6 @@ export default defineComponent({
                 smashggEvents.value = [];
             },
             allValid: computed(() => allValid(validators) || (useFileUpload.value && !!teamDataFile.value)),
-            validators,
             tournamentId,
             smashggEvents,
             smashggEvent,

@@ -2,7 +2,7 @@
 
 exports[`NextMatch template matches snapshot 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-checkbox-stub label=\\"Choose teams manually\\" modelvalue=\\"false\\" small=\\"false\\" disabled=\\"false\\" data-test=\\"choose-manually-toggle\\"></ipl-checkbox-stub>
   <ipl-checkbox-stub label=\\"Show on stream\\" modelvalue=\\"true\\" small=\\"false\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"show-on-stream-toggle\\"></ipl-checkbox-stub>
 </div>
@@ -11,7 +11,7 @@ exports[`NextMatch template matches snapshot 1`] = `
 
 exports[`NextMatch template matches snapshot when choosing teams manually 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-checkbox-stub label=\\"Choose teams manually\\" modelvalue=\\"true\\" small=\\"false\\" disabled=\\"false\\" data-test=\\"choose-manually-toggle\\"></ipl-checkbox-stub>
   <ipl-checkbox-stub label=\\"Show on stream\\" modelvalue=\\"true\\" small=\\"false\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"show-on-stream-toggle\\"></ipl-checkbox-stub>
 </div>

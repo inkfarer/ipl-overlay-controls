@@ -54,6 +54,15 @@ export const activeRoundStore = createStore<ActiveRoundStore>({
         },
         updateActiveGames(store, games: ActiveRoundGame[]): void {
             nodecg.sendMessage('updateActiveGames', { games });
+        },
+        switchToNextColor(): void {
+            nodecg.sendMessage('switchToNextColor');
+        },
+        switchToPreviousColor(): void {
+            nodecg.sendMessage('switchToPreviousColor');
+        },
+        async getNextAndPreviousColors(): Promise<void> {
+            return nodecg.sendMessage('getNextAndPreviousColors');
         }
     }
 });

@@ -1,13 +1,13 @@
 import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
 import { mock } from 'jest-mock-extended';
-import type * as NextRoundHelper from '../nextRoundHelper';
+import type * as NextRoundHelper from '../../helpers/nextRoundHelper';
 import type * as RoundStoreHelper from '../../helpers/roundStoreHelper';
 import type * as GenerateId from '../../../helpers/generateId';
 const mockNextRoundHelper = mock<typeof NextRoundHelper>();
 const mockGenerateId = mock<typeof GenerateId>();
 const mockRoundStoreHelper = mock<typeof RoundStoreHelper>();
-jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('../../helpers/nextRoundHelper', () => mockNextRoundHelper);
 jest.mock('../../../helpers/generateId', () => mockGenerateId);
 jest.mock('../../helpers/roundStoreHelper', () => mockRoundStoreHelper);
 

@@ -3,7 +3,7 @@ import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
 import { RoundStore } from 'schemas';
 import { handleRoundData } from './roundDataHelper';
-import { setNextRoundGames } from '../replicants/nextRoundHelper';
+import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { RuntimeConfig } from '../../types/schemas';
 import { GameVersion } from '../../types/enums/gameVersion';
 

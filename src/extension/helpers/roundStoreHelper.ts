@@ -1,7 +1,7 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { RoundStore, RuntimeConfig } from '../../types/schemas';
 import { PlayType } from '../../types/enums/playType';
-import { setNextRoundGames } from '../replicants/nextRoundHelper';
+import { setNextRoundGames } from './nextRoundHelper';
 import { perGameData } from '../../helpers/gameData/gameData';
 import { randomFromArray } from '../../helpers/array';
 

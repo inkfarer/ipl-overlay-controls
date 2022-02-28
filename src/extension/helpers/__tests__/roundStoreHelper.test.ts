@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended';
-import type * as NextRoundHelper from '../../replicants/nextRoundHelper';
+import type * as NextRoundHelper from '../nextRoundHelper';
 const mockNextRoundHelper = mock<typeof NextRoundHelper>();
-jest.mock('../../replicants/nextRoundHelper', () => mockNextRoundHelper);
+jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
 
 import { replicants } from '../../__mocks__/mockNodecg';
 import { PlayType } from '../../../types/enums/playType';

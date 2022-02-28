@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RoundEditor matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"Cool Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\"></ipl-input-stub>
   <ipl-select-stub modelvalue=\\"PLAY_ALL\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\"></ipl-select-stub>
   <div class=\\"separator\\"><span>1</span></div>
@@ -21,7 +21,7 @@ exports[`RoundEditor matches snapshot 1`] = `
 `;
 
 exports[`RoundEditor matches snapshot when creating new round 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11398c0e=\\"\\">
+"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"New Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\"></ipl-input-stub>
   <ipl-select-stub modelvalue=\\"BEST_OF\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\"></ipl-select-stub>
   <div class=\\"separator\\"><span>1</span></div>

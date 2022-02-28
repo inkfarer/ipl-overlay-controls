@@ -46,12 +46,12 @@
     margin-bottom: 8px !important;
 }
 
-.max-width {
-    width: 100%;
+.m-r-8 {
+    margin-right: 8px !important;
 }
 
-.mw-2 {
-    max-width: 272px;
+.max-width {
+    width: 100%;
 }
 
 .d-block {
@@ -64,4 +64,8 @@
 
 .h-max-content {
     height: max-content;
+}
+
+.large-icon {
+    font-size: 1.25em;
 }
