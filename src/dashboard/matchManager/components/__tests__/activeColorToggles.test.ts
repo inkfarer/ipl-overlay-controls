@@ -124,6 +124,23 @@ describe('ActiveColorToggles', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    it('matches snapshot with swapped colors', async () => {
+        const store = createActiveRoundStore();
+        store.state.swapColorsInternally = true;
+        const settingsStore = createSettingsStore();
+        const wrapper = mount(ActiveColorToggles, {
+            global: {
+                plugins: [
+                    [store, activeRoundStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
+            }
+        });
+        await flushPromises();
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it('sets color when clicking previous color toggle', async () => {
         const activeRoundStore = createActiveRoundStore();
         const settingsStore = createSettingsStore();
