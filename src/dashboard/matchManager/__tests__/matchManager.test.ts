@@ -18,7 +18,8 @@ describe('MatchManager', () => {
         ActiveMatchEditor: true,
         ScoreDisplay: true,
         SetEditor: true,
-        FontAwesomeIcon: true
+        FontAwesomeIcon: true,
+        ActiveRosterDisplay: true
     };
 
     function createCasterStore() {

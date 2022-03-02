@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TeamRosterDisplay matches snapshot 1`] = `
+"<div>
+  <div class=\\"text-bold m-b-4 wrap-anywhere text-size-medium\\">Cool Team</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player one</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player two</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player three</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player four</div>
+</div>"
+`;
+
+exports[`TeamRosterDisplay matches snapshot with overlong names 1`] = `
+"<div>
+  <div class=\\"text-bold m-b-4 wrap-anywhere text-size-medium\\">Cool Team Cool Team Cool Team Cool Team Cool ...</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player one</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player two</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player three player three player three player...</div>
+  <div class=\\"m-t-2 wrap-anywhere\\">player four</div>
+</div>"
+`;
