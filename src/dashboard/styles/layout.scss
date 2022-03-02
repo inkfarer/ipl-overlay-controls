@@ -22,40 +22,21 @@
     }
 }
 
-.m-t-8 {
-    margin-top: 8px !important;
-}
+$layout-margins: 2, 4, 6, 8, 16;
 
-.m-t-6 {
-    margin-top: 6px !important;
-}
-
-.m-t-4 {
-    margin-top: 4px !important;
-}
-
-.m-t-2 {
-    margin-top: 2px !important;
-}
-
-.m-l-8 {
-    margin-left: 8px !important;
-}
-
-.m-l-6 {
-    margin-left: 6px !important;
-}
-
-.m-b-8 {
-    margin-bottom: 8px !important;
-}
-
-.m-b-4 {
-    margin-bottom: 4px !important;
-}
-
-.m-r-8 {
-    margin-right: 8px !important;
+@each $margin in $layout-margins {
+    .m-t-#{$margin} {
+        margin-top: #{$margin}px;
+    }
+    .m-b-#{$margin} {
+        margin-bottom: #{$margin}px;
+    }
+    .m-l-#{$margin} {
+        margin-left: #{$margin}px;
+    }
+    .m-r-#{$margin} {
+        margin-right: #{$margin}px;
+    }
 }
 
 .max-width {
