@@ -24,6 +24,7 @@ p {
 a {
     color: #0090FF;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         text-decoration: underline;
@@ -55,6 +56,14 @@ a {
 
 .text-semibold {
     font-weight: 500;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.text-size-medium {
+    font-size: 1.3em;
 }
 
 .text-right {

@@ -43,6 +43,13 @@
             <active-match-editor class="m-t-8" />
             <next-match-starter class="m-t-8" />
             <scoreboard-editor class="m-t-8" />
+            <ipl-expanding-space
+                key="activeRosters"
+                title="Active Rosters"
+                class="m-t-8"
+            >
+                <active-roster-display class="m-t-8" />
+            </ipl-expanding-space>
         </ipl-expanding-space-group>
     </div>
     <set-editor class="m-t-8" />
@@ -55,18 +62,21 @@ import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
 import SetEditor from './components/setEditor.vue';
 import ActiveColorToggles from './components/activeColorToggles.vue';
-import { IplButton, IplSpace, IplExpandingSpaceGroup } from '@iplsplatoon/vue-components';
+import { IplButton, IplSpace, IplExpandingSpaceGroup, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import NextMatchStarter from './components/nextMatchStarter.vue';
 import { useObsStore } from '../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
+import ActiveRosterDisplay from '../components/activeRosterDisplay.vue';
 
 export default defineComponent({
     name: 'ActiveRound',
 
     components: {
+        IplExpandingSpace,
+        ActiveRosterDisplay,
         NextMatchStarter,
         IplErrorDisplay,
         ScoreboardEditor,
