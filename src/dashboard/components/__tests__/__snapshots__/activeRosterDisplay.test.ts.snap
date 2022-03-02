@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActiveRosterDisplay matches snapshot 1`] = `
+"<div class=\\"active-roster-display\\">
+  <team-roster-display-stub team=\\"Team One\\" class=\\"text-right\\"></team-roster-display-stub>
+  <div class=\\"separator\\"></div>
+  <team-roster-display-stub team=\\"Team Two\\"></team-roster-display-stub>
+</div>"
+`;
