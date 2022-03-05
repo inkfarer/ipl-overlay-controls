@@ -25,7 +25,8 @@ describe('teamDataImporter', () => {
                     meta: {
                         id: '123123',
                         source: TournamentDataSource.BATTLEFY,
-                        shortName: null
+                        shortName: null,
+                        name: 'Tournament Name'
                     },
                     teams: []
                 },
@@ -382,5 +383,23 @@ describe('teamDataImporter', () => {
         await wrapper.vm.$nextTick();
 
         expect(store.dispatch).toHaveBeenCalledWith('setShortName', 'Tournament Name');
+    });
+
+    it('reverts short name changes on update button right click', async () => {
+        const store = createTournamentDataStore();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [[ store, tournamentDataStoreKey ]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="shortName"]').vm.$emit('update:modelValue', 'Tourney Name');
+        wrapper.getComponent('[data-test="update-short-name-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="shortName"]').attributes().modelvalue).toEqual('Tournament Name');
+        expect(event.preventDefault).toHaveBeenCalled();
     });
 });
