@@ -82,9 +82,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
-import { IplButton, IplExpandingSpace, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
+import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingTextColor } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';

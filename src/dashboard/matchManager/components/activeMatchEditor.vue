@@ -84,10 +84,10 @@ import {
     IplMessage,
     IplExpandingSpace,
     IplInput,
-    provideValidators
+    provideValidators,
+    notBlank,
+    validator
 } from '@iplsplatoon/vue-components';
-import { validator } from '../../helpers/validation/validator';
-import { notBlank } from '../../helpers/validation/stringValidators';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({

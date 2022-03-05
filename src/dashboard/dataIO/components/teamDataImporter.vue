@@ -113,10 +113,11 @@ import {
     IplInput,
     IplUpload,
     IplCheckbox,
-    provideValidators
+    provideValidators,
+    notBlank,
+    validator,
+    allValid
 } from '@iplsplatoon/vue-components';
-import { allValid, validator } from '../../helpers/validation/validator';
-import { notBlank } from '../../helpers/validation/stringValidators';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
