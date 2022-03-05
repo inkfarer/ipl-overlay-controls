@@ -30,8 +30,10 @@
             class="m-t-8"
             label="Update"
             :color="isChanged ? 'red' : 'blue'"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             data-test="update-button"
             @click="doUpdate"
+            @right-click="undoChanges"
         />
     </ipl-space>
 </template>
@@ -45,6 +47,7 @@ import { computed, ref } from 'vue';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { prettyPrintList } from '../../../helpers/array';
 import { pluralizeWithoutCount } from '../../helpers/stringHelper';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'RuntimeConfig',
@@ -63,6 +66,7 @@ export default defineComponent({
             { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             prettyPrintList,
             GameVersionHelper,
             gameVersion,
@@ -81,6 +85,11 @@ export default defineComponent({
                 } else {
                     showIncompatibleBundlesMessage.value = false;
                 }
+            },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                gameVersion.value = store.state.runtimeConfig.gameVersion as GameVersion;
             }
         };
     }
