@@ -32,8 +32,11 @@
             <ipl-button
                 class="m-t-8"
                 label="Update"
+                data-test="update-main-scene-button"
                 :color="mainUpdateButtonColor"
+                :title="RIGHT_CLICK_UNDO_MESSAGE"
                 @click="updateMainScene"
+                @right-click="undoMainScene"
             />
         </div>
     </ipl-expanding-space>
@@ -69,6 +72,7 @@ import { ActiveBreakScene } from 'schemas';
 import isEqual from 'lodash/isEqual';
 import NextStageTimeInput from './components/nextStageTimeInput.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'BreakScreen',
@@ -84,19 +88,20 @@ export default defineComponent({
         const isChanged = computed(() => !isEqual(mainFlavorText.value, store.state.mainFlavorText)
             || !isEqual(nextRoundTime.value, store.state.nextRoundStartTime.startTime));
 
-        store.watch(store => store.mainFlavorText, newValue => {
+        store.watch(state => state.mainFlavorText, newValue => {
             if (!mainFlavorTextFocused.value) {
                 mainFlavorText.value = newValue;
             }
         }, { immediate: true });
 
-        store.watch(store => store.nextRoundStartTime.startTime, newValue => {
+        store.watch(state => state.nextRoundStartTime.startTime, newValue => {
             if (!nextRoundTimeFocused.value) {
                 nextRoundTime.value = newValue;
             }
         }, { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             activeBreakScene: computed(() => store.state.activeBreakScene),
             mainFlavorText,
             nextRoundTime,
@@ -114,6 +119,12 @@ export default defineComponent({
             updateMainScene() {
                 store.commit('setMainFlavorText', mainFlavorText.value);
                 store.commit('setNextRoundStartTime', nextRoundTime.value);
+            },
+            undoMainScene(event: Event) {
+                event.preventDefault();
+
+                nextRoundTime.value = store.state.nextRoundStartTime.startTime;
+                mainFlavorText.value = store.state.mainFlavorText;
             },
             mainUpdateButtonColor: computed(() => isChanged.value ? 'red' : 'blue'),
             handleMainFlavorTextFocus(event: boolean) {
