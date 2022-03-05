@@ -71,7 +71,7 @@ describe('HighlightedMatchViewer', () => {
     it('matches snapshot', () => {
         const highlightedMatchStore = createHighlightedMatchStore();
         highlightedMatchStore.state.highlightedMatches = [
-            { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
+            { meta: { name: 'cool match', id: '1234', playType: PlayType.PLAY_ALL }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
         const nextRoundStore = createNextRoundStore();

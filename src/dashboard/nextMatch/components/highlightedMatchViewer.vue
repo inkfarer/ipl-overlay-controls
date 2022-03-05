@@ -22,9 +22,16 @@
             :value="addDots(selectedMatchData?.teamB?.name)"
             data-test="team-b-name-display"
         />
+        <ipl-data-row
+            v-if="!!selectedMatchData?.meta.playType"
+            label="Type of play"
+            :value="formatPlayType(selectedMatchData?.meta.playType, selectedRoundData?.roundData?.games.length)"
+            data-test="play-type-display"
+        />
         <round-select
             v-model="selectedRound"
             class="m-t-4"
+            @update:roundData="selectedRoundData = $event"
         />
         <ipl-button
             class="m-t-8"
@@ -41,9 +48,10 @@
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { IplButton, IplSelect, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
-import RoundSelect from '../../components/roundSelect.vue';
+import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { addDots } from '../../../helpers/stringHelper';
+import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 
 export default defineComponent({
     name: 'HighlightedMatchViewer',
@@ -55,6 +63,7 @@ export default defineComponent({
         const nextRoundStore = useNextRoundStore();
         const selectedMatch = ref<string>(null);
         const selectedRound = ref<string>(null);
+        const selectedRoundData = ref<RoundSelectRound>(null);
 
         watchEffect(() => {
             const nextRound = nextRoundStore.state.nextRound;
@@ -77,6 +86,8 @@ export default defineComponent({
 
         return {
             addDots,
+            selectedRoundData,
+            formatPlayType: PlayTypeHelper.toPrettyString,
             matchOptions: computed(() => {
                 const isAllSameStage = highlightedMatchStore.state.highlightedMatches.every(match =>
                     match.meta.stageName === highlightedMatchStore.state.highlightedMatches[0].meta.stageName);

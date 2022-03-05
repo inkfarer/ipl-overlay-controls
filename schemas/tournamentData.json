@@ -87,6 +87,9 @@
                     "type": {
                         "type": "string",
                         "enum": ["SWISS", "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION", "ROUND_ROBIN", "LADDER"]
+                    },
+                    "playType": {
+                        "$ref": "defs/round.json#/$defs/type"
                     }
                 }
             }

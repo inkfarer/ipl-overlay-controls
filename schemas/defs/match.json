@@ -29,6 +29,9 @@
           "match": {
             "description": "Match number from provider",
             "type": "integer"
+          },
+          "playType": {
+            "$ref": "round.json#/$defs/type"
           }
         },
         "required": ["name", "id"],
