@@ -122,7 +122,9 @@
                 label="Update"
                 :color="gamesChanged ? 'red' : 'blue'"
                 data-test="update-button"
+                :title="RIGHT_CLICK_UNDO_MESSAGE"
                 @click="handleUpdate"
+                @right-click="undoChanges"
             />
             <ipl-button
                 label="Reset"
@@ -160,6 +162,7 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 library.add(faTimes);
 
@@ -211,6 +214,7 @@ export default defineComponent({
             nextGameIndex.value === -1 ? null : activeRoundStore.state.activeRound.games[nextGameIndex.value]);
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             games,
             stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
             modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
@@ -285,7 +289,12 @@ export default defineComponent({
                 activeRoundStore.dispatch('resetActiveRound');
             },
             nextGame,
-            nextGameIndex
+            nextGameIndex,
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                games.value = cloneDeep(activeRoundStore.state.activeRound.games);
+            }
         };
     }
 });
