@@ -33,7 +33,9 @@
                 async
                 progress-message="Connecting..."
                 success-message="Connected!"
+                :title="RIGHT_CLICK_UNDO_MESSAGE"
                 @click="connect"
+                @right-click="undoChanges"
             />
             <ipl-space
                 class="text-center m-t-8 text-semibold rounded-inner"
@@ -66,6 +68,7 @@ import {
 import { computed, ref } from 'vue';
 import { useObsStore } from '../../store/obsStore';
 import { ObsStatus, ObsStatusHelper } from 'types/enums/ObsStatus';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ObsSocketSettings',
@@ -100,6 +103,7 @@ export default defineComponent({
         provideValidators(validators);
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             socketEnabled,
             socketUrl,
             socketPassword,
@@ -111,6 +115,12 @@ export default defineComponent({
             status: computed(() => obsStore.state.obsData.status),
             connect() {
                 return obsStore.dispatch('connect', { address: socketUrl.value, password: socketPassword.value });
+            },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                socketUrl.value = obsStore.state.obsCredentials.address;
+                socketPassword.value = obsStore.state.obsCredentials.password;
             }
         };
     }
