@@ -92,4 +92,22 @@ describe('ObsSocketSettings', () => {
 
         expect(store.dispatch).toHaveBeenCalledWith('connect', { address: 'https://new-socket-url', password: 'pwd' });
     });
+
+    it('resets data on connect button right click', async () => {
+        const store = createObsStore();
+        const wrapper = mount(ObsSocketSettings, {
+            global: {
+                plugins: [[store, obsStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
+        wrapper.getComponent('[data-test="socket-connect-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="socketUrl"]').attributes().modelvalue).toEqual('localhost:4444');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
 });

@@ -70,8 +70,10 @@
                 label="Update"
                 class="m-t-8"
                 :color="customColorChanged ? 'red' : 'blue'"
+                :title="RIGHT_CLICK_UNDO_MESSAGE"
                 data-test="custom-color-submit-btn"
                 @click="submitCustomColor"
+                @right-click="undoCustomColorChanges"
             />
         </div>
     </ipl-expanding-space>
@@ -80,12 +82,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
-import { getContrastingTextColor } from '../../helpers/colorHelper';
 import { ColorInfo } from 'types/colors';
-import { IplButton, IplExpandingSpace, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
+import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingTextColor } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ColorEditor',
@@ -129,6 +131,7 @@ export default defineComponent({
         }
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             useCustomColor,
             customColorA,
             customColorB,
@@ -161,7 +164,13 @@ export default defineComponent({
                     categoryName
                 });
             },
-            swapColorsInternally
+            swapColorsInternally,
+            undoCustomColorChanges(event: Event) {
+                event.preventDefault();
+
+                customColorA.value = activeRoundStore.state.activeRound.teamA.color;
+                customColorB.value = activeRoundStore.state.activeRound.teamB.color;
+            }
         };
     }
 });

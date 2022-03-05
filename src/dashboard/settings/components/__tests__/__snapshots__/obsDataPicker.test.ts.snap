@@ -4,7 +4,7 @@ exports[`ObsDataPicker matches snapshot 1`] = `
 "<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-select-stub modelvalue=\\"Scene One\\" label=\\"Gameplay scene\\" options=\\"[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"gameplay-scene-select\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Scene Two\\" label=\\"Intermission scene\\" options=\\"[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"intermission-scene-select\\" class=\\"m-t-8\\"></ipl-select-stub>
-  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-button\\"></ipl-button-stub>
+  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" title=\\"Right-click to undo changes.\\" data-test=\\"update-button\\"></ipl-button-stub>
 </div>"
 `;
 

@@ -16,13 +16,16 @@
         <round-select
             v-model="selectedRound"
             class="m-t-8"
+            data-test="round-selector"
         />
         <ipl-button
             label="Update"
             class="m-t-8"
             :color="isChanged ? 'red' : 'blue'"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             data-test="update-button"
             @click="handleUpdate"
+            @right-click="undoChanges"
         />
     </ipl-space>
 </template>
@@ -34,6 +37,7 @@ import TeamSelect from '../../components/teamSelect.vue';
 import { computed, ref } from 'vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import RoundSelect from '../../components/roundSelect.vue';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ManualTeamPicker',
@@ -61,6 +65,7 @@ export default defineComponent({
             { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             teamAId,
             teamBId,
             selectedRound,
@@ -74,6 +79,13 @@ export default defineComponent({
                     teamBId: teamBId.value,
                     roundId: selectedRound.value
                 });
+            },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                teamAId.value = nextRoundStore.state.nextRound.teamA.id;
+                teamBId.value = nextRoundStore.state.nextRound.teamB.id;
+                selectedRound.value = nextRoundStore.state.nextRound.round.id;
             }
         };
     }

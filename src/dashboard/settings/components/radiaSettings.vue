@@ -30,7 +30,9 @@
             class="m-t-8"
             :color="buttonColor"
             :disabled="!isValid"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             @click="handleUpdate"
+            @right-click="undoChanges"
         />
         <ipl-checkbox
             v-model="settings.updateOnImport"
@@ -44,14 +46,24 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref } from 'vue';
-import { IplButton, IplInput, IplSpace, IplCheckbox, IplMessage, provideValidators } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplInput,
+    IplSpace,
+    IplCheckbox,
+    IplMessage,
+    provideValidators,
+    validator,
+    allValid,
+    minLength,
+    numeric
+} from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import cloneDeep from 'lodash/cloneDeep';
 import { RadiaSettings } from 'schemas';
-import { allValid, validator } from '../../helpers/validation/validator';
-import { minLength, numeric } from '../../helpers/validation/stringValidators';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'RadiaSettings',
@@ -68,8 +80,8 @@ export default defineComponent({
         const store = useSettingsStore();
         const isFocused = ref(false);
         const isChanged = computed(() => !isEqual(
-            pick(settings.value, ['guildID']),
-            pick(store.state.radiaSettings, ['guildID'])
+            pick(settings.value, [ 'guildID' ]),
+            pick(store.state.radiaSettings, [ 'guildID' ])
         ));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
         const validators = {
@@ -88,6 +100,7 @@ export default defineComponent({
         });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             radiaEnabled: computed(() => store.state.radiaSettings.enabled),
             focused: isFocused,
             handleFocusEvent(event: boolean) {
@@ -107,6 +120,11 @@ export default defineComponent({
             },
             async attemptRadiaReconnect(): Promise<void> {
                 return store.dispatch('attemptRadiaConnection');
+            },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                settings.value.guildID = store.state.radiaSettings.guildID;
             }
         };
     }

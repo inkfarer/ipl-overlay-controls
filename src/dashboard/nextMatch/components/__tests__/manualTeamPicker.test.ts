@@ -76,4 +76,24 @@ describe('ManualTeamPicker', () => {
             roundId: '0387'
         });
     });
+
+    it('reverts changes on update button right click', async () => {
+        const store = createNextRoundStore();
+        const wrapper = mount(ManualTeamPicker, {
+            global: {
+                plugins: [[store, nextRoundStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
+        wrapper.getComponent('[data-test="round-selector"]').vm.$emit('update:modelValue', '098098');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('123123');
+        expect(wrapper.getComponent('[data-test="round-selector"]').attributes().modelvalue).toEqual('0387');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
 });

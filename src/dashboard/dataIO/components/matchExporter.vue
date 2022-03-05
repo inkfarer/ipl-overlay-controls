@@ -12,9 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core';
-import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSpace, pluralize } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { pluralize } from '../../helpers/stringHelper';
 import { computed } from 'vue';
 
 export default defineComponent({

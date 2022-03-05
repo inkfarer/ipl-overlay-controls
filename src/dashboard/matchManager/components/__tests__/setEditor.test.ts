@@ -301,6 +301,32 @@ describe('setEditor', () => {
         ]);
     });
 
+    it('reverts changes on update button right click', async () => {
+        const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
+        const wrapper = mount(SetEditor, {
+            global: {
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]')
+            .vm.$emit('update:modelValue', 'Moray Towers');
+        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="mode-select"]')
+            .vm.$emit('update:modelValue', 'Turf War');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]').attributes().modelvalue).toEqual('Blackbelly Skatepark');
+        expect(wrapper.getComponent('[data-test="set-editor-0"] > [data-test="mode-select"]').attributes().modelvalue).toEqual('Rainmaker');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('has expected button color after changing round data', async () => {
         const store = createActiveRoundStore();
         const settingsStore = createSettingsStore();

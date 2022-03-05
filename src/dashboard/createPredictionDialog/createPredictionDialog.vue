@@ -45,15 +45,23 @@
                 label="Team B"
             />
         </div>
-        <ipl-button
-            label="Create"
-            class="m-t-8"
-            :disabled="!allValid"
-            color="green"
-            async
-            data-test="create-prediction-button"
-            @click="createPrediction"
-        />
+        <div class="layout horizontal m-t-8">
+            <ipl-button
+                label="Create"
+                :disabled="!allValid"
+                color="green"
+                async
+                data-test="create-prediction-button"
+                @click="createPrediction"
+            />
+            <ipl-button
+                label="Reset"
+                color="red"
+                class="m-l-8"
+                data-test="reset-inputs-button"
+                @click="resetInputs"
+            />
+        </div>
     </ipl-space>
 </template>
 
@@ -122,6 +130,12 @@ export default defineComponent({
                     teamBName: teamBName.value
                 });
                 (nodecg.getDialog('createPredictionDialog') as NodecgDialog).close();
+            },
+            resetInputs() {
+                title.value = 'Who do you think will win this match?';
+                duration.value = 120;
+                teamAName.value = nextRoundStore.state.nextRound.teamA.name;
+                teamBName.value = nextRoundStore.state.nextRound.teamB.name;
             },
             closeDialog
         };

@@ -169,4 +169,28 @@ describe('ManualSongEditor', () => {
 
         expect(store.commit).not.toHaveBeenCalled();
     });
+
+    it('reverts changes when update button is right clicked', async () => {
+        const store = createMusicStore();
+        store.state.manualNowPlaying.song = 'old song';
+        store.state.manualNowPlaying.artist = 'old artist';
+        const wrapper = mount(ManualSongEditor, {
+            global: {
+                plugins: [ [ store, musicStoreKey ] ]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
+        wrapper.getComponent('[name="song"]').vm.$emit('update:modelValue', 'new song');
+        await wrapper.vm.$nextTick();
+
+        wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="artist"]').attributes().modelvalue).toEqual('old artist');
+        expect(wrapper.getComponent('[name="song"]').attributes().modelvalue).toEqual('old song');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
 });

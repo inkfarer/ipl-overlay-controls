@@ -172,6 +172,49 @@ describe('RoundEditor', () => {
         expect(wrapper.emitted('createNewRound')).toBeFalsy();
     });
 
+    it('reverts changes on update button right click', async () => {
+        const store = createTournamentDataStore();
+        const settingsStore = createSettingsStore();
+        // @ts-ignore: This works.
+        const wrapper = mount(RoundEditor, {
+            global: {
+                plugins: [
+                    [store, tournamentDataStoreKey],
+                    [settingsStore, settingsStoreKey]
+                ]
+            },
+            props: {
+                round: {
+                    meta: {
+                        name: 'New Round',
+                        isCompleted: false,
+                        type: PlayType.PLAY_ALL
+                    },
+                    games: [
+                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
+                        { stage: 'Moray Towers', mode: 'Clam Blitz' },
+                        { stage: 'Port Mackerel', mode: 'Tower Control' }
+                    ]
+                },
+                roundId: 'round-456',
+                isNewRound: false
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
+        wrapper.getComponent('[name="round-name"]').vm.$emit('update:modelValue', 'Cool Round');
+        wrapper.getComponent('[name="round-type"]').vm.$emit('update:modelValue', PlayType.BEST_OF);
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="mode-selector-0"]').attributes().modelvalue).toEqual('Rainmaker');
+        expect(wrapper.getComponent('[name="round-name"]').attributes().modelvalue).toEqual('New Round');
+        expect(wrapper.getComponent('[name="round-type"]').attributes().modelvalue).toEqual(PlayType.PLAY_ALL);
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('updates round on update button click if round is new', async () => {
         mockUpdateRound.mockResolvedValue({ id: 'new-round-id' });
         const store = createTournamentDataStore();

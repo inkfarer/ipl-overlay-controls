@@ -33,8 +33,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue';
 import { DateObjectUnits, DateTime } from 'luxon';
-import { IplInput, IplSelect } from '@iplsplatoon/vue-components';
-import { padNumber } from '../../helpers/stringHelper';
+import { IplInput, IplSelect, padNumber } from '@iplsplatoon/vue-components';
 
 const dayMonthFormat = 'dd/MM';
 const dayMonthYearFormat = 'dd/MM/yyyy';

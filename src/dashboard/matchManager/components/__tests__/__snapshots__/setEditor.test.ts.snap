@@ -101,7 +101,7 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div class=\\"layout horizontal m-t-8\\">
-      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
       <ipl-button-stub label=\\"Reset\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"reset-button\\"></ipl-button-stub>
       <ipl-toggle-button-stub label=\\"Edit colors\\" modelvalue=\\"false\\" class=\\"m-l-6\\" data-test=\\"edit-colors-toggle\\"></ipl-toggle-button-stub>
     </div>
@@ -174,7 +174,7 @@ exports[`setEditor matches snapshot when active round updates to one with less g
       </div>
     </div>
     <div class=\\"layout horizontal m-t-8\\">
-      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
       <ipl-button-stub label=\\"Reset\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"reset-button\\"></ipl-button-stub>
       <ipl-toggle-button-stub label=\\"Edit colors\\" modelvalue=\\"false\\" class=\\"m-l-6\\" data-test=\\"edit-colors-toggle\\"></ipl-toggle-button-stub>
     </div>
@@ -319,7 +319,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div class=\\"layout horizontal m-t-8\\">
-      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
       <ipl-button-stub label=\\"Reset\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"reset-button\\"></ipl-button-stub>
       <ipl-toggle-button-stub label=\\"Edit colors\\" modelvalue=\\"false\\" class=\\"m-l-6\\" data-test=\\"edit-colors-toggle\\"></ipl-toggle-button-stub>
     </div>
@@ -428,7 +428,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div class=\\"layout horizontal m-t-8\\">
-      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
       <ipl-button-stub label=\\"Reset\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"reset-button\\"></ipl-button-stub>
       <ipl-toggle-button-stub label=\\"Edit colors\\" modelvalue=\\"true\\" class=\\"m-l-6\\" data-test=\\"edit-colors-toggle\\"></ipl-toggle-button-stub>
     </div>
@@ -503,7 +503,7 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
       </div>
     </div>
     <div class=\\"layout horizontal m-t-8\\">
-      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
       <ipl-button-stub label=\\"Reset\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"true\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"reset-button\\"></ipl-button-stub>
       <ipl-toggle-button-stub label=\\"Edit colors\\" modelvalue=\\"false\\" class=\\"m-l-6\\" data-test=\\"edit-colors-toggle\\"></ipl-toggle-button-stub>
     </div>

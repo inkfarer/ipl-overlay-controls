@@ -11,8 +11,10 @@
             label="Update"
             class="m-t-8"
             :color="buttonColor"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             data-test="update-button"
             @click="handleUpdate"
+            @right-click="undoChanges"
         />
     </ipl-space>
 </template>
@@ -24,6 +26,7 @@ import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
 import { LastFmSettings } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'LastfmSettings',
@@ -47,6 +50,7 @@ export default defineComponent({
         }, { deep: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             focused: isFocused,
             handleFocusEvent(event: boolean) {
                 isFocused.value = event;
@@ -59,6 +63,11 @@ export default defineComponent({
                     store.commit('setLastFmSettings', { newValue: settings.value });
                 }
             },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                settings.value = cloneDeep(store.state.lastFmSettings);
+            }
         };
     }
 });

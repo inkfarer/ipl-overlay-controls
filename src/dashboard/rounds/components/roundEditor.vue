@@ -7,6 +7,7 @@
         />
         <ipl-select
             v-model="roundInternal.meta.type"
+            name="round-type"
             label="Type"
             class="m-t-6"
             :options="typeOptions"
@@ -35,7 +36,9 @@
                 :label="isNewRound ? 'Save' : 'Update'"
                 :color="isNewRound ? 'green' : isChanged ? 'red' : 'blue'"
                 data-test="update-button"
+                :title="isNewRound ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
                 @click="handleUpdate"
+                @right-click="undoChanges"
             />
             <ipl-button
                 icon="times"
@@ -59,6 +62,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { PlayType, PlayTypeHelper } from 'types/enums/playType';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 library.add(faTimes);
 
@@ -109,6 +113,7 @@ export default defineComponent({
         }, { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             roundInternal,
             stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
             modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
@@ -144,7 +149,13 @@ export default defineComponent({
                     value: type,
                     name: PlayTypeHelper.toPrettyString(type, roundInternal.value.games.length)
                 }));
-            })
+            }),
+            undoChanges(event: Event) {
+                if (props.isNewRound) return;
+                event.preventDefault();
+
+                roundInternal.value = cloneDeep(props.round);
+            }
         };
     }
 });

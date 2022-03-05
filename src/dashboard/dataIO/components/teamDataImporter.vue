@@ -93,7 +93,9 @@
             data-test="update-short-name-button"
             :color="shortNameChanged ? 'red' : 'blue'"
             :disabled="!shortNameValidator.isValid"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             @click="updateShortName"
+            @right-click="undoShortNameChanges"
         />
     </ipl-space>
 </template>
@@ -111,13 +113,15 @@ import {
     IplInput,
     IplUpload,
     IplCheckbox,
-    provideValidators
+    provideValidators,
+    notBlank,
+    validator,
+    allValid
 } from '@iplsplatoon/vue-components';
-import { allValid, validator } from '../../helpers/validation/validator';
-import { notBlank } from '../../helpers/validation/stringValidators';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'TeamDataImporter',
@@ -153,6 +157,7 @@ export default defineComponent({
         });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             teamDataFile,
             useFileUpload,
             tournamentMetadata: computed(() => tournamentDataStore.state.tournamentData.meta),
@@ -230,6 +235,13 @@ export default defineComponent({
                 tournamentDataStore.state.tournamentData.meta.shortName !== shortName.value),
             updateShortName() {
                 tournamentDataStore.dispatch('setShortName', shortName.value);
+            },
+            undoShortNameChanges(event: Event) {
+                event.preventDefault();
+
+                shortName.value
+                    = tournamentDataStore.state.tournamentData.meta.shortName
+                    ?? tournamentDataStore.state.tournamentData.meta.name;
             }
         };
     }
