@@ -164,6 +164,29 @@ describe('CreatePredictionDialog', () => {
         expect(mockDialog.close).toHaveBeenCalledTimes(1);
     });
 
+    it('resets data to defaults on reset button click', async () => {
+        const predictionDataStore = createPredictionDataStore();
+        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+        const nextRoundStore = createNextRoundStore();
+        const wrapper = mount(CreatePredictionDialog, {
+            global: {
+                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[type="number"]').vm.$emit('update:modelValue', 128);
+        wrapper.getComponent('[name="title"]').vm.$emit('update:modelValue', 'Who will win?');
+        wrapper.getComponent('[name="team-a-name"]').vm.$emit('update:modelValue', 'Team One!!!');
+        wrapper.getComponent('[name="team-b-name"]').vm.$emit('update:modelValue', 'Team Two?!?!?!?');
+        wrapper.getComponent('[data-test="reset-inputs-button"]').vm.$emit('click');
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[type="number"]').attributes().modelvalue).toEqual('120');
+        expect(wrapper.getComponent('[name="title"]').attributes().modelvalue).toEqual('Who do you think will win this match?');
+        expect(wrapper.getComponent('[name="team-a-name"]').attributes().modelvalue).toEqual('cool team A');
+        expect(wrapper.getComponent('[name="team-b-name"]').attributes().modelvalue).toEqual('cool team B');
+    });
+
     it('closes dialog on dialog title close event', () => {
         const predictionDataStore = createPredictionDataStore();
         const nextRoundStore = createNextRoundStore();
