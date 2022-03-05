@@ -9,14 +9,14 @@ export class PlayTypeHelper {
         }[value];
     }
 
-    static fromBattlefySeriesStyle(value: string): PlayType | null {
+    static fromBattlefySeriesStyle(value: string): PlayType | undefined {
         switch (value?.toLowerCase()) {
             case 'gamespermatch':
                 return PlayType.PLAY_ALL;
             case 'bestof':
                 return PlayType.BEST_OF;
             default:
-                return null;
+                return undefined;
         }
     }
 }

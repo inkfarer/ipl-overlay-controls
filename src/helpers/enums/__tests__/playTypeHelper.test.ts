@@ -28,10 +28,10 @@ describe('PlayTypeHelper', () => {
         });
 
         it('returns null on unknown values', () => {
-            expect(PlayTypeHelper.fromBattlefySeriesStyle('aaaaa')).toEqual(null);
-            expect(PlayTypeHelper.fromBattlefySeriesStyle(null)).toEqual(null);
-            expect(PlayTypeHelper.fromBattlefySeriesStyle(undefined)).toEqual(null);
-            expect(PlayTypeHelper.fromBattlefySeriesStyle('  ')).toEqual(null);
+            expect(PlayTypeHelper.fromBattlefySeriesStyle('aaaaa')).toEqual(undefined);
+            expect(PlayTypeHelper.fromBattlefySeriesStyle(null)).toEqual(undefined);
+            expect(PlayTypeHelper.fromBattlefySeriesStyle(undefined)).toEqual(undefined);
+            expect(PlayTypeHelper.fromBattlefySeriesStyle('  ')).toEqual(undefined);
         });
     });
 });

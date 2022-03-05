@@ -31,6 +31,7 @@
         <round-select
             v-model="selectedRound"
             class="m-t-4"
+            data-test="round-selector"
             @update:roundData="selectedRoundData = $event"
         />
         <ipl-button
@@ -52,6 +53,7 @@ import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue'
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { addDots } from '../../../helpers/stringHelper';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
+import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 export default defineComponent({
     name: 'HighlightedMatchViewer',
@@ -61,6 +63,7 @@ export default defineComponent({
     setup() {
         const highlightedMatchStore = useHighlightedMatchStore();
         const nextRoundStore = useNextRoundStore();
+        const tournamentDataStore = useTournamentDataStore();
         const selectedMatch = ref<string>(null);
         const selectedRound = ref<string>(null);
         const selectedRoundData = ref<RoundSelectRound>(null);
@@ -111,6 +114,14 @@ export default defineComponent({
                     teamBId: selectedMatchData.value.teamB.id,
                     roundId: selectedRound.value
                 });
+
+                const playType = selectedMatchData.value?.meta.playType;
+                if (!!playType && selectedRoundData.value.roundData?.meta.type !== playType) {
+                    await tournamentDataStore.dispatch('updateRound', {
+                        id: selectedRound.value,
+                        type: playType
+                    });
+                }
             }
         };
     }

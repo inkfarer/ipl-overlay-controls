@@ -2,10 +2,11 @@ import HighlightedMatchViewer from '../highlightedMatchViewer.vue';
 import { createStore } from 'vuex';
 import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlightedMatchStore';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { config, mount } from '@vue/test-utils';
+import { config, flushPromises, mount } from '@vue/test-utils';
 import { Team } from 'types/team';
 import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
 import { PlayType } from 'types/enums/playType';
+import { tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 
 describe('HighlightedMatchViewer', () => {
     config.global.stubs = {
@@ -16,8 +17,18 @@ describe('HighlightedMatchViewer', () => {
         FontAwesomeIcon: true
     };
 
+    config.global.plugins = [[createStore({}), tournamentDataStoreKey]];
+
     const mockSetNextMatch = jest.fn();
     const mockTeam: Team = { id: '1234', name: 'mock team', showLogo: false, players: []};
+
+    function createTournamentDataStore() {
+        return createStore({
+            actions: {
+                updateRound: jest.fn()
+            }
+        });
+    }
 
     function createNextRoundStore() {
         return createStore<NextRoundStore>({
@@ -203,6 +214,50 @@ describe('HighlightedMatchViewer', () => {
             teamAId: '1234',
             teamBId: '5678',
             roundId: '0387'
+        });
+    });
+
+    it('updates selected round if it has a play type that differs from the one of the selected match', async () => {
+        const highlightedMatchStore = createHighlightedMatchStore();
+        highlightedMatchStore.state.highlightedMatches = [
+            {
+                meta: { name: 'cooler match', id: '567', playType: PlayType.BEST_OF },
+                teamA: {
+                    ...mockTeam,
+                    id: '1234'
+                },
+                teamB: {
+                    ...mockTeam,
+                    id: '5678'
+                }
+            }
+        ];
+        const nextRoundStore = createNextRoundStore();
+        const tournamentDataStore = createTournamentDataStore();
+        jest.spyOn(tournamentDataStore, 'dispatch');
+        const wrapper = mount(HighlightedMatchViewer, {
+            global: {
+                plugins: [
+                    [highlightedMatchStore, highlightedMatchStoreKey],
+                    [nextRoundStore, nextRoundStoreKey],
+                    [tournamentDataStore, tournamentDataStoreKey]
+                ]
+            }
+        });
+
+        wrapper.getComponent('[data-test="round-selector"]').vm.$emit('update:roundData',
+            { roundData: { meta: { type: PlayType.PLAY_ALL }, games: []} });
+        wrapper.getComponent('[data-test="set-next-match-button"]').vm.$emit('click');
+        await flushPromises();
+
+        expect(mockSetNextMatch).toHaveBeenCalledWith(expect.any(Object), {
+            teamAId: '1234',
+            teamBId: '5678',
+            roundId: '0387'
+        });
+        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('updateRound', {
+            id: '0387',
+            type: PlayType.BEST_OF
         });
     });
 
