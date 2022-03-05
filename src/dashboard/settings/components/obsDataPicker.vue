@@ -23,8 +23,10 @@
             label="Update"
             class="m-t-8"
             :color="isChanged ? 'red' : 'blue'"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             data-test="update-button"
             @click="update"
+            @right-click="undoChanges"
         />
     </ipl-space>
 </template>
@@ -34,6 +36,7 @@ import { defineComponent } from '@vue/runtime-core';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useObsStore } from '../../store/obsStore';
 import { computed, ref } from 'vue';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ObsDataPicker',
@@ -56,6 +59,7 @@ export default defineComponent({
             { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             gameplayScene,
             intermissionScene,
             hasObsData: computed(() => obsStore.state.obsData.scenes != null),
@@ -69,6 +73,12 @@ export default defineComponent({
                     gameplayScene: gameplayScene.value,
                     intermissionScene: intermissionScene.value
                 });
+            },
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                gameplayScene.value = obsStore.state.obsData.gameplayScene;
+                intermissionScene.value = obsStore.state.obsData.intermissionScene;
             }
         };
     }
