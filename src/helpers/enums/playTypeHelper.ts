@@ -19,4 +19,15 @@ export class PlayTypeHelper {
                 return undefined;
         }
     }
+
+    static fromSmashggSetGamesType(value: number): PlayType | undefined {
+        switch (value) {
+            case 1:
+                return PlayType.BEST_OF;
+            case 2:
+                return PlayType.PLAY_ALL;
+            default:
+                return undefined;
+        }
+    }
 }

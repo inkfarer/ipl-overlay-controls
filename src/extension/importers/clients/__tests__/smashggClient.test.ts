@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getSmashGGData, getSmashGGEvents, getSmashGGStreamQueue } from '../smashggClient';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { SmashggEntrantsResponse } from 'types/smashgg';
+import { PlayType } from '../../../../types/enums/playType';
 
 describe('smashggClient', () => {
     jest.mock('axios');
@@ -477,6 +478,7 @@ describe('smashggClient', () => {
                                                     name: 'Phase X'
                                                 }
                                             },
+                                            setGamesType: 1,
                                             identifier: 'Z',
                                             event: {
                                                 id: 1234
@@ -533,6 +535,7 @@ describe('smashggClient', () => {
                                                     name: 'Phase H'
                                                 }
                                             },
+                                            setGamesType: 2,
                                             identifier: 'G',
                                             event: {
                                                 id: 12345
@@ -594,6 +597,7 @@ describe('smashggClient', () => {
                                             id: 988,
                                             round: '987',
                                             identifier: 'I',
+                                            setGamesType: 2,
                                             phaseGroup: {
                                                 displayIdentifier: 'ID988',
                                                 phase: {
@@ -668,6 +672,7 @@ describe('smashggClient', () => {
                 meta: {
                     id: '999',
                     match: 0,
+                    playType: PlayType.BEST_OF,
                     name: 'Set Z - Round 999 - Pool ID999 - Phase X',
                     round: '999',
                     stageName: 'ID999'
@@ -710,6 +715,7 @@ describe('smashggClient', () => {
                 meta: {
                     id: '988',
                     match: 0,
+                    playType: PlayType.PLAY_ALL,
                     name: 'Set I - Round 987 - Pool ID988 - Phase R',
                     round: '987',
                     stageName: 'ID988'
