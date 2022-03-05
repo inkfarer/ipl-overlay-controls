@@ -21,6 +21,6 @@ exports[`teamDataImporter matches snapshot 1`] = `
     <!--v-if-->
   </div>
   <ipl-input-stub name=\\"shortName\\" label=\\"Short tournament name\\" modelvalue=\\"Cool Tournament\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"m-t-4\\"></ipl-input-stub>
-  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-short-name-button\\"></ipl-button-stub>
+  <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-short-name-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
 </div>"
 `;

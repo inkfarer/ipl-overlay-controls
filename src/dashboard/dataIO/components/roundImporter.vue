@@ -43,9 +43,9 @@ import {
     IplUpload,
     provideValidators,
     validator,
-    allValid
+    allValid,
+    notBlank
 } from '@iplsplatoon/vue-components';
-import { notBlank } from '../../helpers/validation/stringValidators';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 export default defineComponent({

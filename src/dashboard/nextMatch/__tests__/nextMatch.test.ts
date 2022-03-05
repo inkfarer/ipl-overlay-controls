@@ -8,7 +8,8 @@ describe('NextMatch', () => {
         HighlightedMatchPicker: true,
         ManualTeamPicker: true,
         IplErrorDisplay: true,
-        IplCheckbox: true
+        IplCheckbox: true,
+        IplSmallToggle: true
     };
 
     function createNextRoundStore() {

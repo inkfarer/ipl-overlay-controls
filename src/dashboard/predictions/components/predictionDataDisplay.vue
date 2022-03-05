@@ -61,8 +61,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { usePredictionDataStore } from '../../store/predictionDataStore';
 import { Outcome } from 'schemas';
-import { IplSpace, IplProgressBar } from '@iplsplatoon/vue-components';
-import { pluralize } from '../../helpers/stringHelper';
+import { IplSpace, IplProgressBar, pluralize } from '@iplsplatoon/vue-components';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { DateTime, Duration } from 'luxon';
 

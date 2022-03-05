@@ -149,6 +149,24 @@ describe('radiaSettings', () => {
         });
     });
 
+    it('reverts changes on update button right click', async () => {
+        const store = createSettingsStore();
+        const wrapper = mount(RadiaSettings, {
+            global: {
+                plugins: [ [ store, settingsStoreKey ] ]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="guild-id"]').attributes().modelvalue).toEqual('123123');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('does not update settings on button click if data has not been updated', async () => {
         const store = createSettingsStore();
         jest.spyOn(store, 'commit');

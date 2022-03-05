@@ -1,15 +1,15 @@
 <template>
     <ipl-error-display class="m-b-8" />
     <ipl-space>
-        <ipl-checkbox
+        <ipl-small-toggle
             v-model="chooseTeamsManually"
             label="Choose teams manually"
             data-test="choose-manually-toggle"
         />
-        <ipl-checkbox
+        <ipl-small-toggle
             v-model="showOnStream"
             label="Show on stream"
-            class="m-t-8"
+            class="m-t-4"
             data-test="show-on-stream-toggle"
         />
     </ipl-space>
@@ -27,14 +27,14 @@
 import { computed, defineComponent, ref } from 'vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import HighlightedMatchPicker from './components/highlightedMatchPicker.vue';
-import { IplCheckbox, IplSpace } from '@iplsplatoon/vue-components';
+import { IplSpace, IplSmallToggle } from '@iplsplatoon/vue-components';
 import ManualTeamPicker from './components/manualTeamPicker.vue';
 import { useNextRoundStore } from '../store/nextRoundStore';
 
 export default defineComponent({
     name: 'HighlightedMatches',
 
-    components: { ManualTeamPicker, HighlightedMatchPicker, IplErrorDisplay, IplCheckbox, IplSpace },
+    components: { ManualTeamPicker, HighlightedMatchPicker, IplErrorDisplay, IplSpace, IplSmallToggle },
 
     setup() {
         const nextRoundStore = useNextRoundStore();

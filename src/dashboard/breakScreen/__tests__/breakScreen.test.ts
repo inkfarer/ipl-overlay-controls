@@ -18,6 +18,10 @@ describe('BreakScreen', () => {
                 mainFlavorText: null,
                 nextRoundStartTime: { startTime: null, isVisible: null },
                 activeBreakScene: null
+            },
+            mutations: {
+                setMainFlavorText: jest.fn(),
+                setNextRoundStartTime: jest.fn()
             }
         });
     }
@@ -126,5 +130,46 @@ describe('BreakScreen', () => {
         await wrapper.vm.$nextTick();
 
         expect(nextStageTimeInput.attributes().modelvalue).toEqual('2020-05-12');
+    });
+
+    it('updates data on main scene update button click', async () => {
+        const store = createBreakScreenStore();
+        jest.spyOn(store, 'commit');
+        store.state.mainFlavorText = 'flavor text??';
+        store.state.nextRoundStartTime.startTime = 'start time!!';
+        const wrapper = mount(BreakScreen, {
+            global: {
+                plugins: [[store, breakScreenStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
+        wrapper.getComponent('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
+        await wrapper.vm.$nextTick();
+
+        wrapper.getComponent('[data-test="update-main-scene-button"]').vm.$emit('click');
+
+        expect(store.commit).toHaveBeenCalledTimes(2);
+        expect(store.commit).toHaveBeenCalledWith('setMainFlavorText', 'new text!!!');
+        expect(store.commit).toHaveBeenCalledWith('setNextRoundStartTime', '2020-01-02');
+    });
+
+    it('reverts changes to main scene data on update button right click', async () => {
+        const store = createBreakScreenStore();
+        store.state.mainFlavorText = 'flavor text??';
+        store.state.nextRoundStartTime.startTime = 'start time!!';
+        const wrapper = mount(BreakScreen, {
+            global: {
+                plugins: [[store, breakScreenStoreKey]]
+            }
+        });
+
+        wrapper.getComponent('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
+        wrapper.getComponent('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
+        wrapper.getComponent('[data-test="update-main-scene-button"]').vm.$emit('right-click', new Event(null));
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="next-stage-time-input"]').attributes().modelvalue).toEqual('start time!!');
+        expect(wrapper.getComponent('[name="break-main-flavor-text"]').attributes().modelvalue).toEqual('flavor text??');
     });
 });

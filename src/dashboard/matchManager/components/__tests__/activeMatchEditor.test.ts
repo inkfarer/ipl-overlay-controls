@@ -240,6 +240,27 @@ describe('ActiveRoundEditor', () => {
         });
     });
 
+    it('reverts updates on update button right click', async () => {
+        const tournamentDataStore = createTournamentDataStore();
+        const activeRoundStore = createActiveRoundStore();
+        const wrapper = mount(ActiveRoundEditor, {
+            global: {
+                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
+        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', 'newteam1id');
+        wrapper.getComponent('[data-test="update-match-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="matchName"]').attributes().modelvalue).toEqual('Rad Match');
+        expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('123123');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('does not display message if selected round has no progress and round data is unchanged', () => {
         const activeRoundStore = createActiveRoundStore();
         const tournamentDataStore = createTournamentDataStore();

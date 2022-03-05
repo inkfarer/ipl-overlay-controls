@@ -65,7 +65,9 @@
             label="Update"
             :color="isChanged ? 'red' : 'blue'"
             data-test="update-match-button"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             @click="updateRound"
+            @right-click="undoChanges"
         />
     </ipl-expanding-space>
 </template>
@@ -82,10 +84,11 @@ import {
     IplMessage,
     IplExpandingSpace,
     IplInput,
-    provideValidators
+    provideValidators,
+    notBlank,
+    validator
 } from '@iplsplatoon/vue-components';
-import { validator } from '../../helpers/validation/validator';
-import { notBlank } from '../../helpers/validation/stringValidators';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ActiveRoundEditor',
@@ -145,6 +148,7 @@ export default defineComponent({
         provideValidators(validators);
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team => ({
                 value: team.id,
                 name: addDots(team.name)
@@ -186,7 +190,15 @@ export default defineComponent({
             selectedMatch,
             matchHasProgress,
             addDots,
-            validators
+            validators,
+            undoChanges(event: Event) {
+                event.preventDefault();
+
+                matchId.value = activeRoundStore.state.activeRound.match.id;
+                matchName.value = activeRoundStore.state.activeRound.match.name;
+                teamAId.value = activeRoundStore.state.activeRound.teamA.id;
+                teamBId.value = activeRoundStore.state.activeRound.teamB.id;
+            }
         };
     }
 });

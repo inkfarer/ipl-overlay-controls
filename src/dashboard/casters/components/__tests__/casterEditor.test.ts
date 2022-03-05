@@ -214,6 +214,35 @@ describe('CasterEditor', () => {
             });
         });
 
+        it('reverts changes on right click if caster is committed', async () => {
+            const store = createCasterStore();
+            const wrapper = mount(CasterEditor, {
+                global: {
+                    plugins: [ [ store, casterStoreKey ] ]
+                },
+                props: {
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    casterId: 'casterid',
+                    uncommitted: false
+                }
+            });
+            const event = new Event(null);
+            jest.spyOn(event, 'preventDefault');
+
+            wrapper.getComponent('[name="name"]').vm.$emit('update:modelValue', 'new player value');
+            wrapper.getComponent('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
+            wrapper.getComponent('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
+            await wrapper.vm.$nextTick();
+
+            wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('cool caster');
+            expect(wrapper.getComponent('[name="twitter"]').attributes().modelvalue).toEqual('@ccaster');
+            expect(wrapper.getComponent('[name="pronouns"]').attributes().modelvalue).toEqual('he/him');
+            expect(event.preventDefault).toHaveBeenCalled();
+        });
+
         it('saves to store and emits event on click if caster is uncommitted', async () => {
             const store = createCasterStore();
             const wrapper = mount(CasterEditor, {
@@ -238,6 +267,35 @@ describe('CasterEditor', () => {
             const saveEvents = wrapper.emitted('save');
             expect(saveEvents.length).toEqual(1);
             expect(saveEvents[0]).toEqual(['new-caster-id']);
+        });
+
+        it('does nothing on right click if caster is uncommitted', async () => {
+            const store = createCasterStore();
+            const wrapper = mount(CasterEditor, {
+                global: {
+                    plugins: [ [ store, casterStoreKey ] ]
+                },
+                props: {
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    casterId: 'casterid',
+                    uncommitted: true
+                }
+            });
+            const event = new Event(null);
+            jest.spyOn(event, 'preventDefault');
+
+            wrapper.getComponent('[name="name"]').vm.$emit('update:modelValue', 'new player value');
+            wrapper.getComponent('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
+            wrapper.getComponent('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
+            await wrapper.vm.$nextTick();
+
+            wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('new player value');
+            expect(wrapper.getComponent('[name="twitter"]').attributes().modelvalue).toEqual('@newtwit');
+            expect(wrapper.getComponent('[name="pronouns"]').attributes().modelvalue).toEqual('they/them');
+            expect(event.preventDefault).not.toHaveBeenCalled();
         });
 
         it('is disabled if there are three or more casters and the given caster is uncommitted', () => {

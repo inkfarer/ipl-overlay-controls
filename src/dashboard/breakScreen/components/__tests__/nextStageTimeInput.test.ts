@@ -1,7 +1,7 @@
 import NextStageTimeInput from '../nextStageTimeInput.vue';
 import { config, mount } from '@vue/test-utils';
 import { DateTime } from 'luxon';
-import { padNumber } from '../../../helpers/stringHelper';
+import { padNumber } from '@iplsplatoon/vue-components';
 
 describe('NextStageTimeInput', () => {
     const mockNow = '2021-01-23T05:54:00Z';

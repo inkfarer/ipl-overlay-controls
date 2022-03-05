@@ -84,4 +84,22 @@ describe('ObsDataPicker', () => {
             intermissionScene: 'Scene Three'
         });
     });
+
+    it('reverts changes on update button right click', async () => {
+        const store = createObsDataStore();
+        const wrapper = mount(ObsDataPicker, {
+            global: {
+                plugins: [[store, obsStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="intermission-scene-select"]').attributes().modelvalue).toEqual('Scene Two');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
 });

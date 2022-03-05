@@ -37,7 +37,9 @@
                 :color="buttonColor"
                 :disabled="disableSave"
                 data-test="update-button"
+                :title="uncommitted ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
                 @click="updateCaster"
+                @right-click="undoChanges"
             />
             <ipl-button
                 icon="times"
@@ -59,6 +61,7 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 library.add(faTimes);
 
@@ -98,6 +101,7 @@ export default defineComponent({
         }, { immediate: true });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             internalCaster,
             key,
             async updateCaster() {
@@ -128,7 +132,13 @@ export default defineComponent({
             buttonColor: computed(() => props.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
             updateButtonLabel: computed(() => props.uncommitted ? 'Save' : 'Update'),
             pronounFormatter: (input: string) => input.toLowerCase(),
-            twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input
+            twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input,
+            undoChanges(event: Event) {
+                if (props.uncommitted) return;
+                event.preventDefault();
+
+                internalCaster.value = cloneDeep(props.caster);
+            }
         };
     }
 });

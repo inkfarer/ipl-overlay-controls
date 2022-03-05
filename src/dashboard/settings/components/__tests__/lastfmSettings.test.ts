@@ -75,6 +75,24 @@ describe('lastfmSettings', () => {
         expect(store.commit).toHaveBeenCalledWith('setLastFmSettings', { newValue: { username: 'new username' } });
     });
 
+    it('reverts changes when update button is right clicked', async () => {
+        const store = createSettingsStore();
+        const wrapper = mount(LastfmSettings, {
+            global: {
+                plugins: [[store, settingsStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="username"]').vm.$emit('update:modelValue', 'new username');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="username"]').attributes().modelvalue).toEqual('username');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('does not update settings on button click if data has not been updated', async () => {
         const store = createSettingsStore();
         jest.spyOn(store, 'commit');

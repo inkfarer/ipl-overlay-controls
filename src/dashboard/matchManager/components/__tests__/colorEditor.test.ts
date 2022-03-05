@@ -35,7 +35,7 @@ describe('ColorEditor', () => {
                         name: null,
                         showLogo: null,
                         players: null,
-                        color: null
+                        color: '#889'
                     },
                     teamB: {
                         score: 2,
@@ -43,7 +43,7 @@ describe('ColorEditor', () => {
                         name: null,
                         showLogo: null,
                         players: null,
-                        color: null
+                        color: '#999'
                     },
                     activeColor: {
                         title: 'Dark Blue vs Green',
@@ -184,6 +184,31 @@ describe('ColorEditor', () => {
                 isCustom: true
             }
         });
+    });
+
+    it('reverts changes on custom color update button right click', async () => {
+        const store = createActiveRoundStore();
+        const settingsStore = createSettingsStore();
+        store.state.activeRound.activeColor.isCustom = true;
+        const wrapper = mount(ColorEditor, {
+            global: {
+                plugins: [
+                    [ store, activeRoundStoreKey ],
+                    [ settingsStore, settingsStoreKey ]
+                ]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
+        wrapper.getComponent('[name="team-b-color"]').vm.$emit('update:modelValue', '#345345');
+        wrapper.getComponent('[data-test="custom-color-submit-btn"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[name="team-a-color"]').attributes().modelvalue).toEqual('#889');
+        expect(wrapper.getComponent('[name="team-b-color"]').attributes().modelvalue).toEqual('#999');
+        expect(event.preventDefault).toHaveBeenCalled();
     });
 
     it('swaps custom colors when swapColorsInternally is changed', async () => {

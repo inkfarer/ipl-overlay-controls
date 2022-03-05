@@ -66,6 +66,24 @@ describe('RuntimeConfig', () => {
         expect(wrapper.findComponent('[data-test="incompatible-bundle-warning"]').exists()).toEqual(false);
     });
 
+    it('reverts changes when submit button is right clicked', async () => {
+        const store = createSettingsStore();
+        const wrapper = mount(RuntimeConfig, {
+            global: {
+                plugins: [[store, settingsStoreKey]]
+            }
+        });
+        const event = new Event(null);
+        jest.spyOn(event, 'preventDefault');
+
+        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.getComponent('[data-test="game-version-select"]').attributes().modelvalue).toEqual('SPLATOON_2');
+        expect(event.preventDefault).toHaveBeenCalled();
+    });
+
     it('handles submitting when an incompatible bundle is found', async () => {
         const store = createSettingsStore();
         store.state.runtimeConfig.gameVersion = GameVersion.SPLATOON_3;
