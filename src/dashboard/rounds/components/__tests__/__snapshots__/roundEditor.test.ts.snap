@@ -3,7 +3,7 @@
 exports[`RoundEditor matches snapshot 1`] = `
 "<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"Cool Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\"></ipl-input-stub>
-  <ipl-select-stub modelvalue=\\"PLAY_ALL\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\"></ipl-select-stub>
+  <ipl-select-stub modelvalue=\\"PLAY_ALL\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" name=\\"round-type\\" class=\\"m-t-6\\"></ipl-select-stub>
   <div class=\\"separator\\"><span>1</span></div>
   <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-selector-0\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"stage-selector-0\\"></ipl-select-stub>
@@ -14,7 +14,7 @@ exports[`RoundEditor matches snapshot 1`] = `
   <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-selector-2\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Port Mackerel\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"stage-selector-2\\"></ipl-select-stub>
   <div class=\\"layout horizontal m-t-8\\">
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
+    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
     <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
   </div>
 </div>"
@@ -23,7 +23,7 @@ exports[`RoundEditor matches snapshot 1`] = `
 exports[`RoundEditor matches snapshot when creating new round 1`] = `
 "<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"New Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\"></ipl-input-stub>
-  <ipl-select-stub modelvalue=\\"BEST_OF\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-6\\"></ipl-select-stub>
+  <ipl-select-stub modelvalue=\\"BEST_OF\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" disabled=\\"false\\" name=\\"round-type\\" class=\\"m-t-6\\"></ipl-select-stub>
   <div class=\\"separator\\"><span>1</span></div>
   <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-selector-0\\"></ipl-select-stub>
   <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-t-8\\" data-test=\\"stage-selector-0\\"></ipl-select-stub>
