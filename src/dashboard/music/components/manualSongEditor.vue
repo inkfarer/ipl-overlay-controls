@@ -23,7 +23,9 @@
             :color="buttonColor"
             class="m-t-8"
             data-test="manual-song-update-button"
+            :title="RIGHT_CLICK_UNDO_MESSAGE"
             @click="handleUpdate"
+            @right-click="undo"
         />
     </ipl-expanding-space>
 </template>
@@ -34,6 +36,7 @@ import { useMusicStore } from '../musicStore';
 import { IplButton, IplInput, IplCheckbox, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
+import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ManualSongEditor',
@@ -53,6 +56,7 @@ export default defineComponent({
         });
 
         return {
+            RIGHT_CLICK_UNDO_MESSAGE,
             nowPlayingSource: computed({
                 get() {
                     return musicStore.state.nowPlayingSource === 'manual';
@@ -70,12 +74,13 @@ export default defineComponent({
                 if (isEdited.value) {
                     musicStore.commit('setManualNowPlaying', manualNowPlaying.value);
                 }
+            },
+            undo(event: Event) {
+                event.preventDefault();
+
+                manualNowPlaying.value = cloneDeep(musicStore.state.manualNowPlaying);
             }
         };
     }
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>
