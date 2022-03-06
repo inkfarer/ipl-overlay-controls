@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { IplToggle, IplExpandingSpace, IplDataRow } from '@iplsplatoon/vue-components';
 import { useScoreboardStore } from '../../store/scoreboardStore';
 import { ScoreboardData } from 'schemas';
@@ -30,17 +30,17 @@ export default defineComponent({
 
     setup() {
         const store = useScoreboardStore();
-        const scoreboardData: Ref<ScoreboardData> = ref(cloneDeep(store.state.scoreboardData));
+        const scoreboardData: Ref<ScoreboardData> = ref(cloneDeep(store.scoreboardData));
 
-        store.watch(store => store.scoreboardData.isVisible, newValue => {
+        watch(() => store.scoreboardData.isVisible, newValue => {
             scoreboardData.value.isVisible = newValue;
         });
 
         return {
-            flavorText: computed(() => store.state.scoreboardData.flavorText),
+            flavorText: computed(() => store.scoreboardData.flavorText),
             scoreboardData,
             setScoreboardVisible(value: boolean) {
-                store.commit('setScoreboardVisible', value);
+                store.setScoreboardVisible(value);
             }
         };
     }

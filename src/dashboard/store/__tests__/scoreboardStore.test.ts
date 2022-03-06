@@ -1,32 +1,19 @@
-import { scoreboardStore } from '../scoreboardStore';
 import { replicants } from '../../__mocks__/mockNodecg';
 import { ScoreboardData } from 'schemas';
+import { createPinia, setActivePinia } from 'pinia';
+import { useScoreboardStore } from '../scoreboardStore';
 
 describe('scoreboardStore', () => {
     beforeEach(() => {
-        scoreboardStore.replaceState({
-            scoreboardData: {
-                flavorText: '',
-                isVisible: null
-            }
-        });
-    });
-
-    describe('setState', () => {
-        it('updates state', () => {
-            scoreboardStore.commit('setState', {
-                name: 'scoreboardData',
-                val: { flavorText: 'new value', isVisible: true }
-            });
-
-            expect(scoreboardStore.state.scoreboardData).toEqual({ flavorText: 'new value', isVisible: true });
-        });
+        setActivePinia(createPinia());
     });
 
     describe('setFlavorText', () => {
         it('updates replicant value', () => {
+            const store = useScoreboardStore();
             replicants.scoreboardData = { flavorText: '' };
-            scoreboardStore.commit('setFlavorText', 'new text :)');
+
+            store.setFlavorText('new text :)');
 
             expect((replicants.scoreboardData as ScoreboardData).flavorText).toEqual('new text :)');
         });
@@ -35,7 +22,9 @@ describe('scoreboardStore', () => {
     describe('setScoreboardVisible', () => {
         it('updates replicant value', () => {
             replicants.scoreboardData = { isVisible: null };
-            scoreboardStore.commit('setScoreboardVisible', false);
+            const store = useScoreboardStore();
+
+            store.setScoreboardVisible(false);
 
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(false);
         });
