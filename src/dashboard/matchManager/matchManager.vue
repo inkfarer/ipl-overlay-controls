@@ -106,20 +106,20 @@ export default defineComponent({
 
         return {
             disableShowCasters,
-            isObsConnected: computed(() => obsStore.state.obsData.status === ObsStatus.CONNECTED),
+            isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
             showCasters() {
                 casterStore.showCasters();
             },
             async startGame() {
-                return obsStore.dispatch('startGame');
+                return obsStore.startGame();
             },
             async endGame() {
-                return obsStore.dispatch('endGame');
+                return obsStore.endGame();
             },
             disableGameStart: computed(() =>
-                obsStore.state.obsData.gameplayScene === obsStore.state.obsData.currentScene),
+                obsStore.obsData.gameplayScene === obsStore.obsData.currentScene),
             disableGameEnd: computed(() =>
-                obsStore.state.obsData.gameplayScene !== obsStore.state.obsData.currentScene)
+                obsStore.obsData.gameplayScene !== obsStore.obsData.currentScene)
         };
     }
 });

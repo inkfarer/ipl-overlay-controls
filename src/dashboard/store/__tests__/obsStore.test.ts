@@ -1,18 +1,17 @@
-import { obsStore } from '../obsStore';
+import { useObsStore } from '../obsStore';
 import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { createPinia, setActivePinia } from 'pinia';
 
 describe('obsStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            obsStore.commit('setState', { name: 'obsData', val: { foo: 'bar' } });
-
-            expect(obsStore.state.obsData).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('connect', () => {
         it('sends message to connect to OBS', () => {
-            obsStore.dispatch('connect', { address: 'localhost', password: 'pwd' });
+            const store = useObsStore();
+
+            store.connect({ address: 'localhost', password: 'pwd' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('connectToObs', { address: 'localhost', password: 'pwd' });
         });
@@ -20,7 +19,10 @@ describe('obsStore', () => {
 
     describe('setData', () => {
         it('sends message to extension', () => {
-            obsStore.dispatch('setData', { address: '192.168.1.2' });
+            const store = useObsStore();
+
+            // @ts-ignore
+            store.setData({ address: '192.168.1.2' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setObsData', { address: '192.168.1.2' });
         });
@@ -28,7 +30,9 @@ describe('obsStore', () => {
 
     describe('startGame', () => {
         it('sends message to extension', () => {
-            obsStore.dispatch('startGame');
+            const store = useObsStore();
+
+            store.startGame();
 
             expect(mockSendMessage).toHaveBeenCalledWith('startGame');
         });
@@ -36,7 +40,9 @@ describe('obsStore', () => {
 
     describe('endGame', () => {
         it('sends message to extension', () => {
-            obsStore.dispatch('endGame');
+            const store = useObsStore();
+
+            store.endGame();
 
             expect(mockSendMessage).toHaveBeenCalledWith('endGame');
         });
@@ -44,7 +50,9 @@ describe('obsStore', () => {
 
     describe('setEnabled', () => {
         it('sends message to extension', () => {
-            obsStore.dispatch('setEnabled', false);
+            const store = useObsStore();
+
+            store.setEnabled(false);
 
             expect(mockSendMessage).toHaveBeenCalledWith('setObsSocketEnabled', false);
         });

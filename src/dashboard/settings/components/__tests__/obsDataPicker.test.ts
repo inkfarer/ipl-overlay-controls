@@ -1,39 +1,37 @@
 import ObsDataPicker from '../obsDataPicker.vue';
-import { createStore } from 'vuex';
-import { ObsStore, obsStoreKey } from '../../../store/obsStore';
+import { useObsStore } from '../../../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('ObsDataPicker', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         FontAwesomeIcon: true,
         IplSelect: true,
         IplButton: true
     };
 
-    function createObsDataStore() {
-        return createStore<ObsStore>({
-            state: {
-                obsCredentials: null,
-                obsData: {
-                    enabled: true,
-                    status: ObsStatus.CONNECTED,
-                    scenes: ['Scene One', 'Scene Two', 'Scene Three'],
-                    gameplayScene: 'Scene One',
-                    intermissionScene: 'Scene Two'
-                }
-            },
-            actions: {
-                setData: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useObsStore().$state = {
+            obsCredentials: null,
+            obsData: {
+                enabled: true,
+                status: ObsStatus.CONNECTED,
+                scenes: ['Scene One', 'Scene Two', 'Scene Three'],
+                gameplayScene: 'Scene One',
+                intermissionScene: 'Scene Two'
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createObsDataStore();
         const wrapper = mount(ObsDataPicker, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -41,11 +39,11 @@ describe('ObsDataPicker', () => {
     });
 
     it('matches snapshot without scene data', () => {
-        const store = createObsDataStore();
-        store.state.obsData.scenes = null;
+        const store = useObsStore();
+        store.obsData.scenes = null;
         const wrapper = mount(ObsDataPicker, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -53,10 +51,9 @@ describe('ObsDataPicker', () => {
     });
 
     it('has expected button color when data is changed', async () => {
-        const store = createObsDataStore();
         const wrapper = mount(ObsDataPicker, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -67,11 +64,11 @@ describe('ObsDataPicker', () => {
     });
 
     it('handles updating data', async () => {
-        const store = createObsDataStore();
-        jest.spyOn(store, 'dispatch');
+        const store = useObsStore();
+        store.setData = jest.fn();
         const wrapper = mount(ObsDataPicker, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -79,17 +76,16 @@ describe('ObsDataPicker', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.dispatch).toHaveBeenCalledWith('setData', {
+        expect(store.setData).toHaveBeenCalledWith({
             gameplayScene: 'Scene One',
             intermissionScene: 'Scene Three'
         });
     });
 
     it('reverts changes on update button right click', async () => {
-        const store = createObsDataStore();
         const wrapper = mount(ObsDataPicker, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
         const event = new Event(null);

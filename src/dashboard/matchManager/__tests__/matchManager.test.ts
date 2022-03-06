@@ -1,13 +1,14 @@
 import MatchManager from '../matchManager.vue';
 import { config, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { ObsStatus } from 'types/enums/ObsStatus';
-import { obsStoreKey } from '../../store/obsStore';
 import { messageListeners } from '../../__mocks__/mockNodecg';
 import { useCasterStore } from '../../store/casterStore';
-import { createTestingPinia } from '@pinia/testing';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useObsStore } from '../../store/obsStore';
 
 describe('MatchManager', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         NextMatchStarter: true,
         IplErrorDisplay: true,
@@ -23,29 +24,24 @@ describe('MatchManager', () => {
         ActiveRosterDisplay: true
     };
 
-    function createObsStore() {
-        return createStore({
-            state: {
-                obsData: {
-                    status: ObsStatus.CONNECTED
-                }
-            },
-            actions: {
-                startGame: jest.fn(),
-                endGame: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useObsStore().$state = {
+            // @ts-ignore
+            obsData: {
+                status: ObsStatus.CONNECTED
             }
-        });
-    }
+        };
+    });
 
     it.each(Object.values(ObsStatus))('matches snapshot if obs status is %s', status => {
-        const pinia = createTestingPinia();
-        const obsStore = createObsStore();
-        obsStore.state.obsData.status = status;
+        const obsStore = useObsStore();
+        obsStore.obsData.status = status;
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [pinia],
-                    [obsStore, obsStoreKey]
+                    [pinia]
                 ]
             }
         });
@@ -54,15 +50,12 @@ describe('MatchManager', () => {
     });
 
     it('handles showing casters', () => {
-        const pinia = createTestingPinia();
         const casterStore = useCasterStore();
         jest.spyOn(casterStore, 'showCasters');
-        const obsStore = createObsStore();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [pinia],
-                    [obsStore, obsStoreKey]
+                    [pinia]
                 ]
             }
         });
@@ -73,14 +66,11 @@ describe('MatchManager', () => {
     });
 
     it('disables showing casters when message to show casters is received from nodecg and enables it after a delay', async () => {
-        const pinia = createTestingPinia();
         jest.useFakeTimers();
-        const obsStore = createObsStore();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [pinia],
-                    [obsStore, obsStoreKey]
+                    [pinia]
                 ]
             }
         });
@@ -99,38 +89,34 @@ describe('MatchManager', () => {
     });
 
     it('handles starting a game', () => {
-        const pinia = createTestingPinia();
-        const obsStore = createObsStore();
-        jest.spyOn(obsStore, 'dispatch');
+        const obsStore = useObsStore();
+        obsStore.startGame = jest.fn();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [pinia],
-                    [obsStore, obsStoreKey]
+                    [pinia]
                 ]
             }
         });
 
         wrapper.getComponent('[data-test="start-game-button"]').vm.$emit('click');
 
-        expect(obsStore.dispatch).toHaveBeenCalledWith('startGame');
+        expect(obsStore.startGame).toHaveBeenCalled();
     });
 
     it('handles ending a game', () => {
-        const pinia = createTestingPinia();
-        const obsStore = createObsStore();
-        jest.spyOn(obsStore, 'dispatch');
+        const obsStore = useObsStore();
+        obsStore.endGame = jest.fn();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [pinia],
-                    [obsStore, obsStoreKey]
+                    [pinia]
                 ]
             }
         });
 
         wrapper.getComponent('[data-test="end-game-button"]').vm.$emit('click');
 
-        expect(obsStore.dispatch).toHaveBeenCalledWith('endGame');
+        expect(obsStore.endGame).toHaveBeenCalled();
     });
 });

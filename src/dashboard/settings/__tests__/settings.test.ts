@@ -1,9 +1,11 @@
 import { config, mount } from '@vue/test-utils';
 import Settings from '../settings.vue';
-import { createStore } from 'vuex';
-import { obsStoreKey } from '../../store/obsStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useObsStore } from '../../store/obsStore';
 
 describe('Settings', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplErrorDisplay: true,
         LastfmSettings: true,
@@ -14,21 +16,21 @@ describe('Settings', () => {
         FontAwesomeIcon: true
     };
 
-    function createObsStore() {
-        return createStore({
-            state: {
-                obsData: {
-                    enabled: true
-                }
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useObsStore().$state = {
+            // @ts-ignore
+            obsData: {
+                enabled: true
             }
-        });
-    }
+        };
+    });
 
     it.each(['lastfm', 'radia', 'gameVersion', 'obs-socket'])('matches snapshot when section %s is selected', async (section) => {
-        const obsStore = createObsStore();
         const wrapper = mount(Settings, {
             global: {
-                plugins: [[obsStore, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -41,11 +43,11 @@ describe('Settings', () => {
     });
 
     it('matches snapshot when OBS socket is disabled', async () => {
-        const obsStore = createObsStore();
-        obsStore.state.obsData.enabled = false;
+        const obsStore = useObsStore();
+        obsStore.obsData.enabled = false;
         const wrapper = mount(Settings, {
             global: {
-                plugins: [[obsStore, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 

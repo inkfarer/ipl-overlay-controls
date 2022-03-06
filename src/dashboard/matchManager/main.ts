@@ -9,16 +9,16 @@ import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/sc
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { nextRoundReps, useNextRoundStore } from '../store/nextRoundStore';
 import { settingsReps, settingsStore, settingsStoreKey } from '../settings/settingsStore';
-import { obsReps, obsStore, obsStoreKey } from '../store/obsStore';
+import { obsReps, useObsStore } from '../store/obsStore';
 import { createPinia } from 'pinia';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
     await setUpReplicants(scoreboardReps, scoreboardStore);
     await setUpReplicants(settingsReps, settingsStore);
-    await setUpReplicants(obsReps, obsStore);
     const app = createApp(Panel);
     app.use(createPinia());
+    await setUpPiniaReplicants(obsReps, useObsStore());
     await setUpPiniaReplicants(nextRoundReps, useNextRoundStore());
     await setUpPiniaReplicants(activeRoundReps, useActiveRoundStore());
     setUpErrorHandler(app);
@@ -26,6 +26,5 @@ import { createPinia } from 'pinia';
     app.use(tournamentDataStore, tournamentDataStoreKey);
     app.use(scoreboardStore, scoreboardStoreKey);
     app.use(settingsStore, settingsStoreKey);
-    app.use(obsStore, obsStoreKey);
     app.mount('#app');
 })();
