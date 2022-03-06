@@ -1,4 +1,3 @@
-import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
 import { mock } from 'jest-mock-extended';
 import type * as NextRoundHelper from '../../helpers/nextRoundHelper';
@@ -19,13 +18,24 @@ describe('roundStore', () => {
         jest.resetAllMocks();
     });
 
-    describe('updateRoundStore', () => {
-        it('creates new round if needed', () => {
+    describe('insertRound', () => {
+        it('returns an error if the given round already exists', () => {
+            replicants.roundStore = { aaa: {} };
+            const ack = jest.fn();
+
+            messageListeners.insertRound({
+                id: 'aaa'
+            }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('Round \'aaa\' already exists.'));
+        });
+
+        it('creates new round', () => {
             replicants.roundStore = { };
             replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            messageListeners.updateRoundStore({
+            messageListeners.insertRound({
                 id: '234234',
                 roundName: 'Cool Round',
                 type: PlayType.PLAY_ALL,
@@ -40,9 +50,9 @@ describe('roundStore', () => {
                 id: '234234',
                 round: {
                     games: [
-                        { stage: 'Blackbelly Skatepark', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Moray Towers', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
-                        { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                        { stage: 'Blackbelly Skatepark', mode: 'Clam Blitz' },
+                        { stage: 'Moray Towers', mode: 'Rainmaker' },
+                        { stage: 'Manta Maria', mode: 'Tower Control' }
                     ],
                     meta: { name: 'Cool Round', type: PlayType.PLAY_ALL }
                 }
@@ -55,12 +65,77 @@ describe('roundStore', () => {
                         type: PlayType.PLAY_ALL
                     },
                     games: [
-                        { stage: 'Blackbelly Skatepark', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Moray Towers', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
-                        { stage: 'Manta Maria', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                        { stage: 'Blackbelly Skatepark', mode: 'Clam Blitz' },
+                        { stage: 'Moray Towers', mode: 'Rainmaker' },
+                        { stage: 'Manta Maria', mode: 'Tower Control' }
                     ]
                 }
             });
+        });
+
+        it('generates id for round if it is not given', () => {
+            mockGenerateId.generateId.mockReturnValue('new round id');
+            replicants.roundStore = {};
+            replicants.nextRound = { round: { id: '123' } };
+            const ack = jest.fn();
+
+            messageListeners.insertRound({
+                roundName: 'Rad Round (Updated)',
+                games: [
+                    { stage: 'MakoMart', mode: 'Clam Blitz' },
+                    { stage: 'Port Mackerel', mode: 'Clam Blitz' },
+                    { stage: 'Humpback Pump Track', mode: 'Tower Control' }
+                ]
+            }, ack);
+
+            expect(ack).toHaveBeenCalledWith(null, {
+                id: 'new round id',
+                round: {
+                    meta: {
+                        name: 'Rad Round (Updated)'
+                    },
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz' },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz' },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control' }
+                    ]
+                }
+            });
+            expect(replicants.roundStore).toEqual({
+                'new round id': {
+                    meta: {
+                        name: 'Rad Round (Updated)',
+                        isCompleted: false
+                    },
+                    games: [
+                        { stage: 'MakoMart', mode: 'Clam Blitz' },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz' },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control' }
+                    ]
+                }
+            });
+        });
+    });
+
+    describe('updateRound', () => {
+        it('returns an error if no round is found', () => {
+            replicants.roundStore = {};
+            const ack = jest.fn();
+
+            messageListeners.updateRound({
+                id: 'aaaggg'
+            }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('Could not find round \'aaaggg\''));
+        });
+
+        it('returns an error if no round id is given', () => {
+            replicants.roundStore = {};
+            const ack = jest.fn();
+
+            messageListeners.updateRound({}, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('No round ID given.'));
         });
 
         it('updates existing rounds', () => {
@@ -72,16 +147,16 @@ describe('roundStore', () => {
                         type: PlayType.PLAY_ALL
                     },
                     games: [
-                        { stage: 'Walleye Warehouse', mode: 'Turf War', winner: GameWinner.BRAVO },
-                        { stage: 'Moray Towers', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Humpback Pump Track', mode: 'Rainmaker', winner: GameWinner.NO_WINNER }
+                        { stage: 'Walleye Warehouse', mode: 'Turf War' },
+                        { stage: 'Moray Towers', mode: 'Clam Blitz' },
+                        { stage: 'Humpback Pump Track', mode: 'Rainmaker' }
                     ]
                 }
             };
             replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            messageListeners.updateRoundStore({
+            messageListeners.updateRound({
                 id: 'aaaaaa',
                 roundName: 'Rad Round (Updated)',
                 type: PlayType.BEST_OF,
@@ -92,17 +167,7 @@ describe('roundStore', () => {
                 ]
             }, ack);
 
-            expect(ack).toHaveBeenCalledWith(null, {
-                id: 'aaaaaa',
-                round: {
-                    games: [
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
-                    ],
-                    meta: { name: 'Rad Round (Updated)', type: PlayType.BEST_OF }
-                }
-            });
+            expect(ack).toHaveBeenCalledWith(null);
             expect(replicants.roundStore).toEqual({
                 aaaaaa: {
                     meta: {
@@ -111,9 +176,9 @@ describe('roundStore', () => {
                         type: PlayType.BEST_OF
                     },
                     games: [
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                        { stage: 'MakoMart', mode: 'Clam Blitz' },
+                        { stage: 'Port Mackerel', mode: 'Clam Blitz' },
+                        { stage: 'Humpback Pump Track', mode: 'Tower Control' }
                     ]
                 }
             });
@@ -127,16 +192,16 @@ describe('roundStore', () => {
                         isCompleted: true
                     },
                     games: [
-                        { stage: 'Walleye Warehouse', mode: 'Turf War', winner: GameWinner.BRAVO },
-                        { stage: 'Moray Towers', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Humpback Pump Track', mode: 'Rainmaker', winner: GameWinner.NO_WINNER }
+                        { stage: 'Walleye Warehouse', mode: 'Turf War' },
+                        { stage: 'Moray Towers', mode: 'Clam Blitz' },
+                        { stage: 'Humpback Pump Track', mode: 'Rainmaker' }
                     ]
                 }
             };
             replicants.nextRound = { round: { id: '123' } };
             const ack = jest.fn();
 
-            messageListeners.updateRoundStore({
+            messageListeners.updateRound({
                 id: '123',
                 roundName: 'R',
                 games: [
@@ -146,59 +211,8 @@ describe('roundStore', () => {
                 ]
             }, ack);
 
-            expect(ack).toHaveBeenCalledWith(null, {
-                id: '123',
-                round: {
-                    games: [
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.BRAVO },
-                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
-                    ],
-                    meta: { name: 'R' }
-                }
-            });
+            expect(ack).toHaveBeenCalledWith(null);
             expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('123');
-        });
-
-        it('generates id for round if it is not given', () => {
-            mockGenerateId.generateId.mockReturnValue('new round id');
-            replicants.roundStore = {};
-            replicants.nextRound = { round: { id: '123' } };
-            const ack = jest.fn();
-
-            messageListeners.updateRoundStore({
-                roundName: 'Rad Round (Updated)',
-                games: [
-                    { stage: 'MakoMart', mode: 'Clam Blitz' },
-                    { stage: 'Port Mackerel', mode: 'Clam Blitz' },
-                    { stage: 'Humpback Pump Track', mode: 'Tower Control' }
-                ]
-            }, ack);
-
-            expect(ack).toHaveBeenCalledWith(null, {
-                id: 'new round id',
-                round: {
-                    games: [
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
-                    ],
-                    meta: { name: 'Rad Round (Updated)' }
-                }
-            });
-            expect(replicants.roundStore).toEqual({
-                'new round id': {
-                    meta: {
-                        name: 'Rad Round (Updated)',
-                        isCompleted: false
-                    },
-                    games: [
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Port Mackerel', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Humpback Pump Track', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
-                    ]
-                }
-            });
         });
     });
 

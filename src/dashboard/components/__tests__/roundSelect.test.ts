@@ -61,8 +61,8 @@ describe('RoundSelect', () => {
         const modelValueEmits = wrapper.emitted('update:modelValue');
         const roundDataEmits = wrapper.emitted('update:roundData');
         expect(modelValueEmits.length).toEqual(1);
-        expect(roundDataEmits.length).toEqual(1);
+        expect(roundDataEmits.length).toEqual(2);
         expect(modelValueEmits[0]).toEqual(['roundone']);
-        expect(roundDataEmits[0]).toEqual([{ id: 'roundone', roundData: { meta: { name: 'Round One' } } }]);
+        expect(roundDataEmits[1]).toEqual([{ id: 'roundone', roundData: { meta: { name: 'Round One' } } }]);
     });
 });

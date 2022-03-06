@@ -147,7 +147,7 @@ describe('tournamentDataStore', () => {
             });
 
             expect(result).toEqual({ id: 'round-round' });
-            expect(mockSendMessage).toHaveBeenCalledWith('updateRoundStore', {
+            expect(mockSendMessage).toHaveBeenCalledWith('updateRound', {
                 id: 'round',
                 roundName: 'Cool Round',
                 games: [ { mode: 'Rainmaker', stage: 'Ancho-V Games' } ]

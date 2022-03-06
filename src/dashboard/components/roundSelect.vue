@@ -38,16 +38,22 @@ export default defineComponent({
     setup(props, { emit }) {
         const tournamentDataStore = useTournamentDataStore();
 
+        function emitRoundData(roundId: string) {
+            emit('update:roundData', {
+                id: roundId,
+                roundData: tournamentDataStore.state.roundStore[roundId]
+            });
+        }
+
+        emitRoundData(props.modelValue);
+
         const value = computed({
             get() {
                 return props.modelValue;
             },
             set(value: string) {
                 emit('update:modelValue', value);
-                emit('update:roundData', {
-                    id: value,
-                    roundData: tournamentDataStore.state.roundStore[value]
-                });
+                emitRoundData(value);
             }
         });
 

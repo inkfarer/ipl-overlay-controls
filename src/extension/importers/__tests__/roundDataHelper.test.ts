@@ -1,4 +1,3 @@
-import { GameWinner } from 'types/enums/gameWinner';
 import { PlayType } from '../../../types/enums/playType';
 import * as GenerateId from '../../../helpers/generateId';
 import { mock } from 'jest-mock-extended';
@@ -56,9 +55,9 @@ describe('roundDataHelper', () => {
                         type: PlayType.PLAY_ALL
                     },
                     games: [
-                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker', winner: GameWinner.NO_WINNER },
-                        { stage: 'MakoMart', mode: 'Clam Blitz', winner: GameWinner.NO_WINNER },
-                        { stage: 'Moray Towers', mode: 'Tower Control', winner: GameWinner.NO_WINNER }
+                        { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
+                        { stage: 'MakoMart', mode: 'Clam Blitz' },
+                        { stage: 'Moray Towers', mode: 'Tower Control' }
                     ]
                 },
                 '222222': {
@@ -68,7 +67,7 @@ describe('roundDataHelper', () => {
                         type: PlayType.BEST_OF
                     },
                     games: [
-                        { stage: 'Humpback Pump Track', mode: 'Splat Zones', winner: GameWinner.NO_WINNER }
+                        { stage: 'Humpback Pump Track', mode: 'Splat Zones' }
                     ]
                 },
                 '333333': {
@@ -78,7 +77,7 @@ describe('roundDataHelper', () => {
                         type: PlayType.BEST_OF
                     },
                     games: [
-                        { stage: 'Humpback Pump Track', mode: 'Splat Zones', winner: GameWinner.NO_WINNER }
+                        { stage: 'Humpback Pump Track', mode: 'Splat Zones' }
                     ]
                 }
             });
@@ -107,9 +106,9 @@ describe('roundDataHelper', () => {
                         type: PlayType.PLAY_ALL
                     },
                     games: [
-                        { stage: 'Unknown Stage', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER },
-                        { stage: 'Unknown Stage', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER },
-                        { stage: 'Counterpick', mode: 'Unknown Mode', winner: GameWinner.NO_WINNER }
+                        { stage: 'Unknown Stage', mode: 'Unknown Mode' },
+                        { stage: 'Unknown Stage', mode: 'Unknown Mode' },
+                        { stage: 'Counterpick', mode: 'Unknown Mode' }
                     ]
                 }
             });

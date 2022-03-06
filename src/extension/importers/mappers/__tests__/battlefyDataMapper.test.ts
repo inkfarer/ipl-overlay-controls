@@ -1,6 +1,7 @@
 import { mapBattlefyStagesToHighlightedMatches, mapBattlefyStagesToTournamentData } from '../battlefyDataMapper';
 import { BracketType } from '../../../../types/enums/bracketType';
 import { Stage } from '../../../types/battlefyTournamentData';
+import { PlayType } from '../../../../types/enums/playType';
 
 describe('battlefyDataMapper', () => {
     describe('mapBattlefyStagesToTournamentData', () => {
@@ -10,7 +11,8 @@ describe('battlefyDataMapper', () => {
                     _id: '12314321',
                     name: 'Stage One',
                     bracket: {
-                        type: 'swiss'
+                        type: 'swiss',
+                        seriesStyle: 'gamesPerMatch'
                     }
                 },
                 {
@@ -18,19 +20,22 @@ describe('battlefyDataMapper', () => {
                     name: 'Stage Two',
                     bracket: {
                         type: 'elimination',
-                        style: 'double'
+                        style: 'double',
+                        seriesStyle: 'bestOf'
                     }
                 }
             ] as Stage[])).toEqual([
                 {
                     name: 'Stage One',
                     id: '12314321',
-                    type: BracketType.SWISS
+                    type: BracketType.SWISS,
+                    playType: PlayType.PLAY_ALL
                 },
                 {
                     name: 'Stage Two',
                     id: '4356365',
-                    type: BracketType.DOUBLE_ELIMINATION
+                    type: BracketType.DOUBLE_ELIMINATION,
+                    playType: PlayType.BEST_OF
                 }
             ]);
         });
@@ -42,7 +47,7 @@ describe('battlefyDataMapper', () => {
                 {
                     _id: 'swiswsiswis',
                     name: 'Swiss Stage',
-                    bracket: { type: 'swiss' },
+                    bracket: { type: 'swiss', seriesStyle: 'gamesPerMatch' },
                     matches: [
                         {
                             _id: '354364141',
@@ -82,7 +87,7 @@ describe('battlefyDataMapper', () => {
                 {
                     _id: 'elimliemleieml',
                     name: 'Elimination Stage',
-                    bracket: { type: 'elimination' },
+                    bracket: { type: 'elimination', seriesStyle: 'bestOf' },
                     matches: [
                         {
                             _id: '354364141',
@@ -131,6 +136,7 @@ describe('battlefyDataMapper', () => {
                         name: 'Round 1 Match 50',
                         round: 1,
                         stageName: 'Swiss Stage',
+                        playType: PlayType.PLAY_ALL
                     },
                     teamA:  {
                         id: '123123123',
@@ -168,6 +174,7 @@ describe('battlefyDataMapper', () => {
                         name: 'Round 3 Match C23',
                         round: 3,
                         stageName: 'Elimination Stage',
+                        playType: PlayType.BEST_OF
                     },
                     teamA:  {
                         id: '123123123',

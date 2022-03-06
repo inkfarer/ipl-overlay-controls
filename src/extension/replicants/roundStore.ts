@@ -1,8 +1,6 @@
 import * as nodecgContext from '../helpers/nodecg';
 import { NextRound, RoundStore } from 'schemas';
 import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
-import clone from 'clone';
-import { GameWinner } from 'types/enums/gameWinner';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
@@ -13,37 +11,53 @@ const nodecg = nodecgContext.get();
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
-nodecg.listenFor('updateRoundStore', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
-    const id = data.id ?? generateId();
-    const roundStoreValue = roundStore.value[id];
-    const originalValue = clone(roundStoreValue);
+nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+    if (!data.id) {
+        return ack(new Error('No round ID given.'));
+    }
+    if (!roundStore.value[data.id]) {
+        return ack(new Error(`Could not find round '${data.id}'`));
+    }
 
-    const mappedGames = clone(data.games).map((game, index) =>
-        ({ ...game, winner: originalValue?.games[index]?.winner || GameWinner.NO_WINNER }));
+    const roundStoreValue = roundStore.value[data.id];
 
-    if (!roundStoreValue) {
-        roundStore.value[id] = {
-            games: mappedGames,
-            meta: {
-                name: data.roundName,
-                isCompleted: false,
-                type: data.type
-            }
-        };
-    } else {
-        roundStoreValue.games = mappedGames;
+    if (data.games) {
+        roundStoreValue.games = data.games;
+    }
+    if (data.roundName) {
         roundStoreValue.meta.name = data.roundName;
+    }
+    if (data.type) {
         roundStoreValue.meta.type = data.type;
     }
 
-    if (nextRound.value.round.id === id) {
-        setNextRoundGames(id);
+    if (nextRound.value.round.id === data.id) {
+        setNextRoundGames(data.id);
     }
+
+    ack(null);
+});
+
+nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+    if (data.id && roundStore.value[data.id]) {
+        return ack(new Error(`Round '${data.id}' already exists.`));
+    }
+
+    const id = data.id ?? generateId();
+
+    roundStore.value[id] = {
+        games: data.games,
+        meta: {
+            name: data.roundName,
+            isCompleted: false,
+            type: data.type
+        }
+    };
 
     return ack(null, {
         id,
         round: {
-            games: mappedGames,
+            games: data.games,
             meta: {
                 name: data.roundName,
                 type: data.type

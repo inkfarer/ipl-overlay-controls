@@ -59,10 +59,11 @@ import { IplButton, IplInput, IplSelect, IplSpace } from '@iplsplatoon/vue-compo
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
-import { PlayType, PlayTypeHelper } from 'types/enums/playType';
+import { PlayType } from 'types/enums/playType';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 
 library.add(faTimes);
 
@@ -118,15 +119,23 @@ export default defineComponent({
             stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
             modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
             async handleUpdate() {
-                const result = await store.dispatch('updateRound', {
-                    ...!props.isNewRound && { id: props.roundId },
+                const updates = {
                     roundName: roundInternal.value.meta.name,
                     type: roundInternal.value.meta.type,
                     games: roundInternal.value.games.map(game => ({ mode: game.mode, stage: game.stage }))
-                });
+                };
 
                 if (props.isNewRound) {
-                    emit('createNewRound', result.id);
+                    const result = await store.dispatch('insertRound', updates);
+
+                    if (props.isNewRound) {
+                        emit('createNewRound', result.id);
+                    }
+                } else {
+                    await store.dispatch('updateRound', {
+                        id: props.roundId,
+                        ...updates
+                    });
                 }
             },
             handleDelete() {

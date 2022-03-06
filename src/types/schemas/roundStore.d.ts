@@ -20,5 +20,4 @@ export interface Round {
 export interface RoundGame {
 	stage: string;
 	mode: string;
-	[k: string]: unknown;
 }

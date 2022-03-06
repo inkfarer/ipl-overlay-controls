@@ -60,7 +60,7 @@ export default defineComponent({
                 ({ value: team.id, name: addDots(team.name) }))),
             teamImageShown: computed({
                 get() {
-                    return teamData.value.showLogo;
+                    return teamData.value?.showLogo ?? true;
                 },
                 set(value: boolean) {
                     tournamentDataStore.dispatch('setTeamImageHidden',

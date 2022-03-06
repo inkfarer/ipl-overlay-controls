@@ -7,7 +7,7 @@ import { generateId } from '../../helpers/generateId';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
-import { ActiveRound, RadiaSettings } from '../../types/schemas';
+import { ActiveRound, NextRound, RadiaSettings } from '../../types/schemas';
 import { addDots, isBlank } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
@@ -18,6 +18,7 @@ const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
+const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
 export function updateTournamentDataReplicants(data: TournamentData): void {
     if (data.teams.length <= 0) {
@@ -47,14 +48,20 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
     const firstTeam = data.teams[0];
     const secondTeam = data.teams[1] ?? data.teams[0];
 
-    setActiveRoundTeams(activeRound.value, firstTeam.id, secondTeam.id);
+    const teamIdExists = (teamId: string) => data.teams.some(team => team.id === teamId);
 
-    if (data.teams.length < 5) {
-        setNextRoundTeams(
-            (data.teams[data.teams.length - 2]?.id ?? firstTeam.id),
-            data.teams[data.teams.length - 1].id);
-    } else {
-        setNextRoundTeams(data.teams[2].id, data.teams[3].id);
+    if (!teamIdExists(activeRound.value.teamA.id) || !teamIdExists(activeRound.value.teamB.id)) {
+        setActiveRoundTeams(activeRound.value, firstTeam.id, secondTeam.id);
+    }
+
+    if (!teamIdExists(nextRound.value.teamA.id) || !teamIdExists(nextRound.value.teamB.id)) {
+        if (data.teams.length < 5) {
+            setNextRoundTeams(
+                (data.teams[data.teams.length - 2]?.id ?? firstTeam.id),
+                data.teams[data.teams.length - 1].id);
+        } else {
+            setNextRoundTeams(data.teams[2].id, data.teams[3].id);
+        }
     }
 }
 

@@ -44,8 +44,11 @@ export const tournamentDataStore = createStore<TournamentDataStore>({
         async fetchRoundData(store, { url }: { url: string }): Promise<void> {
             return nodecg.sendMessage('getRounds', { url });
         },
-        async updateRound(store, data: UpdateRoundStoreRequest): Promise<UpdateRoundStoreResponse> {
-            return nodecg.sendMessage('updateRoundStore', data);
+        async updateRound(store, data: UpdateRoundStoreRequest): Promise<void> {
+            return nodecg.sendMessage('updateRound', data);
+        },
+        async insertRound(store, data: UpdateRoundStoreRequest): Promise<UpdateRoundStoreResponse> {
+            return nodecg.sendMessage('insertRound', data);
         },
         resetRoundStore() {
             nodecg.sendMessage('resetRoundStore');

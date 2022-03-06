@@ -42,5 +42,6 @@ export interface TournamentData {
 		name: string;
 		id: string;
 		type: 'SWISS' | 'SINGLE_ELIMINATION' | 'DOUBLE_ELIMINATION' | 'ROUND_ROBIN' | 'LADDER';
+		playType?: 'BEST_OF' | 'PLAY_ALL';
 	}[];
 }
