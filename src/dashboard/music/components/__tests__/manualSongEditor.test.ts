@@ -78,7 +78,7 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        store.$patch({ manualNowPlaying: { song: 'dope song', artist: 'cool artist' } });
+        store.manualNowPlaying = { song: 'dope song', artist: 'cool artist' };
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="artist"]').attributes().modelvalue).toEqual('cool artist');

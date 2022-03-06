@@ -49,7 +49,7 @@ export default defineComponent({
         const isEdited = computed(() => !isEqual(musicStore.manualNowPlaying, manualNowPlaying.value));
         const isFocused = ref(false);
 
-        watch(musicStore.manualNowPlaying, newValue => {
+        watch(() => musicStore.manualNowPlaying, newValue => {
             if (!isFocused.value) {
                 manualNowPlaying.value = cloneDeep(newValue);
             }
