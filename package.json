@@ -1,6 +1,6 @@
 {
     "name": "ipl-overlay-controls",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "description": "Dashboard elements for Inkling Performance Labs broadcast graphics.",
     "homepage": "https://github.com/inkfarer/ipl-overlay-controls",
     "author": {
@@ -141,7 +141,6 @@
         "semver": "^7.3.5",
         "ts-node": "^10.0.0",
         "vue": "^3.2.20",
-        "vuex": "^4.0.2",
         "ws": "^7.5.3"
     },
     "devDependencies": {
