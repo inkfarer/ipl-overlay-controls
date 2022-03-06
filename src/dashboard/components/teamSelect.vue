@@ -52,19 +52,18 @@ export default defineComponent({
             }
         });
         const teamData = computed(() =>
-            tournamentDataStore.state.tournamentData.teams.find(team => team.id === teamId.value));
+            tournamentDataStore.tournamentData.teams.find(team => team.id === teamId.value));
 
         return {
             teamId,
-            teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team =>
+            teams: computed(() => tournamentDataStore.tournamentData.teams.map(team =>
                 ({ value: team.id, name: addDots(team.name) }))),
             teamImageShown: computed({
                 get() {
                     return teamData.value?.showLogo ?? true;
                 },
                 set(value: boolean) {
-                    tournamentDataStore.dispatch('setTeamImageHidden',
-                        { teamId: teamId.value, isVisible: value });
+                    tournamentDataStore.setTeamImageHidden({ teamId: teamId.value, isVisible: value });
                 }
             })
         };

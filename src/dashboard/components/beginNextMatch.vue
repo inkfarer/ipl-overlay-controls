@@ -48,7 +48,7 @@ export default defineComponent({
         provideValidators(validators);
 
         watchEffect(() => {
-            matchName.value = generateMatchNameForRound(tournamentDataStore.state.matchStore, props.roundName);
+            matchName.value = generateMatchNameForRound(tournamentDataStore.matchStore, props.roundName);
         });
 
         return {

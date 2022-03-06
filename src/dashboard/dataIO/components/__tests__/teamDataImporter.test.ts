@@ -1,12 +1,14 @@
 import TeamDataImporter from '../teamDataImporter.vue';
-import { createStore } from 'vuex';
-import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { mockBundleConfig } from '../../../__mocks__/mockNodecg';
 import * as stringHelper from '../../../helpers/stringHelper';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
 
 describe('teamDataImporter', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplButton: true,
         IplSelect: true,
@@ -14,37 +16,27 @@ describe('teamDataImporter', () => {
         IplUpload: true
     };
 
-    const mockGetSmashggEvent = jest.fn();
-    const mockGetTournamentData = jest.fn();
-    const mockUploadTeamData = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createTournamentDataStore() {
-        return createStore<TournamentDataStore>({
-            state: {
-                tournamentData: {
-                    meta: {
-                        id: '123123',
-                        source: TournamentDataSource.BATTLEFY,
-                        shortName: null,
-                        name: 'Tournament Name'
-                    },
-                    teams: []
+        useTournamentDataStore().$state = {
+            tournamentData: {
+                meta: {
+                    id: '123123',
+                    source: TournamentDataSource.BATTLEFY,
+                    shortName: null,
+                    name: 'Tournament Name'
                 },
-                roundStore: {},
-                matchStore: {}
+                teams: []
             },
-            actions: {
-                getSmashggEvent: mockGetSmashggEvent,
-                getTournamentData: mockGetTournamentData,
-                uploadTeamData: mockUploadTeamData,
-                setShortName: jest.fn()
-            }
-        });
-    }
+            roundStore: {},
+            matchStore: {}
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createTournamentDataStore();
-        store.state.tournamentData.meta = {
+        const store = useTournamentDataStore();
+        store.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             name: 'Cool Tournament',
@@ -53,7 +45,7 @@ describe('teamDataImporter', () => {
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -61,8 +53,8 @@ describe('teamDataImporter', () => {
     });
 
     it('displays data of existing tournament', () => {
-        const store = createTournamentDataStore();
-        store.state.tournamentData.meta = {
+        const store = useTournamentDataStore();
+        store.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             name: 'Cool Tournament',
@@ -71,7 +63,7 @@ describe('teamDataImporter', () => {
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -79,8 +71,8 @@ describe('teamDataImporter', () => {
     });
 
     it('displays data of existing tournament if it is missing a name', () => {
-        const store = createTournamentDataStore();
-        store.state.tournamentData.meta = {
+        const store = useTournamentDataStore();
+        store.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             url: 'tounament://cool-tournament',
@@ -88,7 +80,7 @@ describe('teamDataImporter', () => {
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -96,8 +88,8 @@ describe('teamDataImporter', () => {
     });
 
     it('displays data of existing tournament if it is missing an URL', () => {
-        const store = createTournamentDataStore();
-        store.state.tournamentData.meta = {
+        const store = useTournamentDataStore();
+        store.tournamentData.meta = {
             source: TournamentDataSource.BATTLEFY,
             id: '123123asd',
             name: 'cool tournament',
@@ -105,7 +97,7 @@ describe('teamDataImporter', () => {
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -113,8 +105,8 @@ describe('teamDataImporter', () => {
     });
 
     it('displays data of existing tournament if it has smash.gg data', () => {
-        const store = createTournamentDataStore();
-        store.state.tournamentData.meta = {
+        const store = useTournamentDataStore();
+        store.tournamentData.meta = {
             source: TournamentDataSource.SMASHGG,
             id: '123123asd',
             name: 'cool tournament',
@@ -133,7 +125,7 @@ describe('teamDataImporter', () => {
         };
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -142,10 +134,9 @@ describe('teamDataImporter', () => {
 
     it('has expected data source options if smash.gg config is present', () => {
         mockBundleConfig.smashgg = { apiKey: 'ggkey123' };
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
         const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
@@ -159,10 +150,9 @@ describe('teamDataImporter', () => {
 
     it('has expected data source options if smash.gg config is not present', () => {
         mockBundleConfig.smashgg = undefined;
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
         const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
@@ -174,10 +164,11 @@ describe('teamDataImporter', () => {
     });
 
     it('dispatches to store on import', () => {
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.getTournamentData = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -185,17 +176,18 @@ describe('teamDataImporter', () => {
         wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockGetTournamentData).toHaveBeenCalledWith(expect.any(Object), {
+        expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.SMASHGG,
             id: 'cool-tourney'
         });
     });
 
     it('extracts battlefy tournament URL on import', () => {
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.getTournamentData = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
         jest.spyOn(stringHelper, 'extractBattlefyTournamentId').mockReturnValue('battlefy-tournament-id');
@@ -204,7 +196,7 @@ describe('teamDataImporter', () => {
         wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockGetTournamentData).toHaveBeenCalledWith(expect.any(Object), {
+        expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.BATTLEFY,
             id: 'battlefy-tournament-id'
         });
@@ -212,10 +204,12 @@ describe('teamDataImporter', () => {
     });
 
     it('dispatches to store on import if file upload is enabled but source is not set to UPLOAD', async () => {
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.getTournamentData = jest.fn();
+        store.uploadTeamData = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -225,19 +219,20 @@ describe('teamDataImporter', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockGetTournamentData).toHaveBeenCalledWith(expect.any(Object), {
+        expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.SMASHGG,
             id: 'cool-tourney'
         });
-        expect(mockUploadTeamData).not.toHaveBeenCalled();
+        expect(store.uploadTeamData).not.toHaveBeenCalled();
     });
 
     it('dispatches to store on file import', async () => {
         const file = new File([], 'mock-file');
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.uploadTeamData = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -247,20 +242,20 @@ describe('teamDataImporter', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockUploadTeamData).toHaveBeenCalledWith(expect.any(Object), { file });
+        expect(store.uploadTeamData).toHaveBeenCalledWith({ file });
     });
 
     it('shows smash.gg event selector if import returns more than one event', async () => {
-        mockGetTournamentData.mockResolvedValue({
+        const store = useTournamentDataStore();
+        store.getTournamentData = jest.fn().mockResolvedValue({
             events: [
                 { id: 123123, name: 'Event One', game: 'Splatoon 2' },
                 { id: 456456, name: 'Event Two', game: 'Ultimate' }
             ]
         });
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -274,17 +269,17 @@ describe('teamDataImporter', () => {
     });
 
     it('dispatches to store on smash.gg event import', async () => {
-        mockGetTournamentData.mockResolvedValue({
+        const store = useTournamentDataStore();
+        store.getSmashggEvent = jest.fn().mockResolvedValue({});
+        store.getTournamentData = jest.fn().mockResolvedValue({
             events: [
                 { id: 123123, name: 'Event One', game: 'Splatoon 2' },
                 { id: 456456, name: 'Event Two', game: 'Ultimate' }
             ]
         });
-        mockGetSmashggEvent.mockResolvedValue({});
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -294,21 +289,22 @@ describe('teamDataImporter', () => {
         wrapper.getComponent('[data-test="smashgg-event-import-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(mockGetSmashggEvent).toHaveBeenCalledWith(expect.any(Object), { eventId: 456456 });
+        expect(store.getSmashggEvent).toHaveBeenCalledWith({ eventId: 456456 });
         expect(wrapper.findComponent('[data-test="import-button"]').exists()).toEqual(true);
     });
 
     it('handles smash.gg event import being cancelled', async () => {
-        mockGetTournamentData.mockResolvedValue({
+        const store = useTournamentDataStore();
+        store.getSmashggEvent = jest.fn();
+        store.getTournamentData = jest.fn().mockResolvedValue({
             events: [
                 { id: 123123, name: 'Event One', game: 'Splatoon 2' },
                 { id: 456456, name: 'Event Two', game: 'Ultimate' }
             ]
         });
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -317,15 +313,14 @@ describe('teamDataImporter', () => {
         wrapper.getComponent('[data-test="smashgg-event-import-cancel-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
-        expect(mockGetSmashggEvent).not.toHaveBeenCalled();
+        expect(store.getSmashggEvent).not.toHaveBeenCalled();
         expect(wrapper.findComponent('[data-test="import-button"]').exists()).toEqual(true);
     });
 
     it('shows uploader if selected source is UPLOAD and file upload is enabled', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -338,10 +333,9 @@ describe('teamDataImporter', () => {
     });
 
     it('shows ID input if selected source is UPLOAD and file upload is disabled', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -354,10 +348,9 @@ describe('teamDataImporter', () => {
     });
 
     it('shows ID input if selected source is not UPLOAD and file upload is enabled', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -370,11 +363,11 @@ describe('teamDataImporter', () => {
     });
 
     it('handles updating short name', async () => {
-        const store = createTournamentDataStore();
-        jest.spyOn(store, 'dispatch');
+        const store = useTournamentDataStore();
+        store.setShortName = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -382,14 +375,13 @@ describe('teamDataImporter', () => {
         wrapper.getComponent('[data-test="update-short-name-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
-        expect(store.dispatch).toHaveBeenCalledWith('setShortName', 'Tournament Name');
+        expect(store.setShortName).toHaveBeenCalledWith('Tournament Name');
     });
 
     it('reverts short name changes on update button right click', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamDataImporter, {
             global: {
-                plugins: [[ store, tournamentDataStoreKey ]]
+                plugins: [pinia]
             }
         });
         const event = new Event(null);

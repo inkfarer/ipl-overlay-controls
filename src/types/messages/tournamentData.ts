@@ -1,4 +1,5 @@
 import { SmashggEvent } from 'types/smashgg';
+import { TournamentDataSource } from '../enums/tournamentDataSource';
 
 export interface ToggleTeamImageRequest {
     teamId: string;
@@ -7,6 +8,11 @@ export interface ToggleTeamImageRequest {
 
 export interface GetSmashggEventRequest {
     eventId: number;
+}
+
+export interface GetTournamentDataRequest {
+    id: string
+    method: TournamentDataSource
 }
 
 export interface GetTournamentDataResponse {

@@ -5,9 +5,9 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { Team } from 'types/team';
 import { PlayType } from 'types/enums/playType';
-import { tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../../store/nextRoundStore';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
 
 describe('HighlightedMatchViewer', () => {
     let pinia: TestingPinia;
@@ -34,18 +34,8 @@ describe('HighlightedMatchViewer', () => {
         };
     });
 
-    config.global.plugins = [[createStore({}), tournamentDataStoreKey]];
-
     const mockSetNextMatch = jest.fn();
     const mockTeam: Team = { id: '1234', name: 'mock team', showLogo: false, players: []};
-
-    function createTournamentDataStore() {
-        return createStore({
-            actions: {
-                updateRound: jest.fn()
-            }
-        });
-    }
 
     function createHighlightedMatchStore() {
         return createStore<HighlightedMatchStore>({
@@ -229,14 +219,13 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'dispatch');
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.updateRound = jest.fn();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
                     pinia,
-                    [tournamentDataStore, tournamentDataStoreKey]
                 ]
             }
         });
@@ -251,7 +240,7 @@ describe('HighlightedMatchViewer', () => {
             teamBId: '5678',
             roundId: '0387'
         });
-        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('updateRound', {
+        expect(tournamentDataStore.updateRound).toHaveBeenCalledWith({
             id: '0387',
             type: PlayType.BEST_OF
         });

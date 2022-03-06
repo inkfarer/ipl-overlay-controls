@@ -101,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
@@ -142,8 +142,8 @@ export default defineComponent({
         const shortName = ref('');
         const shortNameValidator = validator(shortName, false, notBlank);
 
-        tournamentDataStore.watch(
-            state => state.tournamentData.meta.shortName,
+        watch(
+            () => tournamentDataStore.tournamentData.meta.shortName,
             newValue => shortName.value = newValue,
             { immediate: true });
 
@@ -160,7 +160,7 @@ export default defineComponent({
             RIGHT_CLICK_UNDO_MESSAGE,
             teamDataFile,
             useFileUpload,
-            tournamentMetadata: computed(() => tournamentDataStore.state.tournamentData.meta),
+            tournamentMetadata: computed(() => tournamentDataStore.tournamentData.meta),
             dataSourceOptions: computed(() => {
                 const options = [
                     TournamentDataSource.BATTLEFY,
@@ -194,13 +194,13 @@ export default defineComponent({
             }),
             async handleImport() {
                 if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
-                    return tournamentDataStore.dispatch('uploadTeamData', { file: teamDataFile.value });
+                    return tournamentDataStore.uploadTeamData({ file: teamDataFile.value });
                 } else {
                     const id = dataSource.value === TournamentDataSource.BATTLEFY
                         ? extractBattlefyTournamentId(tournamentId.value)
                         : tournamentId.value;
 
-                    const result: GetTournamentDataResponse = await tournamentDataStore.dispatch('getTournamentData', {
+                    const result: GetTournamentDataResponse = await tournamentDataStore.getTournamentData({
                         method: dataSource.value,
                         id
                     });
@@ -217,7 +217,7 @@ export default defineComponent({
                 }
             },
             async handleSmashggEventImport() {
-                await tournamentDataStore.dispatch('getSmashggEvent', { eventId: parseInt(smashggEvent.value) });
+                await tournamentDataStore.getSmashggEvent({ eventId: parseInt(smashggEvent.value) });
                 smashggEvents.value = [];
             },
             handleSmashggImportCancel() {
@@ -232,16 +232,16 @@ export default defineComponent({
             shortName,
             shortNameValidator,
             shortNameChanged: computed(() =>
-                tournamentDataStore.state.tournamentData.meta.shortName !== shortName.value),
+                tournamentDataStore.tournamentData.meta.shortName !== shortName.value),
             updateShortName() {
-                tournamentDataStore.dispatch('setShortName', shortName.value);
+                tournamentDataStore.setShortName(shortName.value);
             },
             undoShortNameChanges(event: Event) {
                 event.preventDefault();
 
                 shortName.value
-                    = tournamentDataStore.state.tournamentData.meta.shortName
-                    ?? tournamentDataStore.state.tournamentData.meta.name;
+                    = tournamentDataStore.tournamentData.meta.shortName
+                    ?? tournamentDataStore.tournamentData.meta.name;
             }
         };
     }

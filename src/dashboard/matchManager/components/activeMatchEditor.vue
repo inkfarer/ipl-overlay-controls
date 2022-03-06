@@ -106,7 +106,7 @@ export default defineComponent({
         const matchId = ref('');
         const matchName = ref('');
 
-        const selectedMatch = computed(() => tournamentDataStore.state.matchStore[matchId.value]);
+        const selectedMatch = computed(() => tournamentDataStore.matchStore[matchId.value]);
         const matchHasProgress = computed(() =>
             selectedMatch.value?.teamA?.score > 0
             || selectedMatch.value?.teamB?.score > 0);
@@ -149,7 +149,7 @@ export default defineComponent({
 
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
-            teams: computed(() => tournamentDataStore.state.tournamentData.teams.map(team => ({
+            teams: computed(() => tournamentDataStore.tournamentData.teams.map(team => ({
                 value: team.id,
                 name: addDots(team.name)
             }))),
@@ -163,7 +163,7 @@ export default defineComponent({
                     return activeRoundStore.activeRound.teamA.showLogo;
                 },
                 set(value: boolean) {
-                    tournamentDataStore.dispatch('setTeamImageHidden',
+                    tournamentDataStore.setTeamImageHidden(
                         { teamId: activeRoundStore.activeRound.teamA.id, isVisible: value });
                 }
             }),
@@ -172,11 +172,11 @@ export default defineComponent({
                     return activeRoundStore.activeRound.teamB.showLogo;
                 },
                 set(value: boolean) {
-                    tournamentDataStore.dispatch('setTeamImageHidden',
+                    tournamentDataStore.setTeamImageHidden(
                         { teamId: activeRoundStore.activeRound.teamB.id, isVisible: value });
                 }
             }),
-            matches: computed(() => Object.entries(tournamentDataStore.state.matchStore).map(([ key, value ]) =>
+            matches: computed(() => Object.entries(tournamentDataStore.matchStore).map(([ key, value ]) =>
                 ({ value: key, name: value.meta.name }))),
             isChanged,
             updateRound() {

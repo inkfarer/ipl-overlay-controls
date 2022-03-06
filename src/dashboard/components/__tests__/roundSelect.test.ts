@@ -1,38 +1,41 @@
 import RoundSelect from '../roundSelect.vue';
-import { createStore } from 'vuex';
 import { config, mount } from '@vue/test-utils';
-import { tournamentDataStoreKey } from '../../store/tournamentDataStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 describe('RoundSelect', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplSelect: true
     };
 
-    function createTournamentDataStore() {
-        return createStore({
-            state: {
-                roundStore: {
-                    roundone: {
-                        meta: {
-                            name: 'Round One'
-                        }
-                    },
-                    roundtwo: {
-                        meta: {
-                            name: 'Round Two'
-                        }
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useTournamentDataStore().$state = {
+            roundStore: {
+                roundone: {
+                    // @ts-ignore
+                    meta: {
+                        name: 'Round One'
                     }
                 },
-                matchStore: {}
-            }
-        });
-    }
+                roundtwo: {
+                    // @ts-ignore
+                    meta: {
+                        name: 'Round Two'
+                    }
+                }
+            },
+            matchStore: {}
+        };
+    });
 
     it('matches snapshot', () => {
-        const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(RoundSelect, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey]]
+                plugins: [pinia]
             },
             props: {
                 modelValue: 'roundtwo'
@@ -45,10 +48,9 @@ describe('RoundSelect', () => {
     });
 
     it('emits expected data on select value change', async () => {
-        const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(RoundSelect, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey]]
+                plugins: [pinia]
             },
             props: {
                 modelValue: 'roundtwo'

@@ -1,9 +1,8 @@
 import BeginNextMatch from '../beginNextMatch.vue';
-import { createStore } from 'vuex';
 import { config, mount } from '@vue/test-utils';
-import { tournamentDataStoreKey } from '../../store/tournamentDataStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../store/nextRoundStore';
+import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 describe('BeginNextMatch', () => {
     let pinia: TestingPinia;
@@ -14,7 +13,18 @@ describe('BeginNextMatch', () => {
     };
 
     beforeEach(() => {
+        mockNextRoundHelper.generateMatchNameForRound.mockReturnValue('Match Name');
+
         pinia = createTestingPinia();
+
+        useTournamentDataStore().$state = {
+            matchStore: {
+                match1: {
+                    // @ts-ignore
+                    meta: { name: 'Cool Round' }
+                }
+            }
+        };
     });
 
     jest.mock('../../../helpers/nextRound', () => mockNextRoundHelper);
@@ -24,30 +34,10 @@ describe('BeginNextMatch', () => {
         IplButton: true
     };
 
-    function createTournamentDataStore() {
-        return createStore({
-            state: {
-                matchStore: {
-                    match1: {
-                        meta: { name: 'Cool Round' }
-                    }
-                }
-            }
-        });
-    }
-
-    beforeEach(() => {
-        mockNextRoundHelper.generateMatchNameForRound.mockReturnValue('Match Name');
-    });
-
     it('matches snapshot', () => {
-        const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(BeginNextMatch, {
             global: {
-                plugins: [
-                    pinia,
-                    [tournamentDataStore, tournamentDataStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 roundName: 'Cool Round'
@@ -60,13 +50,9 @@ describe('BeginNextMatch', () => {
     it('handles beginning next match', async () => {
         const nextRoundStore = useNextRoundStore();
         nextRoundStore.beginNextMatch = jest.fn();
-        const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(BeginNextMatch, {
             global: {
-                plugins: [
-                    pinia,
-                    [tournamentDataStore, tournamentDataStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 roundName: 'Cool Round'
@@ -81,13 +67,9 @@ describe('BeginNextMatch', () => {
     });
 
     it('disables beginning match if match name is invalid', async () => {
-        const tournamentDataStore = createTournamentDataStore();
         const wrapper = mount(BeginNextMatch, {
             global: {
-                plugins: [
-                    pinia,
-                    [tournamentDataStore, tournamentDataStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 roundName: 'Cool Round'

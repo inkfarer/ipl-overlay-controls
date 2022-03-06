@@ -117,7 +117,7 @@ export default defineComponent({
 
                 const playType = selectedMatchData.value?.meta.playType;
                 if (!!playType && selectedRoundData.value.roundData?.meta.type !== playType) {
-                    await tournamentDataStore.dispatch('updateRound', {
+                    await tournamentDataStore.updateRound({
                         id: selectedRound.value,
                         type: playType
                     });
