@@ -34,7 +34,7 @@
 import { defineComponent } from '@vue/runtime-core';
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import TeamSelect from '../../components/teamSelect.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import RoundSelect from '../../components/roundSelect.vue';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
@@ -47,20 +47,20 @@ export default defineComponent({
     setup() {
         const nextRoundStore = useNextRoundStore();
 
-        const teamAId = ref(nextRoundStore.state.nextRound.teamA.id);
-        const teamBId = ref(nextRoundStore.state.nextRound.teamB.id);
-        const selectedRound = ref<string>(nextRoundStore.state.nextRound.round.id);
+        const teamAId = ref(nextRoundStore.nextRound.teamA.id);
+        const teamBId = ref(nextRoundStore.nextRound.teamB.id);
+        const selectedRound = ref<string>(nextRoundStore.nextRound.round.id);
 
-        nextRoundStore.watch(
-            store => store.nextRound.teamA.id,
+        watch(
+            () => nextRoundStore.nextRound.teamA.id,
             newValue => teamAId.value = newValue,
             { immediate: true });
-        nextRoundStore.watch(
-            store => store.nextRound.teamB.id,
+        watch(
+            () => nextRoundStore.nextRound.teamB.id,
             newValue => teamBId.value = newValue,
             { immediate: true });
-        nextRoundStore.watch(
-            state => state.nextRound.round.id,
+        watch(
+            () => nextRoundStore.nextRound.round.id,
             newId => selectedRound.value = newId,
             { immediate: true });
 
@@ -70,11 +70,11 @@ export default defineComponent({
             teamBId,
             selectedRound,
             isChanged: computed(() =>
-                teamAId.value !== nextRoundStore.state.nextRound.teamA.id
-                || teamBId.value !== nextRoundStore.state.nextRound.teamB.id
-                || selectedRound.value !== nextRoundStore.state.nextRound.round.id),
+                teamAId.value !== nextRoundStore.nextRound.teamA.id
+                || teamBId.value !== nextRoundStore.nextRound.teamB.id
+                || selectedRound.value !== nextRoundStore.nextRound.round.id),
             handleUpdate() {
-                nextRoundStore.dispatch('setNextRound', {
+                nextRoundStore.setNextRound({
                     teamAId: teamAId.value,
                     teamBId: teamBId.value,
                     roundId: selectedRound.value
@@ -83,9 +83,9 @@ export default defineComponent({
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                teamAId.value = nextRoundStore.state.nextRound.teamA.id;
-                teamBId.value = nextRoundStore.state.nextRound.teamB.id;
-                selectedRound.value = nextRoundStore.state.nextRound.round.id;
+                teamAId.value = nextRoundStore.nextRound.teamA.id;
+                teamBId.value = nextRoundStore.nextRound.teamB.id;
+                selectedRound.value = nextRoundStore.nextRound.round.id;
             }
         };
     }

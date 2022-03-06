@@ -4,11 +4,14 @@ import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlight
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { Team } from 'types/team';
-import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
 import { PlayType } from 'types/enums/playType';
 import { tournamentDataStoreKey } from '../../../store/tournamentDataStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useNextRoundStore } from '../../../store/nextRoundStore';
 
 describe('HighlightedMatchViewer', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplSelect: true,
         IplDataRow: true,
@@ -16,6 +19,20 @@ describe('HighlightedMatchViewer', () => {
         RoundSelect: true,
         FontAwesomeIcon: true
     };
+
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useNextRoundStore().$state = {
+            nextRound: {
+                teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
+                teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
+                round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
+                showOnStream: true,
+                games: []
+            }
+        };
+    });
 
     config.global.plugins = [[createStore({}), tournamentDataStoreKey]];
 
@@ -26,20 +43,6 @@ describe('HighlightedMatchViewer', () => {
         return createStore({
             actions: {
                 updateRound: jest.fn()
-            }
-        });
-    }
-
-    function createNextRoundStore() {
-        return createStore<NextRoundStore>({
-            state: {
-                nextRound: {
-                    teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
-                    teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
-                    showOnStream: true,
-                    games: []
-                }
             }
         });
     }
@@ -66,12 +69,11 @@ describe('HighlightedMatchViewer', () => {
     it('matches snapshot when no matches are loaded', () => {
         const highlightedMatchStore = createHighlightedMatchStore();
         highlightedMatchStore.state.highlightedMatches = [];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -85,12 +87,11 @@ describe('HighlightedMatchViewer', () => {
             { meta: { name: 'cool match', id: '1234', playType: PlayType.PLAY_ALL }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -104,12 +105,11 @@ describe('HighlightedMatchViewer', () => {
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -129,12 +129,11 @@ describe('HighlightedMatchViewer', () => {
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -167,12 +166,11 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -198,12 +196,11 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -232,14 +229,13 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const tournamentDataStore = createTournamentDataStore();
         jest.spyOn(tournamentDataStore, 'dispatch');
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
+                    pinia,
                     [tournamentDataStore, tournamentDataStoreKey]
                 ]
             }
@@ -267,12 +263,11 @@ describe('HighlightedMatchViewer', () => {
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });
@@ -292,12 +287,11 @@ describe('HighlightedMatchViewer', () => {
                 teamB: mockTeam
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
                 plugins: [
                     [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
+                    pinia
                 ]
             }
         });

@@ -1,19 +1,18 @@
-import { nextRoundStore } from '../nextRoundStore';
+import { useNextRoundStore } from '../nextRoundStore';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { NextRound } from 'schemas';
+import { createPinia, setActivePinia } from 'pinia';
 
 describe('nextRoundStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            nextRoundStore.commit('setState', { name: 'nextRound', val: { foo: 'bar' } });
-
-            expect(nextRoundStore.state.nextRound).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setNextRound', () => {
         it('sends message to extension', () => {
-            nextRoundStore.dispatch('setNextRound', { teamAId: '123123', teamBId: '456456', roundId: '340857' });
+            const store = useNextRoundStore();
+
+            store.setNextRound({ teamAId: '123123', teamBId: '456456', roundId: '340857' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound',
                 { teamAId: '123123', teamBId: '456456', roundId: '340857' });
@@ -23,7 +22,9 @@ describe('nextRoundStore', () => {
     describe('setShowOnStream', () => {
         it('updates replicant value', () => {
             replicants.nextRound = { showOnStream: false };
-            nextRoundStore.commit('setShowOnStream', true);
+            const store = useNextRoundStore();
+
+            store.setShowOnStream(true);
 
             expect((replicants.nextRound as NextRound).showOnStream).toEqual(true);
         });
@@ -31,7 +32,9 @@ describe('nextRoundStore', () => {
 
     describe('beginNextMatch', () => {
         it('sends message to extension', () => {
-            nextRoundStore.dispatch('beginNextMatch', { matchName: 'cool match' });
+            const store = useNextRoundStore();
+
+            store.beginNextMatch({ matchName: 'cool match' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('beginNextMatch', { matchName: 'cool match' });
         });

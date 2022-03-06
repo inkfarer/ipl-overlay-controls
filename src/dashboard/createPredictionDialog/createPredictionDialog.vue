@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import {
     IplButton,
     IplSpace,
@@ -109,7 +109,7 @@ export default defineComponent({
         };
         provideValidators(validators);
 
-        nextRoundStore.watch(state => state.nextRound, (newValue, oldValue) => {
+        watch(() => nextRoundStore.nextRound, (newValue, oldValue) => {
             if (newValue.teamA.name !== oldValue?.teamA.name) teamAName.value = addDots(newValue.teamA.name, 25);
             if (newValue.teamB.name !== oldValue?.teamB.name) teamBName.value = addDots(newValue.teamB.name, 25);
         }, { immediate: true });
@@ -134,8 +134,8 @@ export default defineComponent({
             resetInputs() {
                 title.value = 'Who do you think will win this match?';
                 duration.value = 120;
-                teamAName.value = nextRoundStore.state.nextRound.teamA.name;
-                teamBName.value = nextRoundStore.state.nextRound.teamB.name;
+                teamAName.value = nextRoundStore.nextRound.teamA.name;
+                teamBName.value = nextRoundStore.nextRound.teamB.name;
             },
             closeDialog
         };

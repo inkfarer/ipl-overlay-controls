@@ -55,7 +55,7 @@ export default defineComponent({
             matchName,
             allValid: computed(() => allValid(validators)),
             beginNextMatch() {
-                nextRoundStore.dispatch('beginNextMatch', { matchName: matchName.value });
+                nextRoundStore.beginNextMatch({ matchName: matchName.value });
             }
         };
     }

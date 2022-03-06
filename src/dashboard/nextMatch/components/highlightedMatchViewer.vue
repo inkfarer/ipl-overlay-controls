@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue';
+import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
 import { IplButton, IplSelect, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue';
@@ -69,7 +69,7 @@ export default defineComponent({
         const selectedRoundData = ref<RoundSelectRound>(null);
 
         watchEffect(() => {
-            const nextRound = nextRoundStore.state.nextRound;
+            const nextRound = nextRoundStore.nextRound;
             const equalMatch = highlightedMatchStore.state.highlightedMatches.find(match =>
                 match.teamA.id === nextRound.teamA.id && match.teamB.id === nextRound.teamB.id);
 
@@ -83,7 +83,7 @@ export default defineComponent({
         const selectedMatchData = computed(() =>
             highlightedMatchStore.state.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
 
-        nextRoundStore.watch(state => state.nextRound.round.id, newId => {
+        watch(() => nextRoundStore.nextRound.round.id, newId => {
             selectedRound.value = newId;
         }, { immediate: true });
 
@@ -105,9 +105,9 @@ export default defineComponent({
             selectedMatchData,
             disableSetNextMatch: computed(() => !selectedMatchData.value),
             isChanged: computed(() =>
-                nextRoundStore.state.nextRound.teamA.id !== selectedMatchData.value?.teamA.id
-                || nextRoundStore.state.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
-                || nextRoundStore.state.nextRound.round.id !== selectedRound.value ),
+                nextRoundStore.nextRound.teamA.id !== selectedMatchData.value?.teamA.id
+                || nextRoundStore.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
+                || nextRoundStore.nextRound.round.id !== selectedRound.value ),
             async handleSetNextMatch() {
                 await highlightedMatchStore.dispatch('setNextMatch', {
                     teamAId: selectedMatchData.value.teamA.id,

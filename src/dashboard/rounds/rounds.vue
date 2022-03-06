@@ -160,7 +160,7 @@ export default defineComponent({
             },
             creatingNewRound,
             newRound,
-            nextRoundId: computed(() => nextRoundStore.state.nextRound.round.id)
+            nextRoundId: computed(() => nextRoundStore.nextRound.round.id)
         };
     }
 });

@@ -1,42 +1,36 @@
 import ManualTeamPicker from '../manualTeamPicker.vue';
-import { createStore } from 'vuex';
-import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
 import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useNextRoundStore } from '../../../store/nextRoundStore';
 
 describe('ManualTeamPicker', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         TeamSelect: true,
         RoundSelect: true,
         IplButton: true
     };
 
-    function createNextRoundStore() {
-        return createStore<NextRoundStore>({
-            state: {
-                nextRound: {
-                    teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
-                    teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
-                    showOnStream: true,
-                    games: []
-                }
-            },
-            mutations: {
-                setShowOnStream: jest.fn()
-            },
-            actions: {
-                beginNextMatch: jest.fn(),
-                setNextRound: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useNextRoundStore().$state = {
+            nextRound: {
+                teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
+                teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
+                round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
+                showOnStream: true,
+                games: []
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createNextRoundStore();
         const wrapper = mount(ManualTeamPicker, {
             global: {
-                plugins: [[store, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -44,10 +38,9 @@ describe('ManualTeamPicker', () => {
     });
 
     it('changes button color when data is changed', async () => {
-        const store = createNextRoundStore();
         const wrapper = mount(ManualTeamPicker, {
             global: {
-                plugins: [[store, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -58,11 +51,11 @@ describe('ManualTeamPicker', () => {
     });
 
     it('handles updating data', async () => {
-        const store = createNextRoundStore();
-        jest.spyOn(store, 'dispatch');
+        const store = useNextRoundStore();
+        store.setNextRound = jest.fn();
         const wrapper = mount(ManualTeamPicker, {
             global: {
-                plugins: [[store, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -70,7 +63,7 @@ describe('ManualTeamPicker', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.dispatch).toHaveBeenCalledWith('setNextRound', {
+        expect(store.setNextRound).toHaveBeenCalledWith({
             teamAId: '999999',
             teamBId: '345345',
             roundId: '0387'
@@ -78,10 +71,9 @@ describe('ManualTeamPicker', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const store = createNextRoundStore();
         const wrapper = mount(ManualTeamPicker, {
             global: {
-                plugins: [[store, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const event = new Event(null);

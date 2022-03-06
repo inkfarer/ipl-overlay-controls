@@ -3,14 +3,17 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useNextRoundStore } from '../../store/nextRoundStore';
 
 jest.mock('../../helpers/dialogHelper');
 
 describe('CreatePredictionDialog', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplInput: true,
         FontAwesomeIcon: true,
@@ -18,28 +21,21 @@ describe('CreatePredictionDialog', () => {
         IplDialogTitle: true
     };
 
-    const mockCreatePrediction = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createNextRoundStore() {
-        return createStore<NextRoundStore>({
-            state: {
-                nextRound: {
-                    teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
-                    teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
-                    showOnStream: true,
-                    games: []
-                }
-            },
-            mutations: {
-                setShowOnStream: jest.fn()
-            },
-            actions: {
-                beginNextMatch: jest.fn(),
-                setNextRound: jest.fn()
+        useNextRoundStore().$state = {
+            nextRound: {
+                teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
+                teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
+                round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
+                showOnStream: true,
+                games: []
             }
-        });
-    }
+        };
+    });
+
+    const mockCreatePrediction = jest.fn();
 
     function createPredictionDataStore() {
         return createStore<PredictionDataStore>({
@@ -88,10 +84,9 @@ describe('CreatePredictionDialog', () => {
     it('matches snapshot when existing prediction is locked', () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -101,10 +96,9 @@ describe('CreatePredictionDialog', () => {
     it('matches snapshot when existing prediction is active', () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -114,10 +108,9 @@ describe('CreatePredictionDialog', () => {
     it('matches snapshot', () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -127,10 +120,9 @@ describe('CreatePredictionDialog', () => {
     it('disables submit button if any fields are invalid', async () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -143,10 +135,9 @@ describe('CreatePredictionDialog', () => {
     it('handles creating prediction and closes dialog on create button click', async () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -167,10 +158,9 @@ describe('CreatePredictionDialog', () => {
     it('resets data to defaults on reset button click', async () => {
         const predictionDataStore = createPredictionDataStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -189,10 +179,9 @@ describe('CreatePredictionDialog', () => {
 
     it('closes dialog on dialog title close event', () => {
         const predictionDataStore = createPredictionDataStore();
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
