@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import {
     IplButton,
     IplInput,
@@ -81,27 +81,27 @@ export default defineComponent({
         const isFocused = ref(false);
         const isChanged = computed(() => !isEqual(
             pick(settings.value, [ 'guildID' ]),
-            pick(store.state.radiaSettings, [ 'guildID' ])
+            pick(store.radiaSettings, [ 'guildID' ])
         ));
-        const settings: Ref<RadiaSettings> = ref(cloneDeep(store.state.radiaSettings));
+        const settings: Ref<RadiaSettings> = ref(cloneDeep(store.radiaSettings));
         const validators = {
             'guild-id': validator(() => settings.value.guildID, true, minLength(17), numeric)
         };
         provideValidators(validators);
 
-        store.watch(store => store.radiaSettings.guildID, newValue => {
+        watch(() => store.radiaSettings.guildID, newValue => {
             if (!isFocused.value) {
                 settings.value.guildID = newValue;
             }
         });
 
-        store.watch(store => store.radiaSettings.updateOnImport, newValue => {
+        watch(() => store.radiaSettings.updateOnImport, newValue => {
             settings.value.updateOnImport = newValue;
         });
 
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
-            radiaEnabled: computed(() => store.state.radiaSettings.enabled),
+            radiaEnabled: computed(() => store.radiaSettings.enabled),
             focused: isFocused,
             handleFocusEvent(event: boolean) {
                 isFocused.value = event;
@@ -112,19 +112,19 @@ export default defineComponent({
             settings,
             handleUpdate() {
                 if (isChanged.value) {
-                    store.commit('setRadiaSettings', { newValue: settings.value });
+                    store.setRadiaSettings({ newValue: settings.value });
                 }
             },
             setUpdateOnImport(value: boolean) {
-                store.commit('setUpdateOnImport', value);
+                store.setUpdateOnImport(value);
             },
             async attemptRadiaReconnect(): Promise<void> {
-                return store.dispatch('attemptRadiaConnection');
+                return store.attemptRadiaConnection();
             },
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                settings.value.guildID = store.state.radiaSettings.guildID;
+                settings.value.guildID = store.radiaSettings.guildID;
             }
         };
     }

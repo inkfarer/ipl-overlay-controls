@@ -175,7 +175,7 @@ export default defineComponent({
     setup() {
         const activeRoundStore = useActiveRoundStore();
         const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
+        const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
 
         const editColorsEnabled = ref(false);
 

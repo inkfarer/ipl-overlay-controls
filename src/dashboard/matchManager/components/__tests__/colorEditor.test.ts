@@ -1,11 +1,10 @@
 import ColorEditor from '../colorEditor.vue';
-import { createStore } from 'vuex';
 import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('ColorEditor', () => {
     let pinia: TestingPinia;
@@ -65,26 +64,19 @@ describe('ColorEditor', () => {
             },
             swapColorsInternally: false
         };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
+            }
+        };
     });
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
     it('matches snapshot', () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -93,14 +85,10 @@ describe('ColorEditor', () => {
 
     it('matches snapshot when using custom color', () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -110,13 +98,9 @@ describe('ColorEditor', () => {
     it('sets color on option click', async () => {
         const store = useActiveRoundStore();
         store.setActiveColor = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -137,14 +121,10 @@ describe('ColorEditor', () => {
 
     it('has expected button color when custom color is changed', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -157,14 +137,10 @@ describe('ColorEditor', () => {
     it('updates active color on custom color update button click', () => {
         const store = useActiveRoundStore();
         store.setActiveColor = jest.fn();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -187,14 +163,10 @@ describe('ColorEditor', () => {
 
     it('reverts changes on custom color update button right click', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
         const event = new Event(null);
@@ -212,15 +184,11 @@ describe('ColorEditor', () => {
 
     it('swaps custom colors when swapColorsInternally is changed', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         store.swapColorsInternally = false;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
         const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');
@@ -238,14 +206,10 @@ describe('ColorEditor', () => {
 
     it('handles team colors changing in store', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         store.activeRound.activeColor.isCustom = true;
         const wrapper = mount(ColorEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
         const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');

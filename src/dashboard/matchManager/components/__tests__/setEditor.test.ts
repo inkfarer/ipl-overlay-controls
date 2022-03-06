@@ -1,16 +1,16 @@
 import SetEditor from '../setEditor.vue';
-import { createStore } from 'vuex';
 import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('setEditor', () => {
     let pinia: TestingPinia;
+
     config.global.stubs = {
         IplButton: true,
         IplInput: true,
@@ -103,26 +103,19 @@ describe('setEditor', () => {
             },
             swapColorsInternally: false
         };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
+            }
+        };
     });
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
     it('matches snapshot', () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -178,13 +171,9 @@ describe('setEditor', () => {
                 }
             },
         ];
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -192,13 +181,9 @@ describe('setEditor', () => {
     });
 
     it('matches snapshot when editing colors', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -211,13 +196,9 @@ describe('setEditor', () => {
     it('handles round reset', () => {
         const store = useActiveRoundStore();
         store.resetActiveRound = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -229,13 +210,9 @@ describe('setEditor', () => {
     it('handles round update', () => {
         const store = useActiveRoundStore();
         store.updateActiveGames = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -293,13 +270,9 @@ describe('setEditor', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
         const event = new Event(null);
@@ -318,13 +291,10 @@ describe('setEditor', () => {
     });
 
     it('has expected button color after changing round data', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
                 plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                    pinia ]
             }
         });
         const updateButton = wrapper.getComponent('[data-test="update-button"]');
@@ -339,13 +309,9 @@ describe('setEditor', () => {
     });
 
     it('handles stage change', () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -356,13 +322,9 @@ describe('setEditor', () => {
     });
 
     it('handles mode change', () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -375,13 +337,9 @@ describe('setEditor', () => {
     it('handles winner change to none', async () => {
         const store = useActiveRoundStore();
         store.setWinnerForIndex = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -394,13 +352,9 @@ describe('setEditor', () => {
     it('handles winner change to alpha', async () => {
         const store = useActiveRoundStore();
         store.setWinnerForIndex = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -413,13 +367,9 @@ describe('setEditor', () => {
     it('handles winner change to bravo', async () => {
         const store = useActiveRoundStore();
         store.setWinnerForIndex = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -430,13 +380,9 @@ describe('setEditor', () => {
     });
 
     it('handles color change', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -456,13 +402,9 @@ describe('setEditor', () => {
     });
 
     it('handles custom color change', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -484,13 +426,9 @@ describe('setEditor', () => {
     });
 
     it('handles game color being set to custom', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -510,13 +448,9 @@ describe('setEditor', () => {
     });
 
     it('handles game color being set off custom', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -538,13 +472,9 @@ describe('setEditor', () => {
     it('handles game colors getting swapped', async () => {
         const store = useActiveRoundStore();
         store.swapRoundColor = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -556,13 +486,9 @@ describe('setEditor', () => {
 
     it('does not revert local changes on store update', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -630,13 +556,9 @@ describe('setEditor', () => {
 
     it('matches snapshot when active round updates to one with less games than the previous one', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -684,13 +606,9 @@ describe('setEditor', () => {
 
     it('matches snapshot when active round updates to one with more games than the previous one', async () => {
         const store = useActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 

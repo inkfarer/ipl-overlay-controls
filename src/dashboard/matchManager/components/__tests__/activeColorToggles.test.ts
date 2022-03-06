@@ -1,12 +1,11 @@
 import ActiveColorToggles from '../activeColorToggles.vue';
-import { createStore } from 'vuex';
 import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('ActiveColorToggles', () => {
     let pinia: TestingPinia;
@@ -90,26 +89,19 @@ describe('ActiveColorToggles', () => {
             },
             swapColorsInternally: false
         };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
+            }
+        };
     });
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
     it('matches snapshot', async () => {
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
         await flushPromises();
@@ -120,13 +112,9 @@ describe('ActiveColorToggles', () => {
     it('matches snapshot with swapped colors', async () => {
         const store = useActiveRoundStore();
         store.swapColorsInternally = true;
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
         await flushPromises();
@@ -137,13 +125,9 @@ describe('ActiveColorToggles', () => {
     it('sets color when clicking previous color toggle', async () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.switchToPreviousColor = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -156,13 +140,9 @@ describe('ActiveColorToggles', () => {
     it('sets color when clicking next color toggle', async () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.switchToNextColor = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -175,13 +155,9 @@ describe('ActiveColorToggles', () => {
     it('swaps colors on swap button click', () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.swapColors = jest.fn();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 

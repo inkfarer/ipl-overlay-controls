@@ -1,11 +1,10 @@
 import RoundEditor from '../roundEditor.vue';
-import { createStore } from 'vuex';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('RoundEditor', () => {
     let pinia: TestingPinia;
@@ -43,27 +42,20 @@ describe('RoundEditor', () => {
             },
             matchStore: {}
         };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
+            }
+        };
     });
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
     it('matches snapshot', () => {
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -87,14 +79,10 @@ describe('RoundEditor', () => {
     });
 
     it('matches snapshot when creating new round', () => {
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -122,14 +110,10 @@ describe('RoundEditor', () => {
     it('updates round on update button click', async () => {
         const store = useTournamentDataStore();
         store.updateRound = jest.fn().mockResolvedValue({});
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -167,14 +151,10 @@ describe('RoundEditor', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -211,14 +191,10 @@ describe('RoundEditor', () => {
     it('updates round on update button click if round is new', async () => {
         const store = useTournamentDataStore();
         store.insertRound = jest.fn().mockResolvedValue({ id: 'new-round-id' });
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -259,14 +235,10 @@ describe('RoundEditor', () => {
     it('removes round on remove button click', async () => {
         const store = useTournamentDataStore();
         store.removeRound = jest.fn();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -294,14 +266,10 @@ describe('RoundEditor', () => {
     it('cancels new round creation on remove button click when round is new', async () => {
         const store = useTournamentDataStore();
         store.removeRound = jest.fn();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -328,14 +296,10 @@ describe('RoundEditor', () => {
     });
 
     it('changes button color when data is changed and round is already saved', async () => {
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    pinia,
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {

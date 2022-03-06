@@ -1,10 +1,8 @@
 import { NodeCGBrowser } from 'nodecg/browser';
 import { LastFmSettings, RadiaSettings, RuntimeConfig } from 'schemas';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
 import { GameVersion } from 'types/enums/gameVersion';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
+import { defineStore } from 'pinia';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -18,8 +16,8 @@ export interface SettingsStore {
     runtimeConfig: RuntimeConfig
 }
 
-export const settingsStore = createStore<SettingsStore>({
-    state: {
+export const useSettingsStore = defineStore('settings', {
+    state: () => ({
         lastFmSettings: {},
         radiaSettings: {
             guildID: null,
@@ -27,33 +25,22 @@ export const settingsStore = createStore<SettingsStore>({
             updateOnImport: null
         },
         runtimeConfig: null
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        },
-        setLastFmSettings(store, { newValue }: { newValue: LastFmSettings }): void {
+    } as SettingsStore),
+    actions: {
+        setLastFmSettings({ newValue }: { newValue: LastFmSettings }): void {
             lastFmSettings.value = newValue;
         },
-        setRadiaSettings(store, { newValue }: { newValue: RadiaSettings }): void {
+        setRadiaSettings({ newValue }: { newValue: RadiaSettings }): void {
             radiaSettings.value = newValue;
         },
-        setUpdateOnImport(store, updateOnImport: boolean): void {
+        setUpdateOnImport(updateOnImport: boolean): void {
             radiaSettings.value.updateOnImport = updateOnImport;
-        }
-    },
-    actions: {
+        },
         async attemptRadiaConnection(): Promise<void> {
             return nodecg.sendMessage('retryRadiaAvailabilityCheck');
         },
-        setGameVersion(store, newValue: GameVersion): Promise<SetGameVersionResponse> {
+        setGameVersion(newValue: GameVersion): Promise<SetGameVersionResponse> {
             return nodecg.sendMessage('setGameVersion', { version: newValue });
         }
     }
 });
-
-export const settingsStoreKey: InjectionKey<Store<SettingsStore>> = Symbol();
-
-export function useSettingsStore(): Store<SettingsStore> {
-    return useStore(settingsStoreKey);
-}

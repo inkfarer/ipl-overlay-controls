@@ -92,7 +92,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const store = useTournamentDataStore();
         const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
+        const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
         const roundInternal: Ref<Round> = ref(null);
 
         watch(() => props.round, (newValue, oldValue) => {
