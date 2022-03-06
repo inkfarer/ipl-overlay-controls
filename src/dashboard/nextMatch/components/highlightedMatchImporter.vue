@@ -32,7 +32,7 @@ export default defineComponent({
 
     setup() {
         const store = useHighlightedMatchStore();
-        const tournamentDataSource = computed(() => store.state.tournamentData.meta.source as TournamentDataSource);
+        const tournamentDataSource = computed(() => store.tournamentData.meta.source as TournamentDataSource);
         const selectedMatchOptions: Ref<SelectOptions> = ref([]);
 
         return {
@@ -50,7 +50,7 @@ export default defineComponent({
                 switch (tournamentDataSource.value) {
                     case TournamentDataSource.BATTLEFY:
                         return [
-                            ...(store.state.tournamentData.stages
+                            ...(store.tournamentData.stages
                                 .filter(stage => [BracketType.SWISS,
                                     BracketType.DOUBLE_ELIMINATION,
                                     BracketType.SINGLE_ELIMINATION,
@@ -63,7 +63,7 @@ export default defineComponent({
                         ];
                     case TournamentDataSource.SMASHGG:
                         return [
-                            ...(store.state.tournamentData.meta.sourceSpecificData.smashgg.streams.map(stream => ({
+                            ...(store.tournamentData.meta.sourceSpecificData.smashgg.streams.map(stream => ({
                                 value: stream.id.toString(),
                                 name: stream.streamName
                             }))),
@@ -75,7 +75,7 @@ export default defineComponent({
             }),
             selectedMatchOptions,
             async handleImport() {
-                return store.dispatch('getHighlightedMatches', { options: selectedMatchOptions.value });
+                return store.getHighlightedMatches({ options: selectedMatchOptions.value });
             },
             importDisabled: computed(() => selectedMatchOptions.value?.length <= 0)
         };

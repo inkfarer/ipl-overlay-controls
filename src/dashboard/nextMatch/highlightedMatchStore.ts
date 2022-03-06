@@ -1,14 +1,9 @@
 import { NodeCGBrowser } from 'nodecg/browser';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
-import {
-    HighlightedMatches,
-    TournamentData
-} from 'schemas';
+import { HighlightedMatches, TournamentData } from 'schemas';
 import { SelectOptions } from '../types/select';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { SetNextRoundRequest } from 'types/messages/rounds';
+import { defineStore } from 'pinia';
 
 const highlightedMatches = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -20,18 +15,13 @@ export interface HighlightedMatchStore {
     tournamentData: TournamentData;
 }
 
-export const highlightedMatchStore = createStore<HighlightedMatchStore>({
-    state: {
+export const useHighlightedMatchStore = defineStore('highlightedMatches', {
+    state: () => ({
         highlightedMatches: null,
         tournamentData: null
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        }
-    },
+    } as HighlightedMatchStore),
     actions: {
-        async getHighlightedMatches(store, { options }: { options: SelectOptions }): Promise<void> {
+        async getHighlightedMatches({ options }: { options: SelectOptions }): Promise<void> {
             const getAllMatches = options.some(option => option.value === 'all');
 
             if (getAllMatches) {
@@ -39,7 +29,7 @@ export const highlightedMatchStore = createStore<HighlightedMatchStore>({
             } else {
                 const values = options.map(option => option.value);
 
-                switch (store.state.tournamentData.meta.source) {
+                switch (this.tournamentData.meta.source) {
                     case TournamentDataSource.BATTLEFY:
                         return nodecg.sendMessage('getHighlightedMatches', {
                             getAllMatches: false,
@@ -51,18 +41,12 @@ export const highlightedMatchStore = createStore<HighlightedMatchStore>({
                             streamIDs: values.map(value => parseInt(value))
                         });
                     default:
-                        throw new Error(`Cannot import data from source '${store.state.tournamentData.meta.source}'`);
+                        throw new Error(`Cannot import data from source '${this.tournamentData.meta.source}'`);
                 }
             }
         },
-        async setNextMatch(store, data: SetNextRoundRequest): Promise<void> {
+        async setNextMatch(data: SetNextRoundRequest): Promise<void> {
             return nodecg.sendMessage('setNextRound', data);
         }
     }
 });
-
-export const highlightedMatchStoreKey: InjectionKey<Store<HighlightedMatchStore>> = Symbol();
-
-export function useHighlightedMatchStore(): Store<HighlightedMatchStore> {
-    return useStore(highlightedMatchStoreKey);
-}

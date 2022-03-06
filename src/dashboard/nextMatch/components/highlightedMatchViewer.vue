@@ -70,18 +70,18 @@ export default defineComponent({
 
         watchEffect(() => {
             const nextRound = nextRoundStore.nextRound;
-            const equalMatch = highlightedMatchStore.state.highlightedMatches.find(match =>
+            const equalMatch = highlightedMatchStore.highlightedMatches.find(match =>
                 match.teamA.id === nextRound.teamA.id && match.teamB.id === nextRound.teamB.id);
 
             if (equalMatch) {
                 selectedMatch.value = equalMatch.meta.id;
             } else {
-                selectedMatch.value = highlightedMatchStore.state.highlightedMatches[0]?.meta?.id ?? null;
+                selectedMatch.value = highlightedMatchStore.highlightedMatches[0]?.meta?.id ?? null;
             }
         });
 
         const selectedMatchData = computed(() =>
-            highlightedMatchStore.state.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
+            highlightedMatchStore.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
 
         watch(() => nextRoundStore.nextRound.round.id, newId => {
             selectedRound.value = newId;
@@ -92,10 +92,10 @@ export default defineComponent({
             selectedRoundData,
             formatPlayType: PlayTypeHelper.toPrettyString,
             matchOptions: computed(() => {
-                const isAllSameStage = highlightedMatchStore.state.highlightedMatches.every(match =>
-                    match.meta.stageName === highlightedMatchStore.state.highlightedMatches[0].meta.stageName);
+                const isAllSameStage = highlightedMatchStore.highlightedMatches.every(match =>
+                    match.meta.stageName === highlightedMatchStore.highlightedMatches[0].meta.stageName);
 
-                return highlightedMatchStore.state.highlightedMatches.map(stage => ({
+                return highlightedMatchStore.highlightedMatches.map(stage => ({
                     value: stage.meta.id,
                     name: isAllSameStage ? stage.meta.name : `${stage.meta.name} | ${stage.meta.stageName}`
                 }));
@@ -109,7 +109,7 @@ export default defineComponent({
                 || nextRoundStore.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
                 || nextRoundStore.nextRound.round.id !== selectedRound.value ),
             async handleSetNextMatch() {
-                await highlightedMatchStore.dispatch('setNextMatch', {
+                await highlightedMatchStore.setNextMatch({
                     teamAId: selectedMatchData.value.teamA.id,
                     teamBId: selectedMatchData.value.teamB.id,
                     roundId: selectedRound.value
