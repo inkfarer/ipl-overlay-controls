@@ -30,6 +30,7 @@
         },
         "roundGame": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "stage": {
                     "type": "string"

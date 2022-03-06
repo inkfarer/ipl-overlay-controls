@@ -5,12 +5,16 @@ import { MatchTeam } from '../../types/battlefyStage';
 import { HighlightedMatches } from '../../../types/schemas';
 import { HighlightedMatchMetaData } from '../../../types/highlightedMatch';
 import { Team } from '../../../types/team';
+import { PlayType } from '../../../types/enums/playType';
+import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 
-export function mapBattlefyStagesToTournamentData(stages: Stage[]): { name: string; id: string; type: BracketType}[] {
+export function mapBattlefyStagesToTournamentData(stages: Stage[]):
+    { name: string; id: string; type: BracketType, playType: PlayType}[] {
     return stages.map(stage => ({
         name: stage.name,
         id: stage._id,
-        type: BracketTypeHelper.fromBattlefy(stage.bracket.type, stage.bracket.style)
+        type: BracketTypeHelper.fromBattlefy(stage.bracket.type, stage.bracket.style),
+        playType: PlayTypeHelper.fromBattlefySeriesStyle(stage.bracket.seriesStyle)
     }));
 }
 
@@ -53,7 +57,8 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
                 stageName: stage.name,
                 round: match.roundNumber,
                 match: match.matchNumber,
-                name: matchName
+                name: matchName,
+                playType: PlayTypeHelper.fromBattlefySeriesStyle(stage.bracket.seriesStyle)
             };
             // If the completedAt exists then we add it to the metadata
             if (!isEmpty(match.completedAt)) {

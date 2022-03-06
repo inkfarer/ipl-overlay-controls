@@ -7,6 +7,7 @@ import {
     SmashggTournamentStreamQueueSlot
 } from 'types/smashgg';
 import isEmpty from 'lodash/isEmpty';
+import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 
 export async function getSmashGGEvents(slug: string, token: string): Promise<SmashggEvent[]> {
     const query = `query Events($slug: String!) {
@@ -232,6 +233,7 @@ export async function getSmashGGStreamQueue(
                     id
                     identifier
                     round
+                    setGamesType
                     event {
                         id
                     }
@@ -301,7 +303,8 @@ export async function getSmashGGStreamQueue(
                             stageName: set.phaseGroup.displayIdentifier,
                             round: set.round,
                             match: 0,
-                            name: `Set ${set.identifier} - Round ${set.round} - Pool ${set.phaseGroup.displayIdentifier} - ${set.phaseGroup.phase.name}`
+                            name: `Set ${set.identifier} - Round ${set.round} - Pool ${set.phaseGroup.displayIdentifier} - ${set.phaseGroup.phase.name}`,
+                            playType: PlayTypeHelper.fromSmashggSetGamesType(set.setGamesType)
                         },
                         teamA: streamQueueTeamCreator(set.slots[0]),
                         teamB: streamQueueTeamCreator(set.slots[1])

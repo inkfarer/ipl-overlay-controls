@@ -29,7 +29,12 @@ const router = nodecg.Router();
 
         switch (req.body.jsonType) {
             case 'rounds': {
-                updateRounds(handleRoundData(content, runtimeConfig.value.gameVersion as GameVersion));
+                try {
+                    updateRounds(handleRoundData(content, runtimeConfig.value.gameVersion as GameVersion));
+                } catch (e) {
+                    nodecg.log.error('Failed to update round data:', e);
+                    return res.status(400).send('Got an error while parsing round data.');
+                }
                 break;
             }
             case 'teams': {
@@ -37,7 +42,7 @@ const router = nodecg.Router();
                     const resolvedTeams = await parseUploadedTeamData(content, file.name);
                     updateTournamentDataReplicants(resolvedTeams);
                 } catch (e) {
-                    nodecg.log.error(`Team data parsing error: ${e}`);
+                    nodecg.log.error('Failed to parse team data:', e);
                     return res.status(400).send('Got an error while parsing team data.');
                 }
                 break;

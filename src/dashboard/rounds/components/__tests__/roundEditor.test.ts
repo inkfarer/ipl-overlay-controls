@@ -5,6 +5,7 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { settingsStoreKey } from '../../../settings/settingsStore';
+import Mock = jest.Mock;
 
 describe('RoundEditor', () => {
     config.global.stubs = {
@@ -54,7 +55,8 @@ describe('RoundEditor', () => {
             },
             actions: {
                 updateRound: mockUpdateRound,
-                removeRound: mockRemoveRound
+                removeRound: mockRemoveRound,
+                insertRound: jest.fn()
             }
         });
     }
@@ -128,6 +130,7 @@ describe('RoundEditor', () => {
     it('updates round on update button click', async () => {
         mockUpdateRound.mockResolvedValue({});
         const store = createTournamentDataStore();
+        jest.spyOn(store, 'dispatch');
         const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
@@ -159,7 +162,7 @@ describe('RoundEditor', () => {
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
+        expect(store.dispatch).toHaveBeenCalledWith('updateRound', {
             id: 'round-456',
             roundName: 'New Round',
             type: PlayType.PLAY_ALL,
@@ -216,8 +219,9 @@ describe('RoundEditor', () => {
     });
 
     it('updates round on update button click if round is new', async () => {
-        mockUpdateRound.mockResolvedValue({ id: 'new-round-id' });
         const store = createTournamentDataStore();
+        jest.spyOn(store, 'dispatch');
+        (store.dispatch as Mock).mockResolvedValue({ id: 'new-round-id' });
         const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
@@ -249,7 +253,7 @@ describe('RoundEditor', () => {
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(mockUpdateRound).toHaveBeenCalledWith(expect.any(Object), {
+        expect(store.dispatch).toHaveBeenCalledWith('insertRound', {
             roundName: 'New Round',
             type: PlayType.PLAY_ALL,
             games: [

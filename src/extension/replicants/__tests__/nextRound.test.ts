@@ -13,16 +13,22 @@ describe('nextRound', () => {
 
     describe('setNextRound', () => {
         it('sets teams', () => {
-            messageListeners.setNextRound({ teamAId: '345234', teamBId: '452523' });
+            const ack = jest.fn();
+
+            messageListeners.setNextRound({ teamAId: '345234', teamBId: '452523' }, ack);
 
             expect(mockNextRoundHelper.setNextRoundTeams).toHaveBeenCalledWith('345234', '452523');
+            expect(ack).toHaveBeenCalledWith(null);
         });
 
         it('sets rounds if given', () => {
-            messageListeners.setNextRound({ teamAId: '365244', teamBId: '425235', roundId: '23424' });
+            const ack = jest.fn();
+
+            messageListeners.setNextRound({ teamAId: '365244', teamBId: '425235', roundId: '23424' }, ack);
 
             expect(mockNextRoundHelper.setNextRoundTeams).toHaveBeenCalledWith('365244', '425235');
             expect(mockNextRoundHelper.setNextRoundGames).toHaveBeenCalledWith('23424');
+            expect(ack).toHaveBeenCalledWith(null);
         });
 
         it('handles errors', () => {

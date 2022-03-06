@@ -98,7 +98,8 @@ export interface SmashggTournamentStreamQueueResponse {
                 sets: {
                     id: number
                     identifier: string
-                    round: number
+                    round: number,
+                    setGamesType: number,
                     event: {
                         id: number
                     }

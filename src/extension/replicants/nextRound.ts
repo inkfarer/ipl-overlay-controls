@@ -14,4 +14,6 @@ nodecg.listenFor('setNextRound', (data: SetNextRoundRequest, ack: UnhandledListe
     } catch (e) {
         return ack(e);
     }
+
+    return ack(null);
 });

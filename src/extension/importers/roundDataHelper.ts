@@ -1,18 +1,18 @@
 import { RoundStore } from 'schemas';
-import { GameWinner } from 'types/enums/gameWinner';
 import { generateId } from '../../helpers/generateId';
 import { ImporterRound } from 'types/importer';
 import { PlayType } from '../../types/enums/playType';
 import { GameVersion } from '../../types/enums/gameVersion';
 import { perGameData } from '../../helpers/gameData/gameData';
 import { toLower } from 'lodash';
+import { RoundGame } from '../../types/schemas';
 
 export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersion): RoundStore {
     const result: RoundStore = {};
 
     for (let i = 0; i < rounds.length; i++) {
         const round = rounds[i];
-        const games = [];
+        const games: RoundGame[] = [];
         const roundGames = round.games == null ? round.maps : round.games;
 
         if (!roundGames) continue;
@@ -23,8 +23,7 @@ export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersio
 
             games.push({
                 stage: normalizeStageName(stageName, gameVersion),
-                mode: normalizeModeName(game.mode, gameVersion),
-                winner: GameWinner.NO_WINNER
+                mode: normalizeModeName(game.mode, gameVersion)
             });
         }
 

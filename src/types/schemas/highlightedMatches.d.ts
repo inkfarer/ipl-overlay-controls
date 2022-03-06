@@ -28,6 +28,7 @@ export type HighlightedMatches = {
 		 * Match number from provider
 		 */
 		match?: number;
+		playType?: 'BEST_OF' | 'PLAY_ALL';
 	};
 	teamA: {
 		id: string;
