@@ -1,47 +1,20 @@
 import CasterEditor from '../casterEditor.vue';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { CasterStore, casterStoreKey } from '../../../store/casterStore';
+import { useCasterStore } from '../../../store/casterStore';
 import { reactive } from 'vue';
+import { createTestingPinia } from '@pinia/testing';
 
 describe('CasterEditor', () => {
-    const mockUpdateCaster = jest.fn();
-    const mockSaveUncommittedCaster = jest.fn();
-    const mockRemoveUncommittedCaster = jest.fn();
-    const mockRemoveCaster = jest.fn();
-
     config.global.stubs = {
         IplInput: true,
         IplButton: true
     };
 
-    function createCasterStore() {
-        return createStore<CasterStore>({
-            state: {
-                casters: {},
-                uncommittedCasters: {},
-                radiaSettings: {
-                    guildID: null,
-                    enabled: null,
-                    updateOnImport: null
-                }
-            },
-            mutations: {
-                updateCaster: mockUpdateCaster,
-                removeUncommittedCaster: mockRemoveUncommittedCaster
-            },
-            actions: {
-                saveUncommittedCaster: mockSaveUncommittedCaster,
-                removeCaster: mockRemoveCaster
-            }
-        });
-    }
-
     it('fills inputs with caster data', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' },
@@ -55,11 +28,11 @@ describe('CasterEditor', () => {
     });
 
     it('updates caster data provided in props', async () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' });
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster,
@@ -79,11 +52,11 @@ describe('CasterEditor', () => {
     });
 
     it('does not update caster data if any input is focused', async () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' });
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster,
@@ -100,10 +73,10 @@ describe('CasterEditor', () => {
     });
 
     it('has expected label and color on update button', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' },
@@ -117,10 +90,10 @@ describe('CasterEditor', () => {
     });
 
     it('has expected label and color on update button if data is uncommitted', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' },
@@ -135,10 +108,10 @@ describe('CasterEditor', () => {
     });
 
     it('has expected label and color on update button if data is updated', async () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' },
@@ -155,10 +128,10 @@ describe('CasterEditor', () => {
     });
 
     it('displays expected badges if caster is uncommitted', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them' },
@@ -174,10 +147,10 @@ describe('CasterEditor', () => {
     });
 
     it('displays expected badges if caster is committed', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -194,10 +167,12 @@ describe('CasterEditor', () => {
 
     describe('update caster button', () => {
         it('sends update to store on click if caster is committed', () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.updateCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -208,17 +183,17 @@ describe('CasterEditor', () => {
 
             wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-            expect(mockUpdateCaster).toHaveBeenCalledWith(expect.any(Object), {
+            expect(store.updateCaster).toHaveBeenCalledWith({
                 id: 'casterid',
                 newValue: { name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' }
             });
         });
 
         it('reverts changes on right click if caster is committed', async () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -244,10 +219,12 @@ describe('CasterEditor', () => {
         });
 
         it('saves to store and emits event on click if caster is uncommitted', async () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.saveUncommittedCaster = jest.fn().mockResolvedValue('new-caster-id');
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -255,12 +232,11 @@ describe('CasterEditor', () => {
                     uncommitted: true
                 }
             });
-            mockSaveUncommittedCaster.mockResolvedValue('new-caster-id');
 
             wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
             await flushPromises();
 
-            expect(mockSaveUncommittedCaster).toHaveBeenCalledWith(expect.any(Object), {
+            expect(store.saveUncommittedCaster).toHaveBeenCalledWith({
                 id: 'casterid',
                 caster: { name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' }
             });
@@ -270,10 +246,10 @@ describe('CasterEditor', () => {
         });
 
         it('does nothing on right click if caster is uncommitted', async () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -299,15 +275,16 @@ describe('CasterEditor', () => {
         });
 
         it('is disabled if there are three or more casters and the given caster is uncommitted', () => {
-            const store = createCasterStore();
-            store.state.casters = {
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.casters = {
                 a: {},
                 b: {},
                 c: {}
             };
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -320,15 +297,16 @@ describe('CasterEditor', () => {
         });
 
         it('is not disabled if there are three or more casters and the given caster is committed', () => {
-            const store = createCasterStore();
-            store.state.casters = {
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.casters = {
                 a: {},
                 b: {},
                 c: {}
             };
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -343,10 +321,12 @@ describe('CasterEditor', () => {
 
     describe('remove caster button', () => {
         it('sends remove event to store if uncommitted', () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.removeUncommittedCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -357,14 +337,16 @@ describe('CasterEditor', () => {
 
             wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
 
-            expect(mockRemoveUncommittedCaster).toHaveBeenCalledWith(expect.any(Object), 'casterid');
+            expect(store.removeUncommittedCaster).toHaveBeenCalledWith('casterid');
         });
 
         it('sends remove event to store if committed', () => {
-            const store = createCasterStore();
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            store.removeCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 global: {
-                    plugins: [ [ store, casterStoreKey ] ]
+                    plugins: [ pinia ]
                 },
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
@@ -375,15 +357,15 @@ describe('CasterEditor', () => {
 
             wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
 
-            expect(mockRemoveCaster).toHaveBeenCalledWith(expect.any(Object), 'casterid');
+            expect(store.removeCaster).toHaveBeenCalledWith('casterid');
         });
     });
 
     describe('formatters', () => {
-        const store = createCasterStore();
+        const pinia = createTestingPinia();
         const wrapper = mount(CasterEditor, {
             global: {
-                plugins: [ [ store, casterStoreKey ] ]
+                plugins: [ pinia ]
             },
             props: {
                 caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },

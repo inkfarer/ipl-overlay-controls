@@ -18,7 +18,9 @@ export async function setUpPiniaReplicants(
 ): Promise<void> {
     reps.forEach(rep => {
         rep.on('change', newValue => {
-            store.$patch({ [rep.name]: cloneDeep(newValue) });
+            store.$patch((state: Record<string, unknown>) => {
+                state[rep.name] = cloneDeep(newValue);
+            });
         });
     });
     await NodeCG.waitForReplicants(...Object.values(reps));

@@ -2,9 +2,10 @@ import MatchManager from '../matchManager.vue';
 import { config, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { ObsStatus } from 'types/enums/ObsStatus';
-import { casterStoreKey } from '../../store/casterStore';
 import { obsStoreKey } from '../../store/obsStore';
 import { messageListeners } from '../../__mocks__/mockNodecg';
+import { useCasterStore } from '../../store/casterStore';
+import { createTestingPinia } from '@pinia/testing';
 
 describe('MatchManager', () => {
     config.global.stubs = {
@@ -22,14 +23,6 @@ describe('MatchManager', () => {
         ActiveRosterDisplay: true
     };
 
-    function createCasterStore() {
-        return createStore({
-            actions: {
-                showCasters: jest.fn()
-            }
-        });
-    }
-
     function createObsStore() {
         return createStore({
             state: {
@@ -45,13 +38,13 @@ describe('MatchManager', () => {
     }
 
     it.each(Object.values(ObsStatus))('matches snapshot if obs status is %s', status => {
-        const casterStore = createCasterStore();
+        const pinia = createTestingPinia();
         const obsStore = createObsStore();
         obsStore.state.obsData.status = status;
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [casterStore, casterStoreKey],
+                    [pinia],
                     [obsStore, obsStoreKey]
                 ]
             }
@@ -61,13 +54,14 @@ describe('MatchManager', () => {
     });
 
     it('handles showing casters', () => {
-        const casterStore = createCasterStore();
-        jest.spyOn(casterStore, 'dispatch');
+        const pinia = createTestingPinia();
+        const casterStore = useCasterStore();
+        jest.spyOn(casterStore, 'showCasters');
         const obsStore = createObsStore();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [casterStore, casterStoreKey],
+                    [pinia],
                     [obsStore, obsStoreKey]
                 ]
             }
@@ -75,18 +69,17 @@ describe('MatchManager', () => {
 
         wrapper.getComponent('[data-test="show-casters-button"]').vm.$emit('click');
 
-        expect(casterStore.dispatch).toHaveBeenCalledWith('showCasters');
+        expect(casterStore.showCasters).toHaveBeenCalled();
     });
 
     it('disables showing casters when message to show casters is received from nodecg and enables it after a delay', async () => {
+        const pinia = createTestingPinia();
         jest.useFakeTimers();
-        const casterStore = createCasterStore();
-        jest.spyOn(casterStore, 'dispatch');
         const obsStore = createObsStore();
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [casterStore, casterStoreKey],
+                    [pinia],
                     [obsStore, obsStoreKey]
                 ]
             }
@@ -106,13 +99,13 @@ describe('MatchManager', () => {
     });
 
     it('handles starting a game', () => {
-        const casterStore = createCasterStore();
+        const pinia = createTestingPinia();
         const obsStore = createObsStore();
         jest.spyOn(obsStore, 'dispatch');
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [casterStore, casterStoreKey],
+                    [pinia],
                     [obsStore, obsStoreKey]
                 ]
             }
@@ -124,13 +117,13 @@ describe('MatchManager', () => {
     });
 
     it('handles ending a game', () => {
-        const casterStore = createCasterStore();
+        const pinia = createTestingPinia();
         const obsStore = createObsStore();
         jest.spyOn(obsStore, 'dispatch');
         const wrapper = mount(MatchManager, {
             global: {
                 plugins: [
-                    [casterStore, casterStoreKey],
+                    [pinia],
                     [obsStore, obsStoreKey]
                 ]
             }

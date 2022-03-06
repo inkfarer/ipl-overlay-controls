@@ -108,7 +108,7 @@ export default defineComponent({
             disableShowCasters,
             isObsConnected: computed(() => obsStore.state.obsData.status === ObsStatus.CONNECTED),
             showCasters() {
-                casterStore.dispatch('showCasters');
+                casterStore.showCasters();
             },
             async startGame() {
                 return obsStore.dispatch('startGame');
