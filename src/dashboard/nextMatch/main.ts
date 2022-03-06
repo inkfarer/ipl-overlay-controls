@@ -6,12 +6,14 @@ import { highlightedMatchReps, highlightedMatchStore, highlightedMatchStoreKey }
 import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextRoundStore';
+import { createPinia } from 'pinia';
 
 (async () => {
     await setUpReplicants(highlightedMatchReps, highlightedMatchStore);
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
     await setUpReplicants(nextRoundReps, nextRoundStore);
     const app = createApp(Panel);
+    app.use(createPinia());
     setUpErrorHandler(app);
     app.use(highlightedMatchStore, highlightedMatchStoreKey);
     app.use(tournamentDataStore, tournamentDataStoreKey);

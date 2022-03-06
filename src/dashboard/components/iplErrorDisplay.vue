@@ -35,9 +35,9 @@ export default defineComponent({
         if (!store) throw new Error('Missing error handler store.');
 
         return {
-            recentErrors: computed(() => store.state.recentErrors),
+            recentErrors: computed(() => store.recentErrors),
             removeMessage(key: string) {
-                store.commit('removeRecentError', { key });
+                store.removeRecentError({ key });
             },
             addDots
         };

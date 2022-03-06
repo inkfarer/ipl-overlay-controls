@@ -1,44 +1,32 @@
-import { createStore, Store, useStore } from 'vuex';
-import { App, InjectionKey } from 'vue';
+import { App } from 'vue';
 import { generateId } from '../../helpers/generateId';
+import { defineStore } from 'pinia';
 
-export interface ErrorHandlerStore {
-    recentErrors: Record<string, unknown>;
-}
-
-export const errorHandlerStore = createStore<ErrorHandlerStore>({
-    state: {
+export const useErrorHandlerStore = defineStore('errorHandler', {
+    state: () => ({
         recentErrors: {}
-    },
-    mutations: {
-        removeRecentError(state, { key }: { key: string }): void {
-            delete state.recentErrors[key];
-        }
-    },
+    }),
     actions: {
-        handleError(store, { err, info }: { err: unknown, info: string }): void {
+        removeRecentError({ key }: { key: string }): void {
+            delete this.recentErrors[key];
+        },
+        handleError({ err, info }: { err: unknown, info: string }): void {
             console.error(`Got error from '${info}': \n`, err);
 
-            if (Object.keys(store.state.recentErrors).length >= 2) return;
+            if (Object.keys(this.recentErrors).length >= 2) return;
 
             const id = generateId();
-            store.state.recentErrors[id] = err;
+            this.recentErrors[id] = err;
             window.setTimeout(() => {
-                delete store.state.recentErrors[id];
+                delete this.recentErrors[id];
             }, 25000);
         }
     }
 });
 
-export const errorHandlerStoreKey: InjectionKey<Store<ErrorHandlerStore>> = Symbol();
-
-export function useErrorHandlerStore(): Store<ErrorHandlerStore> {
-    return useStore(errorHandlerStoreKey);
-}
-
 export function setUpErrorHandler(app: App<unknown>): void {
-    app.use(errorHandlerStore, errorHandlerStoreKey);
+    const store = useErrorHandlerStore();
     app.config.errorHandler = (err, vm, info) => {
-        errorHandlerStore.dispatch('handleError', { err, info });
+        store.handleError({ err, info });
     };
 }

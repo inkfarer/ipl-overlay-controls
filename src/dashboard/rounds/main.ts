@@ -7,6 +7,7 @@ import { activeRoundReps, activeRoundStore, activeRoundStoreKey } from '../store
 import { nextRoundReps, nextRoundStore, nextRoundStoreKey } from '../store/nextRoundStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { settingsReps, settingsStore, settingsStoreKey } from '../settings/settingsStore';
+import { createPinia } from 'pinia';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
@@ -14,6 +15,7 @@ import { settingsReps, settingsStore, settingsStoreKey } from '../settings/setti
     await setUpReplicants(nextRoundReps, nextRoundStore);
     await setUpReplicants(settingsReps, settingsStore);
     const app = createApp(Panel);
+    app.use(createPinia());
     setUpErrorHandler(app);
     app.use(tournamentDataStore, tournamentDataStoreKey);
     app.use(activeRoundStore, activeRoundStoreKey);
