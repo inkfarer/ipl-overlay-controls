@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { IplButton, IplSpace, IplExpandingSpace, IplInput, IplCheckbox } from '@iplsplatoon/vue-components';
 import { useBreakScreenStore } from './breakScreenStore';
 import { ActiveBreakScene } from 'schemas';
@@ -85,16 +85,16 @@ export default defineComponent({
         const nextRoundTime = ref('');
         const nextRoundTimeFocused = ref(false);
         const mainFlavorTextFocused = ref(false);
-        const isChanged = computed(() => !isEqual(mainFlavorText.value, store.state.mainFlavorText)
-            || !isEqual(nextRoundTime.value, store.state.nextRoundStartTime.startTime));
+        const isChanged = computed(() => !isEqual(mainFlavorText.value, store.mainFlavorText)
+            || !isEqual(nextRoundTime.value, store.nextRoundStartTime.startTime));
 
-        store.watch(state => state.mainFlavorText, newValue => {
+        watch(() => store.mainFlavorText, newValue => {
             if (!mainFlavorTextFocused.value) {
                 mainFlavorText.value = newValue;
             }
         }, { immediate: true });
 
-        store.watch(state => state.nextRoundStartTime.startTime, newValue => {
+        watch(() => store.nextRoundStartTime.startTime, newValue => {
             if (!nextRoundTimeFocused.value) {
                 nextRoundTime.value = newValue;
             }
@@ -102,29 +102,29 @@ export default defineComponent({
 
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
-            activeBreakScene: computed(() => store.state.activeBreakScene),
+            activeBreakScene: computed(() => store.activeBreakScene),
             mainFlavorText,
             nextRoundTime,
             showNextRoundTime: computed({
                 get() {
-                    return store.state.nextRoundStartTime.isVisible;
+                    return store.nextRoundStartTime.isVisible;
                 },
                 set(value: boolean) {
-                    store.commit('setNextRoundStartTimeVisible', value);
+                    store.setNextRoundStartTimeVisible(value);
                 }
             }),
             setActiveBreakScene(newValue: ActiveBreakScene) {
-                store.commit('setActiveBreakScene', newValue);
+                store.setActiveBreakScene(newValue);
             },
             updateMainScene() {
-                store.commit('setMainFlavorText', mainFlavorText.value);
-                store.commit('setNextRoundStartTime', nextRoundTime.value);
+                store.setMainFlavorText(mainFlavorText.value);
+                store.setNextRoundStartTime(nextRoundTime.value);
             },
             undoMainScene(event: Event) {
                 event.preventDefault();
 
-                nextRoundTime.value = store.state.nextRoundStartTime.startTime;
-                mainFlavorText.value = store.state.mainFlavorText;
+                nextRoundTime.value = store.nextRoundStartTime.startTime;
+                mainFlavorText.value = store.mainFlavorText;
             },
             mainUpdateButtonColor: computed(() => isChanged.value ? 'red' : 'blue'),
             handleMainFlavorTextFocus(event: boolean) {

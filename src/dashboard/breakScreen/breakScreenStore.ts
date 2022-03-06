@@ -1,8 +1,5 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { ActiveBreakScene, MainFlavorText, NextRoundStartTime } from 'schemas';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
+import { defineStore } from 'pinia';
 
 const mainFlavorText = nodecg.Replicant<MainFlavorText>('mainFlavorText');
 const nextRoundStartTime = nodecg.Replicant<NextRoundStartTime>('nextRoundStartTime');
@@ -16,33 +13,24 @@ export interface BreakScreenStore {
     activeBreakScene: ActiveBreakScene;
 }
 
-export const breakScreenStore = createStore<BreakScreenStore>({
-    state: {
+export const useBreakScreenStore = defineStore('breakScreen', {
+    state: () => ({
         mainFlavorText: null,
-        nextRoundStartTime: null,
+        nextRoundStartTime: { startTime: null, isVisible: null },
         activeBreakScene: null
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        },
-        setActiveBreakScene(store, newValue: ActiveBreakScene): void {
+    } as BreakScreenStore),
+    actions: {
+        setActiveBreakScene(newValue: ActiveBreakScene): void {
             activeBreakScene.value = newValue;
         },
-        setMainFlavorText(store, newValue: string): void {
+        setMainFlavorText(newValue: string): void {
             mainFlavorText.value = newValue;
         },
-        setNextRoundStartTimeVisible(store, newValue: boolean): void {
+        setNextRoundStartTimeVisible(newValue: boolean): void {
             nextRoundStartTime.value.isVisible = newValue;
         },
-        setNextRoundStartTime(store, newValue: string): void {
+        setNextRoundStartTime(newValue: string): void {
             nextRoundStartTime.value.startTime = newValue;
         }
     }
 });
-
-export const breakScreenStoreKey: InjectionKey<Store<BreakScreenStore>> = Symbol();
-
-export function useBreakScreenStore(): Store<BreakScreenStore> {
-    return useStore(breakScreenStoreKey);
-}
