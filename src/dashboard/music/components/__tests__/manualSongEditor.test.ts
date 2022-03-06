@@ -1,7 +1,7 @@
 import ManualSongEditor from '../manualSongEditor.vue';
 import { config, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { MusicStore, musicStoreKey } from '../../musicStore';
+import { useMusicStore } from '../../musicStore';
+import { createTestingPinia } from '@pinia/testing';
 
 describe('ManualSongEditor', () => {
     config.global.stubs = {
@@ -10,27 +10,13 @@ describe('ManualSongEditor', () => {
         IplButton: true
     };
 
-    function createMusicStore() {
-        return createStore<MusicStore>({
-            state: {
-                nowPlayingSource: null,
-                nowPlaying: null,
-                manualNowPlaying: { song: null, artist: null },
-                musicShown: null
-            },
-            mutations: {
-                setNowPlayingSource: jest.fn(),
-                setManualNowPlaying: jest.fn()
-            }
-        });
-    }
-
     it('ticks enable checkbox if source is manual', () => {
-        const store = createMusicStore();
-        store.state.nowPlayingSource = 'manual';
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.nowPlayingSource = 'manual';
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -39,11 +25,12 @@ describe('ManualSongEditor', () => {
     });
 
     it('unticks enable checkbox if source is not manual', () => {
-        const store = createMusicStore();
-        store.state.nowPlayingSource = 'lastfm';
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.nowPlayingSource = 'lastfm';
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -52,43 +39,46 @@ describe('ManualSongEditor', () => {
     });
 
     it('sets now playing source to manual if enable checkbox is ticked', () => {
-        const store = createMusicStore();
-        jest.spyOn(store, 'commit');
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        jest.spyOn(store, 'setNowPlayingSource');
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', true);
 
-        expect(store.commit).toHaveBeenCalledWith('setNowPlayingSource', 'manual');
+        expect(store.setNowPlayingSource).toHaveBeenCalledWith('manual');
     });
 
     it('sets now playing source to lastfm if enable checkbox is unticked', () => {
-        const store = createMusicStore();
-        jest.spyOn(store, 'commit');
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        jest.spyOn(store, 'setNowPlayingSource');
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', false);
 
-        expect(store.commit).toHaveBeenCalledWith('setNowPlayingSource', 'lastfm');
+        expect(store.setNowPlayingSource).toHaveBeenCalledWith('lastfm');
     });
 
     it('updates data if unfocused', async () => {
-        const store = createMusicStore();
-        store.state.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
-        store.state.manualNowPlaying = { song: 'dope song', artist: 'cool artist' };
+        store.$patch({ manualNowPlaying: { song: 'dope song', artist: 'cool artist' } });
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="artist"]').attributes().modelvalue).toEqual('cool artist');
@@ -96,17 +86,18 @@ describe('ManualSongEditor', () => {
     });
 
     it('does not update data if any field is focused', async () => {
-        const store = createMusicStore();
-        store.state.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
         const artistInput = wrapper.getComponent('[name="artist"]');
 
         artistInput.vm.$emit('focuschange', true);
-        store.state.manualNowPlaying = { song: 'dope song', artist: 'cool artist' };
+        store.manualNowPlaying = { song: 'dope song', artist: 'cool artist' };
         await wrapper.vm.$nextTick();
 
         expect(artistInput.attributes().modelvalue).toEqual('dope artist');
@@ -114,11 +105,12 @@ describe('ManualSongEditor', () => {
     });
 
     it('has expected button color if data is not updated', () => {
-        const store = createMusicStore();
-        store.state.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -126,11 +118,12 @@ describe('ManualSongEditor', () => {
     });
 
     it('has expected button color if data is updated', async () => {
-        const store = createMusicStore();
-        store.state.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.manualNowPlaying = { song: 'cool song', artist: 'dope artist' };
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -141,11 +134,12 @@ describe('ManualSongEditor', () => {
     });
 
     it('commits update to store on update button click if data is changed', () => {
-        const store = createMusicStore();
-        jest.spyOn(store, 'commit');
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        jest.spyOn(store, 'setManualNowPlaying');
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -153,30 +147,32 @@ describe('ManualSongEditor', () => {
         wrapper.getComponent('[name="song"]').vm.$emit('update:modelValue', 'new song');
         wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('click');
 
-        expect(store.commit).toHaveBeenCalledWith('setManualNowPlaying', { artist: 'new artist', song: 'new song' });
+        expect(store.setManualNowPlaying).toHaveBeenCalledWith({ artist: 'new artist', song: 'new song' });
     });
 
     it('does not commit update to store if data has not changed', () => {
-        const store = createMusicStore();
-        jest.spyOn(store, 'commit');
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        jest.spyOn(store, 'setManualNowPlaying');
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('click');
 
-        expect(store.commit).not.toHaveBeenCalled();
+        expect(store.setManualNowPlaying).not.toHaveBeenCalled();
     });
 
     it('reverts changes when update button is right clicked', async () => {
-        const store = createMusicStore();
-        store.state.manualNowPlaying.song = 'old song';
-        store.state.manualNowPlaying.artist = 'old artist';
+        const pinia = createTestingPinia();
+        const store = useMusicStore();
+        store.manualNowPlaying.song = 'old song';
+        store.manualNowPlaying.artist = 'old artist';
         const wrapper = mount(ManualSongEditor, {
             global: {
-                plugins: [ [ store, musicStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
         const event = new Event(null);
