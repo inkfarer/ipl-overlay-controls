@@ -99,7 +99,7 @@ export default defineComponent({
         const tournamentDataStore = useTournamentDataStore();
         const activeRoundStore = useActiveRoundStore();
 
-        const activeRound = computed(() => activeRoundStore.state.activeRound);
+        const activeRound = computed(() => activeRoundStore.activeRound);
 
         const teamAId = ref('');
         const teamBId = ref('');
@@ -120,25 +120,25 @@ export default defineComponent({
         });
 
         const isChanged = computed(() =>
-            teamAId.value !== activeRoundStore.state.activeRound.teamA.id
-            || teamBId.value !== activeRoundStore.state.activeRound.teamB.id
-            || matchId.value !== activeRoundStore.state.activeRound.match.id
-            || matchName.value !== activeRoundStore.state.activeRound.match.name);
+            teamAId.value !== activeRoundStore.activeRound.teamA.id
+            || teamBId.value !== activeRoundStore.activeRound.teamB.id
+            || matchId.value !== activeRoundStore.activeRound.match.id
+            || matchName.value !== activeRoundStore.activeRound.match.name);
 
-        activeRoundStore.watch(
-            store => store.activeRound.teamA.id,
+        watch(
+            () => activeRoundStore.activeRound.teamA.id,
             newValue => teamAId.value = newValue,
             { immediate: true });
-        activeRoundStore.watch(
-            store => store.activeRound.teamB.id,
+        watch(
+            () => activeRoundStore.activeRound.teamB.id,
             newValue => teamBId.value = newValue,
             { immediate: true });
-        activeRoundStore.watch(
-            store => store.activeRound.match.id,
+        watch(
+            () => activeRoundStore.activeRound.match.id,
             newValue => matchId.value = newValue,
             { immediate: true });
-        activeRoundStore.watch(
-            store => store.activeRound.match.name,
+        watch(
+            () => activeRoundStore.activeRound.match.name,
             newValue => matchName.value = newValue,
             { immediate: true });
 
@@ -160,27 +160,27 @@ export default defineComponent({
             activeRound,
             teamAImageShown: computed({
                 get() {
-                    return activeRoundStore.state.activeRound.teamA.showLogo;
+                    return activeRoundStore.activeRound.teamA.showLogo;
                 },
                 set(value: boolean) {
                     tournamentDataStore.dispatch('setTeamImageHidden',
-                        { teamId: activeRoundStore.state.activeRound.teamA.id, isVisible: value });
+                        { teamId: activeRoundStore.activeRound.teamA.id, isVisible: value });
                 }
             }),
             teamBImageShown: computed({
                 get() {
-                    return activeRoundStore.state.activeRound.teamB.showLogo;
+                    return activeRoundStore.activeRound.teamB.showLogo;
                 },
                 set(value: boolean) {
                     tournamentDataStore.dispatch('setTeamImageHidden',
-                        { teamId: activeRoundStore.state.activeRound.teamB.id, isVisible: value });
+                        { teamId: activeRoundStore.activeRound.teamB.id, isVisible: value });
                 }
             }),
             matches: computed(() => Object.entries(tournamentDataStore.state.matchStore).map(([ key, value ]) =>
                 ({ value: key, name: value.meta.name }))),
             isChanged,
             updateRound() {
-                activeRoundStore.dispatch('setActiveRound', {
+                activeRoundStore.setActiveRound({
                     matchId: matchId.value,
                     matchName: matchName.value,
                     teamAId: teamAId.value,
@@ -194,10 +194,10 @@ export default defineComponent({
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                matchId.value = activeRoundStore.state.activeRound.match.id;
-                matchName.value = activeRoundStore.state.activeRound.match.name;
-                teamAId.value = activeRoundStore.state.activeRound.teamA.id;
-                teamBId.value = activeRoundStore.state.activeRound.teamB.id;
+                matchId.value = activeRoundStore.activeRound.match.id;
+                matchName.value = activeRoundStore.activeRound.match.name;
+                teamAId.value = activeRoundStore.activeRound.teamA.id;
+                teamBId.value = activeRoundStore.activeRound.teamB.id;
             }
         };
     }

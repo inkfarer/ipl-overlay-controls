@@ -3,3 +3,5 @@ export enum GameWinner {
     ALPHA = 'alpha',
     BRAVO = 'bravo'
 }
+
+export type GameWinnerValues = `${GameWinner}`;

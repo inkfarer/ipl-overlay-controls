@@ -1,102 +1,96 @@
 import ActiveColorToggles from '../activeColorToggles.vue';
 import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { settingsStoreKey } from '../../../settings/settingsStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('ActiveColorToggles', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         FontAwesomeIcon: true
     };
 
-    const mockSwapColors = jest.fn();
-    const mockSwitchToNextColor = jest.fn();
-    const mockSwitchToPreviousColor = jest.fn();
-    const mockGetNextAndPreviousColors = jest.fn().mockResolvedValue({
-        nextColor: {
-            categoryName: 'Ranked Modes',
-            clrA: '#FEF232',
-            clrB: '#2ED2FE',
-            clrNeutral: '#FD5600',
-            index: 6,
-            isCustom: false,
-            title: 'Yellow vs Blue'
-        },
-        previousColor: {
-            categoryName: 'Ranked Modes',
-            clrA: '#04D976',
-            clrB: '#D600AB',
-            clrNeutral: '#D2E500',
-            index: 1,
-            isCustom: false,
-            title: 'Green vs Magenta'
-        }
-    });
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createActiveRoundStore() {
-        return createStore<ActiveRoundStore>({
-            state: {
-                activeRound: {
-                    teamA: {
-                        score: 0,
-                        id: '123123',
-                        name: 'Team One',
-                        showLogo: true,
-                        players: null,
-                        color: null
-                    },
-                    teamB: {
-                        score: 2,
-                        id: '345345',
-                        name: 'Team Two (Really long name for testing ;))',
-                        showLogo: false,
-                        players: null,
-                        color: null
-                    },
-                    activeColor: {
-                        categoryName: 'Ranked Modes',
-                        index: 0,
-                        title: 'coolest color',
-                        isCustom: false,
-                        clrNeutral: '#0FAA00',
-                    },
-                    match: {
-                        id: '01010',
-                        name: 'Rad Match',
-                        isCompleted: false,
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: null,
-                            mode: null
-                        },
-                    ],
-                },
-                swapColorsInternally: false
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.getNextAndPreviousColors = jest.fn().mockResolvedValue({
+            nextColor: {
+                categoryName: 'Ranked Modes',
+                clrA: '#FEF232',
+                clrB: '#2ED2FE',
+                clrNeutral: '#FD5600',
+                index: 6,
+                isCustom: false,
+                title: 'Yellow vs Blue'
             },
-            actions: {
-                swapColors: mockSwapColors,
-                switchToNextColor: mockSwitchToNextColor,
-                switchToPreviousColor: mockSwitchToPreviousColor,
-                getNextAndPreviousColors: mockGetNextAndPreviousColors,
+            previousColor: {
+                categoryName: 'Ranked Modes',
+                clrA: '#04D976',
+                clrB: '#D600AB',
+                clrNeutral: '#D2E500',
+                index: 1,
+                isCustom: false,
+                title: 'Green vs Magenta'
             }
         });
-    }
+        activeRoundStore.$state = {
+            activeRound: {
+                teamA: {
+                    score: 0,
+                    id: '123123',
+                    name: 'Team One',
+                    showLogo: true,
+                    players: null,
+                    color: null
+                },
+                teamB: {
+                    score: 2,
+                    id: '345345',
+                    name: 'Team Two (Really long name for testing ;))',
+                    showLogo: false,
+                    players: null,
+                    color: null
+                },
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    index: 0,
+                    title: 'coolest color',
+                    isCustom: false,
+                    clrNeutral: '#0FAA00',
+                },
+                match: {
+                    id: '01010',
+                    name: 'Rad Match',
+                    isCompleted: false,
+                    type: PlayType.BEST_OF
+                },
+                games: [
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: null,
+                        mode: null
+                    },
+                ],
+            },
+            swapColorsInternally: false
+        };
+    });
 
     function createSettingsStore() {
         return createStore({
@@ -109,12 +103,11 @@ describe('ActiveColorToggles', () => {
     }
 
     it('matches snapshot', async () => {
-        const store = createActiveRoundStore();
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
                 plugins: [
-                    [store, activeRoundStoreKey],
+                    pinia,
                     [settingsStore, settingsStoreKey]
                 ]
             }
@@ -125,13 +118,13 @@ describe('ActiveColorToggles', () => {
     });
 
     it('matches snapshot with swapped colors', async () => {
-        const store = createActiveRoundStore();
-        store.state.swapColorsInternally = true;
+        const store = useActiveRoundStore();
+        store.swapColorsInternally = true;
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
                 plugins: [
-                    [store, activeRoundStoreKey],
+                    pinia,
                     [settingsStore, settingsStoreKey]
                 ]
             }
@@ -142,12 +135,13 @@ describe('ActiveColorToggles', () => {
     });
 
     it('sets color when clicking previous color toggle', async () => {
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.switchToPreviousColor = jest.fn();
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
                 plugins: [
-                    [activeRoundStore, activeRoundStoreKey],
+                    pinia,
                     [settingsStore, settingsStoreKey]
                 ]
             }
@@ -156,16 +150,17 @@ describe('ActiveColorToggles', () => {
         const toggle = wrapper.get('[data-test="color-toggle-previous"]');
         await toggle.trigger('click');
 
-        expect(mockSwitchToPreviousColor).toHaveBeenCalled();
+        expect(activeRoundStore.switchToPreviousColor).toHaveBeenCalled();
     });
 
     it('sets color when clicking next color toggle', async () => {
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.switchToNextColor = jest.fn();
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
                 plugins: [
-                    [activeRoundStore, activeRoundStoreKey],
+                    pinia,
                     [settingsStore, settingsStoreKey]
                 ]
             }
@@ -174,16 +169,17 @@ describe('ActiveColorToggles', () => {
         const toggle = wrapper.get('[data-test="color-toggle-next"]');
         await toggle.trigger('click');
 
-        expect(mockSwitchToNextColor).toHaveBeenCalled();
+        expect(activeRoundStore.switchToNextColor).toHaveBeenCalled();
     });
 
     it('swaps colors on swap button click', () => {
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.swapColors = jest.fn();
         const settingsStore = createSettingsStore();
         const wrapper = mount(ActiveColorToggles, {
             global: {
                 plugins: [
-                    [activeRoundStore, activeRoundStoreKey],
+                    pinia,
                     [settingsStore, settingsStoreKey]
                 ]
             }
@@ -191,6 +187,6 @@ describe('ActiveColorToggles', () => {
 
         wrapper.getComponent('[data-test="swap-colors-button"]').vm.$emit('click');
 
-        expect(mockSwapColors).toHaveBeenCalled();
+        expect(activeRoundStore.swapColors).toHaveBeenCalled();
     });
 });

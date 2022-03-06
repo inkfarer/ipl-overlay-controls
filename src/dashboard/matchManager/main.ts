@@ -3,7 +3,7 @@ import { setUpPiniaReplicants, setUpReplicants } from '../helpers/storeHelper';
 import Panel from './matchManager.vue';
 import { createApp } from 'vue';
 import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';
-import { activeRoundReps, activeRoundStore, activeRoundStoreKey } from '../store/activeRoundStore';
+import { activeRoundReps, useActiveRoundStore } from '../store/activeRoundStore';
 import { castersReps, useCasterStore } from '../store/casterStore';
 import { scoreboardReps, scoreboardStore, scoreboardStoreKey } from '../store/scoreboardStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
@@ -14,17 +14,16 @@ import { createPinia } from 'pinia';
 
 (async () => {
     await setUpReplicants(tournamentDataReps, tournamentDataStore);
-    await setUpReplicants(activeRoundReps, activeRoundStore);
     await setUpReplicants(scoreboardReps, scoreboardStore);
     await setUpReplicants(nextRoundReps, nextRoundStore);
     await setUpReplicants(settingsReps, settingsStore);
     await setUpReplicants(obsReps, obsStore);
     const app = createApp(Panel);
     app.use(createPinia());
+    await setUpPiniaReplicants(activeRoundReps, useActiveRoundStore());
     setUpErrorHandler(app);
     await setUpPiniaReplicants(castersReps, useCasterStore());
     app.use(tournamentDataStore, tournamentDataStoreKey);
-    app.use(activeRoundStore, activeRoundStoreKey);
     app.use(scoreboardStore, scoreboardStoreKey);
     app.use(nextRoundStore, nextRoundStoreKey);
     app.use(settingsStore, settingsStoreKey);

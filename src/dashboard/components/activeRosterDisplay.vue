@@ -24,8 +24,8 @@ export default defineComponent({
         const activeRoundStore = useActiveRoundStore();
 
         return {
-            teamA: computed(() => activeRoundStore.state.activeRound.teamA),
-            teamB: computed(() => activeRoundStore.state.activeRound.teamB)
+            teamA: computed(() => activeRoundStore.activeRound.teamA),
+            teamB: computed(() => activeRoundStore.activeRound.teamB)
         };
     }
 });

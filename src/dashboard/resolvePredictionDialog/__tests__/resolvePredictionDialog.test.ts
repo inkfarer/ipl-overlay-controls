@@ -3,20 +3,99 @@ import { createStore } from 'vuex';
 import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 jest.mock('../../helpers/dialogHelper');
 
 describe('ResolvePredictionDialog', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         FontAwesomeIcon: true,
         IplDialogTitle: true,
         IplErrorDisplay: true
     };
+
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useActiveRoundStore().$state = {
+            activeRound: {
+                teamA: {
+                    score: 0,
+                    id: '123123',
+                    name: 'First Team',
+                    showLogo: true,
+                    players: null,
+                    color: null
+                },
+                teamB: {
+                    score: 2,
+                    id: '345345',
+                    name: 'Second Team',
+                    showLogo: false,
+                    players: null,
+                    color: null
+                },
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    index: 0,
+                    title: 'coolest color',
+                    isCustom: false,
+                    clrNeutral: '#222'
+                },
+                match: {
+                    id: '01010',
+                    name: 'Rad Match',
+                    isCompleted: false,
+                    type: PlayType.PLAY_ALL
+                },
+                games: [
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: 'Blackbelly Skatepark',
+                        mode: 'Rainmaker',
+                        color: {
+                            index: 2,
+                            title: 'Cool Color',
+                            clrA: '#123123',
+                            clrB: '#345345',
+                            clrNeutral: '#00FF00',
+                            categoryName: 'Cool Colors',
+                            isCustom: false,
+                            colorsSwapped: false
+                        }
+                    },
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: 'MakoMart',
+                        mode: 'Tower Control',
+                        color: {
+                            index: 0,
+                            title: 'Cool Color',
+                            clrA: '#837693',
+                            clrB: '#206739',
+                            clrNeutral: '#00AA00',
+                            categoryName: 'Custom Color',
+                            isCustom: true,
+                            colorsSwapped: true
+                        }
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: 'Camp Triggerfish',
+                        mode: 'Splat Zones'
+                    },
+                ],
+            },
+            swapColorsInternally: false
+        };
+    });
 
     const mockResolvePrediction = jest.fn();
 
@@ -64,89 +143,12 @@ describe('ResolvePredictionDialog', () => {
         });
     }
 
-    function createActiveRoundStore() {
-        return createStore<ActiveRoundStore>({
-            state: {
-                activeRound: {
-                    teamA: {
-                        score: 0,
-                        id: '123123',
-                        name: 'First Team',
-                        showLogo: true,
-                        players: null,
-                        color: null
-                    },
-                    teamB: {
-                        score: 2,
-                        id: '345345',
-                        name: 'Second Team',
-                        showLogo: false,
-                        players: null,
-                        color: null
-                    },
-                    activeColor: {
-                        categoryName: 'Ranked Modes',
-                        index: 0,
-                        title: 'coolest color',
-                        isCustom: false,
-                        clrNeutral: '#222'
-                    },
-                    match: {
-                        id: '01010',
-                        name: 'Rad Match',
-                        isCompleted: false,
-                        type: PlayType.PLAY_ALL
-                    },
-                    games: [
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: 'Blackbelly Skatepark',
-                            mode: 'Rainmaker',
-                            color: {
-                                index: 2,
-                                title: 'Cool Color',
-                                clrA: '#123123',
-                                clrB: '#345345',
-                                clrNeutral: '#00FF00',
-                                categoryName: 'Cool Colors',
-                                isCustom: false,
-                                colorsSwapped: false
-                            }
-                        },
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: 'MakoMart',
-                            mode: 'Tower Control',
-                            color: {
-                                index: 0,
-                                title: 'Cool Color',
-                                clrA: '#837693',
-                                clrB: '#206739',
-                                clrNeutral: '#00AA00',
-                                categoryName: 'Custom Color',
-                                isCustom: true,
-                                colorsSwapped: true
-                            }
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: 'Camp Triggerfish',
-                            mode: 'Splat Zones'
-                        },
-                    ],
-                },
-                swapColorsInternally: false
-            }
-        });
-    }
-
     it('matches snapshot with missing prediction data', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction = undefined;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -155,11 +157,10 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the prediction is not locked', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -168,12 +169,12 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the current round is not completed', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.match.isCompleted = false;
+        activeRoundStore.activeRound.match.isCompleted = false;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -182,13 +183,13 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the winner name cannot be determined', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.teamA.score = 1;
-        activeRoundStore.state.activeRound.teamB.score = 1;
+        activeRoundStore.activeRound.teamA.score = 1;
+        activeRoundStore.activeRound.teamB.score = 1;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -197,15 +198,15 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the winner cannot be determined automatically', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.teamA.score = 1;
-        activeRoundStore.state.activeRound.teamA.name = 'unknown team a';
-        activeRoundStore.state.activeRound.teamB.score = 2;
-        activeRoundStore.state.activeRound.teamB.name = 'unknown team b';
+        activeRoundStore.activeRound.teamA.score = 1;
+        activeRoundStore.activeRound.teamA.name = 'unknown team a';
+        activeRoundStore.activeRound.teamB.score = 2;
+        activeRoundStore.activeRound.teamB.name = 'unknown team b';
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -214,13 +215,13 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the winner is determined as team A', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.teamA.score = 2;
-        activeRoundStore.state.activeRound.teamB.score = 1;
+        activeRoundStore.activeRound.teamA.score = 2;
+        activeRoundStore.activeRound.teamB.score = 1;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -229,13 +230,13 @@ describe('ResolvePredictionDialog', () => {
 
     it('matches snapshot when the winner is determined as team B', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        activeRoundStore.state.activeRound.teamA.score = 1;
-        activeRoundStore.state.activeRound.teamB.score = 2;
+        activeRoundStore.activeRound.teamA.score = 1;
+        activeRoundStore.activeRound.teamB.score = 2;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 
@@ -244,11 +245,10 @@ describe('ResolvePredictionDialog', () => {
 
     it('handles first outcome being resolved and closes dialog when it completes', async () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
         mockResolvePrediction.mockResolvedValue({});
@@ -263,11 +263,10 @@ describe('ResolvePredictionDialog', () => {
 
     it('handles second outcome being resolved and closes dialog when it completes', async () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
         predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
         mockResolvePrediction.mockResolvedValue({});
@@ -282,10 +281,9 @@ describe('ResolvePredictionDialog', () => {
 
     it('closes dialog on dialog title close event', () => {
         const predictionDataStore = createPredictionDataStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ResolvePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [[predictionDataStore, predictionDataStoreKey], pinia]
             }
         });
 

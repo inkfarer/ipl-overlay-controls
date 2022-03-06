@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
@@ -108,23 +108,24 @@ export default defineComponent({
     setup() {
         const activeRoundStore = useActiveRoundStore();
 
-        const activeRound = computed(() => activeRoundStore.state.activeRound);
+        const activeRound = computed(() => activeRoundStore.activeRound);
         const nextColor = ref<ColorWithCategory>(null);
         const previousColor = ref<ColorWithCategory>(null);
 
-        activeRoundStore.watch(
-            state => [state.activeRound.activeColor.index, state.activeRound.activeColor.categoryName],
+        watch(
+            () => [
+                activeRoundStore.activeRound.activeColor.index,
+                activeRoundStore.activeRound.activeColor.categoryName
+            ],
             async () => {
-                const colors: GetNextAndPreviousColorsResponse
-                    = await activeRoundStore.dispatch('getNextAndPreviousColors');
+                const colors: GetNextAndPreviousColorsResponse = await activeRoundStore.getNextAndPreviousColors();
 
                 nextColor.value = colors.nextColor;
                 previousColor.value = colors.previousColor;
-            },
-            { immediate: true });
+            }, { immediate: true });
 
         const colorTogglesDisabled = computed(() =>
-            activeRoundStore.state.activeRound.activeColor.categoryName === 'Custom Color');
+            activeRoundStore.activeRound.activeColor.categoryName === 'Custom Color');
 
         return {
             activeRound,
@@ -135,18 +136,18 @@ export default defineComponent({
                 }
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
-            colorsSwapped: computed(() => activeRoundStore.state.swapColorsInternally),
+            colorsSwapped: computed(() => activeRoundStore.swapColorsInternally),
             nextColor,
             previousColor,
             addDots,
             swapColors() {
-                activeRoundStore.dispatch('swapColors');
+                activeRoundStore.swapColors();
             },
             switchToNextColor() {
-                activeRoundStore.dispatch('switchToNextColor');
+                activeRoundStore.switchToNextColor();
             },
             switchToPreviousColor() {
-                activeRoundStore.dispatch('switchToPreviousColor');
+                activeRoundStore.switchToPreviousColor();
             }
         };
     }

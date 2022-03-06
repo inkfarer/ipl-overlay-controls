@@ -145,7 +145,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import {
     IplButton,
@@ -163,6 +163,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { useSettingsStore } from '../../settings/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { ActiveRoundGame } from 'types/activeRoundGame';
 
 library.add(faTimes);
 
@@ -178,10 +179,10 @@ export default defineComponent({
 
         const editColorsEnabled = ref(false);
 
-        const games = ref(cloneDeep(activeRoundStore.state.activeRound.games));
-        const gamesChanged = computed(() => !isEqual(games.value, activeRoundStore.state.activeRound.games));
+        const games = ref<ActiveRoundGame[]>(cloneDeep(activeRoundStore.activeRound.games));
+        const gamesChanged = computed(() => !isEqual(games.value, activeRoundStore.activeRound.games));
 
-        activeRoundStore.watch(state => state.activeRound.games, (newValue, oldValue) => {
+        watch(() => activeRoundStore.activeRound.games, (newValue, oldValue) => {
             games.value = cloneDeep(newValue).map((game, index) => {
                 const oldGame = oldValue[index];
 
@@ -203,15 +204,15 @@ export default defineComponent({
         });
 
         const activeColor = computed(() => ({
-            ...activeRoundStore.state.activeRound.activeColor,
-            clrA: activeRoundStore.state.activeRound.teamA.color,
-            clrB: activeRoundStore.state.activeRound.teamB.color
+            ...activeRoundStore.activeRound.activeColor,
+            clrA: activeRoundStore.activeRound.teamA.color,
+            clrB: activeRoundStore.activeRound.teamB.color
         }));
 
         const nextGameIndex = computed(() =>
-            activeRoundStore.state.activeRound.games.findIndex(game => game.winner === GameWinner.NO_WINNER));
+            activeRoundStore.activeRound.games.findIndex(game => game.winner === GameWinner.NO_WINNER));
         const nextGame = computed(() =>
-            nextGameIndex.value === -1 ? null : activeRoundStore.state.activeRound.games[nextGameIndex.value]);
+            nextGameIndex.value === -1 ? null : activeRoundStore.activeRound.games[nextGameIndex.value]);
 
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
@@ -221,13 +222,13 @@ export default defineComponent({
             GameWinner,
             gamesChanged,
             getColorA(game: { color: { clrA: string } }): string {
-                return game.color?.clrA ?? activeRoundStore.state.activeRound.teamA.color;
+                return game.color?.clrA ?? activeRoundStore.activeRound.teamA.color;
             },
             getColorB(game: { color: { clrB: string } }): string {
-                return game.color?.clrB ?? activeRoundStore.state.activeRound.teamB.color;
+                return game.color?.clrB ?? activeRoundStore.activeRound.teamB.color;
             },
             setWinner(index: number, winner: GameWinner): void {
-                activeRoundStore.dispatch('setWinnerForIndex', { index, winner });
+                activeRoundStore.setWinnerForIndex({ index, winner });
             },
             editColorsEnabled,
             activeColor,
@@ -246,7 +247,7 @@ export default defineComponent({
                     .find(group => group.meta.name === colorParts[0])
                     .colors[colorIndex];
                 const colorsSwapped = games.value[index].color?.colorsSwapped
-                    ?? activeRoundStore.state.swapColorsInternally;
+                    ?? activeRoundStore.swapColorsInternally;
 
                 games.value[index].color = {
                     ...colorObject,
@@ -259,7 +260,7 @@ export default defineComponent({
                 };
             },
             setColorsSwapped(index: number, colorsSwapped: boolean): void {
-                activeRoundStore.dispatch('swapRoundColor', { roundIndex: index, colorsSwapped });
+                activeRoundStore.swapRoundColor({ roundIndex: index, colorsSwapped });
             },
             setIsCustomColor(index: number, isCustom: boolean): void {
                 if (!games.value[index].color) return;
@@ -281,19 +282,19 @@ export default defineComponent({
                     games.value[index].color.clrB = color;
                 }
             },
-            swapColorsInternally: computed(() => activeRoundStore.state.swapColorsInternally),
+            swapColorsInternally: computed(() => activeRoundStore.swapColorsInternally),
             handleUpdate(): void {
-                activeRoundStore.dispatch('updateActiveGames', games.value);
+                activeRoundStore.updateActiveGames(games.value);
             },
             handleReset(): void {
-                activeRoundStore.dispatch('resetActiveRound');
+                activeRoundStore.resetActiveRound();
             },
             nextGame,
             nextGameIndex,
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                games.value = cloneDeep(activeRoundStore.state.activeRound.games);
+                games.value = cloneDeep(activeRoundStore.activeRound.games);
             }
         };
     }
