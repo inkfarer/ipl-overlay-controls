@@ -85,7 +85,7 @@ export default defineComponent({
         const predictionDataStore = usePredictionDataStore();
         const activeRoundStore = useActiveRoundStore();
 
-        const outcomes = computed(() => predictionDataStore.state.predictionStore.currentPrediction?.outcomes);
+        const outcomes = computed(() => predictionDataStore.predictionStore.currentPrediction?.outcomes);
 
         const winningTeamName = computed(() => {
             const activeRound = activeRoundStore.activeRound;
@@ -118,13 +118,13 @@ export default defineComponent({
         return {
             matchIsCompleted: computed(() => activeRoundStore.activeRound.match.isCompleted),
             outcomes,
-            status: computed(() => predictionDataStore.state.predictionStore.currentPrediction?.status),
+            status: computed(() => predictionDataStore.predictionStore.currentPrediction?.status),
             PredictionStatus,
             winningTeamName,
             winningTeam,
             GameWinner,
             async resolvePrediction(winningOutcomeIndex: number): Promise<void> {
-                await predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex });
+                await predictionDataStore.resolvePrediction({ winningOutcomeIndex });
                 (nodecg.getDialog('resolvePredictionDialog') as NodecgDialog).close();
             },
             closeDialog

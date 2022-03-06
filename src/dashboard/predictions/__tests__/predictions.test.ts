@@ -1,13 +1,12 @@
 import Predictions from '../predictions.vue';
 import { config, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { mockDialog, mockGetDialog, mockSendMessage } from '../../__mocks__/mockNodecg';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { usePredictionDataStore } from '../../store/predictionDataStore';
 
 describe('Predictions', () => {
-    const mockLockPrediction = jest.fn();
-    const mockCancelPrediction = jest.fn();
+    let pinia: TestingPinia;
 
     config.global.stubs = {
         PredictionDataDisplay: true,
@@ -16,60 +15,55 @@ describe('Predictions', () => {
         IplErrorDisplay: true
     };
 
-    const createPredictionDataStore = () => {
-        return createStore<PredictionDataStore>({
-            state: {
-                predictionStore: {
-                    status: {
-                        socketOpen: true,
-                        predictionsEnabled: true
-                    },
-                    currentPrediction: {
-                        id: 'prediction123',
-                        broadcasterId: 'ipl',
-                        broadcasterName: 'IPL',
-                        broadcasterLogin: 'eye pee el',
-                        title: 'Who will win?',
-                        outcomes: [
-                            {
-                                id: 'outcome-1',
-                                title: 'First Team',
-                                users: 5,
-                                pointsUsed: 10000,
-                                topPredictors: [],
-                                color: 'BLUE'
-                            },
-                            {
-                                id: 'outcome-2',
-                                title: 'Second Team',
-                                users: 1,
-                                pointsUsed: 1,
-                                topPredictors: [],
-                                color: 'PINK'
-                            }
-                        ],
-                        duration: 60,
-                        status: PredictionStatus.ACTIVE,
-                        creationTime: '2020'
-                    }
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        usePredictionDataStore().$state = {
+            predictionStore: {
+                status: {
+                    socketOpen: true,
+                    predictionsEnabled: true
+                },
+                currentPrediction: {
+                    id: 'prediction123',
+                    broadcasterId: 'ipl',
+                    broadcasterName: 'IPL',
+                    broadcasterLogin: 'eye pee el',
+                    title: 'Who will win?',
+                    outcomes: [
+                        {
+                            id: 'outcome-1',
+                            title: 'First Team',
+                            users: 5,
+                            pointsUsed: 10000,
+                            topPredictors: [],
+                            color: 'BLUE'
+                        },
+                        {
+                            id: 'outcome-2',
+                            title: 'Second Team',
+                            users: 1,
+                            pointsUsed: 1,
+                            topPredictors: [],
+                            color: 'PINK'
+                        }
+                    ],
+                    duration: 60,
+                    status: PredictionStatus.ACTIVE,
+                    creationTime: '2020'
                 }
-            },
-            actions: {
-                lockPrediction: mockLockPrediction,
-                cancelPrediction: mockCancelPrediction,
-                reconnect: jest.fn()
             }
-        });
-    };
+        };
+    });
 
     it('shows warning if predictions are not enabled', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.status.predictionsEnabled = false;
-        store.state.predictionStore.status.predictionStatusReason = 'Predictions are disabled!';
-        store.state.predictionStore.currentPrediction = undefined;
+        const store = usePredictionDataStore();
+        store.predictionStore.status.predictionsEnabled = false;
+        store.predictionStore.status.predictionStatusReason = 'Predictions are disabled!';
+        store.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -84,11 +78,11 @@ describe('Predictions', () => {
     });
 
     it('shows message and management space if prediction data is missing', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction = undefined;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -101,10 +95,9 @@ describe('Predictions', () => {
     });
 
     it('shows prediction data if predictions are enabled and data is present', () => {
-        const store = createPredictionDataStore();
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -117,11 +110,11 @@ describe('Predictions', () => {
     });
 
     it('shows message if websocket is closed', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.status.socketOpen = false;
+        const store = usePredictionDataStore();
+        store.predictionStore.status.socketOpen = false;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -134,26 +127,26 @@ describe('Predictions', () => {
     });
 
     it('dispatches to store on reconnect', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.status.socketOpen = false;
-        jest.spyOn(store, 'dispatch');
+        const store = usePredictionDataStore();
+        store.predictionStore.status.socketOpen = false;
+        store.reconnect = jest.fn();
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="socket-reconnect-button"]').vm.$emit('click');
 
-        expect(store.dispatch).toHaveBeenCalledWith('reconnect');
+        expect(store.reconnect).toHaveBeenCalled();
     });
 
     it('shows expected buttons if prediction status is RESOLVED', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -161,11 +154,11 @@ describe('Predictions', () => {
     });
 
     it('shows expected buttons if prediction status is LOCKED', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -173,11 +166,11 @@ describe('Predictions', () => {
     });
 
     it('shows expected buttons if prediction status is CANCELED', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.CANCELED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.CANCELED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -185,11 +178,11 @@ describe('Predictions', () => {
     });
 
     it('shows expected buttons if prediction status is ACTIVE', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -197,11 +190,11 @@ describe('Predictions', () => {
     });
 
     it('shows dialog when resolving prediction', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -212,11 +205,11 @@ describe('Predictions', () => {
     });
 
     it('shows dialog when creating prediction', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -227,39 +220,41 @@ describe('Predictions', () => {
     });
 
     it('dispatches action when locking prediction', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+        const store = usePredictionDataStore();
+        store.lockPrediction = jest.fn();
+        store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="lock-prediction-button"]').vm.$emit('click');
 
-        expect(mockLockPrediction).toHaveBeenCalled();
+        expect(store.lockPrediction).toHaveBeenCalled();
     });
 
     it('dispatches action when cancelling prediction', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const store = usePredictionDataStore();
+        store.cancelPrediction = jest.fn();
+        store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="cancel-prediction-button"]').vm.$emit('click');
 
-        expect(mockCancelPrediction).toHaveBeenCalled();
+        expect(store.cancelPrediction).toHaveBeenCalled();
     });
 
     it('sends message when showing prediction data', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(Predictions, {
             global: {
-                plugins: [[store, predictionDataStoreKey]]
+                plugins: [pinia]
             }
         });
 

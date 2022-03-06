@@ -1,11 +1,9 @@
 import { NodeCGBrowser } from 'nodecg/browser';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
 import { Prediction, PredictionStore } from 'schemas';
 import { PredictionStatus } from 'types/enums/predictionStatus';
+import { defineStore } from 'pinia';
 
-export const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
+const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
 
 export const predictionReps = [ predictionStore ];
 
@@ -13,51 +11,45 @@ export interface PredictionDataStore {
     predictionStore: PredictionStore;
 }
 
-export const predictionDataStore = createStore<PredictionDataStore>({
-    state: {
+export const usePredictionDataStore = defineStore('prediction', {
+    state: () => ({
         predictionStore: null,
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        },
-    },
+    } as PredictionDataStore),
     actions: {
-        async lockPrediction(store) {
+        async lockPrediction() {
             return patchPrediction(
-                store.state.predictionStore.currentPrediction,
+                this.predictionStore.currentPrediction,
                 PredictionStatus.LOCKED,
                 [ PredictionStatus.ACTIVE ]);
         },
-        async cancelPrediction(store) {
+        async cancelPrediction() {
             return patchPrediction(
-                store.state.predictionStore.currentPrediction,
+                this.predictionStore.currentPrediction,
                 PredictionStatus.CANCELED,
                 [ PredictionStatus.ACTIVE, PredictionStatus.LOCKED ]);
         },
-        async resolvePrediction(store, { winningOutcomeIndex }: { winningOutcomeIndex: number }) {
+        async resolvePrediction({ winningOutcomeIndex }: { winningOutcomeIndex: number }) {
             if (winningOutcomeIndex > 1 || winningOutcomeIndex < 0) {
                 throw new Error(`Cannot resolve prediction with outcome index ${winningOutcomeIndex}.`);
-            } else if (!store.state.predictionStore.currentPrediction?.id) {
+            } else if (!this.predictionStore.currentPrediction?.id) {
                 throw new Error('No prediction to resolve.');
-            } else if (store.state.predictionStore.currentPrediction.status !== PredictionStatus.LOCKED ) {
+            } else if (this.predictionStore.currentPrediction.status !== PredictionStatus.LOCKED ) {
                 throw new Error('Can only resolve a locked prediction.');
             }
 
             return nodecg.sendMessage('patchPrediction', {
-                id: store.state.predictionStore.currentPrediction.id,
+                id: this.predictionStore.currentPrediction.id,
                 status: PredictionStatus.RESOLVED,
-                winning_outcome_id: store.state.predictionStore.currentPrediction.outcomes[winningOutcomeIndex].id
+                winning_outcome_id: this.predictionStore.currentPrediction.outcomes[winningOutcomeIndex].id
             });
         },
         async createPrediction(
-            store,
             { title, teamAName, teamBName, duration }:
                 { title: string, teamAName: string, teamBName: string, duration: number }
         ) {
             if (
                 [PredictionStatus.ACTIVE, PredictionStatus.LOCKED]
-                    .includes(store.state.predictionStore.currentPrediction?.status as PredictionStatus)
+                    .includes(this.predictionStore.currentPrediction?.status as PredictionStatus)
             ) {
                 throw new Error('An unresolved prediction already exists.');
             }
@@ -90,10 +82,4 @@ async function patchPrediction(
         id: currentPrediction.id,
         status: status,
     });
-}
-
-export const predictionDataStoreKey: InjectionKey<Store<PredictionDataStore>> = Symbol();
-
-export function usePredictionDataStore(): Store<PredictionDataStore> {
-    return useStore(predictionDataStoreKey);
 }

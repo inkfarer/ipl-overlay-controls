@@ -121,9 +121,9 @@ export default defineComponent({
             teamBName,
             allValid: computed(() => allValid(validators)),
             isActivePredictionUnresolved: computed(() => [PredictionStatus.ACTIVE, PredictionStatus.LOCKED]
-                .includes(predictionDataStore.state.predictionStore.currentPrediction?.status as PredictionStatus)),
+                .includes(predictionDataStore.predictionStore.currentPrediction?.status as PredictionStatus)),
             async createPrediction() {
-                await predictionDataStore.dispatch('createPrediction', {
+                await predictionDataStore.createPrediction({
                     title: title.value,
                     duration: duration.value,
                     teamAName: teamAName.value,

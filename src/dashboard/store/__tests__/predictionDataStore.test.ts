@@ -1,10 +1,13 @@
-import { predictionDataStore } from '../predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { createPinia, setActivePinia } from 'pinia';
+import { usePredictionDataStore } from '../predictionDataStore';
 
-describe('predictionDataStore', () => {
+describe('store', () => {
     beforeEach(() => {
-        predictionDataStore.replaceState({
+        setActivePinia(createPinia());
+
+        usePredictionDataStore().$state = {
             predictionStore: {
                 status: {
                     socketOpen: true,
@@ -39,25 +42,16 @@ describe('predictionDataStore', () => {
                     creationTime: '2020'
                 }
             }
-        });
-    });
-
-    describe('mutations', () => {
-        describe('setState', () => {
-            it('updates state', () => {
-                predictionDataStore.commit('setState', { name: 'predictionStore', val: { foo: 'bar' } });
-
-                expect(predictionDataStore.state.predictionStore).toEqual({ foo: 'bar' });
-            });
-        });
+        };
     });
 
     describe('actions', () => {
         describe('lockPrediction', () => {
             it('locks prediction', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
 
-                await predictionDataStore.dispatch('lockPrediction');
+                await store.lockPrediction();
 
                 expect(mockSendMessage).toHaveBeenCalledWith('patchPrediction', {
                     id: 'prediction123',
@@ -66,9 +60,11 @@ describe('predictionDataStore', () => {
             });
 
             it('throws error if prediction state is not ACTIVE', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+                const store = usePredictionDataStore();
 
-                await expect(() => predictionDataStore.dispatch('lockPrediction')).rejects
+                store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+
+                await expect(() => store.lockPrediction()).rejects
                     .toThrow('Cannot set prediction status at this time. Status must match one of [ACTIVE]');
                 expect(mockSendMessage).not.toHaveBeenCalled();
             });
@@ -76,9 +72,11 @@ describe('predictionDataStore', () => {
 
         describe('cancelPrediction', () => {
             it('cancels prediction', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+                const store = usePredictionDataStore();
 
-                await predictionDataStore.dispatch('cancelPrediction');
+                store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+
+                await store.cancelPrediction();
 
                 expect(mockSendMessage).toHaveBeenCalledWith('patchPrediction', {
                     id: 'prediction123',
@@ -87,9 +85,11 @@ describe('predictionDataStore', () => {
             });
 
             it('throws error if prediction state is not ACTIVE or LOCKED', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+                const store = usePredictionDataStore();
 
-                await expect(() => predictionDataStore.dispatch('cancelPrediction')).rejects
+                store.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+
+                await expect(() => store.cancelPrediction()).rejects
                     .toThrow('Cannot set prediction status at this time. Status must match one of [ACTIVE, LOCKED]');
                 expect(mockSendMessage).not.toHaveBeenCalled();
             });
@@ -97,33 +97,40 @@ describe('predictionDataStore', () => {
 
         describe('resolvePrediction', () => {
             it('throws error if index is below 0', async () => {
-                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: -21 }))
+                const store = usePredictionDataStore();
+
+                await expect(() => store.resolvePrediction({ winningOutcomeIndex: -21 }))
                     .rejects.toThrow('Cannot resolve prediction with outcome index -21');
             });
 
             it('throws error if index is above 1', async () => {
-                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 2 }))
+                const store = usePredictionDataStore();
+
+                await expect(() => store.resolvePrediction({ winningOutcomeIndex: 2 }))
                     .rejects.toThrow('Cannot resolve prediction with outcome index 2');
             });
 
             it('throws error if prediction data is missing', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction = undefined;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction = undefined;
 
-                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 1 }))
+                await expect(() => store.resolvePrediction({ winningOutcomeIndex: 1 }))
                     .rejects.toThrow('No prediction to resolve.');
             });
 
             it('throws error if prediction is not locked', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
 
-                await expect(() => predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 1 }))
+                await expect(() => store.resolvePrediction({ winningOutcomeIndex: 1 }))
                     .rejects.toThrow('Can only resolve a locked prediction.');
             });
 
             it('sends message to extension', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
 
-                await predictionDataStore.dispatch('resolvePrediction', { winningOutcomeIndex: 0 });
+                await store.resolvePrediction({ winningOutcomeIndex: 0 });
 
                 expect(mockSendMessage).toHaveBeenCalledWith('patchPrediction', {
                     id: 'prediction123',
@@ -135,30 +142,30 @@ describe('predictionDataStore', () => {
 
         describe('createPrediction', () => {
             it('throws error if current prediction is active', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
 
                 await expect(
-                    () => predictionDataStore.dispatch(
-                        'createPrediction',
+                    () => store.createPrediction(
                         { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 })
                 ).rejects.toThrow('An unresolved prediction already exists.');
             });
 
             it('throws error if current prediction is locked', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
 
                 await expect(
-                    () => predictionDataStore.dispatch(
-                        'createPrediction',
+                    () => store.createPrediction(
                         { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 })
                 ).rejects.toThrow('An unresolved prediction already exists.');
             });
 
             it('creates new prediction', async () => {
-                predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
+                const store = usePredictionDataStore();
+                store.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
 
-                await predictionDataStore.dispatch(
-                    'createPrediction',
+                await store.createPrediction(
                     { title: 'Who will win?', teamAName: 'Team A', teamBName: 'Team B', duration: 120 });
 
                 expect(mockSendMessage).toHaveBeenCalledWith('postPrediction', {
@@ -174,7 +181,9 @@ describe('predictionDataStore', () => {
 
         describe('reconnect', () => {
             it('sends message', () => {
-                predictionDataStore.dispatch('reconnect');
+                const store = usePredictionDataStore();
+
+                store.reconnect();
 
                 expect(mockSendMessage).toHaveBeenCalledWith('reconnectToRadiaSocket');
             });
