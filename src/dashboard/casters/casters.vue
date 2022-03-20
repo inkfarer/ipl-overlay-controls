@@ -43,17 +43,15 @@
 </template>
 
 <script lang="ts">
-import { computed,  defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useCasterStore } from '../store/casterStore';
 import { IplButton, IplSpace, IplExpandingSpaceGroup } from '@iplsplatoon/vue-components';
-import { Casters } from 'schemas';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import CasterEditor from './components/casterEditor.vue';
-import cloneDeep from 'lodash/cloneDeep';
-import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { storeToRefs } from 'pinia';
 
 library.add(faPlus);
 
@@ -64,45 +62,28 @@ export default defineComponent({
 
     setup() {
         const store = useCasterStore();
-        const casters: Ref<Casters> = ref({});
-        const uncommittedCasters = computed(() => store.state.uncommittedCasters);
+        const storeRefs = storeToRefs(store);
         const activeCaster = ref<string>(null);
-        const allCasters = computed(() => ({ ...casters.value, ...uncommittedCasters.value }));
+        const allCasters = computed(() => ({ ...storeRefs.casters.value, ...storeRefs.uncommittedCasters.value }));
         const getCasterKey = (id: string) => `caster_${id}`;
         const showLoadFromVc = computed(() =>
-            store.state.radiaSettings.enabled && !isEmpty(store.state.radiaSettings.guildID));
-
-        store.watch(store => store.casters, (newValue: Casters, oldValue: Casters) => {
-            Object.entries(newValue).forEach(([key, value]) => {
-                if (!isEqual(value, oldValue?.[key])) {
-                    casters.value[key] = cloneDeep(value);
-                }
-            });
-
-            Object.keys(casters.value).forEach(key => {
-                if (!newValue[key]) {
-                    delete casters.value[key];
-                }
-            });
-
-        }, { immediate: true, deep: true });
+            store.radiaSettings.enabled && !isEmpty(store.radiaSettings.guildID));
 
         return {
-            casters,
-            uncommittedCasters,
+            casters: storeRefs.casters,
+            uncommittedCasters: storeRefs.uncommittedCasters,
             activeCaster,
             disableAddCaster: computed(() => Object.keys(allCasters.value).length >= 3),
             getCasterKey,
-            addCaster() {
-                store.dispatch('addUncommittedCaster').then(newId => {
-                    activeCaster.value = getCasterKey(newId);
-                });
+            async addCaster() {
+                const newId = await store.addDefaultCaster();
+                activeCaster.value = getCasterKey(newId);
             },
             handleCasterSave(newId: string) {
                 activeCaster.value = getCasterKey(newId);
             },
             async loadFromVc() {
-                return store.dispatch('loadCastersFromVc');
+                return store.loadCastersFromVc();
             },
             showLoadFromVc,
             addCasterIcon: computed(() => showLoadFromVc.value ? 'plus' : null)

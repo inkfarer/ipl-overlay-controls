@@ -1,76 +1,61 @@
 import RoundEditor from '../roundEditor.vue';
-import { createStore } from 'vuex';
-import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
-import Mock = jest.Mock;
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('RoundEditor', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplInput: true,
         IplSelect: true,
         IplButton: true
     };
 
-    const mockUpdateRound = jest.fn();
-    const mockRemoveRound = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
-    function createTournamentDataStore() {
-        return createStore<TournamentDataStore>({
-            state: {
-                tournamentData: {
-                    meta: { id: '1093478', source: 'SMASHGG', shortName: null },
-                    teams: [
-                        { id: '123123', name: 'cool team A', players: [], showLogo: true },
-                        { id: '345345', name: 'cool team B', players: [], showLogo: false }
-                    ]
-                },
-                roundStore: {
-                    '0387': {
-                        meta: { name: 'dope round', type: PlayType.BEST_OF },
-                        games: []
-                    },
-                    '9573': {
-                        meta: { name: 'dope round the second', type: PlayType.BEST_OF },
-                        games: []
-                    },
-                    '2426': {
-                        meta: { name: 'dope round the third', type: PlayType.BEST_OF },
-                        games: []
-                    }
-                },
-                matchStore: {}
+        useTournamentDataStore().$state = {
+            tournamentData: {
+                meta: { id: '1093478', source: 'SMASHGG', shortName: null },
+                teams: [
+                    { id: '123123', name: 'cool team A', players: [], showLogo: true },
+                    { id: '345345', name: 'cool team B', players: [], showLogo: false }
+                ]
             },
-            actions: {
-                updateRound: mockUpdateRound,
-                removeRound: mockRemoveRound,
-                insertRound: jest.fn()
+            roundStore: {
+                '0387': {
+                    meta: { name: 'dope round', type: PlayType.BEST_OF },
+                    games: []
+                },
+                '9573': {
+                    meta: { name: 'dope round the second', type: PlayType.BEST_OF },
+                    games: []
+                },
+                '2426': {
+                    meta: { name: 'dope round the third', type: PlayType.BEST_OF },
+                    games: []
+                }
+            },
+            matchStore: {}
+        };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -94,15 +79,10 @@ describe('RoundEditor', () => {
     });
 
     it('matches snapshot when creating new round', () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -128,17 +108,12 @@ describe('RoundEditor', () => {
     });
 
     it('updates round on update button click', async () => {
-        mockUpdateRound.mockResolvedValue({});
-        const store = createTournamentDataStore();
-        jest.spyOn(store, 'dispatch');
-        const settingsStore = createSettingsStore();
+        const store = useTournamentDataStore();
+        store.updateRound = jest.fn().mockResolvedValue({});
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -162,7 +137,7 @@ describe('RoundEditor', () => {
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(store.dispatch).toHaveBeenCalledWith('updateRound', {
+        expect(store.updateRound).toHaveBeenCalledWith({
             id: 'round-456',
             roundName: 'New Round',
             type: PlayType.PLAY_ALL,
@@ -176,15 +151,10 @@ describe('RoundEditor', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -219,17 +189,12 @@ describe('RoundEditor', () => {
     });
 
     it('updates round on update button click if round is new', async () => {
-        const store = createTournamentDataStore();
-        jest.spyOn(store, 'dispatch');
-        (store.dispatch as Mock).mockResolvedValue({ id: 'new-round-id' });
-        const settingsStore = createSettingsStore();
+        const store = useTournamentDataStore();
+        store.insertRound = jest.fn().mockResolvedValue({ id: 'new-round-id' });
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -253,7 +218,7 @@ describe('RoundEditor', () => {
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(store.dispatch).toHaveBeenCalledWith('insertRound', {
+        expect(store.insertRound).toHaveBeenCalledWith({
             roundName: 'New Round',
             type: PlayType.PLAY_ALL,
             games: [
@@ -268,15 +233,12 @@ describe('RoundEditor', () => {
     });
 
     it('removes round on remove button click', async () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
+        const store = useTournamentDataStore();
+        store.removeRound = jest.fn();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -298,21 +260,16 @@ describe('RoundEditor', () => {
 
         wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
 
-        expect(mockRemoveRound).toHaveBeenCalledWith(expect.any(Object), {
-            roundId: 'round-456'
-        });
+        expect(store.removeRound).toHaveBeenCalledWith({ roundId: 'round-456' });
     });
 
     it('cancels new round creation on remove button click when round is new', async () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
+        const store = useTournamentDataStore();
+        store.removeRound = jest.fn();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {
@@ -334,20 +291,15 @@ describe('RoundEditor', () => {
 
         wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
 
-        expect(mockRemoveRound).not.toHaveBeenCalled();
+        expect(store.removeRound).not.toHaveBeenCalled();
         expect(wrapper.emitted('cancelNewRound').length).toEqual(1);
     });
 
     it('changes button color when data is changed and round is already saved', async () => {
-        const store = createTournamentDataStore();
-        const settingsStore = createSettingsStore();
         // @ts-ignore: This works.
         const wrapper = mount(RoundEditor, {
             global: {
-                plugins: [
-                    [store, tournamentDataStoreKey],
-                    [settingsStore, settingsStoreKey]
-                ]
+                plugins: [ pinia ]
             },
             props: {
                 round: {

@@ -1,18 +1,16 @@
-import { musicStore } from '../musicStore';
+import { useMusicStore } from '../musicStore';
 import { replicants } from '../../__mocks__/mockNodecg';
+import { createPinia, setActivePinia } from 'pinia';
 
 describe('musicStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            musicStore.commit('setState', { name: 'nowPlaying', val: { foo: 'bar' } });
-
-            expect(musicStore.state.nowPlaying).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setMusicShown', () => {
         it('updates replicant value', () => {
-            musicStore.commit('setMusicShown', false);
+            const store = useMusicStore();
+            store.setMusicShown(false);
 
             expect(replicants.musicShown).toEqual(false);
         });
@@ -20,7 +18,8 @@ describe('musicStore', () => {
 
     describe('setNowPlayingSource', () => {
         it('updates replicant value', () => {
-            musicStore.commit('setNowPlayingSource', 'lastfm');
+            const store = useMusicStore();
+            store.setNowPlayingSource('lastfm');
 
             expect(replicants.nowPlayingSource).toEqual('lastfm');
         });
@@ -28,7 +27,8 @@ describe('musicStore', () => {
 
     describe('setManualNowPlaying', () => {
         it('updates replicant value', () => {
-            musicStore.commit('setManualNowPlaying', { song: 'cool song' });
+            const store = useMusicStore();
+            store.setManualNowPlaying({ song: 'cool song' });
 
             expect(replicants.manualNowPlaying).toEqual({ song: 'cool song' });
         });

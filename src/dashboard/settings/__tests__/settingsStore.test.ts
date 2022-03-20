@@ -1,18 +1,19 @@
-import { settingsStore } from '../settingsStore';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSettingsStore } from '../settingsStore';
+import { GameVersion } from 'types/enums/gameVersion';
 
 describe('settingsStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            settingsStore.commit('setState', { name: 'lastFmSettings', val: { foo: 'bar' } });
-
-            expect(settingsStore.state.lastFmSettings).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setLastFmSettings', () => {
         it('updates replicant value', () => {
-            settingsStore.commit('setLastFmSettings', { newValue: { new: 'value' } });
+            const store = useSettingsStore();
+
+            // @ts-ignore
+            store.setLastFmSettings({ newValue: { new: 'value' } });
 
             expect(replicants.lastFmSettings).toEqual({ new: 'value' });
         });
@@ -20,7 +21,10 @@ describe('settingsStore', () => {
 
     describe('setRadiaSettings', () => {
         it('updates replicant value', () => {
-            settingsStore.commit('setRadiaSettings', { newValue: { new: 'value' } });
+            const store = useSettingsStore();
+
+            // @ts-ignore
+            store.setRadiaSettings({ newValue: { new: 'value' } });
 
             expect(replicants.radiaSettings).toEqual({ new: 'value' });
         });
@@ -28,7 +32,9 @@ describe('settingsStore', () => {
 
     describe('attemptRadiaConnection', () => {
         it('sends message', () => {
-            settingsStore.dispatch('attemptRadiaConnection');
+            const store = useSettingsStore();
+
+            store.attemptRadiaConnection();
 
             expect(mockSendMessage).toHaveBeenCalledWith('retryRadiaAvailabilityCheck');
         });
@@ -36,7 +42,9 @@ describe('settingsStore', () => {
 
     describe('setGameVersion', () => {
         it('sends message', () => {
-            settingsStore.dispatch('setGameVersion', 'SPLATOON_3');
+            const store = useSettingsStore();
+
+            store.setGameVersion(GameVersion.SPLATOON_3);
 
             expect(mockSendMessage).toHaveBeenCalledWith('setGameVersion', { version: 'SPLATOON_3' });
         });

@@ -43,7 +43,7 @@ import { defineComponent } from '@vue/runtime-core';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { GameVersion, GameVersionHelper } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../settingsStore';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { prettyPrintList } from '../../../helpers/array';
 import { pluralizeWithoutCount } from '../../helpers/stringHelper';
@@ -60,8 +60,8 @@ export default defineComponent({
         const showIncompatibleBundlesMessage = ref(false);
         const incompatibleBundles = ref<string[]>([]);
 
-        store.watch(
-            state => state.runtimeConfig.gameVersion,
+        watch(
+            () => store.runtimeConfig.gameVersion,
             version => gameVersion.value = version as GameVersion,
             { immediate: true });
 
@@ -73,12 +73,12 @@ export default defineComponent({
             pluralizeWithoutCount,
             gameVersionOptions: Object.values(GameVersion).map(version =>
                 ({ value: version, name: GameVersionHelper.toPrettyString(version) })),
-            isChanged: computed(() => gameVersion.value !== store.state.runtimeConfig.gameVersion),
-            currentGameVersion: computed(() => store.state.runtimeConfig.gameVersion),
+            isChanged: computed(() => gameVersion.value !== store.runtimeConfig.gameVersion),
+            currentGameVersion: computed(() => store.runtimeConfig.gameVersion),
             showIncompatibleBundlesMessage,
             incompatibleBundles,
             async doUpdate() {
-                const result: SetGameVersionResponse = await store.dispatch('setGameVersion', gameVersion.value);
+                const result: SetGameVersionResponse = await store.setGameVersion(gameVersion.value);
                 if (result.incompatibleBundles.length > 0) {
                     showIncompatibleBundlesMessage.value = true;
                     incompatibleBundles.value = result.incompatibleBundles;
@@ -89,7 +89,7 @@ export default defineComponent({
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                gameVersion.value = store.state.runtimeConfig.gameVersion as GameVersion;
+                gameVersion.value = store.runtimeConfig.gameVersion as GameVersion;
             }
         };
     }

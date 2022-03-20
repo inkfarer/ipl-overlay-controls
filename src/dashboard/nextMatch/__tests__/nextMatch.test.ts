@@ -1,9 +1,11 @@
 import NextMatch from '../nextMatch.vue';
-import { createStore } from 'vuex';
 import { config, mount } from '@vue/test-utils';
-import { nextRoundStoreKey } from '../../store/nextRoundStore';
+import { useNextRoundStore } from '../../store/nextRoundStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('NextMatch', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         HighlightedMatchPicker: true,
         ManualTeamPicker: true,
@@ -12,25 +14,22 @@ describe('NextMatch', () => {
         IplSmallToggle: true
     };
 
-    function createNextRoundStore() {
-        return createStore({
-            state: {
-                nextRound: {
-                    showOnStream: true
-                }
-            },
-            mutations: {
-                setShowOnStream: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useNextRoundStore().$state = {
+            // @ts-ignore
+            nextRound: {
+                showOnStream: true
             }
-        });
-    }
+        };
+    });
 
     describe('template', () => {
         it('matches snapshot', () => {
-            const store = createNextRoundStore();
             const wrapper = mount(NextMatch, {
                 global: {
-                    plugins: [[store, nextRoundStoreKey]]
+                    plugins: [pinia]
                 }
             });
 
@@ -38,10 +37,9 @@ describe('NextMatch', () => {
         });
 
         it('matches snapshot when choosing teams manually', async () => {
-            const store = createNextRoundStore();
             const wrapper = mount(NextMatch, {
                 global: {
-                    plugins: [[store, nextRoundStoreKey]]
+                    plugins: [pinia]
                 }
             });
 
@@ -53,17 +51,17 @@ describe('NextMatch', () => {
     });
 
     it('handles changing show on stream checkbox', async () => {
-        const store = createNextRoundStore();
-        jest.spyOn(store, 'commit');
+        const store = useNextRoundStore();
+        store.setShowOnStream = jest.fn();
         const wrapper = mount(NextMatch, {
             global: {
-                plugins: [[store, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="show-on-stream-toggle"]').vm.$emit('update:modelValue', false);
         await wrapper.vm.$nextTick();
 
-        expect(store.commit).toHaveBeenCalledWith('setShowOnStream', false);
+        expect(store.setShowOnStream).toHaveBeenCalledWith(false);
     });
 });

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { IplButton, IplInput, IplSpace } from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../settingsStore';
 import isEqual from 'lodash/isEqual';
@@ -39,11 +39,11 @@ export default defineComponent({
 
     setup() {
         const isFocused = ref(false);
-        const isChanged = computed(() => !isEqual(settings.value, store.state.lastFmSettings));
+        const isChanged = computed(() => !isEqual(settings.value, store.lastFmSettings));
         const store = useSettingsStore();
-        const settings: Ref<LastFmSettings> = ref(cloneDeep(store.state.lastFmSettings));
+        const settings: Ref<LastFmSettings> = ref(cloneDeep(store.lastFmSettings));
 
-        store.watch(store => store.lastFmSettings, (newValue) => {
+        watch(() => store.lastFmSettings, (newValue) => {
             if (!isFocused.value) {
                 settings.value = cloneDeep(newValue);
             }
@@ -60,13 +60,13 @@ export default defineComponent({
             settings,
             handleUpdate() {
                 if (isChanged.value) {
-                    store.commit('setLastFmSettings', { newValue: settings.value });
+                    store.setLastFmSettings({ newValue: settings.value });
                 }
             },
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                settings.value = cloneDeep(store.state.lastFmSettings);
+                settings.value = cloneDeep(store.lastFmSettings);
             }
         };
     }

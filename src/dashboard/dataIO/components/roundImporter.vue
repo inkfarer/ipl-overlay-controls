@@ -70,9 +70,9 @@ export default defineComponent({
             allValid: computed(() => allValid(validators)),
             async handleImport() {
                 if (useFileUpload.value) {
-                    await tournamentDataStore.dispatch('uploadRoundData', { file: roundFile.value });
+                    await tournamentDataStore.uploadRoundData({ file: roundFile.value });
                 } else {
-                    await tournamentDataStore.dispatch('fetchRoundData', { url: dataUrl.value });
+                    await tournamentDataStore.fetchRoundData({ url: dataUrl.value });
                 }
             }
         };

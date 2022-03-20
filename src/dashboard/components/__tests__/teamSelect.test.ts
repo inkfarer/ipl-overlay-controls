@@ -1,43 +1,43 @@
 import TeamSelect from '../teamSelect.vue';
-import { createStore } from 'vuex';
 import { config, mount } from '@vue/test-utils';
-import { tournamentDataStoreKey } from '../../store/tournamentDataStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 describe('TeamSelect', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplSelect: true,
         IplCheckbox: true
     };
 
-    function createTournamentDataStore() {
-        return createStore({
-            state: {
-                tournamentData: {
-                    teams: [
-                        {
-                            id: 'teamone',
-                            name: 'Team One',
-                            showLogo: true
-                        },
-                        {
-                            id: 'teamtwo',
-                            name: 'Team Two',
-                            showLogo: false
-                        }
-                    ]
-                }
-            },
-            actions: {
-                setTeamImageHidden: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useTournamentDataStore().$state = {
+            tournamentData: {
+                teams: [
+                    // @ts-ignore
+                    {
+                        id: 'teamone',
+                        name: 'Team One',
+                        showLogo: true
+                    },
+                    // @ts-ignore
+                    {
+                        id: 'teamtwo',
+                        name: 'Team Two',
+                        showLogo: false
+                    }
+                ]
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(TeamSelect, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             },
             props: {
                 modelValue: 'teamone',
@@ -51,11 +51,11 @@ describe('TeamSelect', () => {
     });
 
     it('handles setting team image visibility', () => {
-        const store = createTournamentDataStore();
-        jest.spyOn(store, 'dispatch');
+        const store = useTournamentDataStore();
+        store.setTeamImageHidden = jest.fn();
         const wrapper = mount(TeamSelect, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             },
             props: {
                 modelValue: 'teamone',
@@ -65,6 +65,6 @@ describe('TeamSelect', () => {
 
         wrapper.getComponent('[data-test="team-image-toggle"]').vm.$emit('update:modelValue', false);
 
-        expect(store.dispatch).toHaveBeenCalledWith('setTeamImageHidden', { teamId: 'teamone', isVisible: false });
+        expect(store.setTeamImageHidden).toHaveBeenCalledWith({ teamId: 'teamone', isVisible: false });
     });
 });

@@ -1,9 +1,7 @@
 import { NodeCGBrowser } from 'nodecg/browser';
 import { ObsCredentials, ObsData } from 'schemas';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
 import { SetObsDataRequest } from 'types/messages/obs';
+import { defineStore } from 'pinia';
 
 const obsData = nodecg.Replicant<ObsData>('obsData');
 const obsCredentials = nodecg.Replicant<ObsCredentials>('obsCredentials');
@@ -15,21 +13,16 @@ export interface ObsStore {
     obsCredentials: ObsCredentials
 }
 
-export const obsStore = createStore<ObsStore>({
-    state: {
+export const useObsStore = defineStore('obs', {
+    state: () => ({
         obsData: null,
         obsCredentials: null
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        }
-    },
+    } as ObsStore),
     actions: {
-        async connect(store, { address, password }: { address: string, password?: string }): Promise<void> {
+        async connect({ address, password }: { address: string, password?: string }): Promise<void> {
             return nodecg.sendMessage('connectToObs', { address, password });
         },
-        async setData(store, data: SetObsDataRequest): Promise<void> {
+        async setData(data: SetObsDataRequest): Promise<void> {
             return nodecg.sendMessage('setObsData', data);
         },
         async startGame(): Promise<void> {
@@ -38,14 +31,8 @@ export const obsStore = createStore<ObsStore>({
         async endGame(): Promise<void> {
             return nodecg.sendMessage('endGame');
         },
-        setEnabled(store, enabled: boolean): void {
+        setEnabled(enabled: boolean): void {
             nodecg.sendMessage('setObsSocketEnabled', enabled);
         }
     }
 });
-
-export const obsStoreKey: InjectionKey<Store<ObsStore>> = Symbol();
-
-export function useObsStore(): Store<ObsStore> {
-    return useStore(obsStoreKey);
-}

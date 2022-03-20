@@ -7,6 +7,7 @@ import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { GetSmashggEventRequest } from 'types/messages/tournamentData';
+import { GetTournamentDataRequest } from '../../types/messages/tournamentData';
 
 const nodecg = nodecgContext.get();
 
@@ -17,7 +18,7 @@ if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') 
     );
 }
 
-nodecg.listenFor('getTournamentData', async (data, ack: UnhandledListenForCb) => {
+nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack: UnhandledListenForCb) => {
     if (!data.id || !data.method) {
         ack(new Error('Missing arguments.'), null);
         return;

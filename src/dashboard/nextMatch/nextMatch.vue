@@ -43,10 +43,10 @@ export default defineComponent({
             chooseTeamsManually: ref(false),
             showOnStream: computed({
                 get() {
-                    return nextRoundStore.state.nextRound.showOnStream;
+                    return nextRoundStore.nextRound.showOnStream;
                 },
                 set(value: boolean) {
-                    nextRoundStore.commit('setShowOnStream', value);
+                    nextRoundStore.setShowOnStream(value);
                 }
             })
         };

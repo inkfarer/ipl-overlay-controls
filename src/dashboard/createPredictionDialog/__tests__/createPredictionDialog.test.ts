@@ -1,16 +1,18 @@
 import CreatePredictionDialog from '../createPredictionDialog.vue';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { PredictionDataStore, predictionDataStoreKey } from '../../store/predictionDataStore';
 import { PredictionStatus } from 'types/enums/predictionStatus';
-import { NextRoundStore, nextRoundStoreKey } from '../../store/nextRoundStore';
 import { mockDialog, mockGetDialog } from '../../__mocks__/mockNodecg';
 import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useNextRoundStore } from '../../store/nextRoundStore';
+import { usePredictionDataStore } from '../../store/predictionDataStore';
 
 jest.mock('../../helpers/dialogHelper');
 
 describe('CreatePredictionDialog', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplInput: true,
         FontAwesomeIcon: true,
@@ -18,80 +20,63 @@ describe('CreatePredictionDialog', () => {
         IplDialogTitle: true
     };
 
-    const mockCreatePrediction = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createNextRoundStore() {
-        return createStore<NextRoundStore>({
-            state: {
-                nextRound: {
-                    teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
-                    teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
-                    showOnStream: true,
-                    games: []
-                }
-            },
-            mutations: {
-                setShowOnStream: jest.fn()
-            },
-            actions: {
-                beginNextMatch: jest.fn(),
-                setNextRound: jest.fn()
+        useNextRoundStore().$state = {
+            nextRound: {
+                teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
+                teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
+                round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
+                showOnStream: true,
+                games: []
             }
-        });
-    }
+        };
 
-    function createPredictionDataStore() {
-        return createStore<PredictionDataStore>({
-            state: {
-                predictionStore: {
-                    status: {
-                        socketOpen: true,
-                        predictionsEnabled: true
-                    },
-                    currentPrediction: {
-                        id: 'prediction123',
-                        broadcasterId: 'ipl',
-                        broadcasterName: 'IPL',
-                        broadcasterLogin: 'eye pee el',
-                        title: 'Who will win?',
-                        outcomes: [
-                            {
-                                id: 'outcome-1',
-                                title: 'First Team',
-                                users: 5,
-                                pointsUsed: 10000,
-                                topPredictors: [],
-                                color: 'BLUE'
-                            },
-                            {
-                                id: 'outcome-2',
-                                title: 'Second Team',
-                                users: 1,
-                                pointsUsed: 1,
-                                topPredictors: [],
-                                color: 'PINK'
-                            }
-                        ],
-                        duration: 60,
-                        status: PredictionStatus.ACTIVE,
-                        creationTime: '2020',
-                    }
+        usePredictionDataStore().$state = {
+            predictionStore: {
+                status: {
+                    socketOpen: true,
+                    predictionsEnabled: true
+                },
+                currentPrediction: {
+                    id: 'prediction123',
+                    broadcasterId: 'ipl',
+                    broadcasterName: 'IPL',
+                    broadcasterLogin: 'eye pee el',
+                    title: 'Who will win?',
+                    outcomes: [
+                        {
+                            id: 'outcome-1',
+                            title: 'First Team',
+                            users: 5,
+                            pointsUsed: 10000,
+                            topPredictors: [],
+                            color: 'BLUE'
+                        },
+                        {
+                            id: 'outcome-2',
+                            title: 'Second Team',
+                            users: 1,
+                            pointsUsed: 1,
+                            topPredictors: [],
+                            color: 'PINK'
+                        }
+                    ],
+                    duration: 60,
+                    status: PredictionStatus.ACTIVE,
+                    creationTime: '2020',
                 }
-            },
-            actions: {
-                createPrediction: mockCreatePrediction,
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot when existing prediction is locked', () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.LOCKED;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -99,12 +84,11 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('matches snapshot when existing prediction is active', () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.ACTIVE;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -112,12 +96,11 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('matches snapshot', () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -125,12 +108,11 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('disables submit button if any fields are invalid', async () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -141,12 +123,12 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('handles creating prediction and closes dialog on create button click', async () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.createPrediction = jest.fn();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -154,7 +136,7 @@ describe('CreatePredictionDialog', () => {
         wrapper.getComponent('[data-test="create-prediction-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(mockCreatePrediction).toHaveBeenCalledWith(expect.any(Object), {
+        expect(predictionDataStore.createPrediction).toHaveBeenCalledWith({
             title: 'Who do you think will win this match?',
             duration: 128,
             teamAName: 'cool team A',
@@ -165,12 +147,11 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('resets data to defaults on reset button click', async () => {
-        const predictionDataStore = createPredictionDataStore();
-        predictionDataStore.state.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
-        const nextRoundStore = createNextRoundStore();
+        const predictionDataStore = usePredictionDataStore();
+        predictionDataStore.predictionStore.currentPrediction.status = PredictionStatus.RESOLVED;
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -188,11 +169,9 @@ describe('CreatePredictionDialog', () => {
     });
 
     it('closes dialog on dialog title close event', () => {
-        const predictionDataStore = createPredictionDataStore();
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(CreatePredictionDialog, {
             global: {
-                plugins: [[predictionDataStore, predictionDataStoreKey], [nextRoundStore, nextRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 

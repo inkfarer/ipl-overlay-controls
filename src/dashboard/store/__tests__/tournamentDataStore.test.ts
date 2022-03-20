@@ -1,20 +1,19 @@
-import { tournamentDataStore } from '../tournamentDataStore';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { TournamentData } from 'schemas';
+import { createPinia, setActivePinia } from 'pinia';
+import { useTournamentDataStore } from '../tournamentDataStore';
 
 describe('tournamentDataStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            tournamentDataStore.commit('setState', { name: 'roundStore', val: { foo: 'bar' } });
-
-            expect(tournamentDataStore.state.roundStore).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setTeamImageHidden', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.dispatch('setTeamImageHidden', { teamId: '1234', isVisible: true });
+            const store = useTournamentDataStore();
+
+            store.setTeamImageHidden({ teamId: '1234', isVisible: true });
 
             expect(mockSendMessage).toHaveBeenCalledWith('toggleTeamImage', { teamId: '1234', isVisible: true });
         });
@@ -22,7 +21,9 @@ describe('tournamentDataStore', () => {
 
     describe('getTournamentData', () => {
         it('sends message to extension', async () => {
-            await tournamentDataStore.dispatch('getTournamentData', {
+            const store = useTournamentDataStore();
+
+            await store.getTournamentData({
                 method: TournamentDataSource.UPLOAD,
                 id: 'tournament___'
             });
@@ -36,7 +37,9 @@ describe('tournamentDataStore', () => {
 
     describe('getSmashggEvent', () => {
         it('sends message to extension', async () => {
-            await tournamentDataStore.dispatch('getSmashggEvent', {
+            const store = useTournamentDataStore();
+
+            await store.getSmashggEvent({
                 eventId: 123123
             });
 
@@ -48,13 +51,14 @@ describe('tournamentDataStore', () => {
 
     describe('uploadTeamData', () => {
         it('sends file to local endpoint', async () => {
+            const store = useTournamentDataStore();
             const file = new File([], 'new-file.json');
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
             expectedFormData.append('jsonType', 'teams');
             global.fetch = jest.fn().mockResolvedValue({ status: 200 });
 
-            await tournamentDataStore.dispatch('uploadTeamData', { file });
+            await store.uploadTeamData({ file });
 
             expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                 method: 'POST',
@@ -65,6 +69,7 @@ describe('tournamentDataStore', () => {
         it('throws error on bad status', async () => {
             expect.assertions(2);
 
+            const store = useTournamentDataStore();
             const file = new File([], 'new-file.json');
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
@@ -72,7 +77,7 @@ describe('tournamentDataStore', () => {
             global.fetch = jest.fn().mockResolvedValue({ status: 500, text: jest.fn().mockResolvedValue('Error!') });
 
             try {
-                await tournamentDataStore.dispatch('uploadTeamData', { file });
+                await store.uploadTeamData({ file });
             } catch (e) {
                 expect(e.message).toEqual('Import failed with status 500: Error!');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
@@ -85,13 +90,14 @@ describe('tournamentDataStore', () => {
 
     describe('uploadRoundData', () => {
         it('sends file to local endpoint', async () => {
+            const store = useTournamentDataStore();
             const file = new File([], 'new-file.json');
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
             expectedFormData.append('jsonType', 'rounds');
             global.fetch = jest.fn().mockResolvedValue({ status: 200 });
 
-            await tournamentDataStore.dispatch('uploadRoundData', { file });
+            await store.uploadRoundData({ file });
 
             expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                 method: 'POST',
@@ -102,6 +108,7 @@ describe('tournamentDataStore', () => {
         it('throws error on bad status', async () => {
             expect.assertions(2);
 
+            const store = useTournamentDataStore();
             const file = new File([], 'new-file.json');
             const expectedFormData = new FormData();
             expectedFormData.append('file', file);
@@ -109,7 +116,7 @@ describe('tournamentDataStore', () => {
             global.fetch = jest.fn().mockResolvedValue({ status: 401, text: jest.fn().mockResolvedValue('Error!!') });
 
             try {
-                await tournamentDataStore.dispatch('uploadRoundData', { file });
+                await store.uploadRoundData({ file });
             } catch (e) {
                 expect(e.message).toEqual('Import failed with status 401: Error!!');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
@@ -122,7 +129,9 @@ describe('tournamentDataStore', () => {
 
     describe('fetchRoundData', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.dispatch('fetchRoundData', { url: 'data://round-data' });
+            const store = useTournamentDataStore();
+
+            store.fetchRoundData({ url: 'data://round-data' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('getRounds', { url: 'data://round-data' });
         });
@@ -130,7 +139,9 @@ describe('tournamentDataStore', () => {
 
     describe('removeRound', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.dispatch('removeRound', { roundId: 'round123' });
+            const store = useTournamentDataStore();
+
+            store.removeRound({ roundId: 'round123' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('removeRound', { roundId: 'round123' });
         });
@@ -138,9 +149,10 @@ describe('tournamentDataStore', () => {
 
     describe('updateRound', () => {
         it('sends message to extension', async () => {
+            const store = useTournamentDataStore();
             mockSendMessage.mockResolvedValue({ id: 'round-round' });
 
-            const result = await tournamentDataStore.dispatch('updateRound', {
+            const result = await store.updateRound({
                 id: 'round',
                 roundName: 'Cool Round',
                 games: [ { mode: 'Rainmaker', stage: 'Ancho-V Games' } ]
@@ -157,7 +169,8 @@ describe('tournamentDataStore', () => {
 
     describe('resetRoundStore', () => {
         it('sends message to extension', () => {
-            tournamentDataStore.dispatch('resetRoundStore');
+            const store = useTournamentDataStore();
+            store.resetRoundStore();
 
             expect(mockSendMessage).toHaveBeenCalledWith('resetRoundStore');
         });
@@ -165,9 +178,10 @@ describe('tournamentDataStore', () => {
 
     describe('setShortName', () => {
         it('updates tournament data', () => {
+            const store = useTournamentDataStore();
             replicants.tournamentData = { meta: { shortName: 'Old Name' } };
 
-            tournamentDataStore.dispatch('setShortName', 'New Name');
+            store.setShortName('New Name');
 
             expect((replicants.tournamentData as TournamentData).meta.shortName).toEqual('New Name');
         });

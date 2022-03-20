@@ -94,8 +94,8 @@ export default defineComponent({
         const isEdited = computed(() => !isEqual(props.caster, internalCaster.value));
         const key = getCurrentInstance().vnode.key as string;
 
-        watch(() => props.caster, newValue => {
-            if (!isFocused.value) {
+        watch(() => props.caster, (newValue, oldValue) => {
+            if (!isFocused.value && !isEqual(newValue, oldValue)) {
                 internalCaster.value = cloneDeep(newValue);
             }
         }, { immediate: true });
@@ -106,27 +106,27 @@ export default defineComponent({
             key,
             async updateCaster() {
                 if (props.uncommitted) {
-                    const newId = await store.dispatch('saveUncommittedCaster', {
+                    const newId = await store.saveUncommittedCaster({
                         id: props.casterId,
                         caster: internalCaster.value
                     });
                     emit('save', newId);
                 } else {
-                    store.commit('updateCaster', { id: props.casterId, newValue: internalCaster.value });
+                    store.updateCaster({ id: props.casterId, newValue: internalCaster.value });
                 }
             },
             removeCaster() {
                 if (props.uncommitted) {
-                    store.commit('removeUncommittedCaster', props.casterId);
+                    store.removeUncommittedCaster(props.casterId);
                 } else {
-                    store.dispatch('removeCaster', props.casterId);
+                    store.removeCaster(props.casterId);
                 }
             },
             setFocused(focused: boolean) {
                 isFocused.value = focused;
             },
             disableSave: computed(() => {
-                return props.uncommitted && Object.keys(store.state.casters).length >= 3;
+                return props.uncommitted && Object.keys(store.casters).length >= 3;
             }),
             isEdited,
             buttonColor: computed(() => props.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),

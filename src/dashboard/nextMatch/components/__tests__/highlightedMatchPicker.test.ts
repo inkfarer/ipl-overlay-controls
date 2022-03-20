@@ -1,25 +1,27 @@
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import difference from 'lodash/difference';
 import { config, mount } from '@vue/test-utils';
-import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlightedMatchStore';
-import { createStore } from 'vuex';
 import HighlightedMatchPicker from '../highlightedMatchPicker.vue';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useHighlightedMatchStore } from '../../highlightedMatchStore';
 
 describe('HighlightedMatchPicker', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         HighlightedMatchImporter: true,
         HighlightedMatchViewer: true,
         FontAwesomeIcon: true
     };
 
-    function createHighlightedMatchStore() {
-        return createStore<HighlightedMatchStore>({
-            state: {
-                tournamentData: null,
-                highlightedMatches: null
-            }
-        });
-    }
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useHighlightedMatchStore().$state = {
+            tournamentData: null,
+            highlightedMatches: null
+        };
+    });
 
     const importableSources = [
         TournamentDataSource.SMASHGG,
@@ -28,8 +30,8 @@ describe('HighlightedMatchPicker', () => {
 
     difference(Object.values(TournamentDataSource), importableSources).forEach(source => {
         it(`displays warning for source ${source}`, () => {
-            const store = createHighlightedMatchStore();
-            store.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source,
                     id: 'tournament123',
@@ -39,7 +41,7 @@ describe('HighlightedMatchPicker', () => {
             };
             const wrapper = mount(HighlightedMatchPicker, {
                 global: {
-                    plugins: [[store, highlightedMatchStoreKey]]
+                    plugins: [pinia]
                 }
             });
 
@@ -52,8 +54,8 @@ describe('HighlightedMatchPicker', () => {
 
     importableSources.forEach(source => {
         it(`displays importer and viewer for source ${source}`, () => {
-            const store = createHighlightedMatchStore();
-            store.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source,
                     id: 'tournament123',
@@ -64,7 +66,7 @@ describe('HighlightedMatchPicker', () => {
             };
             const wrapper = mount(HighlightedMatchPicker, {
                 global: {
-                    plugins: [[store, highlightedMatchStoreKey]]
+                    plugins: [pinia]
                 }
             });
 
@@ -75,8 +77,8 @@ describe('HighlightedMatchPicker', () => {
         });
 
         it(`displays warning when stages are not present for ${source}`, () => {
-            const store = createHighlightedMatchStore();
-            store.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source,
                     id: 'tournament123',
@@ -87,7 +89,7 @@ describe('HighlightedMatchPicker', () => {
             };
             const wrapper = mount(HighlightedMatchPicker, {
                 global: {
-                    plugins: [[store, highlightedMatchStoreKey]]
+                    plugins: [pinia]
                 }
             });
 

@@ -1,34 +1,31 @@
 import ScoreboardEditor from '../scoreboardEditor.vue';
 import { config, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { ScoreboardStore, scoreboardStoreKey } from '../../../store/scoreboardStore';
+import { useScoreboardStore } from '../../../store/scoreboardStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('ScoreboardEditor', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplToggle: true,
         IplDataRow: true
     };
 
-    const createScoreboardStore = () => {
-        return createStore<ScoreboardStore>({
-            state: {
-                scoreboardData: {
-                    flavorText: 'whoa',
-                    isVisible: false
-                }
-            },
-            mutations: {
-                setFlavorText: jest.fn(),
-                setScoreboardVisible: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useScoreboardStore().$state = {
+            scoreboardData: {
+                flavorText: 'whoa',
+                isVisible: false
             }
-        });
-    };
+        };
+    });
 
     it('matches snapshot', async () => {
-        const store = createScoreboardStore();
         const wrapper = mount(ScoreboardEditor, {
             global: {
-                plugins: [ [ store, scoreboardStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -36,14 +33,14 @@ describe('ScoreboardEditor', () => {
     });
 
     it('updates isVisible on store change', async () => {
-        const store = createScoreboardStore();
+        const store = useScoreboardStore();
         const wrapper = mount(ScoreboardEditor, {
             global: {
-                plugins: [ [ store, scoreboardStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
-        store.state.scoreboardData.isVisible = false;
+        store.scoreboardData.isVisible = false;
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findComponent('[data-test="scoreboard-visible-toggle"]').attributes().modelvalue)
@@ -51,16 +48,16 @@ describe('ScoreboardEditor', () => {
     });
 
     it('updates scoreboard visible on toggle interaction', async () => {
-        const store = createScoreboardStore();
-        jest.spyOn(store, 'commit');
+        const store = useScoreboardStore();
+        store.setScoreboardVisible = jest.fn();
         const wrapper = mount(ScoreboardEditor, {
             global: {
-                plugins: [ [ store, scoreboardStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.findComponent('[data-test="scoreboard-visible-toggle"]').vm.$emit('update:modelValue', true);
 
-        expect(store.commit).toHaveBeenCalledWith('setScoreboardVisible', true);
+        expect(store.setScoreboardVisible).toHaveBeenCalledWith(true);
     });
 });

@@ -39,9 +39,9 @@ export default defineComponent({
 
         return {
             roundData: computed(() => ({
-                name: nextRoundStore.state.nextRound.round.name,
-                teamAName: addDots(nextRoundStore.state.nextRound.teamA.name),
-                teamBName: addDots(nextRoundStore.state.nextRound.teamB.name)
+                name: nextRoundStore.nextRound.round.name,
+                teamAName: addDots(nextRoundStore.nextRound.teamA.name),
+                teamBName: addDots(nextRoundStore.nextRound.teamB.name)
             })),
         };
     }

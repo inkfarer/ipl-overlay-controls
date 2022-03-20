@@ -1,7 +1,7 @@
-import { GameWinner } from 'types/enums/gameWinner';
+import { GameWinnerValues } from './enums/gameWinner';
 
 export interface ActiveRoundGame {
-    winner: GameWinner;
+    winner: GameWinnerValues;
     stage: string;
     mode: string;
     color?: {

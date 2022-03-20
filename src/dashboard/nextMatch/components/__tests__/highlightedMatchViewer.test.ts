@@ -1,14 +1,16 @@
 import HighlightedMatchViewer from '../highlightedMatchViewer.vue';
-import { createStore } from 'vuex';
-import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlightedMatchStore';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { Team } from 'types/team';
-import { NextRoundStore, nextRoundStoreKey } from '../../../store/nextRoundStore';
 import { PlayType } from 'types/enums/playType';
-import { tournamentDataStoreKey } from '../../../store/tournamentDataStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useNextRoundStore } from '../../../store/nextRoundStore';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { useHighlightedMatchStore } from '../../highlightedMatchStore';
 
 describe('HighlightedMatchViewer', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplSelect: true,
         IplDataRow: true,
@@ -17,62 +19,40 @@ describe('HighlightedMatchViewer', () => {
         FontAwesomeIcon: true
     };
 
-    config.global.plugins = [[createStore({}), tournamentDataStoreKey]];
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    const mockSetNextMatch = jest.fn();
+        useNextRoundStore().$state = {
+            nextRound: {
+                teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
+                teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
+                round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
+                showOnStream: true,
+                games: []
+            }
+        };
+
+        useHighlightedMatchStore().$state = {
+            tournamentData: {
+                meta: {
+                    id: 'tournament123',
+                    source: TournamentDataSource.UNKNOWN,
+                    shortName: null
+                },
+                teams: []
+            },
+            highlightedMatches: null
+        };
+    });
+
     const mockTeam: Team = { id: '1234', name: 'mock team', showLogo: false, players: []};
 
-    function createTournamentDataStore() {
-        return createStore({
-            actions: {
-                updateRound: jest.fn()
-            }
-        });
-    }
-
-    function createNextRoundStore() {
-        return createStore<NextRoundStore>({
-            state: {
-                nextRound: {
-                    teamA: { id: '123123', name: 'cool team A', showLogo: true, players: []},
-                    teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
-                    round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
-                    showOnStream: true,
-                    games: []
-                }
-            }
-        });
-    }
-
-    function createHighlightedMatchStore() {
-        return createStore<HighlightedMatchStore>({
-            state: {
-                tournamentData: {
-                    meta: {
-                        id: 'tournament123',
-                        source: TournamentDataSource.UNKNOWN,
-                        shortName: null
-                    },
-                    teams: []
-                },
-                highlightedMatches: null
-            },
-            actions: {
-                setNextMatch: mockSetNextMatch
-            }
-        });
-    }
-
     it('matches snapshot when no matches are loaded', () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [];
-        const nextRoundStore = createNextRoundStore();
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [];
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -80,18 +60,14 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('matches snapshot', () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'cool match', id: '1234', playType: PlayType.PLAY_ALL }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -99,23 +75,19 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('selects first match when highlighted matches are updated', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         expect(wrapper.getComponent('[data-test="match-selector"]').attributes().modelvalue).toEqual('1234');
-        highlightedMatchStore.state.highlightedMatches = [
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'new match', id: '678' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'new match 2', id: '3089754' }, teamA: mockTeam, teamB: mockTeam }
         ];
@@ -124,25 +96,21 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('selects match with same teams as next round if found', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         expect(wrapper.getComponent('[data-test="match-selector"]').attributes().modelvalue).toEqual('1234');
         const mockSelectedTeamA = { ...mockTeam, id: '123123' };
         const mockSelectedTeamB = { ...mockTeam, id: '345345' };
-        highlightedMatchStore.state.highlightedMatches = [
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'new match', id: '678' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'new match 2', id: '3089754' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'coolest match', id: '7396' }, teamA: mockSelectedTeamA, teamB: mockSelectedTeamB }
@@ -152,8 +120,8 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('displays team names for selected match', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             {
                 meta: { name: 'cooler match', id: '567' },
@@ -167,13 +135,9 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -184,8 +148,9 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('commits to store on set next match button press', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.setNextMatch = jest.fn();
+        highlightedMatchStore.highlightedMatches = [
             {
                 meta: { name: 'cooler match', id: '567' },
                 teamA: {
@@ -198,19 +163,15 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="set-next-match-button"]').vm.$emit('click');
 
-        expect(mockSetNextMatch).toHaveBeenCalledWith(expect.any(Object), {
+        expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
             teamAId: '1234',
             teamBId: '5678',
             roundId: '0387'
@@ -218,8 +179,9 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('updates selected round if it has a play type that differs from the one of the selected match', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.setNextMatch = jest.fn();
+        highlightedMatchStore.highlightedMatches = [
             {
                 meta: { name: 'cooler match', id: '567', playType: PlayType.BEST_OF },
                 teamA: {
@@ -232,16 +194,11 @@ describe('HighlightedMatchViewer', () => {
                 }
             }
         ];
-        const nextRoundStore = createNextRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'dispatch');
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.updateRound = jest.fn();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey],
-                    [tournamentDataStore, tournamentDataStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -250,30 +207,26 @@ describe('HighlightedMatchViewer', () => {
         wrapper.getComponent('[data-test="set-next-match-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(mockSetNextMatch).toHaveBeenCalledWith(expect.any(Object), {
+        expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
             teamAId: '1234',
             teamBId: '5678',
             roundId: '0387'
         });
-        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('updateRound', {
+        expect(tournamentDataStore.updateRound).toHaveBeenCalledWith({
             id: '0387',
             type: PlayType.BEST_OF
         });
     });
 
     it('changes update button color when data is changed', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             { meta: { name: 'cool match', id: '1234' }, teamA: mockTeam, teamB: mockTeam },
             { meta: { name: 'cooler match', id: '567' }, teamA: mockTeam, teamB: mockTeam }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -284,21 +237,17 @@ describe('HighlightedMatchViewer', () => {
     });
 
     it('disables set next match button if selected match data is not found', async () => {
-        const highlightedMatchStore = createHighlightedMatchStore();
-        highlightedMatchStore.state.highlightedMatches = [
+        const highlightedMatchStore = useHighlightedMatchStore();
+        highlightedMatchStore.highlightedMatches = [
             {
                 meta: { name: 'cooler match', id: '567' },
                 teamA: mockTeam,
                 teamB: mockTeam
             }
         ];
-        const nextRoundStore = createNextRoundStore();
         const wrapper = mount(HighlightedMatchViewer, {
             global: {
-                plugins: [
-                    [highlightedMatchStore, highlightedMatchStoreKey],
-                    [nextRoundStore, nextRoundStoreKey]
-                ]
+                plugins: [ pinia ]
             }
         });
 

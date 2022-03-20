@@ -26,7 +26,7 @@ export default defineComponent({
 
         return {
             pluralize,
-            matchCount: computed(() => Object.keys(tournamentDataStore.state.matchStore).length),
+            matchCount: computed(() => Object.keys(tournamentDataStore.matchStore).length),
             bundleName: nodecg.bundleName
         };
     }
