@@ -5,11 +5,11 @@
             label="Name"
             name="round-name"
         />
-        <ipl-select
+        <ipl-radio
             v-model="roundInternal.meta.type"
             name="round-type"
             label="Type"
-            class="m-t-6"
+            class="m-t-4"
             :options="typeOptions"
         />
         <template
@@ -55,7 +55,7 @@
 import { computed, defineComponent, PropType, ref, Ref, watch } from 'vue';
 import type { Round } from 'schemas';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { IplButton, IplInput, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSelect, IplSpace, IplRadio } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
@@ -70,7 +70,7 @@ library.add(faTimes);
 export default defineComponent({
     name: 'RoundEditor',
 
-    components: { IplSpace, IplSelect, IplButton, IplInput },
+    components: { IplRadio, IplSpace, IplSelect, IplButton, IplInput },
 
     props: {
         round: {

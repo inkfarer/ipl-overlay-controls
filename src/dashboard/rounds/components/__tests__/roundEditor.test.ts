@@ -12,7 +12,8 @@ describe('RoundEditor', () => {
     config.global.stubs = {
         IplInput: true,
         IplSelect: true,
-        IplButton: true
+        IplButton: true,
+        IplRadio: true
     };
 
     beforeEach(() => {
