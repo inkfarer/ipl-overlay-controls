@@ -1,19 +1,18 @@
-import { activeRoundStore } from '../activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
+import { createPinia, setActivePinia } from 'pinia';
+import { useActiveRoundStore } from '../activeRoundStore';
 
 describe('activeRoundStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            activeRoundStore.commit('setState', { name: 'activeRound', val: { foo: 'bar' } });
-
-            expect(activeRoundStore.state.activeRound).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setWinner', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('setWinner', { winner: GameWinner.ALPHA });
+            const store = useActiveRoundStore();
+
+            store.setWinner({ winner: GameWinner.ALPHA });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setWinner', { winner: GameWinner.ALPHA });
         });
@@ -21,7 +20,9 @@ describe('activeRoundStore', () => {
 
     describe('removeWinner', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('removeWinner');
+            const store = useActiveRoundStore();
+
+            store.removeWinner();
 
             expect(mockSendMessage).toHaveBeenCalledWith('removeWinner');
         });
@@ -29,7 +30,10 @@ describe('activeRoundStore', () => {
 
     describe('setActiveColor', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('setActiveColor', {
+            const store = useActiveRoundStore();
+
+            store.setActiveColor({
+                // @ts-ignore
                 color: {
                     clrA: '#123',
                     clrB: '#456'
@@ -50,8 +54,9 @@ describe('activeRoundStore', () => {
     describe('swapColors', () => {
         it('updates replicant value', () => {
             replicants.swapColorsInternally = true;
+            const store = useActiveRoundStore();
 
-            activeRoundStore.dispatch('swapColors');
+            store.swapColors();
 
             expect(replicants.swapColorsInternally).toEqual(false);
         });
@@ -59,23 +64,29 @@ describe('activeRoundStore', () => {
 
     describe('setActiveRound', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('setActiveRound', {
+            const store = useActiveRoundStore();
+
+            store.setActiveRound({
                 teamAId: 'teama123',
                 teamBId: 'teamb234',
-                roundId: 'round2'
+                matchId: 'round2',
+                matchName: 'Cool Match'
             });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setActiveRound', {
                 teamAId: 'teama123',
                 teamBId: 'teamb234',
-                roundId: 'round2'
+                matchId: 'round2',
+                matchName: 'Cool Match'
             });
         });
     });
 
     describe('swapRoundColor', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
+            const store = useActiveRoundStore();
+
+            store.swapRoundColor({ roundIndex: 100, colorsSwapped: true });
 
             expect(mockSendMessage).toHaveBeenCalledWith('swapRoundColor', { roundIndex: 100, colorsSwapped: true });
         });
@@ -83,7 +94,10 @@ describe('activeRoundStore', () => {
 
     describe('updateActiveGames', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('updateActiveGames', [ { foo: 'bar' }, { biz: 'boz' } ]);
+            const store = useActiveRoundStore();
+
+            // @ts-ignore
+            store.updateActiveGames([ { foo: 'bar' }, { biz: 'boz' } ]);
 
             expect(mockSendMessage).toHaveBeenCalledWith('updateActiveGames', {
                 games: [ { foo: 'bar' }, { biz: 'boz' } ]
@@ -93,7 +107,9 @@ describe('activeRoundStore', () => {
 
     describe('setWinnerForIndex', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('setWinnerForIndex', { index: 50, winner: GameWinner.ALPHA });
+            const store = useActiveRoundStore();
+
+            store.setWinnerForIndex({ index: 50, winner: GameWinner.ALPHA });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setWinner', { roundIndex: 50, winner: GameWinner.ALPHA });
         });
@@ -101,7 +117,9 @@ describe('activeRoundStore', () => {
 
     describe('resetActiveRound', () => {
         it('sends message to extension', () => {
-            activeRoundStore.dispatch('resetActiveRound');
+            const store = useActiveRoundStore();
+
+            store.resetActiveRound();
 
             expect(mockSendMessage).toHaveBeenCalledWith('resetActiveRound');
         });

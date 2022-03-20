@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useMusicStore } from '../musicStore';
 import { IplButton, IplInput, IplCheckbox, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import cloneDeep from 'lodash/cloneDeep';
@@ -45,11 +45,11 @@ export default defineComponent({
 
     setup() {
         const musicStore = useMusicStore();
-        const manualNowPlaying = ref(cloneDeep(musicStore.state.manualNowPlaying));
-        const isEdited = computed(() => !isEqual(musicStore.state.manualNowPlaying, manualNowPlaying.value));
+        const manualNowPlaying = ref(cloneDeep(musicStore.manualNowPlaying));
+        const isEdited = computed(() => !isEqual(musicStore.manualNowPlaying, manualNowPlaying.value));
         const isFocused = ref(false);
 
-        musicStore.watch(store => store.manualNowPlaying, newValue => {
+        watch(() => musicStore.manualNowPlaying, newValue => {
             if (!isFocused.value) {
                 manualNowPlaying.value = cloneDeep(newValue);
             }
@@ -59,10 +59,10 @@ export default defineComponent({
             RIGHT_CLICK_UNDO_MESSAGE,
             nowPlayingSource: computed({
                 get() {
-                    return musicStore.state.nowPlayingSource === 'manual';
+                    return musicStore.nowPlayingSource === 'manual';
                 },
                 set(value: boolean) {
-                    musicStore.commit('setNowPlayingSource', value ? 'manual' : 'lastfm');
+                    musicStore.setNowPlayingSource(value ? 'manual' : 'lastfm');
                 }
             }),
             handleFocusEvent(event: boolean) {
@@ -72,13 +72,13 @@ export default defineComponent({
             manualNowPlaying,
             handleUpdate() {
                 if (isEdited.value) {
-                    musicStore.commit('setManualNowPlaying', manualNowPlaying.value);
+                    musicStore.setManualNowPlaying(manualNowPlaying.value);
                 }
             },
             undo(event: Event) {
                 event.preventDefault();
 
-                manualNowPlaying.value = cloneDeep(musicStore.state.manualNowPlaying);
+                manualNowPlaying.value = cloneDeep(musicStore.manualNowPlaying);
             }
         };
     }

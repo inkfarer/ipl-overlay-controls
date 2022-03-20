@@ -1,40 +1,37 @@
 import HighlightedMatchImporter from '../highlightedMatchImporter.vue';
-import { createStore } from 'vuex';
-import { HighlightedMatchStore, highlightedMatchStoreKey } from '../../highlightedMatchStore';
 import { config, mount } from '@vue/test-utils';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useHighlightedMatchStore } from '../../highlightedMatchStore';
 
 describe('HighlightedMatchImporter', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplMultiSelect: true,
         IplButton: true
     };
 
-    const mockGetHighlightedMatches = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createHighlightedMatchStore() {
-        return createStore<HighlightedMatchStore>({
-            state: {
-                tournamentData: {
-                    meta: {
-                        id: 'tournament123',
-                        source: TournamentDataSource.UNKNOWN,
-                        shortName: 'Unknown Tournament'
-                    },
-                    teams: []
+        useHighlightedMatchStore().$state = {
+            tournamentData: {
+                meta: {
+                    id: 'tournament123',
+                    source: TournamentDataSource.UNKNOWN,
+                    shortName: 'Unknown Tournament'
                 },
-                highlightedMatches: null
+                teams: []
             },
-            actions: {
-                getHighlightedMatches: mockGetHighlightedMatches
-            }
-        });
-    }
+            highlightedMatches: null
+        };
+    });
 
     it('has expected match selector label and options when tournament is imported from battlefy', () => {
-        const store = createHighlightedMatchStore();
-        store.state.tournamentData = {
+        const store = useHighlightedMatchStore();
+        store.tournamentData = {
             meta: {
                 id: 'tournament123',
                 source: TournamentDataSource.BATTLEFY,
@@ -51,7 +48,7 @@ describe('HighlightedMatchImporter', () => {
         };
         const wrapper = mount(HighlightedMatchImporter, {
             global: {
-                plugins: [[store, highlightedMatchStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -67,8 +64,8 @@ describe('HighlightedMatchImporter', () => {
     });
 
     it('has expected match selector label and options when tournament is imported from smash.gg', () => {
-        const store = createHighlightedMatchStore();
-        store.state.tournamentData = {
+        const store = useHighlightedMatchStore();
+        store.tournamentData = {
             meta: {
                 id: 'tournament123',
                 source: TournamentDataSource.SMASHGG,
@@ -88,7 +85,7 @@ describe('HighlightedMatchImporter', () => {
         };
         const wrapper = mount(HighlightedMatchImporter, {
             global: {
-                plugins: [[store, highlightedMatchStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -102,10 +99,11 @@ describe('HighlightedMatchImporter', () => {
     });
 
     it('dispatches to store when importing', async () => {
-        const store = createHighlightedMatchStore();
+        const store = useHighlightedMatchStore();
+        store.getHighlightedMatches = jest.fn();
         const wrapper = mount(HighlightedMatchImporter, {
             global: {
-                plugins: [[store, highlightedMatchStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -113,14 +111,13 @@ describe('HighlightedMatchImporter', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockGetHighlightedMatches).toHaveBeenCalledWith(expect.any(Object), { options: [{ foo: 'bar' }]});
+        expect(store.getHighlightedMatches).toHaveBeenCalledWith({ options: [{ foo: 'bar' }]});
     });
 
     it('disables import button when nothing is selected', async () => {
-        const store = createHighlightedMatchStore();
         const wrapper = mount(HighlightedMatchImporter, {
             global: {
-                plugins: [[store, highlightedMatchStoreKey]]
+                plugins: [pinia]
             }
         });
 

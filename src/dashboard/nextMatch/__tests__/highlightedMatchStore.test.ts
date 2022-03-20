@@ -1,19 +1,18 @@
-import { highlightedMatchStore } from '../highlightedMatchStore';
 import { mockSendMessage } from '../../__mocks__/mockNodecg';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { createPinia, setActivePinia } from 'pinia';
+import { useHighlightedMatchStore } from '../highlightedMatchStore';
 
 describe('highlightedMatchStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            highlightedMatchStore.commit('setState', { name: 'tournamentData', val: { foo: 'bar' } });
-
-            expect(highlightedMatchStore.state.tournamentData).toEqual({ foo: 'bar' });
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setNextMatch', () => {
         it('sends message to extension', () => {
-            highlightedMatchStore.dispatch('setNextMatch', { teamAId: 'teama123', teamBId: 'teamb3409587' });
+            const store = useHighlightedMatchStore();
+
+            store.setNextMatch({ teamAId: 'teama123', teamBId: 'teamb3409587' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound', {
                 teamAId: 'teama123',
@@ -24,13 +23,17 @@ describe('highlightedMatchStore', () => {
 
     describe('getHighlightedMatches', () => {
         it('fetches all matches if chosen', async () => {
-            await highlightedMatchStore.dispatch('getHighlightedMatches', { options: [ { value: 'all' } ]});
+            const store = useHighlightedMatchStore();
+
+            // @ts-ignore
+            await store.getHighlightedMatches({ options: [ { value: 'all' } ]});
 
             expect(mockSendMessage).toHaveBeenCalledWith('getHighlightedMatches', { getAllMatches: true });
         });
 
         it('fetches stages if tournament is imported from battlefy', async () => {
-            highlightedMatchStore.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source: TournamentDataSource.BATTLEFY,
                     id: 'tournament123',
@@ -38,7 +41,8 @@ describe('highlightedMatchStore', () => {
                 },
                 teams: []
             };
-            await highlightedMatchStore.dispatch('getHighlightedMatches', {
+
+            await store.getHighlightedMatches({
                 options: [
                     { value: 'bracket123', name: 'Bracket 123' },
                     { value: 'bracket456', name: 'Bracket 456' }
@@ -52,7 +56,8 @@ describe('highlightedMatchStore', () => {
         });
 
         it('fetches streams if tournament is imported from smash.gg', async () => {
-            highlightedMatchStore.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source: TournamentDataSource.SMASHGG,
                     id: 'tournament123',
@@ -60,7 +65,8 @@ describe('highlightedMatchStore', () => {
                 },
                 teams: []
             };
-            await highlightedMatchStore.dispatch('getHighlightedMatches', {
+
+            await store.getHighlightedMatches({
                 options: [
                     { value: '102938210598', name: 'Cool Stream' },
                     { value: '4059678', name: 'Cooler Stream' }
@@ -74,7 +80,8 @@ describe('highlightedMatchStore', () => {
         });
 
         it('throws error if tournament is imported from unsupported source', async () => {
-            highlightedMatchStore.state.tournamentData = {
+            const store = useHighlightedMatchStore();
+            store.tournamentData = {
                 meta: {
                     source: TournamentDataSource.UPLOAD,
                     id: 'tournament123',
@@ -83,7 +90,7 @@ describe('highlightedMatchStore', () => {
                 teams: []
             };
 
-            await expect(() => highlightedMatchStore.dispatch('getHighlightedMatches', {
+            await expect(() => store.getHighlightedMatches({
                 options: [
                     { value: '102938210598', name: 'Cool Stream' },
                     { value: '4059678', name: 'Cooler Stream' }

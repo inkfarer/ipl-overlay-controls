@@ -79,21 +79,21 @@ export default defineComponent({
         const store = useActiveRoundStore();
 
         return {
-            teamAScore: computed(() => store.state.activeRound.teamA.score),
-            teamBScore: computed(() => store.state.activeRound.teamB.score),
+            teamAScore: computed(() => store.activeRound.teamA.score),
+            teamBScore: computed(() => store.activeRound.teamB.score),
             GameWinner,
             setWinner(winner: GameWinner) {
-                store.dispatch('setWinner', { winner });
+                store.setWinner({ winner });
             },
             removeWinner() {
-                store.dispatch('removeWinner');
+                store.removeWinner();
             },
             disableAddScore: computed(() => {
-                const activeRound = store.state.activeRound;
+                const activeRound = store.activeRound;
                 return activeRound.teamA.score + activeRound.teamB.score >= activeRound.games.length;
             }),
             lastWinner: computed(() =>
-                last(store.state.activeRound.games.filter(game => game.winner !== GameWinner.NO_WINNER))?.winner)
+                last(store.activeRound.games.filter(game => game.winner !== GameWinner.NO_WINNER))?.winner)
         };
     }
 });

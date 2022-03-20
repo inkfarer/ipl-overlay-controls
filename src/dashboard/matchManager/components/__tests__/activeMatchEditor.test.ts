@@ -1,12 +1,14 @@
 import ActiveRoundEditor from '../activeMatchEditor.vue';
-import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
-import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
 
 describe('ActiveRoundEditor', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplSelect: true,
         IplCheckbox: true,
@@ -15,14 +17,72 @@ describe('ActiveRoundEditor', () => {
         IplInput: true
     };
 
-    const mockSetActiveColor = jest.fn();
-    const mockSetActiveRound = jest.fn();
-    const mockSwapColors = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createActiveRoundStore() {
-        return createStore<ActiveRoundStore>({
-            state: {
-                activeRound: {
+        useActiveRoundStore().$state = {
+            activeRound: {
+                teamA: {
+                    score: 0,
+                    id: '123123',
+                    name: null,
+                    showLogo: true,
+                    players: null,
+                    color: null
+                },
+                teamB: {
+                    score: 2,
+                    id: '345345',
+                    name: null,
+                    showLogo: false,
+                    players: null,
+                    color: null
+                },
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    index: 0,
+                    title: 'coolest color',
+                    isCustom: false,
+                    clrNeutral: '#FFF',
+                },
+                match: {
+                    id: '01010',
+                    name: 'Rad Match',
+                    isCompleted: false,
+                    type: PlayType.BEST_OF
+                },
+                games: [
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: null,
+                        mode: null
+                    },
+                ],
+            },
+            swapColorsInternally: false
+        };
+
+        useTournamentDataStore().$state = {
+            tournamentData: {
+                meta: { id: '1093478', source: 'SMASHGG', shortName: null },
+                teams: [
+                    { id: '123123', name: 'cool team A (test long name long name long name long name long name long name long name)', players: [], showLogo: true },
+                    { id: '345345', name: 'cool team B', players: [], showLogo: false }
+                ]
+            },
+            matchStore: {
+                '01010': {
+                    meta: { name: 'dope round', isCompleted: false, type: PlayType.PLAY_ALL },
                     teamA: {
                         score: 0,
                         id: '123123',
@@ -39,93 +99,17 @@ describe('ActiveRoundEditor', () => {
                         players: null,
                         color: null
                     },
-                    activeColor: {
-                        categoryName: 'Ranked Modes',
-                        index: 0,
-                        title: 'coolest color',
-                        isCustom: false,
-                        clrNeutral: '#FFF',
-                    },
-                    match: {
-                        id: '01010',
-                        name: 'Rad Match',
-                        isCompleted: false,
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: null,
-                            mode: null
-                        },
-                    ],
-                },
-                swapColorsInternally: false
+                    games: []
+                }
             },
-            actions: {
-                swapColors: mockSwapColors,
-                setActiveColor: mockSetActiveColor,
-                setActiveRound: mockSetActiveRound
-            }
-        });
-    }
-
-    function createTournamentDataStore() {
-        return createStore<TournamentDataStore>({
-            state: {
-                tournamentData: {
-                    meta: { id: '1093478', source: 'SMASHGG', shortName: null },
-                    teams: [
-                        { id: '123123', name: 'cool team A (test long name long name long name long name long name long name long name)', players: [], showLogo: true },
-                        { id: '345345', name: 'cool team B', players: [], showLogo: false }
-                    ]
-                },
-                matchStore: {
-                    '01010': {
-                        meta: { name: 'dope round', isCompleted: false, type: PlayType.PLAY_ALL },
-                        teamA: {
-                            score: 0,
-                            id: '123123',
-                            name: null,
-                            showLogo: true,
-                            players: null,
-                            color: null
-                        },
-                        teamB: {
-                            score: 2,
-                            id: '345345',
-                            name: null,
-                            showLogo: false,
-                            players: null,
-                            color: null
-                        },
-                        games: []
-                    }
-                },
-                roundStore: {}
-            },
-            actions: {
-                setTeamImageHidden: jest.fn()
-            }
-        });
-    }
+            roundStore: {}
+        };
+    });
 
     it('matches snapshot and has expected values for select options', () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -150,26 +134,23 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('handles store data updating', async () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
+        const activeRoundStore = useActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
-        activeRoundStore.state.activeRound.teamA.id = '678678';
+        activeRoundStore.activeRound.teamA.id = '678678';
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('678678');
     });
 
     it('has expected update button color if data is locally changed', async () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const teamASelector = wrapper.getComponent('[data-test="team-a-selector"]');
@@ -181,50 +162,47 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('sends commit to store if team A image toggle is changed', () => {
-        const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'dispatch');
-        const activeRoundStore = createActiveRoundStore();
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.setTeamImageHidden = jest.fn();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const teamAImageToggle = wrapper.getComponent('[data-test="team-a-image-toggle"]');
 
         teamAImageToggle.vm.$emit('update:modelValue', false);
 
-        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.setTeamImageHidden).toHaveBeenCalledWith({
             teamId: '123123',
             isVisible: false
         });
     });
 
     it('sends commit to store if team B image toggle is changed', () => {
-        const tournamentDataStore = createTournamentDataStore();
-        jest.spyOn(tournamentDataStore, 'dispatch');
-        const activeRoundStore = createActiveRoundStore();
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.setTeamImageHidden = jest.fn();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const teamBImageToggle = wrapper.getComponent('[data-test="team-b-image-toggle"]');
 
         teamBImageToggle.vm.$emit('update:modelValue', true);
 
-        expect(tournamentDataStore.dispatch).toHaveBeenCalledWith('setTeamImageHidden', {
+        expect(tournamentDataStore.setTeamImageHidden).toHaveBeenCalledWith({
             teamId: '345345',
             isVisible: true
         });
     });
 
     it('updates round data on update button click', () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
-        jest.spyOn(activeRoundStore, 'dispatch');
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.setActiveRound = jest.fn();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
@@ -232,7 +210,7 @@ describe('ActiveRoundEditor', () => {
 
         updateButton.vm.$emit('click');
 
-        expect(activeRoundStore.dispatch).toHaveBeenCalledWith('setActiveRound', {
+        expect(activeRoundStore.setActiveRound).toHaveBeenCalledWith({
             teamAId: '123123',
             teamBId: '345345',
             matchId: '01010',
@@ -241,11 +219,9 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('reverts updates on update button right click', async () => {
-        const tournamentDataStore = createTournamentDataStore();
-        const activeRoundStore = createActiveRoundStore();
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const event = new Event(null);
@@ -262,9 +238,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('does not display message if selected round has no progress and round data is unchanged', () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.roundStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false, type: PlayType.PLAY_ALL },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
@@ -274,7 +249,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -282,9 +257,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('does not display message if selected round has no progress', async () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.matchStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
@@ -294,7 +268,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
@@ -304,9 +278,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('does not display message if selected round has progress but data is not changed', () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.roundStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.roundStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 0, showLogo: true, players: []},
@@ -316,7 +289,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -324,9 +297,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('displays message if selected round has progress', async () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.matchStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.matchStore = {
             '01010': {
                 meta: { name: 'dope round', isCompleted: false, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team (long name long name long name long name long name)', score: 0, showLogo: true, players: []},
@@ -336,7 +308,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -349,9 +321,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('displays message if selected round is completed', async () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.matchStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.matchStore = {
             '01010': {
                 meta: { name: 'dope round', isCompleted: true, type: PlayType.PLAY_ALL },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
@@ -361,7 +332,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -374,9 +345,8 @@ describe('ActiveRoundEditor', () => {
     });
 
     it('changes selected teams if a new round is selected', async () => {
-        const activeRoundStore = createActiveRoundStore();
-        const tournamentDataStore = createTournamentDataStore();
-        tournamentDataStore.state.matchStore = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.matchStore = {
             '0387': {
                 meta: { name: 'dope round', isCompleted: true, type: PlayType.BEST_OF },
                 teamA: { id: '123123', name: 'Cool Team', score: 2, showLogo: true, players: []},
@@ -392,7 +362,7 @@ describe('ActiveRoundEditor', () => {
         };
         const wrapper = mount(ActiveRoundEditor, {
             global: {
-                plugins: [[tournamentDataStore, tournamentDataStoreKey], [activeRoundStore, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
         const roundSelector = wrapper.getComponent('[data-test="match-selector"]');

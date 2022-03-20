@@ -35,7 +35,7 @@
 import { defineComponent } from '@vue/runtime-core';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useObsStore } from '../../store/obsStore';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
@@ -49,12 +49,12 @@ export default defineComponent({
         const gameplayScene = ref('');
         const intermissionScene = ref('');
 
-        obsStore.watch(
-            state => state.obsData.gameplayScene,
+        watch(
+            () => obsStore.obsData.gameplayScene,
             scene => gameplayScene.value = scene,
             { immediate: true });
-        obsStore.watch(
-            state => state.obsData.intermissionScene,
+        watch(
+            () => obsStore.obsData.intermissionScene,
             scene => intermissionScene.value = scene,
             { immediate: true });
 
@@ -62,14 +62,14 @@ export default defineComponent({
             RIGHT_CLICK_UNDO_MESSAGE,
             gameplayScene,
             intermissionScene,
-            hasObsData: computed(() => obsStore.state.obsData.scenes != null),
-            sceneOptions: computed(() => obsStore.state.obsData.scenes?.map(scene =>
+            hasObsData: computed(() => obsStore.obsData.scenes != null),
+            sceneOptions: computed(() => obsStore.obsData.scenes?.map(scene =>
                 ({ value: scene, name: scene })) ?? []),
             isChanged: computed(() =>
-                gameplayScene.value !== obsStore.state.obsData.gameplayScene
-                || intermissionScene.value !== obsStore.state.obsData.intermissionScene),
+                gameplayScene.value !== obsStore.obsData.gameplayScene
+                || intermissionScene.value !== obsStore.obsData.intermissionScene),
             update() {
-                obsStore.dispatch('setData', {
+                obsStore.setData({
                     gameplayScene: gameplayScene.value,
                     intermissionScene: intermissionScene.value
                 });
@@ -77,8 +77,8 @@ export default defineComponent({
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                gameplayScene.value = obsStore.state.obsData.gameplayScene;
-                intermissionScene.value = obsStore.state.obsData.intermissionScene;
+                gameplayScene.value = obsStore.obsData.gameplayScene;
+                intermissionScene.value = obsStore.obsData.intermissionScene;
             }
         };
     }

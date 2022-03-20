@@ -1,14 +1,16 @@
 import SetEditor from '../setEditor.vue';
-import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
-import { settingsStoreKey } from '../../../settings/settingsStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('setEditor', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplButton: true,
         IplInput: true,
@@ -17,122 +19,103 @@ describe('setEditor', () => {
         IplCheckbox: true
     };
 
-    const mockSetWinnerForIndex = jest.fn();
-    const mockSwapRoundColor = jest.fn();
-    const mockUpdateActiveGames = jest.fn();
-    const mockResetActiveRound = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createSettingsStore() {
-        return createStore({
-            state: {
-                runtimeConfig: {
-                    gameVersion: GameVersion.SPLATOON_2
-                }
-            }
-        });
-    }
-
-    function createActiveRoundStore() {
-        return createStore<ActiveRoundStore>({
-            state: {
-                activeRound: {
-                    teamA: {
-                        score: 0,
-                        id: '123123',
-                        name: null,
-                        showLogo: true,
-                        players: null,
-                        color: null
-                    },
-                    teamB: {
-                        score: 2,
-                        id: '345345',
-                        name: null,
-                        showLogo: false,
-                        players: null,
-                        color: null
-                    },
-                    activeColor: {
-                        categoryName: 'Ranked Modes',
-                        index: 0,
-                        title: 'coolest color',
-                        isCustom: false,
-                        clrNeutral: '#00AAA0',
-                    },
-                    match: {
-                        id: '01010',
-                        name: 'Rad Match',
-                        isCompleted: false,
-                        type: PlayType.BEST_OF
-                    },
-                    games: [
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: 'Blackbelly Skatepark',
-                            mode: 'Rainmaker',
-                            color: {
-                                index: 2,
-                                title: 'Cool Color',
-                                clrA: '#123123',
-                                clrB: '#345345',
-                                clrNeutral: '#FF00FF',
-                                categoryName: 'Cool Colors',
-                                isCustom: false,
-                                colorsSwapped: false
-                            }
-                        },
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: 'MakoMart',
-                            mode: 'Tower Control',
-                            color: {
-                                index: 0,
-                                title: 'Cool Color',
-                                clrA: '#837693',
-                                clrB: '#206739',
-                                clrNeutral: '#FF8563',
-                                categoryName: 'Custom Color',
-                                isCustom: true,
-                                colorsSwapped: true
-                            }
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: 'Camp Triggerfish',
-                            mode: 'Splat Zones'
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: 'Humpback Pump Track',
-                            mode: 'Clam Blitz'
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: 'Inkblot Art Academy',
-                            mode: 'Splat Zones'
-                        }
-                    ],
+        useActiveRoundStore().$state = {
+            activeRound: {
+                teamA: {
+                    score: 0,
+                    id: '123123',
+                    name: null,
+                    showLogo: true,
+                    players: null,
+                    color: null
                 },
-                swapColorsInternally: false
+                teamB: {
+                    score: 2,
+                    id: '345345',
+                    name: null,
+                    showLogo: false,
+                    players: null,
+                    color: null
+                },
+                activeColor: {
+                    categoryName: 'Ranked Modes',
+                    index: 0,
+                    title: 'coolest color',
+                    isCustom: false,
+                    clrNeutral: '#00AAA0',
+                },
+                match: {
+                    id: '01010',
+                    name: 'Rad Match',
+                    isCompleted: false,
+                    type: PlayType.BEST_OF
+                },
+                games: [
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: 'Blackbelly Skatepark',
+                        mode: 'Rainmaker',
+                        color: {
+                            index: 2,
+                            title: 'Cool Color',
+                            clrA: '#123123',
+                            clrB: '#345345',
+                            clrNeutral: '#FF00FF',
+                            categoryName: 'Cool Colors',
+                            isCustom: false,
+                            colorsSwapped: false
+                        }
+                    },
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: 'MakoMart',
+                        mode: 'Tower Control',
+                        color: {
+                            index: 0,
+                            title: 'Cool Color',
+                            clrA: '#837693',
+                            clrB: '#206739',
+                            clrNeutral: '#FF8563',
+                            categoryName: 'Custom Color',
+                            isCustom: true,
+                            colorsSwapped: true
+                        }
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: 'Camp Triggerfish',
+                        mode: 'Splat Zones'
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: 'Humpback Pump Track',
+                        mode: 'Clam Blitz'
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: 'Inkblot Art Academy',
+                        mode: 'Splat Zones'
+                    }
+                ],
             },
-            actions: {
-                setWinnerForIndex: mockSetWinnerForIndex,
-                resetActiveRound: mockResetActiveRound,
-                swapRoundColor: mockSwapRoundColor,
-                updateActiveGames: mockUpdateActiveGames
+            swapColorsInternally: false
+        };
+
+        // @ts-ignore
+        useSettingsStore().$state = {
+            runtimeConfig: {
+                gameVersion: GameVersion.SPLATOON_2
             }
-        });
-    }
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -140,8 +123,8 @@ describe('setEditor', () => {
     });
 
     it('matches snapshot with no upcoming round', () => {
-        const store = createActiveRoundStore();
-        store.state.activeRound.games = [
+        const store = useActiveRoundStore();
+        store.activeRound.games = [
             {
                 winner: GameWinner.BRAVO,
                 stage: 'Blackbelly Skatepark',
@@ -188,13 +171,9 @@ describe('setEditor', () => {
                 }
             },
         ];
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -202,14 +181,9 @@ describe('setEditor', () => {
     });
 
     it('matches snapshot when editing colors', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -220,31 +194,25 @@ describe('setEditor', () => {
     });
 
     it('handles round reset', () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.resetActiveRound = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="reset-button"]').vm.$emit('click');
 
-        expect(mockResetActiveRound).toHaveBeenCalledTimes(1);
+        expect(store.resetActiveRound).toHaveBeenCalledTimes(1);
     });
 
     it('handles round update', () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.updateActiveGames = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -252,7 +220,7 @@ describe('setEditor', () => {
             .vm.$emit('update:modelValue', 'Moray Towers');
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(mockUpdateActiveGames).toHaveBeenCalledWith(expect.any(Object), [
+        expect(store.updateActiveGames).toHaveBeenCalledWith([
             {
                 color: {
                     categoryName: 'Cool Colors',
@@ -302,14 +270,9 @@ describe('setEditor', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
         const event = new Event(null);
@@ -328,14 +291,10 @@ describe('setEditor', () => {
     });
 
     it('has expected button color after changing round data', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
                 plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                    pinia ]
             }
         });
         const updateButton = wrapper.getComponent('[data-test="update-button"]');
@@ -350,14 +309,9 @@ describe('setEditor', () => {
     });
 
     it('handles stage change', () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -368,14 +322,9 @@ describe('setEditor', () => {
     });
 
     it('handles mode change', () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -386,68 +335,54 @@ describe('setEditor', () => {
     });
 
     it('handles winner change to none', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.setWinnerForIndex = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="set-editor-1"] [data-test="set-winner-button-none"]').vm.$emit('click');
 
-        expect(mockSetWinnerForIndex)
-            .toHaveBeenCalledWith(expect.any(Object), { index: 1, winner: GameWinner.NO_WINNER });
+        expect(store.setWinnerForIndex)
+            .toHaveBeenCalledWith({ index: 1, winner: GameWinner.NO_WINNER });
     });
 
     it('handles winner change to alpha', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.setWinnerForIndex = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="set-editor-2"] [data-test="set-winner-button-a"]').vm.$emit('click');
 
-        expect(mockSetWinnerForIndex)
-            .toHaveBeenCalledWith(expect.any(Object), { index: 2, winner: GameWinner.ALPHA });
+        expect(store.setWinnerForIndex)
+            .toHaveBeenCalledWith({ index: 2, winner: GameWinner.ALPHA });
     });
 
     it('handles winner change to bravo', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.setWinnerForIndex = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="set-editor-2"] [data-test="set-winner-button-b"]').vm.$emit('click');
 
-        expect(mockSetWinnerForIndex)
-            .toHaveBeenCalledWith(expect.any(Object), { index: 2, winner: GameWinner.BRAVO });
+        expect(store.setWinnerForIndex)
+            .toHaveBeenCalledWith({ index: 2, winner: GameWinner.BRAVO });
     });
 
     it('handles color change', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -467,14 +402,9 @@ describe('setEditor', () => {
     });
 
     it('handles custom color change', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -496,14 +426,9 @@ describe('setEditor', () => {
     });
 
     it('handles game color being set to custom', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -523,14 +448,9 @@ describe('setEditor', () => {
     });
 
     it('handles game color being set off custom', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -550,32 +470,25 @@ describe('setEditor', () => {
     });
 
     it('handles game colors getting swapped', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
+        store.swapRoundColor = jest.fn();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="set-editor-0"] [data-test="swap-colors-toggle"]')
             .vm.$emit('update:modelValue', true);
 
-        expect(mockSwapRoundColor).toHaveBeenCalledWith(expect.any(Object), { roundIndex: 0, colorsSwapped: true });
+        expect(store.swapRoundColor).toHaveBeenCalledWith({ roundIndex: 0, colorsSwapped: true });
     });
 
     it('does not revert local changes on store update', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
@@ -585,7 +498,7 @@ describe('setEditor', () => {
             .vm.$emit('update:modelValue', 'Splat Zones');
         wrapper.getComponent('[data-test="set-editor-0"] [data-test="color-select"]')
             .vm.$emit('update:modelValue', 'Ranked Modes_2');
-        store.state.activeRound.games = [
+        store.activeRound.games = [
             {
                 winner: GameWinner.NO_WINNER,
                 stage: 'Blackbelly Skatepark',
@@ -642,18 +555,14 @@ describe('setEditor', () => {
     });
 
     it('matches snapshot when active round updates to one with less games than the previous one', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
-        store.state.activeRound.games = [
+        store.activeRound.games = [
             {
                 winner: GameWinner.NO_WINNER,
                 stage: 'Blackbelly Skatepark',
@@ -696,18 +605,14 @@ describe('setEditor', () => {
     });
 
     it('matches snapshot when active round updates to one with more games than the previous one', async () => {
-        const store = createActiveRoundStore();
-        const settingsStore = createSettingsStore();
+        const store = useActiveRoundStore();
         const wrapper = mount(SetEditor, {
             global: {
-                plugins: [
-                    [ store, activeRoundStoreKey ],
-                    [ settingsStore, settingsStoreKey ]
-                ]
+                plugins: [ pinia ]
             }
         });
 
-        store.state.activeRound.games = [
+        store.activeRound.games = [
             {
                 winner: GameWinner.NO_WINNER,
                 stage: 'Blackbelly Skatepark',

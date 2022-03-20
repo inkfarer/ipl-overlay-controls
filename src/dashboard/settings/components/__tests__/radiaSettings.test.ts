@@ -1,42 +1,37 @@
 import RadiaSettings from '../radiaSettings.vue';
-import { createStore } from 'vuex';
-import { SettingsStore, settingsStoreKey } from '../../settingsStore';
 import { mount, config } from '@vue/test-utils';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useSettingsStore } from '../../settingsStore';
 
 describe('radiaSettings', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplInput: true,
         IplButton: true,
         IplCheckbox: true
     };
 
-    const createSettingsStore = () => {
-        return createStore<SettingsStore>({
-            state: {
-                lastFmSettings: {},
-                radiaSettings: {
-                    guildID: '123123',
-                    enabled: null,
-                    updateOnImport: null
-                },
-                runtimeConfig: null
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useSettingsStore().$state = {
+            lastFmSettings: {},
+            radiaSettings: {
+                guildID: '123123',
+                enabled: null,
+                updateOnImport: null
             },
-            mutations: {
-                setRadiaSettings: jest.fn(),
-                setUpdateOnImport: jest.fn()
-            },
-            actions: {
-                attemptRadiaConnection: jest.fn()
-            }
-        });
-    };
+            runtimeConfig: null
+        };
+    });
 
     it('shows message if radia is disabled', async () => {
-        const store = createSettingsStore();
-        store.state.radiaSettings.enabled = false;
+        const store = useSettingsStore();
+        store.radiaSettings.enabled = false;
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -49,26 +44,26 @@ describe('radiaSettings', () => {
     });
 
     it('dispatches to store when reconnecting to radia', async () => {
-        const store = createSettingsStore();
-        jest.spyOn(store, 'dispatch');
-        store.state.radiaSettings.enabled = false;
+        const store = useSettingsStore();
+        store.attemptRadiaConnection = jest.fn();
+        store.radiaSettings.enabled = false;
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="radia-connect-button"]').vm.$emit('click');
 
-        expect(store.dispatch).toHaveBeenCalledWith('attemptRadiaConnection');
+        expect(store.attemptRadiaConnection).toHaveBeenCalled();
     });
 
     it('hides message if radia is enabled', async () => {
-        const store = createSettingsStore();
-        store.state.radiaSettings.enabled = true;
+        const store = useSettingsStore();
+        store.radiaSettings.enabled = true;
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -79,33 +74,33 @@ describe('radiaSettings', () => {
     });
 
     it('updates inputs on store change if unfocused', async () => {
-        const store = createSettingsStore();
+        const store = useSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         const guildIdInput = wrapper.findComponent('[name="guild-id"]');
         guildIdInput.vm.$emit('focuschange', false);
-        store.state.radiaSettings.guildID = '345345';
+        store.radiaSettings.guildID = '345345';
         await wrapper.vm.$nextTick();
 
         expect(guildIdInput.attributes().modelvalue).toEqual('345345');
     });
 
     it('does not change input value on store change if it is focused', async () => {
-        const store = createSettingsStore();
+        const store = useSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         const usernameInput = wrapper.findComponent('[name="guild-id"]');
         usernameInput.vm.$emit('focuschange', true);
-        store.state.radiaSettings.guildID = '345345';
-        store.state.radiaSettings.updateOnImport = false;
+        store.radiaSettings.guildID = '345345';
+        store.radiaSettings.updateOnImport = false;
         await wrapper.vm.$nextTick();
 
         expect(usernameInput.attributes().modelvalue).toEqual('123123');
@@ -114,14 +109,14 @@ describe('radiaSettings', () => {
     });
 
     it('updates updateOnInput value on store change', async () => {
-        const store = createSettingsStore();
+        const store = useSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
-        store.state.radiaSettings.updateOnImport = true;
+        store.radiaSettings.updateOnImport = true;
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="update-on-import-checkbox"]').attributes().modelvalue)
@@ -129,18 +124,18 @@ describe('radiaSettings', () => {
     });
 
     it('updates settings on button click if they have been updated', async () => {
-        const store = createSettingsStore();
-        jest.spyOn(store, 'commit');
+        const store = useSettingsStore();
+        store.setRadiaSettings = jest.fn();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.commit).toHaveBeenCalledWith('setRadiaSettings', {
+        expect(store.setRadiaSettings).toHaveBeenCalledWith({
             newValue: {
                 enabled: null,
                 guildID: '789789',
@@ -150,10 +145,9 @@ describe('radiaSettings', () => {
     });
 
     it('reverts changes on update button right click', async () => {
-        const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
         const event = new Event(null);
@@ -168,24 +162,23 @@ describe('radiaSettings', () => {
     });
 
     it('does not update settings on button click if data has not been updated', async () => {
-        const store = createSettingsStore();
-        jest.spyOn(store, 'commit');
+        const store = useSettingsStore();
+        store.setRadiaSettings = jest.fn();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.commit).not.toHaveBeenCalled();
+        expect(store.setRadiaSettings).not.toHaveBeenCalled();
     });
 
     it('has expected button color', async () => {
-        const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -193,10 +186,9 @@ describe('radiaSettings', () => {
     });
 
     it('has expected button color when data is edited', async () => {
-        const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -207,10 +199,9 @@ describe('radiaSettings', () => {
     });
 
     it('disables update button if data is invalid', async () => {
-        const store = createSettingsStore();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
@@ -221,17 +212,17 @@ describe('radiaSettings', () => {
     });
 
     it('updates updateOnImport value when relevant checkbox is interacted with', async () => {
-        const store = createSettingsStore();
-        jest.spyOn(store, 'commit');
+        const store = useSettingsStore();
+        store.setUpdateOnImport = jest.fn();
         const wrapper = mount(RadiaSettings, {
             global: {
-                plugins: [ [ store, settingsStoreKey ] ]
+                plugins: [ pinia ]
             }
         });
 
         wrapper.getComponent('[data-test="update-on-import-checkbox"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
 
-        expect(store.commit).toHaveBeenCalledWith('setUpdateOnImport', true);
+        expect(store.setUpdateOnImport).toHaveBeenCalledWith(true);
     });
 });

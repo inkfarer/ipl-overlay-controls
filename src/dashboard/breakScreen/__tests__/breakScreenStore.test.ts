@@ -1,19 +1,18 @@
-import { breakScreenStore } from '../breakScreenStore';
+import { useBreakScreenStore } from '../breakScreenStore';
 import { replicants } from '../../__mocks__/mockNodecg';
 import { NextRoundStartTime } from 'schemas';
+import { createPinia, setActivePinia } from 'pinia';
 
 describe('breakScreenStore', () => {
-    describe('setState', () => {
-        it('updates state', () => {
-            breakScreenStore.commit('setState', { name: 'mainFlavorText', val: 'new value' });
-
-            expect(breakScreenStore.state.mainFlavorText).toEqual('new value');
-        });
+    beforeEach(() => {
+        setActivePinia(createPinia());
     });
 
     describe('setActiveBreakScene', () => {
         it('updates replicant value', () => {
-            breakScreenStore.commit('setActiveBreakScene', 'teams');
+            const store = useBreakScreenStore();
+
+            store.setActiveBreakScene('teams');
 
             expect(replicants.activeBreakScene).toEqual('teams');
         });
@@ -21,7 +20,9 @@ describe('breakScreenStore', () => {
 
     describe('setMainFlavorText', () => {
         it('updates replicant value', () => {
-            breakScreenStore.commit('setMainFlavorText', 'hello!');
+            const store = useBreakScreenStore();
+
+            store.setMainFlavorText('hello!');
 
             expect(replicants.mainFlavorText).toEqual('hello!');
         });
@@ -30,8 +31,9 @@ describe('breakScreenStore', () => {
     describe('setNextRoundStartTimeVisible', () => {
         it('updates replicant value', () => {
             replicants.nextRoundStartTime = { isVisible: null };
+            const store = useBreakScreenStore();
 
-            breakScreenStore.commit('setNextRoundStartTimeVisible', true);
+            store.setNextRoundStartTimeVisible(true);
 
             expect((replicants.nextRoundStartTime as NextRoundStartTime).isVisible).toEqual(true);
         });
@@ -40,8 +42,9 @@ describe('breakScreenStore', () => {
     describe('setNextRoundStartTime', () => {
         it('updates replicant value', () => {
             replicants.nextRoundStartTime = { startTime: null };
+            const store = useBreakScreenStore();
 
-            breakScreenStore.commit('setNextRoundStartTime', '2020-01-05');
+            store.setNextRoundStartTime('2020-01-05');
 
             expect((replicants.nextRoundStartTime as NextRoundStartTime).startTime).toEqual('2020-01-05');
         });

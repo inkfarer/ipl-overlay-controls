@@ -1,71 +1,65 @@
 import ScoreDisplay from '../scoreDisplay.vue';
-import { createStore } from 'vuex';
-import { ActiveRoundStore, activeRoundStoreKey } from '../../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { config, mount } from '@vue/test-utils';
 import { GameWinner } from 'types/enums/gameWinner';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('ScoreDisplay', () => {
-    const mockSetWinner = jest.fn();
-    const mockRemoveWinner = jest.fn();
+    let pinia: TestingPinia;
+
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useActiveRoundStore().$state = {
+            activeRound: {
+                teamA: {
+                    score: 0,
+                    id: null,
+                    name: null,
+                    showLogo: null,
+                    players: null,
+                    color: null
+                },
+                teamB: {
+                    score: 2,
+                    id: null,
+                    name: null,
+                    showLogo: null,
+                    players: null,
+                    color: null
+                },
+                activeColor: null,
+                match: null,
+                games: [
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.BRAVO,
+                        stage: null,
+                        mode: null
+                    },
+                    {
+                        winner: GameWinner.NO_WINNER,
+                        stage: null,
+                        mode: null
+                    },
+                ],
+            },
+            swapColorsInternally: false
+        };
+    });
 
     config.global.stubs = {
         IplButton: true
     };
 
-    function createActiveRoundStore() {
-        return createStore<ActiveRoundStore>({
-            state: {
-                activeRound: {
-                    teamA: {
-                        score: 0,
-                        id: null,
-                        name: null,
-                        showLogo: null,
-                        players: null,
-                        color: null
-                    },
-                    teamB: {
-                        score: 2,
-                        id: null,
-                        name: null,
-                        showLogo: null,
-                        players: null,
-                        color: null
-                    },
-                    activeColor: null,
-                    match: null,
-                    games: [
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.BRAVO,
-                            stage: null,
-                            mode: null
-                        },
-                        {
-                            winner: GameWinner.NO_WINNER,
-                            stage: null,
-                            mode: null
-                        },
-                    ],
-                },
-                swapColorsInternally: false
-            },
-            actions: {
-                setWinner: mockSetWinner,
-                removeWinner: mockRemoveWinner
-            }
-        });
-    }
-
     it('matches snapshot', () => {
-        const store = createActiveRoundStore();
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -73,12 +67,12 @@ describe('ScoreDisplay', () => {
     });
 
     it('disables adding score if last game in round has been completed', () => {
-        const store = createActiveRoundStore();
-        store.state.activeRound.teamA.score = 1;
-        store.state.activeRound.teamB.score = 2;
+        const store = useActiveRoundStore();
+        store.activeRound.teamA.score = 1;
+        store.activeRound.teamB.score = 2;
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -87,8 +81,8 @@ describe('ScoreDisplay', () => {
     });
 
     it('disables removing team A score if last game was won by team B', () => {
-        const store = createActiveRoundStore();
-        store.state.activeRound.games = [
+        const store = useActiveRoundStore();
+        store.activeRound.games = [
             {
                 winner: GameWinner.BRAVO,
                 stage: null,
@@ -107,7 +101,7 @@ describe('ScoreDisplay', () => {
         ];
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -116,8 +110,8 @@ describe('ScoreDisplay', () => {
     });
 
     it('disables removing team B score if last game was won by team A', () => {
-        const store = createActiveRoundStore();
-        store.state.activeRound.games = [
+        const store = useActiveRoundStore();
+        store.activeRound.games = [
             {
                 winner: GameWinner.BRAVO,
                 stage: null,
@@ -136,7 +130,7 @@ describe('ScoreDisplay', () => {
         ];
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -145,8 +139,8 @@ describe('ScoreDisplay', () => {
     });
 
     it('disables removing score if round has no completed games', () => {
-        const store = createActiveRoundStore();
-        store.state.activeRound.games = [
+        const store = useActiveRoundStore();
+        store.activeRound.games = [
             {
                 winner: GameWinner.NO_WINNER,
                 stage: null,
@@ -165,7 +159,7 @@ describe('ScoreDisplay', () => {
         ];
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -174,54 +168,58 @@ describe('ScoreDisplay', () => {
     });
 
     it('sends message to store when adding points to team A', () => {
-        const store = createActiveRoundStore();
+        const store = useActiveRoundStore();
+        store.setWinner = jest.fn();
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="team-a-plus-btn"]').vm.$emit('click');
 
-        expect(mockSetWinner).toHaveBeenCalledWith(expect.any(Object), { winner: GameWinner.ALPHA });
+        expect(store.setWinner).toHaveBeenCalledWith({ winner: GameWinner.ALPHA });
     });
 
     it('sends message to store when adding points to team B', () => {
-        const store = createActiveRoundStore();
+        const store = useActiveRoundStore();
+        store.setWinner = jest.fn();
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="team-b-plus-btn"]').vm.$emit('click');
 
-        expect(mockSetWinner).toHaveBeenCalledWith(expect.any(Object), { winner: GameWinner.BRAVO });
+        expect(store.setWinner).toHaveBeenCalledWith({ winner: GameWinner.BRAVO });
     });
 
     it('sends message to store when removing points from team A', () => {
-        const store = createActiveRoundStore();
+        const store = useActiveRoundStore();
+        store.removeWinner = jest.fn();
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="team-a-minus-btn"]').vm.$emit('click');
 
-        expect(mockRemoveWinner).toHaveBeenCalled();
+        expect(store.removeWinner).toHaveBeenCalled();
     });
 
     it('sends message to store when removing points from team B', () => {
-        const store = createActiveRoundStore();
+        const store = useActiveRoundStore();
+        store.removeWinner = jest.fn();
         const wrapper = mount(ScoreDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
         wrapper.getComponent('[data-test="team-b-minus-btn"]').vm.$emit('click');
 
-        expect(mockRemoveWinner).toHaveBeenCalled();
+        expect(store.removeWinner).toHaveBeenCalled();
     });
 });

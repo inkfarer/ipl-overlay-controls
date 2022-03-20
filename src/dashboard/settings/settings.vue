@@ -88,7 +88,7 @@ export default defineComponent({
         const obsStore = useObsStore();
 
         return {
-            obsSocketEnabled: computed(() => obsStore.state.obsData.enabled),
+            obsSocketEnabled: computed(() => obsStore.obsData.enabled),
             visibleSection: ref<keyof typeof settingsSections>('obs-socket'),
             showSidebar: ref(false),
             settingsSections

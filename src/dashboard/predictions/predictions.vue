@@ -113,8 +113,8 @@ export default defineComponent({
 
     setup() {
         const store = usePredictionDataStore();
-        const hasPredictionData = computed(() => !!store.state.predictionStore.currentPrediction);
-        const currentPrediction = computed(() => store.state.predictionStore.currentPrediction);
+        const hasPredictionData = computed(() => !!store.predictionStore.currentPrediction);
+        const currentPrediction = computed(() => store.predictionStore.currentPrediction);
 
         return {
             status: computed(() => {
@@ -124,7 +124,7 @@ export default defineComponent({
             rawStatus: computed(() => currentPrediction.value?.status as PredictionStatus),
             PredictionStatus,
             hasPredictionData,
-            predictionStatus: computed(() => store.state.predictionStore.status),
+            predictionStatus: computed(() => store.predictionStore.status),
             handleResolve() {
                 (nodecg.getDialog('resolvePredictionDialog') as NodecgDialog).open();
             },
@@ -132,16 +132,16 @@ export default defineComponent({
                 (nodecg.getDialog('createPredictionDialog') as NodecgDialog).open();
             },
             async handleLock() {
-                return store.dispatch('lockPrediction');
+                return store.lockPrediction();
             },
             async handleCancel() {
-                return store.dispatch('cancelPrediction');
+                return store.cancelPrediction();
             },
             handleShow() {
                 nodecg.sendMessage('showPredictionData');
             },
             async handleReconnect() {
-                return store.dispatch('reconnect');
+                return store.reconnect();
             }
         };
     }

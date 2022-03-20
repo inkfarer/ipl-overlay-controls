@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
 import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingTextColor } from '@iplsplatoon/vue-components';
@@ -97,28 +97,28 @@ export default defineComponent({
     setup() {
         const activeRoundStore = useActiveRoundStore();
         const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
+        const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
 
         const useCustomColor = ref(false);
         const customColorA = ref(null);
         const customColorB = ref(null);
 
-        activeRoundStore.watch(store => store.activeRound.teamA.color, newValue => {
+        watch(() => activeRoundStore.activeRound.teamA.color, newValue => {
             customColorA.value = newValue;
         }, { immediate: true });
-        activeRoundStore.watch(store => store.activeRound.teamB.color, newValue => {
+        watch(() => activeRoundStore.activeRound.teamB.color, newValue => {
             customColorB.value = newValue;
         }, { immediate: true });
 
-        activeRoundStore.watch(store => store.swapColorsInternally, () => {
+        watch(() => activeRoundStore.swapColorsInternally, () => {
             const colorA = customColorA.value;
             customColorA.value = customColorB.value;
             customColorB.value = colorA;
         });
 
-        const swapColorsInternally = computed(() => activeRoundStore.state.swapColorsInternally);
+        const swapColorsInternally = computed(() => activeRoundStore.swapColorsInternally);
 
-        activeRoundStore.watch(store => store.activeRound.activeColor.isCustom, newValue => {
+        watch(() => activeRoundStore.activeRound.activeColor.isCustom, newValue => {
             useCustomColor.value = newValue;
         }, { immediate: true });
 
@@ -136,11 +136,11 @@ export default defineComponent({
             customColorA,
             customColorB,
             customColorChanged: computed(() => {
-                const activeRound = activeRoundStore.state.activeRound;
+                const activeRound = activeRoundStore.activeRound;
                 return customColorA.value !== activeRound.teamA.color || customColorB.value !== activeRound.teamB.color;
             }),
             submitCustomColor() {
-                activeRoundStore.dispatch('setActiveColor', {
+                activeRoundStore.setActiveColor({
                     categoryName: 'Custom Color',
                     color: {
                         index: 0,
@@ -154,12 +154,12 @@ export default defineComponent({
             },
             colorsWithoutCustom: computed(() =>
                 gameData.value.colors.filter(color => color.meta.name !== 'Custom Color')),
-            activeColor: computed(() => activeRoundStore.state.activeRound.activeColor.title),
+            activeColor: computed(() => activeRoundStore.activeRound.activeColor.title),
             getBorderColor(color: string): string {
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
             setColor(color: ColorInfo, categoryName: string): void {
-                activeRoundStore.dispatch('setActiveColor', {
+                activeRoundStore.setActiveColor({
                     color: swapColorsInternally.value ? swapColors(color) : color,
                     categoryName
                 });
@@ -168,8 +168,8 @@ export default defineComponent({
             undoCustomColorChanges(event: Event) {
                 event.preventDefault();
 
-                customColorA.value = activeRoundStore.state.activeRound.teamA.color;
-                customColorB.value = activeRoundStore.state.activeRound.teamB.color;
+                customColorA.value = activeRoundStore.activeRound.teamA.color;
+                customColorB.value = activeRoundStore.activeRound.teamB.color;
             }
         };
     }

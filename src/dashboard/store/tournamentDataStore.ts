@@ -1,9 +1,11 @@
 import { MatchStore, RoundStore, TournamentData } from 'schemas';
-import { createStore, Store, useStore } from 'vuex';
-import cloneDeep from 'lodash/cloneDeep';
-import { InjectionKey } from 'vue';
-import { ToggleTeamImageRequest } from 'types/messages/tournamentData';
+import {
+    GetTournamentDataRequest,
+    GetTournamentDataResponse,
+    ToggleTeamImageRequest
+} from 'types/messages/tournamentData';
 import { UpdateRoundStoreRequest, UpdateRoundStoreResponse } from 'types/messages/roundStore';
+import { defineStore } from 'pinia';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
@@ -17,49 +19,44 @@ export interface TournamentDataStore {
     matchStore: MatchStore;
 }
 
-export const tournamentDataStore = createStore<TournamentDataStore>({
-    state: {
+export const useTournamentDataStore = defineStore('tournamentData', {
+    state: () => ({
         tournamentData: null,
         roundStore: null,
         matchStore: null
-    },
-    mutations: {
-        setState(store, { name, val }: { name: string, val: unknown }): void {
-            this.state[name] = cloneDeep(val);
-        }
-    },
+    } as TournamentDataStore),
     actions: {
-        async getTournamentData(store, { method, id }: { method: TournamentDataStore, id: string }): Promise<void> {
-            return await nodecg.sendMessage('getTournamentData', { method, id });
+        async getTournamentData({ method, id }: GetTournamentDataRequest): Promise<GetTournamentDataResponse> {
+            return nodecg.sendMessage('getTournamentData', { method, id });
         },
-        async getSmashggEvent(store, { eventId }: { eventId: number }): Promise<void> {
+        async getSmashggEvent({ eventId }: { eventId: number }): Promise<void> {
             return await nodecg.sendMessage('getSmashggEvent', { eventId });
         },
-        async uploadTeamData(store, { file }: { file: File }): Promise<void> {
+        async uploadTeamData({ file }: { file: File }): Promise<void> {
             return sendLocalFile('teams', file);
         },
-        async uploadRoundData(store, { file }: { file: File }): Promise<void> {
+        async uploadRoundData({ file }: { file: File }): Promise<void> {
             return sendLocalFile('rounds', file);
         },
-        async fetchRoundData(store, { url }: { url: string }): Promise<void> {
+        async fetchRoundData({ url }: { url: string }): Promise<void> {
             return nodecg.sendMessage('getRounds', { url });
         },
-        async updateRound(store, data: UpdateRoundStoreRequest): Promise<void> {
+        async updateRound(data: UpdateRoundStoreRequest): Promise<void> {
             return nodecg.sendMessage('updateRound', data);
         },
-        async insertRound(store, data: UpdateRoundStoreRequest): Promise<UpdateRoundStoreResponse> {
+        async insertRound(data: UpdateRoundStoreRequest): Promise<UpdateRoundStoreResponse> {
             return nodecg.sendMessage('insertRound', data);
         },
         resetRoundStore() {
             nodecg.sendMessage('resetRoundStore');
         },
-        setTeamImageHidden(store, { teamId, isVisible }: { teamId: string, isVisible: boolean }): Promise<void> {
+        setTeamImageHidden({ teamId, isVisible }: { teamId: string, isVisible: boolean }): Promise<void> {
             return nodecg.sendMessage('toggleTeamImage', { teamId, isVisible } as ToggleTeamImageRequest);
         },
-        removeRound(store, { roundId }: { roundId: string }): Promise<void> {
+        removeRound({ roundId }: { roundId: string }): Promise<void> {
             return nodecg.sendMessage('removeRound', { roundId });
         },
-        setShortName(store, newValue: string): void {
+        setShortName(newValue: string): void {
             tournamentData.value.meta.shortName = newValue;
         }
     }
@@ -76,10 +73,4 @@ async function sendLocalFile(dataType: 'teams' | 'rounds', file: File): Promise<
         const responseText = await response.text();
         throw new Error(`Import failed with status ${response.status}: ${responseText}`);
     }
-}
-
-export const tournamentDataStoreKey: InjectionKey<Store<TournamentDataStore>> = Symbol();
-
-export function useTournamentDataStore(): Store<TournamentDataStore> {
-    return useStore(tournamentDataStoreKey);
 }

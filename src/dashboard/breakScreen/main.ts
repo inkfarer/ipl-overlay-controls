@@ -1,13 +1,15 @@
 import '../styles/globalStyles.scss';
-import { setUpReplicants } from '../helpers/storeHelper';
-import { breakScreenReps, breakScreenStore, breakScreenStoreKey } from './breakScreenStore';
+import { setUpPiniaReplicants } from '../helpers/storeHelper';
+import { breakScreenReps, useBreakScreenStore } from './breakScreenStore';
 import Panel from './breakScreen.vue';
 import { createApp } from 'vue';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
+import { createPinia } from 'pinia';
 
-setUpReplicants(breakScreenReps, breakScreenStore).then(() => {
+(async () => {
     const app = createApp(Panel);
+    app.use(createPinia());
     setUpErrorHandler(app);
-    app.use(breakScreenStore, breakScreenStoreKey);
+    await setUpPiniaReplicants(breakScreenReps, useBreakScreenStore());
     app.mount('#app');
-});
+})();

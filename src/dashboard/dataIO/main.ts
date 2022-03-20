@@ -1,13 +1,15 @@
 import '../styles/globalStyles.scss';
-import { setUpReplicants } from '../helpers/storeHelper';
+import { setUpPiniaReplicants } from '../helpers/storeHelper';
 import { createApp } from 'vue';
-import { tournamentDataReps, tournamentDataStore, tournamentDataStoreKey } from '../store/tournamentDataStore';
+import { tournamentDataReps, useTournamentDataStore } from '../store/tournamentDataStore';
 import DataImport from './dataIO.vue';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
+import { createPinia } from 'pinia';
 
-setUpReplicants(tournamentDataReps, tournamentDataStore).then(() => {
+(async () => {
     const app = createApp(DataImport);
+    app.use(createPinia());
+    await setUpPiniaReplicants(tournamentDataReps, useTournamentDataStore());
     setUpErrorHandler(app);
-    app.use(tournamentDataStore, tournamentDataStoreKey);
     app.mount('#app');
-});
+})();

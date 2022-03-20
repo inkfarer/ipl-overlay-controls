@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import {
     IplButton,
     IplSpace,
@@ -112,12 +112,12 @@ export default defineComponent({
         const store = useTournamentDataStore();
         const nextRoundStore = useNextRoundStore();
         const rounds: Ref<RoundStore> = ref({});
-        const selectedRoundId = ref(Object.keys(store.state.roundStore)[0]);
+        const selectedRoundId = ref(Object.keys(store.roundStore)[0]);
         const openRoundSidebar = ref(false);
         const newRound = ref({});
         const creatingNewRound = ref(false);
 
-        store.watch(store => store.roundStore, (newValue: RoundStore, oldValue: RoundStore) => {
+        watch(() => store.roundStore, (newValue: RoundStore, oldValue: RoundStore) => {
             if (!newValue[selectedRoundId.value]) {
                 selectedRoundId.value = Object.keys(newValue)[0];
             }
@@ -138,9 +138,9 @@ export default defineComponent({
         return {
             rounds,
             selectedRoundId,
-            selectedRound: computed(() => store.state.roundStore[selectedRoundId.value]),
+            selectedRound: computed(() => store.roundStore[selectedRoundId.value]),
             resetRounds() {
-                store.dispatch('resetRoundStore');
+                store.resetRoundStore();
             },
             openRoundSidebar,
             selectRound(key: string): void {
@@ -160,7 +160,7 @@ export default defineComponent({
             },
             creatingNewRound,
             newRound,
-            nextRoundId: computed(() => nextRoundStore.state.nextRound.round.id)
+            nextRoundId: computed(() => nextRoundStore.nextRound.round.id)
         };
     }
 });

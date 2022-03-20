@@ -1,32 +1,34 @@
 import PredictionDataDisplay from '../predictionDataDisplay.vue';
-import { createStore } from 'vuex';
-import { PredictionDataStore, predictionDataStoreKey } from '../../../store/predictionDataStore';
+import { usePredictionDataStore } from '../../../store/predictionDataStore';
 import { config, mount } from '@vue/test-utils';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { DateTime } from 'luxon';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('PredictionDataDisplay', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         FontAwesomeIcon: true,
         IplProgressBar: true
     };
 
-    const createPredictionDataStore = () => {
-        return createStore<PredictionDataStore>({
-            state: {
-                predictionStore: {
-                    status: {
-                        socketOpen: true,
-                        predictionsEnabled: true
-                    }
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        usePredictionDataStore().$state = {
+            predictionStore: {
+                status: {
+                    socketOpen: true,
+                    predictionsEnabled: true
                 }
             }
-        });
-    };
+        };
+    });
 
     it('matches snapshot', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction = {
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction = {
             id: 'prediction123',
             broadcasterId: 'ipl',
             broadcasterName: 'IPL',
@@ -56,7 +58,7 @@ describe('PredictionDataDisplay', () => {
         };
         const wrapper = mount(PredictionDataDisplay, {
             global: {
-                plugins: [[ store, predictionDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -64,8 +66,8 @@ describe('PredictionDataDisplay', () => {
     });
 
     it('matches snapshot with newly started prediction', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction = {
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction = {
             id: 'prediction123',
             broadcasterId: 'ipl',
             broadcasterName: 'IPL',
@@ -95,7 +97,7 @@ describe('PredictionDataDisplay', () => {
         };
         const wrapper = mount(PredictionDataDisplay, {
             global: {
-                plugins: [[ store, predictionDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -103,8 +105,8 @@ describe('PredictionDataDisplay', () => {
     });
 
     it('matches snapshot with winner', () => {
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction = {
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction = {
             id: 'prediction123',
             broadcasterId: 'ipl',
             broadcasterName: 'IPL',
@@ -135,7 +137,7 @@ describe('PredictionDataDisplay', () => {
         };
         const wrapper = mount(PredictionDataDisplay, {
             global: {
-                plugins: [[ store, predictionDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 
@@ -148,8 +150,8 @@ describe('PredictionDataDisplay', () => {
             // In the browser, setInterval returns a number.
             return 0 as unknown as NodeJS.Timeout;
         });
-        const store = createPredictionDataStore();
-        store.state.predictionStore.currentPrediction = {
+        const store = usePredictionDataStore();
+        store.predictionStore.currentPrediction = {
             id: 'prediction123',
             broadcasterId: 'ipl',
             broadcasterName: 'IPL',
@@ -180,7 +182,7 @@ describe('PredictionDataDisplay', () => {
         };
         const wrapper = mount(PredictionDataDisplay, {
             global: {
-                plugins: [[ store, predictionDataStoreKey ]]
+                plugins: [pinia]
             }
         });
 

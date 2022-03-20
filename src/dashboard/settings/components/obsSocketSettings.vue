@@ -65,7 +65,7 @@ import {
     provideValidators,
     allValid, IplToggle, IplMessage
 } from '@iplsplatoon/vue-components';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useObsStore } from '../../store/obsStore';
 import { ObsStatus, ObsStatusHelper } from 'types/enums/ObsStatus';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
@@ -80,21 +80,21 @@ export default defineComponent({
 
         const socketEnabled = computed({
             get() {
-                return obsStore.state.obsData.enabled;
+                return obsStore.obsData.enabled;
             },
             set(value: boolean): void {
-                obsStore.dispatch('setEnabled', value);
+                obsStore.setEnabled(value);
             }
         });
 
         const socketUrl = ref('');
         const socketPassword = ref('');
 
-        obsStore.watch(
-            state => state.obsCredentials.address, newValue => socketUrl.value = newValue,
+        watch(
+            () => obsStore.obsCredentials.address, newValue => socketUrl.value = newValue,
             { immediate: true });
-        obsStore.watch(
-            state => state.obsCredentials.password, newValue => socketPassword.value = newValue,
+        watch(
+            () => obsStore.obsCredentials.password, newValue => socketPassword.value = newValue,
             { immediate: true });
 
         const validators = {
@@ -108,19 +108,19 @@ export default defineComponent({
             socketUrl,
             socketPassword,
             isChanged: computed(() =>
-                socketUrl.value !== obsStore.state.obsCredentials.address
-                || socketPassword.value !== obsStore.state.obsCredentials.password),
+                socketUrl.value !== obsStore.obsCredentials.address
+                || socketPassword.value !== obsStore.obsCredentials.password),
             allValid: computed(() => allValid(validators)),
-            statusText: computed(() => ObsStatusHelper.toPrettyString(obsStore.state.obsData.status as ObsStatus)),
-            status: computed(() => obsStore.state.obsData.status),
+            statusText: computed(() => ObsStatusHelper.toPrettyString(obsStore.obsData.status as ObsStatus)),
+            status: computed(() => obsStore.obsData.status),
             connect() {
-                return obsStore.dispatch('connect', { address: socketUrl.value, password: socketPassword.value });
+                return obsStore.connect({ address: socketUrl.value, password: socketPassword.value });
             },
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                socketUrl.value = obsStore.state.obsCredentials.address;
-                socketPassword.value = obsStore.state.obsCredentials.password;
+                socketUrl.value = obsStore.obsCredentials.address;
+                socketPassword.value = obsStore.obsCredentials.password;
             }
         };
     }

@@ -1,36 +1,35 @@
 import ObsSocketSettings from '../obsSocketSettings.vue';
-import { createStore } from 'vuex';
-import { ObsStore, obsStoreKey } from '../../../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useObsStore } from '../../../store/obsStore';
 
 describe('ObsSocketSettings', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplInput: true,
         IplButton: true
     };
 
-    function createObsStore() {
-        return createStore<ObsStore>({
-            state: {
-                obsData: { status: ObsStatus.CONNECTED, enabled: true },
-                obsCredentials: {
-                    address: 'localhost:4444',
-                    password: 'pwd'
-                }
-            },
-            actions: {
-                connect: jest.fn()
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useObsStore().$state = {
+            obsData: { status: ObsStatus.CONNECTED, enabled: true },
+            obsCredentials: {
+                address: 'localhost:4444',
+                password: 'pwd'
             }
-        });
-    }
+        };
+    });
 
     it.each(Object.values(ObsStatus))('matches snapshot when status is %s', status => {
-        const store = createObsStore();
-        store.state.obsData.status = status;
+        const store = useObsStore();
+        store.obsData.status = status;
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -38,11 +37,11 @@ describe('ObsSocketSettings', () => {
     });
 
     it('matches snapshot when obs socket is disabled', () => {
-        const store = createObsStore();
-        store.state.obsData.enabled = false;
+        const store = useObsStore();
+        store.obsData.enabled = false;
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -50,10 +49,9 @@ describe('ObsSocketSettings', () => {
     });
 
     it('disables connecting if data is invalid', async () => {
-        const store = createObsStore();
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -64,10 +62,9 @@ describe('ObsSocketSettings', () => {
     });
 
     it('changes connect button color if data is changed', async () => {
-        const store = createObsStore();
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -78,11 +75,11 @@ describe('ObsSocketSettings', () => {
     });
 
     it('handles connecting to socket', async () => {
-        const store = createObsStore();
-        jest.spyOn(store, 'dispatch');
+        const store = useObsStore();
+        store.connect = jest.fn();
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -90,14 +87,13 @@ describe('ObsSocketSettings', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="socket-connect-button"]').vm.$emit('click');
 
-        expect(store.dispatch).toHaveBeenCalledWith('connect', { address: 'https://new-socket-url', password: 'pwd' });
+        expect(store.connect).toHaveBeenCalledWith({ address: 'https://new-socket-url', password: 'pwd' });
     });
 
     it('resets data on connect button right click', async () => {
-        const store = createObsStore();
         const wrapper = mount(ObsSocketSettings, {
             global: {
-                plugins: [[store, obsStoreKey]]
+                plugins: [pinia]
             }
         });
         const event = new Event(null);

@@ -17,10 +17,9 @@
 import { computed, defineComponent } from 'vue';
 import { useMusicStore } from './musicStore';
 import { NowPlayingSource } from 'schemas';
-import isEmpty from 'lodash/isEmpty';
 import ManualSongEditor from './components/manualSongEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
-import { IplLabel, IplSpace, IplToggle } from '@iplsplatoon/vue-components';
+import { IplLabel, IplSpace, IplToggle, isBlank } from '@iplsplatoon/vue-components';
 
 export default defineComponent({
     name: 'Music',
@@ -34,17 +33,17 @@ export default defineComponent({
 
         return {
             nowPlaying: computed(() => {
-                const { nowPlaying } = musicStore.state;
-                const songName = [nowPlaying.artist, nowPlaying.song].filter(item => !isEmpty(item)).join(' - ');
-                return isEmpty(songName) ? 'No song is currently playing.' : songName;
+                const nowPlaying = musicStore.nowPlaying;
+                const songName = [nowPlaying.artist, nowPlaying.song].filter(item => !isBlank(item)).join(' - ');
+                return isBlank(songName) ? 'No song is currently playing.' : songName;
             }),
-            nowPlayingSource: computed(() => nowPlayingSourceLabels[musicStore.state.nowPlayingSource]),
+            nowPlayingSource: computed(() => nowPlayingSourceLabels[musicStore.nowPlayingSource]),
             musicShown: computed({
                 get() {
-                    return musicStore.state.musicShown;
+                    return musicStore.musicShown;
                 },
                 set(value: boolean) {
-                    musicStore.commit('setMusicShown', value);
+                    musicStore.setMusicShown(value);
                 }
             })
         };

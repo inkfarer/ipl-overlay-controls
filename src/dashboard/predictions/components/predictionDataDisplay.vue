@@ -73,8 +73,8 @@ export default defineComponent({
     setup() {
         const store = usePredictionDataStore();
 
-        const isActive = computed(() => store.state.predictionStore.currentPrediction?.status === 'ACTIVE');
-        const lockTime = computed(() => DateTime.fromISO(store.state.predictionStore.currentPrediction?.lockTime));
+        const isActive = computed(() => store.predictionStore.currentPrediction?.status === 'ACTIVE');
+        const lockTime = computed(() => DateTime.fromISO(store.predictionStore.currentPrediction?.lockTime));
         const secondsRemaining = ref(0);
         let timeRemainingInterval: number = null;
         const formattedTimeRemaining = computed(() =>
@@ -91,7 +91,7 @@ export default defineComponent({
             }
         }, { immediate: true });
 
-        const currentPrediction = computed(() => store.state.predictionStore.currentPrediction);
+        const currentPrediction = computed(() => store.predictionStore.currentPrediction);
         const totalPointsSpent = computed(() =>
             currentPrediction.value?.outcomes[0]?.pointsUsed + currentPrediction.value?.outcomes[1].pointsUsed);
         function getOutcome(index: number): Outcome & { percentage: number, isWinner: boolean } {

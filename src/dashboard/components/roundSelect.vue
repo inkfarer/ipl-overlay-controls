@@ -41,7 +41,7 @@ export default defineComponent({
         function emitRoundData(roundId: string) {
             emit('update:roundData', {
                 id: roundId,
-                roundData: tournamentDataStore.state.roundStore[roundId]
+                roundData: tournamentDataStore.roundStore[roundId]
             });
         }
 
@@ -59,7 +59,7 @@ export default defineComponent({
 
         return {
             value,
-            roundOptions: computed(() => Object.entries(tournamentDataStore.state.roundStore).map(([key, value]) =>
+            roundOptions: computed(() => Object.entries(tournamentDataStore.roundStore).map(([key, value]) =>
                 ({ value: key, name: value.meta.name })))
         };
     }

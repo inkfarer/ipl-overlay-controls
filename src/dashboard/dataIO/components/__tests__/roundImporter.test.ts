@@ -1,45 +1,41 @@
 import RoundImporter from '../roundImporter.vue';
 import { config, mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
-import { TournamentDataStore, tournamentDataStoreKey } from '../../../store/tournamentDataStore';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { useTournamentDataStore } from '../../../store/tournamentDataStore';
 
 describe('roundImporter', () => {
+    let pinia: TestingPinia;
+
     config.global.stubs = {
         IplButton: true,
         IplInput: true,
         IplUpload: true
     };
 
-    const mockUploadRoundData = jest.fn();
-    const mockFetchRoundData = jest.fn();
+    beforeEach(() => {
+        pinia = createTestingPinia();
 
-    function createTournamentDataStore() {
-        return createStore<TournamentDataStore>({
-            state: {
-                tournamentData: {
-                    meta: {
-                        id: '123123',
-                        source: TournamentDataSource.BATTLEFY,
-                        shortName: 'A tournament'
-                    },
-                    teams: []
+        useTournamentDataStore().$state = {
+            tournamentData: {
+                meta: {
+                    id: '123123',
+                    source: TournamentDataSource.BATTLEFY,
+                    shortName: 'A tournament'
                 },
-                roundStore: {},
-                matchStore: {}
+                teams: []
             },
-            actions: {
-                fetchRoundData: mockFetchRoundData,
-                uploadRoundData: mockUploadRoundData
-            }
-        });
-    }
+            roundStore: {},
+            matchStore: {}
+        };
+    });
 
     it('dispatches to store on URL import', async () => {
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.fetchRoundData = jest.fn();
         const wrapper = mount(RoundImporter, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -48,14 +44,15 @@ describe('roundImporter', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockFetchRoundData).toHaveBeenCalledWith(expect.any(Object), { url: 'data://url' });
+        expect(store.fetchRoundData).toHaveBeenCalledWith({ url: 'data://url' });
     });
 
     it('dispatches to store on file import', async () => {
-        const store = createTournamentDataStore();
+        const store = useTournamentDataStore();
+        store.uploadRoundData = jest.fn();
         const wrapper = mount(RoundImporter, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             }
         });
         const file = new File([], 'test-file');
@@ -65,14 +62,13 @@ describe('roundImporter', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
 
-        expect(mockUploadRoundData).toHaveBeenCalledWith(expect.any(Object), { file });
+        expect(store.uploadRoundData).toHaveBeenCalledWith({ file });
     });
 
     it('shows uploader when file upload is selected', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(RoundImporter, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             }
         });
 
@@ -84,10 +80,9 @@ describe('roundImporter', () => {
     });
 
     it('shows url input when file upload is deselected', async () => {
-        const store = createTournamentDataStore();
         const wrapper = mount(RoundImporter, {
             global: {
-                plugins: [[store, tournamentDataStoreKey]]
+                plugins: [pinia]
             }
         });
 

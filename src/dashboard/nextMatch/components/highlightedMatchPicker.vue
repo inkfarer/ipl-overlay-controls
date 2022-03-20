@@ -38,13 +38,13 @@ export default defineComponent({
 
     setup() {
         const store = useHighlightedMatchStore();
-        const tournamentDataSource = computed(() => store.state.tournamentData.meta.source as TournamentDataSource);
+        const tournamentDataSource = computed(() => store.tournamentData.meta.source as TournamentDataSource);
 
         return {
             canImportData: computed(() => [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
                 .includes(tournamentDataSource.value)),
             formattedDataSource: computed(() => TournamentDataSourceHelper.toPrettyString(tournamentDataSource.value)),
-            stageDataPresent: computed(() => !isEmpty(store.state.tournamentData.stages))
+            stageDataPresent: computed(() => !isEmpty(store.tournamentData.stages))
         };
     }
 });

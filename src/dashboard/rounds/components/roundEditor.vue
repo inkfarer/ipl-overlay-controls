@@ -92,7 +92,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const store = useTournamentDataStore();
         const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.state.runtimeConfig.gameVersion]);
+        const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
         const roundInternal: Ref<Round> = ref(null);
 
         watch(() => props.round, (newValue, oldValue) => {
@@ -126,13 +126,13 @@ export default defineComponent({
                 };
 
                 if (props.isNewRound) {
-                    const result = await store.dispatch('insertRound', updates);
+                    const result = await store.insertRound(updates);
 
                     if (props.isNewRound) {
                         emit('createNewRound', result.id);
                     }
                 } else {
-                    await store.dispatch('updateRound', {
+                    await store.updateRound({
                         id: props.roundId,
                         ...updates
                     });
@@ -142,7 +142,7 @@ export default defineComponent({
                 if (props.isNewRound) {
                     emit('cancelNewRound');
                 } else {
-                    return store.dispatch('removeRound', { roundId: props.roundId });
+                    return store.removeRound({ roundId: props.roundId });
                 }
             },
             isChanged: computed(() => {

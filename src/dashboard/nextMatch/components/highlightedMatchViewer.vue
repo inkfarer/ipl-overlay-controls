@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue';
+import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
 import { IplButton, IplSelect, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue';
@@ -69,21 +69,21 @@ export default defineComponent({
         const selectedRoundData = ref<RoundSelectRound>(null);
 
         watchEffect(() => {
-            const nextRound = nextRoundStore.state.nextRound;
-            const equalMatch = highlightedMatchStore.state.highlightedMatches.find(match =>
+            const nextRound = nextRoundStore.nextRound;
+            const equalMatch = highlightedMatchStore.highlightedMatches.find(match =>
                 match.teamA.id === nextRound.teamA.id && match.teamB.id === nextRound.teamB.id);
 
             if (equalMatch) {
                 selectedMatch.value = equalMatch.meta.id;
             } else {
-                selectedMatch.value = highlightedMatchStore.state.highlightedMatches[0]?.meta?.id ?? null;
+                selectedMatch.value = highlightedMatchStore.highlightedMatches[0]?.meta?.id ?? null;
             }
         });
 
         const selectedMatchData = computed(() =>
-            highlightedMatchStore.state.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
+            highlightedMatchStore.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
 
-        nextRoundStore.watch(state => state.nextRound.round.id, newId => {
+        watch(() => nextRoundStore.nextRound.round.id, newId => {
             selectedRound.value = newId;
         }, { immediate: true });
 
@@ -92,10 +92,10 @@ export default defineComponent({
             selectedRoundData,
             formatPlayType: PlayTypeHelper.toPrettyString,
             matchOptions: computed(() => {
-                const isAllSameStage = highlightedMatchStore.state.highlightedMatches.every(match =>
-                    match.meta.stageName === highlightedMatchStore.state.highlightedMatches[0].meta.stageName);
+                const isAllSameStage = highlightedMatchStore.highlightedMatches.every(match =>
+                    match.meta.stageName === highlightedMatchStore.highlightedMatches[0].meta.stageName);
 
-                return highlightedMatchStore.state.highlightedMatches.map(stage => ({
+                return highlightedMatchStore.highlightedMatches.map(stage => ({
                     value: stage.meta.id,
                     name: isAllSameStage ? stage.meta.name : `${stage.meta.name} | ${stage.meta.stageName}`
                 }));
@@ -105,11 +105,11 @@ export default defineComponent({
             selectedMatchData,
             disableSetNextMatch: computed(() => !selectedMatchData.value),
             isChanged: computed(() =>
-                nextRoundStore.state.nextRound.teamA.id !== selectedMatchData.value?.teamA.id
-                || nextRoundStore.state.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
-                || nextRoundStore.state.nextRound.round.id !== selectedRound.value ),
+                nextRoundStore.nextRound.teamA.id !== selectedMatchData.value?.teamA.id
+                || nextRoundStore.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
+                || nextRoundStore.nextRound.round.id !== selectedRound.value ),
             async handleSetNextMatch() {
-                await highlightedMatchStore.dispatch('setNextMatch', {
+                await highlightedMatchStore.setNextMatch({
                     teamAId: selectedMatchData.value.teamA.id,
                     teamBId: selectedMatchData.value.teamB.id,
                     roundId: selectedRound.value
@@ -117,7 +117,7 @@ export default defineComponent({
 
                 const playType = selectedMatchData.value?.meta.playType;
                 if (!!playType && selectedRoundData.value.roundData?.meta.type !== playType) {
-                    await tournamentDataStore.dispatch('updateRound', {
+                    await tournamentDataStore.updateRound({
                         id: selectedRound.value,
                         type: playType
                     });

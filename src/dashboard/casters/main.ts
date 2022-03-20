@@ -1,13 +1,15 @@
 import '../styles/globalStyles.scss';
-import { setUpReplicants } from '../helpers/storeHelper';
-import { castersReps, casterStore, casterStoreKey } from '../store/casterStore';
+import { setUpPiniaReplicants } from '../helpers/storeHelper';
+import { castersReps, useCasterStore } from '../store/casterStore';
 import Panel from './casters.vue';
 import { createApp } from 'vue';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
+import { createPinia } from 'pinia';
 
-setUpReplicants(castersReps, casterStore).then(() => {
+(async () => {
     const app = createApp(Panel);
+    app.use(createPinia());
+    await setUpPiniaReplicants(castersReps, useCasterStore());
     setUpErrorHandler(app);
-    app.use(casterStore, casterStoreKey);
     app.mount('#app');
-});
+})();

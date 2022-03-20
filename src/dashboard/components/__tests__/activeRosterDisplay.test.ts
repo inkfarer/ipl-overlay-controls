@@ -1,29 +1,32 @@
 import ActiveRosterDisplay from '../activeRosterDisplay.vue';
-import { createStore } from 'vuex';
 import { config, mount } from '@vue/test-utils';
-import { activeRoundStoreKey } from '../../store/activeRoundStore';
+import { useActiveRoundStore } from '../../store/activeRoundStore';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('ActiveRosterDisplay', () => {
+    let pinia: TestingPinia;
+
+    beforeEach(() => {
+        pinia = createTestingPinia();
+
+        useActiveRoundStore().$state = {
+            activeRound: {
+                // @ts-ignore
+                teamA: 'Team One',
+                // @ts-ignore
+                teamB: 'Team Two'
+            }
+        };
+    });
+
     config.global.stubs = {
         TeamRosterDisplay: true
     };
 
-    function createActiveRoundStore() {
-        return createStore({
-            state: {
-                activeRound: {
-                    teamA: 'Team One',
-                    teamB: 'Team Two'
-                }
-            }
-        });
-    }
-
     it('matches snapshot', () => {
-        const store = createActiveRoundStore();
         const wrapper = mount(ActiveRosterDisplay, {
             global: {
-                plugins: [[store, activeRoundStoreKey]]
+                plugins: [pinia]
             }
         });
 
