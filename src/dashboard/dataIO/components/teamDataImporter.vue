@@ -25,10 +25,11 @@
             />
         </template>
         <template v-else>
-            <ipl-select
+            <ipl-radio
                 v-model="dataSource"
                 label="Source"
                 data-test="source-selector"
+                class="data-source-selector"
                 :options="dataSourceOptions"
             />
             <ipl-input
@@ -107,16 +108,17 @@ import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import {
+    allValid,
     IplButton,
-    IplSpace,
-    IplSelect,
-    IplInput,
-    IplUpload,
     IplCheckbox,
-    provideValidators,
+    IplInput,
+    IplRadio,
+    IplSelect,
+    IplSpace,
+    IplUpload,
     notBlank,
-    validator,
-    allValid
+    provideValidators,
+    validator
 } from '@iplsplatoon/vue-components';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
@@ -126,7 +128,7 @@ import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 export default defineComponent({
     name: 'TeamDataImporter',
 
-    components: { IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace },
+    components: { IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace, IplRadio },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -164,16 +166,14 @@ export default defineComponent({
             dataSourceOptions: computed(() => {
                 const options = [
                     TournamentDataSource.BATTLEFY,
+                    TournamentDataSource.SMASHGG,
                     TournamentDataSource.UPLOAD
                 ];
 
-                if (hasSmashggConfig.value) {
-                    options.splice(1, 0, TournamentDataSource.SMASHGG);
-                }
-
                 return options.map(option => ({
                     value: option,
-                    name: TournamentDataSourceHelper.toPrettyString(option)
+                    name: TournamentDataSourceHelper.toPrettyString(option),
+                    disabled: option === TournamentDataSource.SMASHGG && !hasSmashggConfig.value
                 }));
             }),
             dataSource,
@@ -248,7 +248,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './src/dashboard/styles/colors';
 @import './src/dashboard/styles/constants';
 
@@ -258,5 +258,11 @@ export default defineComponent({
     background-color: $background-tertiary;
     text-align: center;
     word-break: break-all;
+}
+
+.data-source-selector .ipl-radio__options {
+    padding: 0 4px 4px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius-inner;
 }
 </style>

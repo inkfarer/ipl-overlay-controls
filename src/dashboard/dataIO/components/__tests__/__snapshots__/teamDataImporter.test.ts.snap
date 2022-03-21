@@ -11,7 +11,7 @@ exports[`teamDataImporter displays data of existing tournament if it is missing 
 exports[`teamDataImporter matches snapshot 1`] = `
 "<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
   <div class=\\"title\\">Tournament data</div>
-  <ipl-select-stub modelvalue=\\"BATTLEFY\\" label=\\"Source\\" options=\\"[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"source-selector\\"></ipl-select-stub>
+  <ipl-radio-stub modelvalue=\\"BATTLEFY\\" label=\\"Source\\" options=\\"[object Object],[object Object],[object Object]\\" data-test=\\"source-selector\\" class=\\"data-source-selector\\"></ipl-radio-stub>
   <ipl-input-stub name=\\"tournament-id-input\\" label=\\"Tournament URL\\" modelvalue=\\"\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"m-t-4\\"></ipl-input-stub>
   <ipl-upload-stub class=\\"m-t-8\\" data-test=\\"team-data-upload\\" style=\\"display: none;\\"></ipl-upload-stub>
   <div class=\\"layout horizontal center-horizontal\\"><label class=\\"small m-t-8\\" data-test=\\"use-file-upload-checkbox\\" data-v-15d39ed1=\\"\\" style=\\"display: none;\\"><input type=\\"checkbox\\" data-v-15d39ed1=\\"\\"> Upload file</label></div>

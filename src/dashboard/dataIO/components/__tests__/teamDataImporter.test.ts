@@ -13,7 +13,8 @@ describe('teamDataImporter', () => {
         IplButton: true,
         IplSelect: true,
         IplInput: true,
-        IplUpload: true
+        IplUpload: true,
+        IplRadio: true
     };
 
     beforeEach(() => {
@@ -142,9 +143,9 @@ describe('teamDataImporter', () => {
         const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
 
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'Battlefy', value: TournamentDataSource.BATTLEFY },
-            { name: 'Smash.gg', value: TournamentDataSource.SMASHGG },
-            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD }
+            { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
+            { name: 'Smash.gg', value: TournamentDataSource.SMASHGG, disabled: false },
+            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false }
         ]);
     });
 
@@ -158,8 +159,9 @@ describe('teamDataImporter', () => {
         const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
 
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'Battlefy', value: TournamentDataSource.BATTLEFY },
-            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD }
+            { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
+            { name: 'Smash.gg', value: TournamentDataSource.SMASHGG, disabled: true },
+            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false }
         ]);
     });
 
