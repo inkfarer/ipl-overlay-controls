@@ -1,7 +1,7 @@
 import Casters from '../casters.vue';
 import { useCasterStore } from '../../store/casterStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
+import { createTestingPinia, TestingPinia } from '@pinia/testing';
 
 describe('Casters', () => {
     config.global.stubs = {
@@ -11,45 +11,40 @@ describe('Casters', () => {
         IplErrorDisplay: true
     };
 
+    let pinia: TestingPinia;
+    beforeEach(() => {
+        pinia = createTestingPinia();
+        config.global.plugins = [pinia];
+    });
+
     describe('add caster button', () => {
         it('adds caster and sets it as the active caster on click', async () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.addDefaultCaster = jest.fn().mockResolvedValue('new caster id');
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             wrapper.getComponent('[data-test="add-caster-button"]').vm.$emit('click');
             await flushPromises();
 
             expect(store.addDefaultCaster).toHaveBeenCalled();
-            expect(wrapper.vm.activeCaster).toEqual('caster_new caster id');
+            expect(wrapper.vm.activeCaster).toEqual('new caster id');
             expect(wrapper.getComponent('[data-test="caster-editor-group"]').attributes().modelvalue)
-                .toEqual('caster_new caster id');
+                .toEqual('new caster id');
         });
 
         it('is disabled if there are three casters', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.casters = {
                 a: {},
                 b: {},
                 c: {},
             };
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             expect(wrapper.getComponent('[data-test="add-caster-button"]').attributes().disabled).toEqual('true');
         });
 
         it('is disabled if there are three or more casters and uncommitted casters', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.casters = {
                 a: {},
@@ -59,11 +54,7 @@ describe('Casters', () => {
                 c: {},
                 d: {}
             };
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             expect(wrapper.getComponent('[data-test="add-caster-button"]').attributes().disabled).toEqual('true');
         });
@@ -71,54 +62,38 @@ describe('Casters', () => {
 
     describe('load from vc button', () => {
         it('does not exist if radia is disabled', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.radiaSettings.enabled = false;
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             expect(wrapper.findComponent('[data-test="load-from-vc-button"]').exists()).toEqual(false);
         });
 
         it('does not exist if guild id is not configured', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.radiaSettings = {
                 enabled: true,
                 guildID: '',
                 updateOnImport: null
             };
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             expect(wrapper.findComponent('[data-test="load-from-vc-button"]').exists()).toEqual(false);
         });
 
         it('is present if radia is enabled and configured', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.radiaSettings = {
                 enabled: true,
                 guildID: '123123123123',
                 updateOnImport: null
             };
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             expect(wrapper.findComponent('[data-test="load-from-vc-button"]').exists()).toEqual(true);
         });
 
         it('sends store message to load casters on click', () => {
-            const pinia = createTestingPinia();
             const store = useCasterStore();
             store.loadCastersFromVc = jest.fn();
             store.radiaSettings = {
@@ -126,11 +101,7 @@ describe('Casters', () => {
                 guildID: '123123123123',
                 updateOnImport: null
             };
-            const wrapper = mount(Casters, {
-                global: {
-                    plugins: [ pinia ]
-                }
-            });
+            const wrapper = mount(Casters);
 
             wrapper.getComponent('[data-test="load-from-vc-button"]').vm.$emit('click');
 
@@ -139,7 +110,6 @@ describe('Casters', () => {
     });
 
     it('creates element for every caster', async () => {
-        const pinia = createTestingPinia();
         const store = useCasterStore();
         store.casters = {
             a: { name: 'cool caster' },
@@ -147,7 +117,6 @@ describe('Casters', () => {
         };
         const wrapper = mount(Casters, {
             global: {
-                plugins: [ pinia ],
                 stubs: {
                     IplExpandingSpaceGroup: false
                 }
@@ -161,7 +130,6 @@ describe('Casters', () => {
     });
 
     it('creates element for every uncommitted caster', async () => {
-        const pinia = createTestingPinia();
         const store = useCasterStore();
         store.casters = {
             a: { name: 'cool caster' },
@@ -172,7 +140,6 @@ describe('Casters', () => {
         };
         const wrapper = mount(Casters, {
             global: {
-                plugins: [ pinia ],
                 stubs: {
                     IplExpandingSpaceGroup: false
                 }
@@ -193,14 +160,12 @@ describe('Casters', () => {
     });
 
     it('handles uncommitted caster emitting save event', async () => {
-        const pinia = createTestingPinia();
         const store = useCasterStore();
         store.uncommittedCasters = {
             a: { name: 'cool caster (copy)' }
         };
         const wrapper = mount(Casters, {
             global: {
-                plugins: [ pinia ],
                 stubs: {
                     IplExpandingSpaceGroup: false
                 }
@@ -210,6 +175,29 @@ describe('Casters', () => {
         const editor = wrapper.findComponent('caster-editor-stub');
         editor.vm.$emit('save', 'new caster');
 
-        expect(wrapper.vm.activeCaster).toEqual('caster_new caster');
+        expect(wrapper.vm.activeCaster).toEqual('new caster');
+    });
+
+    it('handles changing order of casters', async () => {
+        const store = useCasterStore();
+        store.setCasterOrder = jest.fn().mockResolvedValue({});
+        store.uncommittedCasters = {
+            a: { name: 'cool caster' },
+        };
+        store.casters = {
+            b: { name: 'cool caster (copy)' },
+            c: { name: 'cool caster (copy) (copy)' },
+        };
+        const wrapper = mount(Casters, {
+            global: {
+                stubs: {
+                    IplExpandingSpaceGroup: false
+                }
+            }
+        });
+
+        await wrapper.getComponent('[data-test="casters-draggable"]').vm.$emit('end');
+
+        expect(store.setCasterOrder).toHaveBeenCalledWith(['b', 'c']);
     });
 });

@@ -175,7 +175,7 @@ describe('CasterEditor', () => {
                     plugins: [ pinia ]
                 },
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false },
                     casterId: 'casterid',
                     uncommitted: false
                 }
@@ -196,7 +196,7 @@ describe('CasterEditor', () => {
                     plugins: [ pinia ]
                 },
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false },
                     casterId: 'casterid',
                     uncommitted: false
                 }
@@ -227,7 +227,7 @@ describe('CasterEditor', () => {
                     plugins: [ pinia ]
                 },
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: true },
                     casterId: 'casterid',
                     uncommitted: true
                 }

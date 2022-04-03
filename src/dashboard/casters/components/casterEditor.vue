@@ -3,6 +3,13 @@
         :key="key"
         class="m-t-8"
     >
+        <template #header-extra>
+            <font-awesome-icon
+                v-if="!uncommitted"
+                icon="grip-vertical"
+                class="caster-elem-grip"
+            />
+        </template>
         <template #title>
             {{ internalCaster.name }}
             <span class="badge badge-blue pronoun-badge">{{ internalCaster.pronouns }}</span>
@@ -62,13 +69,16 @@ import cloneDeep from 'lodash/cloneDeep';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import pick from 'lodash/pick';
 
-library.add(faTimes);
+library.add(faTimes, faGripVertical);
 
 export default defineComponent({
     name: 'CasterEditor',
 
-    components: { IplExpandingSpace, IplButton, IplInput },
+    components: { IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
 
     props: {
         caster: {
@@ -108,11 +118,14 @@ export default defineComponent({
                 if (props.uncommitted) {
                     const newId = await store.saveUncommittedCaster({
                         id: props.casterId,
-                        caster: internalCaster.value
+                        caster: pick(internalCaster.value, ['name', 'twitter', 'pronouns'])
                     });
                     emit('save', newId);
                 } else {
-                    store.updateCaster({ id: props.casterId, newValue: internalCaster.value });
+                    store.updateCaster({
+                        id: props.casterId,
+                        newValue: pick(internalCaster.value, ['name', 'twitter', 'pronouns'])
+                    });
                 }
             },
             removeCaster() {
@@ -143,3 +156,13 @@ export default defineComponent({
     }
 });
 </script>
+
+<style lang="scss">
+@import '../../styles/colors';
+
+.caster-elem-grip {
+    color: $input-color;
+    margin: 0 4px;
+    position: relative;
+}
+</style>

@@ -9,7 +9,8 @@ describe('NextMatchStarter', () => {
 
     config.global.stubs = {
         IplDataRow: true,
-        BeginNextMatch: true
+        BeginNextMatch: true,
+        FontAwesomeIcon: true
     };
 
     beforeEach(() => {

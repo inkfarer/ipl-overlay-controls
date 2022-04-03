@@ -16,7 +16,8 @@ describe('setEditor', () => {
         IplInput: true,
         IplSelect: true,
         IplToggleButton: true,
-        IplCheckbox: true
+        IplCheckbox: true,
+        FontAwesomeIcon: true
     };
 
     beforeEach(() => {

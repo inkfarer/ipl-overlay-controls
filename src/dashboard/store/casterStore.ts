@@ -66,6 +66,9 @@ export const useCasterStore = defineStore('casters', {
         },
         async removeCaster(id: string): Promise<void> {
             return nodecg.sendMessage('removeCaster', { id });
+        },
+        async setCasterOrder(casterIds: string[]): Promise<void> {
+            return nodecg.sendMessage('setCasterOrder', { casterIds });
         }
     }
 });

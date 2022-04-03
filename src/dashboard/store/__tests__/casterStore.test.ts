@@ -128,4 +128,14 @@ describe('casterStore', () => {
             });
         });
     });
+
+    describe('setCasterOrder', () => {
+        it('sends message to extension', () => {
+            const store = useCasterStore();
+
+            store.setCasterOrder(['aa', 'bb']);
+
+            expect(mockSendMessage).toHaveBeenCalledWith('setCasterOrder', { casterIds: ['aa', 'bb']});
+        });
+    });
 });
