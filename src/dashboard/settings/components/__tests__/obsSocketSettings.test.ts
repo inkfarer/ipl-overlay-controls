@@ -9,7 +9,8 @@ describe('ObsSocketSettings', () => {
 
     config.global.stubs = {
         IplInput: true,
-        IplButton: true
+        IplButton: true,
+        FontAwesomeIcon: true
     };
 
     beforeEach(() => {

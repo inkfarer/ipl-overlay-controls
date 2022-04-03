@@ -8,7 +8,8 @@ describe('ScoreboardEditor', () => {
 
     config.global.stubs = {
         IplToggle: true,
-        IplDataRow: true
+        IplDataRow: true,
+        FontAwesomeIcon: true
     };
 
     beforeEach(() => {

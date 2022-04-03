@@ -23,70 +23,88 @@
         v-model="activeCaster"
         data-test="caster-editor-group"
     >
-        <caster-editor
-            v-for="(caster, id) in casters"
-            :key="getCasterKey(id)"
-            :caster-id="id"
-            data-test="caster-editor"
-            :caster="caster"
-        />
-        <caster-editor
-            v-for="(caster, id) in uncommittedCasters"
-            :key="getCasterKey(id)"
-            :caster-id="id"
-            :caster="caster"
-            uncommitted
-            data-test="uncommitted-caster-editor"
-            @save="handleCasterSave"
-        />
+        <draggable
+            :list="casters"
+            item-key="id"
+            handle=".caster-elem-grip"
+            data-test="casters-draggable"
+            @end="onMove"
+        >
+            <template #item="{ element }">
+                <caster-editor
+                    :key="element.id"
+                    :caster-id="element.id"
+                    :uncommitted="element.uncommitted"
+                    data-test="caster-editor"
+                    :caster="element"
+                    @save="handleCasterSave"
+                />
+            </template>
+        </draggable>
     </ipl-expanding-space-group>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { useCasterStore } from '../store/casterStore';
-import { IplButton, IplSpace, IplExpandingSpaceGroup } from '@iplsplatoon/vue-components';
+import { IplButton, IplExpandingSpaceGroup, IplSpace } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import CasterEditor from './components/casterEditor.vue';
 import isEmpty from 'lodash/isEmpty';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { storeToRefs } from 'pinia';
+import { Caster } from 'schemas';
+import Draggable from 'vuedraggable';
 
 library.add(faPlus);
 
 export default defineComponent({
     name: 'Casters',
 
-    components: { IplErrorDisplay, CasterEditor, IplExpandingSpaceGroup, IplButton, IplSpace },
+    components: { IplExpandingSpaceGroup, IplErrorDisplay, CasterEditor, IplButton, IplSpace, Draggable },
 
     setup() {
         const store = useCasterStore();
         const storeRefs = storeToRefs(store);
         const activeCaster = ref<string>(null);
         const allCasters = computed(() => ({ ...storeRefs.casters.value, ...storeRefs.uncommittedCasters.value }));
-        const getCasterKey = (id: string) => `caster_${id}`;
         const showLoadFromVc = computed(() =>
             store.radiaSettings.enabled && !isEmpty(store.radiaSettings.guildID));
 
+        const casters = ref([]);
+        watchEffect(() => {
+            const result: Array<Caster & { id: string, uncommitted: boolean }> = [];
+            Object.entries(storeRefs.casters.value).forEach(([key, caster]) => {
+                result.push({ id: String(key), ...caster, uncommitted: false });
+            });
+            Object.entries(storeRefs.uncommittedCasters.value).forEach(([key, caster]) => {
+                result.push({ id: String(key), ...caster, uncommitted: true });
+            });
+            casters.value = result;
+        });
+
         return {
-            casters: storeRefs.casters,
+            casters,
             uncommittedCasters: storeRefs.uncommittedCasters,
             activeCaster,
             disableAddCaster: computed(() => Object.keys(allCasters.value).length >= 3),
-            getCasterKey,
             async addCaster() {
-                const newId = await store.addDefaultCaster();
-                activeCaster.value = getCasterKey(newId);
+                activeCaster.value = await store.addDefaultCaster();
             },
             handleCasterSave(newId: string) {
-                activeCaster.value = getCasterKey(newId);
+                activeCaster.value = newId;
             },
             async loadFromVc() {
                 return store.loadCastersFromVc();
             },
             showLoadFromVc,
-            addCasterIcon: computed(() => showLoadFromVc.value ? 'plus' : null)
+            addCasterIcon: computed(() => showLoadFromVc.value ? 'plus' : null),
+            async onMove() {
+                await store.setCasterOrder(casters.value
+                    .filter(caster => !caster.uncommitted)
+                    .map(caster => caster.id));
+            }
         };
     }
 });

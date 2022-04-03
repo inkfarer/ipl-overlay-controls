@@ -12,7 +12,8 @@ describe('ColorEditor', () => {
     config.global.stubs = {
         IplCheckbox: true,
         IplInput: true,
-        IplButton: true
+        IplButton: true,
+        FontAwesomeIcon: true
     };
 
     beforeEach(() => {
