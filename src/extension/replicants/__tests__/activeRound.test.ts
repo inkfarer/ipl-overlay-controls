@@ -396,7 +396,17 @@ describe('activeRound', () => {
     });
 
     describe('switchToNextColor', () => {
+        it('does not switch colors if active color is custom', () => {
+            replicants.activeRound = { activeColor: { isCustom: true } };
+
+            messageListeners.switchToNextColor();
+
+            expect(mockActiveColorHelper.setActiveColor).not.toHaveBeenCalled();
+            expect(mockActiveColorHelper.getNextColor).not.toHaveBeenCalled();
+        });
+
         it('switches to next color', () => {
+            replicants.activeRound = { activeColor: { isCustom: false } };
             // @ts-ignore
             mockActiveColorHelper.getNextColor.mockReturnValue({
                 categoryName: 'Cool Colors',
@@ -417,7 +427,17 @@ describe('activeRound', () => {
     });
 
     describe('switchToPreviousColor', () => {
+        it('does not switch colors if active color is custom', () => {
+            replicants.activeRound = { activeColor: { isCustom: true } };
+
+            messageListeners.switchToPreviousColor();
+
+            expect(mockActiveColorHelper.setActiveColor).not.toHaveBeenCalled();
+            expect(mockActiveColorHelper.getPreviousColor).not.toHaveBeenCalled();
+        });
+
         it('switches to previous color', () => {
+            replicants.activeRound = { activeColor: { isCustom: false } };
             // @ts-ignore
             mockActiveColorHelper.getPreviousColor.mockReturnValue({
                 categoryName: 'Cool Colors',
