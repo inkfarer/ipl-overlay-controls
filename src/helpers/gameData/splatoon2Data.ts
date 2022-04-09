@@ -159,6 +159,14 @@ export const splatoon2Data: GameData = normalizeGameData({
                     clrB: '#1BBF0F',
                     clrNeutral: '#CCE50C',
                     isCustom: false
+                },
+                {
+                    index: 7,
+                    title: 'Yellow vs Blue',
+                    clrA: '#F1CE33',
+                    clrB: '#4B12BE',
+                    clrNeutral: '#E62E96',
+                    isCustom: false
                 }
             ]
         },

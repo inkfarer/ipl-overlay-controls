@@ -103,6 +103,12 @@ exports[`ColorEditor matches snapshot 1`] = `
               <div class=\\"color-preview\\" style=\\"background-color: rgb(27, 191, 15); border-color: white;\\"></div>
             </div>
           </div>
+          <div data-test=\\"color-option-1-7\\" class=\\"color-option layout horizontal center-vertical\\"><span style=\\"flex-grow: 1;\\">Yellow vs Blue</span>
+            <div class=\\"color-previews layout horizontal\\">
+              <div class=\\"color-preview\\" style=\\"background-color: rgb(241, 206, 51); border-color: #181e29;\\"></div>
+              <div class=\\"color-preview\\" style=\\"background-color: rgb(75, 18, 190); border-color: white;\\"></div>
+            </div>
+          </div>
         </div>
         <div class=\\"color-group\\">
           <div class=\\"title\\">Color Lock</div>
