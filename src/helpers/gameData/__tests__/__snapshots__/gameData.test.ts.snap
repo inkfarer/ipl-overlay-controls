@@ -125,6 +125,14 @@ Object {
             "isCustom": false,
             "title": "Pink vs Green",
           },
+          Object {
+            "clrA": "#F1CE33",
+            "clrB": "#4B12BE",
+            "clrNeutral": "#E62E96",
+            "index": 7,
+            "isCustom": false,
+            "title": "Yellow vs Blue",
+          },
         ],
         "meta": Object {
           "name": "Turf War",
