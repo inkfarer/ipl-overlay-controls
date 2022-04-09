@@ -226,4 +226,23 @@ describe('ColorEditor', () => {
         expect(teamAColorElem.attributes().modelvalue).toEqual('#987978');
         expect(teamBColorElem.attributes().modelvalue).toEqual('#FFFFFF');
     });
+
+    it('does not change custom color inputs if active color is updated but is not custom', async () => {
+        const store = useActiveRoundStore();
+        store.activeRound.activeColor.isCustom = true;
+        const wrapper = mount(ColorEditor, {
+            global: {
+                plugins: [ pinia ]
+            }
+        });
+
+        store.activeRound.activeColor.isCustom = false;
+        store.activeRound.teamA.color = '#987978';
+        store.activeRound.teamB.color = '#FFFFFF';
+        await wrapper.vm.$nextTick();
+        await wrapper.getComponent('[data-test="use-custom-color-toggle"]').vm.$emit('update:modelValue', true);
+
+        expect(wrapper.getComponent('[name="team-a-color"]').attributes().modelvalue).toEqual('#889');
+        expect(wrapper.getComponent('[name="team-b-color"]').attributes().modelvalue).toEqual('#999');
+    });
 });

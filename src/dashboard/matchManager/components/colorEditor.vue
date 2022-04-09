@@ -8,6 +8,7 @@
                 <ipl-checkbox
                     v-model="useCustomColor"
                     label="Use custom color"
+                    data-test="use-custom-color-toggle"
                     small
                 />
             </div>
@@ -104,10 +105,14 @@ export default defineComponent({
         const customColorB = ref(null);
 
         watch(() => activeRoundStore.activeRound.teamA.color, newValue => {
-            customColorA.value = newValue;
+            if (customColorA.value == null || activeRoundStore.activeRound.activeColor.isCustom) {
+                customColorA.value = newValue;
+            }
         }, { immediate: true });
         watch(() => activeRoundStore.activeRound.teamB.color, newValue => {
-            customColorB.value = newValue;
+            if (customColorB.value == null || activeRoundStore.activeRound.activeColor.isCustom) {
+                customColorB.value = newValue;
+            }
         }, { immediate: true });
 
         watch(() => activeRoundStore.swapColorsInternally, () => {
