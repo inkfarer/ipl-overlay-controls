@@ -122,6 +122,8 @@ nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
 });
 
 export function switchToNextColor(): void {
+    if (activeRound.value.activeColor.isCustom) return;
+
     const nextColor = getNextColor();
 
     setActiveColor({
@@ -131,6 +133,8 @@ export function switchToNextColor(): void {
 }
 
 export function switchToPreviousColor(): void {
+    if (activeRound.value.activeColor.isCustom) return;
+
     const previousColor = getPreviousColor();
 
     setActiveColor({
