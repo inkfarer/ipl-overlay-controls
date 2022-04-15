@@ -152,3 +152,18 @@ export interface BattlefyTournamentData {
     game: Game;
     streams: Stream[];
 }
+
+export type BattlefyTeamsResponse = { error: string } | Array<BattlefyTeam>
+
+interface BattlefyTeam {
+    _id: string
+    name: string
+    players: Array<BattlefyPlayer>
+    persistentTeam?: { logoUrl: string }
+}
+
+interface BattlefyPlayer {
+    _id: string
+    inGameName: string
+    username: string
+}

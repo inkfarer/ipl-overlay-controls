@@ -11,9 +11,6 @@ const bundlesDir = path.join(__dirname, '..', '..', '..');
 const bundles = readdirSync(bundlesDir, { withFileTypes: true })
     .filter(dir => dir.isDirectory() && dir.name !== 'ipl-overlay-controls');
 
-console.log(__dirname);
-console.log(bundlesDir);
-
 bundles.forEach(async (bundle) => {
     const bundlePath = `${bundlesDir}/${bundle.name}`;
     const bundlePackagePath = `${bundlePath}/package.json`;
