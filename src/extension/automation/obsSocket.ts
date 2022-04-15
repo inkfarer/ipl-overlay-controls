@@ -5,6 +5,7 @@ import { isBlank } from '../../helpers/stringHelper';
 import { ObsStatus } from '../../types/enums/ObsStatus';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { SetObsDataRequest } from '../../types/messages/obs';
+import semver from 'semver/preload';
 
 const nodecg = nodecgContext.get();
 
@@ -34,8 +35,13 @@ socket.on('ConnectionOpened', () => {
     stopReconnecting();
 });
 
-socket.on('ScenesChanged', scenes => {
-    obsData.value.scenes = scenes.scenes.map(scene => scene.name);
+socket.on('ScenesChanged', async (event) => {
+    // Older OBS websocket versions do not provide this data.
+    if (event.scenes) {
+        obsData.value.scenes = event.scenes.map(scene => scene.name);
+    } else {
+        await fetchObsData();
+    }
 });
 
 socket.on('SwitchScenes', event => {
@@ -62,6 +68,7 @@ async function connect(credentials: ObsCredentials): Promise<void> {
             password: isBlank(credentials.password) ? undefined : credentials.password
         });
 
+        await checkObsVersion();
         await fetchObsData();
     } catch (e) {
         obsData.value.status = ObsStatus.NOT_CONNECTED;
@@ -83,7 +90,15 @@ export async function tryToConnect(credentials: ObsCredentials, doLog = true): P
     }
 }
 
-async function fetchObsData() {
+async function checkObsVersion(): Promise<void> {
+    const versionInfo = await socket.send('GetVersion');
+    const socketVersion = semver.parse(versionInfo['obs-websocket-version']);
+    if (semver.lt(socketVersion, '4.9.0')) {
+        nodecg.log.warn(`Please update your obs-websocket version (Currently ${socketVersion}) as older versions are known to cause unexpected issues.`);
+    }
+}
+
+async function fetchObsData(): Promise<void> {
     try {
         const scenes = await socket.send('GetSceneList');
         const currentScene = await socket.send('GetCurrentScene');
