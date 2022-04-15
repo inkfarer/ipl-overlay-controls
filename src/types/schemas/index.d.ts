@@ -2,6 +2,7 @@ export * from './configschema';
 export * from './activeBreakScene';
 export * from './activeRound';
 export * from './casters';
+export * from './gameAutomationData';
 export * from './highlightedMatches';
 export * from './lastFmNowPlaying';
 export * from './lastFmSettings';

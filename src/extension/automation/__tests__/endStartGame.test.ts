@@ -2,7 +2,7 @@ import type * as ObsSocketModule from '../obsSocket';
 import { mock } from 'jest-mock-extended';
 import { messageListeners, mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { GameVersion } from '../../../types/enums/gameVersion';
-import { ScoreboardData } from '../../../types/schemas';
+import { GameAutomationData, ScoreboardData } from '../../../types/schemas';
 import type * as ActiveRoundModule from '../../replicants/activeRound';
 
 const mockActiveRoundModule = mock<typeof ActiveRoundModule>();
@@ -11,69 +11,158 @@ const mockObsSocket = mock<typeof ObsSocketModule>();
 jest.mock('../obsSocket', () => mockObsSocket);
 
 import '../endStartGame';
+import { GameAutomationAction } from '../../../types/enums/GameAutomationAction';
 
 describe('endStartGame', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.restoreAllMocks();
         jest.useFakeTimers();
-        replicants.runtimeConfig = { gameVersion: GameVersion.SPLATOON_2 };
         replicants.obsData = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
         replicants.scoreboardData = { };
+        replicants.gameAutomationData = {
+            actionInProgress: GameAutomationAction.NONE,
+            nextTaskForAction: null
+        };
     });
 
     afterEach(() => {
         jest.clearAllTimers();
     });
 
-    describe('startGame', () => {
-        it('clears timeouts from previous calls', async () => {
-            const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
-            const cb = jest.fn();
-
-            await messageListeners.startGame(null, cb);
-            await messageListeners.endGame(null, jest.fn());
-            await messageListeners.startGame(null, cb);
-            jest.advanceTimersByTime(23500);
-
-            expect(clearTimeoutSpy).toHaveBeenCalledTimes(4);
-            expect(cb).toHaveBeenCalledTimes(2);
-            clearTimeoutSpy.mockClear();
+    describe.each([
+        { version: GameVersion.SPLATOON_2, timings: [1, 11500, 12000]},
+        { version: GameVersion.SPLATOON_3, timings: [1, 11500, 12000]},
+    ])('startGame on $version', args => {
+        beforeEach(() => {
+            replicants.runtimeConfig = { gameVersion: args.version };
         });
 
-        it('sets scene, shows scoreboard and casters', async () => {
-            const cb = jest.fn();
+        it('returns an error when an action is already in progress', () => {
+            const ack = jest.fn();
+            (replicants.gameAutomationData as GameAutomationData).actionInProgress = GameAutomationAction.END_GAME;
 
-            await messageListeners.startGame(null, cb);
+            messageListeners.startGame(null, ack);
 
-            expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Gameplay Scene');
-            expect(mockActiveRoundModule.switchToNextColor).toHaveBeenCalled();
+            expect(ack).toHaveBeenCalledWith(new Error('An action is already in progress.'));
+        });
+
+        it('completes expected tasks', async () => {
+            const ack = jest.fn();
+
+            messageListeners.startGame(null, ack);
+
+            expect(ack).toHaveBeenCalledWith(null);
+            expect(mockObsSocket.setCurrentScene).not.toHaveBeenCalled();
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
             expect(mockSendMessage).not.toHaveBeenCalled();
-            expect(cb).not.toHaveBeenCalled();
-            jest.advanceTimersByTime(11500);
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'changeScene', index: 0 });
+
+            jest.advanceTimersByTime(args.timings[0]);
+            expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Gameplay Scene');
+            expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
+            expect(mockSendMessage).not.toHaveBeenCalled();
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'showScoreboard', index: 1 });
+
+            jest.advanceTimersByTime(args.timings[1]);
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(true);
             expect(mockSendMessage).not.toHaveBeenCalled();
-            expect(cb).not.toHaveBeenCalled();
-            jest.advanceTimersByTime(12000);
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'showCasters', index: 2 });
+
+            jest.advanceTimersByTime(args.timings[2]);
             expect(mockSendMessage).toHaveBeenCalledWith('mainShowCasters');
-            expect(cb).toHaveBeenCalled();
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction).toBeNull();
         });
     });
 
-    describe('endGame', () => {
-        it('hides the scoreboard and changes scene', async () => {
-            const cb = jest.fn();
+    describe.each([
+        { version: GameVersion.SPLATOON_2, timings: [3000, 7500]},
+        { version: GameVersion.SPLATOON_3, timings: [3000, 7500]},
+    ])('endGame on $version', args => {
+        beforeEach(() => {
+            replicants.runtimeConfig = { gameVersion: args.version };
+        });
 
-            await messageListeners.endGame(null, cb);
+        it('returns an error when an action is already in progress', () => {
+            const ack = jest.fn();
+            (replicants.gameAutomationData as GameAutomationData).actionInProgress = GameAutomationAction.END_GAME;
 
-            jest.advanceTimersByTime(3000);
+            messageListeners.endGame(null, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('An action is already in progress.'));
+        });
+
+        it('completes expected tasks', async () => {
+            const ack = jest.fn();
+
+            messageListeners.endGame(null, ack);
+
+            expect(ack).toHaveBeenCalledWith(null);
+            expect(mockObsSocket.setCurrentScene).not.toHaveBeenCalled();
+            expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'hideScoreboard', index: 0 });
+
+            jest.advanceTimersByTime(args.timings[0]);
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(false);
             expect(mockObsSocket.setCurrentScene).not.toHaveBeenCalled();
-            expect(cb).not.toHaveBeenCalled();
-            jest.advanceTimersByTime(7500);
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'changeScene', index: 1 });
+
+            jest.advanceTimersByTime(args.timings[1]);
             expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Break Scene');
-            expect(cb).toHaveBeenCalled();
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction).toBeNull();
+        });
+    });
+
+    describe('fastForwardToNextGameAutomationTask', () => {
+        beforeEach(() => {
+            replicants.runtimeConfig = { gameVersion: GameVersion.SPLATOON_2 };
+            (replicants.gameAutomationData as GameAutomationData).actionInProgress = GameAutomationAction.NONE;
+        });
+
+        it('returns error if no action is in progress', () => {
+            const ack = jest.fn();
+            (replicants.gameAutomationData as GameAutomationData).actionInProgress = GameAutomationAction.NONE;
+
+            messageListeners.fastForwardToNextGameAutomationTask(null, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('No action is in progress.'));
+        });
+
+        it('completes next automation task', () => {
+            messageListeners.endGame(null, jest.fn());
+            const ack = jest.fn();
+
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'hideScoreboard', index: 0 });
+
+            messageListeners.fastForwardToNextGameAutomationTask(null, ack);
+
+            expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(false);
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'changeScene', index: 1 });
+            expect(ack).toHaveBeenCalledWith(null);
+        });
+
+        it('sets timeout to execute next automation task', () => {
+            messageListeners.endGame(null, jest.fn());
+            const ack = jest.fn();
+
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'hideScoreboard', index: 0 });
+
+            messageListeners.fastForwardToNextGameAutomationTask(null, ack);
+
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
+                .toEqual({ name: 'changeScene', index: 1 });
+            expect(ack).toHaveBeenCalledWith(null);
+
+            jest.advanceTimersByTime(7500);
+            expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction).toBeNull();
         });
     });
 });

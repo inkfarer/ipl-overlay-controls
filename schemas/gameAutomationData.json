@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "actionInProgress": {
+            "type": "string",
+            "enum": ["END_GAME", "START_GAME", "NONE"]
+        },
+        "nextTaskForAction": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "number"
+                }
+            },
+            "required": ["name", "index"]
+        }
+    },
+    "default": {
+        "actionInProgress": "NONE",
+        "nextTaskForAction": null
+    }
+}

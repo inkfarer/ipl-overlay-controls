@@ -1,19 +1,29 @@
 import * as nodecgContext from '../helpers/nodecg';
-import { ObsData, RuntimeConfig, ScoreboardData } from '../../types/schemas';
+import { GameAutomationData, ObsData, RuntimeConfig, ScoreboardData } from '../../types/schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setCurrentScene } from './obsSocket';
 import { GameVersion } from '../../types/enums/gameVersion';
 import { switchToNextColor } from '../replicants/activeRound';
+import { GameAutomationAction } from '../../types/enums/GameAutomationAction';
 
 const nodecg = nodecgContext.get();
+
 const obsData = nodecg.Replicant<ObsData>('obsData');
 const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+const gameAutomationData = nodecg.Replicant<GameAutomationData>('gameAutomationData');
+
+interface AutomationActionTask {
+    timeout: number
+    name: string
+    action: () => unknown
+}
 
 interface GameStartTimings {
     showScoreboard: number
     showCasters: number
 }
+
 interface GameEndTimings {
     hideScoreboard: number
     changeScene: number
@@ -22,68 +32,151 @@ interface GameEndTimings {
 const startTimings: Record<GameVersion, GameStartTimings> = {
     [GameVersion.SPLATOON_2]: {
         showScoreboard: 11500,
-        showCasters: 23500
+        showCasters: 12000
     },
     [GameVersion.SPLATOON_3]: {
         showScoreboard: 11500,
-        showCasters: 23500
+        showCasters: 12000
     }
 };
 const endTimings: Record<GameVersion, GameEndTimings> = {
     [GameVersion.SPLATOON_2]: {
         hideScoreboard: 3000,
-        changeScene: 10500
+        changeScene: 7500
     },
     [GameVersion.SPLATOON_3]: {
         hideScoreboard: 3000,
-        changeScene: 10500
+        changeScene: 7500
     }
 };
 
-let gameStartTimeouts: Array<NodeJS.Timeout> = [];
-let gameEndTimeouts: Array<NodeJS.Timeout> = [];
-
-function cancelTimeouts(timeouts: Array<NodeJS.Timeout>): void {
-    timeouts.forEach(timeout => clearTimeout(timeout));
+function getAutomationTasks(action: GameAutomationAction): Array<AutomationActionTask> {
+    const gameVersion = runtimeConfig.value.gameVersion;
+    switch (action) {
+        case GameAutomationAction.START_GAME:
+            return [
+                {
+                    timeout: 0,
+                    name: 'changeScene',
+                    action: async () => {
+                        switchToNextColor();
+                        await setCurrentScene(obsData.value.gameplayScene);
+                    }
+                },
+                {
+                    timeout: startTimings[gameVersion].showScoreboard,
+                    name: 'showScoreboard',
+                    action: () => {
+                        scoreboardData.value.isVisible = true;
+                    }
+                },
+                {
+                    timeout: startTimings[gameVersion].showCasters,
+                    name: 'showCasters',
+                    action: () => {
+                        nodecg.sendMessage('mainShowCasters');
+                    }
+                }
+            ];
+        case GameAutomationAction.END_GAME:
+            return [
+                {
+                    timeout: endTimings[gameVersion].hideScoreboard,
+                    name: 'hideScoreboard',
+                    action: () => {
+                        scoreboardData.value.isVisible = false;
+                    }
+                },
+                {
+                    timeout: endTimings[gameVersion].changeScene,
+                    name: 'changeScene',
+                    action: async () => {
+                        await setCurrentScene(obsData.value.intermissionScene);
+                    }
+                }
+            ];
+        default:
+            throw new Error(`Unknown GameAutomationTask value '${action}'`);
+    }
 }
 
-function cancelGameTimeouts(): void {
-    cancelTimeouts(gameStartTimeouts);
-    gameStartTimeouts = [];
-    cancelTimeouts(gameEndTimeouts);
-    gameEndTimeouts = [];
+let automationTasks: Array<AutomationActionTask> | null = null;
+let nextAutomationTaskTimeout: NodeJS.Timeout = null;
+
+nodecg.listenFor('startGame', (data: never, ack: UnhandledListenForCb) => {
+    try {
+        startAutomationAction(GameAutomationAction.START_GAME);
+        ack(null);
+    } catch (e) {
+        return ack(e);
+    }
+});
+
+nodecg.listenFor('endGame', (data: never, ack: UnhandledListenForCb) => {
+    try {
+        startAutomationAction(GameAutomationAction.END_GAME);
+        ack(null);
+    } catch (e) {
+        return ack(e);
+    }
+});
+
+nodecg.listenFor('fastForwardToNextGameAutomationTask', (data: never, ack: UnhandledListenForCb) => {
+    if (gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
+        return ack(new Error('No action is in progress.'));
+    }
+
+    completeAutomationTask(automationTasks[gameAutomationData.value.nextTaskForAction.index]);
+    ack(null);
+});
+
+function startAutomationAction(action: GameAutomationAction): void {
+    if (gameAutomationData.value.actionInProgress !== GameAutomationAction.NONE) {
+        throw new Error('An action is already in progress.');
+    }
+
+    gameAutomationData.value.actionInProgress = action;
+    automationTasks = getAutomationTasks(action);
+
+    setNextAutomationTask();
 }
 
-nodecg.listenFor('startGame', async (data: never, callback: UnhandledListenForCb) => {
-    const timings = startTimings[runtimeConfig.value.gameVersion];
-    cancelGameTimeouts();
+function setNextAutomationTask(): void {
+    const nextTaskIndex = (gameAutomationData.value.nextTaskForAction?.index ?? -1) + 1;
+    const nextTask = automationTasks[nextTaskIndex];
+    if (!nextTask) {
+        clearAutomationActionData();
+    } else {
+        gameAutomationData.value.nextTaskForAction = {
+            index: nextTaskIndex,
+            name: nextTask.name
+        };
+        nextAutomationTaskTimeout = setTimeout(async () => {
+            await completeAutomationTask(nextTask);
+        }, nextTask.timeout);
+    }
+}
 
-    switchToNextColor();
-    await setCurrentScene(obsData.value.gameplayScene);
-    gameStartTimeouts.push(setTimeout(() => {
-        scoreboardData.value.isVisible = true;
-    }, timings.showScoreboard));
-    gameStartTimeouts.push(setTimeout(() => {
-        nodecg.sendMessage('mainShowCasters');
-    }, timings.showCasters));
+async function completeAutomationTask(task: AutomationActionTask): Promise<void> {
+    clearTimeout(nextAutomationTaskTimeout);
+    setNextAutomationTask();
+    try {
+        const result = task.action();
+        if (isPromise(result)) {
+            await task.action();
+        }
+    } catch (e) {
+        nodecg.log.error('Encountered an error during automation task', e);
+    }
+}
 
-    setTimeout(() => {
-        callback();
-    }, Math.max(...Object.values(timings)));
-});
+function clearAutomationActionData() {
+    gameAutomationData.value.actionInProgress = GameAutomationAction.NONE;
+    gameAutomationData.value.nextTaskForAction = null;
+    automationTasks = null;
+}
 
-nodecg.listenFor('endGame', async (data: never, callback: UnhandledListenForCb) => {
-    const timings = endTimings[runtimeConfig.value.gameVersion];
-    cancelGameTimeouts();
-
-    gameEndTimeouts.push(setTimeout(() => {
-        scoreboardData.value.isVisible = false;
-    }, timings.hideScoreboard));
-    gameEndTimeouts.push(setTimeout(async () => {
-        await setCurrentScene(obsData.value.intermissionScene);
-    }, timings.changeScene));
-
-    setTimeout(() => {
-        callback();
-    }, Math.max(...Object.values(timings)));
-});
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isPromise(value: any): boolean {
+    return Boolean(value && typeof value === 'object' && typeof value.then === 'function');
+}
