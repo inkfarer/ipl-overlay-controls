@@ -58,7 +58,7 @@
             <ipl-button
                 class="m-t-8"
                 label="Import"
-                :disabled="!allValid"
+                :disabled="!allValid || refreshingTournamentData"
                 async
                 progress-message="Importing..."
                 data-test="import-button"
@@ -81,6 +81,16 @@
                 {{ tournamentMetadata.sourceSpecificData.smashgg.eventData.name }}
                 ({{ tournamentMetadata.sourceSpecificData.smashgg.eventData.game }})
             </template>
+            <ipl-button
+                v-if="tournamentMetadata.source !== TournamentDataSource.UPLOAD &&
+                    tournamentMetadata.source !== TournamentDataSource.UNKNOWN"
+                class="m-t-6"
+                label="Refresh"
+                async
+                progress-message="Refreshing..."
+                data-test="refresh-button"
+                @click="handleRefresh"
+            />
         </div>
         <ipl-input
             v-model="shortName"
@@ -143,6 +153,8 @@ export default defineComponent({
 
         const shortName = ref('');
         const shortNameValidator = validator(shortName, false, notBlank);
+
+        const refreshingTournamentData = ref(false);
 
         watch(
             () => tournamentDataStore.tournamentData.meta.shortName,
@@ -242,6 +254,16 @@ export default defineComponent({
                 shortName.value
                     = tournamentDataStore.tournamentData.meta.shortName
                     ?? tournamentDataStore.tournamentData.meta.name;
+            },
+
+            refreshingTournamentData,
+            async handleRefresh() {
+                refreshingTournamentData.value = true;
+                try {
+                    await tournamentDataStore.refreshTournamentData();
+                } finally {
+                    refreshingTournamentData.value = false;
+                }
             }
         };
     }

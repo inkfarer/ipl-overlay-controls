@@ -31,7 +31,7 @@ describe('tournamentImporter', () => {
                 await messageListeners.getTournamentData(
                     { id: 'tourney', method: TournamentDataSource.SMASHGG }, ack);
 
-                expect(ack).toHaveBeenCalledWith(new Error('No smash.gg token provided.'));
+                expect(ack).toHaveBeenCalledWith(new Error('No smash.gg API key is configured.'));
             });
         });
     });

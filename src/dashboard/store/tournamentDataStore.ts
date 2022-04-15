@@ -58,6 +58,9 @@ export const useTournamentDataStore = defineStore('tournamentData', {
         },
         setShortName(newValue: string): void {
             tournamentData.value.meta.shortName = newValue;
+        },
+        async refreshTournamentData(): Promise<void> {
+            return nodecg.sendMessage('refreshTournamentData');
         }
     }
 });

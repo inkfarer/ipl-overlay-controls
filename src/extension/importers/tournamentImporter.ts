@@ -34,7 +34,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             }
             case TournamentDataSource.SMASHGG: {
                 if (!nodecg.bundleConfig?.smashgg?.apiKey) {
-                    ack(new Error('No smash.gg token provided.'));
+                    ack(new Error('No smash.gg API key is configured.'));
                     break;
                 }
 
