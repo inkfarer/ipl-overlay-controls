@@ -44,8 +44,8 @@ socket.on('ScenesChanged', async (event) => {
     }
 });
 
-socket.on('SwitchScenes', event => {
-    obsData.value.currentScene = event['scene-name'];
+socket.on('TransitionBegin', event => {
+    obsData.value.currentScene = event['to-scene'];
 });
 
 function reconnect() {

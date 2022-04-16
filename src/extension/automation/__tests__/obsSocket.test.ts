@@ -134,10 +134,10 @@ describe('obsSocket', () => {
         });
     });
 
-    describe('event: SwitchScenes', () => {
+    describe('event: TransitionBegin', () => {
         it('updates current scene', () => {
-            socketEventCallbacks.SwitchScenes({
-                'scene-name': 'New Scene'
+            socketEventCallbacks.TransitionBegin({
+                'to-scene': 'New Scene'
             });
 
             expect((replicants.obsData as ObsData).currentScene).toEqual('New Scene');
