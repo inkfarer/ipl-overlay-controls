@@ -11,6 +11,7 @@
                     :color="startStopColor"
                     :disabled="startStopDisabled"
                     data-test="start-stop-game-button"
+                    class="m-b-8"
                     @click="doAutomationAction"
                 />
                 <ipl-button
@@ -18,7 +19,6 @@
                     :disabled="disableShowCasters"
                     :small="isObsConnected"
                     data-test="show-casters-button"
-                    class="m-t-8"
                     @click="showCasters"
                 />
             </ipl-space>
