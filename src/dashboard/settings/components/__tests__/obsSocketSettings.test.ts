@@ -16,13 +16,9 @@ describe('ObsSocketSettings', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
 
-        useObsStore().$state = {
-            obsData: { status: ObsStatus.CONNECTED, enabled: true },
-            obsCredentials: {
-                address: 'localhost:4444',
-                password: 'pwd'
-            }
-        };
+        const obsStore = useObsStore();
+        obsStore.obsData = { status: ObsStatus.CONNECTED, enabled: true };
+        obsStore.obsCredentials = { address: 'localhost:4444', password: 'pwd' };
     });
 
     it.each(Object.values(ObsStatus))('matches snapshot when status is %s', status => {

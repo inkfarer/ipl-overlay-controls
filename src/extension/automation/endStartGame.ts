@@ -1,3 +1,8 @@
+/*
+ * ipl-overlay-controls contains a "Game automation actions" module.
+ * Each action has a list of pre-defined "Tasks" that it completes in a pre-defined order, each one at its own time.
+ */
+
 import * as nodecgContext from '../helpers/nodecg';
 import { GameAutomationData, ObsData, RuntimeConfig, ScoreboardData } from '../../types/schemas';
 import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
@@ -100,9 +105,6 @@ function getAutomationTasks(action: GameAutomationAction): Array<AutomationActio
     }
 }
 
-let automationTasks: Array<AutomationActionTask> | null = null;
-let nextAutomationTaskTimeout: NodeJS.Timeout = null;
-
 nodecg.listenFor('startGame', (data: never, ack: UnhandledListenForCb) => {
     try {
         startAutomationAction(GameAutomationAction.START_GAME);
@@ -120,6 +122,9 @@ nodecg.listenFor('endGame', (data: never, ack: UnhandledListenForCb) => {
         return ack(e);
     }
 });
+
+let automationTasks: Array<AutomationActionTask> | null = null;
+let nextAutomationTaskTimeout: NodeJS.Timeout = null;
 
 nodecg.listenFor('fastForwardToNextGameAutomationTask', (data: never, ack: UnhandledListenForCb) => {
     if (gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
@@ -141,11 +146,24 @@ function startAutomationAction(action: GameAutomationAction): void {
     setNextAutomationTask();
 }
 
-function setNextAutomationTask(): void {
-    const nextTaskIndex = (gameAutomationData.value.nextTaskForAction?.index ?? -1) + 1;
-    const nextTask = automationTasks[nextTaskIndex];
+// TODO
+// if an action's timeout is 0, ignore this logic and execute it immediately when it comes up in the queue
+// save when an action is expected to be run and disable completing tasks on the client side ~1s before they
+// automatically complete to prevent unintentional skips
+
+async function setNextAutomationTask(): Promise<void> {
+    let nextTaskIndex = (gameAutomationData.value.nextTaskForAction?.index ?? -1) + 1;
+    let nextTask = automationTasks[nextTaskIndex];
+    // Immediately execute tasks with no timeout without sending info about the tasks to clients
+    while (nextTask?.timeout === 0) {
+        await executeAutomationTask(nextTask);
+        nextTaskIndex++;
+        nextTask = automationTasks[nextTaskIndex];
+    }
     if (!nextTask) {
-        clearAutomationActionData();
+        gameAutomationData.value.actionInProgress = GameAutomationAction.NONE;
+        gameAutomationData.value.nextTaskForAction = null;
+        automationTasks = null;
     } else {
         gameAutomationData.value.nextTaskForAction = {
             index: nextTaskIndex,
@@ -160,6 +178,10 @@ function setNextAutomationTask(): void {
 async function completeAutomationTask(task: AutomationActionTask): Promise<void> {
     clearTimeout(nextAutomationTaskTimeout);
     setNextAutomationTask();
+    await executeAutomationTask(task);
+}
+
+async function executeAutomationTask(task: AutomationActionTask): Promise<void> {
     try {
         const result = task.action();
         if (isPromise(result)) {
@@ -168,12 +190,6 @@ async function completeAutomationTask(task: AutomationActionTask): Promise<void>
     } catch (e) {
         nodecg.log.error('Encountered an error during automation task', e);
     }
-}
-
-function clearAutomationActionData() {
-    gameAutomationData.value.actionInProgress = GameAutomationAction.NONE;
-    gameAutomationData.value.nextTaskForAction = null;
-    automationTasks = null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

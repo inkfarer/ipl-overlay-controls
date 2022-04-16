@@ -7,11 +7,8 @@ exports[`MatchManager matches snapshot if obs status is CONNECTED 1`] = `
     <score-display-stub></score-display-stub>
     <active-color-toggles-stub class=\\"m-t-8\\"></active-color-toggles-stub>
     <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
-      <div class=\\"layout horizontal m-b-8\\">
-        <ipl-button-stub label=\\"Start\\" color=\\"green\\" disabled=\\"true\\" async=\\"true\\" progressmessage=\\"Starting...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"start-game-button\\"></ipl-button-stub>
-        <ipl-button-stub label=\\"End\\" color=\\"red\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Ending...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-8\\" data-test=\\"end-game-button\\"></ipl-button-stub>
-      </div>
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"End Game\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"start-stop-game-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\" class=\\"m-t-8\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>
@@ -27,7 +24,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTING 1`] = `
     <active-color-toggles-stub class=\\"m-t-8\\"></active-color-toggles-stub>
     <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
       <!--v-if-->
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\" class=\\"m-t-8\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>
@@ -43,10 +40,20 @@ exports[`MatchManager matches snapshot if obs status is NOT_CONNECTED 1`] = `
     <active-color-toggles-stub class=\\"m-t-8\\"></active-color-toggles-stub>
     <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
       <!--v-if-->
-      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\"></ipl-button-stub>
+      <ipl-button-stub label=\\"Show casters\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"show-casters-button\\" class=\\"m-t-8\\"></ipl-button-stub>
     </div>
   </div>
   <ipl-expanding-space-group-stub class=\\"max-width m-l-8\\"></ipl-expanding-space-group-stub>
 </div>
 <set-editor-stub class=\\"m-t-8\\"></set-editor-stub>"
 `;
+
+exports[`MatchManager when automation action is in progress has expected button color and label when task name is changeScene 1`] = `"Change Scene"`;
+
+exports[`MatchManager when automation action is in progress has expected button color and label when task name is hideScoreboard 1`] = `"Hide Scoreboard"`;
+
+exports[`MatchManager when automation action is in progress has expected button color and label when task name is showCasters 1`] = `"Show Casters"`;
+
+exports[`MatchManager when automation action is in progress has expected button color and label when task name is showScoreboard 1`] = `"Show Scoreboard"`;
+
+exports[`MatchManager when automation action is in progress has expected button color and label when task name is unknown task 1`] = `"???"`;

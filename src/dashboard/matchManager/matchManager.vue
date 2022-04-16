@@ -5,35 +5,19 @@
             <score-display />
             <active-color-toggles class="m-t-8" />
             <ipl-space class="m-t-8">
-                <div
+                <ipl-button
                     v-if="isObsConnected"
-                    class="layout horizontal m-b-8"
-                >
-                    <ipl-button
-                        label="Start"
-                        color="green"
-                        async
-                        progress-message="Starting..."
-                        :disabled="disableGameStart"
-                        data-test="start-game-button"
-                        @click="startGame"
-                    />
-                    <ipl-button
-                        label="End"
-                        color="red"
-                        async
-                        progress-message="Ending..."
-                        class="m-l-8"
-                        :disabled="disableGameEnd"
-                        data-test="end-game-button"
-                        @click="endGame"
-                    />
-                </div>
+                    :label="startStopLabel"
+                    :color="startStopColor"
+                    data-test="start-stop-game-button"
+                    @click="doAutomationAction"
+                />
                 <ipl-button
                     label="Show casters"
                     :disabled="disableShowCasters"
                     :small="isObsConnected"
                     data-test="show-casters-button"
+                    class="m-t-8"
                     @click="showCasters"
                 />
             </ipl-space>
@@ -62,7 +46,7 @@ import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
 import SetEditor from './components/setEditor.vue';
 import ActiveColorToggles from './components/activeColorToggles.vue';
-import { IplButton, IplSpace, IplExpandingSpaceGroup, IplExpandingSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSpace, IplExpandingSpaceGroup, IplExpandingSpace, isBlank } from '@iplsplatoon/vue-components';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
@@ -70,6 +54,7 @@ import NextMatchStarter from './components/nextMatchStarter.vue';
 import { useObsStore } from '../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import ActiveRosterDisplay from '../components/activeRosterDisplay.vue';
+import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 
 export default defineComponent({
     name: 'ActiveRound',
@@ -104,22 +89,49 @@ export default defineComponent({
             }, 5000);
         });
 
+        const actionInProgress = computed(() =>
+            obsStore.gameAutomationData?.actionInProgress !== GameAutomationAction.NONE
+            && !isBlank(obsStore.gameAutomationData?.nextTaskForAction?.name));
+        const gameplaySceneActive = computed(() => obsStore.obsData.gameplayScene === obsStore.obsData.currentScene);
+
         return {
             disableShowCasters,
             isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
             showCasters() {
                 casterStore.showCasters();
             },
-            async startGame() {
-                return obsStore.startGame();
-            },
-            async endGame() {
-                return obsStore.endGame();
-            },
-            disableGameStart: computed(() =>
-                obsStore.obsData.gameplayScene === obsStore.obsData.currentScene),
-            disableGameEnd: computed(() =>
-                obsStore.obsData.gameplayScene !== obsStore.obsData.currentScene)
+
+            actionInProgress,
+            startStopLabel: computed(() => {
+                if (!actionInProgress.value) {
+                    return gameplaySceneActive.value ? 'End Game' : 'Start Game';
+                } else {
+                    return {
+                        changeScene: 'Change Scene',
+                        showScoreboard: 'Show Scoreboard',
+                        showCasters: 'Show Casters',
+                        hideScoreboard: 'Hide Scoreboard'
+                    }[obsStore.gameAutomationData?.nextTaskForAction.name] ?? '???';
+                }
+            }),
+            startStopColor: computed(() => {
+                if (actionInProgress.value) {
+                    return 'blue';
+                } else if (gameplaySceneActive.value) {
+                    return 'red';
+                } else {
+                    return 'green';
+                }
+            }),
+            doAutomationAction() {
+                if (actionInProgress.value) {
+                    obsStore.fastForwardToNextGameAutomationTask();
+                } else if (gameplaySceneActive.value) {
+                    obsStore.endGame();
+                } else {
+                    obsStore.startGame();
+                }
+            }
         };
     }
 });
