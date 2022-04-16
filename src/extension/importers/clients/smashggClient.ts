@@ -3,7 +3,10 @@ import axios from 'axios';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import {
-    SmashggEntrantsResponse, SmashggEvent, SmashggEventsResponse, SmashggTournamentStreamQueueResponse,
+    SmashggEntrantsResponse,
+    SmashggEvent,
+    SmashggEventsResponse,
+    SmashggTournamentStreamQueueResponse,
     SmashggTournamentStreamQueueSlot
 } from 'types/smashgg';
 import isEmpty from 'lodash/isEmpty';

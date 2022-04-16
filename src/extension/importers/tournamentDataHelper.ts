@@ -20,6 +20,10 @@ const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
+export function teamExists(teamId: string): boolean {
+    return tournamentData.value.teams.some(team => team.id === teamId);
+}
+
 export function updateTournamentDataReplicants(data: TournamentData): void {
     if (data.teams.length <= 0) {
         throw new Error('Tournament has no teams.');

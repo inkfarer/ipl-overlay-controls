@@ -1,12 +1,15 @@
+import { mock } from 'jest-mock-extended';
+import type * as BattlefyDataMapper from '../../mappers/battlefyDataMapper';
+
+const mockBattlefyDataMapper = mock<typeof BattlefyDataMapper>();
+jest.mock('../../mappers/battlefyDataMapper', () => mockBattlefyDataMapper);
+
 import { BattlefyTournamentData } from '../../../types/battlefyTournamentData';
-
-jest.mock('../../mappers/battlefyDataMapper');
-
-import { getBattlefyMatches, getBattlefyTournamentData, getBattlefyTournamentUrl } from '../battlefyClient';
-import * as battlefyDataMapper from '../../mappers/battlefyDataMapper';
 import axios from 'axios';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import Mock = jest.Mock;
+
+import { getBattlefyMatches, getBattlefyTournamentData, getBattlefyTournamentUrl } from '../battlefyClient';
 
 describe('battlefyClient', () => {
     jest.mock('axios');
@@ -27,7 +30,7 @@ describe('battlefyClient', () => {
 
     describe('getBattlefyMatches', () => {
         it('fetches highlighted matches', async () => {
-            (battlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
+            (mockBattlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
             mockGet.mockResolvedValue({ data: [ { stages: 'battlefy stages' } ]});
 
             const result = await getBattlefyMatches('aaaa', undefined, true);
@@ -44,12 +47,12 @@ describe('battlefyClient', () => {
                 + '&extend[stages.matches.bottom.team.persistentTeam]=1'
                 + '&extend[stages.matches.top.team.players]=1'
                 + '&extend[stages.matches.bottom.team.players]=1');
-            expect(battlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith('battlefy stages');
+            expect(mockBattlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith('battlefy stages');
             expect(result).toEqual('parsed battlefy data');
         });
 
         it('fetches specified highlighted matches', async () => {
-            (battlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
+            (mockBattlefyDataMapper.mapBattlefyStagesToHighlightedMatches as Mock).mockReturnValue('parsed battlefy data');
             mockGet.mockResolvedValue({ data: [ { stages: [ { _id: 'swiswsiswis' }, { _id: '123123' } ]} ]});
 
             const result = await getBattlefyMatches('aaaa', [ 'swiswsiswis' ]);
@@ -66,7 +69,7 @@ describe('battlefyClient', () => {
                 + '&extend[stages.matches.bottom.team.persistentTeam]=1'
                 + '&extend[stages.matches.top.team.players]=1'
                 + '&extend[stages.matches.bottom.team.players]=1');
-            expect(battlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith([ { _id: 'swiswsiswis' } ]);
+            expect(mockBattlefyDataMapper.mapBattlefyStagesToHighlightedMatches).toHaveBeenCalledWith([ { _id: 'swiswsiswis' } ]);
             expect(result).toEqual('parsed battlefy data');
         });
 
@@ -86,8 +89,8 @@ describe('battlefyClient', () => {
     });
 
     describe('getBattlefyTournamentData', () => {
-        it('fetches tournament data', async () => {
-            (battlefyDataMapper.mapBattlefyStagesToTournamentData as Mock).mockReturnValue('stages');
+        it('fetches tournament data, filters out teams with no players and returns it in the expected format', async () => {
+            (mockBattlefyDataMapper.mapBattlefyStagesToTournamentData as Mock).mockReturnValue('stages');
             mockGet.mockResolvedValueOnce({
                 data: [
                     {
@@ -135,6 +138,25 @@ describe('battlefyClient', () => {
                                 username: 'useruser2'
                             }
                         ]
+                    },
+                    {
+                        _id: '120938129308',
+                        name: 'Team Three',
+                        players: [
+                            {
+                                inGameName: 'ingameingame',
+                                username: 'useruser'
+                            },
+                            {
+                                inGameName: 'ingameingame2',
+                                username: 'useruser2'
+                            }
+                        ]
+                    },
+                    {
+                        _id: 'aaaaaa',
+                        name: 'BYE',
+                        players: []
                     }
                 ]
             });
@@ -183,6 +205,21 @@ describe('battlefyClient', () => {
                         ],
                         showLogo: true,
                     },
+                    {
+                        id: '120938129308',
+                        name: 'Team Three',
+                        players: [
+                            {
+                                name: 'ingameingame',
+                                username: 'useruser',
+                            },
+                            {
+                                name: 'ingameingame2',
+                                username: 'useruser2',
+                            },
+                        ],
+                        showLogo: true,
+                    },
                 ],
             });
             expect(mockGet)
@@ -202,7 +239,7 @@ describe('battlefyClient', () => {
                     + 'streams%5D%5B%24query%5D%5BdeletedAt%5D%5B%24exists%5D=false');
             expect(mockGet).toHaveBeenCalledWith('https://dtmwra1jsgyb0.cloudfront.net/tournaments/pjaojrtipfj3'
                 + 'w09quhf/teams');
-            expect(battlefyDataMapper.mapBattlefyStagesToTournamentData).toHaveBeenCalledWith('stages from battlefy');
+            expect(mockBattlefyDataMapper.mapBattlefyStagesToTournamentData).toHaveBeenCalledWith('stages from battlefy');
         });
 
         it('handles errors from Battlefy', async () => {
@@ -216,7 +253,7 @@ describe('battlefyClient', () => {
 
             const result = getBattlefyTournamentData('pjaojrtipfj3w09quhf');
 
-            await expect(result).rejects.toBe('An error has occurred.');
+            await expect(result).rejects.toEqual(new Error('An error has occurred.'));
         });
     });
 });

@@ -1,22 +1,25 @@
 import { NodeCGBrowser } from 'nodecg/browser';
-import { ObsCredentials, ObsData } from 'schemas';
+import { GameAutomationData, ObsCredentials, ObsData } from 'schemas';
 import { SetObsDataRequest } from 'types/messages/obs';
 import { defineStore } from 'pinia';
 
 const obsData = nodecg.Replicant<ObsData>('obsData');
 const obsCredentials = nodecg.Replicant<ObsCredentials>('obsCredentials');
+const gameAutomationData = nodecg.Replicant<GameAutomationData>('gameAutomationData');
 
-export const obsReps = [obsData, obsCredentials];
+export const obsReps = [obsData, obsCredentials, gameAutomationData];
 
 export interface ObsStore {
     obsData: ObsData
     obsCredentials: ObsCredentials
+    gameAutomationData: GameAutomationData
 }
 
 export const useObsStore = defineStore('obs', {
     state: () => ({
         obsData: null,
-        obsCredentials: null
+        obsCredentials: null,
+        gameAutomationData: null
     } as ObsStore),
     actions: {
         async connect({ address, password }: { address: string, password?: string }): Promise<void> {
@@ -30,6 +33,9 @@ export const useObsStore = defineStore('obs', {
         },
         async endGame(): Promise<void> {
             return nodecg.sendMessage('endGame');
+        },
+        async fastForwardToNextGameAutomationTask(): Promise<void> {
+            return nodecg.sendMessage('fastForwardToNextGameAutomationTask');
         },
         setEnabled(enabled: boolean): void {
             nodecg.sendMessage('setObsSocketEnabled', enabled);

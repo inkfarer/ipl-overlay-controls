@@ -7,6 +7,7 @@ import { HighlightedMatchMetaData } from '../../../types/highlightedMatch';
 import { Team } from '../../../types/team';
 import { PlayType } from '../../../types/enums/playType';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
+import { teamExists } from '../tournamentDataHelper';
 
 export function mapBattlefyStagesToTournamentData(stages: Stage[]):
     { name: string; id: string; type: BracketType, playType: PlayType}[] {
@@ -28,9 +29,7 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
     for (let i = 0; i < validBracketStages.length; i++) {
         const stage = validBracketStages[i];
 
-        const liveMatches = stage.matches.filter(match => {
-            return match.isMarkedLive === true;
-        });
+        const liveMatches = stage.matches.filter(match => match.isMarkedLive === true);
 
         for (let j = 0; j < liveMatches.length; j++) {
             const match = liveMatches[j];
@@ -39,6 +38,8 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
             // Build Team info
             const teamAData = mapBattlefyTeamData(match.top);
             const teamBData = mapBattlefyTeamData(match.bottom);
+
+            if (!teamExists(teamAData.id) || !teamExists(teamBData.id)) continue;
 
             // Build MetaData for match
             let matchName = `Round ${match.roundNumber} Match `;

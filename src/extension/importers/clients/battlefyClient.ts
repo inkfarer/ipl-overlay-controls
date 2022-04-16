@@ -1,9 +1,11 @@
 import { HighlightedMatches, TournamentData } from 'schemas';
 import axios from 'axios';
-import { BattlefyTournamentData } from '../../types/battlefyTournamentData';
-import { Team } from 'types/team';
+import { BattlefyTeamsResponse, BattlefyTournamentData } from '../../types/battlefyTournamentData';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
-import { mapBattlefyStagesToHighlightedMatches, mapBattlefyStagesToTournamentData } from '../mappers/battlefyDataMapper';
+import {
+    mapBattlefyStagesToHighlightedMatches,
+    mapBattlefyStagesToTournamentData
+} from '../mappers/battlefyDataMapper';
 
 /**
  * Returns the matches with isMarkedLive as true for a list of Battlefy Stages
@@ -59,12 +61,15 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
     const requestURL = 'https://dtmwra1jsgyb0.cloudfront.net/tournaments/' + id + '/teams';
     return new Promise((resolve, reject) => {
         axios
-            .get(requestURL)
+            .get<BattlefyTeamsResponse>(requestURL)
             .then(response => {
                 const { data } = response;
-                if (data.error) {
-                    reject(data.error);
-                    return;
+                if (!Array.isArray(data)) {
+                    if (data.error) {
+                        return reject(new Error(data.error));
+                    } else {
+                        return reject(new Error('Received an unknown response from Battlefy.'));
+                    }
                 }
 
                 const result: TournamentData = {
@@ -75,29 +80,20 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                         shortName: tournamentInfo.name ?? 'Unknown Tournament',
                         url: getBattlefyTournamentUrl(tournamentInfo)
                     },
-                    teams: [],
+                    teams: data
+                        .filter(team => !!team.players && team.players?.length > 0)
+                        .map(team => ({
+                            id: team._id,
+                            name: team.name,
+                            logoUrl: team.persistentTeam?.logoUrl,
+                            showLogo: true,
+                            players: team.players.map(elementPlayer => ({
+                                name: elementPlayer.inGameName,
+                                username: elementPlayer.username
+                            }))
+                        })),
                     stages: mapBattlefyStagesToTournamentData(tournamentInfo.stages)
                 };
-                for (let i = 0; i < data.length; i++) {
-                    const element = data[i];
-                    const teamInfo: Team = {
-                        id: element._id,
-                        name: element.name,
-                        logoUrl: element.persistentTeam.logoUrl,
-                        showLogo: true,
-                        players: []
-                    };
-                    for (let j = 0; j < element.players.length; j++) {
-                        const elementPlayer = element.players[j];
-                        const playerInfo = {
-                            name: elementPlayer.inGameName,
-                            username: elementPlayer.username
-                        };
-                        teamInfo.players.push(playerInfo);
-                    }
-
-                    result.teams.push(teamInfo);
-                }
 
                 resolve(result);
             })

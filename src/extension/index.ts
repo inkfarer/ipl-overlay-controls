@@ -10,6 +10,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
 
     require('./importers/music');
     require('./importers/tournamentImporter');
+    require('./importers/tournamentRefresh');
     require('./importers/roundImporter');
     require('./importers/fileImport');
     require('./importers/highlightedMatches');

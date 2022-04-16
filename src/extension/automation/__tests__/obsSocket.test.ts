@@ -112,12 +112,32 @@ describe('obsSocket', () => {
 
             expect((replicants.obsData as ObsData).scenes).toEqual(['Scene One', 'Scene Two']);
         });
+
+        it('updates scene data if no data was included in the event', async () => {
+            mockObsWebSocket.send.calledWith('GetSceneList').mockResolvedValue({
+                scenes: [{ name: 'Scene One' }, { name: 'Scene Two' }] as unknown as OBSWebSocket.Scene[],
+                messageId: '',
+                status: 'ok'
+            });
+            mockObsWebSocket.send.calledWith('GetCurrentScene').mockResolvedValue({
+                name: 'Current Scene',
+                messageId: '',
+                status: 'ok'
+            });
+
+            await socketEventCallbacks.ScenesChanged({ });
+
+            expect((replicants.obsData as ObsData).scenes).toEqual(['Scene One', 'Scene Two']);
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(2);
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
+        });
     });
 
-    describe('event: SwitchScenes', () => {
+    describe('event: TransitionBegin', () => {
         it('updates current scene', () => {
-            socketEventCallbacks.SwitchScenes({
-                'scene-name': 'New Scene'
+            socketEventCallbacks.TransitionBegin({
+                'to-scene': 'New Scene'
             });
 
             expect((replicants.obsData as ObsData).currentScene).toEqual('New Scene');
@@ -162,6 +182,11 @@ describe('obsSocket', () => {
                 messageId: '',
                 status: 'ok'
             });
+            mockObsWebSocket.send.calledWith('GetVersion').mockResolvedValue({
+                'obs-websocket-version': '4.9.0',
+                messageId: '',
+                status: 'ok'
+            });
 
             await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
 
@@ -169,7 +194,8 @@ describe('obsSocket', () => {
             const obsData = replicants.obsData as ObsData;
             expect(obsData.scenes).toEqual(['Scene One', 'Scene Two']);
             expect(obsData.currentScene).toEqual('Current Scene');
-            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(2);
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetVersion');
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
         });

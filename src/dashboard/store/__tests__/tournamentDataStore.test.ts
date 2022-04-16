@@ -186,4 +186,13 @@ describe('tournamentDataStore', () => {
             expect((replicants.tournamentData as TournamentData).meta.shortName).toEqual('New Name');
         });
     });
+
+    describe('refreshTournamentData', () => {
+        it('sends message to extension', () => {
+            const store = useTournamentDataStore();
+            store.refreshTournamentData();
+
+            expect(mockSendMessage).toHaveBeenCalledWith('refreshTournamentData');
+        });
+    });
 });

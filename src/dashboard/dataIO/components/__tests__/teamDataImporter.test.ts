@@ -53,10 +53,10 @@ describe('teamDataImporter', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('displays data of existing tournament', () => {
+    it.each([TournamentDataSource.UPLOAD, TournamentDataSource.BATTLEFY, TournamentDataSource.UNKNOWN])('displays data of existing tournament when its source is %s', source => {
         const store = useTournamentDataStore();
         store.tournamentData.meta = {
-            source: TournamentDataSource.BATTLEFY,
+            source,
             id: '123123asd',
             name: 'Cool Tournament',
             shortName: 'Cool Tournament',
@@ -395,5 +395,19 @@ describe('teamDataImporter', () => {
 
         expect(wrapper.getComponent('[name="shortName"]').attributes().modelvalue).toEqual('Tournament Name');
         expect(event.preventDefault).toHaveBeenCalled();
+    });
+
+    it('handles refreshing tournament data', () => {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.refreshTournamentData = jest.fn();
+        const wrapper = mount(TeamDataImporter, {
+            global: {
+                plugins: [pinia]
+            }
+        });
+
+        wrapper.getComponent('[data-test="refresh-button"]').vm.$emit('click');
+
+        expect(tournamentDataStore.refreshTournamentData).toHaveBeenCalled();
     });
 });

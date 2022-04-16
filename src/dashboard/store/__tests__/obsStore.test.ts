@@ -48,6 +48,16 @@ describe('obsStore', () => {
         });
     });
 
+    describe('fastForwardToNextGameAutomationTask', () => {
+        it('sends message to extension', () => {
+            const store = useObsStore();
+
+            store.fastForwardToNextGameAutomationTask();
+
+            expect(mockSendMessage).toHaveBeenCalledWith('fastForwardToNextGameAutomationTask');
+        });
+    });
+
     describe('setEnabled', () => {
         it('sends message to extension', () => {
             const store = useObsStore();

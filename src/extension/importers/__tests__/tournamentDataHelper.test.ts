@@ -25,7 +25,7 @@ jest.mock('../mappers/battlefyDataMapper', () => mockBattlefyDataMapper);
 jest.mock('../../replicants/matchStore', () => mockMatchStoreModule);
 
 import {
-    parseUploadedTeamData,
+    parseUploadedTeamData, teamExists,
     updateRadiaTournamentData,
     updateTournamentDataReplicants
 } from '../tournamentDataHelper';
@@ -663,6 +663,41 @@ describe('tournamentDataHelper', () => {
             updateRadiaTournamentData(undefined, 'Cool Tourney');
 
             expect(mockRadiaClient.updateTournamentData).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('teamExists', () => {
+        it('is true if team is present in tournament data', () => {
+            replicants.tournamentData = {
+                teams: [
+                    { id: 'team-one' },
+                    { id: 'team-two' },
+                    { id: 'team-three' },
+                    { id: 'team-four' }
+                ]
+            };
+
+            expect(teamExists('team-one')).toEqual(true);
+            expect(teamExists('team-two')).toEqual(true);
+            expect(teamExists('team-three')).toEqual(true);
+            expect(teamExists('team-four')).toEqual(true);
+        });
+
+        it('is false if team is not present in tournament data', () => {
+            replicants.tournamentData = {
+                teams: [
+                    { id: 'team-one' },
+                    { id: 'team-two' },
+                    { id: 'team-three' },
+                    { id: 'team-four' }
+                ]
+            };
+
+            expect(teamExists('team-five')).toEqual(false);
+            expect(teamExists('cool-team')).toEqual(false);
+            expect(teamExists('TEAM-ONE')).toEqual(false);
+            expect(teamExists(null)).toEqual(false);
+            expect(teamExists(undefined)).toEqual(false);
         });
     });
 });

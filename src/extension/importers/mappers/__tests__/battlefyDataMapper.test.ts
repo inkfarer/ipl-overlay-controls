@@ -1,7 +1,13 @@
-import { mapBattlefyStagesToHighlightedMatches, mapBattlefyStagesToTournamentData } from '../battlefyDataMapper';
 import { BracketType } from '../../../../types/enums/bracketType';
 import { Stage } from '../../../types/battlefyTournamentData';
 import { PlayType } from '../../../../types/enums/playType';
+import { mock } from 'jest-mock-extended';
+import type * as TournamentDataHelper from '../../tournamentDataHelper';
+
+const mockTournamentDataHelper = mock<typeof TournamentDataHelper>();
+jest.mock('../../tournamentDataHelper', () => mockTournamentDataHelper);
+
+import { mapBattlefyStagesToHighlightedMatches, mapBattlefyStagesToTournamentData } from '../battlefyDataMapper';
 
 describe('battlefyDataMapper', () => {
     describe('mapBattlefyStagesToTournamentData', () => {
@@ -43,6 +49,8 @@ describe('battlefyDataMapper', () => {
 
     describe('mapBattlefyStagesToHighlightedMatches', () => {
         it('maps stages to expected format', () => {
+            mockTournamentDataHelper.teamExists.mockReturnValue(true);
+
             expect(mapBattlefyStagesToHighlightedMatches([
                 {
                     _id: 'swiswsiswis',
@@ -129,7 +137,7 @@ describe('battlefyDataMapper', () => {
                 { bracket: { type: 'unknown' } }
             ] as Stage[])).toEqual([
                 {
-                    meta:  {
+                    meta: {
                         completionTime: '2020-05-30',
                         id: '354364141',
                         match: 50,
@@ -138,11 +146,11 @@ describe('battlefyDataMapper', () => {
                         stageName: 'Swiss Stage',
                         playType: PlayType.PLAY_ALL
                     },
-                    teamA:  {
+                    teamA: {
                         id: '123123123',
                         logoUrl: 'logo://url',
                         name: 'Cool Team',
-                        players:  [
+                        players: [
                             {
                                 name: 'P1',
                             },
@@ -152,11 +160,11 @@ describe('battlefyDataMapper', () => {
                         ],
                         showLogo: true,
                     },
-                    teamB:  {
+                    teamB: {
                         id: '234234234',
                         logoUrl: 'logo://url/2',
                         name: 'Cool Team the Second',
-                        players:  [
+                        players: [
                             {
                                 name: 'P3',
                             },
@@ -168,7 +176,7 @@ describe('battlefyDataMapper', () => {
                     },
                 },
                 {
-                    meta:  {
+                    meta: {
                         id: '354364141',
                         match: 23,
                         name: 'Round 3 Match C23',
@@ -176,11 +184,11 @@ describe('battlefyDataMapper', () => {
                         stageName: 'Elimination Stage',
                         playType: PlayType.BEST_OF
                     },
-                    teamA:  {
+                    teamA: {
                         id: '123123123',
                         logoUrl: 'logo://url',
                         name: 'Cool Team',
-                        players:  [
+                        players: [
                             {
                                 name: 'P5',
                             },
@@ -190,11 +198,11 @@ describe('battlefyDataMapper', () => {
                         ],
                         showLogo: true,
                     },
-                    teamB:  {
+                    teamB: {
                         id: '234234234',
                         logoUrl: 'logo://url/2',
                         name: 'Cool Team the Second',
-                        players:  [
+                        players: [
                             {
                                 name: 'P7',
                             },
@@ -206,6 +214,81 @@ describe('battlefyDataMapper', () => {
                     },
                 },
             ]);
+        });
+
+        it('skips importing match when top team is not present in tournament data', () => {
+            mockTournamentDataHelper.teamExists.mockReturnValueOnce(false);
+
+            expect(mapBattlefyStagesToHighlightedMatches([
+                {
+                    _id: 'swiswsiswis',
+                    name: 'Swiss Stage',
+                    bracket: { type: 'swiss', seriesStyle: 'gamesPerMatch' },
+                    matches: [
+                        {
+                            _id: '354364141',
+                            isMarkedLive: true,
+                            matchNumber: 50,
+                            roundNumber: 1,
+                            completedAt: '2020-05-30',
+                            top: {
+                                team: {
+                                    _id: '123123123',
+                                    players: []
+                                }
+                            },
+                            bottom: {
+                                team: {
+                                    _id: '234234234',
+                                    players: []
+                                }
+                            }
+                        }
+                    ]
+                }
+            ] as Stage[])).toEqual([]);
+
+            expect(mockTournamentDataHelper.teamExists).toHaveBeenCalledTimes(1);
+            expect(mockTournamentDataHelper.teamExists).toHaveBeenCalledWith('123123123');
+        });
+
+        it('skips importing match when bottom team is not present in tournament data', () => {
+            mockTournamentDataHelper.teamExists
+                .mockReturnValueOnce(true)
+                .mockReturnValueOnce(false);
+
+            expect(mapBattlefyStagesToHighlightedMatches([
+                {
+                    _id: 'swiswsiswis',
+                    name: 'Swiss Stage',
+                    bracket: { type: 'swiss', seriesStyle: 'gamesPerMatch' },
+                    matches: [
+                        {
+                            _id: '354364141',
+                            isMarkedLive: true,
+                            matchNumber: 50,
+                            roundNumber: 1,
+                            completedAt: '2020-05-30',
+                            top: {
+                                team: {
+                                    _id: '123123123',
+                                    players: []
+                                }
+                            },
+                            bottom: {
+                                team: {
+                                    _id: '234234234',
+                                    players: []
+                                }
+                            }
+                        }
+                    ]
+                }
+            ] as Stage[])).toEqual([]);
+
+            expect(mockTournamentDataHelper.teamExists).toHaveBeenCalledTimes(2);
+            expect(mockTournamentDataHelper.teamExists).toHaveBeenCalledWith('123123123');
+            expect(mockTournamentDataHelper.teamExists).toHaveBeenCalledWith('234234234');
         });
     });
 });

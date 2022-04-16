@@ -16,15 +16,14 @@ describe('ObsDataPicker', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
 
-        useObsStore().$state = {
-            obsCredentials: null,
-            obsData: {
-                enabled: true,
-                status: ObsStatus.CONNECTED,
-                scenes: ['Scene One', 'Scene Two', 'Scene Three'],
-                gameplayScene: 'Scene One',
-                intermissionScene: 'Scene Two'
-            }
+        const obsStore = useObsStore();
+        obsStore.obsCredentials = null;
+        obsStore.obsData = {
+            enabled: true,
+            status: ObsStatus.CONNECTED,
+            scenes: ['Scene One', 'Scene Two', 'Scene Three'],
+            gameplayScene: 'Scene One',
+            intermissionScene: 'Scene Two'
         };
     });
 
