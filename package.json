@@ -127,7 +127,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
-        "@iplsplatoon/vue-components": "2.6.0",
+        "@iplsplatoon/vue-components": "2.6.1",
         "@pinia/testing": "^0.0.9",
         "@types/fs-extra": "^9.0.13",
         "axios": "^0.21.1",
