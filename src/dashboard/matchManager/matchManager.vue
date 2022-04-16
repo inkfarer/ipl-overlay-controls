@@ -9,6 +9,7 @@
                     v-if="isObsConnected"
                     :label="startStopLabel"
                     :color="startStopColor"
+                    :disabled="startStopDisabled"
                     data-test="start-stop-game-button"
                     @click="doAutomationAction"
                 />
@@ -40,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onUnmounted, ref } from 'vue';
 import ScoreDisplay from './components/scoreDisplay.vue';
 import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
@@ -94,6 +95,15 @@ export default defineComponent({
             && !isBlank(obsStore.gameAutomationData?.nextTaskForAction?.name));
         const gameplaySceneActive = computed(() => obsStore.obsData.gameplayScene === obsStore.obsData.currentScene);
 
+        const now = ref(new Date().getTime());
+        const setCurrentTimeInterval = setInterval(() => {
+            now.value = new Date().getTime();
+        }, 100);
+
+        onUnmounted(() => {
+            clearInterval(setCurrentTimeInterval);
+        });
+
         return {
             disableShowCasters,
             isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
@@ -131,7 +141,11 @@ export default defineComponent({
                 } else {
                     obsStore.startGame();
                 }
-            }
+            },
+            startStopDisabled: computed(() => {
+                return actionInProgress.value
+                    && obsStore.gameAutomationData?.nextTaskForAction?.executionTimeMillis - 1000 < now.value;
+            })
         };
     }
 });

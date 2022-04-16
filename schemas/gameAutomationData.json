@@ -16,9 +16,12 @@
                 },
                 "index": {
                     "type": "number"
+                },
+                "executionTimeMillis": {
+                    "type": "number"
                 }
             },
-            "required": ["name", "index"]
+            "required": ["name", "index", "executionTimeMillis"]
         }
     },
     "default": {

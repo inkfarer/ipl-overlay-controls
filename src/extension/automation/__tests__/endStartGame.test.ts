@@ -19,6 +19,7 @@ describe('endStartGame', () => {
         jest.clearAllMocks();
         jest.restoreAllMocks();
         jest.useFakeTimers();
+        jest.spyOn(Date.prototype, 'getTime').mockReturnValue(10000);
         replicants.obsData = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
         replicants.scoreboardData = { };
         replicants.gameAutomationData = {
@@ -58,13 +59,13 @@ describe('endStartGame', () => {
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
             expect(mockSendMessage).not.toHaveBeenCalled();
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ index: 1, name: 'showScoreboard' });
+                .toEqual({ index: 1, name: 'showScoreboard', executionTimeMillis: 21500 });
 
             jest.advanceTimersByTime(args.timings[0]);
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(true);
             expect(mockSendMessage).not.toHaveBeenCalled();
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'showCasters', index: 2 });
+                .toEqual({ name: 'showCasters', index: 2, executionTimeMillis: 22000 });
 
             jest.advanceTimersByTime(args.timings[1]);
             expect(mockSendMessage).toHaveBeenCalledWith('mainShowCasters');
@@ -98,13 +99,13 @@ describe('endStartGame', () => {
             expect(mockObsSocket.setCurrentScene).not.toHaveBeenCalled();
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'hideScoreboard', index: 0 });
+                .toEqual({ name: 'hideScoreboard', index: 0, executionTimeMillis: 13000 });
 
             jest.advanceTimersByTime(args.timings[0]);
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(false);
             expect(mockObsSocket.setCurrentScene).not.toHaveBeenCalled();
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'changeScene', index: 1 });
+                .toEqual({ name: 'changeScene', index: 1, executionTimeMillis: 17500 });
 
             jest.advanceTimersByTime(args.timings[1]);
             expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Break Scene');
@@ -132,13 +133,13 @@ describe('endStartGame', () => {
             const ack = jest.fn();
 
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'hideScoreboard', index: 0 });
+                .toEqual({ name: 'hideScoreboard', index: 0, executionTimeMillis: 13000 });
 
             messageListeners.fastForwardToNextGameAutomationTask(null, ack);
 
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toEqual(false);
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'changeScene', index: 1 });
+                .toEqual({ name: 'changeScene', index: 1, executionTimeMillis: 17500 });
             expect(ack).toHaveBeenCalledWith(null);
         });
 
@@ -147,12 +148,12 @@ describe('endStartGame', () => {
             const ack = jest.fn();
 
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'hideScoreboard', index: 0 });
+                .toEqual({ name: 'hideScoreboard', index: 0, executionTimeMillis: 13000 });
 
             messageListeners.fastForwardToNextGameAutomationTask(null, ack);
 
             expect((replicants.gameAutomationData as GameAutomationData).nextTaskForAction)
-                .toEqual({ name: 'changeScene', index: 1 });
+                .toEqual({ name: 'changeScene', index: 1, executionTimeMillis: 17500 });
             expect(ack).toHaveBeenCalledWith(null);
 
             jest.advanceTimersByTime(7500);

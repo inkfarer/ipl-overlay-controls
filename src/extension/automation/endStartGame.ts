@@ -146,11 +146,6 @@ function startAutomationAction(action: GameAutomationAction): void {
     setNextAutomationTask();
 }
 
-// TODO
-// if an action's timeout is 0, ignore this logic and execute it immediately when it comes up in the queue
-// save when an action is expected to be run and disable completing tasks on the client side ~1s before they
-// automatically complete to prevent unintentional skips
-
 async function setNextAutomationTask(): Promise<void> {
     let nextTaskIndex = (gameAutomationData.value.nextTaskForAction?.index ?? -1) + 1;
     let nextTask = automationTasks[nextTaskIndex];
@@ -167,7 +162,8 @@ async function setNextAutomationTask(): Promise<void> {
     } else {
         gameAutomationData.value.nextTaskForAction = {
             index: nextTaskIndex,
-            name: nextTask.name
+            name: nextTask.name,
+            executionTimeMillis: new Date().getTime() + nextTask.timeout
         };
         nextAutomationTaskTimeout = setTimeout(async () => {
             await completeAutomationTask(nextTask);

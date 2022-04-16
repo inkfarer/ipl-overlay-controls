@@ -82,7 +82,7 @@ describe('MatchManager', () => {
             const obsStore = useObsStore();
             obsStore.gameAutomationData = {
                 actionInProgress: GameAutomationAction.START_GAME,
-                nextTaskForAction: { name: 'action!!', index: 2 }
+                nextTaskForAction: { name: 'action!!', index: 2, executionTimeMillis: 123123 }
             };
             wrapper = mount(MatchManager);
         });
@@ -166,5 +166,31 @@ describe('MatchManager', () => {
             expect((button.vm as unknown as UnknownModule).color).toEqual('green');
             expect((button.vm as unknown as UnknownModule).label).toEqual('Start Game');
         });
+    });
+
+    it.each([9001, 9500, 9999, 10000, 11000])('disables completing task when execution time is one second or less from now (now=%s)', async (now) => {
+        const obsStore = useObsStore();
+        obsStore.gameAutomationData = {
+            actionInProgress: GameAutomationAction.START_GAME,
+            nextTaskForAction: { name: 'action!!', index: 2, executionTimeMillis: 10000 }
+        };
+        jest.spyOn(Date.prototype, 'getTime').mockReturnValue(now);
+        const wrapper = mount(MatchManager);
+        const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+
+        expect((button.vm as unknown as UnknownModule).disabled).toEqual(true);
+    });
+
+    it('enables completing task when execution time is more than one second from now', () => {
+        const obsStore = useObsStore();
+        obsStore.gameAutomationData = {
+            actionInProgress: GameAutomationAction.START_GAME,
+            nextTaskForAction: { name: 'action!!', index: 2, executionTimeMillis: 10000 }
+        };
+        jest.spyOn(Date.prototype, 'getTime').mockReturnValue(8999);
+        const wrapper = mount(MatchManager);
+        const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+
+        expect((button.vm as unknown as UnknownModule).disabled).toEqual(false);
     });
 });

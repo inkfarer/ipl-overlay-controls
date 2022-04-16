@@ -10,5 +10,6 @@ export interface GameAutomationData {
 	nextTaskForAction?: {
 		name: string;
 		index: number;
+		executionTimeMillis: number;
 	} | null;
 }
