@@ -5,6 +5,18 @@
             <score-display />
             <active-color-toggles class="m-t-8" />
             <ipl-space class="m-t-8">
+                <ipl-message
+                    v-if="showObsConfigurationChangedWarning"
+                    type="warning"
+                    class="m-b-8"
+                    data-test="obs-scenes-changed-warning"
+                    closeable
+                    @close="showObsConfigurationChangedWarning = false"
+                >
+                    The OBS scene configuration has changed.
+                    Please confirm that the configured gameplay and intermission scenes
+                    ('{{ gameplayScene }}' & '{{ intermissionScene }}') are still correct.
+                </ipl-message>
                 <ipl-button
                     v-if="isObsConnected"
                     :label="startStopLabel"
@@ -47,7 +59,14 @@ import ActiveMatchEditor from './components/activeMatchEditor.vue';
 import ColorEditor from './components/colorEditor.vue';
 import SetEditor from './components/setEditor.vue';
 import ActiveColorToggles from './components/activeColorToggles.vue';
-import { IplButton, IplSpace, IplExpandingSpaceGroup, IplExpandingSpace, isBlank } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplSpace,
+    IplExpandingSpaceGroup,
+    IplExpandingSpace,
+    isBlank,
+    IplMessage
+} from '@iplsplatoon/vue-components';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
@@ -61,6 +80,7 @@ export default defineComponent({
     name: 'ActiveRound',
 
     components: {
+        IplMessage,
         IplExpandingSpace,
         ActiveRosterDisplay,
         NextMatchStarter,
@@ -104,6 +124,11 @@ export default defineComponent({
             clearInterval(setCurrentTimeInterval);
         });
 
+        const showObsConfigurationChangedWarning = ref(false);
+        nodecg.listenFor('obsSceneConfigurationChangedAfterUpdate', () => {
+            showObsConfigurationChangedWarning.value = true;
+        });
+
         return {
             disableShowCasters,
             isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
@@ -145,7 +170,11 @@ export default defineComponent({
             startStopDisabled: computed(() => {
                 return actionInProgress.value
                     && obsStore.gameAutomationData?.nextTaskForAction?.executionTimeMillis - 1000 < now.value;
-            })
+            }),
+
+            gameplayScene: computed(() => obsStore.obsData.gameplayScene),
+            intermissionScene: computed(() => obsStore.obsData.intermissionScene),
+            showObsConfigurationChangedWarning
         };
     }
 });

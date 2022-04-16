@@ -193,4 +193,39 @@ describe('MatchManager', () => {
 
         expect((button.vm as unknown as UnknownModule).disabled).toEqual(false);
     });
+
+    it('does not show scene configuration change warning by default', () => {
+        const wrapper = mount(MatchManager);
+
+        expect(wrapper.findComponent('[data-test="obs-scenes-changed-warning"]').exists()).toEqual(false);
+    });
+
+    it('shows warning if obs scene configuration is changed', async () => {
+        const obsStore = useObsStore();
+        obsStore.obsData.gameplayScene = 'Gameplay Scene';
+        obsStore.obsData.intermissionScene = 'Intermission Scene';
+        const wrapper = mount(MatchManager);
+
+        messageListeners.obsSceneConfigurationChangedAfterUpdate();
+        await wrapper.vm.$nextTick();
+
+        const warning = wrapper.findComponent('[data-test="obs-scenes-changed-warning"]');
+        expect(warning.exists()).toEqual(true);
+        expect(warning.text()).toEqual('The OBS scene configuration has changed. Please confirm that the configured gameplay and intermission scenes (\'Gameplay Scene\' & \'Intermission Scene\') are still correct.');
+    });
+
+    it('allows to close obs scene configuration warning', async () => {
+        const wrapper = mount(MatchManager);
+
+        messageListeners.obsSceneConfigurationChangedAfterUpdate();
+        await wrapper.vm.$nextTick();
+
+        const warning = wrapper.findComponent('[data-test="obs-scenes-changed-warning"]');
+        expect(warning.exists()).toEqual(true);
+
+        warning.vm.$emit('close');
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.findComponent('[data-test="obs-scenes-changed-warning"]').exists()).toEqual(false);
+    });
 });

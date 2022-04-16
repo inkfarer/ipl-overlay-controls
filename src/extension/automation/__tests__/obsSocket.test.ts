@@ -1,7 +1,7 @@
 import OBSWebSocket from 'obs-websocket-js';
 import { mock } from 'jest-mock-extended';
 import { UnknownFunction } from '../../../helpers/__mocks__/module';
-import { messageListeners, replicants } from '../../__mocks__/mockNodecg';
+import { messageListeners, mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { ObsStatus } from '../../../types/enums/ObsStatus';
 import { ObsData } from '../../../types/schemas';
 const mockObsWebSocket = mock<OBSWebSocket>();
@@ -103,6 +103,10 @@ describe('obsSocket', () => {
 
     describe('event: ScenesChanged', () => {
         it('updates scene data', () => {
+            replicants.obsData = {
+                gameplayScene: 'Scene Two',
+                intermissionScene: 'Scene One'
+            };
             socketEventCallbacks.ScenesChanged({
                 scenes: [
                     { name: 'Scene One' },
@@ -110,7 +114,48 @@ describe('obsSocket', () => {
                 ]
             });
 
-            expect((replicants.obsData as ObsData).scenes).toEqual(['Scene One', 'Scene Two']);
+            const newObsData = replicants.obsData as ObsData;
+            expect(newObsData.scenes).toEqual(['Scene One', 'Scene Two']);
+            expect(newObsData.gameplayScene).toEqual('Scene Two');
+            expect(newObsData.intermissionScene).toEqual('Scene One');
+            expect(mockSendMessage).not.toHaveBeenCalled();
+        });
+
+        it('updates configured gameplay and intermission scenes if the existing ones do not exist in the new scene list', () => {
+            replicants.obsData = {
+                gameplayScene: 'Old gameplay scene',
+                intermissionScene: 'Old intermission scene'
+            };
+            socketEventCallbacks.ScenesChanged({
+                scenes: [
+                    { name: 'Scene One' },
+                    { name: 'Scene Two' }
+                ]
+            });
+
+            const newObsData = replicants.obsData as ObsData;
+            expect(newObsData.scenes).toEqual(['Scene One', 'Scene Two']);
+            expect(newObsData.gameplayScene).toEqual('Scene One');
+            expect(newObsData.intermissionScene).toEqual('Scene Two');
+            expect(mockSendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
+        });
+
+        it('updates configured gameplay and intermission scenes if the existing ones do not exist in the new scene list and only one scene is present', () => {
+            replicants.obsData = {
+                gameplayScene: 'Old gameplay scene',
+                intermissionScene: 'Old intermission scene'
+            };
+            socketEventCallbacks.ScenesChanged({
+                scenes: [
+                    { name: 'Scene One' }
+                ]
+            });
+
+            const newObsData = replicants.obsData as ObsData;
+            expect(newObsData.scenes).toEqual(['Scene One']);
+            expect(newObsData.gameplayScene).toEqual('Scene One');
+            expect(newObsData.intermissionScene).toEqual('Scene One');
+            expect(mockSendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
         });
 
         it('updates scene data if no data was included in the event', async () => {
@@ -145,6 +190,22 @@ describe('obsSocket', () => {
     });
 
     describe('connectToObs', () => {
+        beforeEach(() => {
+            mockObsWebSocket.send.mockReset();
+
+            mockObsWebSocket.send.calledWith('GetCurrentScene').mockResolvedValue({
+                name: 'Current Scene', messageId: '', status: 'ok' });
+            mockObsWebSocket.send.calledWith('GetVersion').mockResolvedValue({
+                'obs-websocket-version': '4.9.0', messageId: '', status: 'ok' });
+
+            replicants.obsData = {
+                enabled: true,
+                scenes: ['Scene One', 'Scene Two', 'Scene Three'],
+                gameplayScene: 'Scene Two',
+                intermissionScene: 'Scene One'
+            };
+        });
+
         it('connects to OBS socket with provided credentials', async () => {
             const cb = jest.fn();
 
@@ -177,23 +238,64 @@ describe('obsSocket', () => {
                 messageId: '',
                 status: 'ok'
             });
-            mockObsWebSocket.send.calledWith('GetCurrentScene').mockResolvedValue({
-                name: 'Current Scene',
-                messageId: '',
-                status: 'ok'
-            });
-            mockObsWebSocket.send.calledWith('GetVersion').mockResolvedValue({
-                'obs-websocket-version': '4.9.0',
+
+            await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(null);
+            const obsData = replicants.obsData as ObsData;
+            expect(obsData.scenes).toEqual(['Scene One', 'Scene Two']);
+            expect(obsData.currentScene).toEqual('Current Scene');
+            expect(obsData.gameplayScene).toEqual('Scene Two');
+            expect(obsData.intermissionScene).toEqual('Scene One');
+            expect(mockSendMessage).not.toHaveBeenCalled();
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetVersion');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
+        });
+
+        it('overrides configured gameplay and intermission scene if they are absent from the new scene list', async () => {
+            const cb = jest.fn();
+
+            mockObsWebSocket.send.calledWith('GetSceneList').mockResolvedValue({
+                scenes: [{ name: 'New Scene One' }, { name: 'New Scene Two' }] as unknown as OBSWebSocket.Scene[],
                 messageId: '',
                 status: 'ok'
             });
 
             await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
 
-            expect(cb).toHaveBeenCalled();
+            expect(cb).toHaveBeenCalledWith(null);
             const obsData = replicants.obsData as ObsData;
-            expect(obsData.scenes).toEqual(['Scene One', 'Scene Two']);
+            expect(obsData.scenes).toEqual(['New Scene One', 'New Scene Two']);
             expect(obsData.currentScene).toEqual('Current Scene');
+            expect(obsData.gameplayScene).toEqual('New Scene One');
+            expect(obsData.intermissionScene).toEqual('New Scene Two');
+            expect(mockSendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
+            expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetVersion');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
+            expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetCurrentScene');
+        });
+
+        it('overrides configured gameplay and intermission scene if they are absent from the new scene list and only one scene is available', async () => {
+            const cb = jest.fn();
+
+            mockObsWebSocket.send.calledWith('GetSceneList').mockResolvedValue({
+                scenes: [{ name: 'New Scene One' }] as unknown as OBSWebSocket.Scene[],
+                messageId: '',
+                status: 'ok'
+            });
+
+            await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
+
+            expect(cb).toHaveBeenCalledWith(null);
+            const obsData = replicants.obsData as ObsData;
+            expect(obsData.scenes).toEqual(['New Scene One']);
+            expect(obsData.currentScene).toEqual('Current Scene');
+            expect(obsData.gameplayScene).toEqual('New Scene One');
+            expect(obsData.intermissionScene).toEqual('New Scene One');
+            expect(mockSendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
             expect(mockObsWebSocket.send).toHaveBeenCalledTimes(3);
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetVersion');
             expect(mockObsWebSocket.send).toHaveBeenCalledWith('GetSceneList');
@@ -207,7 +309,7 @@ describe('obsSocket', () => {
 
             await messageListeners.connectToObs({ address: '192.168.1.222:2222' }, cb);
 
-            expect(cb).toHaveBeenCalled();
+            expect(cb).toHaveBeenCalledWith(new Error('Err'));
             expect(mockObsWebSocket.send).not.toHaveBeenCalled();
             expect(mockObsWebSocket.connect).toHaveBeenCalledTimes(1);
             expect((replicants.obsData as ObsData).status).toEqual(ObsStatus.NOT_CONNECTED);
