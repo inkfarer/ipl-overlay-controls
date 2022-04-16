@@ -38,7 +38,7 @@ socket.on('ConnectionOpened', () => {
 socket.on('ScenesChanged', async (event) => {
     // Older OBS websocket versions do not provide this data.
     if (event.scenes) {
-        obsData.value.scenes = event.scenes.map(scene => scene.name);
+        setNewSceneList(event.scenes.map(scene => scene.name));
     } else {
         await fetchObsData();
     }
@@ -104,9 +104,34 @@ async function fetchObsData(): Promise<void> {
         const currentScene = await socket.send('GetCurrentScene');
 
         obsData.value.currentScene = currentScene.name;
-        obsData.value.scenes = scenes.scenes.map(scene => scene.name);
+        setNewSceneList(scenes.scenes.map(scene => scene.name));
     } catch (e) {
         nodecg.log.error('Failed to get data for scenes:', e.description ?? e.error ?? e);
+    }
+}
+
+function setNewSceneList(scenes: string[]): void {
+    // OBS does not allow you to have no scenes.
+    if (scenes.length <= 0) {
+        nodecg.log.error('Received scene list with no scenes.');
+        return;
+    }
+
+    const obsDataUpdates: Record<string, unknown> = {};
+    if (!scenes.includes(obsData.value.gameplayScene)) {
+        obsDataUpdates.gameplayScene = scenes[0];
+    }
+    if (!scenes.includes(obsData.value.intermissionScene)) {
+        obsDataUpdates.intermissionScene = scenes[scenes.length === 1 ? 0 : 1];
+    }
+    obsDataUpdates.scenes = scenes;
+    obsData.value = {
+        ...obsData.value,
+        ...obsDataUpdates
+    };
+
+    if (obsDataUpdates.gameplayScene || obsDataUpdates.intermissionScene) {
+        nodecg.sendMessage('obsSceneConfigurationChangedAfterUpdate');
     }
 }
 
