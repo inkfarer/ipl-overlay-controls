@@ -43,6 +43,13 @@ export async function getSmashGGEvents(slug: string, token: string): Promise<Sma
         }
     );
 
+    if (!response.data.data.tournament) {
+        throw new Error(`Could not find tournament with slug '${slug}'.`);
+    }
+    if (!response.data.data.tournament.events) {
+        throw new Error(`Tournament '${slug}' has no events.`);
+    }
+
     return response.data.data.tournament.events.map(event => ({
         id: event.id,
         name: event.name,
@@ -166,6 +173,11 @@ async function getSmashGGPage(
     );
 
     const { data } = response;
+
+    if (!data.data.event) {
+        throw new Error(`Could not find event with id '${eventId}'`);
+    }
+
     const pageInfo: Team[] = [];
     data.data.event.entrants.nodes.forEach(entrant => {
         pageInfo.push({

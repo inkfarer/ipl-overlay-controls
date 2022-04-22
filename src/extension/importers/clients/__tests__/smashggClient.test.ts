@@ -68,6 +68,34 @@ describe('smashggClient', () => {
             );
             expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1])).toMatchSnapshot();
         });
+
+        it('throws error if tournament is not found', async () => {
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        tournament: null
+                    }
+                }
+            });
+
+            await expect(() => getSmashGGEvents('event', 'apdjwiadhjwio'))
+                .rejects.toThrow(new Error('Could not find tournament with slug \'event\'.'));
+        });
+
+        it('throws error if tournament has no events', async () => {
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        tournament: {
+                            events: null
+                        }
+                    }
+                }
+            });
+
+            await expect(() => getSmashGGEvents('eventte', 'apdjwiadhjwio'))
+                .rejects.toThrow(new Error('Tournament \'eventte\' has no events.'));
+        });
     });
 
     describe('getSmashGGData', () => {
@@ -449,6 +477,19 @@ describe('smashggClient', () => {
                 ]
             });
             expect(mockPost).toHaveBeenCalledTimes(3);
+        });
+
+        it('throws error if event is not found', async () => {
+            mockPost.mockResolvedValueOnce({
+                data: {
+                    data: {
+                        event: null
+                    }
+                }
+            });
+
+            await expect(() => getSmashGGData(12345, '149083257830574'))
+                .rejects.toEqual(new Error('Could not find event with id \'12345\''));
         });
     });
 

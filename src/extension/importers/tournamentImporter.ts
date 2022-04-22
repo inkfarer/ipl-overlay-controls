@@ -56,15 +56,18 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             default:
                 return ack(new Error('Invalid method given.'));
         }
-
     } catch (e) {
         ack(e);
     }
 });
 
 nodecg.listenFor('getSmashggEvent', async (data: GetSmashggEventRequest, ack: UnhandledListenForCb) => {
-    await getSmashggEventData(data.eventId);
-    ack(null, data.eventId);
+    try {
+        await getSmashggEventData(data.eventId);
+        return ack(null, data.eventId);
+    } catch (e) {
+        return ack(e);
+    }
 });
 
 async function getSmashggEventData(eventId: number): Promise<void> {
