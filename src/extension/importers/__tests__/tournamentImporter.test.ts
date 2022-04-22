@@ -136,6 +136,16 @@ describe('tournamentImporter', () => {
                 expect(mockTournamentDataHelper.updateTournamentDataReplicants).toHaveBeenCalledWith(tournamentData);
                 expect(ack).toHaveBeenCalledWith(null, 123123);
             });
+
+            it('returns errors to client', async () => {
+                const ack = jest.fn();
+                mockSmashggClient.getSmashGGData.mockRejectedValue(new Error('Error!?'));
+
+                await messageListeners.getSmashggEvent({ eventId: 123234 }, ack);
+
+                expect(mockSmashggClient.getSmashGGData).toHaveBeenCalledWith(123234, 'smashggkey789');
+                expect(ack).toHaveBeenCalledWith(new Error('Error!?'));
+            });
         });
     });
 });
