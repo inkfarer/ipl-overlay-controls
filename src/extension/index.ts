@@ -29,6 +29,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     if (nodecg.Replicant<ObsData>('obsData').value.enabled) {
         tryToConnect(nodecg.Replicant<ObsCredentials>('obsCredentials').value);
     }
+
     require('./automation/endStartGame');
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');

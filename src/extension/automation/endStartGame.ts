@@ -18,6 +18,11 @@ const scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const gameAutomationData = nodecg.Replicant<GameAutomationData>('gameAutomationData');
 
+let automationTasks: Array<AutomationActionTask> | null = null;
+let nextAutomationTaskTimeout: NodeJS.Timeout = null;
+
+resetGameAutomationData();
+
 interface AutomationActionTask {
     timeout: number
     name: string
@@ -123,9 +128,6 @@ nodecg.listenFor('endGame', (data: never, ack: UnhandledListenForCb) => {
     }
 });
 
-let automationTasks: Array<AutomationActionTask> | null = null;
-let nextAutomationTaskTimeout: NodeJS.Timeout = null;
-
 nodecg.listenFor('fastForwardToNextGameAutomationTask', (data: never, ack: UnhandledListenForCb) => {
     if (gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
         return ack(new Error('No action is in progress.'));
@@ -156,9 +158,7 @@ async function setNextAutomationTask(): Promise<void> {
         nextTask = automationTasks[nextTaskIndex];
     }
     if (!nextTask) {
-        gameAutomationData.value.actionInProgress = GameAutomationAction.NONE;
-        gameAutomationData.value.nextTaskForAction = null;
-        automationTasks = null;
+        resetGameAutomationData();
     } else {
         gameAutomationData.value.nextTaskForAction = {
             index: nextTaskIndex,
@@ -186,6 +186,12 @@ async function executeAutomationTask(task: AutomationActionTask): Promise<void> 
     } catch (e) {
         nodecg.log.error('Encountered an error during automation task', e);
     }
+}
+
+function resetGameAutomationData(): void {
+    gameAutomationData.value.actionInProgress = GameAutomationAction.NONE;
+    gameAutomationData.value.nextTaskForAction = null;
+    automationTasks = null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
