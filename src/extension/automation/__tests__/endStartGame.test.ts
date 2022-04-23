@@ -4,15 +4,14 @@ import { messageListeners, mockSendMessage, replicants } from '../../__mocks__/m
 import { GameVersion } from '../../../types/enums/gameVersion';
 import { GameAutomationData, ScoreboardData } from '../../../types/schemas';
 import type * as ActiveRoundModule from '../../replicants/activeRound';
+import { GameAutomationAction } from '../../../types/enums/GameAutomationAction';
+import { flushPromises } from '@vue/test-utils';
 
 const mockActiveRoundModule = mock<typeof ActiveRoundModule>();
 jest.mock('../../replicants/activeRound', () => mockActiveRoundModule);
 const mockObsSocket = mock<typeof ObsSocketModule>();
 jest.mock('../obsSocket', () => mockObsSocket);
 
-import '../endStartGame';
-import { GameAutomationAction } from '../../../types/enums/GameAutomationAction';
-import { flushPromises } from '@vue/test-utils';
 
 describe('endStartGame', () => {
     beforeEach(() => {
@@ -26,6 +25,8 @@ describe('endStartGame', () => {
             actionInProgress: GameAutomationAction.NONE,
             nextTaskForAction: null
         };
+
+        require('../endStartGame');
     });
 
     afterEach(() => {
@@ -55,6 +56,7 @@ describe('endStartGame', () => {
             messageListeners.startGame(null, ack);
             await flushPromises();
 
+            expect(mockActiveRoundModule.switchToNextColor).toHaveBeenCalledTimes(1);
             expect(mockObsSocket.setCurrentScene).toHaveBeenCalledWith('Gameplay Scene');
             expect((replicants.scoreboardData as ScoreboardData).isVisible).toBeUndefined();
             expect(mockSendMessage).not.toHaveBeenCalled();

@@ -181,7 +181,7 @@ async function executeAutomationTask(task: AutomationActionTask): Promise<void> 
     try {
         const result = task.action();
         if (isPromise(result)) {
-            await task.action();
+            await result;
         }
     } catch (e) {
         nodecg.log.error('Encountered an error during automation task', e);
