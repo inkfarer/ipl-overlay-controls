@@ -305,6 +305,10 @@ export async function getSmashGGStreamQueue(
     const highlightedStreamQueue: HighlightedMatches = [];
     const { data } = response;
 
+    if (!data.data?.tournament?.streamQueue) {
+        return [];
+    }
+
     data.data.tournament.streamQueue.forEach(streamQueue => {
         if (getAllStreams || streamIDs.includes(streamQueue.stream.id)) {
             streamQueue.sets.forEach(set => {

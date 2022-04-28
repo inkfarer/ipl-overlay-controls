@@ -44,7 +44,8 @@ export default defineComponent({
             canImportData: computed(() => [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
                 .includes(tournamentDataSource.value)),
             formattedDataSource: computed(() => TournamentDataSourceHelper.toPrettyString(tournamentDataSource.value)),
-            stageDataPresent: computed(() => !isEmpty(store.tournamentData.stages))
+            stageDataPresent: computed(() => !isEmpty(store.tournamentData.stages)
+                || !isEmpty(store.tournamentData.meta.sourceSpecificData?.smashgg?.streams))
         };
     }
 });
