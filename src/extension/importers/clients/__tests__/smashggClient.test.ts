@@ -499,6 +499,22 @@ describe('smashggClient', () => {
             expect(mockPost).not.toHaveBeenCalled();
         });
 
+        it('returns empty array if smash.gg returns no stream queues', async () => {
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        tournament: {
+                            streamQueue: null
+                        }
+                    }
+                }
+            });
+
+            const result = await getSmashGGStreamQueue('slugslug', 'tokenboken', 1234, [111, 222], false);
+
+            expect(result).toEqual([]);
+        });
+
         it('returns requested streams in the active event', async () => {
             mockPost.mockResolvedValue({
                 data: {
