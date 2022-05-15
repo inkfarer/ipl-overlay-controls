@@ -72,7 +72,7 @@ Allows to set which [Last.fm](https://www.last.fm/) account to get the currently
 
 Provides options for what guild ID to use when getting commentator and prediction information from [Radia Productions.](https://github.com/IPLSplatoon/Radia-Productions)
 
-The "Update tournament data on import" toggle will automatically update the tournament name and bracket link stored in Radia when tournament data is imported. [More on importing tournament data](/users-guide/#importing-team-data)
+The "Update tournament data on import" toggle will automatically update the tournament name and bracket link stored in Radia when tournament data is imported. [More on importing tournament data](#importing-team-data)
 
 #### Game version
 
@@ -90,7 +90,7 @@ To be able to automatically start and end games, select a gameplay and intermiss
 ## Installing graphics
 
 ipl-overlay-controls is not very useful without a graphics package accompanying it.  
-A list of bundles that use ipl-overlay-controls can be found [here.](/dependent-bundles)  
+A list of bundles that use ipl-overlay-controls can be found [here.](../dependent-bundles)  
 You may use these bundles as a reference point for your own broadcasts, but using them verbatim in your own work is forbidden.    
 The ipl-overlay-controls dashboard is free to use, though we would appreciate an acknowledgement on your broadcast or tournament information page.
 
@@ -139,7 +139,7 @@ for options. For example, typing "sn" with a stage selection box open will selec
 
 To manage casters, use the "Casters" panel in the main IPL workspace.  
 When it is configured, casters can be imported automatically from a [Radia Productions](https://github.com/IPLSplatoon/Radia-Productions) server.  
-More info about configuring Radia can be found [here](/users-guide/#configuration) and [here.](/users-guide/#radia)
+More info about configuring Radia can be found [here](#configuration) and [here.](#radia)
 
 ## During a stream
 
@@ -203,7 +203,7 @@ The OBS websocket connection in ipl-overlay-controls can be used to:
 - Switch to the next color automatically
 - Show commentators when a match starts
 
-Read more about configuring the OBS socket [here.](/users-guide/#obs-socket)
+Read more about configuring the OBS socket [here.](#obs-socket)
 
 When OBS is not on the gameplay scene, an option to start a game will be available on the Match Manager panel.  
 It is intended to be selected immediately after the game is finished loading and the match intro is playing.

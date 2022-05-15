@@ -1,6 +1,6 @@
 # ipl-overlay-controls
 
-Welcome to the ipl-overlay-controls wiki!
+Welcome to the ipl-overlay-controls documentation!
 
 ipl-overlay-controls is used by Inkling Performance Labs to control Splatoon tournament graphics. 
 It has many features to automate or simplify the tasks a broadcaster will encounter during a Splatoon tournament stream.

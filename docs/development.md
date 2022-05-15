@@ -30,7 +30,7 @@ To define a different set of compatible games for your bundle, add the following
 ## Team data
 
 ipl-overlay-controls supports importing team data from smash.gg and Battlefy.  
-[Read more about how to import team data](/users-guide/#importing-team-data)
+[Read more about how to import team data](../users-guide/#importing-team-data)
 
 ### tournamentData
 
@@ -76,7 +76,7 @@ Contains a list of matches that have been played during this tournament. Include
 
 *Replicant* [(Schema)](https://github.com/inkfarer/ipl-overlay-controls/blob/4.0.0/schemas/highlightedMatches.json)
 
-Contains a list of highlighted matches, pulled from Battlefy or smash.gg. [Read more about getting highlighted matches.](/users-guide/#setting-the-next-match)  
+Contains a list of highlighted matches, pulled from Battlefy or smash.gg. [Read more about getting highlighted matches.](../users-guide/#setting-the-next-match)  
 Monitoring this replicant is typically not required for graphics packages.
 
 ## Casters
@@ -180,7 +180,7 @@ Contains a general "Flavor text" to be displayed on a intermission graphic.
 ## Scoreboard
 
 The scoreboard displays what teams are playing in the ongoing match, and the match's score.  
-Information about the teams currently playing should be gathered from the `activeRound` replicant. [More info](/development/#activeround)
+Information about the teams currently playing should be gathered from the `activeRound` replicant. [More info](#activeround)
 
 ### scoreboardData
 
