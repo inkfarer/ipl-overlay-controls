@@ -1,0 +1,10 @@
+site_name: ipl-overlay-controls
+repo_url: https://github.com/inkfarer/ipl-overlay-controls
+theme:
+  name: readthedocs
+extra_css: [docs.css]
+nav:
+  - Introduction: 'index.md'
+  - User's guide: 'users-guide.md'
+  - Development: 'development.md'
+  - Dependents: 'dependent-bundles.md'
