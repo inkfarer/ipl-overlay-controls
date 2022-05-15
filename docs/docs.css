@@ -1,0 +1,130 @@
+body {
+    color: #eaeaea;
+}
+
+strong {
+    color: #fff;
+}
+
+a {
+    color: #0090FF;
+}
+
+a:visited {
+    color: #007FE1;
+}
+
+img {
+    image-rendering: auto;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.rst-content code,
+.rst-content pre code {
+    background-color: #262F40;
+    border-color: #1e2633;
+    border-radius: 4px;
+    color: #D8D8D8;
+}
+
+.rst-content h3,
+.rst-content h4 {
+    margin-bottom: 8px;
+}
+
+hr {
+    border-color: #737373;
+}
+
+.wy-side-nav-search {
+    background-color: #1E2432;
+}
+
+.wy-nav-side {
+    background-color: #262F40;
+    box-shadow: 0 0 8px rgb(34, 34, 34);
+}
+
+.wy-nav-content-wrap {
+    background-color: #2F3A4F;
+}
+
+.wy-nav-top {
+    background-color: #262F40;
+    box-shadow: 0 0 8px rgb(34, 34, 34);
+}
+
+.btn-neutral:visited {
+    color: #fff !important;
+}
+
+.btn-neutral {
+    background-color: #6155BD !important;
+    box-shadow: unset;
+    color: #fff !important;
+}
+
+.btn-neutral:hover {
+    background-color: #574caa !important;
+}
+
+@media screen and (min-width: 1100px) {
+    .wy-nav-content {
+        background-color: #2F3A4F;
+    }
+
+    .wy-nav-content-wrap {
+        background-color: #232C3D;
+    }
+}
+
+.wy-menu-vertical a {
+    color: #d9d9d9;
+}
+
+.wy-menu-vertical a:hover {
+    background-color: #212837;
+}
+
+.wy-menu-vertical li.current {
+    background-color: #4E42A9;
+}
+
+.wy-menu-vertical li.current a {
+    border-color: #4E42A9;
+}
+
+.wy-menu-vertical li.current a:hover {
+    background-color: #483D9D;
+    border-color: #483D9D;
+}
+
+.wy-menu-vertical li.toctree-l2.current > a, .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a,
+.wy-menu-vertical li.toctree-l3.current > a, .wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
+    background-color: #40368B;
+    border-color: #40368B;
+}
+
+.wy-menu-vertical li.toctree-l2.current > a:hover, .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a:hover {
+    background-color: #322A6C;
+    border-color: #322A6C;
+}
+
+.wy-menu-vertical li.current > a, .wy-menu-vertical li.on a {
+    background-color: #6155BD;
+    border-color: #6155BD !important;
+    color: #fff;
+}
+
+.wy-menu-vertical > ul.current > li.current > a:hover, .wy-menu-vertical li.on a:hover {
+    background-color: #574caa;
+    border-color: #574caa !important;
+}
+
+.wy-menu-vertical li.current > a button.toctree-expand, .wy-menu-vertical li.on a button.toctree-expand,
+.wy-menu-vertical li.current > a:hover button.toctree-expand, .wy-menu-vertical li.on a:hover button.toctree-expand,
+.wy-menu-vertical li.toctree-l2 button.toctree-expand,
+.wy-menu-vertical li.toctree-l2 a, .wy-menu-vertical li.toctree-l3 a, .wy-menu-vertical li.toctree-l4 a, .wy-menu-vertical li.toctree-l5 a, .wy-menu-vertical li.toctree-l6 a, .wy-menu-vertical li.toctree-l7 a, .wy-menu-vertical li.toctree-l8 a, .wy-menu-vertical li.toctree-l9 a, .wy-menu-vertical li.toctree-l10 a,
+.wy-menu-vertical li.toctree-l2 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l3 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l4 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l5 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l6 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l7 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l8 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l9 a:hover button.toctree-expand, .wy-menu-vertical li.toctree-l10 a:hover button.toctree-expand {
+    color: #fff;
+}
