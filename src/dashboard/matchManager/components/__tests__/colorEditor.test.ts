@@ -38,11 +38,11 @@ describe('ColorEditor', () => {
                     color: '#999'
                 },
                 activeColor: {
-                    title: 'Dark Blue vs Green',
-                    index: 5,
+                    title: 'Yellow vs Blue',
+                    index: 6,
                     categoryName: 'Ranked Modes',
                     isCustom: false,
-                    clrNeutral: '#333'
+                    clrNeutral: '#FD5600'
                 },
                 match: null,
                 games: [
