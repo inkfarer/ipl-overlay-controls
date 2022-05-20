@@ -40,7 +40,7 @@ exports[`ColorEditor matches snapshot 1`] = `
               <div class=\\"color-preview\\" style=\\"background-color: rgb(185, 9, 224); border-color: white;\\"></div>
             </div>
           </div>
-          <div data-test=\\"color-option-0-4\\" class=\\"color-option layout horizontal center-vertical is-selected\\"><span style=\\"flex-grow: 1;\\">Dark Blue vs Green</span>
+          <div data-test=\\"color-option-0-4\\" class=\\"color-option layout horizontal center-vertical\\"><span style=\\"flex-grow: 1;\\">Dark Blue vs Green</span>
             <div class=\\"color-previews layout horizontal\\">
               <div class=\\"color-preview\\" style=\\"background-color: rgb(47, 39, 204); border-color: white;\\"></div>
               <div class=\\"color-preview\\" style=\\"background-color: rgb(55, 252, 0); border-color: #181e29;\\"></div>
@@ -52,7 +52,7 @@ exports[`ColorEditor matches snapshot 1`] = `
               <div class=\\"color-preview\\" style=\\"background-color: rgb(55, 252, 0); border-color: #181e29;\\"></div>
             </div>
           </div>
-          <div data-test=\\"color-option-0-6\\" class=\\"color-option layout horizontal center-vertical\\"><span style=\\"flex-grow: 1;\\">Yellow vs Blue</span>
+          <div data-test=\\"color-option-0-6\\" class=\\"color-option layout horizontal center-vertical is-selected\\"><span style=\\"flex-grow: 1;\\">Yellow vs Blue</span>
             <div class=\\"color-previews layout horizontal\\">
               <div class=\\"color-preview\\" style=\\"background-color: rgb(254, 242, 50); border-color: #181e29;\\"></div>
               <div class=\\"color-preview\\" style=\\"background-color: rgb(46, 210, 254); border-color: #181e29;\\"></div>

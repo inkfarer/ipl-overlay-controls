@@ -27,7 +27,8 @@
                         :key="`color_${groupIndex}_${colorIndex}`"
                         :data-test="`color-option-${groupIndex}-${colorIndex}`"
                         class="color-option layout horizontal center-vertical"
-                        :class="{ 'is-selected': activeColor === color.title }"
+                        :class="{ 'is-selected': activeColor.title === color.title &&
+                            activeColor.categoryName === group.meta.name }"
                         @click="setColor(color, group.meta.name)"
                     >
                         <span style="flex-grow: 1">{{ color.title }}</span>
@@ -159,7 +160,7 @@ export default defineComponent({
             },
             colorsWithoutCustom: computed(() =>
                 gameData.value.colors.filter(color => color.meta.name !== 'Custom Color')),
-            activeColor: computed(() => activeRoundStore.activeRound.activeColor.title),
+            activeColor: computed(() => activeRoundStore.activeRound.activeColor),
             getBorderColor(color: string): string {
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
