@@ -6,6 +6,8 @@ import { resetRoundStore } from '../helpers/roundStoreHelper';
 import { resetMatchStore } from '../helpers/matchStoreHelper';
 import { dependentBundles } from '../helpers/bundleHelper';
 import { Locale } from '../../types/enums/Locale';
+import { updateLocaleInfo } from './localeInfo';
+import { GameVersion } from '../../types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
@@ -22,13 +24,12 @@ nodecg.listenFor('setGameVersion', (data: SetGameVersionMessage, ack: UnhandledL
     runtimeConfig.value.gameVersion = data.version;
     resetRoundStore();
     resetMatchStore(true);
+    updateLocaleInfo(runtimeConfig.value.locale as Locale, data.version);
     ack(null, { incompatibleBundles });
 });
 
-nodecg.listenFor('setLocale', (data: Locale, ack: UnhandledListenForCb) => {
-    if (runtimeConfig.value.locale === data) {
-        return ack(null);
-    }
+nodecg.listenFor('setLocale', (data: Locale) => {
+    updateLocaleInfo(data, runtimeConfig.value.gameVersion as GameVersion);
 
     runtimeConfig.value.locale = data;
 });

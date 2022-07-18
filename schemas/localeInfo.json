@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "stages": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "modes": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    },
+    "required": ["stages", "modes"],
+    "additionalProperties": false,
+    "default": {
+        "stages": { },
+        "modes": { }
+    }
+}
