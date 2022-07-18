@@ -2,7 +2,7 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { GameVersion } from 'types/enums/gameVersion';
 import RuntimeConfig from '../runtimeConfig.vue';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useSettingsStore } from '../../settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 describe('RuntimeConfig', () => {
     let pinia: TestingPinia;
@@ -18,6 +18,7 @@ describe('RuntimeConfig', () => {
         useSettingsStore().$state = {
             lastFmSettings: null,
             radiaSettings: null,
+            // @ts-ignore
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2
             }
@@ -34,7 +35,7 @@ describe('RuntimeConfig', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('matches snapshot when changing data', () => {
+    it('matches snapshot when changing data', async () => {
         const wrapper = mount(RuntimeConfig, {
             global: {
                 plugins: [pinia]
@@ -42,6 +43,7 @@ describe('RuntimeConfig', () => {
         });
 
         wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
     });
@@ -90,11 +92,11 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_3);
+        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_2);
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_3);
+        expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_2);
         const warning = wrapper.findComponent('[data-test="incompatible-bundle-warning"]');
         expect(warning.exists()).toEqual(true);
         expect(warning.text()).toEqual('Bundle old-bundle is incompatible with Splatoon 3.');
@@ -110,11 +112,11 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        expect(store.setGameVersion).toHaveBeenCalledWith('SPLATOON_3');
+        expect(store.setGameVersion).toHaveBeenCalledWith('SPLATOON_2');
         const warning = wrapper.findComponent('[data-test="incompatible-bundle-warning"]');
         expect(warning.exists()).toEqual(true);
         expect(warning.text()).toEqual('Bundles old-bundle and old-bundle-2 are incompatible with Splatoon 3.');
@@ -130,7 +132,7 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
         wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 

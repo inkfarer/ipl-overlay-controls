@@ -19,15 +19,13 @@
             <div class="separator">
                 <span>{{ index + 1 }}</span>
             </div>
-            <ipl-select
+            <mode-select
                 v-model="game.mode"
-                :options="modes"
                 :data-test="`mode-selector-${index}`"
             />
-            <ipl-select
+            <stage-select
                 v-model="game.stage"
                 class="m-t-8"
-                :options="stages"
                 :data-test="`stage-selector-${index}`"
             />
         </template>
@@ -55,22 +53,22 @@
 import { computed, defineComponent, PropType, ref, Ref, watch } from 'vue';
 import type { Round } from 'schemas';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { IplButton, IplInput, IplSelect, IplSpace, IplRadio } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSpace, IplRadio } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
 import { PlayType } from 'types/enums/playType';
-import { useSettingsStore } from '../../settings/settingsStore';
-import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
+import ModeSelect from '../../components/ModeSelect.vue';
+import StageSelect from '../../components/StageSelect.vue';
 
 library.add(faTimes);
 
 export default defineComponent({
     name: 'RoundEditor',
 
-    components: { IplRadio, IplSpace, IplSelect, IplButton, IplInput },
+    components: { StageSelect, ModeSelect, IplRadio, IplSpace, IplButton, IplInput },
 
     props: {
         round: {
@@ -91,8 +89,6 @@ export default defineComponent({
 
     setup(props, { emit }) {
         const store = useTournamentDataStore();
-        const settingsStore = useSettingsStore();
-        const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
         const roundInternal: Ref<Round> = ref(null);
 
         watch(() => props.round, (newValue, oldValue) => {
@@ -116,8 +112,6 @@ export default defineComponent({
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
             roundInternal,
-            stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
-            modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
             async handleUpdate() {
                 const updates = {
                     roundName: roundInternal.value.meta.name,

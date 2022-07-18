@@ -58,7 +58,7 @@ import {
     minLength,
     numeric
 } from '@iplsplatoon/vue-components';
-import { useSettingsStore } from '../settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import cloneDeep from 'lodash/cloneDeep';

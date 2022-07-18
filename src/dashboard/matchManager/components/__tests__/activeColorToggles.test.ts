@@ -5,7 +5,7 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useSettingsStore } from '../../../settings/settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 describe('ActiveColorToggles', () => {
     let pinia: TestingPinia;
@@ -90,8 +90,8 @@ describe('ActiveColorToggles', () => {
             swapColorsInternally: false
         };
 
-        // @ts-ignore
         useSettingsStore().$state = {
+            // @ts-ignore
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2
             }

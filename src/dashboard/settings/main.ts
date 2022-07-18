@@ -1,6 +1,6 @@
 import '../styles/globalStyles.scss';
 import { setUpPiniaReplicants } from '../helpers/storeHelper';
-import { settingsReps, useSettingsStore } from './settingsStore';
+import { settingsReps, useSettingsStore } from '../store/settingsStore';
 import Panel from './settings.vue';
 import { createApp } from 'vue';
 import { setUpErrorHandler } from '../store/errorHandlerStore';

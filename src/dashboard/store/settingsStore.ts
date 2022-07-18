@@ -3,6 +3,8 @@ import { LastFmSettings, RadiaSettings, RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { defineStore } from 'pinia';
+import { Locale } from 'types/enums/Locale';
+import { perGameData } from '../../helpers/gameData/gameData';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -26,6 +28,14 @@ export const useSettingsStore = defineStore('settings', {
         },
         runtimeConfig: null
     } as SettingsStore),
+    getters: {
+        translatedModeName: state =>
+            (mode: string) => (perGameData[state.runtimeConfig.gameVersion]
+                .modes[state.runtimeConfig.locale] as Record<string, string>)[mode],
+        translatedStageName: state =>
+            (stage: string) => (perGameData[state.runtimeConfig.gameVersion]
+                .stages[state.runtimeConfig.locale] as Record<string, string>)[stage],
+    },
     actions: {
         setLastFmSettings({ newValue }: { newValue: LastFmSettings }): void {
             lastFmSettings.value = newValue;
@@ -41,6 +51,9 @@ export const useSettingsStore = defineStore('settings', {
         },
         setGameVersion(newValue: GameVersion): Promise<SetGameVersionResponse> {
             return nodecg.sendMessage('setGameVersion', { version: newValue });
+        },
+        setLocale(newValue: Locale): Promise<void> {
+            return nodecg.sendMessage('setLocale', newValue);
         }
     }
 });

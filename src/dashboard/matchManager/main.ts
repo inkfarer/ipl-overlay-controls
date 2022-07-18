@@ -8,7 +8,7 @@ import { castersReps, useCasterStore } from '../store/casterStore';
 import { scoreboardReps, useScoreboardStore } from '../store/scoreboardStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { nextRoundReps, useNextRoundStore } from '../store/nextRoundStore';
-import { settingsReps, useSettingsStore } from '../settings/settingsStore';
+import { settingsReps, useSettingsStore } from '../store/settingsStore';
 import { obsReps, useObsStore } from '../store/obsStore';
 import { createPinia } from 'pinia';
 

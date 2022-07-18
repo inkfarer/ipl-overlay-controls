@@ -6,7 +6,8 @@ import { ActiveRoundGame } from 'types/activeRoundGame';
 import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useSettingsStore } from '../../../settings/settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
+import { Locale } from 'types/enums/Locale';
 
 describe('setEditor', () => {
     let pinia: TestingPinia;
@@ -17,7 +18,9 @@ describe('setEditor', () => {
         IplSelect: true,
         IplToggleButton: true,
         IplCheckbox: true,
-        FontAwesomeIcon: true
+        FontAwesomeIcon: true,
+        ModeSelect: true,
+        StageSelect: true
     };
 
     beforeEach(() => {
@@ -108,7 +111,8 @@ describe('setEditor', () => {
         // @ts-ignore
         useSettingsStore().$state = {
             runtimeConfig: {
-                gameVersion: GameVersion.SPLATOON_2
+                gameVersion: GameVersion.SPLATOON_2,
+                locale: Locale.EN
             }
         };
     });

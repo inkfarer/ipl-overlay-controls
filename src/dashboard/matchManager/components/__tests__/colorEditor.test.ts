@@ -4,7 +4,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
 import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useSettingsStore } from '../../../settings/settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 describe('ColorEditor', () => {
     let pinia: TestingPinia;
@@ -66,8 +66,8 @@ describe('ColorEditor', () => {
             swapColorsInternally: false
         };
 
-        // @ts-ignore
         useSettingsStore().$state = {
+            // @ts-ignore
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2
             }

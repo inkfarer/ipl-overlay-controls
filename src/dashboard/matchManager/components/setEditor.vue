@@ -4,7 +4,11 @@
             Edit match
             <template v-if="!!nextGame">
                 <span class="badge badge-blue m-l-6">Next up</span>
-                <span class="text-small">{{ nextGame.mode }} on {{ nextGame.stage }}</span>
+                <span class="text-small">
+                    {{ settingsStore.translatedModeName(nextGame.mode) }}
+                    on
+                    {{ settingsStore.translatedStageName(nextGame.stage) }}
+                </span>
             </template>
         </template>
         <div
@@ -15,17 +19,15 @@
             :class="{ 'is-next-game': index === nextGameIndex }"
         >
             <span class="set-number">{{ index + 1 }}</span>
-            <ipl-select
+            <stage-select
                 v-show="!editColorsEnabled"
                 v-model="game.stage"
-                :options="stages"
                 data-test="stage-select"
                 class="m-l-6"
             />
-            <ipl-select
+            <mode-select
                 v-show="!editColorsEnabled"
                 v-model="game.mode"
-                :options="modes"
                 data-test="mode-select"
                 class="m-l-6"
             />
@@ -160,17 +162,28 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { GameWinner } from 'types/enums/gameWinner';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
-import { useSettingsStore } from '../../settings/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { ActiveRoundGame } from 'types/activeRoundGame';
+import StageSelect from '../../components/StageSelect.vue';
+import ModeSelect from '../../components/ModeSelect.vue';
 
 library.add(faTimes);
 
 export default defineComponent({
     name: 'SetEditor',
 
-    components: { IplCheckbox, IplToggleButton, IplButton, IplSelect, IplExpandingSpace, IplInput },
+    components: {
+        ModeSelect,
+        StageSelect,
+        IplCheckbox,
+        IplToggleButton,
+        IplButton,
+        IplSelect,
+        IplExpandingSpace,
+        IplInput
+    },
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
@@ -217,8 +230,6 @@ export default defineComponent({
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
             games,
-            stages: computed(() => gameData.value.stages.map(stage => ({ value: stage, name: stage }))),
-            modes: computed(() => gameData.value.modes.map(stage => ({ value: stage, name: stage }))),
             GameWinner,
             gamesChanged,
             getColorA(game: { color: { clrA: string } }): string {
@@ -295,7 +306,8 @@ export default defineComponent({
                 event.preventDefault();
 
                 games.value = cloneDeep(activeRoundStore.activeRound.games);
-            }
+            },
+            settingsStore
         };
     }
 });

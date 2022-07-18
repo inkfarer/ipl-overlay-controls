@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModeSelect adds expected options to select when language is DE 1`] = `
+Array [
+  Object {
+    "name": "Herrschaft",
+    "value": "Splat Zones",
+  },
+  Object {
+    "name": "Muschelchaos",
+    "value": "Clam Blitz",
+  },
+  Object {
+    "name": "Operation Goldfisch",
+    "value": "Rainmaker",
+  },
+  Object {
+    "name": "Revierkampf",
+    "value": "Turf War",
+  },
+  Object {
+    "name": "Turmkommando",
+    "value": "Tower Control",
+  },
+  Object {
+    "name": "Unbekannte Kampfart",
+    "value": "Unknown Mode",
+  },
+]
+`;
+
+exports[`ModeSelect adds expected options to select when language is EN 1`] = `
+Array [
+  Object {
+    "name": "Clam Blitz",
+    "value": "Clam Blitz",
+  },
+  Object {
+    "name": "Rainmaker",
+    "value": "Rainmaker",
+  },
+  Object {
+    "name": "Splat Zones",
+    "value": "Splat Zones",
+  },
+  Object {
+    "name": "Tower Control",
+    "value": "Tower Control",
+  },
+  Object {
+    "name": "Turf War",
+    "value": "Turf War",
+  },
+  Object {
+    "name": "Unknown Mode",
+    "value": "Unknown Mode",
+  },
+]
+`;
