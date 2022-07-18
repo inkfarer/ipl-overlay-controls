@@ -1,13 +1,48 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { GameData } from './gameData';
+import { GameData, RawGameData, StageModeList, StageNameList } from './gameData';
+import { Locale } from '../../types/enums/Locale';
 
-export function normalizeGameData(existingData: GameData): GameData {
-    const data = cloneDeep(existingData);
-    data.stages.push('Unknown Stage', 'Counterpick');
-    data.stages.sort();
+const commonStageNames: {[key in Locale]: { 'Unknown Stage': string, 'Counterpick': string } } = {
+    [Locale.EN]: {
+        'Unknown Stage': 'Unknown Stage',
+        Counterpick: 'Counterpick'
+    },
+    [Locale.DE]: {
+        'Unknown Stage': 'Unbekannte Arena',
+        Counterpick: 'Counterpick'
+    }
+};
 
-    data.modes.push('Unknown Mode');
-    data.modes.sort();
+const commonModeNames: {[key in Locale]: { 'Unknown Mode': string } } = {
+    [Locale.EN]: {
+        'Unknown Mode': 'Unknown Mode',
+    },
+    [Locale.DE]: {
+        'Unknown Mode': 'Unbekannte Kampfart',
+    }
+};
+
+export function normalizeGameData<S, M>(existingData: RawGameData<S, M>): GameData<S, M> {
+
+    const data = cloneDeep(existingData) as GameData<S, M>;
+
+    data.stages = Object.entries(data.stages).reduce((result, [key, value]) => {
+        result[key as Locale] = {
+            ...value,
+            ...commonStageNames[key as Locale]
+        };
+
+        return result;
+    }, {} as StageNameList<S>);
+
+    data.modes = Object.entries(data.modes).reduce((result, [key, value]) => {
+        result[key as Locale] = {
+            ...value,
+            ...commonModeNames[key as Locale]
+        };
+
+        return result;
+    }, {} as StageModeList<M>);
 
     data.colors.push({
         meta: {

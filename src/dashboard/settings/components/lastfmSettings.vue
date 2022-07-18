@@ -22,7 +22,7 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { IplButton, IplInput, IplSpace } from '@iplsplatoon/vue-components';
-import { useSettingsStore } from '../settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import isEqual from 'lodash/isEqual';
 import { LastFmSettings } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';

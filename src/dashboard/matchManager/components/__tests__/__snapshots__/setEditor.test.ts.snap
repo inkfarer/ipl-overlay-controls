@@ -10,8 +10,8 @@ exports[`setEditor matches snapshot 1`] = `
   </div>
   <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
     <div data-test=\\"set-editor-0\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">1</span>
-      <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Cool Colors_2\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#123123\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -28,8 +28,8 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-1\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">2</span>
-      <ipl-select-stub modelvalue=\\"MakoMart\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"MakoMart\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -46,8 +46,8 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-2\\" class=\\"layout horizontal center-vertical game-editor is-next-game\\"><span class=\\"set-number\\">3</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -64,8 +64,8 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-3\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">4</span>
-      <ipl-select-stub modelvalue=\\"Humpback Pump Track\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Clam Blitz\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Humpback Pump Track\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Clam Blitz\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -82,8 +82,8 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-4\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">5</span>
-      <ipl-select-stub modelvalue=\\"Inkblot Art Academy\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Inkblot Art Academy\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -118,8 +118,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
   </div>
   <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
     <div data-test=\\"set-editor-0\\" class=\\"layout horizontal center-vertical game-editor is-next-game\\"><span class=\\"set-number\\">1</span>
-      <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Cool Colors_2\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#123123\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -136,8 +136,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
       </div>
     </div>
     <div data-test=\\"set-editor-1\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">2</span>
-      <ipl-select-stub modelvalue=\\"MakoMart\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"MakoMart\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -154,8 +154,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
       </div>
     </div>
     <div data-test=\\"set-editor-2\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">3</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -190,8 +190,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
   </div>
   <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
     <div data-test=\\"set-editor-0\\" class=\\"layout horizontal center-vertical game-editor is-next-game\\"><span class=\\"set-number\\">1</span>
-      <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Cool Colors_2\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#123123\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -208,8 +208,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-1\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">2</span>
-      <ipl-select-stub modelvalue=\\"MakoMart\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"MakoMart\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -226,8 +226,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-2\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">3</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -244,8 +244,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-3\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">4</span>
-      <ipl-select-stub modelvalue=\\"Starfish Mainstage\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Starfish Mainstage\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -262,8 +262,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-4\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">5</span>
-      <ipl-select-stub modelvalue=\\"The Reef\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"The Reef\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -280,8 +280,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-5\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">6</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -298,8 +298,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div data-test=\\"set-editor-6\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">7</span>
-      <ipl-select-stub modelvalue=\\"Musselforge Fitness\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Musselforge Fitness\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -334,8 +334,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
   </div>
   <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
     <div data-test=\\"set-editor-0\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">1</span>
-      <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Cool Colors_2\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#123123\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -352,8 +352,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-1\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">2</span>
-      <ipl-select-stub modelvalue=\\"MakoMart\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"MakoMart\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -370,8 +370,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-2\\" class=\\"layout horizontal center-vertical game-editor is-next-game\\"><span class=\\"set-number\\">3</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -388,8 +388,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-3\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">4</span>
-      <ipl-select-stub modelvalue=\\"Humpback Pump Track\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Clam Blitz\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Humpback Pump Track\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Clam Blitz\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -406,8 +406,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-4\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">5</span>
-      <ipl-select-stub modelvalue=\\"Inkblot Art Academy\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Inkblot Art Academy\\" data-test=\\"stage-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\" style=\\"display: none;\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Ranked Modes_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"true\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" type=\\"color\\" centered=\\"false\\" disabled=\\"true\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -444,8 +444,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
   </div>
   <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
     <div data-test=\\"set-editor-0\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">1</span>
-      <ipl-select-stub modelvalue=\\"Blackbelly Skatepark\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Rainmaker\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Cool Colors_2\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#123123\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -462,8 +462,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-1\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">2</span>
-      <ipl-select-stub modelvalue=\\"MakoMart\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Tower Control\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"MakoMart\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>
@@ -480,8 +480,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
       </div>
     </div>
     <div data-test=\\"set-editor-2\\" class=\\"layout horizontal center-vertical game-editor\\"><span class=\\"set-number\\">3</span>
-      <ipl-select-stub modelvalue=\\"Camp Triggerfish\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></ipl-select-stub>
-      <ipl-select-stub modelvalue=\\"Splat Zones\\" options=\\"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></ipl-select-stub>
+      <stage-select-stub modelvalue=\\"Camp Triggerfish\\" data-test=\\"stage-select\\" class=\\"m-l-6\\"></stage-select-stub>
+      <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-select\\" class=\\"m-l-6\\"></mode-select-stub>
       <ipl-select-stub modelvalue=\\"Custom Color_0\\" optiongroups=\\"[object Object],[object Object],[object Object],[object Object]\\" disabled=\\"false\\" class=\\"m-l-6\\" data-test=\\"color-select\\" style=\\"display: none;\\"></ipl-select-stub>
       <div class=\\"layout horizontal max-width m-l-6\\" style=\\"display: none;\\">
         <ipl-input-stub name=\\"team-a-color\\" modelvalue=\\"#837693\\" type=\\"color\\" centered=\\"false\\" disabled=\\"false\\" class=\\"max-width custom-color-select\\" style=\\"flex-grow: 1;\\" data-test=\\"custom-color-select-a\\"></ipl-input-stub>

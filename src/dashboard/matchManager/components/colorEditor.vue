@@ -87,7 +87,7 @@ import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
 import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingTextColor } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
-import { useSettingsStore } from '../../settings/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 

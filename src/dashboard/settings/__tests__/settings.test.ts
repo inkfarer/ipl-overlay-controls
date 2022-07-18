@@ -27,7 +27,7 @@ describe('Settings', () => {
         };
     });
 
-    it.each(['lastfm', 'radia', 'gameVersion', 'obs-socket'])('matches snapshot when section %s is selected', async (section) => {
+    it.each(['lastfm', 'radia', 'general', 'obs-socket'])('matches snapshot when section %s is selected', async (section) => {
         const wrapper = mount(Settings, {
             global: {
                 plugins: [pinia]

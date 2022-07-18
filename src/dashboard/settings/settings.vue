@@ -34,7 +34,7 @@
         class="m-t-8"
     />
     <runtime-config
-        v-else-if="visibleSection === 'gameVersion'"
+        v-else-if="visibleSection === 'general'"
         class="m-t-8"
     />
     <template v-else-if="visibleSection === 'obs-socket'">
@@ -63,9 +63,9 @@ import { useObsStore } from '../store/obsStore';
 library.add(faBars);
 
 const settingsSections = {
+    general: 'General',
     lastfm: 'Last.fm',
     radia: 'Radia',
-    gameVersion: 'Game version',
     'obs-socket': 'OBS Socket'
 };
 
@@ -89,7 +89,7 @@ export default defineComponent({
 
         return {
             obsSocketEnabled: computed(() => obsStore.obsData.enabled),
-            visibleSection: ref<keyof typeof settingsSections>('obs-socket'),
+            visibleSection: ref<keyof typeof settingsSections>('general'),
             showSidebar: ref(false),
             settingsSections
         };

@@ -5,7 +5,11 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface RuntimeConfig {
-	gameVersion: 'SPLATOON_2' | 'SPLATOON_3';
-	locale: 'EN' | 'DE';
+export interface LocaleInfo {
+	stages: {
+		[k: string]: unknown;
+	};
+	modes: {
+		[k: string]: unknown;
+	};
 }

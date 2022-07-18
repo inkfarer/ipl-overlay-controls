@@ -1,8 +1,7 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
-import { PredictionStore, RadiaSettings } from 'schemas';
+import { PredictionStore, RadiaSettings, ObsCredentials, ObsData, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
-import { ObsCredentials, ObsData } from '../types/schemas';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG & NodeCGStatic): void => {
@@ -36,6 +35,9 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
     predictionStore.value.status.socketOpen = false;
     radiaSettings.value.enabled = false;
+
+    const { initLocaleInfoIfNeeded } = require('./replicants/localeInfo');
+    initLocaleInfoIfNeeded(nodecg.Replicant<RuntimeConfig>('runtimeConfig').value);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(

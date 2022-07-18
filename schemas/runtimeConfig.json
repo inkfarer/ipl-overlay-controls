@@ -5,11 +5,16 @@
         "gameVersion": {
             "type": "string",
             "enum": ["SPLATOON_2", "SPLATOON_3"]
+        },
+        "locale": {
+            "type": "string",
+            "enum": ["EN", "DE"]
         }
     },
-    "required": ["gameVersion"],
+    "required": ["gameVersion", "locale"],
     "additionalProperties": false,
     "default": {
-        "gameVersion": "SPLATOON_2"
+        "gameVersion": "SPLATOON_2",
+        "locale": "EN"
     }
 }

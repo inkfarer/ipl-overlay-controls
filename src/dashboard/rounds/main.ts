@@ -6,7 +6,7 @@ import { tournamentDataReps, useTournamentDataStore } from '../store/tournamentD
 import { activeRoundReps, useActiveRoundStore } from '../store/activeRoundStore';
 import { nextRoundReps, useNextRoundStore } from '../store/nextRoundStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
-import { settingsReps, useSettingsStore } from '../settings/settingsStore';
+import { settingsReps, useSettingsStore } from '../store/settingsStore';
 import { createPinia } from 'pinia';
 
 (async () => {

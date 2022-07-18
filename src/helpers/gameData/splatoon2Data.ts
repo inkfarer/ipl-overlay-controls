@@ -1,40 +1,113 @@
 import { GameData } from './gameData';
 import { normalizeGameData } from './normalizeGameData';
+import { Locale } from '../../types/enums/Locale';
 
-export const splatoon2Data: GameData = normalizeGameData({
-    stages: [
-        'Ancho-V Games',
-        'Arowana Mall',
-        'Blackbelly Skatepark',
-        'Camp Triggerfish',
-        'Goby Arena',
-        'Humpback Pump Track',
-        'Inkblot Art Academy',
-        'Kelp Dome',
-        'MakoMart',
-        'Manta Maria',
-        'Moray Towers',
-        'Musselforge Fitness',
-        'New Albacore Hotel',
-        'Piranha Pit',
-        'Port Mackerel',
-        'Shellendorf Institute',
-        'Shifty Station',
-        'Snapper Canal',
-        'Starfish Mainstage',
-        'Sturgeon Shipyard',
-        'The Reef',
-        'Wahoo World',
-        'Walleye Warehouse',
-        'Skipper Pavilion'
-    ],
-    modes: [
-        'Clam Blitz',
-        'Tower Control',
-        'Rainmaker',
-        'Splat Zones',
-        'Turf War'
-    ],
+export interface Splatoon2Stages {
+    'Ancho-V Games': string
+    'Arowana Mall': string
+    'Blackbelly Skatepark': string
+    'Camp Triggerfish': string
+    'Goby Arena': string
+    'Humpback Pump Track': string
+    'Inkblot Art Academy': string
+    'Kelp Dome': string
+    'MakoMart': string
+    'Manta Maria': string
+    'Moray Towers': string
+    'Musselforge Fitness': string
+    'New Albacore Hotel': string
+    'Piranha Pit': string
+    'Port Mackerel': string
+    'Shellendorf Institute': string
+    'Shifty Station': string
+    'Snapper Canal': string
+    'Starfish Mainstage': string
+    'Sturgeon Shipyard': string
+    'The Reef': string
+    'Wahoo World': string
+    'Walleye Warehouse': string
+    'Skipper Pavilion': string
+}
+
+export interface Splatoon2Modes {
+    'Clam Blitz': string
+    'Tower Control': string
+    'Rainmaker': string
+    'Splat Zones': string
+    'Turf War': string
+}
+
+export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normalizeGameData({
+    stages: {
+        [Locale.EN]: {
+            'Ancho-V Games': 'Ancho-V Games',
+            'Arowana Mall': 'Arowana Mall',
+            'Blackbelly Skatepark': 'Blackbelly Skatepark',
+            'Camp Triggerfish': 'Camp Triggerfish',
+            'Goby Arena': 'Goby Arena',
+            'Humpback Pump Track': 'Humpback Pump Track',
+            'Inkblot Art Academy': 'Inkblot Art Academy',
+            'Kelp Dome': 'Kelp Dome',
+            MakoMart: 'MakoMart',
+            'Manta Maria': 'Manta Maria',
+            'Moray Towers': 'Moray Towers',
+            'Musselforge Fitness': 'Musselforge Fitness',
+            'New Albacore Hotel': 'New Albacore Hotel',
+            'Piranha Pit': 'Piranha Pit',
+            'Port Mackerel': 'Port Mackerel',
+            'Shellendorf Institute': 'Shellendorf Institute',
+            'Shifty Station': 'Shifty Station',
+            'Snapper Canal': 'Snapper Canal',
+            'Starfish Mainstage': 'Starfish Mainstage',
+            'Sturgeon Shipyard': 'Sturgeon Shipyard',
+            'The Reef': 'The Reef',
+            'Wahoo World': 'Wahoo World',
+            'Walleye Warehouse': 'Walleye Warehouse',
+            'Skipper Pavilion': 'Skipper Pavilion'
+        },
+        [Locale.DE]: {
+            'Ancho-V Games': 'Anchobit Games HQ',
+            'Arowana Mall': 'Arowana Center',
+            'Blackbelly Skatepark': 'Punkasius-Skatepark',
+            'Camp Triggerfish': 'Camp Schützenfisch',
+            'Goby Arena': 'Backfisch-Stadion',
+            'Humpback Pump Track': 'Buckelwal-Piste',
+            'Inkblot Art Academy': 'Perlmutt-Akademie',
+            'Kelp Dome': 'Tümmlerkuppel',
+            MakoMart: 'Cetacea-Markt',
+            'Manta Maria': 'Manta Maria',
+            'Moray Towers': 'Muränentürme',
+            'Musselforge Fitness': 'Molluskelbude',
+            'New Albacore Hotel': 'Hotel Neothun',
+            'Piranha Pit': 'Steinköhler-Grube',
+            'Port Mackerel': 'Heilbutt-Hafen',
+            'Shellendorf Institute': 'Abyssal-Museum',
+            'Shifty Station': 'Wandelzone',
+            'Snapper Canal': 'Grätenkanal',
+            'Starfish Mainstage': 'Seeigel-Rockbühne',
+            'Sturgeon Shipyard': 'Störwerft',
+            'The Reef': 'Korallenviertel',
+            'Wahoo World': 'Flunder-Funpark',
+            'Walleye Warehouse': 'Kofferfisch-Lager',
+            'Skipper Pavilion': 'Grundel-Pavillon'
+        }
+    },
+    modes: {
+        [Locale.EN]: {
+            'Clam Blitz': 'Clam Blitz',
+            'Tower Control': 'Tower Control',
+            Rainmaker: 'Rainmaker',
+            'Splat Zones': 'Splat Zones',
+            'Turf War': 'Turf War'
+        },
+        [Locale.DE]: {
+            'Clam Blitz': 'Muschelchaos',
+            'Tower Control': 'Turmkommando',
+            Rainmaker: 'Operation Goldfisch',
+            'Splat Zones': 'Herrschaft',
+            'Turf War': 'Revierkampf'
+        }
+    },
     colors: [
         {
             meta: {

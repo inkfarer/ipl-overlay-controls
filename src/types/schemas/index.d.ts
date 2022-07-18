@@ -6,6 +6,7 @@ export * from './gameAutomationData';
 export * from './highlightedMatches';
 export * from './lastFmNowPlaying';
 export * from './lastFmSettings';
+export * from './localeInfo';
 export * from './mainFlavorText';
 export * from './manualNowPlaying';
 export * from './matchStore';

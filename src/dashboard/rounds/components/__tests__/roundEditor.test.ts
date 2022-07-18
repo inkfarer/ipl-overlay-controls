@@ -1,19 +1,18 @@
 import RoundEditor from '../roundEditor.vue';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
-import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
-import { useSettingsStore } from '../../../settings/settingsStore';
 
 describe('RoundEditor', () => {
     let pinia: TestingPinia;
 
     config.global.stubs = {
         IplInput: true,
-        IplSelect: true,
         IplButton: true,
-        IplRadio: true
+        IplRadio: true,
+        ModeSelect: true,
+        StageSelect: true
     };
 
     beforeEach(() => {
@@ -42,13 +41,6 @@ describe('RoundEditor', () => {
                 }
             },
             matchStore: {}
-        };
-
-        // @ts-ignore
-        useSettingsStore().$state = {
-            runtimeConfig: {
-                gameVersion: GameVersion.SPLATOON_2
-            }
         };
     });
 

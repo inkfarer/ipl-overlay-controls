@@ -1,7 +1,7 @@
 import LastfmSettings from '../lastfmSettings.vue';
 import { mount, config } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useSettingsStore } from '../../settingsStore';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 describe('lastfmSettings', () => {
     let pinia: TestingPinia;

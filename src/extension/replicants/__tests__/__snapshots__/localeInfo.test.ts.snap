@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is DE 1`] = `
+Object {
+  "modes": Object {
+    "Clam Blitz": "Muschelchaos",
+    "Rainmaker": "Operation Goldfisch",
+    "Splat Zones": "Herrschaft",
+    "Tower Control": "Turmkommando",
+    "Turf War": "Revierkampf",
+    "Unknown Mode": "Unbekannte Kampfart",
+  },
+  "stages": Object {
+    "Ancho-V Games": "Anchobit Games HQ",
+    "Arowana Mall": "Arowana Center",
+    "Blackbelly Skatepark": "Punkasius-Skatepark",
+    "Camp Triggerfish": "Camp Schützenfisch",
+    "Counterpick": "Counterpick",
+    "Goby Arena": "Backfisch-Stadion",
+    "Humpback Pump Track": "Buckelwal-Piste",
+    "Inkblot Art Academy": "Perlmutt-Akademie",
+    "Kelp Dome": "Tümmlerkuppel",
+    "MakoMart": "Cetacea-Markt",
+    "Manta Maria": "Manta Maria",
+    "Moray Towers": "Muränentürme",
+    "Musselforge Fitness": "Molluskelbude",
+    "New Albacore Hotel": "Hotel Neothun",
+    "Piranha Pit": "Steinköhler-Grube",
+    "Port Mackerel": "Heilbutt-Hafen",
+    "Shellendorf Institute": "Abyssal-Museum",
+    "Shifty Station": "Wandelzone",
+    "Skipper Pavilion": "Grundel-Pavillon",
+    "Snapper Canal": "Grätenkanal",
+    "Starfish Mainstage": "Seeigel-Rockbühne",
+    "Sturgeon Shipyard": "Störwerft",
+    "The Reef": "Korallenviertel",
+    "Unknown Stage": "Unbekannte Arena",
+    "Wahoo World": "Flunder-Funpark",
+    "Walleye Warehouse": "Kofferfisch-Lager",
+  },
+}
+`;
+
+exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is EN 1`] = `
+Object {
+  "modes": Object {
+    "Clam Blitz": "Clam Blitz",
+    "Rainmaker": "Rainmaker",
+    "Splat Zones": "Splat Zones",
+    "Tower Control": "Tower Control",
+    "Turf War": "Turf War",
+    "Unknown Mode": "Unknown Mode",
+  },
+  "stages": Object {
+    "Ancho-V Games": "Ancho-V Games",
+    "Arowana Mall": "Arowana Mall",
+    "Blackbelly Skatepark": "Blackbelly Skatepark",
+    "Camp Triggerfish": "Camp Triggerfish",
+    "Counterpick": "Counterpick",
+    "Goby Arena": "Goby Arena",
+    "Humpback Pump Track": "Humpback Pump Track",
+    "Inkblot Art Academy": "Inkblot Art Academy",
+    "Kelp Dome": "Kelp Dome",
+    "MakoMart": "MakoMart",
+    "Manta Maria": "Manta Maria",
+    "Moray Towers": "Moray Towers",
+    "Musselforge Fitness": "Musselforge Fitness",
+    "New Albacore Hotel": "New Albacore Hotel",
+    "Piranha Pit": "Piranha Pit",
+    "Port Mackerel": "Port Mackerel",
+    "Shellendorf Institute": "Shellendorf Institute",
+    "Shifty Station": "Shifty Station",
+    "Skipper Pavilion": "Skipper Pavilion",
+    "Snapper Canal": "Snapper Canal",
+    "Starfish Mainstage": "Starfish Mainstage",
+    "Sturgeon Shipyard": "Sturgeon Shipyard",
+    "The Reef": "The Reef",
+    "Unknown Stage": "Unknown Stage",
+    "Wahoo World": "Wahoo World",
+    "Walleye Warehouse": "Walleye Warehouse",
+  },
+}
+`;
+
+exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is DE 1`] = `
+Object {
+  "modes": Object {
+    "Turf War": "Revierkampf",
+    "Unknown Mode": "Unbekannte Kampfart",
+  },
+  "stages": Object {
+    "Counterpick": "Counterpick",
+    "Eeltail Alley": "Streifenaal-Straße",
+    "Museum d'Alfonsino": "Pinakoithek",
+    "Scorch Gorge": "Sengkluft",
+    "Unknown Stage": "Unbekannte Arena",
+  },
+}
+`;
+
+exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is EN 1`] = `
+Object {
+  "modes": Object {
+    "Turf War": "Turf War",
+    "Unknown Mode": "Unknown Mode",
+  },
+  "stages": Object {
+    "Counterpick": "Counterpick",
+    "Eeltail Alley": "Eeltail Alley",
+    "Museum d'Alfonsino": "Museum d'Alfonsino",
+    "Scorch Gorge": "Scorch Gorge",
+    "Unknown Stage": "Unknown Stage",
+  },
+}
+`;

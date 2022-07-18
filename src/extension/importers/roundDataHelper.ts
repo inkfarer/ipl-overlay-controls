@@ -6,6 +6,7 @@ import { GameVersion } from '../../types/enums/gameVersion';
 import { perGameData } from '../../helpers/gameData/gameData';
 import { toLower } from 'lodash';
 import { RoundGame } from '../../types/schemas';
+import { Locale } from '../../types/enums/Locale';
 
 export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersion): RoundStore {
     const result: RoundStore = {};
@@ -41,7 +42,7 @@ export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersio
 }
 
 function normalizeStageName(name: string, game: GameVersion): string {
-    const stages = perGameData[game].stages;
+    const stages = Object.values(perGameData[game].stages[Locale.EN]);
     const lowerCaseStages = stages.map(toLower);
     name = name.toLowerCase();
 
@@ -53,7 +54,7 @@ function normalizeStageName(name: string, game: GameVersion): string {
 }
 
 function normalizeModeName(name: string, game: GameVersion): string {
-    const modes = perGameData[game].modes;
+    const modes = Object.values(perGameData[game].modes[Locale.EN]);
     const lowerCaseModes = modes.map(toLower);
     name = name.toLowerCase();
 
