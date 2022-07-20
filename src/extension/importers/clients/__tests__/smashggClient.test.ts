@@ -1,3 +1,8 @@
+import { mock } from 'jest-mock-extended';
+import type * as PronounNormalizer from '../../../helpers/PronounNormalizer';
+const mockPronounNormalizer = mock<typeof PronounNormalizer>();
+jest.mock('../../../helpers/PronounNormalizer', () => mockPronounNormalizer);
+
 import axios from 'axios';
 import { getSmashGGData, getSmashGGEvents, getSmashGGStreamQueue } from '../smashggClient';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
@@ -100,6 +105,7 @@ describe('smashggClient', () => {
 
     describe('getSmashGGData', () => {
         it('fetches data from Smash.gg and turns it into our expected format', async () => {
+            mockPronounNormalizer.normalizePronouns.mockImplementation((input) => input);
             mockPost.mockResolvedValue({
                 data: {
                     data: {
@@ -217,7 +223,7 @@ describe('smashggClient', () => {
                         logoUrl: undefined,
                         players: [
                             { name: 'Player Three', pronouns: undefined },
-                            { name: 'TT Player Four', pronouns: 'she/her' }
+                            { name: 'TT Player Four', pronouns: 'She/Her' }
                         ]
                     }
                 ]
@@ -234,9 +240,13 @@ describe('smashggClient', () => {
                 }
             );
             expect(cleanUpGraphqlQuery(mockPost.mock.calls[0][1])).toMatchSnapshot();
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith('She/Her');
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith('he/him');
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith(undefined);
         });
 
         it('fetches data multiple times if more than one page is available', async () => {
+            mockPronounNormalizer.normalizePronouns.mockImplementation((input) => input);
             mockPost.mockResolvedValueOnce({
                 data: {
                     data: {
@@ -461,7 +471,7 @@ describe('smashggClient', () => {
                         showLogo: true,
                         players: [
                             { name: 'Player Three', pronouns: undefined },
-                            { name: 'TT Player Four', pronouns: 'she/her' }
+                            { name: 'TT Player Four', pronouns: 'She/Her' }
                         ]
                     },
                     {
@@ -471,12 +481,15 @@ describe('smashggClient', () => {
                         showLogo: true,
                         players: [
                             { name: 'Player Three', pronouns: undefined },
-                            { name: 'TT Player Four', pronouns: 'she/her' }
+                            { name: 'TT Player Four', pronouns: 'She/Her' }
                         ]
                     }
                 ]
             });
             expect(mockPost).toHaveBeenCalledTimes(3);
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith('She/Her');
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith('he/him');
+            expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith(undefined);
         });
 
         it('throws error if event is not found', async () => {
