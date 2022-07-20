@@ -11,6 +11,7 @@ import {
 } from 'types/smashgg';
 import isEmpty from 'lodash/isEmpty';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
+import { normalizePronouns } from '../../helpers/PronounNormalizer';
 
 export async function getSmashGGEvents(slug: string, token: string): Promise<SmashggEvent[]> {
     const query = `query Events($slug: String!) {
@@ -188,7 +189,7 @@ async function getSmashGGPage(
             players: entrant.participants.map(participant => ({
                 name: isEmpty(participant.prefix)
                     ? participant.gamerTag : `${participant.prefix} ${participant.gamerTag}`,
-                pronouns: participant.user?.genderPronoun?.toLowerCase()
+                pronouns: normalizePronouns(participant.user?.genderPronoun)
             }))
         });
     });
