@@ -12,6 +12,14 @@ describe('normalizePronouns', () => {
     });
 
     it.each([
+        'he',
+        'she',
+        'they'
+    ])('handles singular pronouns ("%s")', input => {
+        expect(normalizePronouns(input)).toBe(input);
+    });
+
+    it.each([
         'any pronouns',
         'i want you to use any pronouns to refer to me',
         'any pronouns except f18 attack helicopter',
