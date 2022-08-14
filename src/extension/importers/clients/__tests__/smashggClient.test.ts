@@ -245,6 +245,59 @@ describe('smashggClient', () => {
             expect(mockPronounNormalizer.normalizePronouns).toHaveBeenCalledWith(undefined);
         });
 
+        it('does not save streams list if no streams were returned from the API', async () => {
+            mockPronounNormalizer.normalizePronouns.mockImplementation((input) => input);
+            mockPost.mockResolvedValue({
+                data: {
+                    data: {
+                        event: {
+                            id: 1234567,
+                            name: 'Splatoon Two',
+                            videogame: {
+                                displayName: 'Splatoon 2'
+                            },
+                            tournament: {
+                                name: 'Cool Tournament',
+                                id: 654423,
+                                slug: 'ct',
+                                streams: null
+                            },
+                            entrants: {
+                                pageInfo: {
+                                    total: 10,
+                                    totalPages: 1
+                                },
+                                nodes: []
+                            }
+                        }
+                    }
+                } as SmashggEntrantsResponse
+            });
+
+            const result = await getSmashGGData(123123, '149083257830574');
+
+            expect(result).toEqual({
+                meta: {
+                    id: 'ct',
+                    name: 'Cool Tournament',
+                    shortName: 'Cool Tournament',
+                    source: TournamentDataSource.SMASHGG,
+                    sourceSpecificData: {
+                        smashgg: {
+                            eventData: {
+                                game: 'Splatoon 2',
+                                id: 1234567,
+                                name: 'Splatoon Two'
+                            },
+                            tournamentId: 654423
+                        }
+                    },
+                    url: 'https://smash.gg/ct/details'
+                },
+                teams: []
+            });
+        });
+
         it('fetches data multiple times if more than one page is available', async () => {
             mockPronounNormalizer.normalizePronouns.mockImplementation((input) => input);
             mockPost.mockResolvedValueOnce({
