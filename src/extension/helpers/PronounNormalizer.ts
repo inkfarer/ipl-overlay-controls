@@ -11,9 +11,14 @@ export function normalizePronouns(pronouns: string): string {
         return 'any pronouns';
     }
 
-    return pronouns
+    const parsedPronouns = pronouns
         .replace(/\s*\/\s*/g, '/')
-        .match(/\S*\/\S*/g)
+        .match(/\S*\/\S*/g);
+    if (parsedPronouns == null) {
+        return pronouns;
+    }
+
+    return parsedPronouns
         .map(pronouns => pronouns.replace(/[.,!-]/g, ''))
         .join(', ');
 }

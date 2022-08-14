@@ -72,7 +72,7 @@ export async function getSmashGGData(eventId: number, token: string): Promise<To
             sourceSpecificData: {
                 smashgg: {
                     tournamentId: firstPageData.raw.data.event.tournament.id,
-                    streams: firstPageData.raw.data.event.tournament.streams,
+                    streams: firstPageData.raw.data.event.tournament.streams ?? undefined,
                     eventData: {
                         id: firstPageData.raw.data.event.id,
                         name: firstPageData.raw.data.event.name,
