@@ -2,7 +2,7 @@ import { replicants } from '../../__mocks__/mockNodecg';
 import { initLocaleInfoIfNeeded, updateLocaleInfo } from '../localeInfo';
 import { Locale } from '../../../types/enums/Locale';
 import { GameVersion } from '../../../types/enums/gameVersion';
-import { cartesian } from '../../../helpers/arrayHelper';
+import { cartesian } from '../../../helpers/ArrayHelper';
 
 describe('localeInfo', () => {
     describe('initLocaleInfoIfNeeded', () => {
