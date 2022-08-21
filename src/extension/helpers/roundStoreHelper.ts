@@ -3,7 +3,7 @@ import { RoundStore, RuntimeConfig } from '../../types/schemas';
 import { PlayType } from '../../types/enums/playType';
 import { setNextRoundGames } from './nextRoundHelper';
 import { perGameData } from '../../helpers/gameData/gameData';
-import { randomFromArray } from '../../helpers/array';
+import { randomFromArray } from '../../helpers/ArrayHelper';
 import omit from 'lodash/omit';
 import { Locale } from '../../types/enums/Locale';
 

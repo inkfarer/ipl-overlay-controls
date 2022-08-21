@@ -52,7 +52,7 @@ import { GameVersion, GameVersionHelper } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../../store/settingsStore';
 import { computed, ref, watch } from 'vue';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
-import { prettyPrintList } from '../../../helpers/array';
+import { prettyPrintList } from '../../../helpers/ArrayHelper';
 import { pluralizeWithoutCount } from '../../helpers/stringHelper';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { Locale, LocaleHelper } from 'types/enums/Locale';

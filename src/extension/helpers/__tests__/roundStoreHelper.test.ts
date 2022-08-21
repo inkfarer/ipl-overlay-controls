@@ -5,9 +5,9 @@ jest.mock('../nextRoundHelper', () => mockNextRoundHelper);
 
 import { replicants } from '../../__mocks__/mockNodecg';
 import { PlayType } from '../../../types/enums/playType';
-import { randomFromArray } from '../../../helpers/array';
+import { randomFromArray } from '../../../helpers/ArrayHelper';
 
-jest.mock('../../../helpers/array');
+jest.mock('../../../helpers/ArrayHelper');
 
 import { resetRoundStore } from '../roundStoreHelper';
 import { GameVersion } from '../../../types/enums/gameVersion';
