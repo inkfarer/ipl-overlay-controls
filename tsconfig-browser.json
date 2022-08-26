@@ -33,7 +33,9 @@
     },
     "exclude": [
         "**/jest.config.ts",
-        "**/__mocks__/**/*.ts",
-        "**/__tests__/**/*.ts"
+        "**/__mocks__/**/*.ts"
+    ],
+    "include": [
+        "src/dashboard/**/*.ts"
     ]
 }

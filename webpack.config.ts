@@ -40,6 +40,13 @@ function dashboardConfig(): webpack.Configuration {
                         enabled: true,
                         compiler: '@vue/compiler-sfc'
                     }
+                },
+                configOverwrite: {
+                    exclude: [
+                        '**/jest.config.ts',
+                        '**/__mocks__/**/*.ts',
+                        '**/__tests__/**/*.ts'
+                    ]
                 }
             }
         }),
@@ -154,11 +161,33 @@ const extensionConfig: webpack.Configuration = {
                 exclude: '/node_modules',
                 loader: 'ts-loader',
                 options: {
-                    configFile: 'tsconfig-extension.json'
+                    configFile: 'tsconfig-extension.json',
+                    transpileOnly: true
                 }
             }
         ]
     },
+    plugins: [
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                configFile: 'tsconfig-extension.json',
+                extensions: {
+                    vue: {
+                        enabled: true,
+                        compiler: '@vue/compiler-sfc'
+                    }
+                },
+                configOverwrite: {
+                    exclude: [
+                        'node_modules',
+                        '**/jest.config.ts',
+                        '**/__mocks__/**/*.ts',
+                        '**/__tests__/**/*.ts'
+                    ]
+                }
+            }
+        })
+    ],
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? false : 'source-map',
     externals: [nodeExternals()],
