@@ -135,4 +135,8 @@ export class ObsConnectorService {
             this.nodecg.sendMessage('obsSceneConfigurationChangedAfterUpdate');
         }
     }
+
+    setCurrentScene(scene: string): Promise<void> {
+        return this.socket.call('SetCurrentProgramScene', { sceneName: scene });
+    }
 }

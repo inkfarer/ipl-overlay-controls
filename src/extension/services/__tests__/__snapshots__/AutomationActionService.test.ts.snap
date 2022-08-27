@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AutomationActionService getAutomationTasks has expected timings for game version SPLATOON_2 and action END_GAME 1`] = `
+Array [
+  Object {
+    "action": [Function],
+    "name": "hideScoreboard",
+    "timeout": 3000,
+  },
+  Object {
+    "action": [Function],
+    "name": "changeScene",
+    "timeout": 7500,
+  },
+]
+`;
+
+exports[`AutomationActionService getAutomationTasks has expected timings for game version SPLATOON_2 and action START_GAME 1`] = `
+Array [
+  Object {
+    "action": [Function],
+    "name": "changeScene",
+    "timeout": 0,
+  },
+  Object {
+    "action": [Function],
+    "name": "showScoreboard",
+    "timeout": 11500,
+  },
+  Object {
+    "action": [Function],
+    "name": "showCasters",
+    "timeout": 12000,
+  },
+]
+`;
+
+exports[`AutomationActionService getAutomationTasks has expected timings for game version SPLATOON_3 and action END_GAME 1`] = `
+Array [
+  Object {
+    "action": [Function],
+    "name": "hideScoreboard",
+    "timeout": 3000,
+  },
+  Object {
+    "action": [Function],
+    "name": "changeScene",
+    "timeout": 7500,
+  },
+]
+`;
+
+exports[`AutomationActionService getAutomationTasks has expected timings for game version SPLATOON_3 and action START_GAME 1`] = `
+Array [
+  Object {
+    "action": [Function],
+    "name": "changeScene",
+    "timeout": 0,
+  },
+  Object {
+    "action": [Function],
+    "name": "showScoreboard",
+    "timeout": 11500,
+  },
+  Object {
+    "action": [Function],
+    "name": "showCasters",
+    "timeout": 12000,
+  },
+]
+`;

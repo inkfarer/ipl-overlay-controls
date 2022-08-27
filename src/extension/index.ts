@@ -26,10 +26,15 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/scoreboardData');
     require('./versionChecker');
 
+    // These imports are here so the files they depend on don't get executed too early.
+    const { AutomationActionService } = require('./services/AutomationActionService');
+    const { AutomationActionController } = require('./controllers/AutomationActionController');
+
     const obsConnectorService = new ObsConnectorService(nodecg);
     new ObsConnectorController(nodecg, obsConnectorService);
-
-    require('./automation/endStartGame');
+    const automationActionService = new AutomationActionService(nodecg, obsConnectorService);
+    automationActionService.resetGameAutomationData();
+    new AutomationActionController(nodecg, automationActionService);
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');
