@@ -9,7 +9,7 @@ import { GameVersion } from '../../types/enums/gameVersion';
 import { GameAutomationAction } from '../../types/enums/GameAutomationAction';
 import { switchToNextColor } from '../replicants/activeRound';
 import { ObsConnectorService } from './ObsConnectorService';
-import { isPromise } from 'util/types';
+import * as util from 'util';
 
 interface AutomationActionTask {
     timeout: number
@@ -164,7 +164,7 @@ export class AutomationActionService {
     private async executeAutomationTask(task: AutomationActionTask): Promise<void> {
         try {
             const result = task.action();
-            if (isPromise(result)) {
+            if (util.types.isPromise(result)) {
                 await result;
             }
         } catch (e) {
