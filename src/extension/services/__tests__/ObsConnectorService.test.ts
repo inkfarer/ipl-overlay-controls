@@ -7,6 +7,7 @@ import { flushPromises } from '@vue/test-utils';
 
 describe('ObsConnectorService', () => {
     beforeEach(() => {
+        jest.useFakeTimers();
         jest.spyOn(OBSWebSocket.prototype, 'connect').mockResolvedValue(null);
         jest.spyOn(OBSWebSocket.prototype, 'disconnect').mockResolvedValue(null);
         jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue(null);
@@ -17,6 +18,11 @@ describe('ObsConnectorService', () => {
             address: 'wss://test-obs',
             password: 'test pwd'
         };
+    });
+
+    afterEach(() => {
+        jest.clearAllTimers();
+        jest.useRealTimers();
     });
 
     describe('constructor', () => {
