@@ -2,9 +2,9 @@ import express from 'express';
 import last from 'lodash/last';
 import { Configschema } from '../../types/schemas';
 import cloneDeep from 'lodash/cloneDeep';
+import { ReplicantServer, NodeCG } from 'nodecg/server';
 
 export type ReplicantChangeHandler = (newValue?: unknown, oldValue?: unknown) => void;
-type OnFunction = (event: string, handler: ReplicantChangeHandler) => void;
 
 const defaultBundleConfig = Object.freeze({
     lastfm: {
@@ -40,35 +40,41 @@ beforeEach(() => {
     Object.assign(mockBundleConfig, cloneDeep(defaultBundleConfig));
 });
 
-require('../helpers/nodecg').set({
-    Replicant(name: string) {
-        const replicantValue: { value: unknown, on: OnFunction } = {
+export const mockNodecg: NodeCG = {
+    Replicant(name: string): ReplicantServer<unknown> {
+        return {
             get value() {
                 return replicants[name];
             },
             set value(newValue: unknown) {
                 replicants[name] = newValue;
             },
+            // @ts-ignore
             on: (event: string, handler: ReplicantChangeHandler) => {
                 replicantChangeListeners[name] = handler;
             }
         };
-        return replicantValue;
     },
+    // @ts-ignore
     listenFor: (messageName: string, handler: () => void) => {
         messageListeners[messageName] = handler as (message: unknown, cb?: () => void) => void;
     },
-    Router: () => ({
+    Router: (): express.Router => ({
+        // @ts-ignore
         post(path: string, ...handlers: express.RequestHandler[]) {
             requestHandlers['POST'][path] = last(handlers);
         },
+        // @ts-ignore
         get(path: string, ...handlers: express.RequestHandler[]) {
             requestHandlers['GET'][path] = last(handlers);
         }
     }),
     mount: mockMount,
+    // @ts-ignore
     log: mockNodecgLog,
     bundleConfig: mockBundleConfig,
     bundleName: 'ipl-overlay-controls',
     sendMessage: mockSendMessage
-});
+};
+
+require('../helpers/nodecg').set(mockNodecg);
