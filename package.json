@@ -174,7 +174,7 @@
         "jest-mock-extended": "^2.0.4",
         "jest-when": "^3.3.1",
         "json-schema-to-typescript": "^10.1.4",
-        "obs-websocket-js": "^4.0.3",
+        "obs-websocket-js": "^5.0.1",
         "sass": "^1.42.1",
         "sass-loader": "^12.1.0",
         "style-loader": "^2.0.0",

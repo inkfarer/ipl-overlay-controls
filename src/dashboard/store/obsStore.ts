@@ -37,8 +37,8 @@ export const useObsStore = defineStore('obs', {
         async fastForwardToNextGameAutomationTask(): Promise<void> {
             return nodecg.sendMessage('fastForwardToNextGameAutomationTask');
         },
-        setEnabled(enabled: boolean): void {
-            nodecg.sendMessage('setObsSocketEnabled', enabled);
+        setEnabled(enabled: boolean): Promise<void> {
+            return nodecg.sendMessage('setObsSocketEnabled', enabled);
         }
     }
 });

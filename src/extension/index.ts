@@ -1,7 +1,9 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
-import { PredictionStore, RadiaSettings, ObsCredentials, ObsData, RuntimeConfig } from 'schemas';
+import { PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
+import { ObsConnectorService } from './services/ObsConnectorService';
+import { ObsConnectorController } from './controllers/ObsConnectorController';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG & NodeCGStatic): void => {
@@ -24,12 +26,15 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/scoreboardData');
     require('./versionChecker');
 
-    const { tryToConnect } = require('./automation/obsSocket');
-    if (nodecg.Replicant<ObsData>('obsData').value.enabled) {
-        tryToConnect(nodecg.Replicant<ObsCredentials>('obsCredentials').value);
-    }
+    // These imports are here so the files they depend on don't get executed too early.
+    const { AutomationActionService } = require('./services/AutomationActionService');
+    const { AutomationActionController } = require('./controllers/AutomationActionController');
 
-    require('./automation/endStartGame');
+    const obsConnectorService = new ObsConnectorService(nodecg);
+    new ObsConnectorController(nodecg, obsConnectorService);
+    const automationActionService = new AutomationActionService(nodecg, obsConnectorService);
+    automationActionService.resetGameAutomationData();
+    new AutomationActionController(nodecg, automationActionService);
 
     const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
     const predictionStore = nodecg.Replicant<PredictionStore>('predictionStore');

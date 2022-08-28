@@ -1,6 +1,7 @@
 import { App } from 'vue';
 import { generateId } from '../../helpers/generateId';
 import { defineStore } from 'pinia';
+import { isBlank } from '../../helpers/stringHelper';
 
 export const useErrorHandlerStore = defineStore('errorHandler', {
     state: () => ({
@@ -10,8 +11,12 @@ export const useErrorHandlerStore = defineStore('errorHandler', {
         removeRecentError({ key }: { key: string }): void {
             delete this.recentErrors[key];
         },
-        handleError({ err, info }: { err: unknown, info: string }): void {
-            console.error(`Got error from '${info}': \n`, err);
+        handleError({ err, info }: { err: unknown, info?: string }): void {
+            if (!isBlank(info)) {
+                console.error(`Got error from '${info}': \n`, err);
+            } else {
+                console.error(err);
+            }
 
             if (Object.keys(this.recentErrors).length >= 2) return;
 
