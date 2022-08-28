@@ -92,8 +92,8 @@ describe('roundDataHelper', () => {
                     type: PlayType.PLAY_ALL,
                     games: [
                         { stage: 'Blackbelly Skatepark', mode: 'Rainmaker' },
-                        { stage: 'makomart', mode: 'clam blitz' },
-                        { map: 'Counterpick', mode: 'TOWER CONTROL' }
+                        { stage: 'moray towers', mode: 'clam blitz' },
+                        { map: 'Counterpick', mode: '?????' }
                     ]
                 }
             ], GameVersion.SPLATOON_3);
@@ -106,8 +106,8 @@ describe('roundDataHelper', () => {
                         type: PlayType.PLAY_ALL
                     },
                     games: [
-                        { stage: 'Unknown Stage', mode: 'Unknown Mode' },
-                        { stage: 'Unknown Stage', mode: 'Unknown Mode' },
+                        { stage: 'Unknown Stage', mode: 'Rainmaker' },
+                        { stage: 'Unknown Stage', mode: 'Clam Blitz' },
                         { stage: 'Counterpick', mode: 'Unknown Mode' }
                     ]
                 }

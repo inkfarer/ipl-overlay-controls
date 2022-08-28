@@ -85,15 +85,28 @@ Object {
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is DE 1`] = `
 Object {
   "modes": Object {
+    "Clam Blitz": "Muschelchaos",
+    "Rainmaker": "Operation Goldfisch",
+    "Splat Zones": "Herrschaft",
+    "Tower Control": "Turmkommando",
     "Turf War": "Revierkampf",
     "Unknown Mode": "Unbekannte Kampfart",
   },
   "stages": Object {
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Streifenaal-Straße",
+    "Hagglefish Market": "Schnapperchen-Basar",
+    "Hammerhead Bridge": "Makrelenbrücke",
+    "Inkblot Art Academy": "Perlmutt-Akademie",
+    "Mahi-Mahi Resort": "Mahi-Mahi-Resort",
+    "MakoMart": "Cetacea-Markt",
+    "Mincemeat Metalworks": "Aalstahl-Metallwerk",
     "Museum d'Alfonsino": "Pinakoithek",
     "Scorch Gorge": "Sengkluft",
+    "Sturgeon Shipyard": "Störwerft",
+    "Undertow Spillway": "Schwertmuschel-Reservoir",
     "Unknown Stage": "Unbekannte Arena",
+    "Wahoo World": "Flunder-Funpark",
   },
 }
 `;
@@ -101,15 +114,28 @@ Object {
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is EN 1`] = `
 Object {
   "modes": Object {
+    "Clam Blitz": "Clam Blitz",
+    "Rainmaker": "Rainmaker",
+    "Splat Zones": "Splat Zones",
+    "Tower Control": "Tower Control",
     "Turf War": "Turf War",
     "Unknown Mode": "Unknown Mode",
   },
   "stages": Object {
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Eeltail Alley",
+    "Hagglefish Market": "Hagglefish Market",
+    "Hammerhead Bridge": "Hammerhead Bridge",
+    "Inkblot Art Academy": "Inkblot Art Academy",
+    "Mahi-Mahi Resort": "Mahi-Mahi Resort",
+    "MakoMart": "MakoMart",
+    "Mincemeat Metalworks": "Mincemeat Metalworks",
     "Museum d'Alfonsino": "Museum d'Alfonsino",
     "Scorch Gorge": "Scorch Gorge",
+    "Sturgeon Shipyard": "Sturgeon Shipyard",
+    "Undertow Spillway": "Undertow Spillway",
     "Unknown Stage": "Unknown Stage",
+    "Wahoo World": "Wahoo World",
   },
 }
 `;
