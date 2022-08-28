@@ -1,7 +1,7 @@
 import MatchManager from '../matchManager.vue';
 import { config, mount, VueWrapper } from '@vue/test-utils';
 import { ObsStatus } from 'types/enums/ObsStatus';
-import { messageListeners } from '../../__mocks__/mockNodecg';
+import { messageListeners, mockSendMessage } from '../../__mocks__/mockNodecg';
 import { useCasterStore } from '../../store/casterStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useObsStore } from '../../store/obsStore';
@@ -74,6 +74,17 @@ describe('MatchManager', () => {
         jest.useRealTimers();
     });
 
+    it('does not show button to cancel automation action when no action is in progress', () => {
+        const obsStore = useObsStore();
+        obsStore.gameAutomationData = {
+            actionInProgress: GameAutomationAction.NONE,
+            nextTaskForAction: null
+        };
+        const wrapper = mount(MatchManager);
+
+        expect(wrapper.findComponent('[data-test="cancel-automation-action-button"]').exists()).toEqual(false);
+    });
+
     describe('when automation action is in progress', () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let wrapper: VueWrapper<any>;
@@ -103,6 +114,18 @@ describe('MatchManager', () => {
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('blue');
             expect((button.vm as unknown as UnknownModule).label).toMatchSnapshot();
+        });
+
+        it('shows button to cancel action', () => {
+            expect(wrapper.getComponent('[data-test="cancel-automation-action-button"]').isVisible()).toEqual(true);
+        });
+
+        it('handles cancel button press', () => {
+            const button = wrapper.getComponent('[data-test="cancel-automation-action-button"]');
+
+            button.vm.$emit('click');
+
+            expect(mockSendMessage).toHaveBeenCalledWith('cancelAutomationAction', undefined);
         });
     });
 

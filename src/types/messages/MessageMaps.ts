@@ -9,6 +9,7 @@ export interface MessageInputMap {
     startGame: never
     endGame: never
     fastForwardToNextGameAutomationTask: never
+    cancelAutomationAction: never
 }
 
 export interface MessageResultMap {

@@ -26,13 +26,25 @@
                     class="m-b-8"
                     @click="doAutomationAction"
                 />
-                <ipl-button
-                    label="Show casters"
-                    :disabled="disableShowCasters"
-                    :small="isObsConnected"
-                    data-test="show-casters-button"
-                    @click="showCasters"
-                />
+                <div class="layout horizontal">
+                    <ipl-button
+                        v-if="actionInProgress"
+                        label="Cancel action"
+                        small
+                        data-test="cancel-automation-action-button"
+                        color="red"
+                        class="max-width m-r-8"
+                        @click="cancelAutomationAction"
+                    />
+                    <ipl-button
+                        label="Show casters"
+                        :disabled="disableShowCasters"
+                        :small="isObsConnected"
+                        data-test="show-casters-button"
+                        class="max-width"
+                        @click="showCasters"
+                    />
+                </div>
             </ipl-space>
         </div>
         <ipl-expanding-space-group class="max-width m-l-8">
@@ -75,6 +87,7 @@ import { useObsStore } from '../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import ActiveRosterDisplay from '../components/activeRosterDisplay.vue';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
+import { sendMessage } from '../helpers/nodecgHelper';
 
 export default defineComponent({
     name: 'ActiveRound',
@@ -166,6 +179,9 @@ export default defineComponent({
                 } else {
                     obsStore.startGame();
                 }
+            },
+            cancelAutomationAction() {
+                sendMessage('cancelAutomationAction');
             },
             startStopDisabled: computed(() => {
                 return actionInProgress.value
