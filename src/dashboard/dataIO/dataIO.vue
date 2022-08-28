@@ -1,8 +1,14 @@
 <template>
     <ipl-error-display class="m-b-8" />
-    <team-data-importer />
-    <round-importer class="m-t-8" />
-    <match-exporter class="m-t-8" />
+    <div class="layout horizontal even-spacing">
+        <div>
+            <team-data-importer />
+        </div>
+        <div class="m-l-8">
+            <round-importer />
+            <match-exporter class="m-t-8" />
+        </div>
+    </div>
 </template>
 
 <script lang="ts">

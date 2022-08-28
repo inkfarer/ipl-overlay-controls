@@ -1,71 +1,75 @@
 <template>
-    <ipl-space>
-        <div class="title">Tournament data</div>
-        <template v-if="smashggEvents.length > 1">
-            <ipl-select
-                v-model="smashggEvent"
-                :options="smashggEvents"
-                data-test="smashgg-event-selector"
-                label="Event"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Import"
-                async
-                progress-message="Importing..."
-                data-test="smashgg-event-import-button"
-                @click="handleSmashggEventImport"
-            />
-            <ipl-button
-                class="m-t-8"
-                label="Cancel"
-                color="red"
-                data-test="smashgg-event-import-cancel-button"
-                @click="handleSmashggImportCancel"
-            />
-        </template>
-        <template v-else>
-            <ipl-radio
-                v-model="dataSource"
-                label="Source"
-                data-test="source-selector"
-                class="data-source-selector"
-                :options="dataSourceOptions"
-            />
-            <ipl-input
-                v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
-                v-model="tournamentId"
-                :label="idLabel"
-                name="tournament-id-input"
-                class="m-t-4"
-            />
-            <ipl-upload
-                v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
-                v-model="teamDataFile"
-                class="m-t-8"
-                data-test="team-data-upload"
-            />
-            <div class="layout horizontal center-horizontal">
-                <ipl-checkbox
-                    v-show="dataSource === TournamentDataSource.UPLOAD"
-                    v-model="useFileUpload"
-                    label="Upload file"
-                    class="m-t-8"
-                    small
-                    data-test="use-file-upload-checkbox"
+    <bordered-space label="Tournament data">
+        <ipl-space>
+            <template v-if="smashggEvents.length > 1">
+                <ipl-select
+                    v-model="smashggEvent"
+                    :options="smashggEvents"
+                    data-test="smashgg-event-selector"
+                    label="Event"
                 />
-            </div>
-            <ipl-button
-                class="m-t-8"
-                label="Import"
-                :disabled="!allValid || refreshingTournamentData"
-                async
-                progress-message="Importing..."
-                data-test="import-button"
-                @click="handleImport"
-            />
-        </template>
-        <div class="existing-data m-t-8">
+                <ipl-button
+                    class="m-t-8"
+                    label="Import"
+                    async
+                    progress-message="Importing..."
+                    data-test="smashgg-event-import-button"
+                    @click="handleSmashggEventImport"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    label="Cancel"
+                    color="red"
+                    data-test="smashgg-event-import-cancel-button"
+                    @click="handleSmashggImportCancel"
+                />
+            </template>
+            <template v-else>
+                <ipl-radio
+                    v-model="dataSource"
+                    label="Source"
+                    data-test="source-selector"
+                    class="data-source-selector"
+                    :options="dataSourceOptions"
+                />
+                <ipl-input
+                    v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
+                    v-model="tournamentId"
+                    :label="idLabel"
+                    name="tournament-id-input"
+                    class="m-t-4"
+                />
+                <ipl-upload
+                    v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
+                    v-model="teamDataFile"
+                    class="m-t-8"
+                    data-test="team-data-upload"
+                />
+                <div class="layout horizontal center-horizontal">
+                    <ipl-checkbox
+                        v-show="dataSource === TournamentDataSource.UPLOAD"
+                        v-model="useFileUpload"
+                        label="Upload file"
+                        class="m-t-8"
+                        small
+                        data-test="use-file-upload-checkbox"
+                    />
+                </div>
+                <ipl-button
+                    class="m-t-8"
+                    label="Import"
+                    :disabled="!allValid || refreshingTournamentData"
+                    async
+                    progress-message="Importing..."
+                    data-test="import-button"
+                    @click="handleImport"
+                />
+            </template>
+        </ipl-space>
+        <ipl-space
+            data-test="saved-data-section"
+            class="text-center m-t-8"
+        >
             <div class="title">Saved data</div>
             <a
                 v-if="!!tournamentMetadata.url"
@@ -91,27 +95,29 @@
                 data-test="refresh-button"
                 @click="handleRefresh"
             />
-        </div>
-        <ipl-input
-            v-model="shortName"
-            label="Short tournament name"
-            name="shortName"
-            class="m-t-4"
-        />
-        <ipl-button
-            class="m-t-8"
-            label="Update"
-            data-test="update-short-name-button"
-            :color="shortNameChanged ? 'red' : 'blue'"
-            :disabled="!shortNameValidator.isValid"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
-            @click="updateShortName"
-            @right-click="undoShortNameChanges"
-        />
-    </ipl-space>
+        </ipl-space>
+        <ipl-space class="m-t-8">
+            <ipl-input
+                v-model="shortName"
+                label="Short tournament name"
+                name="shortName"
+            />
+            <ipl-button
+                class="m-t-8"
+                label="Update"
+                data-test="update-short-name-button"
+                :color="shortNameChanged ? 'red' : 'blue'"
+                :disabled="!shortNameValidator.isValid"
+                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                @click="updateShortName"
+                @right-click="undoShortNameChanges"
+            />
+        </ipl-space>
+    </bordered-space>
 </template>
 
 <script lang="ts">
+import { NodeCGBrowser } from 'nodecg/browser';
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
@@ -134,11 +140,12 @@ import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import BorderedSpace from '../../components/BorderedSpace.vue';
 
 export default defineComponent({
     name: 'TeamDataImporter',
 
-    components: { IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace, IplRadio },
+    components: { BorderedSpace, IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace, IplRadio },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
@@ -274,11 +281,10 @@ export default defineComponent({
 @import './src/dashboard/styles/colors';
 @import './src/dashboard/styles/constants';
 
-.existing-data {
+.darker-space {
     padding: 8px;
     border-radius: $border-radius-inner;
-    background-color: $background-tertiary;
-    text-align: center;
+    background-color: rgba(0, 0, 0, 0.15);
     word-break: break-all;
 }
 

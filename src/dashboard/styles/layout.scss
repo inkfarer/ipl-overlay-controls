@@ -11,6 +11,11 @@
         &.center-vertical {
             align-items: center;
         }
+
+        &.even-spacing > * {
+            flex-basis: 0;
+            flex-grow: 1;
+        }
     }
 
     &.vertical {
