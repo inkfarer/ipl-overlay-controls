@@ -68,7 +68,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        expect(wrapper.get('.existing-data').html()).toMatchSnapshot();
+        expect(wrapper.get('[data-test="saved-data-section"]').html()).toMatchSnapshot();
     });
 
     it('displays data of existing tournament if it is missing a name', () => {
@@ -85,7 +85,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        expect(wrapper.get('.existing-data').html()).toMatchSnapshot();
+        expect(wrapper.get('[data-test="saved-data-section"]').html()).toMatchSnapshot();
     });
 
     it('displays data of existing tournament if it is missing an URL', () => {
@@ -102,7 +102,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        expect(wrapper.get('.existing-data').html()).toMatchSnapshot();
+        expect(wrapper.get('[data-test="saved-data-section"]').html()).toMatchSnapshot();
     });
 
     it('displays data of existing tournament if it has smash.gg data', () => {
@@ -130,7 +130,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        expect(wrapper.get('.existing-data').html()).toMatchSnapshot();
+        expect(wrapper.get('[data-test="saved-data-section"]').html()).toMatchSnapshot();
     });
 
     it('has expected data source options if smash.gg config is present', () => {
