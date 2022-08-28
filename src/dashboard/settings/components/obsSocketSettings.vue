@@ -69,6 +69,7 @@ import { computed, ref, watch } from 'vue';
 import { useObsStore } from '../../store/obsStore';
 import { ObsStatus, ObsStatusHelper } from 'types/enums/ObsStatus';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { useErrorHandlerStore } from '../../store/errorHandlerStore';
 
 export default defineComponent({
     name: 'ObsSocketSettings',
@@ -77,13 +78,18 @@ export default defineComponent({
 
     setup() {
         const obsStore = useObsStore();
+        const errorHandlerStore = useErrorHandlerStore();
 
         const socketEnabled = computed({
             get() {
                 return obsStore.obsData.enabled;
             },
-            set(value: boolean): void {
-                obsStore.setEnabled(value);
+            async set(value: boolean): Promise<void> {
+                try {
+                    await obsStore.setEnabled(value);
+                } catch (err) {
+                    errorHandlerStore.handleError({ err });
+                }
             }
         });
 
