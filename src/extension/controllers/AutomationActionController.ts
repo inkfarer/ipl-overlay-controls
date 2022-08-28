@@ -18,5 +18,9 @@ export class AutomationActionController extends BaseController {
         this.listen('fastForwardToNextGameAutomationTask', async () => {
             await automationActionService.fastForwardToNextAutomationTask();
         });
+
+        this.listen('cancelAutomationAction', () => {
+            automationActionService.cancelAutomationAction();
+        });
     }
 }

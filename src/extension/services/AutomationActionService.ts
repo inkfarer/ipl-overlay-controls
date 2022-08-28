@@ -75,7 +75,7 @@ export class AutomationActionService {
             case GameAutomationAction.START_GAME:
                 return [
                     {
-                        timeout: 0,
+                        timeout: 1000,
                         name: 'changeScene',
                         action: async () => {
                             switchToNextColor();
@@ -179,6 +179,15 @@ export class AutomationActionService {
 
         await this.completeTimedAutomationTask(
             this.automationTasks[this.gameAutomationData.value.nextTaskForAction.index]);
+    }
+
+    cancelAutomationAction(): void {
+        if (this.gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
+            throw new Error('No action is in progress.');
+        }
+
+        clearTimeout(this.nextAutomationTaskTimeout);
+        this.resetGameAutomationData();
     }
 
     resetGameAutomationData(): void {

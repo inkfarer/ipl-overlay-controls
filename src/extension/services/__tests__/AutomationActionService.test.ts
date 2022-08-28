@@ -432,4 +432,36 @@ describe('AutomationActionService', () => {
             });
         });
     });
+
+    describe('cancelAutomationAction', () => {
+        it('clears the timeout to execute the next automation action and resets automation data', () => {
+            replicants.gameAutomationData = {
+                actionInProgress: GameAutomationAction.START_GAME
+            };
+            jest.spyOn(AutomationActionService.prototype, 'resetGameAutomationData').mockReturnValue(null);
+            jest.spyOn(global, 'clearTimeout');
+            const service = new AutomationActionService(mockNodecg, obsConnectorService);
+            const timeout = setTimeout(jest.fn(), 1000);
+            service['nextAutomationTaskTimeout'] = timeout;
+
+            service.cancelAutomationAction();
+
+            expect(service.resetGameAutomationData).toHaveBeenCalled();
+            expect(clearTimeout).toHaveBeenCalledWith(timeout);
+        });
+
+        it('throws an error if no action is in progress', () => {
+            replicants.gameAutomationData = {
+                actionInProgress: GameAutomationAction.NONE
+            };
+            jest.spyOn(AutomationActionService.prototype, 'resetGameAutomationData');
+            jest.spyOn(global, 'clearTimeout');
+            const service = new AutomationActionService(mockNodecg, obsConnectorService);
+
+            expect(() => service.cancelAutomationAction()).toThrow(new Error('No action is in progress.'));
+
+            expect(service.resetGameAutomationData).not.toHaveBeenCalled();
+            expect(clearTimeout).not.toHaveBeenCalled();
+        });
+    });
 });

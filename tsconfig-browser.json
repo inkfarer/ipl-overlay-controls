@@ -34,8 +34,5 @@
     "exclude": [
         "**/jest.config.ts",
         "**/__mocks__/**/*.ts"
-    ],
-    "include": [
-        "src/dashboard/**/*.ts"
     ]
 }

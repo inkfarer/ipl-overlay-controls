@@ -36,4 +36,12 @@ describe('AutomationActionController', () => {
             expect(automationActionService.fastForwardToNextAutomationTask).toHaveBeenCalled();
         });
     });
+
+    describe('cancelAutomationAction', () => {
+        it('cancels the ongoing automation action', () => {
+            controllerListeners.cancelAutomationAction();
+
+            expect(automationActionService.cancelAutomationAction).toHaveBeenCalled();
+        });
+    });
 });

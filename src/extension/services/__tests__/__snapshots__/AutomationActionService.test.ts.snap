@@ -20,7 +20,7 @@ Array [
   Object {
     "action": [Function],
     "name": "changeScene",
-    "timeout": 0,
+    "timeout": 1000,
   },
   Object {
     "action": [Function],
@@ -55,7 +55,7 @@ Array [
   Object {
     "action": [Function],
     "name": "changeScene",
-    "timeout": 0,
+    "timeout": 1000,
   },
   Object {
     "action": [Function],
