@@ -1,4 +1,4 @@
-import ColorEditor from '../colorEditor.vue';
+import ColorList from '../colorList.vue';
 import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { config, mount } from '@vue/test-utils';
@@ -6,7 +6,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 
-describe('ColorEditor', () => {
+describe('ColorList', () => {
     let pinia: TestingPinia;
 
     config.global.stubs = {
@@ -75,7 +75,7 @@ describe('ColorEditor', () => {
     });
 
     it('matches snapshot', () => {
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -84,10 +84,23 @@ describe('ColorEditor', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    it('matches snapshot when color names are shown', async () => {
+        const wrapper = mount(ColorList, {
+            global: {
+                plugins: [ pinia ]
+            }
+        });
+
+        wrapper.getComponent('[data-test="color-names-toggle"]').vm.$emit('update:modelValue', true);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it('matches snapshot when using custom color', () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -99,7 +112,7 @@ describe('ColorEditor', () => {
     it('sets color on option click', async () => {
         const store = useActiveRoundStore();
         store.setActiveColor = jest.fn();
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -123,7 +136,7 @@ describe('ColorEditor', () => {
     it('has expected button color when custom color is changed', async () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -139,7 +152,7 @@ describe('ColorEditor', () => {
         const store = useActiveRoundStore();
         store.setActiveColor = jest.fn();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -165,7 +178,7 @@ describe('ColorEditor', () => {
     it('reverts changes on custom color update button right click', async () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -187,7 +200,7 @@ describe('ColorEditor', () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
         store.swapColorsInternally = false;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -208,7 +221,7 @@ describe('ColorEditor', () => {
     it('handles team colors changing in store', async () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
@@ -230,7 +243,7 @@ describe('ColorEditor', () => {
     it('does not change custom color inputs if active color is updated but is not custom', async () => {
         const store = useActiveRoundStore();
         store.activeRound.activeColor.isCustom = true;
-        const wrapper = mount(ColorEditor, {
+        const wrapper = mount(ColorList, {
             global: {
                 plugins: [ pinia ]
             }
