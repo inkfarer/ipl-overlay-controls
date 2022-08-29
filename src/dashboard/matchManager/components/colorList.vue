@@ -4,11 +4,18 @@
         title="More colors"
     >
         <div class="colors-container">
-            <div class="layout horizontal center-horizontal">
+            <div class="layout horizontal center-horizontal m-x-16">
                 <ipl-checkbox
                     v-model="useCustomColor"
                     label="Use custom color"
                     data-test="use-custom-color-toggle"
+                    small
+                />
+                <ipl-checkbox
+                    v-model="showColorNames"
+                    label="Show color names"
+                    data-test="color-names-toggle"
+                    class="m-l-8"
                     small
                 />
             </div>
@@ -20,6 +27,7 @@
                     v-for="(group, groupIndex) in colorsWithoutCustom"
                     :key="`color-group_${groupIndex}`"
                     class="color-group"
+                    :class="{ 'color-names-visible': showColorNames }"
                 >
                     <div class="title">{{ group.meta.name }}</div>
                     <div
@@ -31,7 +39,12 @@
                             activeColor.categoryName === group.meta.name }"
                         @click="setColor(color, group.meta.name)"
                     >
-                        <span style="flex-grow: 1">{{ color.title }}</span>
+                        <span
+                            v-show="showColorNames"
+                            style="flex-grow: 1"
+                        >
+                            {{ color.title }}
+                        </span>
                         <div class="color-previews layout horizontal">
                             <div
                                 class="color-preview"
@@ -92,7 +105,7 @@ import { perGameData } from '../../../helpers/gameData/gameData';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
-    name: 'ColorEditor',
+    name: 'ColorList',
 
     components: { IplButton, IplInput, IplCheckbox, IplExpandingSpace },
 
@@ -176,7 +189,9 @@ export default defineComponent({
 
                 customColorA.value = activeRoundStore.activeRound.teamA.color;
                 customColorB.value = activeRoundStore.activeRound.teamB.color;
-            }
+            },
+
+            showColorNames: ref(false)
         };
     }
 });
@@ -191,6 +206,27 @@ export default defineComponent({
     overflow: auto;
 }
 
+.color-group > .title {
+    width: 100%;
+}
+
+.color-group:not(.color-names-visible) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+
+    > .color-option {
+        width: 58px;
+        justify-content: center;
+        margin-bottom: 3px;
+        margin-top: 3px;
+
+        &:nth-child(3n), &:nth-child(3n + 2) {
+            margin-right: 6px;
+        }
+    }
+}
+
 .color-option {
     width: auto;
     margin: 8px 0;
@@ -198,6 +234,7 @@ export default defineComponent({
     border-radius: $border-radius-inner;
     padding: 6px 10px;
     cursor: pointer;
+    transition-property: background-color;
     transition-duration: $transition-duration-low;
 
     &.is-selected {

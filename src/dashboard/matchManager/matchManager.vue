@@ -48,7 +48,7 @@
             </ipl-space>
         </div>
         <ipl-expanding-space-group class="max-width m-l-8">
-            <color-editor />
+            <color-list />
             <active-match-editor class="m-t-8" />
             <next-match-starter class="m-t-8" />
             <scoreboard-editor class="m-t-8" />
@@ -68,7 +68,7 @@
 import { computed, defineComponent, onUnmounted, ref } from 'vue';
 import ScoreDisplay from './components/scoreDisplay.vue';
 import ActiveMatchEditor from './components/activeMatchEditor.vue';
-import ColorEditor from './components/colorEditor.vue';
+import ColorList from './components/colorList.vue';
 import SetEditor from './components/setEditor.vue';
 import ActiveColorToggles from './components/activeColorToggles.vue';
 import {
@@ -103,7 +103,7 @@ export default defineComponent({
         IplSpace,
         ActiveColorToggles,
         IplExpandingSpaceGroup,
-        ColorEditor,
+        ColorList,
         ActiveMatchEditor,
         ScoreDisplay,
         SetEditor
