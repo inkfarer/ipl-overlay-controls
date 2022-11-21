@@ -80,34 +80,34 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             colors: [
                 {
                     index: 0,
-                    title: 'Yellow vs Dark Blue',
-                    clrA: '#EDD921',
-                    clrB: '#461EE6',
+                    title: 'Turquoise vs Orange',
+                    clrA: '#2ADBC6',
+                    clrB: '#FA5A41',
                     clrNeutral: '#4445FF',
                     isCustom: false
                 },
                 {
                     index: 1,
-                    title: 'Green vs Pink',
-                    clrA: '#B3DE45',
-                    clrB: '#D43BCA',
-                    clrNeutral: '#FFC042',
+                    title: 'Orange vs Purple',
+                    clrA: '#F56522',
+                    clrB: '#821CD6',
+                    clrNeutral: '#CDFF45',
                     isCustom: false
                 },
                 {
                     index: 2,
-                    title: 'Gold vs Purple',
-                    clrA: '#EBCC31',
-                    clrB: '#A032DB',
-                    clrNeutral: '#73DE35',
+                    title: 'Pink vs Green',
+                    clrA: '#F753A1',
+                    clrB: '#35CC2D',
+                    clrNeutral: '#4A36FF',
                     isCustom: false
                 },
                 {
                     index: 3,
-                    title: 'Dark Blue vs Orange',
-                    clrA: '#2C2CDB',
-                    clrB: '#F29C33',
-                    clrNeutral: '#FF67EE',
+                    title: 'Green vs Pink',
+                    clrA: '#B3DE45',
+                    clrB: '#D43BCA',
+                    clrNeutral: '#FFC042',
                     isCustom: false
                 },
                 {
@@ -120,42 +120,42 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
                 },
                 {
                     index: 5,
-                    title: 'Turquoise vs Orange',
-                    clrA: '#2ADBC6',
-                    clrB: '#FA5A41',
-                    clrNeutral: '#4445FF',
+                    title: 'Gold vs Purple',
+                    clrA: '#EBCC31',
+                    clrB: '#A032DB',
+                    clrNeutral: '#73DE35',
                     isCustom: false
                 },
                 {
                     index: 6,
-                    title: 'Pink vs Green',
-                    clrA: '#F753A1',
-                    clrB: '#35CC2D',
-                    clrNeutral: '#4A36FF',
+                    title: 'Yellow vs Dark Blue',
+                    clrA: '#EDD921',
+                    clrB: '#461EE6',
+                    clrNeutral: '#4445FF',
                     isCustom: false
                 },
                 {
                     index: 7,
-                    title: 'Orange vs Dark Blue',
-                    clrA: '#FC7735',
-                    clrB: '#4048DB',
-                    clrNeutral: '#F8F755',
+                    title: 'Dark Blue vs Orange',
+                    clrA: '#2C2CDB',
+                    clrB: '#F29C33',
+                    clrNeutral: '#FF67EE',
                     isCustom: false
                 },
                 {
                     index: 8,
-                    title: 'Orange vs Purple',
-                    clrA: '#F56522',
-                    clrB: '#821CD6',
-                    clrNeutral: '#CDFF45',
-                    isCustom: false
-                },
-                {
-                    index: 9,
                     title: 'Yellow vs Purple',
                     clrA: '#EEFC58',
                     clrB: '#7635F0',
                     clrNeutral: '#54FDE8',
+                    isCustom: false
+                },
+                {
+                    index: 9,
+                    title: 'Orange vs Dark Blue',
+                    clrA: '#FC7735',
+                    clrB: '#4048DB',
+                    clrNeutral: '#F8F755',
                     isCustom: false
                 }
             ]
