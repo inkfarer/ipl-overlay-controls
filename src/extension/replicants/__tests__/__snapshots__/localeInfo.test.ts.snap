@@ -93,8 +93,10 @@ Object {
     "Unknown Mode": "Unbekannte Kampfart",
   },
   "stages": Object {
+    "Brinewater Springs": "Kusaya-Quellen",
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Streifenaal-Straße",
+    "Flounder Heights": "Schollensiedlung",
     "Hagglefish Market": "Schnapperchen-Basar",
     "Hammerhead Bridge": "Makrelenbrücke",
     "Inkblot Art Academy": "Perlmutt-Akademie",
@@ -122,8 +124,10 @@ Object {
     "Unknown Mode": "Unknown Mode",
   },
   "stages": Object {
+    "Brinewater Springs": "Brinewater Springs",
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Eeltail Alley",
+    "Flounder Heights": "Flounder Heights",
     "Hagglefish Market": "Hagglefish Market",
     "Hammerhead Bridge": "Hammerhead Bridge",
     "Inkblot Art Academy": "Inkblot Art Academy",

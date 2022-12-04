@@ -15,6 +15,8 @@ export interface Splatoon3Stages {
     'Sturgeon Shipyard': string
     MakoMart: string
     'Wahoo World': string
+    'Brinewater Springs': string
+    'Flounder Heights': string
 }
 
 export interface Splatoon3Modes {
@@ -39,7 +41,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Inkblot Art Academy': 'Inkblot Art Academy',
             'Sturgeon Shipyard': 'Sturgeon Shipyard',
             MakoMart: 'MakoMart',
-            'Wahoo World': 'Wahoo World'
+            'Wahoo World': 'Wahoo World',
+            'Brinewater Springs': 'Brinewater Springs',
+            'Flounder Heights': 'Flounder Heights'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -53,7 +57,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Inkblot Art Academy': 'Perlmutt-Akademie',
             'Sturgeon Shipyard': 'Störwerft',
             MakoMart: 'Cetacea-Markt',
-            'Wahoo World': 'Flunder-Funpark'
+            'Wahoo World': 'Flunder-Funpark',
+            'Brinewater Springs': 'Kusaya-Quellen',
+            'Flounder Heights': 'Schollensiedlung'
         }
     },
     modes: {
