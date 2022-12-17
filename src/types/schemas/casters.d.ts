@@ -9,7 +9,8 @@ export interface Casters {
 	[k: string]: Caster;
 }
 export interface Caster {
-	name?: string;
-	twitter?: string;
-	pronouns?: string;
+	name: string;
+	twitter: string;
+	pronouns: string;
+	imageUrl?: string;
 }

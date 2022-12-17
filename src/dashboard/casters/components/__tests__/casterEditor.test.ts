@@ -170,6 +170,7 @@ describe('CasterEditor', () => {
             const pinia = createTestingPinia();
             const store = useCasterStore();
             store.updateCaster = jest.fn();
+            // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 global: {
                     plugins: [ pinia ]
@@ -191,6 +192,7 @@ describe('CasterEditor', () => {
 
         it('reverts changes on right click if caster is committed', async () => {
             const pinia = createTestingPinia();
+            // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 global: {
                     plugins: [ pinia ]
@@ -222,6 +224,7 @@ describe('CasterEditor', () => {
             const pinia = createTestingPinia();
             const store = useCasterStore();
             store.saveUncommittedCaster = jest.fn().mockResolvedValue('new-caster-id');
+            // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 global: {
                     plugins: [ pinia ]
@@ -278,8 +281,11 @@ describe('CasterEditor', () => {
             const pinia = createTestingPinia();
             const store = useCasterStore();
             store.casters = {
+                // @ts-ignore
                 a: {},
+                // @ts-ignore
                 b: {},
+                // @ts-ignore
                 c: {}
             };
             const wrapper = mount(CasterEditor, {
@@ -300,8 +306,11 @@ describe('CasterEditor', () => {
             const pinia = createTestingPinia();
             const store = useCasterStore();
             store.casters = {
+                // @ts-ignore
                 a: {},
+                // @ts-ignore
                 b: {},
+                // @ts-ignore
                 c: {}
             };
             const wrapper = mount(CasterEditor, {

@@ -7,9 +7,9 @@
 
 export interface LocaleInfo {
 	stages: {
-		[k: string]: unknown;
+		[k: string]: string;
 	};
 	modes: {
-		[k: string]: unknown;
+		[k: string]: string;
 	};
 }

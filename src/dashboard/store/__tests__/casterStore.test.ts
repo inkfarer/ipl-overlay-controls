@@ -38,6 +38,7 @@ describe('casterStore', () => {
     describe('removeUncommittedCaster', () => {
         it('removes uncommitted casters from state', () => {
             const store = useCasterStore();
+            // @ts-ignore
             store.uncommittedCasters['60389'] = { name: 'cool caster' };
 
             store.removeUncommittedCaster('60389');
@@ -76,10 +77,12 @@ describe('casterStore', () => {
         it('sends message to save caster and removes it from the uncommitted caster list', async () => {
             const store = useCasterStore();
             mockSendMessage.mockResolvedValue('new saved caster id');
+            // @ts-ignore
             store.uncommittedCasters['unsaved caster'] = { name: 'cool caster' };
 
             const result = await store.saveUncommittedCaster({
                 id: 'unsaved caster',
+                // @ts-ignore
                 caster: { name: 'cool caster!' }
             });
 

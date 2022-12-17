@@ -38,6 +38,12 @@
             :formatter="pronounFormatter"
             @focuschange="setFocused"
         />
+        <ipl-input
+            v-model="internalCaster.imageUrl"
+            name="imageUrl"
+            label="Image URL"
+            @focuschange="setFocused"
+        />
         <div class="layout horizontal m-t-8">
             <ipl-button
                 :label="updateButtonLabel"
@@ -71,7 +77,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import pick from 'lodash/pick';
 
 library.add(faTimes, faGripVertical);
 
@@ -99,7 +104,7 @@ export default defineComponent({
 
     setup(props, { emit }) {
         const store = useCasterStore();
-        const internalCaster: Ref<Caster> = ref({});
+        const internalCaster: Ref<Caster> = ref(null);
         const isFocused = ref(false);
         const isEdited = computed(() => !isEqual(props.caster, internalCaster.value));
         const key = getCurrentInstance().vnode.key as string;
@@ -115,16 +120,22 @@ export default defineComponent({
             internalCaster,
             key,
             async updateCaster() {
+                const caster = cloneDeep(internalCaster.value);
+                // @ts-ignore: They exist, I assure you
+                delete caster.id;
+                // @ts-ignore: They exist, I assure you
+                delete caster.uncommitted;
+
                 if (props.uncommitted) {
                     const newId = await store.saveUncommittedCaster({
                         id: props.casterId,
-                        caster: pick(internalCaster.value, ['name', 'twitter', 'pronouns'])
+                        caster
                     });
                     emit('save', newId);
                 } else {
                     store.updateCaster({
                         id: props.casterId,
-                        newValue: pick(internalCaster.value, ['name', 'twitter', 'pronouns'])
+                        newValue: caster
                     });
                 }
             },
