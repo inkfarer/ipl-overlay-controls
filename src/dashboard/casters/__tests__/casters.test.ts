@@ -35,8 +35,11 @@ describe('Casters', () => {
         it('is disabled if there are three casters', () => {
             const store = useCasterStore();
             store.casters = {
+                // @ts-ignore
                 a: {},
+                // @ts-ignore
                 b: {},
+                // @ts-ignore
                 c: {},
             };
             const wrapper = mount(Casters);
@@ -47,11 +50,15 @@ describe('Casters', () => {
         it('is disabled if there are three or more casters and uncommitted casters', () => {
             const store = useCasterStore();
             store.casters = {
+                // @ts-ignore
                 a: {},
+                // @ts-ignore
                 b: {},
             };
             store.uncommittedCasters = {
+                // @ts-ignore
                 c: {},
+                // @ts-ignore
                 d: {}
             };
             const wrapper = mount(Casters);
@@ -112,7 +119,9 @@ describe('Casters', () => {
     it('creates element for every caster', async () => {
         const store = useCasterStore();
         store.casters = {
+            // @ts-ignore
             a: { name: 'cool caster' },
+            // @ts-ignore
             b: { name: 'cool caster (copy)' },
         };
         const wrapper = mount(Casters, {
@@ -132,10 +141,13 @@ describe('Casters', () => {
     it('creates element for every uncommitted caster', async () => {
         const store = useCasterStore();
         store.casters = {
+            // @ts-ignore
             a: { name: 'cool caster' },
         };
         store.uncommittedCasters = {
+            // @ts-ignore
             b: { name: 'cool caster (copy)' },
+            // @ts-ignore
             c: { name: 'cool caster (copy) (copy)' },
         };
         const wrapper = mount(Casters, {
@@ -162,6 +174,7 @@ describe('Casters', () => {
     it('handles uncommitted caster emitting save event', async () => {
         const store = useCasterStore();
         store.uncommittedCasters = {
+            // @ts-ignore
             a: { name: 'cool caster (copy)' }
         };
         const wrapper = mount(Casters, {
@@ -182,10 +195,13 @@ describe('Casters', () => {
         const store = useCasterStore();
         store.setCasterOrder = jest.fn().mockResolvedValue({});
         store.uncommittedCasters = {
+            // @ts-ignore
             a: { name: 'cool caster' },
         };
         store.casters = {
+            // @ts-ignore
             b: { name: 'cool caster (copy)' },
+            // @ts-ignore
             c: { name: 'cool caster (copy) (copy)' },
         };
         const wrapper = mount(Casters, {
