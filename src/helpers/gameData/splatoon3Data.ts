@@ -17,6 +17,8 @@ export interface Splatoon3Stages {
     'Wahoo World': string
     'Brinewater Springs': string
     'Flounder Heights': string
+    'Um\'ami Ruins': string
+    'Manta Maria': string
 }
 
 export interface Splatoon3Modes {
@@ -43,7 +45,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             MakoMart: 'MakoMart',
             'Wahoo World': 'Wahoo World',
             'Brinewater Springs': 'Brinewater Springs',
-            'Flounder Heights': 'Flounder Heights'
+            'Flounder Heights': 'Flounder Heights',
+            'Um\'ami Ruins': 'Um\'ami Ruins',
+            'Manta Maria': 'Manta Maria'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -59,7 +63,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             MakoMart: 'Cetacea-Markt',
             'Wahoo World': 'Flunder-Funpark',
             'Brinewater Springs': 'Kusaya-Quellen',
-            'Flounder Heights': 'Schollensiedlung'
+            'Flounder Heights': 'Schollensiedlung',
+            'Um\'ami Ruins': 'Um\'ami-Ruinen',
+            'Manta Maria': 'Manta Maria'
         }
     },
     modes: {
