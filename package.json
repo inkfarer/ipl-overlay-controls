@@ -136,7 +136,7 @@
         "fs-extra": "^10.0.0",
         "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
         "lodash": "^4.17.21",
-        "luxon": "^2.0.1",
+        "luxon": "2.5.2",
         "pinia": "^2.0.11",
         "semver": "^7.3.5",
         "ts-node": "^10.9.1",
@@ -186,7 +186,7 @@
         "vue-eslint-parser": "^7.11.0",
         "vue-loader": "^16.8.1",
         "vuedraggable": "^4.1.0",
-        "webpack": "^5.73.0",
+        "webpack": "5.76.0",
         "webpack-cli": "^4.7.0",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-node-externals": "^3.0.0"
