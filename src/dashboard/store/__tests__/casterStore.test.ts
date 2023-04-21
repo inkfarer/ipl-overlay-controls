@@ -95,31 +95,32 @@ describe('casterStore', () => {
     describe('loadCastersFromVc', () => {
         it('fetches casters', async () => {
             const store = useCasterStore();
-            mockSendMessage.mockResolvedValue({});
+            mockSendMessage.mockResolvedValue({ add: { }, extra: { } });
 
             await store.loadCastersFromVc();
 
-            expect(mockSendMessage).toHaveBeenCalledWith('getLiveCommentators');
+            expect(mockSendMessage).toHaveBeenCalledWith('getLiveCommentators', undefined);
             expect(store.uncommittedCasters).toEqual({});
         });
 
         it('adds additional casters as uncommitted', async () => {
             const store = useCasterStore();
             mockSendMessage.mockResolvedValue({
-                add: [],
-                extra: [ {
-                    discord_user_id: '123908',
-                    name: 'cool caster',
-                    pronouns: 'they/them'
-                }, {
-                    discord_user_id: '6978340',
-                    name: 'cool caster 2'
-                } ]
+                add: { },
+                extra: {
+                    '123908': {
+                        name: 'cool caster',
+                        pronouns: 'they/them'
+                    },
+                    '6978340': {
+                        name: 'cool caster 2'
+                    }
+                }
             });
 
             await store.loadCastersFromVc();
 
-            expect(mockSendMessage).toHaveBeenCalledWith('getLiveCommentators');
+            expect(mockSendMessage).toHaveBeenCalledWith('getLiveCommentators', undefined);
             expect(store.uncommittedCasters).toEqual({
                 '123908': {
                     name: 'cool caster',

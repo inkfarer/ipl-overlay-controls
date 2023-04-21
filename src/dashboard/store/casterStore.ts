@@ -2,6 +2,7 @@ import { NodeCGBrowser } from 'nodecg/browser';
 import { Caster, Casters, RadiaSettings } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { defineStore } from 'pinia';
+import { sendMessage } from '../helpers/nodecgHelper';
 
 const casters = nodecg.Replicant<Casters>('casters');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -51,15 +52,11 @@ export const useCasterStore = defineStore('casters', {
             return newId;
         },
         async loadCastersFromVc(): Promise<void> {
-            const result = await nodecg.sendMessage('getLiveCommentators');
-            if (result.extra && result.extra.length > 0) {
-                for (let i = 0; i < result.extra.length; i++) {
-                    const extraCaster = result.extra[i];
-                    const id = extraCaster.discord_user_id;
-                    delete extraCaster.discord_user_id;
-                    this.addUncommittedCaster({ id, caster: extraCaster });
-                }
-            }
+            const result = await sendMessage('getLiveCommentators');
+
+            Object.entries(result.extra).forEach(([id, caster]) => {
+                this.addUncommittedCaster({ id, caster });
+            });
         },
         showCasters() {
             nodecg.sendMessage('mainShowCasters');

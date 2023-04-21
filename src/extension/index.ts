@@ -1,6 +1,6 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
-import { PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
+import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
 import { ObsConnectorController } from './controllers/ObsConnectorController';
@@ -8,6 +8,7 @@ import { ObsConnectorController } from './controllers/ObsConnectorController';
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG & NodeCGStatic): void => {
     nodecgContext.set(nodecg);
+    const config = nodecg.bundleConfig as Configschema;
 
     require('./importers/music');
     require('./importers/tournamentImporter');
@@ -49,7 +50,7 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     const { initLocaleInfoIfNeeded } = require('./replicants/localeInfo');
     initLocaleInfoIfNeeded(nodecg.Replicant<RuntimeConfig>('runtimeConfig').value);
 
-    if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
+    if (isEmpty(config) || isEmpty(config.radia)) {
         nodecg.log.warn(
             `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
             + 'Production API will not be possible.'
@@ -59,7 +60,14 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
         predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
     } else {
         require('./importers/radiaAvailabilityCheck');
-        require('./importers/casters');
         require('./importers/predictions');
+
+        const { CasterImportController } = require('./controllers/CasterImportController');
+        const { RadiaProductionsService } = require('./services/RadiaProductionsService');
+        const { RadiaProductionsClient } = require('./clients/RadiaProductionsClient');
+
+        const radiaProductionsClient = new RadiaProductionsClient(config.radia.url, config.radia.authentication);
+        const radiaProductionsService = new RadiaProductionsService(nodecg, radiaProductionsClient);
+        new CasterImportController(nodecg, radiaProductionsService);
     }
 };

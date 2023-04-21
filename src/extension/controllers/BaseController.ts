@@ -11,7 +11,7 @@ export abstract class BaseController {
 
     listen<K extends keyof MessageInputMap, D = MessageInputMap[K]>(
         messageName: K,
-        callback: (data: D) => MessageResultMap[K]
+        callback: (data: D) => MessageResultMap[K] | Promise<MessageResultMap[K]>
     ): void {
         this.nodecg.listenFor(messageName, async (data: D, cb: ListenForCb) => {
             try {
