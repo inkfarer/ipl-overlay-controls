@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ScoreboardEditor matches snapshot 1`] = `
-"<div class=\\"ipl-expansion-panel__content\\" data-v-1dcbcc2a=\\"\\">
-  <div class=\\"ipl-expansion-panel__header layout horizontal center-vertical\\" data-v-1dcbcc2a=\\"\\">
-    <div class=\\"ipl-expansion-panel__header-background\\" data-v-1dcbcc2a=\\"\\"></div>
-    <div class=\\"ipl-expansion-panel__title\\" data-v-1dcbcc2a=\\"\\">Scoreboard</div>
-    <font-awesome-icon-stub icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"icon\\" data-v-1dcbcc2a=\\"\\"></font-awesome-icon-stub>
-    <div class=\\"header-extra\\" data-v-1dcbcc2a=\\"\\"></div>
+"<div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__content\\">
+  <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header\\">
+    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
+    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__title\\">Scoreboard</div>
+    <font-awesome-icon-stub data-v-67856a23=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div data-v-67856a23=\\"\\" class=\\"header-extra\\"></div>
   </div>
-  <div class=\\"content\\" data-v-1dcbcc2a=\\"\\" style=\\"display: none;\\">
+  <div data-v-67856a23=\\"\\" class=\\"content\\" style=\\"display: none;\\">
     <ipl-data-row-stub label=\\"Flavor Text\\" value=\\"whoa\\"></ipl-data-row-stub>
     <ipl-toggle-stub modelvalue=\\"false\\" truelabel=\\"Show\\" falselabel=\\"Hide\\" useneutralcolors=\\"false\\" class=\\"m-t-8\\" data-test=\\"scoreboard-visible-toggle\\"></ipl-toggle-stub>
   </div>

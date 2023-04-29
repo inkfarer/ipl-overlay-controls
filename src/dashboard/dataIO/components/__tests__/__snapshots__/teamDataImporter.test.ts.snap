@@ -1,35 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`teamDataImporter displays data of existing tournament if it has smash.gg data 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><a href=\\"smashgg://cool-tournament\\" target=\\"_blank\\">cool tournament</a><span class=\\"badge badge-blue m-l-6\\">Smash.gg</span><br> 123123asd <br> Cool Event (Splatoon 2) <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub></div>"`;
+exports[`teamDataImporter displays data of existing tournament if it has smash.gg data 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><a href=\\"smashgg://cool-tournament\\" target=\\"_blank\\">cool tournament</a><span class=\\"badge badge-blue m-l-6\\">Smash.gg</span><br> 123123asd <br> Cool Event (Splatoon 2) <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub>
+</div>"
+`;
 
-exports[`teamDataImporter displays data of existing tournament if it is missing a name 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><a href=\\"tounament://cool-tournament\\" target=\\"_blank\\">No name</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--><ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub></div>"`;
+exports[`teamDataImporter displays data of existing tournament if it is missing a name 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><a href=\\"tounament://cool-tournament\\" target=\\"_blank\\">No name</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd
+  <!--v-if-->
+  <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub>
+</div>"
+`;
 
-exports[`teamDataImporter displays data of existing tournament if it is missing an URL 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><span>cool tournament</span><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--><ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub></div>"`;
+exports[`teamDataImporter displays data of existing tournament if it is missing an URL 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><span>cool tournament</span><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd
+  <!--v-if-->
+  <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub>
+</div>"
+`;
 
-exports[`teamDataImporter displays data of existing tournament when its source is BATTLEFY 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd <!--v-if--><ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub></div>"`;
+exports[`teamDataImporter displays data of existing tournament when its source is BATTLEFY 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd
+  <!--v-if-->
+  <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub>
+</div>"
+`;
 
-exports[`teamDataImporter displays data of existing tournament when its source is UNKNOWN 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Unknown</span><br> 123123asd <!--v-if--><!--v-if--></div>"`;
+exports[`teamDataImporter displays data of existing tournament when its source is UNKNOWN 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Unknown</span><br> 123123asd
+  <!--v-if-->
+  <!--v-if-->
+</div>"
+`;
 
-exports[`teamDataImporter displays data of existing tournament when its source is UPLOAD 1`] = `"<div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\"><div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Uploaded file</span><br> 123123asd <!--v-if--><!--v-if--></div>"`;
+exports[`teamDataImporter displays data of existing tournament when its source is UPLOAD 1`] = `
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
+  <div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Uploaded file</span><br> 123123asd
+  <!--v-if-->
+  <!--v-if-->
+</div>"
+`;
 
 exports[`teamDataImporter matches snapshot 1`] = `
 "<fieldset class=\\"section-separator-wrapper\\">
   <legend>Tournament data</legend>
-  <div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
+  <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
     <ipl-radio-stub modelvalue=\\"BATTLEFY\\" label=\\"Source\\" options=\\"[object Object],[object Object],[object Object]\\" data-test=\\"source-selector\\" class=\\"data-source-selector\\"></ipl-radio-stub>
-    <ipl-input-stub name=\\"tournament-id-input\\" label=\\"Tournament URL\\" modelvalue=\\"\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" class=\\"m-t-4\\"></ipl-input-stub>
+    <ipl-input-stub name=\\"tournament-id-input\\" label=\\"Tournament URL\\" modelvalue=\\"\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\" class=\\"m-t-4\\"></ipl-input-stub>
     <ipl-upload-stub class=\\"m-t-8\\" data-test=\\"team-data-upload\\" style=\\"display: none;\\"></ipl-upload-stub>
-    <div class=\\"layout horizontal center-horizontal\\"><label class=\\"small m-t-8\\" data-test=\\"use-file-upload-checkbox\\" data-v-15d39ed1=\\"\\" style=\\"display: none;\\"><input type=\\"checkbox\\" data-v-15d39ed1=\\"\\"> Upload file</label></div>
+    <div class=\\"layout horizontal center-horizontal\\"><label data-v-15d39ed1=\\"\\" class=\\"small m-t-8\\" data-test=\\"use-file-upload-checkbox\\" style=\\"display: none;\\"><input data-v-15d39ed1=\\"\\" type=\\"checkbox\\"> Upload file</label></div>
     <ipl-button-stub label=\\"Import\\" color=\\"blue\\" disabled=\\"true\\" async=\\"true\\" progressmessage=\\"Importing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"import-button\\"></ipl-button-stub>
   </div>
-  <div class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\" data-v-11cc5f1c=\\"\\">
+  <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark text-center m-t-8\\" data-test=\\"saved-data-section\\">
     <div class=\\"title\\">Saved data</div><a href=\\"tournament://cool-tournament\\" target=\\"_blank\\">Cool Tournament</a><span class=\\"badge badge-blue m-l-6\\">Battlefy</span><br> 123123asd
     <!--v-if-->
     <ipl-button-stub label=\\"Refresh\\" color=\\"blue\\" disabled=\\"false\\" async=\\"true\\" progressmessage=\\"Refreshing...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-6\\" data-test=\\"refresh-button\\"></ipl-button-stub>
   </div>
-  <div class=\\"ipl-space color-dark m-t-8\\" data-v-11cc5f1c=\\"\\">
-    <ipl-input-stub name=\\"shortName\\" label=\\"Short tournament name\\" modelvalue=\\"Cool Tournament\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\"></ipl-input-stub>
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-short-name-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
+  <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\">
+    <ipl-input-stub name=\\"shortName\\" label=\\"Short tournament name\\" modelvalue=\\"Cool Tournament\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\"></ipl-input-stub>
+    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"true\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-8\\" data-test=\\"update-short-name-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
   </div>
 </fieldset>"
 `;

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
   <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name wrap-anywhere\\">Team One</span><span class=\\"max-width text-small team-name wrap-anywhere text-right m-l-6\\">Team Two (Really long name for te...</span></div>
   <div class=\\"layout horizontal m-t-4\\">
     <div class=\\"color-display text-right\\" style=\\"color: rgb(24, 30, 41);\\" data-test=\\"team-a-color-display\\">α</div>
@@ -23,7 +23,7 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
 `;
 
 exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
-"<div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
+"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
   <div class=\\"layout horizontal\\"><span class=\\"max-width text-small team-name wrap-anywhere\\">Team One</span><span class=\\"max-width text-small team-name wrap-anywhere text-right m-l-6\\">Team Two (Really long name for te...</span></div>
   <div class=\\"layout horizontal m-t-4\\">
     <div class=\\"color-display text-right\\" style=\\"color: rgb(24, 30, 41);\\" data-test=\\"team-a-color-display\\">β</div>

@@ -3,7 +3,7 @@
 exports[`MatchExporter matches snapshot 1`] = `
 "<fieldset class=\\"section-separator-wrapper\\">
   <legend>Export saved matches</legend>
-  <div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
+  <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
     <div class=\\"text-small text-center\\">Storing data for 2 matches</div>
     <ipl-button-stub label=\\"Export\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"/ipl-overlay-controls/match-data\\" class=\\"m-t-4\\"></ipl-button-stub>
   </div>
@@ -13,7 +13,7 @@ exports[`MatchExporter matches snapshot 1`] = `
 exports[`MatchExporter matches snapshot with one match 1`] = `
 "<fieldset class=\\"section-separator-wrapper\\">
   <legend>Export saved matches</legend>
-  <div class=\\"ipl-space color-dark\\" data-v-11cc5f1c=\\"\\">
+  <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
     <div class=\\"text-small text-center\\">Storing data for 1 match</div>
     <ipl-button-stub label=\\"Export\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"/ipl-overlay-controls/match-data\\" class=\\"m-t-4\\"></ipl-button-stub>
   </div>

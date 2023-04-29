@@ -2,17 +2,8 @@
 
 exports[`Settings matches snapshot when OBS socket is disabled 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-leave-from sidebar-transition-leave-active\\" data-v-2b6fb510=\\"\\">
-  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
-  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-blue clickable m-b-8\\" data-test=\\"section-selector_general\\" data-v-11cc5f1c=\\"\\">General</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_lastfm\\" data-v-11cc5f1c=\\"\\">Last.fm</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_radia\\" data-v-11cc5f1c=\\"\\">Radia</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_obs-socket\\" data-v-11cc5f1c=\\"\\">OBS Socket</div>
-  </div>
-</div>
 <!---->
-<div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
+<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
 <obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>
@@ -21,17 +12,8 @@ exports[`Settings matches snapshot when OBS socket is disabled 1`] = `
 
 exports[`Settings matches snapshot when section general is selected 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-leave-from sidebar-transition-leave-active\\" data-v-2b6fb510=\\"\\">
-  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
-  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-blue clickable m-b-8\\" data-test=\\"section-selector_general\\" data-v-11cc5f1c=\\"\\">General</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_lastfm\\" data-v-11cc5f1c=\\"\\">Last.fm</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_radia\\" data-v-11cc5f1c=\\"\\">Radia</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_obs-socket\\" data-v-11cc5f1c=\\"\\">OBS Socket</div>
-  </div>
-</div>
 <!---->
-<div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
+<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
 <runtime-config-stub class=\\"m-t-8\\"></runtime-config-stub>"
@@ -39,17 +21,8 @@ exports[`Settings matches snapshot when section general is selected 1`] = `
 
 exports[`Settings matches snapshot when section lastfm is selected 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-leave-from sidebar-transition-leave-active\\" data-v-2b6fb510=\\"\\">
-  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
-  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-blue clickable m-b-8\\" data-test=\\"section-selector_general\\" data-v-11cc5f1c=\\"\\">General</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_lastfm\\" data-v-11cc5f1c=\\"\\">Last.fm</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_radia\\" data-v-11cc5f1c=\\"\\">Radia</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_obs-socket\\" data-v-11cc5f1c=\\"\\">OBS Socket</div>
-  </div>
-</div>
 <!---->
-<div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
+<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
 <lastfm-settings-stub class=\\"m-t-8\\"></lastfm-settings-stub>"
@@ -57,17 +30,8 @@ exports[`Settings matches snapshot when section lastfm is selected 1`] = `
 
 exports[`Settings matches snapshot when section obs-socket is selected 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-leave-from sidebar-transition-leave-active\\" data-v-2b6fb510=\\"\\">
-  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
-  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-blue clickable m-b-8\\" data-test=\\"section-selector_general\\" data-v-11cc5f1c=\\"\\">General</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_lastfm\\" data-v-11cc5f1c=\\"\\">Last.fm</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_radia\\" data-v-11cc5f1c=\\"\\">Radia</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_obs-socket\\" data-v-11cc5f1c=\\"\\">OBS Socket</div>
-  </div>
-</div>
 <!---->
-<div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
+<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
 <obs-socket-settings-stub class=\\"m-t-8\\"></obs-socket-settings-stub>
@@ -76,17 +40,8 @@ exports[`Settings matches snapshot when section obs-socket is selected 1`] = `
 
 exports[`Settings matches snapshot when section radia is selected 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
-<div class=\\"ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-leave-from sidebar-transition-leave-active\\" data-v-2b6fb510=\\"\\">
-  <div class=\\"background\\" data-v-2b6fb510=\\"\\"></div>
-  <div class=\\"content\\" data-v-2b6fb510=\\"\\">
-    <div class=\\"ipl-space color-blue clickable m-b-8\\" data-test=\\"section-selector_general\\" data-v-11cc5f1c=\\"\\">General</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_lastfm\\" data-v-11cc5f1c=\\"\\">Last.fm</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_radia\\" data-v-11cc5f1c=\\"\\">Radia</div>
-    <div class=\\"ipl-space color-light clickable m-b-8\\" data-test=\\"section-selector_obs-socket\\" data-v-11cc5f1c=\\"\\">OBS Socket</div>
-  </div>
-</div>
 <!---->
-<div class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\" data-v-11cc5f1c=\\"\\">
+<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark clickable layout horizontal m-t-8\\" data-test=\\"open-sidebar-button\\">
   <font-awesome-icon-stub icon=\\"bars\\" border=\\"false\\" fixedwidth=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" class=\\"large-icon m-r-8\\"></font-awesome-icon-stub> All Settings
 </div>
 <radia-settings-stub class=\\"m-t-8\\"></radia-settings-stub>"
