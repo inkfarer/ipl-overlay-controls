@@ -2,6 +2,9 @@ import Casters from '../casters.vue';
 import { useCasterStore } from '../../store/casterStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import Draggable from 'vuedraggable';
+import CasterEditor from '../components/casterEditor.vue';
+import { IplButton } from '@iplsplatoon/vue-components';
 
 describe('Casters', () => {
     config.global.stubs = {
@@ -23,7 +26,7 @@ describe('Casters', () => {
             store.addDefaultCaster = jest.fn().mockResolvedValue('new caster id');
             const wrapper = mount(Casters);
 
-            wrapper.getComponent('[data-test="add-caster-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="add-caster-button"]').vm.$emit('click');
             await flushPromises();
 
             expect(store.addDefaultCaster).toHaveBeenCalled();
@@ -110,7 +113,7 @@ describe('Casters', () => {
             };
             const wrapper = mount(Casters);
 
-            wrapper.getComponent('[data-test="load-from-vc-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="load-from-vc-button"]').vm.$emit('click');
 
             expect(store.loadCastersFromVc).toHaveBeenCalled();
         });
@@ -185,7 +188,7 @@ describe('Casters', () => {
             }
         });
 
-        const editor = wrapper.findComponent('caster-editor-stub');
+        const editor = wrapper.findComponent<typeof CasterEditor>('caster-editor-stub');
         editor.vm.$emit('save', 'new caster');
 
         expect(wrapper.vm.activeCaster).toEqual('new caster');
@@ -212,7 +215,7 @@ describe('Casters', () => {
             }
         });
 
-        await wrapper.getComponent('[data-test="casters-draggable"]').vm.$emit('end');
+        await wrapper.getComponent<typeof Draggable>('[data-test="casters-draggable"]').vm.$emit('end');
 
         expect(store.setCasterOrder).toHaveBeenCalledWith(['b', 'c']);
     });

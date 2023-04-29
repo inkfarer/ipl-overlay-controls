@@ -1,6 +1,7 @@
-import { RadiaApiCaster } from '../types/radiaApi';
+import { RadiaApiCaster, RadiaCasterSearchResultItem } from '../types/radiaApi';
 import axios, { AxiosInstance } from 'axios';
 import { handleAxiosError } from '../importers/clients/radiaClient';
+import { isBlank } from '../../helpers/stringHelper';
 
 export class RadiaProductionsClient {
     private readonly axios: AxiosInstance;
@@ -29,5 +30,15 @@ export class RadiaProductionsClient {
 
             throw e;
         }
+    }
+
+    async searchCasters(query: string): Promise<RadiaCasterSearchResultItem[]> {
+        if (isBlank(query)) {
+            return [];
+        }
+
+        const response = await this.axios.get<RadiaCasterSearchResultItem[]>(`commentators/profile/search/${encodeURI(query)}`);
+
+        return response.data;
     }
 }

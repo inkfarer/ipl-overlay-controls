@@ -1,7 +1,7 @@
 <template>
     <ipl-expanding-space
         :key="key"
-        class="m-t-8"
+        class="m-t-8 caster-editor"
     >
         <template #header-extra>
             <font-awesome-icon
@@ -16,8 +16,15 @@
             <span
                 v-if="uncommitted"
                 class="badge badge-red uncommitted-badge"
-            >Unsaved</span>
+            >
+                Unsaved
+            </span>
         </template>
+        <caster-search
+            v-if="store.radiaIntegrationEnabled"
+            data-test="caster-search"
+            @select="onSearchSelect"
+        />
         <ipl-input
             v-model="internalCaster.name"
             name="name"
@@ -77,13 +84,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import CasterSearch from './casterSearch.vue';
 
 library.add(faTimes, faGripVertical);
 
 export default defineComponent({
     name: 'CasterEditor',
 
-    components: { IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
+    components: { CasterSearch, IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
 
     props: {
         caster: {
@@ -116,6 +124,7 @@ export default defineComponent({
         }, { immediate: true });
 
         return {
+            store,
             RIGHT_CLICK_UNDO_MESSAGE,
             internalCaster,
             key,
@@ -162,6 +171,15 @@ export default defineComponent({
                 event.preventDefault();
 
                 internalCaster.value = cloneDeep(props.caster);
+            },
+
+            onSearchSelect(caster: Caster) {
+                internalCaster.value = {
+                    ...internalCaster.value,
+                    name: caster.name,
+                    twitter: caster.twitter,
+                    pronouns: caster.pronouns
+                };
             }
         };
     }
@@ -174,6 +192,10 @@ export default defineComponent({
 .caster-elem-grip {
     color: $input-color;
     margin: 0 4px;
+    position: relative;
+}
+
+.caster-editor .content {
     position: relative;
 }
 </style>

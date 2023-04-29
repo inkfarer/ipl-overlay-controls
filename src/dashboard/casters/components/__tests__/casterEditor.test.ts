@@ -3,11 +3,14 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { useCasterStore } from '../../../store/casterStore';
 import { reactive } from 'vue';
 import { createTestingPinia } from '@pinia/testing';
+import { IplButton, IplInput } from '@iplsplatoon/vue-components';
+import CasterSearch from '../casterSearch.vue';
 
 describe('CasterEditor', () => {
     config.global.stubs = {
         IplInput: true,
-        IplButton: true
+        IplButton: true,
+        CasterSearch: true
     };
 
     it('fills inputs with caster data', () => {
@@ -64,7 +67,7 @@ describe('CasterEditor', () => {
             }
         });
 
-        wrapper.getComponent('[name="twitter"]').vm.$emit('focuschange', true);
+        wrapper.getComponent<typeof IplInput>('[name="twitter"]').vm.$emit('focuschange', true);
         await wrapper.setProps({
             caster: { name: 'cool caster (edited)', twitter: '@ccaster', pronouns: 'they/them' }
         });
@@ -119,7 +122,7 @@ describe('CasterEditor', () => {
             }
         });
 
-        wrapper.getComponent('[name="name"]').vm.$emit('update:modelValue', 'new player value');
+        wrapper.getComponent<typeof IplInput>('[name="name"]').vm.$emit('update:modelValue', 'new player value');
         await wrapper.vm.$nextTick();
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
@@ -182,7 +185,7 @@ describe('CasterEditor', () => {
                 }
             });
 
-            wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
             expect(store.updateCaster).toHaveBeenCalledWith({
                 id: 'casterid',
@@ -206,12 +209,12 @@ describe('CasterEditor', () => {
             const event = new Event(null);
             jest.spyOn(event, 'preventDefault');
 
-            wrapper.getComponent('[name="name"]').vm.$emit('update:modelValue', 'new player value');
-            wrapper.getComponent('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
-            wrapper.getComponent('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
+            wrapper.getComponent<typeof IplInput>('[name="name"]').vm.$emit('update:modelValue', 'new player value');
+            wrapper.getComponent<typeof IplInput>('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
+            wrapper.getComponent<typeof IplInput>('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
             await wrapper.vm.$nextTick();
 
-            wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+            wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
             await wrapper.vm.$nextTick();
 
             expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('cool caster');
@@ -236,7 +239,7 @@ describe('CasterEditor', () => {
                 }
             });
 
-            wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
             await flushPromises();
 
             expect(store.saveUncommittedCaster).toHaveBeenCalledWith({
@@ -263,12 +266,12 @@ describe('CasterEditor', () => {
             const event = new Event(null);
             jest.spyOn(event, 'preventDefault');
 
-            wrapper.getComponent('[name="name"]').vm.$emit('update:modelValue', 'new player value');
-            wrapper.getComponent('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
-            wrapper.getComponent('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
+            wrapper.getComponent<typeof IplInput>('[name="name"]').vm.$emit('update:modelValue', 'new player value');
+            wrapper.getComponent<typeof IplInput>('[name="twitter"]').vm.$emit('update:modelValue', '@newtwit');
+            wrapper.getComponent<typeof IplInput>('[name="pronouns"]').vm.$emit('update:modelValue', 'they/them');
             await wrapper.vm.$nextTick();
 
-            wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+            wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
             await wrapper.vm.$nextTick();
 
             expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('new player value');
@@ -344,7 +347,7 @@ describe('CasterEditor', () => {
                 }
             });
 
-            wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
             expect(store.removeUncommittedCaster).toHaveBeenCalledWith('casterid');
         });
@@ -364,7 +367,7 @@ describe('CasterEditor', () => {
                 }
             });
 
-            wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
             expect(store.removeCaster).toHaveBeenCalledWith('casterid');
         });
@@ -384,7 +387,7 @@ describe('CasterEditor', () => {
         });
 
         describe('pronounFormatter', () => {
-            const formatter = (wrapper.getComponent('[name="pronouns"]')
+            const formatter = (wrapper.getComponent<typeof IplInput>('[name="pronouns"]')
                 .vm.$props as { formatter: (value: string) => string }).formatter;
 
             it('converts input to lower case', () => {
@@ -394,7 +397,7 @@ describe('CasterEditor', () => {
         });
 
         describe('twitterFormatter', () => {
-            const formatter = (wrapper.getComponent('[name="twitter"]')
+            const formatter = (wrapper.getComponent<typeof IplInput>('[name="twitter"]')
                 .vm.$props as { formatter: (value: string) => string }).formatter;
 
             it('adds @ symbol before text if it is not present', () => {
@@ -406,6 +409,74 @@ describe('CasterEditor', () => {
                 expect(formatter('@yeehaw')).toEqual('@yeehaw');
                 expect(formatter('@TEST123')).toEqual('@TEST123');
             });
+        });
+    });
+
+    describe('caster search', () => {
+        it('is visible when radia is enabled', () => {
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            // @ts-ignore
+            store.radiaIntegrationEnabled = true;
+            const wrapper = mount(CasterEditor, {
+                global: {
+                    plugins: [ pinia ]
+                },
+                props: {
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    casterId: 'casterid',
+                    uncommitted: false
+                }
+            });
+
+            expect(wrapper.findComponent('[data-test="caster-search"]').exists()).toEqual(true);
+        });
+
+        it('handles a caster being chosen', async () => {
+            const pinia = createTestingPinia();
+            const store = useCasterStore();
+            // @ts-ignore
+            store.radiaIntegrationEnabled = true;
+            const wrapper = mount(CasterEditor, {
+                global: {
+                    plugins: [ pinia ]
+                },
+                props: {
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    casterId: 'casterid',
+                    uncommitted: false
+                }
+            });
+
+            wrapper.findComponent<typeof CasterSearch>('[data-test="caster-search"]').vm.$emit('select', {
+                name: 'caster from search',
+                twitter: '@fromsearch',
+                pronouns: 'they/them'
+            });
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('caster from search');
+            expect(wrapper.getComponent('[name="twitter"]').attributes().modelvalue).toEqual('@fromsearch');
+            expect(wrapper.getComponent('[name="pronouns"]').attributes().modelvalue).toEqual('they/them');
+        });
+
+        it('is not present when radia is disabled', () => {
+            const pinia = createTestingPinia();
+            const store = useCasterStore(pinia);
+            // @ts-ignore
+            store.radiaIntegrationEnabled = false;
+            const wrapper = mount(CasterEditor, {
+                global: {
+                    plugins: [ pinia ]
+                },
+                props: {
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him' },
+                    casterId: 'casterid',
+                    uncommitted: false
+                }
+            });
+
+            expect(wrapper.findComponent('[data-test="caster-search"]').exists()).toEqual(false);
         });
     });
 });

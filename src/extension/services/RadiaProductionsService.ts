@@ -32,6 +32,13 @@ export class RadiaProductionsService {
         };
     }
 
+    async searchCommentators(query: string): Promise<Casters> {
+        const apiResult = await this.radiaProductionsClient.searchCasters(query);
+        const normalizedCasters = apiResult.map(this.normalizeCaster);
+
+        return this.mapRadiaCastersToReplicantSchema(normalizedCasters);
+    }
+
     private normalizeCaster(caster: RadiaApiCaster): RadiaApiCaster {
         caster.twitter = `@${caster.twitter}`;
         caster.pronouns = caster.pronouns.toLowerCase();

@@ -3,6 +3,7 @@ import { Caster, Casters, RadiaSettings } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { defineStore } from 'pinia';
 import { sendMessage } from '../helpers/nodecgHelper';
+import { isBlank } from '../../helpers/stringHelper';
 
 const casters = nodecg.Replicant<Casters>('casters');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -31,6 +32,9 @@ export const useCasterStore = defineStore('casters', {
             updateOnImport: null
         }
     } as CasterStore),
+    getters: {
+        radiaIntegrationEnabled: state => state.radiaSettings.enabled && !isBlank(state.radiaSettings.guildID)
+    },
     actions: {
         updateCaster({ id, newValue }: { id: string, newValue: Caster }): void {
             casters.value[id] = newValue;

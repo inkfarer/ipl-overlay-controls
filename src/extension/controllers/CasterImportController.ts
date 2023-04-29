@@ -9,5 +9,9 @@ export class CasterImportController extends BaseController {
         this.listen('getLiveCommentators', async () => {
             return radiaProductionsService.getLiveCommentators();
         });
+
+        this.listen('searchCommentators', async (query) => {
+            return radiaProductionsService.searchCommentators(query);
+        });
     }
 }

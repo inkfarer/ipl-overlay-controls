@@ -12,12 +12,14 @@ export interface MessageInputMap {
     cancelAutomationAction: never
 
     getLiveCommentators: never
+    searchCommentators: string
 }
 
 type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;
 
 interface InnerMessageResultMap {
     getLiveCommentators: { add: Casters, extra: Casters }
+    searchCommentators: Casters
 }
 
 export type MessageResultMap = InnerMessageResultMap & {

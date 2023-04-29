@@ -51,7 +51,6 @@ import { IplButton, IplExpandingSpaceGroup, IplSpace } from '@iplsplatoon/vue-co
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import CasterEditor from './components/casterEditor.vue';
-import isEmpty from 'lodash/isEmpty';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { storeToRefs } from 'pinia';
 import { Caster } from 'schemas';
@@ -69,8 +68,6 @@ export default defineComponent({
         const storeRefs = storeToRefs(store);
         const activeCaster = ref<string>(null);
         const allCasters = computed(() => ({ ...storeRefs.casters.value, ...storeRefs.uncommittedCasters.value }));
-        const showLoadFromVc = computed(() =>
-            store.radiaSettings.enabled && !isEmpty(store.radiaSettings.guildID));
 
         const casters = ref([]);
         watchEffect(() => {
@@ -98,8 +95,8 @@ export default defineComponent({
             async loadFromVc() {
                 return store.loadCastersFromVc();
             },
-            showLoadFromVc,
-            addCasterIcon: computed(() => showLoadFromVc.value ? 'plus' : null),
+            showLoadFromVc: storeRefs.radiaIntegrationEnabled,
+            addCasterIcon: computed(() => store.radiaIntegrationEnabled ? 'plus' : null),
             async onMove() {
                 await store.setCasterOrder(casters.value
                     .filter(caster => !caster.uncommitted)
