@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActiveRoundEditor matches snapshot and has expected values for select options 1`] = `
-"<div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__content\\" data-test=\\"active-match-editor\\">
-  <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header\\">
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__title\\">Active Match</div>
-    <font-awesome-icon-stub data-v-67856a23=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div data-v-67856a23=\\"\\" class=\\"header-extra\\"></div>
+"<div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__content\\" data-test=\\"active-match-editor\\">
+  <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header\\">
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__title\\">Active Match</div>
+    <font-awesome-icon-stub data-v-24769743=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div data-v-24769743=\\"\\" class=\\"header-extra\\"></div>
   </div>
-  <div data-v-67856a23=\\"\\" class=\\"content\\" style=\\"display: none;\\">
+  <div data-v-24769743=\\"\\" class=\\"content\\" style=\\"display: none;\\">
     <!--v-if-->
     <div class=\\"layout horizontal\\">
       <div class=\\"layout vertical center-horizontal max-width\\">

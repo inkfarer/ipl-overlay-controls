@@ -3,14 +3,14 @@
 exports[`Rounds matches snapshot 1`] = `
 "<ipl-error-display-stub class=\\"m-b-8\\"></ipl-error-display-stub>
 <!---->
-<div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__content\\">
-  <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header\\">
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__title\\">Create Round</div>
-    <font-awesome-icon-stub data-v-67856a23=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div data-v-67856a23=\\"\\" class=\\"header-extra\\"></div>
+<div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__content\\">
+  <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header\\">
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__title\\">Create Round</div>
+    <font-awesome-icon-stub data-v-24769743=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div data-v-24769743=\\"\\" class=\\"header-extra\\"></div>
   </div>
-  <div data-v-67856a23=\\"\\" class=\\"content\\" style=\\"display: none;\\">
+  <div data-v-24769743=\\"\\" class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
       <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
       <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
@@ -40,14 +40,14 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
     <div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-light clickable m-t-8 round-option\\" data-test=\\"round-option-0387\\">dope round</div>
   </div>
 </div>
-<div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__content\\">
-  <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header\\">
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
-    <div data-v-67856a23=\\"\\" class=\\"ipl-expansion-panel__title\\">Create Round</div>
-    <font-awesome-icon-stub data-v-67856a23=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div data-v-67856a23=\\"\\" class=\\"header-extra\\"></div>
+<div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__content\\">
+  <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header\\">
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__header-background\\"></div>
+    <div data-v-24769743=\\"\\" class=\\"ipl-expansion-panel__title\\">Create Round</div>
+    <font-awesome-icon-stub data-v-24769743=\\"\\" icon=\\"chevron-left\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
+    <div data-v-24769743=\\"\\" class=\\"header-extra\\"></div>
   </div>
-  <div data-v-67856a23=\\"\\" class=\\"content\\" style=\\"display: none;\\">
+  <div data-v-24769743=\\"\\" class=\\"content\\" style=\\"display: none;\\">
     <div class=\\"layout horizontal\\">
       <ipl-button-stub label=\\"3 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"new-3-game-round\\"></ipl-button-stub>
       <ipl-button-stub label=\\"5 Games\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"new-5-game-round\\"></ipl-button-stub>
