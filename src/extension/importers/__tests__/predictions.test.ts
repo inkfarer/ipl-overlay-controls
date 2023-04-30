@@ -24,8 +24,7 @@ import '../predictions';
 
 describe('predictions', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
-        jest.restoreAllMocks();
+        mockWebSocketClass.mockReturnValue(mockWebSocket);
     });
 
     describe('radiaSettings', () => {

@@ -1,38 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreatePredictionDialog matches snapshot 1`] = `
-"<ipl-dialog-title-stub title=\\"Create Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\">
-  <div class=\\"layout horizontal\\">
-    <ipl-input-stub name=\\"title\\" label=\\"Title\\" modelvalue=\\"Who do you think will win this match?\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\" class=\\"title-input\\"></ipl-input-stub>
-    <ipl-input-stub name=\\"duration\\" label=\\"Duration\\" modelvalue=\\"120\\" type=\\"number\\" centered=\\"false\\" disabled=\\"false\\" extra=\\"seconds\\" loading=\\"false\\" class=\\"m-l-6 duration-input\\"></ipl-input-stub>
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8">
+  <div class="layout horizontal">
+    <ipl-input-stub name="title" label="Title" modelvalue="Who do you think will win this match?" type="text" centered="false" disabled="false" loading="false" class="title-input"></ipl-input-stub>
+    <ipl-input-stub name="duration" label="Duration" modelvalue="120" type="number" centered="false" disabled="false" extra="seconds" loading="false" class="m-l-6 duration-input"></ipl-input-stub>
   </div>
-  <div class=\\"layout horizontal m-t-4\\">
-    <ipl-input-stub name=\\"team-a-name\\" label=\\"Team A\\" modelvalue=\\"cool team A\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\" class=\\"max-width\\"></ipl-input-stub>
-    <ipl-input-stub name=\\"team-b-name\\" label=\\"Team B\\" modelvalue=\\"cool team B\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\" class=\\"max-width m-l-6\\"></ipl-input-stub>
+  <div class="layout horizontal m-t-4">
+    <ipl-input-stub name="team-a-name" label="Team A" modelvalue="cool team A" type="text" centered="false" disabled="false" loading="false" class="max-width"></ipl-input-stub>
+    <ipl-input-stub name="team-b-name" label="Team B" modelvalue="cool team B" type="text" centered="false" disabled="false" loading="false" class="max-width m-l-6"></ipl-input-stub>
   </div>
-  <div class=\\"layout horizontal m-t-8\\"><a class=\\"ipl-button disabled\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(24, 30, 41); color: rgb(169, 170, 169);\\" data-test=\\"create-prediction-button\\"><span class=\\"label\\">Create</span></a><a class=\\"ipl-button m-l-8\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(231, 78, 54); color: white;\\" data-test=\\"reset-inputs-button\\"><span class=\\"label\\">Reset</span></a></div>
+  <div class="layout horizontal m-t-8"><a class="ipl-button disabled" href="javascript:void(0);" style="background-color: rgb(24, 30, 41); color: rgb(169, 170, 169);" data-test="create-prediction-button"><span class="label">Create</span></a><a class="ipl-button m-l-8" href="javascript:void(0);" style="background-color: rgb(231, 78, 54); color: white;" data-test="reset-inputs-button"><span class="label">Reset</span></a></div>
 </div>"
 `;
 
 exports[`CreatePredictionDialog matches snapshot when existing prediction is active 1`] = `
-"<ipl-dialog-title-stub title=\\"Create Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"
 `;
 
 exports[`CreatePredictionDialog matches snapshot when existing prediction is locked 1`] = `
-"<ipl-dialog-title-stub title=\\"Create Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The active prediction has not been resolved!
   </div>
 </div>"

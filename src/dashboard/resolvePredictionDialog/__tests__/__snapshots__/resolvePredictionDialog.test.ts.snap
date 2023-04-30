@@ -1,98 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ResolvePredictionDialog matches snapshot when the current round is not completed 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The current round has not been completed!
   </div>
 </div>
 <!--v-if-->
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\"><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label data-v-7e7be68d=\\"\\" class=\\"ipl-label winner-label\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8"><label data-v-7e7be68d="" class="ipl-label"> Team A </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-1-button"><span class="label">First Team</span></a><label data-v-7e7be68d="" class="ipl-label winner-label">Winner - Team B </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" data-test="resolve-outcome-2-button"><span class="label">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the prediction is not locked 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-info m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="info-circle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> This prediction cannot be resolved right now.
   </div>
 </div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner cannot be determined automatically 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The current round has not been completed!
   </div>
 </div>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-info m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="info-circle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> Unable to determine the current round's winner. The leading team is unknown team b.
   </div>
 </div>
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\"><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8"><label data-v-7e7be68d="" class="ipl-label"> Team A </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-1-button"><span class="label">First Team</span></a><label data-v-7e7be68d="" class="ipl-label"> Team B </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-2-button"><span class="label">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team A 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The current round has not been completed!
   </div>
 </div>
 <!--v-if-->
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\"><label data-v-7e7be68d=\\"\\" class=\\"ipl-label winner-label\\">Winner - Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8"><label data-v-7e7be68d="" class="ipl-label winner-label">Winner - Team A </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" data-test="resolve-outcome-1-button"><span class="label">First Team</span></a><label data-v-7e7be68d="" class="ipl-label"> Team B </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-2-button"><span class="label">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team B 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The current round has not been completed!
   </div>
 </div>
 <!--v-if-->
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\"><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label data-v-7e7be68d=\\"\\" class=\\"ipl-label winner-label\\">Winner - Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8"><label data-v-7e7be68d="" class="ipl-label"> Team A </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-1-button"><span class="label">First Team</span></a><label data-v-7e7be68d="" class="ipl-label winner-label">Winner - Team B </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" data-test="resolve-outcome-2-button"><span class="label">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be determined 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> The current round has not been completed!
   </div>
 </div>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-info m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"info-circle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="info-circle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> Unable to determine the current round's winner.
     <!--v-if-->
   </div>
 </div>
-<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark m-t-8\\"><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team A </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-1-button\\"><span class=\\"label\\">First Team</span></a><label data-v-7e7be68d=\\"\\" class=\\"ipl-label\\"> Team B </label><a class=\\"ipl-button\\" href=\\"javascript:void(0);\\" style=\\"background-color: rgb(97, 85, 189); color: white;\\" data-test=\\"resolve-outcome-2-button\\"><span class=\\"label\\">Second Team</span></a></div>"
+<div data-v-11cc5f1c="" class="ipl-space color-dark m-t-8"><label data-v-7e7be68d="" class="ipl-label"> Team A </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-1-button"><span class="label">First Team</span></a><label data-v-7e7be68d="" class="ipl-label"> Team B </label><a class="ipl-button" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="resolve-outcome-2-button"><span class="label">Second Team</span></a></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot with missing prediction data 1`] = `
-"<ipl-dialog-title-stub title=\\"Resolve Prediction\\" closingdisabled=\\"false\\"></ipl-dialog-title-stub>
-<ipl-error-display-stub class=\\"m-t-8\\"></ipl-error-display-stub>
-<div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-warning m-t-8\\">
-  <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-triangle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-  <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
+"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+<ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
+<div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
+  <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-triangle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+  <div data-v-ec3b4444="" class="message-content">
     <!----> No prediction data loaded.
   </div>
 </div>"

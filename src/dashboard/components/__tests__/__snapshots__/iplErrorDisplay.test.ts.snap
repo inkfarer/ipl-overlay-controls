@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`IplErrorDisplay matches snapshot with errors 1`] = `
-"<div class=\\"layout vertical center-horizontal\\">
-  <div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-error error-message\\" data-test=\\"recent-error-a\\">
-    <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
-      <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"close-button\\"></font-awesome-icon-stub>
-      <div class=\\"max-width\\">Error!</div>
+"<div class="layout vertical center-horizontal">
+  <div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-error error-message" data-test="recent-error-a">
+    <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-circle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-ec3b4444="" class="message-content">
+      <font-awesome-icon-stub data-v-ec3b4444="" icon="times" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="close-button"></font-awesome-icon-stub>
+      <div class="max-width">Error!</div>
     </div>
   </div>
-  <div data-v-ec3b4444=\\"\\" class=\\"ipl-message__wrapper ipl-message__type-error error-message m-t-8\\" data-test=\\"recent-error-b\\">
-    <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"exclamation-circle\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"icon\\"></font-awesome-icon-stub>
-    <div data-v-ec3b4444=\\"\\" class=\\"message-content\\">
-      <font-awesome-icon-stub data-v-ec3b4444=\\"\\" icon=\\"times\\" border=\\"false\\" fixedwidth=\\"false\\" flip=\\"false\\" listitem=\\"false\\" pulse=\\"false\\" swapopacity=\\"false\\" spin=\\"false\\" symbol=\\"false\\" inverse=\\"false\\" bounce=\\"false\\" shake=\\"false\\" beat=\\"false\\" fade=\\"false\\" beatfade=\\"false\\" flash=\\"false\\" spinpulse=\\"false\\" spinreverse=\\"false\\" class=\\"close-button\\"></font-awesome-icon-stub>
-      <div class=\\"max-width\\">Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...</div>
+  <div data-v-ec3b4444="" class="ipl-message__wrapper ipl-message__type-error error-message m-t-8" data-test="recent-error-b">
+    <font-awesome-icon-stub data-v-ec3b4444="" icon="exclamation-circle" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-ec3b4444="" class="message-content">
+      <font-awesome-icon-stub data-v-ec3b4444="" icon="times" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="close-button"></font-awesome-icon-stub>
+      <div class="max-width">Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!Error!E...</div>
     </div>
   </div>
 </div>"

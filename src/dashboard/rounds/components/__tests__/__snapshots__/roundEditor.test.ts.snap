@@ -1,47 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RoundEditor matches snapshot 1`] = `
-"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
-  <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"Cool Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\"></ipl-input-stub>
-  <ipl-radio-stub modelvalue=\\"PLAY_ALL\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" name=\\"round-type\\" class=\\"m-t-4\\"></ipl-radio-stub>
-  <div class=\\"separator\\"><span>1</span></div>
-  <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-selector-0\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" class=\\"m-t-8\\" data-test=\\"stage-selector-0\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>2</span></div>
-  <mode-select-stub modelvalue=\\"Clam Blitz\\" data-test=\\"mode-selector-1\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Moray Towers\\" class=\\"m-t-8\\" data-test=\\"stage-selector-1\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>3</span></div>
-  <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-selector-2\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Port Mackerel\\" class=\\"m-t-8\\" data-test=\\"stage-selector-2\\"></stage-select-stub>
-  <div class=\\"layout horizontal m-t-8\\">
-    <ipl-button-stub label=\\"Update\\" color=\\"blue\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\" title=\\"Right-click to undo changes.\\"></ipl-button-stub>
-    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
+"<div data-v-11cc5f1c="" class="ipl-space color-dark">
+  <ipl-input-stub name="round-name" label="Name" modelvalue="Cool Round" type="text" centered="false" disabled="false" loading="false"></ipl-input-stub>
+  <ipl-radio-stub modelvalue="PLAY_ALL" label="Type" options="[object Object],[object Object]" name="round-type" class="m-t-4"></ipl-radio-stub>
+  <div class="separator"><span>1</span></div>
+  <mode-select-stub modelvalue="Rainmaker" data-test="mode-selector-0"></mode-select-stub>
+  <stage-select-stub modelvalue="Blackbelly Skatepark" class="m-t-8" data-test="stage-selector-0"></stage-select-stub>
+  <div class="separator"><span>2</span></div>
+  <mode-select-stub modelvalue="Clam Blitz" data-test="mode-selector-1"></mode-select-stub>
+  <stage-select-stub modelvalue="Moray Towers" class="m-t-8" data-test="stage-selector-1"></stage-select-stub>
+  <div class="separator"><span>3</span></div>
+  <mode-select-stub modelvalue="Tower Control" data-test="mode-selector-2"></mode-select-stub>
+  <stage-select-stub modelvalue="Port Mackerel" class="m-t-8" data-test="stage-selector-2"></stage-select-stub>
+  <div class="layout horizontal m-t-8">
+    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-l-6" data-test="remove-button"></ipl-button-stub>
   </div>
 </div>"
 `;
 
 exports[`RoundEditor matches snapshot when creating new round 1`] = `
-"<div data-v-11cc5f1c=\\"\\" class=\\"ipl-space color-dark\\">
-  <ipl-input-stub name=\\"round-name\\" label=\\"Name\\" modelvalue=\\"New Round\\" type=\\"text\\" centered=\\"false\\" disabled=\\"false\\" loading=\\"false\\"></ipl-input-stub>
-  <ipl-radio-stub modelvalue=\\"BEST_OF\\" label=\\"Type\\" options=\\"[object Object],[object Object]\\" name=\\"round-type\\" class=\\"m-t-4\\"></ipl-radio-stub>
-  <div class=\\"separator\\"><span>1</span></div>
-  <mode-select-stub modelvalue=\\"Rainmaker\\" data-test=\\"mode-selector-0\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Blackbelly Skatepark\\" class=\\"m-t-8\\" data-test=\\"stage-selector-0\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>2</span></div>
-  <mode-select-stub modelvalue=\\"Clam Blitz\\" data-test=\\"mode-selector-1\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Moray Towers\\" class=\\"m-t-8\\" data-test=\\"stage-selector-1\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>3</span></div>
-  <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-selector-2\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Port Mackerel\\" class=\\"m-t-8\\" data-test=\\"stage-selector-2\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>4</span></div>
-  <mode-select-stub modelvalue=\\"Splat Zones\\" data-test=\\"mode-selector-3\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"MakoMart\\" class=\\"m-t-8\\" data-test=\\"stage-selector-3\\"></stage-select-stub>
-  <div class=\\"separator\\"><span>5</span></div>
-  <mode-select-stub modelvalue=\\"Tower Control\\" data-test=\\"mode-selector-4\\"></mode-select-stub>
-  <stage-select-stub modelvalue=\\"Ancho-V Games\\" class=\\"m-t-8\\" data-test=\\"stage-selector-4\\"></stage-select-stub>
-  <div class=\\"layout horizontal m-t-8\\">
-    <ipl-button-stub label=\\"Save\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"update-button\\"></ipl-button-stub>
-    <ipl-button-stub icon=\\"times\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"false\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-l-6\\" data-test=\\"remove-button\\"></ipl-button-stub>
+"<div data-v-11cc5f1c="" class="ipl-space color-dark">
+  <ipl-input-stub name="round-name" label="Name" modelvalue="New Round" type="text" centered="false" disabled="false" loading="false"></ipl-input-stub>
+  <ipl-radio-stub modelvalue="BEST_OF" label="Type" options="[object Object],[object Object]" name="round-type" class="m-t-4"></ipl-radio-stub>
+  <div class="separator"><span>1</span></div>
+  <mode-select-stub modelvalue="Rainmaker" data-test="mode-selector-0"></mode-select-stub>
+  <stage-select-stub modelvalue="Blackbelly Skatepark" class="m-t-8" data-test="stage-selector-0"></stage-select-stub>
+  <div class="separator"><span>2</span></div>
+  <mode-select-stub modelvalue="Clam Blitz" data-test="mode-selector-1"></mode-select-stub>
+  <stage-select-stub modelvalue="Moray Towers" class="m-t-8" data-test="stage-selector-1"></stage-select-stub>
+  <div class="separator"><span>3</span></div>
+  <mode-select-stub modelvalue="Tower Control" data-test="mode-selector-2"></mode-select-stub>
+  <stage-select-stub modelvalue="Port Mackerel" class="m-t-8" data-test="stage-selector-2"></stage-select-stub>
+  <div class="separator"><span>4</span></div>
+  <mode-select-stub modelvalue="Splat Zones" data-test="mode-selector-3"></mode-select-stub>
+  <stage-select-stub modelvalue="MakoMart" class="m-t-8" data-test="stage-selector-3"></stage-select-stub>
+  <div class="separator"><span>5</span></div>
+  <mode-select-stub modelvalue="Tower Control" data-test="mode-selector-4"></mode-select-stub>
+  <stage-select-stub modelvalue="Ancho-V Games" class="m-t-8" data-test="stage-selector-4"></stage-select-stub>
+  <div class="layout horizontal m-t-8">
+    <ipl-button-stub label="Save" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" data-test="update-button"></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-l-6" data-test="remove-button"></ipl-button-stub>
   </div>
 </div>"
 `;
