@@ -101,7 +101,8 @@
                     label="A"
                     :color="getColorA(game)"
                     :style="{
-                        borderLeft: `${game.winner === GameWinner.ALPHA ? '8px' : '0px'} solid ${getColorA(game)}`
+                        borderColor: getColorA(game),
+                        borderWidth: `0 0 0 ${game.winner === GameWinner.ALPHA ? '8px' : '0px'}`
                     }"
                     :disabled="game.winner === GameWinner.ALPHA"
                     data-test="set-winner-button-a"
@@ -111,7 +112,8 @@
                     label="B"
                     :color="getColorB(game)"
                     :style="{
-                        borderRight: `${game.winner === GameWinner.BRAVO ? '8px' : '0px'} solid ${getColorB(game)}`
+                        borderColor: getColorB(game),
+                        borderWidth: `0 ${game.winner === GameWinner.BRAVO ? '8px' : '0px'} 0 0`
                     }"
                     :disabled="game.winner === GameWinner.BRAVO"
                     data-test="set-winner-button-b"
@@ -342,6 +344,8 @@ export default defineComponent({
         font-weight: bold;
         padding: 3px 0 0;
         transition-duration: $transition-duration-med;
+        transition-property: border-width, background-color, color;
+        border-style: solid;
 
         &:first-child {
             border-radius: $border-radius-inner 0 0 $border-radius-inner;
