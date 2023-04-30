@@ -39,7 +39,7 @@
             class="m-t-8"
             label="Update tournament data on import"
             data-test="update-on-import-checkbox"
-            @update:modelValue="setUpdateOnImport"
+            @update:model-value="setUpdateOnImport"
         />
     </ipl-space>
 </template>

@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 import TeamSelect from '../../components/teamSelect.vue';
 import { computed, ref, watch } from 'vue';

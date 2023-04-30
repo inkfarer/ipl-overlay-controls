@@ -59,6 +59,7 @@ import Draggable from 'vuedraggable';
 library.add(faPlus);
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Casters',
 
     components: { IplExpandingSpaceGroup, IplErrorDisplay, CasterEditor, IplButton, IplSpace, Draggable },

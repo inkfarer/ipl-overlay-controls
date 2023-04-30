@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import HighlightedMatchViewer from './highlightedMatchViewer.vue';
 import HighlightedMatchImporter from './highlightedMatchImporter.vue';
 import { IplMessage } from '@iplsplatoon/vue-components';

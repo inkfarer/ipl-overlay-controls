@@ -11,7 +11,7 @@
             v-model="scoreboardData.isVisible"
             class="m-t-8"
             data-test="scoreboard-visible-toggle"
-            @update:modelValue="setScoreboardVisible"
+            @update:model-value="setScoreboardVisible"
         />
     </ipl-expanding-space>
 </template>

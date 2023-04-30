@@ -32,7 +32,7 @@
             v-model="selectedRound"
             class="m-t-4"
             data-test="round-selector"
-            @update:roundData="selectedRoundData = $event"
+            @update:round-data="selectedRoundData = $event"
         />
         <ipl-button
             class="m-t-8"

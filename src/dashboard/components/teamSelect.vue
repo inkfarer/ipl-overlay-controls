@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { computed, PropType } from 'vue';
 import { addDots } from '../../helpers/stringHelper';

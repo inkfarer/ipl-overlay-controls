@@ -39,7 +39,7 @@
                 class="m-l-6"
                 :disabled="game.winner === GameWinner.NO_WINNER"
                 data-test="color-select"
-                @update:modelValue="setGameColor(index, $event)"
+                @update:model-value="setGameColor(index, $event)"
             />
             <div
                 v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
@@ -53,7 +53,7 @@
                     name="team-a-color"
                     :disabled="!game.color?.clrA"
                     data-test="custom-color-select-a"
-                    @update:modelValue="setCustomColor('a', index, $event)"
+                    @update:model-value="setCustomColor('a', index, $event)"
                 />
                 <ipl-input
                     :model-value="game.color?.clrB ?? activeColor.clrB"
@@ -63,7 +63,7 @@
                     name="team-b-color"
                     :disabled="!game.color?.clrB"
                     data-test="custom-color-select-b"
-                    @update:modelValue="setCustomColor('b', index, $event)"
+                    @update:model-value="setCustomColor('b', index, $event)"
                 />
             </div>
             <div
@@ -76,7 +76,7 @@
                     label="Custom color"
                     small
                     data-test="custom-color-toggle"
-                    @update:modelValue="setIsCustomColor(index, $event)"
+                    @update:model-value="setIsCustomColor(index, $event)"
                 />
                 <ipl-checkbox
                     :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
@@ -85,7 +85,7 @@
                     class="m-l-6"
                     small
                     data-test="swap-colors-toggle"
-                    @update:modelValue="setColorsSwapped(index, $event)"
+                    @update:model-value="setColorsSwapped(index, $event)"
                 />
             </div>
             <ipl-button
