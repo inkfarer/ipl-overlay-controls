@@ -3,6 +3,7 @@ import { config, flushPromises, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { IplButton, IplInput, IplRadio, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('RoundEditor', () => {
     let pinia: TestingPinia;
@@ -126,8 +127,8 @@ describe('RoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.updateRound).toHaveBeenCalledWith({
@@ -169,10 +170,10 @@ describe('RoundEditor', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
-        wrapper.getComponent('[name="round-name"]').vm.$emit('update:modelValue', 'Cool Round');
-        wrapper.getComponent('[name="round-type"]').vm.$emit('update:modelValue', PlayType.BEST_OF);
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplSelect>('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
+        wrapper.getComponent<typeof IplInput>('[name="round-name"]').vm.$emit('update:modelValue', 'Cool Round');
+        wrapper.getComponent<typeof IplRadio>('[name="round-type"]').vm.$emit('update:modelValue', PlayType.BEST_OF);
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="mode-selector-0"]').attributes().modelvalue).toEqual('Rainmaker');
@@ -207,8 +208,8 @@ describe('RoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.insertRound).toHaveBeenCalledWith({
@@ -251,7 +252,7 @@ describe('RoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
         expect(store.removeRound).toHaveBeenCalledWith({ roundId: 'round-456' });
     });
@@ -282,7 +283,7 @@ describe('RoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="remove-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
         expect(store.removeRound).not.toHaveBeenCalled();
         expect(wrapper.emitted('cancelNewRound').length).toEqual(1);
@@ -312,9 +313,9 @@ describe('RoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
+        wrapper.getComponent<typeof IplSelect>('[data-test="mode-selector-0"]').vm.$emit('update:modelValue', 'Splat Zones');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().color).toEqual('red');
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().color).toEqual('red');
     });
 });

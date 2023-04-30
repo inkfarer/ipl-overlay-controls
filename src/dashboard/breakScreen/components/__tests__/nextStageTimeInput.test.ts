@@ -1,7 +1,7 @@
 import NextStageTimeInput from '../nextStageTimeInput.vue';
 import { config, mount } from '@vue/test-utils';
 import { DateTime } from 'luxon';
-import { padNumber } from '@iplsplatoon/vue-components';
+import { IplInput, IplSelect, padNumber } from '@iplsplatoon/vue-components';
 
 describe('NextStageTimeInput', () => {
     const mockNow = '2021-01-23T05:54:00Z';
@@ -31,7 +31,7 @@ describe('NextStageTimeInput', () => {
         const localDate = DateTime.fromISO(dateString).toLocal();
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: dateString } });
 
-        wrapper.getComponent('[name="hour"]').vm.$emit('update:modelValue', String(localDate.hour + 1));
+        wrapper.getComponent<typeof IplInput>('[name="hour"]').vm.$emit('update:modelValue', String(localDate.hour + 1));
         await wrapper.vm.$nextTick();
 
         const emitted = wrapper.emitted('update:modelValue');
@@ -44,7 +44,7 @@ describe('NextStageTimeInput', () => {
         const localDate = DateTime.fromISO(dateString).toLocal();
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: dateString } });
 
-        wrapper.getComponent('[name="min"]').vm.$emit('update:modelValue', String(localDate.minute + 2));
+        wrapper.getComponent<typeof IplInput>('[name="min"]').vm.$emit('update:modelValue', String(localDate.minute + 2));
         await wrapper.vm.$nextTick();
 
         const emitted = wrapper.emitted('update:modelValue');
@@ -55,7 +55,7 @@ describe('NextStageTimeInput', () => {
     it('emits update on date change', async () => {
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2021-02-23T05:54:00Z' } });
 
-        wrapper.getComponent('[data-test="next-stage-date-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="next-stage-date-select"]')
             .vm.$emit('update:modelValue', '23/01/2021');
         await wrapper.vm.$nextTick();
 
@@ -67,7 +67,7 @@ describe('NextStageTimeInput', () => {
     it('has expected date options if selected time is today', async () => {
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: mockNow } });
 
-        expect((wrapper.getComponent('[data-test="next-stage-date-select"]').vm.$props as { options: unknown }).options)
+        expect((wrapper.getComponent<typeof IplSelect>('[data-test="next-stage-date-select"]').vm.$props as { options: unknown }).options)
             .toEqual([
                 {
                     value: '23/01/2021',
@@ -83,7 +83,7 @@ describe('NextStageTimeInput', () => {
     it('has expected date options if selected time is not today', async () => {
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
 
-        expect((wrapper.getComponent('[data-test="next-stage-date-select"]').vm.$props as { options: unknown }).options)
+        expect((wrapper.getComponent<typeof IplSelect>('[data-test="next-stage-date-select"]').vm.$props as { options: unknown }).options)
             .toEqual([
                 {
                     value: '23/01/2021',
@@ -103,8 +103,7 @@ describe('NextStageTimeInput', () => {
     describe('hourFormatter', () => {
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
 
-        const formatter = (wrapper.getComponent('[name="hour"]')
-            .vm.$props as { formatter: (value: string) => string }).formatter;
+        const formatter = wrapper.getComponent<typeof IplInput>('[name="hour"]').vm.$props.formatter;
 
         it('normalizes numbers below 0 to zero', () => {
             expect(formatter('-1')).toEqual('00');
@@ -126,8 +125,7 @@ describe('NextStageTimeInput', () => {
     describe('minuteFormatter', () => {
         const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
 
-        const formatter = (wrapper.getComponent('[name="min"]')
-            .vm.$props as { formatter: (value: string) => string }).formatter;
+        const formatter = wrapper.getComponent<typeof IplInput>('[name="min"]').vm.$props.formatter;
 
         it('normalizes numbers below 0 to zero', () => {
             expect(formatter('-1')).toEqual('00');

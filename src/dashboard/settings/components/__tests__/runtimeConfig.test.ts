@@ -3,6 +3,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import RuntimeConfig from '../runtimeConfig.vue';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { IplButton, IplMessage, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('RuntimeConfig', () => {
     let pinia: TestingPinia;
@@ -42,7 +43,7 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -57,8 +58,8 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_3);
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_3);
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_3);
@@ -74,8 +75,8 @@ describe('RuntimeConfig', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_3');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="game-version-select"]').attributes().modelvalue).toEqual('SPLATOON_2');
@@ -92,8 +93,8 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_2);
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_2);
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_2);
@@ -112,8 +113,8 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.setGameVersion).toHaveBeenCalledWith('SPLATOON_2');
@@ -132,11 +133,11 @@ describe('RuntimeConfig', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', 'SPLATOON_2');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
         await flushPromises();
 
-        const warning = wrapper.findComponent('[data-test="incompatible-bundle-warning"]');
+        const warning = wrapper.findComponent<typeof IplMessage>('[data-test="incompatible-bundle-warning"]');
         expect(warning.exists()).toEqual(true);
 
         warning.vm.$emit('close');

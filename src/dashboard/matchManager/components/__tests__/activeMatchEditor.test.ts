@@ -5,6 +5,7 @@ import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { IplButton, IplCheckbox, IplInput, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('ActiveRoundEditor', () => {
     let pinia: TestingPinia;
@@ -114,19 +115,19 @@ describe('ActiveRoundEditor', () => {
         });
 
         expect(wrapper.html()).toMatchSnapshot();
-        const teamASelector = wrapper.getComponent('[data-test="team-a-selector"]');
+        const teamASelector = wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]');
         expect(teamASelector.attributes().modelvalue).toEqual('123123');
         expect((teamASelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'cool team A (test long name long name long na...', value: '123123' },
             { name: 'cool team B', value: '345345' }
         ]);
-        const teamBSelector = wrapper.getComponent('[data-test="team-b-selector"]');
+        const teamBSelector = wrapper.getComponent<typeof IplSelect>('[data-test="team-b-selector"]');
         expect(teamBSelector.attributes().modelvalue).toEqual('345345');
         expect((teamBSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'cool team A (test long name long name long na...', value: '123123' },
             { name: 'cool team B', value: '345345' }
         ]);
-        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
+        const roundSelector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
         expect(roundSelector.attributes().modelvalue).toEqual('01010');
         expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'dope round', value: '01010' }
@@ -153,7 +154,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        const teamASelector = wrapper.getComponent('[data-test="team-a-selector"]');
+        const teamASelector = wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]');
 
         teamASelector.vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
@@ -169,7 +170,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        const teamAImageToggle = wrapper.getComponent('[data-test="team-a-image-toggle"]');
+        const teamAImageToggle = wrapper.getComponent<typeof IplCheckbox>('[data-test="team-a-image-toggle"]');
 
         teamAImageToggle.vm.$emit('update:modelValue', false);
 
@@ -187,7 +188,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        const teamBImageToggle = wrapper.getComponent('[data-test="team-b-image-toggle"]');
+        const teamBImageToggle = wrapper.getComponent<typeof IplCheckbox>('[data-test="team-b-image-toggle"]');
 
         teamBImageToggle.vm.$emit('update:modelValue', true);
 
@@ -205,8 +206,8 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
-        const updateButton = wrapper.getComponent('[data-test="update-match-button"]');
+        wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
+        const updateButton = wrapper.getComponent<typeof IplButton>('[data-test="update-match-button"]');
 
         updateButton.vm.$emit('click');
 
@@ -227,9 +228,9 @@ describe('ActiveRoundEditor', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', 'newteam1id');
-        wrapper.getComponent('[data-test="update-match-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', 'Match Name');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', 'newteam1id');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-match-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="matchName"]').attributes().modelvalue).toEqual('Rad Match');
@@ -271,7 +272,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findComponent('[data-test="match-progress-message"]').exists()).toEqual(false);
@@ -312,7 +313,7 @@ describe('ActiveRoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
         const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
@@ -336,7 +337,7 @@ describe('ActiveRoundEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '098098');
         await wrapper.vm.$nextTick();
 
         const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
@@ -365,7 +366,7 @@ describe('ActiveRoundEditor', () => {
                 plugins: [pinia]
             }
         });
-        const roundSelector = wrapper.getComponent('[data-test="match-selector"]');
+        const roundSelector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
 
         roundSelector.vm.$emit('update:modelValue', '12345');
         await wrapper.vm.$nextTick();

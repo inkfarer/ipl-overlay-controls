@@ -2,6 +2,7 @@ import TeamSelect from '../teamSelect.vue';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import { IplCheckbox, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('TeamSelect', () => {
     let pinia: TestingPinia;
@@ -46,7 +47,7 @@ describe('TeamSelect', () => {
         });
 
         expect(wrapper.html()).toMatchSnapshot();
-        expect((wrapper.getComponent('[data-test="team-selector"]').vm.$props as { options: unknown }).options)
+        expect(wrapper.getComponent<typeof IplSelect>('[data-test="team-selector"]').vm.$props.options)
             .toMatchSnapshot();
     });
 
@@ -63,7 +64,7 @@ describe('TeamSelect', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-image-toggle"]').vm.$emit('update:modelValue', false);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="team-image-toggle"]').vm.$emit('update:modelValue', false);
 
         expect(store.setTeamImageHidden).toHaveBeenCalledWith({ teamId: 'teamone', isVisible: false });
     });

@@ -8,6 +8,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { Locale } from 'types/enums/Locale';
+import { IplButton, IplCheckbox, IplInput, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('setEditor', () => {
     let pinia: TestingPinia;
@@ -192,7 +193,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="edit-colors-toggle"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="edit-colors-toggle"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -207,7 +208,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="reset-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="reset-button"]').vm.$emit('click');
 
         expect(store.resetActiveRound).toHaveBeenCalledTimes(1);
     });
@@ -221,9 +222,9 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="stage-select"]')
             .vm.$emit('update:modelValue', 'Moray Towers');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.updateActiveGames).toHaveBeenCalledWith([
             {
@@ -283,11 +284,11 @@ describe('setEditor', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="stage-select"]')
             .vm.$emit('update:modelValue', 'Moray Towers');
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="mode-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="mode-select"]')
             .vm.$emit('update:modelValue', 'Turf War');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]').attributes().modelvalue).toEqual('Blackbelly Skatepark');
@@ -306,7 +307,7 @@ describe('setEditor', () => {
 
         expect(updateButton.attributes().color).toEqual('blue');
 
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="stage-select"]')
             .vm.$emit('update:modelValue', 'Moray Towers');
         await wrapper.vm.$nextTick();
 
@@ -320,7 +321,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-1"] > [data-test="stage-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-1"] > [data-test="stage-select"]')
             .vm.$emit('update:modelValue', 'Moray Towers');
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[1].stage).toEqual('Moray Towers');
@@ -333,7 +334,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-1"] > [data-test="mode-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-1"] > [data-test="mode-select"]')
             .vm.$emit('update:modelValue', 'Turf War');
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[1].mode).toEqual('Turf War');
@@ -348,7 +349,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-1"] [data-test="set-winner-button-none"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="set-editor-1"] [data-test="set-winner-button-none"]').vm.$emit('click');
 
         expect(store.setWinnerForIndex)
             .toHaveBeenCalledWith({ index: 1, winner: GameWinner.NO_WINNER });
@@ -363,7 +364,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-2"] [data-test="set-winner-button-a"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="set-editor-2"] [data-test="set-winner-button-a"]').vm.$emit('click');
 
         expect(store.setWinnerForIndex)
             .toHaveBeenCalledWith({ index: 2, winner: GameWinner.ALPHA });
@@ -378,7 +379,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-2"] [data-test="set-winner-button-b"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="set-editor-2"] [data-test="set-winner-button-b"]').vm.$emit('click');
 
         expect(store.setWinnerForIndex)
             .toHaveBeenCalledWith({ index: 2, winner: GameWinner.BRAVO });
@@ -391,7 +392,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="color-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] [data-test="color-select"]')
             .vm.$emit('update:modelValue', 'Ranked Modes_1');
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
@@ -413,9 +414,9 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="custom-color-select-a"]')
+        wrapper.getComponent<typeof IplInput>('[data-test="set-editor-0"] [data-test="custom-color-select-a"]')
             .vm.$emit('update:modelValue', '#234234');
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="custom-color-select-b"]')
+        wrapper.getComponent<typeof IplInput>('[data-test="set-editor-0"] [data-test="custom-color-select-b"]')
             .vm.$emit('update:modelValue', '#567567');
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
@@ -437,7 +438,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="custom-color-toggle"]')
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="set-editor-0"] [data-test="custom-color-toggle"]')
             .vm.$emit('update:modelValue', true);
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
@@ -459,7 +460,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="custom-color-toggle"]')
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="set-editor-0"] [data-test="custom-color-toggle"]')
             .vm.$emit('update:modelValue', false);
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
@@ -483,7 +484,7 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="swap-colors-toggle"]')
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="set-editor-0"] [data-test="swap-colors-toggle"]')
             .vm.$emit('update:modelValue', true);
 
         expect(store.swapRoundColor).toHaveBeenCalledWith({ roundIndex: 0, colorsSwapped: true });
@@ -497,11 +498,11 @@ describe('setEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="stage-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="stage-select"]')
             .vm.$emit('update:modelValue', 'Camp Triggerfish');
-        wrapper.getComponent('[data-test="set-editor-0"] > [data-test="mode-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="mode-select"]')
             .vm.$emit('update:modelValue', 'Splat Zones');
-        wrapper.getComponent('[data-test="set-editor-0"] [data-test="color-select"]')
+        wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] [data-test="color-select"]')
             .vm.$emit('update:modelValue', 'Ranked Modes_2');
         store.activeRound.games = [
             {

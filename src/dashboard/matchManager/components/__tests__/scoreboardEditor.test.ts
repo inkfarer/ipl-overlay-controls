@@ -2,6 +2,7 @@ import ScoreboardEditor from '../scoreboardEditor.vue';
 import { config, mount } from '@vue/test-utils';
 import { useScoreboardStore } from '../../../store/scoreboardStore';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { IplToggle } from '@iplsplatoon/vue-components';
 
 describe('ScoreboardEditor', () => {
     let pinia: TestingPinia;
@@ -57,7 +58,7 @@ describe('ScoreboardEditor', () => {
             }
         });
 
-        wrapper.findComponent('[data-test="scoreboard-visible-toggle"]').vm.$emit('update:modelValue', true);
+        wrapper.findComponent<typeof IplToggle>('[data-test="scoreboard-visible-toggle"]').vm.$emit('update:modelValue', true);
 
         expect(store.setScoreboardVisible).toHaveBeenCalledWith(true);
     });

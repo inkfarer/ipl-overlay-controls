@@ -3,6 +3,7 @@ import { useActiveRoundStore } from '../../../store/activeRoundStore';
 import { config, mount } from '@vue/test-utils';
 import { GameWinner } from 'types/enums/gameWinner';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { IplButton } from '@iplsplatoon/vue-components';
 
 describe('ScoreDisplay', () => {
     let pinia: TestingPinia;
@@ -176,7 +177,7 @@ describe('ScoreDisplay', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-plus-btn"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="team-a-plus-btn"]').vm.$emit('click');
 
         expect(store.setWinner).toHaveBeenCalledWith({ winner: GameWinner.ALPHA });
     });
@@ -190,7 +191,7 @@ describe('ScoreDisplay', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-b-plus-btn"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="team-b-plus-btn"]').vm.$emit('click');
 
         expect(store.setWinner).toHaveBeenCalledWith({ winner: GameWinner.BRAVO });
     });
@@ -204,7 +205,7 @@ describe('ScoreDisplay', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-minus-btn"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="team-a-minus-btn"]').vm.$emit('click');
 
         expect(store.removeWinner).toHaveBeenCalled();
     });
@@ -218,7 +219,7 @@ describe('ScoreDisplay', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-b-minus-btn"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="team-b-minus-btn"]').vm.$emit('click');
 
         expect(store.removeWinner).toHaveBeenCalled();
     });

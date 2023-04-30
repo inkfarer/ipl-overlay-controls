@@ -5,6 +5,7 @@ import { config, mount } from '@vue/test-utils';
 import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { IplButton, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
 
 describe('ColorList', () => {
     let pinia: TestingPinia;
@@ -91,7 +92,7 @@ describe('ColorList', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="color-names-toggle"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="color-names-toggle"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -142,7 +143,7 @@ describe('ColorList', () => {
             }
         });
 
-        wrapper.getComponent('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
+        wrapper.getComponent<typeof IplInput>('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="custom-color-submit-btn"]').attributes().color).toEqual('red');
@@ -158,9 +159,9 @@ describe('ColorList', () => {
             }
         });
 
-        wrapper.getComponent('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
-        wrapper.getComponent('[name="team-b-color"]').vm.$emit('update:modelValue', '#345345');
-        wrapper.getComponent('[data-test="custom-color-submit-btn"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
+        wrapper.getComponent<typeof IplInput>('[name="team-b-color"]').vm.$emit('update:modelValue', '#345345');
+        wrapper.getComponent<typeof IplButton>('[data-test="custom-color-submit-btn"]').vm.$emit('click');
 
         expect(store.setActiveColor).toHaveBeenCalledWith({
             categoryName: 'Custom Color',
@@ -186,9 +187,9 @@ describe('ColorList', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
-        wrapper.getComponent('[name="team-b-color"]').vm.$emit('update:modelValue', '#345345');
-        wrapper.getComponent('[data-test="custom-color-submit-btn"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="team-a-color"]').vm.$emit('update:modelValue', '#123123');
+        wrapper.getComponent<typeof IplInput>('[name="team-b-color"]').vm.$emit('update:modelValue', '#345345');
+        wrapper.getComponent<typeof IplButton>('[data-test="custom-color-submit-btn"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="team-a-color"]').attributes().modelvalue).toEqual('#889');
@@ -205,8 +206,8 @@ describe('ColorList', () => {
                 plugins: [ pinia ]
             }
         });
-        const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');
-        const teamBColorElem = wrapper.getComponent('[name="team-b-color"]');
+        const teamAColorElem = wrapper.getComponent<typeof IplInput>('[name="team-a-color"]');
+        const teamBColorElem = wrapper.getComponent<typeof IplInput>('[name="team-b-color"]');
 
         teamAColorElem.vm.$emit('update:modelValue', '#123123');
         teamBColorElem.vm.$emit('update:modelValue', '#345345');
@@ -226,8 +227,8 @@ describe('ColorList', () => {
                 plugins: [ pinia ]
             }
         });
-        const teamAColorElem = wrapper.getComponent('[name="team-a-color"]');
-        const teamBColorElem = wrapper.getComponent('[name="team-b-color"]');
+        const teamAColorElem = wrapper.getComponent<typeof IplInput>('[name="team-a-color"]');
+        const teamBColorElem = wrapper.getComponent<typeof IplInput>('[name="team-b-color"]');
 
         teamAColorElem.vm.$emit('update:modelValue', '#123123');
         teamBColorElem.vm.$emit('update:modelValue', '#345345');
@@ -253,7 +254,7 @@ describe('ColorList', () => {
         store.activeRound.teamA.color = '#987978';
         store.activeRound.teamB.color = '#FFFFFF';
         await wrapper.vm.$nextTick();
-        await wrapper.getComponent('[data-test="use-custom-color-toggle"]').vm.$emit('update:modelValue', true);
+        await wrapper.getComponent<typeof IplCheckbox>('[data-test="use-custom-color-toggle"]').vm.$emit('update:modelValue', true);
 
         expect(wrapper.getComponent('[name="team-a-color"]').attributes().modelvalue).toEqual('#889');
         expect(wrapper.getComponent('[name="team-b-color"]').attributes().modelvalue).toEqual('#999');

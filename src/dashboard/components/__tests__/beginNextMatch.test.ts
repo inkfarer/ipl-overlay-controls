@@ -3,6 +3,7 @@ import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import { IplButton, IplInput } from '@iplsplatoon/vue-components';
 
 describe('BeginNextMatch', () => {
     let pinia: TestingPinia;
@@ -59,9 +60,9 @@ describe('BeginNextMatch', () => {
             }
         });
 
-        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', 'New Match');
+        wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', 'New Match');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="begin-next-match-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="begin-next-match-button"]').vm.$emit('click');
 
         expect(nextRoundStore.beginNextMatch).toHaveBeenCalledWith({ matchName: 'New Match' });
     });
@@ -76,7 +77,7 @@ describe('BeginNextMatch', () => {
             }
         });
 
-        wrapper.getComponent('[name="matchName"]').vm.$emit('update:modelValue', '');
+        wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', '');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="begin-next-match-button"]').attributes().disabled).toEqual('true');

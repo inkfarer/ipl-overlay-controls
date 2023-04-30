@@ -7,6 +7,7 @@ import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { usePredictionDataStore } from '../../store/predictionDataStore';
+import { IplButton, IplDialogTitle, IplInput } from '@iplsplatoon/vue-components';
 
 jest.mock('../../helpers/dialogHelper');
 
@@ -116,10 +117,10 @@ describe('CreatePredictionDialog', () => {
             }
         });
 
-        wrapper.getComponent('[type="number"]').vm.$emit('update:modelValue', 0);
+        wrapper.getComponent<typeof IplInput>('[type="number"]').vm.$emit('update:modelValue', 0);
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="create-prediction-button"]').props().disabled).toEqual(true);
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="create-prediction-button"]').props().disabled).toEqual(true);
     });
 
     it('handles creating prediction and closes dialog on create button click', async () => {
@@ -132,8 +133,8 @@ describe('CreatePredictionDialog', () => {
             }
         });
 
-        wrapper.getComponent('[type="number"]').vm.$emit('update:modelValue', 128);
-        wrapper.getComponent('[data-test="create-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[type="number"]').vm.$emit('update:modelValue', 128);
+        wrapper.getComponent<typeof IplButton>('[data-test="create-prediction-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(predictionDataStore.createPrediction).toHaveBeenCalledWith({
@@ -155,11 +156,11 @@ describe('CreatePredictionDialog', () => {
             }
         });
 
-        wrapper.getComponent('[type="number"]').vm.$emit('update:modelValue', 128);
-        wrapper.getComponent('[name="title"]').vm.$emit('update:modelValue', 'Who will win?');
-        wrapper.getComponent('[name="team-a-name"]').vm.$emit('update:modelValue', 'Team One!!!');
-        wrapper.getComponent('[name="team-b-name"]').vm.$emit('update:modelValue', 'Team Two?!?!?!?');
-        wrapper.getComponent('[data-test="reset-inputs-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[type="number"]').vm.$emit('update:modelValue', 128);
+        wrapper.getComponent<typeof IplInput>('[name="title"]').vm.$emit('update:modelValue', 'Who will win?');
+        wrapper.getComponent<typeof IplInput>('[name="team-a-name"]').vm.$emit('update:modelValue', 'Team One!!!');
+        wrapper.getComponent<typeof IplInput>('[name="team-b-name"]').vm.$emit('update:modelValue', 'Team Two?!?!?!?');
+        wrapper.getComponent<typeof IplButton>('[data-test="reset-inputs-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[type="number"]').attributes().modelvalue).toEqual('120');
@@ -175,7 +176,7 @@ describe('CreatePredictionDialog', () => {
             }
         });
 
-        wrapper.getComponent('ipl-dialog-title-stub').vm.$emit('close');
+        wrapper.getComponent<typeof IplDialogTitle>('ipl-dialog-title-stub').vm.$emit('close');
 
         expect(closeDialog).toHaveBeenCalledWith('createPredictionDialog');
     });

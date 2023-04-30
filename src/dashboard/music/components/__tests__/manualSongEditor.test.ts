@@ -2,6 +2,7 @@ import ManualSongEditor from '../manualSongEditor.vue';
 import { config, mount } from '@vue/test-utils';
 import { useMusicStore } from '../../musicStore';
 import { createTestingPinia } from '@pinia/testing';
+import { IplButton, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
 
 describe('ManualSongEditor', () => {
     config.global.stubs = {
@@ -48,7 +49,7 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', true);
 
         expect(store.setNowPlayingSource).toHaveBeenCalledWith('manual');
     });
@@ -63,7 +64,7 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', false);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="enable-manual-input-checkbox"]').vm.$emit('update:modelValue', false);
 
         expect(store.setNowPlayingSource).toHaveBeenCalledWith('lastfm');
     });
@@ -94,7 +95,7 @@ describe('ManualSongEditor', () => {
                 plugins: [ pinia ]
             }
         });
-        const artistInput = wrapper.getComponent('[name="artist"]');
+        const artistInput = wrapper.getComponent<typeof IplInput>('[name="artist"]');
 
         artistInput.vm.$emit('focuschange', true);
         store.manualNowPlaying = { song: 'dope song', artist: 'cool artist' };
@@ -127,7 +128,7 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        wrapper.getComponent('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
+        wrapper.getComponent<typeof IplInput>('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="manual-song-update-button"]').attributes().color).toEqual('red');
@@ -143,9 +144,9 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        wrapper.getComponent('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
-        wrapper.getComponent('[name="song"]').vm.$emit('update:modelValue', 'new song');
-        wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
+        wrapper.getComponent<typeof IplInput>('[name="song"]').vm.$emit('update:modelValue', 'new song');
+        wrapper.getComponent<typeof IplButton>('[data-test="manual-song-update-button"]').vm.$emit('click');
 
         expect(store.setManualNowPlaying).toHaveBeenCalledWith({ artist: 'new artist', song: 'new song' });
     });
@@ -160,7 +161,7 @@ describe('ManualSongEditor', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="manual-song-update-button"]').vm.$emit('click');
 
         expect(store.setManualNowPlaying).not.toHaveBeenCalled();
     });
@@ -178,11 +179,11 @@ describe('ManualSongEditor', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
-        wrapper.getComponent('[name="song"]').vm.$emit('update:modelValue', 'new song');
+        wrapper.getComponent<typeof IplInput>('[name="artist"]').vm.$emit('update:modelValue', 'new artist');
+        wrapper.getComponent<typeof IplInput>('[name="song"]').vm.$emit('update:modelValue', 'new song');
         await wrapper.vm.$nextTick();
 
-        wrapper.getComponent('[data-test="manual-song-update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplButton>('[data-test="manual-song-update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="artist"]').attributes().modelvalue).toEqual('old artist');
