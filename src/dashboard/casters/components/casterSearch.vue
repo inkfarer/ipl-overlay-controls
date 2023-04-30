@@ -3,6 +3,7 @@
         clickable
         color="light"
         class="text-center caster-search__header"
+        v-bind="$attrs"
         @click="searchOpen = !searchOpen"
     >
         <font-awesome-icon icon="search" /> Search casters
