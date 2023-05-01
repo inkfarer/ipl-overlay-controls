@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { GuildInfo, GuildServices, RadiaApiCaster } from '../../types/radiaApi';
+import { GuildInfo, GuildServices } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
@@ -113,23 +113,6 @@ export function handleAxiosError(e: AxiosError | Error): void {
         throw new Error(message);
     }
     throw e;
-}
-
-/**
- * Get the current live casters in vc from a guild
- * @param {string} guildID Guild ID of discord server
- * @returns {Promise<RadiaApiCaster[]>} List of live casters
- */
-export async function getLiveCasters(guildID: string): Promise<RadiaApiCaster[]> {
-    return await axios.get<RadiaApiCaster[]>(
-        `${(nodecg.bundleConfig as Configschema).radia.url}/live/guild/${guildID}`,
-        { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } })
-        .then(response => {
-            if (response.status !== 200) {
-                throw new Error(`Radia API call failed with response ${response.status.toString()}`);
-            }
-            return response.data;
-        });
 }
 
 export async function updateTournamentData(

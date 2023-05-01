@@ -2,6 +2,7 @@ import LastfmSettings from '../lastfmSettings.vue';
 import { mount, config } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { IplButton, IplInput } from '@iplsplatoon/vue-components';
 
 describe('lastfmSettings', () => {
     let pinia: TestingPinia;
@@ -35,7 +36,7 @@ describe('lastfmSettings', () => {
             }
         });
 
-        const usernameInput = wrapper.findComponent('[name="username"]');
+        const usernameInput = wrapper.findComponent<typeof IplInput>('[name="username"]');
         usernameInput.vm.$emit('focuschange', false);
         store.lastFmSettings.username = 'new username';
         await wrapper.vm.$nextTick();
@@ -51,7 +52,7 @@ describe('lastfmSettings', () => {
             }
         });
 
-        const usernameInput = wrapper.findComponent('[name="username"]');
+        const usernameInput = wrapper.findComponent<typeof IplInput>('[name="username"]');
         usernameInput.vm.$emit('focuschange', true);
         store.lastFmSettings.username = 'new username';
         await wrapper.vm.$nextTick();
@@ -68,8 +69,8 @@ describe('lastfmSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="username"]').vm.$emit('update:modelValue', 'new username');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[name="username"]').vm.$emit('update:modelValue', 'new username');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setLastFmSettings).toHaveBeenCalledWith({ newValue: { username: 'new username' } });
     });
@@ -83,8 +84,8 @@ describe('lastfmSettings', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="username"]').vm.$emit('update:modelValue', 'new username');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="username"]').vm.$emit('update:modelValue', 'new username');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="username"]').attributes().modelvalue).toEqual('username');
@@ -100,7 +101,7 @@ describe('lastfmSettings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setLastFmSettings).not.toHaveBeenCalled();
     });
@@ -112,7 +113,7 @@ describe('lastfmSettings', () => {
             }
         });
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().color).toEqual('blue');
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().color).toEqual('blue');
     });
 
     it('has expected button color when data is edited', async () => {
@@ -122,9 +123,9 @@ describe('lastfmSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="username"]').vm.$emit('update:modelValue', 'new username');
+        wrapper.getComponent<typeof IplInput>('[name="username"]').vm.$emit('update:modelValue', 'new username');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().color).toEqual('red');
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().color).toEqual('red');
     });
 });

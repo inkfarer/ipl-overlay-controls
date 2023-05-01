@@ -107,6 +107,7 @@ import PredictionDataDisplay from './components/predictionDataDisplay.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Predictions',
 
     components: { IplErrorDisplay, PredictionDataDisplay, IplButton, IplDataRow, IplMessage, IplSpace },

@@ -2,6 +2,7 @@ import IplErrorDisplay from '../iplErrorDisplay.vue';
 import { config, mount } from '@vue/test-utils';
 import { useErrorHandlerStore } from '../../store/errorHandlerStore';
 import { createTestingPinia } from '@pinia/testing';
+import { IplMessage } from '@iplsplatoon/vue-components';
 
 describe('IplErrorDisplay', () => {
     config.global.stubs = {
@@ -21,7 +22,7 @@ describe('IplErrorDisplay', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="recent-error-err"]').vm.$emit('close');
+        wrapper.getComponent<typeof IplMessage>('[data-test="recent-error-err"]').vm.$emit('close');
 
         expect(store.removeRecentError).toHaveBeenCalledWith({ key: 'err' });
     });

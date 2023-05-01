@@ -4,6 +4,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { BracketType } from 'types/enums/bracketType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useHighlightedMatchStore } from '../../highlightedMatchStore';
+import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('HighlightedMatchImporter', () => {
     let pinia: TestingPinia;
@@ -52,7 +53,7 @@ describe('HighlightedMatchImporter', () => {
             }
         });
 
-        const selector = wrapper.getComponent('[data-test="match-selector"]');
+        const selector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
         expect(selector.attributes().label).toEqual('Bracket');
         expect((selector.vm.$props as { options: unknown }).options).toEqual([
             { value: 'swis12', name: 'Swiss' },
@@ -89,7 +90,7 @@ describe('HighlightedMatchImporter', () => {
             }
         });
 
-        const selector = wrapper.getComponent('[data-test="match-selector"]');
+        const selector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
         expect(selector.attributes().label).toEqual('Stream');
         expect((selector.vm.$props as { options: unknown }).options).toEqual([
             { value: '123098', name: 'Cool Stream' },
@@ -107,9 +108,9 @@ describe('HighlightedMatchImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', [{ foo: 'bar' }]);
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', [{ foo: 'bar' }]);
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
 
         expect(store.getHighlightedMatches).toHaveBeenCalledWith({ options: [{ foo: 'bar' }]});
     });
@@ -121,11 +122,11 @@ describe('HighlightedMatchImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', []);
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', []);
         await wrapper.vm.$nextTick();
         expect(wrapper.getComponent('[data-test="import-button"]').attributes().disabled).toEqual('true');
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', [{ foo: 'bar' }]);
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', [{ foo: 'bar' }]);
         await wrapper.vm.$nextTick();
         expect(wrapper.getComponent('[data-test="import-button"]').attributes().disabled).toEqual('false');
     });

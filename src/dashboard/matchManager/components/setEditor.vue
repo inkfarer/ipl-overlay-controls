@@ -39,7 +39,7 @@
                 class="m-l-6"
                 :disabled="game.winner === GameWinner.NO_WINNER"
                 data-test="color-select"
-                @update:modelValue="setGameColor(index, $event)"
+                @update:model-value="setGameColor(index, $event)"
             />
             <div
                 v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
@@ -53,7 +53,7 @@
                     name="team-a-color"
                     :disabled="!game.color?.clrA"
                     data-test="custom-color-select-a"
-                    @update:modelValue="setCustomColor('a', index, $event)"
+                    @update:model-value="setCustomColor('a', index, $event)"
                 />
                 <ipl-input
                     :model-value="game.color?.clrB ?? activeColor.clrB"
@@ -63,7 +63,7 @@
                     name="team-b-color"
                     :disabled="!game.color?.clrB"
                     data-test="custom-color-select-b"
-                    @update:modelValue="setCustomColor('b', index, $event)"
+                    @update:model-value="setCustomColor('b', index, $event)"
                 />
             </div>
             <div
@@ -76,7 +76,7 @@
                     label="Custom color"
                     small
                     data-test="custom-color-toggle"
-                    @update:modelValue="setIsCustomColor(index, $event)"
+                    @update:model-value="setIsCustomColor(index, $event)"
                 />
                 <ipl-checkbox
                     :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
@@ -85,7 +85,7 @@
                     class="m-l-6"
                     small
                     data-test="swap-colors-toggle"
-                    @update:modelValue="setColorsSwapped(index, $event)"
+                    @update:model-value="setColorsSwapped(index, $event)"
                 />
             </div>
             <ipl-button
@@ -101,7 +101,8 @@
                     label="A"
                     :color="getColorA(game)"
                     :style="{
-                        borderLeft: `${game.winner === GameWinner.ALPHA ? '8px' : '0px'} solid ${getColorA(game)}`
+                        borderColor: getColorA(game),
+                        borderWidth: `0 0 0 ${game.winner === GameWinner.ALPHA ? '8px' : '0px'}`
                     }"
                     :disabled="game.winner === GameWinner.ALPHA"
                     data-test="set-winner-button-a"
@@ -111,7 +112,8 @@
                     label="B"
                     :color="getColorB(game)"
                     :style="{
-                        borderRight: `${game.winner === GameWinner.BRAVO ? '8px' : '0px'} solid ${getColorB(game)}`
+                        borderColor: getColorB(game),
+                        borderWidth: `0 ${game.winner === GameWinner.BRAVO ? '8px' : '0px'} 0 0`
                     }"
                     :disabled="game.winner === GameWinner.BRAVO"
                     data-test="set-winner-button-b"
@@ -342,6 +344,8 @@ export default defineComponent({
         font-weight: bold;
         padding: 3px 0 0;
         transition-duration: $transition-duration-med;
+        transition-property: border-width, background-color, color;
+        border-style: solid;
 
         &:first-child {
             border-radius: $border-radius-inner 0 0 $border-radius-inner;

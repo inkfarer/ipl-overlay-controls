@@ -3,6 +3,7 @@ import { useObsStore } from '../../../store/obsStore';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
+import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('ObsDataPicker', () => {
     let pinia: TestingPinia;
@@ -56,7 +57,7 @@ describe('ObsDataPicker', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
+        wrapper.getComponent<typeof IplSelect>('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="update-button"]').attributes().color).toEqual('red');
@@ -71,9 +72,9 @@ describe('ObsDataPicker', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
+        wrapper.getComponent<typeof IplSelect>('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setData).toHaveBeenCalledWith({
             gameplayScene: 'Scene One',
@@ -90,8 +91,8 @@ describe('ObsDataPicker', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplSelect>('[data-test="intermission-scene-select"]').vm.$emit('update:modelValue', 'Scene Three');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="intermission-scene-select"]').attributes().modelvalue).toEqual('Scene Two');

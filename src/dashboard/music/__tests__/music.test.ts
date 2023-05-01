@@ -2,6 +2,7 @@ import Music from '../music.vue';
 import { useMusicStore } from '../musicStore';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
+import { IplToggle } from '@iplsplatoon/vue-components';
 
 describe('Music', () => {
     config.global.stubs = {
@@ -19,7 +20,7 @@ describe('Music', () => {
         const store = useMusicStore();
         jest.spyOn(store, 'setMusicShown');
 
-        wrapper.getComponent('[data-test="music-shown-toggle"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplToggle>('[data-test="music-shown-toggle"]').vm.$emit('update:modelValue', true);
 
         expect(store.setMusicShown).toHaveBeenCalledWith(true);
     });

@@ -4,6 +4,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { Locale } from 'types/enums/Locale';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import StageSelect from '../StageSelect.vue';
+import { IplSelect } from '@iplsplatoon/vue-components';
 
 describe('StageSelect', () => {
     let pinia: TestingPinia;
@@ -22,7 +23,7 @@ describe('StageSelect', () => {
     it('emits expected event when new option is selected', () => {
         const wrapper = shallowMount(StageSelect);
 
-        wrapper.findComponent('ipl-select-stub').vm.$emit('update:modelValue', 'New Stage');
+        wrapper.findComponent<typeof IplSelect>('ipl-select-stub').vm.$emit('update:modelValue', 'New Stage');
 
         expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['New Stage']);
     });
@@ -32,6 +33,6 @@ describe('StageSelect', () => {
 
         const wrapper = shallowMount(StageSelect);
 
-        expect((wrapper.findComponent('ipl-select-stub').vm as unknown as { options: unknown }).options).toMatchSnapshot();
+        expect(wrapper.findComponent<typeof IplSelect>('ipl-select-stub').vm.options).toMatchSnapshot();
     });
 });

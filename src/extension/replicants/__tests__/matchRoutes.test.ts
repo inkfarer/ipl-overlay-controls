@@ -3,12 +3,17 @@ import { DateTime } from 'luxon';
 import { mockMount, replicants, requestHandlers } from '../../__mocks__/mockNodecg';
 
 describe('matchRoutes', () => {
+    const mockNow = jest.fn();
     jest.mock('luxon', () => ({
         __esModule: true,
         DateTime: {
-            now: jest.fn().mockReturnValue(DateTime.fromISO('2022-02-02T20:33:54Z'))
+            now: mockNow
         }
     }));
+
+    beforeEach(() => {
+        mockNow.mockReturnValue(DateTime.fromISO('2022-02-02T20:33:54Z'));
+    });
 
     it('mounts', () => {
         require('../matchRoutes');

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is DE 1`] = `
-Object {
-  "modes": Object {
+{
+  "modes": {
     "Clam Blitz": "Muschelchaos",
     "Rainmaker": "Operation Goldfisch",
     "Splat Zones": "Herrschaft",
@@ -10,7 +10,7 @@ Object {
     "Turf War": "Revierkampf",
     "Unknown Mode": "Unbekannte Kampfart",
   },
-  "stages": Object {
+  "stages": {
     "Ancho-V Games": "Anchobit Games HQ",
     "Arowana Mall": "Arowana Center",
     "Blackbelly Skatepark": "Punkasius-Skatepark",
@@ -42,8 +42,8 @@ Object {
 `;
 
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is EN 1`] = `
-Object {
-  "modes": Object {
+{
+  "modes": {
     "Clam Blitz": "Clam Blitz",
     "Rainmaker": "Rainmaker",
     "Splat Zones": "Splat Zones",
@@ -51,7 +51,7 @@ Object {
     "Turf War": "Turf War",
     "Unknown Mode": "Unknown Mode",
   },
-  "stages": Object {
+  "stages": {
     "Ancho-V Games": "Ancho-V Games",
     "Arowana Mall": "Arowana Mall",
     "Blackbelly Skatepark": "Blackbelly Skatepark",
@@ -83,8 +83,8 @@ Object {
 `;
 
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is DE 1`] = `
-Object {
-  "modes": Object {
+{
+  "modes": {
     "Clam Blitz": "Muschelchaos",
     "Rainmaker": "Operation Goldfisch",
     "Splat Zones": "Herrschaft",
@@ -92,7 +92,7 @@ Object {
     "Turf War": "Revierkampf",
     "Unknown Mode": "Unbekannte Kampfart",
   },
-  "stages": Object {
+  "stages": {
     "Brinewater Springs": "Kusaya-Quellen",
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Streifenaal-Straße",
@@ -116,8 +116,8 @@ Object {
 `;
 
 exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is EN 1`] = `
-Object {
-  "modes": Object {
+{
+  "modes": {
     "Clam Blitz": "Clam Blitz",
     "Rainmaker": "Rainmaker",
     "Splat Zones": "Splat Zones",
@@ -125,7 +125,7 @@ Object {
     "Turf War": "Turf War",
     "Unknown Mode": "Unknown Mode",
   },
-  "stages": Object {
+  "stages": {
     "Brinewater Springs": "Brinewater Springs",
     "Counterpick": "Counterpick",
     "Eeltail Alley": "Eeltail Alley",

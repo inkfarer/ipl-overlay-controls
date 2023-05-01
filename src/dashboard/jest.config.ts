@@ -1,6 +1,9 @@
 export default {
     clearMocks: true,
     testEnvironment: 'jsdom',
+    testEnvironmentOptions: {
+        customExportConditions: ['node', 'node-addons']
+    },
     moduleFileExtensions: [ 'ts', 'js', 'json', 'vue' ],
     moduleNameMapper: {
         '\\.(css|scss)$': '<rootDir>/__mocks__/emptyModule.ts'

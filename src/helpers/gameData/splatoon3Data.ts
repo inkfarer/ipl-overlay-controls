@@ -92,10 +92,10 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             colors: [
                 {
                     index: 0,
-                    title: 'Turquoise vs Orange',
-                    clrA: '#2ADBC6',
-                    clrB: '#FA5A41',
-                    clrNeutral: '#4445FF',
+                    title: 'Orange vs Dark Blue',
+                    clrA: '#FC7735',
+                    clrB: '#4048DB',
+                    clrNeutral: '#F8F755',
                     isCustom: false
                 },
                 {
@@ -108,22 +108,6 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
                 },
                 {
                     index: 2,
-                    title: 'Gold vs Purple',
-                    clrA: '#EBCC31',
-                    clrB: '#A032DB',
-                    clrNeutral: '#73DE35',
-                    isCustom: false
-                },
-                {
-                    index: 3,
-                    title: 'Yellow vs Dark Blue',
-                    clrA: '#EDD921',
-                    clrB: '#461EE6',
-                    clrNeutral: '#4445FF',
-                    isCustom: false
-                },
-                {
-                    index: 4,
                     title: 'Green vs Pink',
                     clrA: '#B3DE45',
                     clrB: '#D43BCA',
@@ -131,15 +115,15 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
                     isCustom: false
                 },
                 {
-                    index: 5,
-                    title: 'Orange vs Dark Blue',
-                    clrA: '#FC7735',
-                    clrB: '#4048DB',
-                    clrNeutral: '#F8F755',
+                    index: 3,
+                    title: 'Turquoise vs Pink',
+                    clrA: '#2ADBC3',
+                    clrB: '#E34984',
+                    clrNeutral: '#7577FF',
                     isCustom: false
                 },
                 {
-                    index: 6,
+                    index: 4,
                     title: 'Orange vs Purple',
                     clrA: '#F56522',
                     clrB: '#821CD6',
@@ -147,11 +131,27 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
                     isCustom: false
                 },
                 {
+                    index: 5,
+                    title: 'Yellow vs Dark Blue',
+                    clrA: '#EDD921',
+                    clrB: '#461EE6',
+                    clrNeutral: '#4445FF',
+                    isCustom: false
+                },
+                {
+                    index: 6,
+                    title: 'Gold vs Purple',
+                    clrA: '#EBCC31',
+                    clrB: '#A032DB',
+                    clrNeutral: '#73DE35',
+                    isCustom: false
+                },
+                {
                     index: 7,
-                    title: 'Turquoise vs Pink',
-                    clrA: '#2ADBC3',
-                    clrB: '#E34984',
-                    clrNeutral: '#7577FF',
+                    title: 'Turquoise vs Orange',
+                    clrA: '#2ADBC6',
+                    clrB: '#FA5A41',
+                    clrNeutral: '#4445FF',
                     isCustom: false
                 },
                 {

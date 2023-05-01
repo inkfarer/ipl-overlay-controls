@@ -10,7 +10,16 @@
             @click="addCaster"
         />
         <ipl-button
-            v-if="showLoadFromVc"
+            v-if="radiaIntegrationEnabled"
+            class="m-l-6"
+            async
+            data-test="upload-casters-button"
+            icon="arrow-up-from-bracket"
+            title="Upload casters to Radia"
+            @click="uploadCasters"
+        />
+        <ipl-button
+            v-if="radiaIntegrationEnabled"
             class="m-l-6"
             label="Load from VC"
             async
@@ -50,16 +59,18 @@ import { useCasterStore } from '../store/casterStore';
 import { IplButton, IplExpandingSpaceGroup, IplSpace } from '@iplsplatoon/vue-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import CasterEditor from './components/casterEditor.vue';
-import isEmpty from 'lodash/isEmpty';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { storeToRefs } from 'pinia';
 import { Caster } from 'schemas';
 import Draggable from 'vuedraggable';
+import { sendMessage } from '../helpers/nodecgHelper';
 
-library.add(faPlus);
+library.add(faPlus, faArrowUpFromBracket);
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Casters',
 
     components: { IplExpandingSpaceGroup, IplErrorDisplay, CasterEditor, IplButton, IplSpace, Draggable },
@@ -69,8 +80,6 @@ export default defineComponent({
         const storeRefs = storeToRefs(store);
         const activeCaster = ref<string>(null);
         const allCasters = computed(() => ({ ...storeRefs.casters.value, ...storeRefs.uncommittedCasters.value }));
-        const showLoadFromVc = computed(() =>
-            store.radiaSettings.enabled && !isEmpty(store.radiaSettings.guildID));
 
         const casters = ref([]);
         watchEffect(() => {
@@ -98,8 +107,11 @@ export default defineComponent({
             async loadFromVc() {
                 return store.loadCastersFromVc();
             },
-            showLoadFromVc,
-            addCasterIcon: computed(() => showLoadFromVc.value ? 'plus' : null),
+            async uploadCasters() {
+                return sendMessage('pushCastersToRadia');
+            },
+            radiaIntegrationEnabled: storeRefs.radiaIntegrationEnabled,
+            addCasterIcon: computed(() => store.radiaIntegrationEnabled ? 'plus' : null),
             async onMove() {
                 await store.setCasterOrder(casters.value
                     .filter(caster => !caster.uncommitted)

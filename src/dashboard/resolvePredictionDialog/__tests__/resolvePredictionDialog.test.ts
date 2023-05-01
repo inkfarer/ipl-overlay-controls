@@ -8,6 +8,7 @@ import { closeDialog } from '../../helpers/dialogHelper';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { usePredictionDataStore } from '../../store/predictionDataStore';
+import { IplButton, IplDialogTitle } from '@iplsplatoon/vue-components';
 
 jest.mock('../../helpers/dialogHelper');
 
@@ -243,7 +244,7 @@ describe('ResolvePredictionDialog', () => {
         });
         predictionDataStore.resolvePrediction = jest.fn().mockResolvedValue({});
 
-        wrapper.getComponent('[data-test="resolve-outcome-1-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="resolve-outcome-1-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(predictionDataStore.resolvePrediction).toHaveBeenCalledWith({ winningOutcomeIndex: 0 });
@@ -261,7 +262,7 @@ describe('ResolvePredictionDialog', () => {
         });
         predictionDataStore.resolvePrediction = jest.fn().mockResolvedValue({});
 
-        wrapper.getComponent('[data-test="resolve-outcome-2-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="resolve-outcome-2-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(predictionDataStore.resolvePrediction).toHaveBeenCalledWith({ winningOutcomeIndex: 1 });
@@ -276,7 +277,7 @@ describe('ResolvePredictionDialog', () => {
             }
         });
 
-        wrapper.getComponent('ipl-dialog-title-stub').vm.$emit('close');
+        wrapper.getComponent<typeof IplDialogTitle>('ipl-dialog-title-stub').vm.$emit('close');
 
         expect(closeDialog).toHaveBeenCalledWith('resolvePredictionDialog');
     });

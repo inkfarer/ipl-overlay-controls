@@ -1,4 +1,4 @@
-import { ObsCredentials } from '../schemas';
+import { Casters, ObsCredentials } from '../schemas';
 import { SetObsDataRequest } from './obs';
 
 export interface MessageInputMap {
@@ -10,8 +10,19 @@ export interface MessageInputMap {
     endGame: never
     fastForwardToNextGameAutomationTask: never
     cancelAutomationAction: never
+
+    getLiveCommentators: never
+    searchCommentators: string
+    pushCastersToRadia: never
 }
 
-export interface MessageResultMap {
-    [name: string]: void
+type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;
+
+interface InnerMessageResultMap {
+    getLiveCommentators: { add: Casters, extra: Casters }
+    searchCommentators: Casters
+}
+
+export type MessageResultMap = InnerMessageResultMap & {
+    [Key in MessagesWithoutReturnValues]: void
 }

@@ -70,6 +70,7 @@ const settingsSections = {
 };
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Settings',
 
     components: {
