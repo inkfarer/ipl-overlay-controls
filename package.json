@@ -124,8 +124,8 @@
     "repository": "https://github.com/nodecg/nodecg.git",
     "license": "MIT",
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@fortawesome/fontawesome-svg-core": "^6.4.0",
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
         "@iplsplatoon/vue-components": "2.9.2",
         "@pinia/testing": "^0.0.16",
