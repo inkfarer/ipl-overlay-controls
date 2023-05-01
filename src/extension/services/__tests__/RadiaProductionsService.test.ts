@@ -103,4 +103,45 @@ describe('RadiaProductionsService', () => {
             expect(replicants.casters).toBeUndefined();
         });
     });
+
+    describe('pushCastersToRadia', () => {
+        beforeEach(() => {
+            replicants.radiaSettings = {
+                guildID: '834758374985'
+            };
+        });
+
+        it('sends the current casters to radia', async () => {
+            replicants.casters = {
+                '123abc': {
+                    name: 'cool caster',
+                    pronouns: 'they/them',
+                    twitter: '@casterCool'
+                },
+                '321bca': {
+                    name: 'second caster',
+                    pronouns: 'he/him',
+                    twitter: '@casterSecond',
+                    imageUrl: 'casterImage://secondCaster'
+                }
+            };
+
+            await radiaProductionsService.pushCastersToRadia();
+
+            expect(radiaProductionsClient.setCasters).toHaveBeenCalledWith('834758374985', [
+                {
+                    discord_user_id: '123abc',
+                    name: 'cool caster',
+                    pronouns: 'they/them',
+                    twitter: '@casterCool'
+                },
+                {
+                    discord_user_id: '321bca',
+                    name: 'second caster',
+                    pronouns: 'he/him',
+                    twitter: '@casterSecond',
+                }
+            ]);
+        });
+    });
 });

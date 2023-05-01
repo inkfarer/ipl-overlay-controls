@@ -39,6 +39,12 @@ export class RadiaProductionsService {
         return this.mapRadiaCastersToReplicantSchema(normalizedCasters);
     }
 
+    async pushCastersToRadia() {
+        await this.radiaProductionsClient.setCasters(
+            this.radiaSettings.value.guildID,
+            this.mapCastersToRadiaApi(this.casters.value));
+    }
+
     private normalizeCaster(caster: RadiaApiCaster): RadiaApiCaster {
         caster.twitter = `@${caster.twitter}`;
         caster.pronouns = caster.pronouns.toLowerCase();
@@ -52,5 +58,14 @@ export class RadiaProductionsService {
             map[id] = obj;
             return map;
         }, {});
+    }
+
+    private mapCastersToRadiaApi(casters: Casters): RadiaApiCaster[] {
+        return Object.entries(casters).map(([id, caster]) => ({
+            discord_user_id: id,
+            name: caster.name,
+            pronouns: caster.pronouns,
+            twitter: caster.twitter
+        }));
     }
 }

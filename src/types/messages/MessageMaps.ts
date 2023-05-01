@@ -13,6 +13,7 @@ export interface MessageInputMap {
 
     getLiveCommentators: never
     searchCommentators: string
+    pushCastersToRadia: never
 }
 
 type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;

@@ -41,4 +41,8 @@ export class RadiaProductionsClient {
 
         return response.data;
     }
+
+    async setCasters(guildId: string, casters: RadiaApiCaster[]) {
+        await this.axios.post(`live/guild/${guildId}`, casters);
+    }
 }
