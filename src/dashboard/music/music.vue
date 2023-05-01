@@ -22,8 +22,11 @@ import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { IplLabel, IplSpace, IplToggle, isBlank } from '@iplsplatoon/vue-components';
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Music',
+
     components: { IplErrorDisplay, ManualSongEditor, IplLabel, IplToggle, IplSpace },
+
     setup() {
         const musicStore = useMusicStore();
         const nowPlayingSourceLabels: Record<NowPlayingSource, string> = {

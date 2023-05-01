@@ -5,6 +5,16 @@ export interface RadiaApiCaster {
     pronouns: string;
 }
 
+export interface RadiaCasterSearchResultItem {
+    discord_user_id: string
+    twitter: string
+    name: string
+    pronouns: string
+    no_show: boolean
+    no_alert: boolean
+    search_score: number
+}
+
 export interface GuildServices {
     detail?: string;
     twitch?: boolean;

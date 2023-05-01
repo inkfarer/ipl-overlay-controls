@@ -7,6 +7,8 @@ import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../../store/nextRoundStore';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
 import { useHighlightedMatchStore } from '../../highlightedMatchStore';
+import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
+import RoundSelect from '../../../components/roundSelect.vue';
 
 describe('HighlightedMatchViewer', () => {
     let pinia: TestingPinia;
@@ -141,7 +143,7 @@ describe('HighlightedMatchViewer', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', '567');
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', '567');
         await wrapper.vm.$nextTick();
         expect(wrapper.getComponent('[data-test="team-a-name-display"]').attributes().value).toEqual('mock team a');
         expect(wrapper.getComponent('[data-test="team-b-name-display"]').attributes().value).toEqual('mock team b');
@@ -169,7 +171,7 @@ describe('HighlightedMatchViewer', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="set-next-match-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="set-next-match-button"]').vm.$emit('click');
 
         expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
             teamAId: '1234',
@@ -202,9 +204,9 @@ describe('HighlightedMatchViewer', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="round-selector"]').vm.$emit('update:roundData',
+        wrapper.getComponent<typeof RoundSelect>('[data-test="round-selector"]').vm.$emit('update:roundData',
             { roundData: { meta: { type: PlayType.PLAY_ALL }, games: []} });
-        wrapper.getComponent('[data-test="set-next-match-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="set-next-match-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
@@ -230,7 +232,7 @@ describe('HighlightedMatchViewer', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', '567');
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', '567');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="set-next-match-button"]').attributes().color).toEqual('red');
@@ -251,7 +253,7 @@ describe('HighlightedMatchViewer', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="match-selector"]').vm.$emit('update:modelValue', 'something');
+        wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]').vm.$emit('update:modelValue', 'something');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="set-next-match-button"]').attributes().disabled).toEqual('true');

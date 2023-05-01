@@ -4,6 +4,8 @@ import { useNextRoundStore } from '../../store/nextRoundStore';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import RoundEditor from '../components/roundEditor.vue';
+import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
 
 describe('Rounds', () => {
     let pinia: TestingPinia;
@@ -86,7 +88,7 @@ describe('Rounds', () => {
         });
 
         await wrapper.get('[data-test="open-all-rounds-sidebar"]').trigger('click');
-        wrapper.getComponent('[data-test="reset-rounds-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="reset-rounds-button"]').vm.$emit('click');
 
         expect(tournamentDataStore.resetRoundStore).toHaveBeenCalled();
     });
@@ -97,7 +99,7 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
         expect(roundEditor.props().roundId).toEqual('2426');
         expect(roundEditor.props().round).toEqual({
@@ -116,10 +118,10 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
         await wrapper.get('[data-test="open-all-rounds-sidebar"]').trigger('click');
-        wrapper.getComponent('[data-test="round-option-9573"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSpace>('[data-test="round-option-9573"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(roundEditor.props().roundId).toEqual('9573');
@@ -139,9 +141,9 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        wrapper.getComponent('[data-test="new-3-game-round"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="new-3-game-round"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(roundEditor.props().round).toEqual({
@@ -164,9 +166,9 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        wrapper.getComponent('[data-test="new-5-game-round"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="new-5-game-round"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(roundEditor.props().round).toEqual({
@@ -191,9 +193,9 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        wrapper.getComponent('[data-test="new-7-game-round"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="new-7-game-round"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(roundEditor.props().round).toEqual({
@@ -220,9 +222,9 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        wrapper.getComponent('[data-test="new-7-game-round"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="new-7-game-round"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
         roundEditor.vm.$emit('cancelNewRound');
         await wrapper.vm.$nextTick();
@@ -236,9 +238,9 @@ describe('Rounds', () => {
                 plugins: [ pinia ]
             }
         });
-        const roundEditor = wrapper.getComponent('[data-test="round-editor"]');
+        const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        wrapper.getComponent('[data-test="new-7-game-round"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="new-7-game-round"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
         roundEditor.vm.$emit('createNewRound', '0387');
         await wrapper.vm.$nextTick();

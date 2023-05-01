@@ -104,6 +104,7 @@ import { PlayType } from 'types/enums/playType';
 library.add(faBars);
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Rounds',
 
     components: { IplErrorDisplay, IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },

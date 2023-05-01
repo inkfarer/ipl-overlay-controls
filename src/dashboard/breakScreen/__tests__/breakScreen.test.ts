@@ -2,6 +2,8 @@ import BreakScreen from '../breakScreen.vue';
 import { config, mount } from '@vue/test-utils';
 import { useBreakScreenStore } from '../breakScreenStore';
 import { createTestingPinia } from '@pinia/testing';
+import { IplButton, IplInput } from '@iplsplatoon/vue-components';
+import NextStageTimeInput from '../components/nextStageTimeInput.vue';
 
 describe('BreakScreen', () => {
     config.global.stubs = {
@@ -82,7 +84,7 @@ describe('BreakScreen', () => {
                 plugins: [ pinia ]
             }
         });
-        const flavorTextInput = wrapper.getComponent('[name="break-main-flavor-text"]');
+        const flavorTextInput = wrapper.getComponent<typeof IplInput>('[name="break-main-flavor-text"]');
 
         flavorTextInput.vm.$emit('focuschange', true);
         store.mainFlavorText = 'new text!!!';
@@ -116,7 +118,7 @@ describe('BreakScreen', () => {
                 plugins: [ pinia ]
             }
         });
-        const nextStageTimeInput = wrapper.getComponent('[data-test="next-stage-time-input"]');
+        const nextStageTimeInput = wrapper.getComponent<typeof NextStageTimeInput>('[data-test="next-stage-time-input"]');
 
         nextStageTimeInput.vm.$emit('focuschange', true);
         store.nextRoundStartTime.startTime = '2021-03-09';
@@ -138,11 +140,11 @@ describe('BreakScreen', () => {
             }
         });
 
-        wrapper.getComponent('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
-        wrapper.getComponent('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
+        wrapper.getComponent<typeof IplInput>('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
+        wrapper.getComponent<typeof NextStageTimeInput>('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
         await wrapper.vm.$nextTick();
 
-        wrapper.getComponent('[data-test="update-main-scene-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-main-scene-button"]').vm.$emit('click');
 
         expect(store.setMainFlavorText).toHaveBeenCalledWith('new text!!!');
         expect(store.setNextRoundStartTime).toHaveBeenCalledWith('2020-01-02');
@@ -159,9 +161,9 @@ describe('BreakScreen', () => {
             }
         });
 
-        wrapper.getComponent('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
-        wrapper.getComponent('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
-        wrapper.getComponent('[data-test="update-main-scene-button"]').vm.$emit('right-click', new Event(null));
+        wrapper.getComponent<typeof IplInput>('[name="break-main-flavor-text"]').vm.$emit('update:modelValue', 'new text!!!');
+        wrapper.getComponent<typeof NextStageTimeInput>('[data-test="next-stage-time-input"]').vm.$emit('update:modelValue', '2020-01-02');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-main-scene-button"]').vm.$emit('rightClick', new Event(null));
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="next-stage-time-input"]').attributes().modelvalue).toEqual('start time!!');

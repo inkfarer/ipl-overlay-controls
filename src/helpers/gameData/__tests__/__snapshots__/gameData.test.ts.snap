@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gameData perGameData matches snapshot 1`] = `
-Object {
-  "SPLATOON_2": Object {
-    "colors": Array [
-      Object {
-        "colors": Array [
-          Object {
+{
+  "SPLATOON_2": {
+    "colors": [
+      {
+        "colors": [
+          {
             "clrA": "#37FC00",
             "clrB": "#7D28FC",
             "clrNeutral": "#F4067E",
@@ -14,7 +14,7 @@ Object {
             "isCustom": false,
             "title": "Green vs Grape",
           },
-          Object {
+          {
             "clrA": "#04D976",
             "clrB": "#D600AB",
             "clrNeutral": "#D2E500",
@@ -22,7 +22,7 @@ Object {
             "isCustom": false,
             "title": "Green vs Magenta",
           },
-          Object {
+          {
             "clrA": "#10E38F",
             "clrB": "#FB7B08",
             "clrNeutral": "#6912CD",
@@ -30,7 +30,7 @@ Object {
             "isCustom": false,
             "title": "Turquoise vs Orange",
           },
-          Object {
+          {
             "clrA": "#FF9E03",
             "clrB": "#B909E0",
             "clrNeutral": "#08C66B",
@@ -38,7 +38,7 @@ Object {
             "isCustom": false,
             "title": "Mustard vs Purple",
           },
-          Object {
+          {
             "clrA": "#2F27CC",
             "clrB": "#37FC00",
             "clrNeutral": "#EA01B7",
@@ -46,7 +46,7 @@ Object {
             "isCustom": false,
             "title": "Dark Blue vs Green",
           },
-          Object {
+          {
             "clrA": "#B909E0",
             "clrB": "#37FC00",
             "clrNeutral": "#F87604",
@@ -54,7 +54,7 @@ Object {
             "isCustom": false,
             "title": "Purple vs Green",
           },
-          Object {
+          {
             "clrA": "#FEF232",
             "clrB": "#2ED2FE",
             "clrNeutral": "#FD5600",
@@ -63,13 +63,13 @@ Object {
             "title": "Yellow vs Blue",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Ranked Modes",
         },
       },
-      Object {
-        "colors": Array [
-          Object {
+      {
+        "colors": [
+          {
             "clrA": "#D1E004",
             "clrB": "#960CB2",
             "clrNeutral": "#0EB962",
@@ -77,7 +77,7 @@ Object {
             "isCustom": false,
             "title": "Yellow vs Purple",
           },
-          Object {
+          {
             "clrA": "#E61077",
             "clrB": "#361CB8",
             "clrNeutral": "#24C133",
@@ -85,7 +85,7 @@ Object {
             "isCustom": false,
             "title": "Pink vs Blue",
           },
-          Object {
+          {
             "clrA": "#ED0C6A",
             "clrB": "#D5E802",
             "clrNeutral": "#08C24D",
@@ -93,7 +93,7 @@ Object {
             "isCustom": false,
             "title": "Pink vs Yellow",
           },
-          Object {
+          {
             "clrA": "#6B10CC",
             "clrB": "#08CC81",
             "clrNeutral": "#EB246D",
@@ -101,7 +101,7 @@ Object {
             "isCustom": false,
             "title": "Purple vs Turquoise",
           },
-          Object {
+          {
             "clrA": "#E30960",
             "clrB": "#02ADCF",
             "clrNeutral": "#DDE713",
@@ -109,7 +109,7 @@ Object {
             "isCustom": false,
             "title": "Pink vs Light Blue",
           },
-          Object {
+          {
             "clrA": "#5617C2",
             "clrB": "#FF5F03",
             "clrNeutral": "#ACE81E",
@@ -117,7 +117,7 @@ Object {
             "isCustom": false,
             "title": "Purple vs Orange",
           },
-          Object {
+          {
             "clrA": "#E60572",
             "clrB": "#1BBF0F",
             "clrNeutral": "#CCE50C",
@@ -125,7 +125,7 @@ Object {
             "isCustom": false,
             "title": "Pink vs Green",
           },
-          Object {
+          {
             "clrA": "#F1CE33",
             "clrB": "#4B12BE",
             "clrNeutral": "#E62E96",
@@ -134,13 +134,13 @@ Object {
             "title": "Yellow vs Blue",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Turf War",
         },
       },
-      Object {
-        "colors": Array [
-          Object {
+      {
+        "colors": [
+          {
             "clrA": "#FEF232",
             "clrB": "#2F27CC",
             "clrNeutral": "#DC1589",
@@ -149,13 +149,13 @@ Object {
             "title": "Yellow vs Blue (Color Lock)",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Color Lock",
         },
       },
-      Object {
-        "colors": Array [
-          Object {
+      {
+        "colors": [
+          {
             "clrA": "#000000",
             "clrB": "#FFFFFF",
             "clrNeutral": "#818181",
@@ -164,13 +164,13 @@ Object {
             "title": "Custom Color",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Custom Color",
         },
       },
     ],
-    "modes": Object {
-      "DE": Object {
+    "modes": {
+      "DE": {
         "Clam Blitz": "Muschelchaos",
         "Rainmaker": "Operation Goldfisch",
         "Splat Zones": "Herrschaft",
@@ -178,7 +178,7 @@ Object {
         "Turf War": "Revierkampf",
         "Unknown Mode": "Unbekannte Kampfart",
       },
-      "EN": Object {
+      "EN": {
         "Clam Blitz": "Clam Blitz",
         "Rainmaker": "Rainmaker",
         "Splat Zones": "Splat Zones",
@@ -187,8 +187,8 @@ Object {
         "Unknown Mode": "Unknown Mode",
       },
     },
-    "stages": Object {
-      "DE": Object {
+    "stages": {
+      "DE": {
         "Ancho-V Games": "Anchobit Games HQ",
         "Arowana Mall": "Arowana Center",
         "Blackbelly Skatepark": "Punkasius-Skatepark",
@@ -216,7 +216,7 @@ Object {
         "Wahoo World": "Flunder-Funpark",
         "Walleye Warehouse": "Kofferfisch-Lager",
       },
-      "EN": Object {
+      "EN": {
         "Ancho-V Games": "Ancho-V Games",
         "Arowana Mall": "Arowana Mall",
         "Blackbelly Skatepark": "Blackbelly Skatepark",
@@ -246,19 +246,19 @@ Object {
       },
     },
   },
-  "SPLATOON_3": Object {
-    "colors": Array [
-      Object {
-        "colors": Array [
-          Object {
-            "clrA": "#2ADBC6",
-            "clrB": "#FA5A41",
-            "clrNeutral": "#4445FF",
+  "SPLATOON_3": {
+    "colors": [
+      {
+        "colors": [
+          {
+            "clrA": "#FC7735",
+            "clrB": "#4048DB",
+            "clrNeutral": "#F8F755",
             "index": 0,
             "isCustom": false,
-            "title": "Turquoise vs Orange",
+            "title": "Orange vs Dark Blue",
           },
-          Object {
+          {
             "clrA": "#F753A1",
             "clrB": "#35CC2D",
             "clrNeutral": "#4A36FF",
@@ -266,55 +266,55 @@ Object {
             "isCustom": false,
             "title": "Pink vs Green",
           },
-          Object {
-            "clrA": "#EBCC31",
-            "clrB": "#A032DB",
-            "clrNeutral": "#73DE35",
-            "index": 2,
-            "isCustom": false,
-            "title": "Gold vs Purple",
-          },
-          Object {
-            "clrA": "#EDD921",
-            "clrB": "#461EE6",
-            "clrNeutral": "#4445FF",
-            "index": 3,
-            "isCustom": false,
-            "title": "Yellow vs Dark Blue",
-          },
-          Object {
+          {
             "clrA": "#B3DE45",
             "clrB": "#D43BCA",
             "clrNeutral": "#FFC042",
-            "index": 4,
+            "index": 2,
             "isCustom": false,
             "title": "Green vs Pink",
           },
-          Object {
-            "clrA": "#FC7735",
-            "clrB": "#4048DB",
-            "clrNeutral": "#F8F755",
-            "index": 5,
-            "isCustom": false,
-            "title": "Orange vs Dark Blue",
-          },
-          Object {
-            "clrA": "#F56522",
-            "clrB": "#821CD6",
-            "clrNeutral": "#CDFF45",
-            "index": 6,
-            "isCustom": false,
-            "title": "Orange vs Purple",
-          },
-          Object {
+          {
             "clrA": "#2ADBC3",
             "clrB": "#E34984",
             "clrNeutral": "#7577FF",
-            "index": 7,
+            "index": 3,
             "isCustom": false,
             "title": "Turquoise vs Pink",
           },
-          Object {
+          {
+            "clrA": "#F56522",
+            "clrB": "#821CD6",
+            "clrNeutral": "#CDFF45",
+            "index": 4,
+            "isCustom": false,
+            "title": "Orange vs Purple",
+          },
+          {
+            "clrA": "#EDD921",
+            "clrB": "#461EE6",
+            "clrNeutral": "#4445FF",
+            "index": 5,
+            "isCustom": false,
+            "title": "Yellow vs Dark Blue",
+          },
+          {
+            "clrA": "#EBCC31",
+            "clrB": "#A032DB",
+            "clrNeutral": "#73DE35",
+            "index": 6,
+            "isCustom": false,
+            "title": "Gold vs Purple",
+          },
+          {
+            "clrA": "#2ADBC6",
+            "clrB": "#FA5A41",
+            "clrNeutral": "#4445FF",
+            "index": 7,
+            "isCustom": false,
+            "title": "Turquoise vs Orange",
+          },
+          {
             "clrA": "#EEFC58",
             "clrB": "#7635F0",
             "clrNeutral": "#54FDE8",
@@ -322,7 +322,7 @@ Object {
             "isCustom": false,
             "title": "Yellow vs Purple",
           },
-          Object {
+          {
             "clrA": "#2C2CDB",
             "clrB": "#F29C33",
             "clrNeutral": "#FF67EE",
@@ -331,13 +331,13 @@ Object {
             "title": "Dark Blue vs Orange",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Ranked Modes",
         },
       },
-      Object {
-        "colors": Array [
-          Object {
+      {
+        "colors": [
+          {
             "clrA": "#000000",
             "clrB": "#FFFFFF",
             "clrNeutral": "#818181",
@@ -346,13 +346,13 @@ Object {
             "title": "Custom Color",
           },
         ],
-        "meta": Object {
+        "meta": {
           "name": "Custom Color",
         },
       },
     ],
-    "modes": Object {
-      "DE": Object {
+    "modes": {
+      "DE": {
         "Clam Blitz": "Muschelchaos",
         "Rainmaker": "Operation Goldfisch",
         "Splat Zones": "Herrschaft",
@@ -360,7 +360,7 @@ Object {
         "Turf War": "Revierkampf",
         "Unknown Mode": "Unbekannte Kampfart",
       },
-      "EN": Object {
+      "EN": {
         "Clam Blitz": "Clam Blitz",
         "Rainmaker": "Rainmaker",
         "Splat Zones": "Splat Zones",
@@ -369,8 +369,8 @@ Object {
         "Unknown Mode": "Unknown Mode",
       },
     },
-    "stages": Object {
-      "DE": Object {
+    "stages": {
+      "DE": {
         "Brinewater Springs": "Kusaya-Quellen",
         "Counterpick": "Counterpick",
         "Eeltail Alley": "Streifenaal-Straße",
@@ -390,7 +390,7 @@ Object {
         "Unknown Stage": "Unbekannte Arena",
         "Wahoo World": "Flunder-Funpark",
       },
-      "EN": Object {
+      "EN": {
         "Brinewater Springs": "Brinewater Springs",
         "Counterpick": "Counterpick",
         "Eeltail Alley": "Eeltail Alley",

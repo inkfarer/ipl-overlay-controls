@@ -4,6 +4,7 @@ import { PredictionStatus } from 'types/enums/predictionStatus';
 import { mockDialog, mockGetDialog, mockSendMessage } from '../../__mocks__/mockNodecg';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { usePredictionDataStore } from '../../store/predictionDataStore';
+import { IplButton } from '@iplsplatoon/vue-components';
 
 describe('Predictions', () => {
     let pinia: TestingPinia;
@@ -136,7 +137,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="socket-reconnect-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="socket-reconnect-button"]').vm.$emit('click');
 
         expect(store.reconnect).toHaveBeenCalled();
     });
@@ -198,7 +199,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="resolve-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="resolve-prediction-button"]').vm.$emit('click');
 
         expect(mockDialog.open).toHaveBeenCalled();
         expect(mockGetDialog).toHaveBeenCalledWith('resolvePredictionDialog');
@@ -213,7 +214,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="create-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="create-prediction-button"]').vm.$emit('click');
 
         expect(mockDialog.open).toHaveBeenCalled();
         expect(mockGetDialog).toHaveBeenCalledWith('createPredictionDialog');
@@ -229,7 +230,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="lock-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="lock-prediction-button"]').vm.$emit('click');
 
         expect(store.lockPrediction).toHaveBeenCalled();
     });
@@ -244,7 +245,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="cancel-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="cancel-prediction-button"]').vm.$emit('click');
 
         expect(store.cancelPrediction).toHaveBeenCalled();
     });
@@ -258,7 +259,7 @@ describe('Predictions', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="show-prediction-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="show-prediction-button"]').vm.$emit('click');
 
         expect(mockSendMessage).toHaveBeenCalledWith('showPredictionData');
     });

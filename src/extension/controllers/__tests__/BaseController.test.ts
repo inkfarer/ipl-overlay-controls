@@ -31,10 +31,11 @@ describe('BaseController', () => {
         });
 
         describe.each([
-            jest.fn().mockReturnValue('test result'),
-            jest.fn().mockResolvedValue('test result')
-        ])('behaves as expected when the handler returns a proper value (%#)', callback => {
+            () => jest.fn(() => 'test result'),
+            () => jest.fn(() => Promise.resolve('test result'))
+        ])('behaves as expected when the handler returns a proper value (%#)', callbackFactory => {
             it('returns the callback if it is unhandled', async () => {
+                const callback = callbackFactory();
                 const nodecg = {
                     listenFor: jest.fn()
                 };
@@ -53,6 +54,7 @@ describe('BaseController', () => {
             });
 
             it('does not respond to the message if it is handled', async () => {
+                const callback = callbackFactory();
                 const nodecg = {
                     listenFor: jest.fn()
                 };
@@ -72,10 +74,11 @@ describe('BaseController', () => {
         });
 
         describe.each([
-            jest.fn().mockImplementation(() => { throw new Error('test error'); }),
-            jest.fn().mockRejectedValue(new Error('test error'))
-        ])('behaves as expected when the handler throws an error (%#)', callback => {
+            () => jest.fn().mockImplementation(() => { throw new Error('test error'); }),
+            () => jest.fn().mockRejectedValue(new Error('test error'))
+        ])('behaves as expected when the handler throws an error (%#)', callbackFactory => {
             it('returns the callback if it is unhandled and the handler throws an error', async () => {
+                const callback = callbackFactory();
                 const nodecg = {
                     listenFor: jest.fn()
                 };
@@ -94,6 +97,7 @@ describe('BaseController', () => {
             });
 
             it('does not respond to the message if it is handled and the handler throws an error', async () => {
+                const callback = callbackFactory();
                 const nodecg = {
                     listenFor: jest.fn()
                 };

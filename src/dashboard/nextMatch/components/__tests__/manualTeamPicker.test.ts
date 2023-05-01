@@ -3,6 +3,7 @@ import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../../store/nextRoundStore';
+import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('ManualTeamPicker', () => {
     let pinia: TestingPinia;
@@ -44,7 +45,7 @@ describe('ManualTeamPicker', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="update-button"]').attributes().color).toEqual('red');
@@ -59,9 +60,9 @@ describe('ManualTeamPicker', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setNextRound).toHaveBeenCalledWith({
             teamAId: '999999',
@@ -79,9 +80,9 @@ describe('ManualTeamPicker', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
-        wrapper.getComponent('[data-test="round-selector"]').vm.$emit('update:modelValue', '098098');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
+        wrapper.getComponent<typeof IplSelect>('[data-test="round-selector"]').vm.$emit('update:modelValue', '098098');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('123123');

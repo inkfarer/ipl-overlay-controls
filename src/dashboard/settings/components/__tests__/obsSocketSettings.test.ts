@@ -3,6 +3,7 @@ import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useObsStore } from '../../../store/obsStore';
+import { IplButton, IplInput } from '@iplsplatoon/vue-components';
 
 describe('ObsSocketSettings', () => {
     let pinia: TestingPinia;
@@ -52,7 +53,7 @@ describe('ObsSocketSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="socketUrl"]').vm.$emit('update:modelValue', '');
+        wrapper.getComponent<typeof IplInput>('[name="socketUrl"]').vm.$emit('update:modelValue', '');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="socket-connect-button"]').attributes().disabled).toEqual('true');
@@ -65,7 +66,7 @@ describe('ObsSocketSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
+        wrapper.getComponent<typeof IplInput>('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[data-test="socket-connect-button"]').attributes().color).toEqual('red');
@@ -80,9 +81,9 @@ describe('ObsSocketSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
+        wrapper.getComponent<typeof IplInput>('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="socket-connect-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="socket-connect-button"]').vm.$emit('click');
 
         expect(store.connect).toHaveBeenCalledWith({ address: 'https://new-socket-url', password: 'pwd' });
     });
@@ -96,8 +97,8 @@ describe('ObsSocketSettings', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
-        wrapper.getComponent('[data-test="socket-connect-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="socketUrl"]').vm.$emit('update:modelValue', 'https://new-socket-url');
+        wrapper.getComponent<typeof IplButton>('[data-test="socket-connect-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="socketUrl"]').attributes().modelvalue).toEqual('localhost:4444');

@@ -17,6 +17,7 @@ jobs:
           token: ${{ secrets['GITHUB_TOKEN'] }}
           repository: nodecg/nodecg
           path: ./nodecg-temp
+          ref: 'v1.9.0'
 
       - name: Copy ./nodecg-temp > ./nodecg
         run: cp -r ./nodecg-temp ./nodecg

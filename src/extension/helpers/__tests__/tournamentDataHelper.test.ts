@@ -1,15 +1,15 @@
 import { getTeam } from '../tournamentDataHelper';
 import { TournamentData } from 'schemas';
-import { mocked } from 'ts-jest/utils';
 import clone from 'clone';
 
 jest.mock('clone');
 
 describe('tournamentDataHelper', () => {
-    const mockClone = mocked(clone).mockReturnValue('cloned value');
+    const mockClone = jest.mocked(clone);
 
-    afterEach(() => {
+    beforeEach(() => {
         jest.resetAllMocks();
+        mockClone.mockReturnValue('cloned value');
     });
 
     describe('getTeam', () => {

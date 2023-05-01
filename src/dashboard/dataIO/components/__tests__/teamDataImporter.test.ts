@@ -5,6 +5,7 @@ import { mockBundleConfig } from '../../../__mocks__/mockNodecg';
 import * as stringHelper from '../../../helpers/stringHelper';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../../store/tournamentDataStore';
+import { IplButton, IplCheckbox, IplInput, IplRadio, IplSelect, IplUpload } from '@iplsplatoon/vue-components';
 
 describe('teamDataImporter', () => {
     let pinia: TestingPinia;
@@ -140,7 +141,7 @@ describe('teamDataImporter', () => {
                 plugins: [pinia]
             }
         });
-        const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
+        const sourceSelector = wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]');
 
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
@@ -156,7 +157,7 @@ describe('teamDataImporter', () => {
                 plugins: [pinia]
             }
         });
-        const sourceSelector = wrapper.getComponent('[data-test="source-selector"]');
+        const sourceSelector = wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]');
 
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
@@ -174,9 +175,9 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'SMASHGG');
-        wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'SMASHGG');
+        wrapper.getComponent<typeof IplInput>('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
 
         expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.SMASHGG,
@@ -194,9 +195,9 @@ describe('teamDataImporter', () => {
         });
         jest.spyOn(stringHelper, 'extractBattlefyTournamentId').mockReturnValue('battlefy-tournament-id');
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
-        wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
+        wrapper.getComponent<typeof IplInput>('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
 
         expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.BATTLEFY,
@@ -215,11 +216,11 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'SMASHGG');
-        wrapper.getComponent('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
-        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'SMASHGG');
+        wrapper.getComponent<typeof IplInput>('[name="tournament-id-input"]').vm.$emit('update:modelValue', 'cool-tourney');
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
 
         expect(store.getTournamentData).toHaveBeenCalledWith({
             method: TournamentDataSource.SMASHGG,
@@ -238,11 +239,11 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
-        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
-        wrapper.getComponent('[data-test="team-data-upload"]').vm.$emit('update:modelValue', file);
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplUpload>('[data-test="team-data-upload"]').vm.$emit('update:modelValue', file);
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
 
         expect(store.uploadTeamData).toHaveBeenCalledWith({ file });
     });
@@ -261,7 +262,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(wrapper.findComponent('[data-test="smashgg-event-selector"]').exists()).toEqual(true);
@@ -285,10 +286,10 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
         await flushPromises();
-        wrapper.getComponent('[data-test="smashgg-event-selector"]').vm.$emit('update:modelValue', '456456');
-        wrapper.getComponent('[data-test="smashgg-event-import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSelect>('[data-test="smashgg-event-selector"]').vm.$emit('update:modelValue', '456456');
+        wrapper.getComponent<typeof IplButton>('[data-test="smashgg-event-import-button"]').vm.$emit('click');
         await flushPromises();
 
         expect(store.getSmashggEvent).toHaveBeenCalledWith({ eventId: 456456 });
@@ -310,9 +311,9 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="import-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="import-button"]').vm.$emit('click');
         await flushPromises();
-        wrapper.getComponent('[data-test="smashgg-event-import-cancel-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="smashgg-event-import-cancel-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(store.getSmashggEvent).not.toHaveBeenCalled();
@@ -326,8 +327,8 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
-        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(true);
@@ -341,8 +342,8 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
-        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', false);
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'UPLOAD');
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', false);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(false);
@@ -356,8 +357,8 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
-        wrapper.getComponent('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="use-file-upload-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplRadio>('[data-test="source-selector"]').vm.$emit('update:modelValue', 'BATTLEFY');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.findComponent('[data-test="team-data-upload"]').isVisible()).toEqual(false);
@@ -373,8 +374,8 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[name="shortName"]').vm.$emit('update:modelValue', 'Tournament Name');
-        wrapper.getComponent('[data-test="update-short-name-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[name="shortName"]').vm.$emit('update:modelValue', 'Tournament Name');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-short-name-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(store.setShortName).toHaveBeenCalledWith('Tournament Name');
@@ -389,8 +390,8 @@ describe('teamDataImporter', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="shortName"]').vm.$emit('update:modelValue', 'Tourney Name');
-        wrapper.getComponent('[data-test="update-short-name-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="shortName"]').vm.$emit('update:modelValue', 'Tourney Name');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-short-name-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="shortName"]').attributes().modelvalue).toEqual('Tournament Name');
@@ -406,7 +407,7 @@ describe('teamDataImporter', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="refresh-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="refresh-button"]').vm.$emit('click');
 
         expect(tournamentDataStore.refreshTournamentData).toHaveBeenCalled();
     });

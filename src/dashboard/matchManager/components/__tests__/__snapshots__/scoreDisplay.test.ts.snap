@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ScoreDisplay matches snapshot 1`] = `
-"<div class=\\"ipl-space color-dark layout horizontal center-horizontal center-vertical\\" data-v-11cc5f1c=\\"\\">
-  <div class=\\"ipl-space color-light layout horizontal score-display-space\\" data-v-11cc5f1c=\\"\\">
-    <div class=\\"layout vertical\\">
-      <ipl-button-stub icon=\\"plus\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"team-a-plus-btn\\"></ipl-button-stub>
-      <ipl-button-stub icon=\\"minus\\" color=\\"red\\" disabled=\\"true\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-4\\" data-test=\\"team-a-minus-btn\\"></ipl-button-stub>
+"<div data-v-11cc5f1c="" class="ipl-space color-dark layout horizontal center-horizontal center-vertical">
+  <div data-v-11cc5f1c="" class="ipl-space color-light layout horizontal score-display-space">
+    <div class="layout vertical">
+      <ipl-button-stub icon="plus" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" href="" data-test="team-a-plus-btn"></ipl-button-stub>
+      <ipl-button-stub icon="minus" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" href="" class="m-t-4" data-test="team-a-minus-btn"></ipl-button-stub>
     </div>
-    <div class=\\"layout horizontal center-horizontal center-vertical score-wrapper left\\"><span class=\\"score\\">0</span></div>
-  </div><span class=\\"score-separator\\">:</span>
-  <div class=\\"ipl-space color-light layout horizontal score-display-space\\" data-v-11cc5f1c=\\"\\">
-    <div class=\\"layout horizontal center-horizontal center-vertical score-wrapper right\\"><span class=\\"score\\">2</span></div>
-    <div class=\\"layout vertical\\">
-      <ipl-button-stub icon=\\"plus\\" color=\\"green\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" data-test=\\"team-b-plus-btn\\"></ipl-button-stub>
-      <ipl-button-stub icon=\\"minus\\" color=\\"red\\" disabled=\\"false\\" async=\\"false\\" progressmessage=\\"Working...\\" successmessage=\\"Done!\\" requiresconfirmation=\\"false\\" shortconfirmationmessage=\\"false\\" small=\\"true\\" disableonsuccess=\\"false\\" href=\\"\\" class=\\"m-t-4\\" data-test=\\"team-b-minus-btn\\"></ipl-button-stub>
+    <div class="layout horizontal center-horizontal center-vertical score-wrapper left"><span class="score">0</span></div>
+  </div><span class="score-separator">:</span>
+  <div data-v-11cc5f1c="" class="ipl-space color-light layout horizontal score-display-space">
+    <div class="layout horizontal center-horizontal center-vertical score-wrapper right"><span class="score">2</span></div>
+    <div class="layout vertical">
+      <ipl-button-stub icon="plus" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" href="" data-test="team-b-plus-btn"></ipl-button-stub>
+      <ipl-button-stub icon="minus" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" href="" class="m-t-4" data-test="team-b-minus-btn"></ipl-button-stub>
     </div>
   </div>
 </div>"

@@ -11,7 +11,7 @@ beforeEach(() => {
 
 jest.mock('lastfm', () => ({
     LastFmNode: jest.fn().mockReturnValue({
-        stream: jest.fn().mockReturnValue({
+        stream: () => ({
             stop: mockStopStream,
             start: mockStartStream,
             on: (event: string, cb: UnknownFunction) => {

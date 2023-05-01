@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { useActiveRoundStore } from '../store/activeRoundStore';
 import { computed } from 'vue';
 import TeamRosterDisplay from './teamRosterDisplay.vue';

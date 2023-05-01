@@ -7,6 +7,7 @@ import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useObsStore } from '../../store/obsStore';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { UnknownModule } from '../../../helpers/__mocks__/module';
+import { IplButton, IplMessage } from '@iplsplatoon/vue-components';
 
 describe('MatchManager', () => {
     let pinia: TestingPinia;
@@ -52,7 +53,7 @@ describe('MatchManager', () => {
         jest.spyOn(casterStore, 'showCasters');
         const wrapper = mount(MatchManager);
 
-        wrapper.getComponent('[data-test="show-casters-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="show-casters-button"]').vm.$emit('click');
 
         expect(casterStore.showCasters).toHaveBeenCalled();
     });
@@ -102,7 +103,7 @@ describe('MatchManager', () => {
             const obsStore = useObsStore();
             obsStore.fastForwardToNextGameAutomationTask = jest.fn();
 
-            wrapper.getComponent('[data-test="start-stop-game-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]').vm.$emit('click');
 
             expect(obsStore.fastForwardToNextGameAutomationTask).toHaveBeenCalled();
         });
@@ -110,7 +111,7 @@ describe('MatchManager', () => {
         it.each(['changeScene', 'showScoreboard', 'hideScoreboard', 'showCasters', 'unknown task'])('has expected button color and label when task name is %s', async (taskName) => {
             useObsStore().gameAutomationData.nextTaskForAction.name = taskName;
             await wrapper.vm.$nextTick();
-            const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+            const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('blue');
             expect((button.vm as unknown as UnknownModule).label).toMatchSnapshot();
@@ -121,7 +122,7 @@ describe('MatchManager', () => {
         });
 
         it('handles cancel button press', () => {
-            const button = wrapper.getComponent('[data-test="cancel-automation-action-button"]');
+            const button = wrapper.getComponent<typeof IplButton>('[data-test="cancel-automation-action-button"]');
 
             button.vm.$emit('click');
 
@@ -147,13 +148,13 @@ describe('MatchManager', () => {
             const obsStore = useObsStore();
             obsStore.endGame = jest.fn();
 
-            wrapper.getComponent('[data-test="start-stop-game-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]').vm.$emit('click');
 
             expect(obsStore.endGame).toHaveBeenCalled();
         });
 
         it('has expected button color and label', () => {
-            const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+            const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('red');
             expect((button.vm as unknown as UnknownModule).label).toEqual('End Game');
@@ -178,13 +179,13 @@ describe('MatchManager', () => {
             const obsStore = useObsStore();
             obsStore.startGame = jest.fn();
 
-            wrapper.getComponent('[data-test="start-stop-game-button"]').vm.$emit('click');
+            wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]').vm.$emit('click');
 
             expect(obsStore.startGame).toHaveBeenCalled();
         });
 
         it('has expected button color and label', () => {
-            const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+            const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('green');
             expect((button.vm as unknown as UnknownModule).label).toEqual('Start Game');
@@ -199,7 +200,7 @@ describe('MatchManager', () => {
         };
         jest.spyOn(Date.prototype, 'getTime').mockReturnValue(now);
         const wrapper = mount(MatchManager);
-        const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+        const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
         expect((button.vm as unknown as UnknownModule).disabled).toEqual(true);
     });
@@ -212,7 +213,7 @@ describe('MatchManager', () => {
         };
         jest.spyOn(Date.prototype, 'getTime').mockReturnValue(8999);
         const wrapper = mount(MatchManager);
-        const button = wrapper.getComponent('[data-test="start-stop-game-button"]');
+        const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
         expect((button.vm as unknown as UnknownModule).disabled).toEqual(false);
     });
@@ -243,7 +244,7 @@ describe('MatchManager', () => {
         messageListeners.obsSceneConfigurationChangedAfterUpdate();
         await wrapper.vm.$nextTick();
 
-        const warning = wrapper.findComponent('[data-test="obs-scenes-changed-warning"]');
+        const warning = wrapper.findComponent<typeof IplMessage>('[data-test="obs-scenes-changed-warning"]');
         expect(warning.exists()).toEqual(true);
 
         warning.vm.$emit('close');

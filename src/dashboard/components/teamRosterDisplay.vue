@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { PropType } from 'vue';
 import { ActiveRoundTeam } from 'schemas';
 import { addDots } from '../../helpers/stringHelper';

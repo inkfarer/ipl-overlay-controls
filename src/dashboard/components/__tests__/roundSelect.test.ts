@@ -2,6 +2,7 @@ import RoundSelect from '../roundSelect.vue';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import { IplSelect } from '@iplsplatoon/vue-components';
 
 describe('RoundSelect', () => {
     let pinia: TestingPinia;
@@ -43,7 +44,7 @@ describe('RoundSelect', () => {
         });
 
         expect(wrapper.html()).toMatchSnapshot();
-        expect((wrapper.getComponent('[data-test="round-selector"]').vm.$props as { options: unknown }).options)
+        expect(wrapper.getComponent<typeof IplSelect>('[data-test="round-selector"]').vm.$props.options)
             .toMatchSnapshot();
     });
 
@@ -57,7 +58,7 @@ describe('RoundSelect', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="round-selector"]').vm.$emit('update:modelValue', 'roundone');
+        wrapper.getComponent<typeof IplSelect>('[data-test="round-selector"]').vm.$emit('update:modelValue', 'roundone');
         await wrapper.vm.$nextTick();
 
         const modelValueEmits = wrapper.emitted('update:modelValue');

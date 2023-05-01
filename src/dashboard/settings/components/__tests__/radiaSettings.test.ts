@@ -2,6 +2,7 @@ import RadiaSettings from '../radiaSettings.vue';
 import { mount, config } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { IplButton, IplCheckbox, IplInput } from '@iplsplatoon/vue-components';
 
 describe('radiaSettings', () => {
     let pinia: TestingPinia;
@@ -53,7 +54,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="radia-connect-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="radia-connect-button"]').vm.$emit('click');
 
         expect(store.attemptRadiaConnection).toHaveBeenCalled();
     });
@@ -81,7 +82,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        const guildIdInput = wrapper.findComponent('[name="guild-id"]');
+        const guildIdInput = wrapper.findComponent<typeof IplInput>('[name="guild-id"]');
         guildIdInput.vm.$emit('focuschange', false);
         store.radiaSettings.guildID = '345345';
         await wrapper.vm.$nextTick();
@@ -97,7 +98,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        const usernameInput = wrapper.findComponent('[name="guild-id"]');
+        const usernameInput = wrapper.findComponent<typeof IplInput>('[name="guild-id"]');
         usernameInput.vm.$emit('focuschange', true);
         store.radiaSettings.guildID = '345345';
         store.radiaSettings.updateOnImport = false;
@@ -132,8 +133,8 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplInput>('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setRadiaSettings).toHaveBeenCalledWith({
             newValue: {
@@ -153,8 +154,8 @@ describe('radiaSettings', () => {
         const event = new Event(null);
         jest.spyOn(event, 'preventDefault');
 
-        wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('right-click', event);
+        wrapper.getComponent<typeof IplInput>('[name="guild-id"]').vm.$emit('update:modelValue', '789789');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('rightClick', event);
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[name="guild-id"]').attributes().modelvalue).toEqual('123123');
@@ -170,7 +171,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="update-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setRadiaSettings).not.toHaveBeenCalled();
     });
@@ -182,7 +183,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().color).toEqual('blue');
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().color).toEqual('blue');
     });
 
     it('has expected button color when data is edited', async () => {
@@ -192,10 +193,10 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', '890890');
+        wrapper.getComponent<typeof IplInput>('[name="guild-id"]').vm.$emit('update:modelValue', '890890');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().color).toEqual('red');
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().color).toEqual('red');
     });
 
     it('disables update button if data is invalid', async () => {
@@ -205,10 +206,10 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[name="guild-id"]').vm.$emit('update:modelValue', 'something invalid');
+        wrapper.getComponent<typeof IplInput>('[name="guild-id"]').vm.$emit('update:modelValue', 'something invalid');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent('[data-test="update-button"]').props().disabled).toEqual(true);
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').props().disabled).toEqual(true);
     });
 
     it('updates updateOnImport value when relevant checkbox is interacted with', async () => {
@@ -220,7 +221,7 @@ describe('radiaSettings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="update-on-import-checkbox"]').vm.$emit('update:modelValue', true);
+        wrapper.getComponent<typeof IplCheckbox>('[data-test="update-on-import-checkbox"]').vm.$emit('update:modelValue', true);
         await wrapper.vm.$nextTick();
 
         expect(store.setUpdateOnImport).toHaveBeenCalledWith(true);

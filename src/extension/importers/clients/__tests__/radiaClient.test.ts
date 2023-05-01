@@ -7,7 +7,6 @@ jest.mock('axios', () => ({ __esModule: true, default: mockAxios }));
 import {
     createPrediction,
     getGuildInfo,
-    getLiveCasters,
     getPredictions,
     handleAxiosError,
     hasPredictionSupport,
@@ -220,28 +219,6 @@ describe('radiaClient', () => {
                     }
                 }
             })).toThrow('Radia API call failed with response 500: An error has occurred.');
-        });
-    });
-
-    describe('getLiveCasters', () => {
-        it('fetches casters from the API', async () => {
-            const expectedResult = [{ name: 'Caster One' }, { name: 'Caster Two' }];
-            mockAxios.get.mockResolvedValue({ status: 200, data: expectedResult });
-
-            const result = await getLiveCasters('19873590');
-
-            expect(result).toEqual(expectedResult);
-            expect(mockAxios.get).toHaveBeenCalledWith(
-                'radia://url/live/guild/19873590',
-                { headers: { Authorization: 'radia-auth-12345' } }
-            );
-        });
-
-        it('throws an error if the status is not 200', () => {
-            mockAxios.get.mockResolvedValue({ status: 401 });
-
-            expect(getLiveCasters('0259378')).rejects
-                .toThrow('Radia API call failed with response 401');
         });
     });
 

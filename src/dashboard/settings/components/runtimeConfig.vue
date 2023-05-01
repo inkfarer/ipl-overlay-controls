@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { GameVersion, GameVersionHelper } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../../store/settingsStore';

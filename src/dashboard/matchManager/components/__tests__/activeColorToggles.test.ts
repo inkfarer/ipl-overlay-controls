@@ -6,6 +6,7 @@ import { PlayType } from 'types/enums/playType';
 import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { IplButton } from '@iplsplatoon/vue-components';
 
 describe('ActiveColorToggles', () => {
     let pinia: TestingPinia;
@@ -161,7 +162,7 @@ describe('ActiveColorToggles', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="swap-colors-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplButton>('[data-test="swap-colors-button"]').vm.$emit('click');
 
         expect(activeRoundStore.swapColors).toHaveBeenCalled();
     });

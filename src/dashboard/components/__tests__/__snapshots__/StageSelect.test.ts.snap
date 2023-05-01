@@ -1,108 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StageSelect adds expected options to select when language is DE 1`] = `
-Array [
-  Object {
+[
+  {
     "name": "Abyssal-Museum",
     "value": "Shellendorf Institute",
   },
-  Object {
+  {
     "name": "Anchobit Games HQ",
     "value": "Ancho-V Games",
   },
-  Object {
+  {
     "name": "Arowana Center",
     "value": "Arowana Mall",
   },
-  Object {
+  {
     "name": "Backfisch-Stadion",
     "value": "Goby Arena",
   },
-  Object {
+  {
     "name": "Buckelwal-Piste",
     "value": "Humpback Pump Track",
   },
-  Object {
+  {
     "name": "Camp Schützenfisch",
     "value": "Camp Triggerfish",
   },
-  Object {
+  {
     "name": "Cetacea-Markt",
     "value": "MakoMart",
   },
-  Object {
+  {
     "name": "Counterpick",
     "value": "Counterpick",
   },
-  Object {
+  {
     "name": "Flunder-Funpark",
     "value": "Wahoo World",
   },
-  Object {
+  {
     "name": "Grundel-Pavillon",
     "value": "Skipper Pavilion",
   },
-  Object {
+  {
     "name": "Grätenkanal",
     "value": "Snapper Canal",
   },
-  Object {
+  {
     "name": "Heilbutt-Hafen",
     "value": "Port Mackerel",
   },
-  Object {
+  {
     "name": "Hotel Neothun",
     "value": "New Albacore Hotel",
   },
-  Object {
+  {
     "name": "Kofferfisch-Lager",
     "value": "Walleye Warehouse",
   },
-  Object {
+  {
     "name": "Korallenviertel",
     "value": "The Reef",
   },
-  Object {
+  {
     "name": "Manta Maria",
     "value": "Manta Maria",
   },
-  Object {
+  {
     "name": "Molluskelbude",
     "value": "Musselforge Fitness",
   },
-  Object {
+  {
     "name": "Muränentürme",
     "value": "Moray Towers",
   },
-  Object {
+  {
     "name": "Perlmutt-Akademie",
     "value": "Inkblot Art Academy",
   },
-  Object {
+  {
     "name": "Punkasius-Skatepark",
     "value": "Blackbelly Skatepark",
   },
-  Object {
+  {
     "name": "Seeigel-Rockbühne",
     "value": "Starfish Mainstage",
   },
-  Object {
+  {
     "name": "Steinköhler-Grube",
     "value": "Piranha Pit",
   },
-  Object {
+  {
     "name": "Störwerft",
     "value": "Sturgeon Shipyard",
   },
-  Object {
+  {
     "name": "Tümmlerkuppel",
     "value": "Kelp Dome",
   },
-  Object {
+  {
     "name": "Unbekannte Arena",
     "value": "Unknown Stage",
   },
-  Object {
+  {
     "name": "Wandelzone",
     "value": "Shifty Station",
   },
@@ -110,108 +110,108 @@ Array [
 `;
 
 exports[`StageSelect adds expected options to select when language is EN 1`] = `
-Array [
-  Object {
+[
+  {
     "name": "Ancho-V Games",
     "value": "Ancho-V Games",
   },
-  Object {
+  {
     "name": "Arowana Mall",
     "value": "Arowana Mall",
   },
-  Object {
+  {
     "name": "Blackbelly Skatepark",
     "value": "Blackbelly Skatepark",
   },
-  Object {
+  {
     "name": "Camp Triggerfish",
     "value": "Camp Triggerfish",
   },
-  Object {
+  {
     "name": "Counterpick",
     "value": "Counterpick",
   },
-  Object {
+  {
     "name": "Goby Arena",
     "value": "Goby Arena",
   },
-  Object {
+  {
     "name": "Humpback Pump Track",
     "value": "Humpback Pump Track",
   },
-  Object {
+  {
     "name": "Inkblot Art Academy",
     "value": "Inkblot Art Academy",
   },
-  Object {
+  {
     "name": "Kelp Dome",
     "value": "Kelp Dome",
   },
-  Object {
+  {
     "name": "MakoMart",
     "value": "MakoMart",
   },
-  Object {
+  {
     "name": "Manta Maria",
     "value": "Manta Maria",
   },
-  Object {
+  {
     "name": "Moray Towers",
     "value": "Moray Towers",
   },
-  Object {
+  {
     "name": "Musselforge Fitness",
     "value": "Musselforge Fitness",
   },
-  Object {
+  {
     "name": "New Albacore Hotel",
     "value": "New Albacore Hotel",
   },
-  Object {
+  {
     "name": "Piranha Pit",
     "value": "Piranha Pit",
   },
-  Object {
+  {
     "name": "Port Mackerel",
     "value": "Port Mackerel",
   },
-  Object {
+  {
     "name": "Shellendorf Institute",
     "value": "Shellendorf Institute",
   },
-  Object {
+  {
     "name": "Shifty Station",
     "value": "Shifty Station",
   },
-  Object {
+  {
     "name": "Skipper Pavilion",
     "value": "Skipper Pavilion",
   },
-  Object {
+  {
     "name": "Snapper Canal",
     "value": "Snapper Canal",
   },
-  Object {
+  {
     "name": "Starfish Mainstage",
     "value": "Starfish Mainstage",
   },
-  Object {
+  {
     "name": "Sturgeon Shipyard",
     "value": "Sturgeon Shipyard",
   },
-  Object {
+  {
     "name": "The Reef",
     "value": "The Reef",
   },
-  Object {
+  {
     "name": "Unknown Stage",
     "value": "Unknown Stage",
   },
-  Object {
+  {
     "name": "Wahoo World",
     "value": "Wahoo World",
   },
-  Object {
+  {
     "name": "Walleye Warehouse",
     "value": "Walleye Warehouse",
   },

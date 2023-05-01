@@ -2,6 +2,7 @@ import { config, mount } from '@vue/test-utils';
 import Settings from '../settings.vue';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useObsStore } from '../../store/obsStore';
+import { IplSpace } from '@iplsplatoon/vue-components';
 
 describe('Settings', () => {
     let pinia: TestingPinia;
@@ -34,9 +35,9 @@ describe('Settings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="open-sidebar-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSpace>('[data-test="open-sidebar-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent(`[data-test="section-selector_${section}"]`).vm.$emit('click');
+        wrapper.getComponent<typeof IplSpace>(`[data-test="section-selector_${section}"]`).vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -51,9 +52,9 @@ describe('Settings', () => {
             }
         });
 
-        wrapper.getComponent('[data-test="open-sidebar-button"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSpace>('[data-test="open-sidebar-button"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
-        wrapper.getComponent('[data-test="section-selector_obs-socket"]').vm.$emit('click');
+        wrapper.getComponent<typeof IplSpace>('[data-test="section-selector_obs-socket"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();
