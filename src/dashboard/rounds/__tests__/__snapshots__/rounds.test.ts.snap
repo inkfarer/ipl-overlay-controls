@@ -19,7 +19,7 @@ exports[`Rounds matches snapshot 1`] = `
   </div>
 </div>
 <div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
-  <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
+  <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
 </div>
 <round-editor-stub roundid="2426" round="[object Object]" isnewround="false" class="m-t-8" data-test="round-editor"></round-editor-stub>"
 `;
@@ -56,7 +56,7 @@ exports[`Rounds matches snapshot when round sidebar is open 1`] = `
   </div>
 </div>
 <div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
-  <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
+  <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
 </div>
 <round-editor-stub roundid="2426" round="[object Object]" isnewround="false" class="m-t-8" data-test="round-editor"></round-editor-stub>"
 `;

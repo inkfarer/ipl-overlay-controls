@@ -9,14 +9,14 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
   </div>
   <div class="layout horizontal m-t-6 color-toggle-container">
     <div class="color-toggle layout horizontal center-vertical center-horizontal" data-test="color-toggle-previous">
-      <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="icon-left"></font-awesome-icon-stub>
+      <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-left"></font-awesome-icon-stub>
       <div class="color" style="border-color: #181e29; background-color: rgb(4, 217, 118);"></div>
       <div class="color" style="border-color: white; background-color: rgb(214, 0, 171);"></div>
     </div><a class="ipl-button m-l-6" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="swap-colors-button"><span class="label">Swap</span></a>
     <div class="color-toggle layout horizontal center-vertical center-horizontal m-l-6" data-test="color-toggle-next">
       <div class="color" style="border-color: #181e29; background-color: rgb(254, 242, 50);"></div>
       <div class="color" style="border-color: #181e29; background-color: rgb(46, 210, 254);"></div>
-      <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="icon-right"></font-awesome-icon-stub>
+      <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-right"></font-awesome-icon-stub>
     </div>
   </div>
 </div>"
@@ -31,14 +31,14 @@ exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
   </div>
   <div class="layout horizontal m-t-6 color-toggle-container">
     <div class="color-toggle layout horizontal center-vertical center-horizontal" data-test="color-toggle-previous">
-      <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="icon-left"></font-awesome-icon-stub>
+      <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-left"></font-awesome-icon-stub>
       <div class="color" style="border-color: #181e29; background-color: rgb(4, 217, 118);"></div>
       <div class="color" style="border-color: white; background-color: rgb(214, 0, 171);"></div>
     </div><a class="ipl-button m-l-6" href="javascript:void(0);" style="background-color: rgb(97, 85, 189); color: white;" data-test="swap-colors-button"><span class="label">Swap</span></a>
     <div class="color-toggle layout horizontal center-vertical center-horizontal m-l-6" data-test="color-toggle-next">
       <div class="color" style="border-color: #181e29; background-color: rgb(254, 242, 50);"></div>
       <div class="color" style="border-color: #181e29; background-color: rgb(46, 210, 254);"></div>
-      <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" class="icon-right"></font-awesome-icon-stub>
+      <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-right"></font-awesome-icon-stub>
     </div>
   </div>
 </div>"
