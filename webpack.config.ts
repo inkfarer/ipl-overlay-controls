@@ -5,7 +5,7 @@ import LiveReloadPlugin from 'webpack-livereload-plugin';
 import nodeExternals from 'webpack-node-externals';
 import * as globby from 'globby';
 import * as path from 'path';
-import webpack, { DefinePlugin } from 'webpack';
+import webpack from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { VueLoaderPlugin } from 'vue-loader';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -50,7 +50,7 @@ function dashboardConfig(): webpack.Configuration {
                 }
             }
         }),
-        new DefinePlugin({
+        new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: JSON.stringify(true),
             __VUE_PROD_DEVTOOLS__: JSON.stringify(!isProd)
         }),
