@@ -45,6 +45,15 @@ describe('isBlank', () => {
         expect(isBlank('　\t')).toEqual(true);
     });
 
+    it('is true if the value is not a string', () => {
+        // @ts-ignore
+        expect(isBlank({})).toEqual(true);
+        // @ts-ignore
+        expect(isBlank(0)).toEqual(true);
+        // @ts-ignore
+        expect(isBlank([])).toEqual(true);
+    });
+
     it('is false if value is not blank', () => {
         expect(isBlank('   test!!!   ')).toEqual(false);
         expect(isBlank('TEST!!!')).toEqual(false);
