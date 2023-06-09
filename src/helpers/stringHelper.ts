@@ -10,5 +10,5 @@ export function addDots(value: string, maxLength = 48): string {
 }
 
 export function isBlank(value?: string | null): boolean {
-    return value === null || value === undefined || value.trim() === '';
+    return typeof value !== 'string' || value.trim() === '';
 }
