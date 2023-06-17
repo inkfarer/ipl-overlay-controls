@@ -19,6 +19,8 @@ export interface Splatoon3Stages {
     'Flounder Heights': string
     'Um\'ami Ruins': string
     'Manta Maria': string
+    'Barnacle & Dime': string
+    'Humpback Pump Track': string
 }
 
 export interface Splatoon3Modes {
@@ -47,7 +49,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Brinewater Springs': 'Brinewater Springs',
             'Flounder Heights': 'Flounder Heights',
             'Um\'ami Ruins': 'Um\'ami Ruins',
-            'Manta Maria': 'Manta Maria'
+            'Manta Maria': 'Manta Maria',
+            'Barnacle & Dime': 'Barnacle & Dime',
+            'Humpback Pump Track': 'Humpback Pump Track'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -65,7 +69,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Brinewater Springs': 'Kusaya-Quellen',
             'Flounder Heights': 'Schollensiedlung',
             'Um\'ami Ruins': 'Um\'ami-Ruinen',
-            'Manta Maria': 'Manta Maria'
+            'Manta Maria': 'Manta Maria',
+            'Barnacle & Dime': 'Talerfisch & Pock',
+            'Humpback Pump Track': 'Buckelwal-Piste'
         }
     },
     modes: {
