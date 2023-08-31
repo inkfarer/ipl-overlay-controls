@@ -14,7 +14,7 @@
     "required": ["gameVersion", "locale"],
     "additionalProperties": false,
     "default": {
-        "gameVersion": "SPLATOON_2",
+        "gameVersion": "SPLATOON_3",
         "locale": "EN"
     }
 }
