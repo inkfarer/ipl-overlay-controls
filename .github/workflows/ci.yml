@@ -20,17 +20,11 @@ jobs:
           path: ./ipl-overlay-controls
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-
-      - name: Set up NPM cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./ipl-overlay-controls/package-lock.json
 
       - name: Install NPM dependencies
         working-directory: ./ipl-overlay-controls
