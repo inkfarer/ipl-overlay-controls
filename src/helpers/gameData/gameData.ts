@@ -25,6 +25,7 @@ export type StageModeList<M> = {
 
 export interface GameData<S, M> {
     stages: StageNameList<S>,
+    stageImagePaths: {[stage in keyof S]: string },
     modes: StageModeList<M>,
     colors: ColorGroup[]
 }
