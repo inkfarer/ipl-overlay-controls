@@ -198,9 +198,6 @@
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-node-externals": "^3.0.0"
     },
-    "overrides": {
-        "@types/multer": "npm:dry-uninstall"
-    },
     "jest": {
         "projects": [
             "<rootDir>/src/dashboard/jest.config.ts",
