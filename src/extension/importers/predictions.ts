@@ -1,6 +1,6 @@
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
 import { PredictionStore, RadiaSettings } from 'schemas';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import {
     PredictionBeginEvent,
     PredictionEndEvent,
@@ -175,7 +175,7 @@ radiaSettings.on('change', async (newValue, oldValue) => {
     }
 });
 
-nodecg.listenFor('reconnectToRadiaSocket', async (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('reconnectToRadiaSocket', async (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         await attemptSocketConnection(radiaSettings.value.guildID);
         ack(null, null);
@@ -185,7 +185,7 @@ nodecg.listenFor('reconnectToRadiaSocket', async (data: never, ack: UnhandledLis
     }
 });
 
-nodecg.listenFor('getPredictions', async (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('getPredictions', async (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const response = await getPredictions(radiaSettings.value.guildID);
         if (response.length > 0) {
@@ -199,7 +199,7 @@ nodecg.listenFor('getPredictions', async (data: never, ack: UnhandledListenForCb
     }
 });
 
-nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: UnhandledListenForCb) => {
+nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const response = await createPrediction(radiaSettings.value.guildID, data);
         assignPredictionData(response);
@@ -209,7 +209,7 @@ nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: Unhandled
     }
 });
 
-nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: UnhandledListenForCb) => {
+nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const response = await updatePrediction(radiaSettings.value.guildID, data);
         assignPredictionData(response);

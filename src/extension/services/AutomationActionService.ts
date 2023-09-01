@@ -3,10 +3,10 @@
  * Each action has a list of pre-defined "Tasks" that it completes in a pre-defined order, each one at its own time.
  */
 
-import type { NodeCG, ReplicantServer } from 'nodecg/server';
-import { GameAutomationData, ObsData, RuntimeConfig, ScoreboardData } from '../../types/schemas';
-import { GameVersion } from '../../types/enums/gameVersion';
-import { GameAutomationAction } from '../../types/enums/GameAutomationAction';
+import type NodeCG from '@nodecg/types';
+import { GameAutomationData, ObsData, RuntimeConfig, ScoreboardData } from 'schemas';
+import { GameVersion } from 'types/enums/gameVersion';
+import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { switchToNextColor } from '../replicants/activeRound';
 import { ObsConnectorService } from './ObsConnectorService';
 import * as util from 'util';
@@ -50,16 +50,16 @@ const endTimings: Record<GameVersion, GameEndTimings> = {
 };
 
 export class AutomationActionService {
-    private nodecg: NodeCG;
-    private obsData: ReplicantServer<ObsData>;
-    private scoreboardData: ReplicantServer<ScoreboardData>;
-    private runtimeConfig: ReplicantServer<RuntimeConfig>;
-    private gameAutomationData: ReplicantServer<GameAutomationData>;
+    private nodecg: NodeCG.ServerAPI;
+    private obsData: NodeCG.ServerReplicant<ObsData>;
+    private scoreboardData: NodeCG.ServerReplicant<ScoreboardData>;
+    private runtimeConfig: NodeCG.ServerReplicant<RuntimeConfig>;
+    private gameAutomationData: NodeCG.ServerReplicant<GameAutomationData>;
     private readonly obsConnectorService: ObsConnectorService;
     private automationTasks: Array<AutomationActionTask> | null;
     private nextAutomationTaskTimeout: NodeJS.Timeout;
 
-    constructor(nodecg: NodeCG, obsConnectorService: ObsConnectorService) {
+    constructor(nodecg: NodeCG.ServerAPI, obsConnectorService: ObsConnectorService) {
         this.nodecg = nodecg;
         this.obsData = nodecg.Replicant<ObsData>('obsData');
         this.scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');

@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { LastFmSettings, RadiaSettings, RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';

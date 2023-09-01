@@ -1,5 +1,7 @@
-import { Casters, ObsCredentials } from '../schemas';
+import { Casters, ObsCredentials } from 'schemas';
 import { SetObsDataRequest } from './obs';
+import { SetGameVersionMessage, SetGameVersionResponse } from 'types/messages/runtimeConfig';
+import { Locale } from 'types/enums/Locale';
 
 export interface MessageInputMap {
     connectToObs: ObsCredentials
@@ -14,6 +16,9 @@ export interface MessageInputMap {
     getLiveCommentators: never
     searchCommentators: string
     pushCastersToRadia: never
+
+    setGameVersion: SetGameVersionMessage
+    setLocale: Locale
 }
 
 type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;
@@ -21,6 +26,8 @@ type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMes
 interface InnerMessageResultMap {
     getLiveCommentators: { add: Casters, extra: Casters }
     searchCommentators: Casters
+
+    setGameVersion: SetGameVersionResponse
 }
 
 export type MessageResultMap = InnerMessageResultMap & {

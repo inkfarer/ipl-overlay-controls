@@ -3,7 +3,6 @@ import { GuildInfo, GuildServices } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
-import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { SetGuildInfoResponse } from 'types/radia';
 
@@ -11,8 +10,8 @@ const nodecg = nodecgContext.get();
 export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
     try {
         const result = await axios.get<GuildInfo>(
-            `${(nodecg.bundleConfig as Configschema).radia.url}/organisation/guild/${guildId}`,
-            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
+            `${nodecg.bundleConfig.radia.url}/organisation/guild/${guildId}`,
+            { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -27,8 +26,8 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
 
     try {
         const result = await axios.get<GuildServices>(
-            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/check/${guildId}`,
-            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } }
+            `${nodecg.bundleConfig.radia.url}/predictions/check/${guildId}`,
+            { headers: { Authorization: nodecg.bundleConfig.radia.authentication } }
         );
 
         if (result.status === 200) {
@@ -50,8 +49,8 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
 export async function getPredictions(guildID: string): Promise<PredictionResponse[]> {
     try {
         const result = await axios.get<PredictionResponse[]>(
-            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
-            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
+            { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -67,9 +66,9 @@ export async function getPredictions(guildID: string): Promise<PredictionRespons
 export async function updatePrediction(guildID: string, data: PatchPrediction): Promise<PredictionResponse> {
     try {
         const result = await axios.patch<PredictionResponse>(
-            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
             data,
-            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
+            { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -85,9 +84,9 @@ export async function updatePrediction(guildID: string, data: PatchPrediction): 
 export async function createPrediction(guildID: string, data: CreatePrediction): Promise<PredictionResponse> {
     try {
         const result = await axios.post<PredictionResponse>(
-            `${(nodecg.bundleConfig as Configschema).radia.url}/predictions/${guildID}`,
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
             data,
-            { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
+            { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
         return result.data;
     } catch (e) {
@@ -121,9 +120,9 @@ export async function updateTournamentData(
     tournamentName: string
 ): Promise<SetGuildInfoResponse> {
     const response = await axios.post<SetGuildInfoResponse>(
-        `${(nodecg.bundleConfig as Configschema).radia.url}/organisation/guild/${guildId}`,
+        `${nodecg.bundleConfig.radia.url}/organisation/guild/${guildId}`,
         { bracket_link: bracketLink, tournament_name: tournamentName },
-        { headers: { Authorization: (nodecg.bundleConfig as Configschema).radia.authentication } });
+        { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
     if (response.status !== 200) {
         throw new Error(`Radia API call failed with response ${response.status.toString()}`);

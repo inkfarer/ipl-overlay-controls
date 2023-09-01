@@ -206,3 +206,13 @@ The fields stored are named the same and contain the values as what is documente
 To use this feature, configure an API URL and authorization key from the bundle configuration (More info at the readme) and set the ID of the Discord server to import casters from through the "Settings" panel in the IPL Setup workspace. After setup is completed, the Predictions panel will show its functions if the Discord Guild is supported.
 
 Currently, the code required in [Radia-Productions API](https://github.com/IPLSplatoon/Radia-Productions) for this function is **not publicly accessible**. If you would like access to this system you can contact `vlee489#5801` via Discord for queries on access to this section of [Radia-Productions](https://github.com/IPLSplatoon/Radia-Productions).
+
+
+## Assets
+
+ipl-overlay-controls has some commonly used game assets for dependent bundles to use.
+
+### assetPaths
+*Replicant* [(Schema)](https://github.com/inkfarer/ipl-overlay-controls/blob/4.4.0/schemas/assetPaths.json)
+
+Intended to be read-only; contains `stageImages`, a map of stage names to the paths of their respective images. Only changes when the game version is changed.

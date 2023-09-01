@@ -4,6 +4,4 @@ export interface SetGameVersionMessage {
     version: GameVersion
 }
 
-export interface SetGameVersionResponse {
-    incompatibleBundles: Array<string>
-}
+export type SetGameVersionResponse = { incompatibleBundles: Array<string> } | null

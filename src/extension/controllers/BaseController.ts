@@ -1,11 +1,10 @@
-import type { NodeCG } from 'nodecg/server';
-import type { ListenForCb, UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
-import { MessageInputMap, MessageResultMap } from '../../types/messages/MessageMaps';
+import type NodeCG from '@nodecg/types';
+import { MessageInputMap, MessageResultMap } from 'types/messages/MessageMaps';
 
 export abstract class BaseController {
-    private readonly nodecg: NodeCG;
+    private readonly nodecg: NodeCG.ServerAPI;
 
-    protected constructor(nodecg: NodeCG) {
+    protected constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
     }
 
@@ -13,15 +12,15 @@ export abstract class BaseController {
         messageName: K,
         callback: (data: D) => MessageResultMap[K] | Promise<MessageResultMap[K]>
     ): void {
-        this.nodecg.listenFor(messageName, async (data: D, cb: ListenForCb) => {
+        this.nodecg.listenFor(messageName, async (data: D, cb: NodeCG.Acknowledgement) => {
             try {
                 const result = await callback(data);
                 if (!cb.handled) {
-                    (cb as UnhandledListenForCb)(null, result);
+                    (cb as NodeCG.UnhandledAcknowledgement)(null, result);
                 }
             } catch (e) {
                 if (!cb.handled) {
-                    (cb as UnhandledListenForCb)(e);
+                    (cb as NodeCG.UnhandledAcknowledgement)(e);
                 }
             }
         });

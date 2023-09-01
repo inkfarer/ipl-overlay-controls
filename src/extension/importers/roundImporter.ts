@@ -1,17 +1,17 @@
+import type NodeCG from '@nodecg/types';
 import axios from 'axios';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import * as nodecgContext from '../helpers/nodecg';
 import { RoundStore } from 'schemas';
 import { handleRoundData } from './roundDataHelper';
 import { setNextRoundGames } from '../helpers/nextRoundHelper';
-import { RuntimeConfig } from '../../types/schemas';
-import { GameVersion } from '../../types/enums/gameVersion';
+import { RuntimeConfig } from 'schemas';
+import { GameVersion } from 'types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 
-nodecg.listenFor('getRounds', async (data, ack: UnhandledListenForCb) => {
+nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.url) {
         ack(new Error('Missing arguments.'));
         return;

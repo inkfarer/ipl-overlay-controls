@@ -1,6 +1,6 @@
 import express from 'express';
 import { mockMount, replicants, requestHandlers } from '../../__mocks__/mockNodecg';
-import { GameVersion } from '../../../types/enums/gameVersion';
+import { GameVersion } from 'types/enums/gameVersion';
 
 describe('fileImport', () => {
     const mockHandleRoundData = jest.fn();
@@ -71,6 +71,21 @@ describe('fileImport', () => {
             requestHandlers['POST']['/upload-tournament-json']({
                 body: { jsonType: 'rounds' },
                 files: { file: { mimetype: 'text/plain' } }
+            } as unknown as express.Request,
+            { status: mockStatus } as unknown as express.Response,
+            null);
+
+            expect(mockStatus).toHaveBeenCalledWith(400);
+            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
+        });
+
+        it('responds with 400 if multiple files are uploaded under the same name', () => {
+            const mockSend = jest.fn();
+            const mockStatus = jest.fn().mockReturnValue({ send: mockSend });
+
+            requestHandlers['POST']['/upload-tournament-json']({
+                body: { jsonType: 'rounds' },
+                files: { file: [{ mimetype: 'application/json' }, { mimetype: 'application/json' }]}
             } as unknown as express.Request,
             { status: mockStatus } as unknown as express.Response,
             null);

@@ -6,6 +6,7 @@ import { Locale } from '../../types/enums/Locale';
 
 export interface RawGameData<S, M> {
     stages: {[locale in Locale]: {[stage in keyof S]: string } },
+    stageImagePaths: {[stage in keyof S]: string },
     modes: {[locale in Locale]: {[mode in keyof M]: string } },
     colors: ColorGroup[]
 }
@@ -24,6 +25,7 @@ export type StageModeList<M> = {
 
 export interface GameData<S, M> {
     stages: StageNameList<S>,
+    stageImagePaths: {[stage in keyof S]: string },
     modes: StageModeList<M>,
     colors: ColorGroup[]
 }

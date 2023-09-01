@@ -3,8 +3,8 @@ import { LastFmNode } from 'lastfm';
 import clone from 'clone';
 import * as nodecgContext from '../helpers/nodecg';
 import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from 'schemas';
-import { ReplicantServer } from 'nodecg/lib/replicant';
 import isEmpty from 'lodash/isEmpty';
+import type NodeCG from '@nodecg/types';
 
 const nodecg = nodecgContext.get();
 const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
@@ -16,7 +16,7 @@ handleLastFm();
 handleNowPlayingSource();
 
 function handleNowPlayingSource() {
-    const replicantToSource: {[key: string]: ReplicantServer<unknown>} = {
+    const replicantToSource: {[key: string]: NodeCG.ServerReplicant<unknown>} = {
         lastfm: lastFmNowPlaying,
         manual: manualNowPlaying
     };

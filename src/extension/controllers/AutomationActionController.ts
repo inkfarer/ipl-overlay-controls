@@ -1,10 +1,10 @@
-import type { NodeCG } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { AutomationActionService } from '../services/AutomationActionService';
-import { GameAutomationAction } from '../../types/enums/GameAutomationAction';
+import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 
 export class AutomationActionController extends BaseController {
-    constructor(nodecg: NodeCG, automationActionService: AutomationActionService) {
+    constructor(nodecg: NodeCG.ServerAPI, automationActionService: AutomationActionService) {
         super(nodecg);
 
         this.listen('startGame', () => {

@@ -31,7 +31,6 @@
         },
         "games": {
             "type": "array",
-            "additionalItems": false,
             "items": {
                 "type": "object",
                 "properties": {
@@ -88,7 +87,7 @@
                 "mode": "Turf War"
             },
             {
-                "stage": "Ancho-V Games",
+                "stage": "MakoMart",
                 "mode": "Tower Control"
             },
             {

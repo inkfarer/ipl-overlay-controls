@@ -92,6 +92,32 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
             'Skipper Pavilion': 'Grundel-Pavillon'
         }
     },
+    stageImagePaths: {
+        'Ancho-V Games': 'splatoon2/S2_Stage_Ancho-V_Games.webp',
+        'Arowana Mall': 'splatoon2/S2_Stage_Arowana_Mall.webp',
+        'Blackbelly Skatepark': 'splatoon2/S2_Stage_Blackbelly_Skatepark.webp',
+        'Camp Triggerfish': 'splatoon2/S2_Stage_Camp_Triggerfish.webp',
+        'Goby Arena': 'splatoon2/S2_Stage_Goby_Arena.webp',
+        'Humpback Pump Track': 'splatoon2/S2_Stage_Humpback_Pump_Track.webp',
+        'Inkblot Art Academy': 'splatoon2/S2_Stage_Inkblot_Art_Academy.webp',
+        'Kelp Dome': 'splatoon2/S2_Stage_Kelp_Dome.webp',
+        MakoMart: 'splatoon2/S2_Stage_MakoMart.webp',
+        'Manta Maria': 'splatoon2/S2_Stage_Manta_Maria.webp',
+        'Moray Towers': 'splatoon2/S2_Stage_Moray_Towers.webp',
+        'Musselforge Fitness': 'splatoon2/S2_Stage_Musselforge_Fitness.webp',
+        'New Albacore Hotel': 'splatoon2/S2_Stage_New_Albacore_Hotel.webp',
+        'Piranha Pit': 'splatoon2/S2_Stage_Piranha_Pit.webp',
+        'Port Mackerel': 'splatoon2/S2_Stage_Port_Mackerel.webp',
+        'Shellendorf Institute': 'splatoon2/S2_Stage_Shellendorf_Institute.webp',
+        'Shifty Station': 'splatoon2/S2_Stage_Shifty_Station.webp',
+        'Snapper Canal': 'splatoon2/S2_Stage_Snapper_Canal.webp',
+        'Starfish Mainstage': 'splatoon2/S2_Stage_Starfish_Mainstage.webp',
+        'Sturgeon Shipyard': 'splatoon2/S2_Stage_Sturgeon_Shipyard.webp',
+        'The Reef': 'splatoon2/S2_Stage_The_Reef.webp',
+        'Wahoo World': 'splatoon2/S2_Stage_Wahoo_World.webp',
+        'Walleye Warehouse': 'splatoon2/S2_Stage_Walleye_Warehouse.webp',
+        'Skipper Pavilion': 'splatoon2/S2_Stage_Skipper_Pavilion.webp',
+    },
     modes: {
         [Locale.EN]: {
             'Clam Blitz': 'Clam Blitz',
