@@ -31,13 +31,16 @@ jest.mock('../../helpers/bundleHelper', () => ({
 }));
 
 import { RuntimeConfigController } from '../RuntimeConfigController';
+import { AssetPathService } from '../../services/AssetPathService';
 
 describe('RuntimeConfigController', () => {
     let localeInfoService: LocaleInfoService;
+    let assetPathService: AssetPathService;
 
     beforeEach(() => {
         localeInfoService = mock<LocaleInfoService>();
-        new RuntimeConfigController(mockNodecg, localeInfoService);
+        assetPathService = mock<AssetPathService>();
+        new RuntimeConfigController(mockNodecg, localeInfoService, assetPathService);
     });
 
     describe('setGameVersion', () => {
@@ -49,6 +52,7 @@ describe('RuntimeConfigController', () => {
             expect(mockRoundStoreHelper.resetRoundStore).not.toHaveBeenCalled();
             expect(mockMatchStoreHelper.resetMatchStore).not.toHaveBeenCalled();
             expect(localeInfoService.updateLocaleInfo).not.toHaveBeenCalled();
+            expect(assetPathService.updateAssetPaths).not.toHaveBeenCalled();
             expect(result).toEqual(null);
         });
 
@@ -61,6 +65,7 @@ describe('RuntimeConfigController', () => {
             expect(mockRoundStoreHelper.resetRoundStore).toHaveBeenCalledTimes(1);
             expect(mockMatchStoreHelper.resetMatchStore).toHaveBeenCalledWith(true);
             expect(localeInfoService.updateLocaleInfo).toHaveBeenCalledWith(Locale.DE, GameVersion.SPLATOON_2);
+            expect(assetPathService.updateAssetPaths).toHaveBeenCalledWith(GameVersion.SPLATOON_2);
             expect(result).toEqual({
                 incompatibleBundles: [ 'bundle-two' ]
             });

@@ -1,9 +1,11 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
-import { Configschema, PredictionStore, RadiaSettings } from 'schemas';
+import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
 import { ObsConnectorController } from './controllers/ObsConnectorController';
+import { AssetPathService } from './services/AssetPathService';
+import { GameVersion } from 'types/enums/gameVersion';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG & NodeCGStatic): void => {
@@ -49,9 +51,13 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     predictionStore.value.status.socketOpen = false;
     radiaSettings.value.enabled = false;
 
+    const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+    const assetPathService = new AssetPathService(nodecg);
+    assetPathService.updateAssetPaths(runtimeConfig.value.gameVersion as GameVersion);
+
     const localeInfoService = new LocaleInfoService(nodecg);
     localeInfoService.initIfNeeded();
-    new RuntimeConfigController(nodecg, localeInfoService);
+    new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
 
     if (isEmpty(config) || isEmpty(config.radia)) {
         nodecg.log.warn(

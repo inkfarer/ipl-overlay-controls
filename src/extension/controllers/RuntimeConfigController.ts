@@ -7,9 +7,10 @@ import { resetMatchStore } from '../helpers/matchStoreHelper';
 import { Locale } from 'types/enums/Locale';
 import { GameVersion } from 'types/enums/gameVersion';
 import { LocaleInfoService } from '../services/LocaleInfoService';
+import { AssetPathService } from '../services/AssetPathService';
 
 export class RuntimeConfigController extends BaseController {
-    constructor(nodecg: NodeCG, localeInfoService: LocaleInfoService) {
+    constructor(nodecg: NodeCG, localeInfoService: LocaleInfoService, assetPathService: AssetPathService) {
         super(nodecg);
 
         const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
@@ -27,6 +28,7 @@ export class RuntimeConfigController extends BaseController {
             resetRoundStore();
             resetMatchStore(true);
             localeInfoService.updateLocaleInfo(runtimeConfig.value.locale as Locale, data.version);
+            assetPathService.updateAssetPaths(data.version);
             return { incompatibleBundles };
         });
 
