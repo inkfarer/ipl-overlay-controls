@@ -1,3 +1,4 @@
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, NextRound, SwapColorsInternally } from 'schemas';
 import {
@@ -6,7 +7,6 @@ import {
     UpdateActiveGamesRequest,
     SwapRoundColorRequest
 } from 'types/messages/activeRound';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { GameWinner } from 'types/enums/gameWinner';
 import clone from 'clone';
 import { commitActiveRoundToMatchStore } from './matchStore';
@@ -14,7 +14,7 @@ import { SetRoundRequest } from 'types/messages/rounds';
 import { setActiveRoundGames, setActiveRoundTeams, setWinner } from '../helpers/activeRoundHelper';
 import findLastIndex from 'lodash/findLastIndex';
 import { generateId } from '../../helpers/generateId';
-import { BeginNextMatchRequest } from '../../types/messages/activeRound';
+import { BeginNextMatchRequest } from 'types/messages/activeRound';
 import { isBlank } from '../../helpers/stringHelper';
 import cloneDeep from 'lodash/cloneDeep';
 import { getNextColor, getPreviousColor, setActiveColor } from '../helpers/activeColorHelper';
@@ -33,7 +33,7 @@ swapColorsInternally.on('change', (newValue, oldValue) => {
     }
 });
 
-nodecg.listenFor('removeWinner', (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('removeWinner', (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const lastWinnerIndex = findLastIndex(activeRound.value.games, game => game.winner !== GameWinner.NO_WINNER);
         if (lastWinnerIndex < 0) return;
@@ -43,7 +43,7 @@ nodecg.listenFor('removeWinner', (data: never, ack: UnhandledListenForCb) => {
     }
 });
 
-nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     const scoreSum = activeRound.value.teamA.score + activeRound.value.teamB.score;
     const index = data.roundIndex != null ? data.roundIndex : scoreSum;
 
@@ -54,7 +54,7 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: UnhandledListenForCb
     }
 });
 
-nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('setActiveRound', (data: SetRoundRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const newActiveRound = cloneDeep(activeRound.value);
         setActiveRoundTeams(newActiveRound, data.teamAId, data.teamBId);
@@ -86,7 +86,7 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     commitActiveRoundToMatchStore();
 });
 
-nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (isBlank(data?.matchName)) {
         return ack(new Error('Match name must not be blank'));
     }
@@ -151,7 +151,7 @@ nodecg.listenFor('switchToPreviousColor', () => {
     switchToPreviousColor();
 });
 
-nodecg.listenFor('getNextAndPreviousColors', (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('getNextAndPreviousColors', (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     ack(null, {
         nextColor: getNextColor(),
         previousColor: getPreviousColor()

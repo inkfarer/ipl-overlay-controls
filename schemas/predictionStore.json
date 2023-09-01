@@ -118,7 +118,7 @@
                     "description": "Total duration for the Prediction (in seconds)",
                     "type": "integer",
                     "maximum": 1800,
-                    "minLength": 1
+                    "minimum": 1
                 },
                 "status": {
                     "description": "Status of the Prediction",

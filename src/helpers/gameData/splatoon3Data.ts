@@ -74,6 +74,26 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Humpback Pump Track': 'Buckelwal-Piste'
         }
     },
+    stageImagePaths: {
+        'Humpback Pump Track': 'splatoon3/S3_Stage_Humpback_Pump_Track.webp',
+        'Inkblot Art Academy': 'splatoon3/S3_Stage_Inkblot_Art_Academy.webp',
+        MakoMart: 'splatoon3/S3_Stage_MakoMart.webp',
+        'Manta Maria': 'splatoon3/S3_Stage_Manta_Maria.webp',
+        'Sturgeon Shipyard': 'splatoon3/S3_Stage_Sturgeon_Shipyard.webp',
+        'Wahoo World': 'splatoon3/S3_Stage_Wahoo_World.webp',
+        'Museum d\'Alfonsino': 'splatoon3/S3_Stage_Museum_dAlfonsino.webp',
+        'Scorch Gorge': 'splatoon3/S3_Stage_Scorch_Gorge.webp',
+        'Eeltail Alley': 'splatoon3/S3_Stage_Eeltail_Alley.webp',
+        'Hagglefish Market': 'splatoon3/S3_Stage_Hagglefish_Market.webp',
+        'Undertow Spillway': 'splatoon3/S3_Stage_Undertow_Spillway.webp',
+        'Mincemeat Metalworks': 'splatoon3/S3_Stage_Mincemeat_Metalworks.webp',
+        'Hammerhead Bridge': 'splatoon3/S3_Stage_Hammerhead_Bridge.webp',
+        'Mahi-Mahi Resort': 'splatoon3/S3_Stage_Mahi_Mahi_Resort.webp',
+        'Brinewater Springs': 'splatoon3/S3_Stage_Brinewater_Springs.webp',
+        'Flounder Heights': 'splatoon3/S3_Stage_Flounder_Heights.webp',
+        'Um\'ami Ruins': 'splatoon3/S3_Stage_Umami_Ruins.webp',
+        'Barnacle & Dime': 'splatoon3/S3_Stage_Barnacle_&_Dime.webp'
+    },
     modes: {
         [Locale.EN]: {
             'Clam Blitz': 'Clam Blitz',

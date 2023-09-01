@@ -1,11 +1,17 @@
-import { replicants } from '../../__mocks__/mockNodecg';
-import { initLocaleInfoIfNeeded, updateLocaleInfo } from '../localeInfo';
-import { Locale } from '../../../types/enums/Locale';
-import { GameVersion } from '../../../types/enums/gameVersion';
+import { LocaleInfoService } from '../LocaleInfoService';
+import { mockNodecg, replicants } from '../../__mocks__/mockNodecg';
+import { Locale } from 'types/enums/Locale';
+import { GameVersion } from 'types/enums/gameVersion';
 import { cartesian } from '../../../helpers/ArrayHelper';
 
-describe('localeInfo', () => {
-    describe('initLocaleInfoIfNeeded', () => {
+describe('LocaleInfoService', () => {
+    let localeInfoService: LocaleInfoService;
+
+    beforeEach(() => {
+        localeInfoService = new LocaleInfoService(mockNodecg);
+    });
+
+    describe('initIfNeeded', () => {
         it('does nothing if locale info is present', () => {
             const originalLocaleInfo = {
                 modes: {
@@ -16,8 +22,9 @@ describe('localeInfo', () => {
                 }
             };
             replicants.localeInfo = originalLocaleInfo;
+            replicants.runtimeConfig = { locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 };
 
-            initLocaleInfoIfNeeded({ locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 });
+            localeInfoService.initIfNeeded();
 
             expect(replicants.localeInfo).toEqual(originalLocaleInfo);
         });
@@ -27,8 +34,9 @@ describe('localeInfo', () => {
                 modes: { },
                 stages: { }
             };
+            replicants.runtimeConfig = { locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 };
 
-            initLocaleInfoIfNeeded({ locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 });
+            localeInfoService.initIfNeeded();
 
             expect(replicants.localeInfo).toEqual({
                 modes: {
@@ -75,7 +83,7 @@ describe('localeInfo', () => {
         it.each(cartesian(Object.values(GameVersion), Object.values(Locale)))(
             'generates expected locale info when game version is %s and locale is %s',
             (gameVersion, locale) => {
-                updateLocaleInfo(locale, gameVersion);
+                localeInfoService.updateLocaleInfo(locale, gameVersion);
 
                 expect(replicants.localeInfo).toMatchSnapshot();
             });

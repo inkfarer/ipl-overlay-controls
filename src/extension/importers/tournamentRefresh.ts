@@ -1,4 +1,4 @@
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
 import { TournamentData } from 'schemas';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
@@ -10,7 +10,7 @@ const nodecg = nodecgContext.get();
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
-nodecg.listenFor('refreshTournamentData', async (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('refreshTournamentData', async (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     try {
         const dataSource = tournamentData.value.meta.source;
         switch (dataSource) {

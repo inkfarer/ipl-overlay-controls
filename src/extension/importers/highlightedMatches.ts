@@ -1,4 +1,4 @@
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { ImportStatus } from 'types/enums/importStatus';
@@ -12,7 +12,7 @@ const nodecg = nodecgContext.get();
 const highlightedMatchData = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
-nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMessage, ack: UnhandledListenForCb) => {
+nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMessage, ack: NodeCG.UnhandledAcknowledgement) => {
     switch (tournamentData.value.meta.source) {
         case TournamentDataSource.BATTLEFY:
             if (!data.stages && !data.getAllMatches) {

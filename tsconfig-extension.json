@@ -8,9 +8,6 @@
         "moduleResolution": "Node",
         "baseUrl": ".",
         "paths": {
-            "nodecg/*": [
-                "../../types/*"
-            ],
             "types/*": [
                 "src/types/*"
             ],

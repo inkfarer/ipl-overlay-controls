@@ -146,9 +146,9 @@ describe('PredictionDataDisplay', () => {
 
     it('matches snapshot with timer', () => {
         jest.spyOn(window, 'setInterval').mockImplementation((callback) => {
-            callback();
+            (callback as () => void)();
             // In the browser, setInterval returns a number.
-            return 0 as unknown as NodeJS.Timeout;
+            return 0;
         });
         const store = usePredictionDataStore();
         store.predictionStore.currentPrediction = {

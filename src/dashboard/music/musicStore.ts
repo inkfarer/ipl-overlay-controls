@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { ManualNowPlaying, MusicShown, NowPlaying, NowPlayingSource } from 'schemas';
 import { defineStore } from 'pinia';
 

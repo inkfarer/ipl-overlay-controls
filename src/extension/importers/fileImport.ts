@@ -1,30 +1,34 @@
 import { handleRoundData } from './roundDataHelper';
 import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
-import * as express from 'express';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { updateRounds } from './roundImporter';
-import { RuntimeConfig } from '../../types/schemas';
-import { GameVersion } from '../../types/enums/gameVersion';
+import { RuntimeConfig } from 'schemas';
+import { GameVersion } from 'types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const router = nodecg.Router();
 
-(router as express.Router).post(
+// Note that the following is a TypeScript *nightmare* as TS chooses to prefer the types from Multer (a dependency of
+// @types/nodecg) instead of express-fileupload, which is actually in use here. Therefore, we have to force TS to use
+// the correct types for req.files every step of the way here.
+
+router.post(
     '/upload-tournament-json',
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }),
-    async (req: express.Request, res: express.Response) => {
+    async (req, res) => {
         if (
             !req.files
-            || !req.files.file
+            || !(req.files as unknown as fileUpload.FileArray).file
             || !req.body.jsonType
-            || (req.files.file as UploadedFile).mimetype !== 'application/json'
+            || Array.isArray((req.files as unknown as fileUpload.FileArray).file)
+            || ((req.files as unknown as fileUpload.FileArray).file as UploadedFile).mimetype !== 'application/json'
         ) {
             return res.status(400).send('Invalid attached file or jsonType property provided.');
         }
 
-        const file = req.files.file as UploadedFile;
+        const file = (req.files as unknown as fileUpload.FileArray).file as UploadedFile;
         const content = JSON.parse(file.data.toString());
 
         switch (req.body.jsonType) {

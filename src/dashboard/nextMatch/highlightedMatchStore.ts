@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { HighlightedMatches, TournamentData } from 'schemas';
 import { SelectOptions } from '../types/select';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';

@@ -117,7 +117,6 @@
 </template>
 
 <script lang="ts">
-import { NodeCGBrowser } from 'nodecg/browser';
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { Configschema } from 'schemas';
 import isEmpty from 'lodash/isEmpty';

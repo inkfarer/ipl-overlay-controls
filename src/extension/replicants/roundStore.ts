@@ -1,7 +1,7 @@
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
 import { NextRound, RoundStore } from 'schemas';
 import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roundStore';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
 import { resetRoundStore } from '../helpers/roundStoreHelper';
@@ -11,7 +11,7 @@ const nodecg = nodecgContext.get();
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
-nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.id) {
         return ack(new Error('No round ID given.'));
     }
@@ -38,7 +38,7 @@ nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: UnhandledLi
     ack(null);
 });
 
-nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (data.id && roundStore.value[data.id]) {
         return ack(new Error(`Round '${data.id}' already exists.`));
     }
@@ -66,7 +66,7 @@ nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: UnhandledLi
     });
 });
 
-nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (Object.keys(roundStore.value).length <= 1) {
         return ack(new Error('Cannot delete the last round.'));
     }

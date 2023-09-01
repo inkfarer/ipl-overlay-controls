@@ -14,6 +14,10 @@ describe('normalizeGameData', () => {
                     'Dope Stage': '[DE] Dope Stage'
                 }
             },
+            stageImagePaths: {
+                'Cool Stage': 'images/cool-stage.png',
+                'Dope Stage': 'images/dope-stage.png'
+            },
             modes: {
                 [Locale.EN]: {
                     'Turf War': 'Turf War',
@@ -70,6 +74,10 @@ describe('normalizeGameData', () => {
                     'Unknown Stage': 'Unbekannte Arena',
                     Counterpick: 'Counterpick'
                 }
+            },
+            stageImagePaths: {
+                'Cool Stage': 'images/cool-stage.png',
+                'Dope Stage': 'images/dope-stage.png'
             },
             modes: {
                 [Locale.EN]: {

@@ -1,14 +1,15 @@
-import type { NodeCG, NodeCGStatic } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from './helpers/nodecg';
 import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
 import { ObsConnectorController } from './controllers/ObsConnectorController';
+import { AssetPathService } from './services/AssetPathService';
+import { GameVersion } from 'types/enums/gameVersion';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export = (nodecg: NodeCG & NodeCGStatic): void => {
+export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     nodecgContext.set(nodecg);
-    const config = nodecg.bundleConfig as Configschema;
 
     require('./importers/music');
     require('./importers/tournamentImporter');
@@ -23,14 +24,16 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/matchRoutes');
     require('./replicants/matchStore');
     require('./replicants/roundStore');
-    require('./replicants/runtimeConfig');
     require('./replicants/scoreboardData');
     require('./versionChecker');
 
     // These imports are here so the files they depend on don't get executed too early.
+    // This should become a non-issue as more of the codebase gets converted to classes.
     const { AutomationActionService } = require('./services/AutomationActionService');
     const { AutomationActionController } = require('./controllers/AutomationActionController');
     const { ReplicantFixerService } = require('./services/ReplicantFixerService');
+    const { LocaleInfoService } = require('./services/LocaleInfoService');
+    const { RuntimeConfigController } = require('./controllers/RuntimeConfigController');
 
     const obsConnectorService = new ObsConnectorService(nodecg);
     new ObsConnectorController(nodecg, obsConnectorService);
@@ -47,10 +50,15 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     predictionStore.value.status.socketOpen = false;
     radiaSettings.value.enabled = false;
 
-    const { initLocaleInfoIfNeeded } = require('./replicants/localeInfo');
-    initLocaleInfoIfNeeded(nodecg.Replicant<RuntimeConfig>('runtimeConfig').value);
+    const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+    const assetPathService = new AssetPathService(nodecg);
+    assetPathService.updateAssetPaths(runtimeConfig.value.gameVersion as GameVersion);
 
-    if (isEmpty(config) || isEmpty(config.radia)) {
+    const localeInfoService = new LocaleInfoService(nodecg);
+    localeInfoService.initIfNeeded();
+    new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
+
+    if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
             `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
             + 'Production API will not be possible.'
@@ -66,7 +74,9 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
         const { RadiaProductionsService } = require('./services/RadiaProductionsService');
         const { RadiaProductionsClient } = require('./clients/RadiaProductionsClient');
 
-        const radiaProductionsClient = new RadiaProductionsClient(config.radia.url, config.radia.authentication);
+        const radiaProductionsClient = new RadiaProductionsClient(
+            nodecg.bundleConfig.radia.url,
+            nodecg.bundleConfig.radia.authentication);
         const radiaProductionsService = new RadiaProductionsService(nodecg, radiaProductionsClient);
         new CasterImportController(nodecg, radiaProductionsService);
     }

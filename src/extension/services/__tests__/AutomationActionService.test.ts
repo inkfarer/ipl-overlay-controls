@@ -5,9 +5,9 @@ const mockActiveRoundModule = mock<typeof ActiveRoundModule>();
 jest.mock('../../replicants/activeRound', () => mockActiveRoundModule);
 
 import { cartesian } from '../../../helpers/ArrayHelper';
-import { GameAutomationAction } from '../../../types/enums/GameAutomationAction';
-import { GameVersion } from '../../../types/enums/gameVersion';
-import { GameAutomationData, ScoreboardData } from '../../../types/schemas';
+import { GameAutomationAction } from 'types/enums/GameAutomationAction';
+import { GameVersion } from 'types/enums/gameVersion';
+import { GameAutomationData, ScoreboardData } from 'schemas';
 import { mockNodecg, replicants } from '../../__mocks__/mockNodecg';
 import { AutomationActionService } from '../AutomationActionService';
 import { ObsConnectorService } from '../ObsConnectorService';
@@ -313,7 +313,7 @@ describe('AutomationActionService', () => {
             jest.spyOn(AutomationActionService.prototype as any, 'executeAutomationTask').mockReturnValue(null);
             jest.spyOn(global, 'clearTimeout');
             const service = new AutomationActionService(mockNodecg, obsConnectorService);
-            const timeout = setTimeout(jest.fn(), 1000);
+            const timeout = setTimeout(jest.fn(), 1000) as unknown as NodeJS.Timeout;
             service['nextAutomationTaskTimeout'] = timeout;
             const task = {
                 timeout: 999,
@@ -441,7 +441,7 @@ describe('AutomationActionService', () => {
             jest.spyOn(AutomationActionService.prototype, 'resetGameAutomationData').mockReturnValue(null);
             jest.spyOn(global, 'clearTimeout');
             const service = new AutomationActionService(mockNodecg, obsConnectorService);
-            const timeout = setTimeout(jest.fn(), 1000);
+            const timeout = setTimeout(jest.fn(), 1000) as unknown as NodeJS.Timeout;
             service['nextAutomationTaskTimeout'] = timeout;
 
             service.cancelAutomationAction();

@@ -1,21 +1,21 @@
-import type { NodeCG, ReplicantServer } from 'nodecg/server';
-import { ObsCredentials, ObsData } from '../../types/schemas';
+import type NodeCG from '@nodecg/types';
+import { ObsCredentials, ObsData } from 'schemas';
 import OBSWebSocket, { EventTypes } from 'obs-websocket-js';
-import { ObsStatus } from '../../types/enums/ObsStatus';
+import { ObsStatus } from 'types/enums/ObsStatus';
 import { isBlank } from '../../helpers/stringHelper';
 
 // Authentication failed, Unsupported protocol version, Session invalidated
 const SOCKET_CLOSURE_CODES_FORBIDDING_RECONNECTION = [4009, 4010, 4011];
 
 export class ObsConnectorService {
-    private readonly nodecg: NodeCG;
-    private obsData: ReplicantServer<ObsData>;
-    private obsCredentials: ReplicantServer<ObsCredentials>;
+    private readonly nodecg: NodeCG.ServerAPI;
+    private obsData: NodeCG.ServerReplicant<ObsData>;
+    private obsCredentials: NodeCG.ServerReplicant<ObsCredentials>;
     private socket: OBSWebSocket;
     private reconnectionInterval: NodeJS.Timeout;
     private reconnectionCount: number;
 
-    constructor(nodecg: NodeCG) {
+    constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
         this.obsData = nodecg.Replicant('obsData');
         this.obsCredentials = nodecg.Replicant('obsCredentials');

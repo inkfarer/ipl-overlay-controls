@@ -1,10 +1,10 @@
-import type { NodeCG } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { ObsConnectorService } from '../services/ObsConnectorService';
-import { ObsCredentials, ObsData } from '../../types/schemas';
+import { ObsCredentials, ObsData } from 'schemas';
 
 export class ObsConnectorController extends BaseController {
-    constructor(nodecg: NodeCG, obsConnectorService: ObsConnectorService) {
+    constructor(nodecg: NodeCG.ServerAPI, obsConnectorService: ObsConnectorService) {
         super(nodecg);
 
         const obsCredentials = nodecg.Replicant<ObsCredentials>('obsCredentials');

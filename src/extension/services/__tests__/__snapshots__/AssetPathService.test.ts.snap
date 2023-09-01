@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetPathService updateAssetPaths updates asset paths as expected for SPLATOON_2 1`] = `
+{
+  "Ancho-V Games": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Ancho-V_Games.webp",
+  "Arowana Mall": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Arowana_Mall.webp",
+  "Blackbelly Skatepark": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Blackbelly_Skatepark.webp",
+  "Camp Triggerfish": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Camp_Triggerfish.webp",
+  "Goby Arena": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Goby_Arena.webp",
+  "Humpback Pump Track": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Humpback_Pump_Track.webp",
+  "Inkblot Art Academy": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Inkblot_Art_Academy.webp",
+  "Kelp Dome": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Kelp_Dome.webp",
+  "MakoMart": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_MakoMart.webp",
+  "Manta Maria": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Manta_Maria.webp",
+  "Moray Towers": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Moray_Towers.webp",
+  "Musselforge Fitness": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Musselforge_Fitness.webp",
+  "New Albacore Hotel": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_New_Albacore_Hotel.webp",
+  "Piranha Pit": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Piranha_Pit.webp",
+  "Port Mackerel": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Port_Mackerel.webp",
+  "Shellendorf Institute": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Shellendorf_Institute.webp",
+  "Shifty Station": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Shifty_Station.webp",
+  "Skipper Pavilion": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Skipper_Pavilion.webp",
+  "Snapper Canal": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Snapper_Canal.webp",
+  "Starfish Mainstage": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Starfish_Mainstage.webp",
+  "Sturgeon Shipyard": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Sturgeon_Shipyard.webp",
+  "The Reef": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_The_Reef.webp",
+  "Wahoo World": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Wahoo_World.webp",
+  "Walleye Warehouse": "/bundles/ipl-overlay-controls/stage-images/splatoon2/S2_Stage_Walleye_Warehouse.webp",
+}
+`;
+
+exports[`AssetPathService updateAssetPaths updates asset paths as expected for SPLATOON_3 1`] = `
+{
+  "Barnacle & Dime": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Barnacle_&_Dime.webp",
+  "Brinewater Springs": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Brinewater_Springs.webp",
+  "Eeltail Alley": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Eeltail_Alley.webp",
+  "Flounder Heights": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Flounder_Heights.webp",
+  "Hagglefish Market": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Hagglefish_Market.webp",
+  "Hammerhead Bridge": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Hammerhead_Bridge.webp",
+  "Humpback Pump Track": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Humpback_Pump_Track.webp",
+  "Inkblot Art Academy": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Inkblot_Art_Academy.webp",
+  "Mahi-Mahi Resort": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Mahi_Mahi_Resort.webp",
+  "MakoMart": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_MakoMart.webp",
+  "Manta Maria": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Manta_Maria.webp",
+  "Mincemeat Metalworks": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Mincemeat_Metalworks.webp",
+  "Museum d'Alfonsino": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Museum_dAlfonsino.webp",
+  "Scorch Gorge": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Scorch_Gorge.webp",
+  "Sturgeon Shipyard": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Sturgeon_Shipyard.webp",
+  "Um'ami Ruins": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Umami_Ruins.webp",
+  "Undertow Spillway": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Undertow_Spillway.webp",
+  "Wahoo World": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Wahoo_World.webp",
+}
+`;
