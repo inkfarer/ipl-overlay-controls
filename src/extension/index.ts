@@ -1,6 +1,6 @@
 import type { NodeCG, NodeCGStatic } from 'nodecg/server';
 import * as nodecgContext from './helpers/nodecg';
-import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
+import { Configschema, PredictionStore, RadiaSettings } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
 import { ObsConnectorController } from './controllers/ObsConnectorController';
@@ -23,14 +23,16 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     require('./replicants/matchRoutes');
     require('./replicants/matchStore');
     require('./replicants/roundStore');
-    require('./replicants/runtimeConfig');
     require('./replicants/scoreboardData');
     require('./versionChecker');
 
     // These imports are here so the files they depend on don't get executed too early.
+    // This should become a non-issue as more of the codebase gets converted to classes.
     const { AutomationActionService } = require('./services/AutomationActionService');
     const { AutomationActionController } = require('./controllers/AutomationActionController');
     const { ReplicantFixerService } = require('./services/ReplicantFixerService');
+    const { LocaleInfoService } = require('./services/LocaleInfoService');
+    const { RuntimeConfigController } = require('./controllers/RuntimeConfigController');
 
     const obsConnectorService = new ObsConnectorService(nodecg);
     new ObsConnectorController(nodecg, obsConnectorService);
@@ -47,8 +49,9 @@ export = (nodecg: NodeCG & NodeCGStatic): void => {
     predictionStore.value.status.socketOpen = false;
     radiaSettings.value.enabled = false;
 
-    const { initLocaleInfoIfNeeded } = require('./replicants/localeInfo');
-    initLocaleInfoIfNeeded(nodecg.Replicant<RuntimeConfig>('runtimeConfig').value);
+    const localeInfoService = new LocaleInfoService(nodecg);
+    localeInfoService.initIfNeeded();
+    new RuntimeConfigController(nodecg, localeInfoService);
 
     if (isEmpty(config) || isEmpty(config.radia)) {
         nodecg.log.warn(

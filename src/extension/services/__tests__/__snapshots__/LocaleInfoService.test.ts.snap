@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is DE 1`] = `
+exports[`LocaleInfoService updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is DE 1`] = `
 {
   "modes": {
     "Clam Blitz": "Muschelchaos",
@@ -41,7 +41,7 @@ exports[`localeInfo updateLocaleInfo generates expected locale info when game ve
 }
 `;
 
-exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is EN 1`] = `
+exports[`LocaleInfoService updateLocaleInfo generates expected locale info when game version is SPLATOON_2 and locale is EN 1`] = `
 {
   "modes": {
     "Clam Blitz": "Clam Blitz",
@@ -82,7 +82,7 @@ exports[`localeInfo updateLocaleInfo generates expected locale info when game ve
 }
 `;
 
-exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is DE 1`] = `
+exports[`LocaleInfoService updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is DE 1`] = `
 {
   "modes": {
     "Clam Blitz": "Muschelchaos",
@@ -117,7 +117,7 @@ exports[`localeInfo updateLocaleInfo generates expected locale info when game ve
 }
 `;
 
-exports[`localeInfo updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is EN 1`] = `
+exports[`LocaleInfoService updateLocaleInfo generates expected locale info when game version is SPLATOON_3 and locale is EN 1`] = `
 {
   "modes": {
     "Clam Blitz": "Clam Blitz",
