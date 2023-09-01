@@ -119,6 +119,12 @@
                 "file": "resolvePredictionDialog.html",
                 "dialog": true
             }
+        ],
+        "mount": [
+            {
+                "directory": "assets/images/stages",
+                "endpoint": "stage-images"
+            }
         ]
     },
     "repository": "https://github.com/nodecg/nodecg.git",
