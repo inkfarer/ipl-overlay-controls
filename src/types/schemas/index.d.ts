@@ -1,6 +1,7 @@
 export * from './configschema';
 export * from './activeBreakScene';
 export * from './activeRound';
+export * from './assetPaths';
 export * from './casters';
 export * from './gameAutomationData';
 export * from './highlightedMatches';
