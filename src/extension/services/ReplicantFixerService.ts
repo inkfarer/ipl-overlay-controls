@@ -1,14 +1,14 @@
-import type { NodeCG, ReplicantServer } from 'nodecg/server';
-import { ActiveRound, RuntimeConfig, SwapColorsInternally } from '../../types/schemas';
+import type NodeCG from '@nodecg/types';
+import { ActiveRound, RuntimeConfig, SwapColorsInternally } from 'schemas';
 import { perGameData } from '../../helpers/gameData/gameData';
 
 export class ReplicantFixerService {
-    private readonly nodecg: NodeCG;
-    private activeRound: ReplicantServer<ActiveRound>;
-    private runtimeConfig: ReplicantServer<RuntimeConfig>;
-    private swapColorsInternally: ReplicantServer<SwapColorsInternally>;
+    private readonly nodecg: NodeCG.ServerAPI;
+    private activeRound: NodeCG.ServerReplicant<ActiveRound>;
+    private runtimeConfig: NodeCG.ServerReplicant<RuntimeConfig>;
+    private swapColorsInternally: NodeCG.ServerReplicant<SwapColorsInternally>;
 
-    constructor(nodecg: NodeCG) {
+    constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
         this.activeRound = nodecg.Replicant('activeRound');
         this.runtimeConfig = nodecg.Replicant('runtimeConfig');

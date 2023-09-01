@@ -1,9 +1,9 @@
-import type { NodeCG } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { RadiaProductionsService } from '../services/RadiaProductionsService';
 
 export class CasterImportController extends BaseController {
-    constructor(nodecg: NodeCG, radiaProductionsService: RadiaProductionsService) {
+    constructor(nodecg: NodeCG.ServerAPI, radiaProductionsService: RadiaProductionsService) {
         super(nodecg);
 
         this.listen('getLiveCommentators', async () => {

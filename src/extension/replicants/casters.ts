@@ -1,14 +1,14 @@
+import type NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
-import { RemoveCasterRequest } from '../../types/messages/casters';
-import { Caster, Casters } from '../../types/schemas';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
+import { RemoveCasterRequest } from 'types/messages/casters';
+import { Caster, Casters } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 
 const nodecg = nodecgContext.get();
 
 const casters = nodecg.Replicant<Casters>('casters');
 
-nodecg.listenFor('removeCaster', (data: RemoveCasterRequest, ack: UnhandledListenForCb) => {
+nodecg.listenFor('removeCaster', (data: RemoveCasterRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!casters.value[data.id]) {
         return ack(new Error(`Caster '${data.id}' not found.`));
     }
@@ -16,13 +16,13 @@ nodecg.listenFor('removeCaster', (data: RemoveCasterRequest, ack: UnhandledListe
     delete casters.value[data.id];
 });
 
-nodecg.listenFor('saveCaster', (data: Caster, ack: UnhandledListenForCb) => {
+nodecg.listenFor('saveCaster', (data: Caster, ack: NodeCG.UnhandledAcknowledgement) => {
     const id = generateId();
     casters.value[id] = data;
     ack(null, id);
 });
 
-nodecg.listenFor('setCasterOrder', (data: { casterIds: string[] }, ack: UnhandledListenForCb) => {
+nodecg.listenFor('setCasterOrder', (data: { casterIds: string[] }, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!Array.isArray(data.casterIds)) {
         return ack(new Error('"casterIds" must be provided as a list of strings.'));
     }

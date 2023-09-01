@@ -1,8 +1,8 @@
 import express from 'express';
 import last from 'lodash/last';
-import { Configschema } from '../../types/schemas';
+import { Configschema } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';
-import { ReplicantServer, NodeCG } from 'nodecg/server';
+import NodeCG from '@nodecg/types';
 
 export type ReplicantChangeHandler = (newValue?: unknown, oldValue?: unknown) => void;
 
@@ -40,8 +40,8 @@ beforeEach(() => {
     Object.assign(mockBundleConfig, cloneDeep(defaultBundleConfig));
 });
 
-export const mockNodecg: NodeCG = {
-    Replicant(name: string): ReplicantServer<unknown> {
+export const mockNodecg: NodeCG.ServerAPI<Configschema> = {
+    Replicant(name: string): NodeCG.ServerReplicant<unknown> {
         return {
             get value() {
                 return replicants[name];
@@ -49,11 +49,10 @@ export const mockNodecg: NodeCG = {
             set value(newValue: unknown) {
                 replicants[name] = newValue;
             },
-            // @ts-ignore
             on: (event: string, handler: ReplicantChangeHandler) => {
                 replicantChangeListeners[name] = handler;
             }
-        };
+        } as NodeCG.ServerReplicant<unknown>;
     },
     // @ts-ignore
     listenFor: (messageName: string, handler: () => void) => {

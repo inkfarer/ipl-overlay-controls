@@ -11,29 +11,18 @@ jobs:
   lint-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout nodecg/nodecg
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets['GITHUB_TOKEN'] }}
-          repository: nodecg/nodecg
-          path: ./nodecg-temp
-          ref: 'v1.9.0'
-
-      - name: Copy ./nodecg-temp > ./nodecg
-        run: cp -r ./nodecg-temp ./nodecg
-
       - name: Checkout this repository
         uses: actions/checkout@v2
         with:
           token: ${{ secrets['GITHUB_TOKEN'] }}
           ref: ${{ github.ref }}
           fetch-depth: 0
-          path: ./nodecg/bundles/ipl-overlay-controls
+          path: ./ipl-overlay-controls
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Set up NPM cache
         uses: actions/cache@v2
@@ -43,19 +32,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Update NPM
-        run: npm install -g npm@7.19.1
-
       - name: Install NPM dependencies
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: npm ci
 
       - name: Run ESLint on source
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: npm run lint
 
       - name: Run tests
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: npm run test:ci
 
       - name: Create test report
@@ -63,7 +49,7 @@ jobs:
         uses: tanmen/jest-reporter@v1
         with:
           github-token: ${{ secrets['GITHUB_TOKEN'] }}
-          result-file: ./nodecg/bundles/ipl-overlay-controls/result.json
+          result-file: ./ipl-overlay-controls/result.json
 
       - name: Set up GitHub for SSH access
         if: github.ref == 'refs/heads/master'
@@ -73,7 +59,7 @@ jobs:
 
       - name: Set git config
         if: github.ref == 'refs/heads/master'
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -81,7 +67,7 @@ jobs:
       - name: Merge master branch into build branch
         if: github.ref == 'refs/heads/master'
         continue-on-error: true
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: |
           git checkout master
           git checkout build
@@ -89,7 +75,7 @@ jobs:
 
       - name: Build
         if: github.ref == 'refs/heads/master'
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: |
           npm run clean
           npm run build
@@ -98,7 +84,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         id: commit
         continue-on-error: true
-        working-directory: ./nodecg/bundles/ipl-overlay-controls
+        working-directory: ./ipl-overlay-controls
         run: |
           git add -f dashboard extension
           git commit -m "Build result from master branch" -a
@@ -109,4 +95,4 @@ jobs:
         with:
           github_token: ${{ secrets['GITHUB_TOKEN'] }}
           branch: build
-          directory: ./nodecg/bundles/ipl-overlay-controls
+          directory: ./ipl-overlay-controls

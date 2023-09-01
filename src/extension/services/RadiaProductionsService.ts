@@ -1,14 +1,14 @@
-import type { NodeCG, ReplicantServer } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { RadiaProductionsClient } from '../clients/RadiaProductionsClient';
 import { Casters, RadiaSettings } from 'schemas';
 import { RadiaApiCaster } from '../types/radiaApi';
 
 export class RadiaProductionsService {
     private readonly radiaProductionsClient: RadiaProductionsClient;
-    private radiaSettings: ReplicantServer<RadiaSettings>;
-    private casters: ReplicantServer<Casters>;
+    private radiaSettings: NodeCG.ServerReplicant<RadiaSettings>;
+    private casters: NodeCG.ServerReplicant<Casters>;
 
-    constructor(nodecg: NodeCG, radiaProductionsClient: RadiaProductionsClient) {
+    constructor(nodecg: NodeCG.ServerAPI, radiaProductionsClient: RadiaProductionsClient) {
         this.radiaProductionsClient = radiaProductionsClient;
         this.radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
         this.casters = nodecg.Replicant<Casters>('casters');

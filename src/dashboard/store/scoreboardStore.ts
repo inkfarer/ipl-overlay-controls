@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { ScoreboardData } from 'schemas';
 import { defineStore } from 'pinia';
 

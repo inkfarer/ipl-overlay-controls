@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { Caster, Casters, RadiaSettings } from 'schemas';
 import { generateId } from '../../helpers/generateId';
 import { defineStore } from 'pinia';
@@ -51,7 +50,7 @@ export const useCasterStore = defineStore('casters', {
             return id;
         },
         async saveUncommittedCaster({ id, caster }: { id: string, caster: Caster }): Promise<string> {
-            const newId = await nodecg.sendMessage('saveCaster', caster);
+            const newId = await nodecg.sendMessage<string>('saveCaster', caster);
             this.removeUncommittedCaster(id);
             return newId;
         },

@@ -1,25 +1,25 @@
 import { handleRoundData } from './roundDataHelper';
 import * as nodecgContext from '../helpers/nodecg';
 import fileUpload, { UploadedFile } from 'express-fileupload';
-import * as express from 'express';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { updateRounds } from './roundImporter';
-import { RuntimeConfig } from '../../types/schemas';
-import { GameVersion } from '../../types/enums/gameVersion';
+import { RuntimeConfig } from 'schemas';
+import { GameVersion } from 'types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const router = nodecg.Router();
 
-(router as express.Router).post(
+router.post(
     '/upload-tournament-json',
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }),
-    async (req: express.Request, res: express.Response) => {
+    async (req, res) => {
         if (
             !req.files
             || !req.files.file
             || !req.body.jsonType
-            || (req.files.file as UploadedFile).mimetype !== 'application/json'
+            || Array.isArray(req.files.file)
+            || req.files.file.mimetype !== 'application/json'
         ) {
             return res.status(400).send('Invalid attached file or jsonType property provided.');
         }

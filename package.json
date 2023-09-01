@@ -31,7 +31,7 @@
         "test:ci": "jest --json --outputFile=result.json --testLocationInResults"
     },
     "nodecg": {
-        "compatibleRange": "^1.7.0",
+        "compatibleRange": "^1.7.0 || ^2.0.0",
         "dashboardPanels": [
             {
                 "name": "music",
@@ -151,6 +151,7 @@
         "ws": "^7.5.3"
     },
     "devDependencies": {
+        "@nodecg/types": "^2.1.11",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/jest": "^29.5.1",
@@ -188,7 +189,7 @@
         "ts-jest": "^29.1.0",
         "ts-loader": "^9.4.2",
         "tsconfig-paths-webpack-plugin": "^4.0.1",
-        "typescript": "^4.9.5",
+        "typescript": "^5.2.2",
         "vue-eslint-parser": "^9.1.1",
         "vue-loader": "^17.1.0",
         "vuedraggable": "^4.1.0",
@@ -196,6 +197,9 @@
         "webpack-cli": "^5.0.2",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-node-externals": "^3.0.0"
+    },
+    "overrides": {
+        "@types/multer": "npm:dry-uninstall"
     },
     "jest": {
         "projects": [

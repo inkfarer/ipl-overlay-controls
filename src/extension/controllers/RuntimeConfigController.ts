@@ -1,4 +1,4 @@
-import type { NodeCG } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { RuntimeConfig } from 'schemas';
 import { dependentBundles } from '../helpers/bundleHelper';
@@ -10,7 +10,7 @@ import { LocaleInfoService } from '../services/LocaleInfoService';
 import { AssetPathService } from '../services/AssetPathService';
 
 export class RuntimeConfigController extends BaseController {
-    constructor(nodecg: NodeCG, localeInfoService: LocaleInfoService, assetPathService: AssetPathService) {
+    constructor(nodecg: NodeCG.ServerAPI, localeInfoService: LocaleInfoService, assetPathService: AssetPathService) {
         super(nodecg);
 
         const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');

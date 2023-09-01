@@ -1,13 +1,13 @@
-import type { NodeCG, ReplicantServer } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { AssetPaths } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { perGameData } from '../../helpers/gameData/gameData';
 
 export class AssetPathService {
-    private nodecg: NodeCG;
-    private assetPaths: ReplicantServer<AssetPaths>;
+    private nodecg: NodeCG.ServerAPI;
+    private assetPaths: NodeCG.ServerReplicant<AssetPaths>;
 
-    constructor(nodecg: NodeCG) {
+    constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
         this.assetPaths = nodecg.Replicant<AssetPaths>('assetPaths');
     }

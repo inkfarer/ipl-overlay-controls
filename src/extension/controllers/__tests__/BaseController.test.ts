@@ -1,8 +1,8 @@
-import type { NodeCG } from 'nodecg/server';
+import type NodeCG from '@nodecg/types';
 import { BaseController } from '../BaseController';
 
 class TestController extends BaseController {
-    constructor(nodecg: NodeCG) {
+    constructor(nodecg: NodeCG.ServerAPI) {
         super(nodecg);
     }
 

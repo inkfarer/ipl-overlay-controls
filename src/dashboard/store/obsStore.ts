@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { GameAutomationData, ObsCredentials, ObsData } from 'schemas';
 import { SetObsDataRequest } from 'types/messages/obs';
 import { defineStore } from 'pinia';

@@ -31,7 +31,6 @@
         },
         "games": {
             "type": "array",
-            "additionalItems": false,
             "items": {
                 "type": "object",
                 "properties": {

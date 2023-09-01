@@ -1,7 +1,7 @@
+import NodeCG from '@nodecg/types';
 import * as nodecgContext from '../helpers/nodecg';
-import { RadiaSettings } from '../../types/schemas';
+import { RadiaSettings } from 'schemas';
 import { getGuildInfo } from './clients/radiaClient';
-import { UnhandledListenForCb } from 'nodecg/lib/nodecg-instance';
 
 const nodecg = nodecgContext.get();
 
@@ -25,7 +25,7 @@ radiaSettings.on('change', (newValue, oldValue) => {
     }
 });
 
-nodecg.listenFor('retryRadiaAvailabilityCheck', async (data: never, ack: UnhandledListenForCb) => {
+nodecg.listenFor('retryRadiaAvailabilityCheck', async (data: never, ack: NodeCG.UnhandledAcknowledgement) => {
     await checkGuildInfo(radiaSettings.value.guildID);
     return ack(null, null);
 });

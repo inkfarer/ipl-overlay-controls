@@ -1,5 +1,5 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { Configschema } from 'schemas';
+import NodeCG from '@nodecg/types';
 
 const defaultBundleConfig = {
     lastfm: {
@@ -51,4 +51,4 @@ window.nodecg = {
     getDialog: mockGetDialog,
     bundleConfig: mockBundleConfig,
     bundleName: 'ipl-overlay-controls'
-} as unknown as NodeCGBrowser;
+} as unknown as NodeCG.ClientAPI;

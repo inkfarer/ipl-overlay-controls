@@ -1,4 +1,3 @@
-import { NodeCGBrowser } from 'nodecg/browser';
 import { Prediction, PredictionStore } from 'schemas';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import { defineStore } from 'pinia';
