@@ -25,10 +25,10 @@ export class RuntimeConfigController extends BaseController {
                 .map(bundle => bundle.name);
 
             runtimeConfig.value.gameVersion = data.version;
-            resetRoundStore();
-            resetMatchStore(true);
             localeInfoService.updateLocaleInfo(runtimeConfig.value.locale as Locale, data.version);
             assetPathService.updateAssetPaths(data.version);
+            resetRoundStore();
+            resetMatchStore(true);
             return { incompatibleBundles };
         });
 
