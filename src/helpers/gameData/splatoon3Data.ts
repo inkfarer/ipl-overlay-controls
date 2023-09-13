@@ -21,6 +21,8 @@ export interface Splatoon3Stages {
     'Manta Maria': string
     'Barnacle & Dime': string
     'Humpback Pump Track': string
+    'Crableg Capital': string
+    'Shipshape Cargo Co.': string
 }
 
 export interface Splatoon3Modes {
@@ -51,7 +53,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Um\'ami Ruins': 'Um\'ami Ruins',
             'Manta Maria': 'Manta Maria',
             'Barnacle & Dime': 'Barnacle & Dime',
-            'Humpback Pump Track': 'Humpback Pump Track'
+            'Humpback Pump Track': 'Humpback Pump Track',
+            'Crableg Capital': 'Crableg Capital',
+            'Shipshape Cargo Co.': 'Shipshape Cargo Co.'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -71,7 +75,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Um\'ami Ruins': 'Um\'ami-Ruinen',
             'Manta Maria': 'Manta Maria',
             'Barnacle & Dime': 'Talerfisch & Pock',
-            'Humpback Pump Track': 'Buckelwal-Piste'
+            'Humpback Pump Track': 'Buckelwal-Piste',
+            'Crableg Capital': 'Majidae Skyline',
+            'Shipshape Cargo Co.': 'Cargo Ship Heavyfish'
         }
     },
     stageImagePaths: {
@@ -92,7 +98,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
         'Brinewater Springs': 'splatoon3/S3_Stage_Brinewater_Springs.webp',
         'Flounder Heights': 'splatoon3/S3_Stage_Flounder_Heights.webp',
         'Um\'ami Ruins': 'splatoon3/S3_Stage_Umami_Ruins.webp',
-        'Barnacle & Dime': 'splatoon3/S3_Stage_Barnacle_&_Dime.webp'
+        'Barnacle & Dime': 'splatoon3/S3_Stage_Barnacle_&_Dime.webp',
+        'Crableg Capital': 'splatoon3/S3_Stage_Crableg_Capital.webp',
+        'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp'
     },
     modes: {
         [Locale.EN]: {
