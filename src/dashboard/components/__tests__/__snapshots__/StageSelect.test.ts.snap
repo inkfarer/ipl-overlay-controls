@@ -217,3 +217,112 @@ exports[`StageSelect adds expected options to select when language is EN 1`] = `
   },
 ]
 `;
+
+exports[`StageSelect adds expected options to select when language is EU_FR 1`] = `
+[
+  {
+    "name": "Allées salées",
+    "value": "The Reef",
+  },
+  {
+    "name": "Canalamar",
+    "value": "Snapper Canal",
+  },
+  {
+    "name": "Carrière Caviar",
+    "value": "Piranha Pit",
+  },
+  {
+    "name": "Centre Arowana",
+    "value": "Arowana Mall",
+  },
+  {
+    "name": "Chantier Narval",
+    "value": "Sturgeon Shipyard",
+  },
+  {
+    "name": "Counterpick",
+    "value": "Counterpick",
+  },
+  {
+    "name": "Docks Haddock",
+    "value": "Port Mackerel",
+  },
+  {
+    "name": "Encrepôt",
+    "value": "Walleye Warehouse",
+  },
+  {
+    "name": "Galerie des abysses",
+    "value": "Shellendorf Institute",
+  },
+  {
+    "name": "Gymnase Ancrage",
+    "value": "Musselforge Fitness",
+  },
+  {
+    "name": "Hippo-Camping",
+    "value": "Camp Triggerfish",
+  },
+  {
+    "name": "Hôtel Atoll",
+    "value": "New Albacore Hotel",
+  },
+  {
+    "name": "Institut Calam'arts",
+    "value": "Inkblot Art Academy",
+  },
+  {
+    "name": "Lagune aux gobies",
+    "value": "Skipper Pavilion",
+  },
+  {
+    "name": "Manta Maria",
+    "value": "Manta Maria",
+  },
+  {
+    "name": "Parc Carapince",
+    "value": "Wahoo World",
+  },
+  {
+    "name": "Piste Méroule",
+    "value": "Humpback Pump Track",
+  },
+  {
+    "name": "Plateforme polymorphe",
+    "value": "Shifty Station",
+  },
+  {
+    "name": "Scène Sirène",
+    "value": "Starfish Mainstage",
+  },
+  {
+    "name": "Serre Goémon",
+    "value": "Kelp Dome",
+  },
+  {
+    "name": "Skatepark Mako",
+    "value": "Blackbelly Skatepark",
+  },
+  {
+    "name": "Stade Bernique",
+    "value": "Goby Arena",
+  },
+  {
+    "name": "Stage à déterminer",
+    "value": "Unknown Stage",
+  },
+  {
+    "name": "Supermarché Cétacé",
+    "value": "MakoMart",
+  },
+  {
+    "name": "Tentatec Studio",
+    "value": "Ancho-V Games",
+  },
+  {
+    "name": "Tours Girelle",
+    "value": "Moray Towers",
+  },
+]
+`;

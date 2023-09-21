@@ -57,3 +57,32 @@ exports[`ModeSelect adds expected options to select when language is EN 1`] = `
   },
 ]
 `;
+
+exports[`ModeSelect adds expected options to select when language is EU_FR 1`] = `
+[
+  {
+    "name": "Défense de zone",
+    "value": "Splat Zones",
+  },
+  {
+    "name": "Expédition risquée",
+    "value": "Tower Control",
+  },
+  {
+    "name": "Guerre de territoire",
+    "value": "Turf War",
+  },
+  {
+    "name": "Mission Bazookarpe",
+    "value": "Rainmaker",
+  },
+  {
+    "name": "Mode à déterminer",
+    "value": "Unknown Mode",
+  },
+  {
+    "name": "Pluie de palourdes",
+    "value": "Clam Blitz",
+  },
+]
+`;

@@ -10,6 +10,10 @@ const commonStageNames: {[key in Locale]: { 'Unknown Stage': string, 'Counterpic
     [Locale.DE]: {
         'Unknown Stage': 'Unbekannte Arena',
         Counterpick: 'Counterpick'
+    },
+    [Locale.EU_FR]: {
+        'Unknown Stage': 'Stage à déterminer',
+        Counterpick: 'Counterpick'
     }
 };
 
@@ -19,6 +23,9 @@ const commonModeNames: {[key in Locale]: { 'Unknown Mode': string } } = {
     },
     [Locale.DE]: {
         'Unknown Mode': 'Unbekannte Kampfart',
+    },
+    [Locale.EU_FR]: {
+        'Unknown Mode': 'Mode à déterminer',
     }
 };
 

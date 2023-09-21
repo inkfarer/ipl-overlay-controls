@@ -7,5 +7,5 @@
 
 export interface RuntimeConfig {
 	gameVersion: 'SPLATOON_2' | 'SPLATOON_3';
-	locale: 'EN' | 'DE';
+	locale: 'EN' | 'DE' | 'EU_FR';
 }

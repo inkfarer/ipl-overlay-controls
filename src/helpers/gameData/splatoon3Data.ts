@@ -78,6 +78,28 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Humpback Pump Track': 'Buckelwal-Piste',
             'Crableg Capital': 'Majidae Skyline',
             'Shipshape Cargo Co.': 'Cargo Ship Heavyfish'
+        },
+        [Locale.EU_FR]: {
+            'Museum d\'Alfonsino': 'Galeries Guppy',
+            'Scorch Gorge': 'Canyon aux colonnes',
+            'Eeltail Alley': 'Banlieue Balibot',
+            'Hagglefish Market': 'Marché Grefin',
+            'Undertow Spillway': 'Réservoir Rigadelle',
+            'Mincemeat Metalworks': 'Casse Rascasse',
+            'Hammerhead Bridge': 'Pont Esturgeon',
+            'Mahi-Mahi Resort': 'Club Ca$halot',
+            'Inkblot Art Academy': 'Institut Calam\'arts',
+            'Sturgeon Shipyard': 'Chantier Narval',
+            MakoMart: 'Supermarché Cétacé',
+            'Wahoo World': 'Parc Carapince',
+            'Brinewater Springs': 'Sources Sauret',
+            'Flounder Heights': 'Lotissement Filament',
+            'Um\'ami Ruins': 'Ruines Uma\'mi',
+            'Manta Maria': 'Manta Maria',
+            'Barnacle & Dime': 'Halles de Port-merlu',
+            'Humpback Pump Track': 'Piste Méroule',
+            'Crableg Capital': 'Quartier Crabe-ciels',
+            'Shipshape Cargo Co.': 'Chaland Flétan'
         }
     },
     stageImagePaths: {
@@ -116,6 +138,13 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             Rainmaker: 'Operation Goldfisch',
             'Splat Zones': 'Herrschaft',
             'Turf War': 'Revierkampf'
+        },
+        [Locale.EU_FR]: {
+            'Clam Blitz': 'Pluie de palourdes',
+            'Tower Control': 'Expédition risquée',
+            Rainmaker: 'Mission Bazookarpe',
+            'Splat Zones': 'Défense de zone',
+            'Turf War': 'Guerre de territoire'
         }
     },
     colors: [

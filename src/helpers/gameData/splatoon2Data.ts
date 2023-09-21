@@ -90,6 +90,32 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
             'Wahoo World': 'Flunder-Funpark',
             'Walleye Warehouse': 'Kofferfisch-Lager',
             'Skipper Pavilion': 'Grundel-Pavillon'
+        },
+        [Locale.EU_FR]: {
+            'Ancho-V Games': 'Tentatec Studio',
+            'Arowana Mall': 'Centre Arowana',
+            'Blackbelly Skatepark': 'Skatepark Mako',
+            'Camp Triggerfish': 'Hippo-Camping',
+            'Goby Arena': 'Stade Bernique',
+            'Humpback Pump Track': 'Piste Méroule',
+            'Inkblot Art Academy': 'Institut Calam\'arts',
+            'Kelp Dome': 'Serre Goémon',
+            MakoMart: 'Supermarché Cétacé',
+            'Manta Maria': 'Manta Maria',
+            'Moray Towers': 'Tours Girelle',
+            'Musselforge Fitness': 'Gymnase Ancrage',
+            'New Albacore Hotel': 'Hôtel Atoll',
+            'Piranha Pit': 'Carrière Caviar',
+            'Port Mackerel': 'Docks Haddock',
+            'Shellendorf Institute': 'Galerie des abysses',
+            'Shifty Station': 'Plateforme polymorphe',
+            'Snapper Canal': 'Canalamar',
+            'Starfish Mainstage': 'Scène Sirène',
+            'Sturgeon Shipyard': 'Chantier Narval',
+            'The Reef': 'Allées salées',
+            'Wahoo World': 'Parc Carapince',
+            'Walleye Warehouse': 'Encrepôt',
+            'Skipper Pavilion': 'Lagune aux gobies'
         }
     },
     stageImagePaths: {
@@ -132,6 +158,13 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
             Rainmaker: 'Operation Goldfisch',
             'Splat Zones': 'Herrschaft',
             'Turf War': 'Revierkampf'
+        },
+        [Locale.EU_FR]: {
+            'Clam Blitz': 'Pluie de palourdes',
+            'Tower Control': 'Expédition risquée',
+            Rainmaker: 'Mission Bazookarpe',
+            'Splat Zones': 'Défense de zone',
+            'Turf War': 'Guerre de territoire'
         }
     },
     colors: [
