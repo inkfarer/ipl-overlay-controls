@@ -18,6 +18,9 @@
                 },
                 "imageUrl": {
                     "type": "string"
+                },
+                "videoUrl": {
+                    "type": "string"
                 }
             }
         }
