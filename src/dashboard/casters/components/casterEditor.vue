@@ -51,6 +51,12 @@
             label="Image URL"
             @focuschange="setFocused"
         />
+        <ipl-input
+            v-model="internalCaster.videoUrl"
+            name="videoUrl"
+            label="Video URL"
+            @focuschange="setFocused"
+        />
         <div class="layout horizontal m-t-8">
             <ipl-button
                 :label="updateButtonLabel"
