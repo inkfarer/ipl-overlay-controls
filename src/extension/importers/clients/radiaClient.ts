@@ -4,7 +4,7 @@ import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import isEmpty from 'lodash/isEmpty';
-import { SetGuildInfoResponse } from 'types/radia';
+import { RadiaError, SetGuildInfoResponse } from 'types/radia';
 
 const nodecg = nodecgContext.get();
 export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
@@ -94,12 +94,12 @@ export async function createPrediction(guildID: string, data: CreatePrediction):
     }
 }
 
-export function handleAxiosError(e: AxiosError | Error): void {
+export function handleAxiosError(e: AxiosError<RadiaError> | Error): void {
     if ('response' in e) {
         let message = `Radia API call failed with response ${e.response.status}`;
         if (e.response.data?.detail) {
             if (typeof e.response.data.detail === 'object') {
-                if (e.response.data.detail.message) {
+                if ('message' in e.response.data.detail && e.response.data.detail.message != null) {
                     message += `: ${e.response.data.detail.message}`;
                 } else {
                     message += `: ${JSON.stringify(e.response.data.detail)}`;

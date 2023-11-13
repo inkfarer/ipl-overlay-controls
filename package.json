@@ -136,7 +136,7 @@
         "@iplsplatoon/vue-components": "2.9.2",
         "@pinia/testing": "^0.0.16",
         "@types/fs-extra": "^9.0.13",
-        "axios": "^0.21.1",
+        "axios": "^1.6.1",
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "fs-extra": "^10.0.0",
@@ -152,6 +152,8 @@
     },
     "devDependencies": {
         "@nodecg/types": "^2.1.11",
+        "@tourneyview/common": "^0.2.0",
+        "@tourneyview/importer": "^0.2.0",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/jest": "^29.5.1",
