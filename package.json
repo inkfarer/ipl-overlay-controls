@@ -82,6 +82,14 @@
                 "headerColor": "#262F40"
             },
             {
+                "name": "brackets",
+                "title": "Brackets",
+                "width": 2,
+                "file": "brackets.html",
+                "workspace": "ipl",
+                "headerColor": "#262F40"
+            },
+            {
                 "name": "dataIO",
                 "title": "Data import/export",
                 "width": 4,
@@ -133,7 +141,7 @@
         "@fortawesome/fontawesome-svg-core": "^6.4.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
-        "@iplsplatoon/vue-components": "2.9.2",
+        "@iplsplatoon/vue-components": "2.10.0",
         "@pinia/testing": "^0.0.16",
         "@types/fs-extra": "^9.0.13",
         "axios": "^1.6.1",
@@ -152,8 +160,8 @@
     },
     "devDependencies": {
         "@nodecg/types": "^2.1.11",
-        "@tourneyview/common": "^0.2.0",
-        "@tourneyview/importer": "^0.2.0",
+        "@tourneyview/common": "0.2.0",
+        "@tourneyview/importer": "0.2.0",
         "@types/clone": "^2.1.0",
         "@types/express-fileupload": "^1.1.6",
         "@types/jest": "^29.5.1",

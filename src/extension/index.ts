@@ -6,6 +6,7 @@ import { ObsConnectorService } from './services/ObsConnectorService';
 import { ObsConnectorController } from './controllers/ObsConnectorController';
 import { AssetPathService } from './services/AssetPathService';
 import { GameVersion } from 'types/enums/gameVersion';
+import { BracketController } from './controllers/BracketController';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
@@ -57,6 +58,8 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const localeInfoService = new LocaleInfoService(nodecg);
     localeInfoService.initIfNeeded();
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
+
+    new BracketController(nodecg);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(
