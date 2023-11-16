@@ -45,7 +45,7 @@ describe('BracketsPanel', () => {
             expect(wrapper.findAllComponents(IplSpace).length).toEqual(0);
             const message = wrapper.getComponent(IplMessage);
             expect(message.vm.type).toEqual('warning');
-            expect(message.text()).toEqual('Unsupported source (UPLOAD)');
+            expect(message.text()).toEqual('Unsupported source (Uploaded file)');
         });
         
         it('is visible if start.gg is unconfigured', () => {
@@ -61,7 +61,7 @@ describe('BracketsPanel', () => {
             expect(wrapper.findAllComponents(IplSpace).length).toEqual(0);
             const message = wrapper.getComponent(IplMessage);
             expect(message.vm.type).toEqual('warning');
-            expect(message.text()).toEqual('Missing configuration for source SMASHGG');
+            expect(message.text()).toEqual('Missing configuration for source \'Smash.gg\'');
         });
     });
 

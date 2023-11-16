@@ -4,10 +4,12 @@
         type="warning"
     >
         <template v-if="!isSupported">
-            Unsupported source ({{ tournamentDataStore.tournamentData.meta.source }})
+            Unsupported source ({{ TournamentDataSourceHelper
+                .toPrettyString(tournamentDataStore.tournamentData.meta.source as TournamentDataSource) }})
         </template>
         <template v-else>
-            Missing configuration for source {{ tournamentDataStore.tournamentData.meta.source }}
+            Missing configuration for source '{{ TournamentDataSourceHelper
+                .toPrettyString(tournamentDataStore.tournamentData.meta.source as TournamentDataSource) }}'
         </template>
     </ipl-message>
     <template v-else>
@@ -80,7 +82,7 @@ import { useBracketStore } from '../store/bracketStore';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { Configschema } from 'types/schemas';
 import { getMatchImporter } from '../../helpers/BracketHelper';
-import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 
 const bracketStore = useBracketStore();
 const tournamentDataStore = useTournamentDataStore();
