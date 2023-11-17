@@ -400,6 +400,36 @@ exports[`gameData perGameData matches snapshot 1`] = `
       {
         "colors": [
           {
+            "clrA": "#6236DF",
+            "clrB": "#F0EB24",
+            "clrNeutral": "#B82FB6",
+            "index": 0,
+            "isCustom": false,
+            "title": "Purple vs Yellow",
+          },
+        ],
+        "meta": {
+          "name": "Color Lock (Variant 1)",
+        },
+      },
+      {
+        "colors": [
+          {
+            "clrA": "#2D63D7",
+            "clrB": "#FDB605",
+            "clrNeutral": "#8FD20C",
+            "index": 0,
+            "isCustom": false,
+            "title": "Blue vs Orange",
+          },
+        ],
+        "meta": {
+          "name": "Color Lock (Variant 2)",
+        },
+      },
+      {
+        "colors": [
+          {
             "clrA": "#000000",
             "clrB": "#FFFFFF",
             "clrNeutral": "#818181",

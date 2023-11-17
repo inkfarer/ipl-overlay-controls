@@ -17,6 +17,7 @@ describe('ActiveColorToggles', () => {
 
     beforeEach(() => {
         pinia = createTestingPinia();
+        config.global.plugins = [pinia];
 
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.getNextAndPreviousColors = jest.fn().mockResolvedValue({
@@ -100,11 +101,7 @@ describe('ActiveColorToggles', () => {
     });
 
     it('matches snapshot', async () => {
-        const wrapper = mount(ActiveColorToggles, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
+        const wrapper = mount(ActiveColorToggles);
         await flushPromises();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -113,11 +110,7 @@ describe('ActiveColorToggles', () => {
     it('matches snapshot with swapped colors', async () => {
         const store = useActiveRoundStore();
         store.swapColorsInternally = true;
-        const wrapper = mount(ActiveColorToggles, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
+        const wrapper = mount(ActiveColorToggles);
         await flushPromises();
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -126,11 +119,7 @@ describe('ActiveColorToggles', () => {
     it('sets color when clicking previous color toggle', async () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.switchToPreviousColor = jest.fn();
-        const wrapper = mount(ActiveColorToggles, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
+        const wrapper = mount(ActiveColorToggles);
 
         const toggle = wrapper.get('[data-test="color-toggle-previous"]');
         await toggle.trigger('click');
@@ -141,11 +130,7 @@ describe('ActiveColorToggles', () => {
     it('sets color when clicking next color toggle', async () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.switchToNextColor = jest.fn();
-        const wrapper = mount(ActiveColorToggles, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
+        const wrapper = mount(ActiveColorToggles);
 
         const toggle = wrapper.get('[data-test="color-toggle-next"]');
         await toggle.trigger('click');
@@ -153,14 +138,53 @@ describe('ActiveColorToggles', () => {
         expect(activeRoundStore.switchToNextColor).toHaveBeenCalled();
     });
 
+    it('disables color toggles when the next and previous colors match the current one', async () => {
+        const activeRoundStore = useActiveRoundStore();
+        (activeRoundStore.getNextAndPreviousColors as jest.Mock).mockResolvedValue({
+            nextColor: {
+                index: 0,
+                title: 'Blue vs Orange',
+                clrA: '#2D63D7',
+                clrB: '#FDB605',
+                clrNeutral: '#8FD20C',
+                isCustom: false,
+                categoryName: 'Color Lock (Variant 2)'
+            },
+            previousColor: {
+                index: 0,
+                title: 'Blue vs Orange',
+                clrA: '#2D63D7',
+                clrB: '#FDB605',
+                clrNeutral: '#8FD20C',
+                isCustom: false,
+                categoryName: 'Color Lock (Variant 2)'
+            }
+        });
+
+        const wrapper = mount(ActiveColorToggles);
+        await flushPromises();
+
+        const toggles = wrapper.findAll('.color-toggle');
+
+        expect(toggles.every(toggle => toggle.classes().includes('disabled'))).toEqual(true);
+    });
+
+    it('disables color toggles when a custom color is selected', async () => {
+        const activeRoundStore = useActiveRoundStore();
+        activeRoundStore.activeRound.activeColor.isCustom = true;
+
+        const wrapper = mount(ActiveColorToggles);
+        await flushPromises();
+
+        const toggles = wrapper.findAll('.color-toggle');
+
+        expect(toggles.every(toggle => toggle.classes().includes('disabled'))).toEqual(true);
+    });
+
     it('swaps colors on swap button click', () => {
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.swapColors = jest.fn();
-        const wrapper = mount(ActiveColorToggles, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
+        const wrapper = mount(ActiveColorToggles);
 
         wrapper.getComponent<typeof IplButton>('[data-test="swap-colors-button"]').vm.$emit('click');
 
