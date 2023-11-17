@@ -30,42 +30,46 @@ const commonModeNames: {[key in Locale]: { 'Unknown Mode': string } } = {
 };
 
 export function normalizeGameData<S, M>(existingData: RawGameData<S, M>): GameData<S, M> {
+    const data = cloneDeep(existingData);
 
-    const data = cloneDeep(existingData) as GameData<S, M>;
+    return {
+        ...data,
+        stages: Object.entries(data.stages).reduce((result, [key, value]) => {
+            result[key as Locale] = {
+                ...value,
+                ...commonStageNames[key as Locale]
+            };
 
-    data.stages = Object.entries(data.stages).reduce((result, [key, value]) => {
-        result[key as Locale] = {
-            ...value,
-            ...commonStageNames[key as Locale]
-        };
+            return result;
+        }, {} as StageNameList<S>),
+        modes: Object.entries(data.modes).reduce((result, [key, value]) => {
+            result[key as Locale] = {
+                ...value,
+                ...commonModeNames[key as Locale]
+            };
 
-        return result;
-    }, {} as StageNameList<S>);
-
-    data.modes = Object.entries(data.modes).reduce((result, [key, value]) => {
-        result[key as Locale] = {
-            ...value,
-            ...commonModeNames[key as Locale]
-        };
-
-        return result;
-    }, {} as StageModeList<M>);
-
-    data.colors.push({
-        meta: {
-            name: 'Custom Color'
-        },
+            return result;
+        }, {} as StageModeList<M>),
         colors: [
+            ...data.colors.map(colorGroup => ({
+                ...colorGroup,
+                colors: colorGroup.colors.map(color => ({ ...color, isCustom: false }))
+            })),
             {
-                index: 0,
-                title: 'Custom Color',
-                clrA: '#000000',
-                clrB: '#FFFFFF',
-                clrNeutral: '#818181',
-                isCustom: true
+                meta: {
+                    name: 'Custom Color'
+                },
+                colors: [
+                    {
+                        index: 0,
+                        title: 'Custom Color',
+                        clrA: '#000000',
+                        clrB: '#FFFFFF',
+                        clrNeutral: '#818181',
+                        isCustom: true
+                    }
+                ]
             }
         ]
-    });
-
-    return data;
+    };
 }
