@@ -123,9 +123,13 @@ export default defineComponent({
                 nextColor.value = colors.nextColor;
                 previousColor.value = colors.previousColor;
             }, { immediate: true });
-
-        const colorTogglesDisabled = computed(() =>
-            activeRoundStore.activeRound.activeColor.categoryName === 'Custom Color');
+        
+        const colorTogglesDisabled = computed(() => {
+            const activeColorIndex = activeRound.value.activeColor.index;
+            return (nextColor.value != null && nextColor.value.index === activeColorIndex
+                    && previousColor.value != null && previousColor.value.index === activeColorIndex)
+                || activeRoundStore.activeRound.activeColor.isCustom;
+        });
 
         return {
             activeRound,
