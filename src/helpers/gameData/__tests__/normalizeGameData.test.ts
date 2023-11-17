@@ -47,8 +47,7 @@ describe('normalizeGameData', () => {
                             title: 'Color One',
                             clrA: '#000',
                             clrB: '#FFF',
-                            clrNeutral: '#AAA',
-                            isCustom: false
+                            clrNeutral: '#AAA'
                         }
                     ]
                 },
@@ -62,8 +61,7 @@ describe('normalizeGameData', () => {
                             title: 'Color Two',
                             clrA: '#898',
                             clrB: '#999',
-                            clrNeutral: '#EEE',
-                            isCustom: false
+                            clrNeutral: '#EEE'
                         }
                     ]
                 }

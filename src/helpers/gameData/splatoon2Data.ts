@@ -178,56 +178,49 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
                     title: 'Green vs Grape',
                     clrA: '#37FC00',
                     clrB: '#7D28FC',
-                    clrNeutral: '#F4067E',
-                    isCustom: false
+                    clrNeutral: '#F4067E'
                 },
                 {
                     index: 1,
                     title: 'Green vs Magenta',
                     clrA: '#04D976',
                     clrB: '#D600AB',
-                    clrNeutral: '#D2E500',
-                    isCustom: false
+                    clrNeutral: '#D2E500'
                 },
                 {
                     index: 2,
                     title: 'Turquoise vs Orange',
                     clrA: '#10E38F',
                     clrB: '#FB7B08',
-                    clrNeutral: '#6912CD',
-                    isCustom: false
+                    clrNeutral: '#6912CD'
                 },
                 {
                     index: 3,
                     title: 'Mustard vs Purple',
                     clrA: '#FF9E03',
                     clrB: '#B909E0',
-                    clrNeutral: '#08C66B',
-                    isCustom: false
+                    clrNeutral: '#08C66B'
                 },
                 {
                     index: 4,
                     title: 'Dark Blue vs Green',
                     clrA: '#2F27CC',
                     clrB: '#37FC00',
-                    clrNeutral: '#EA01B7',
-                    isCustom: false
+                    clrNeutral: '#EA01B7'
                 },
                 {
                     index: 5,
                     title: 'Purple vs Green',
                     clrA: '#B909E0',
                     clrB: '#37FC00',
-                    clrNeutral: '#F87604',
-                    isCustom: false
+                    clrNeutral: '#F87604'
                 },
                 {
                     index: 6,
                     title: 'Yellow vs Blue',
                     clrA: '#FEF232',
                     clrB: '#2ED2FE',
-                    clrNeutral: '#FD5600',
-                    isCustom: false
+                    clrNeutral: '#FD5600'
                 }
             ]
         },
@@ -241,64 +234,56 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
                     title: 'Yellow vs Purple',
                     clrA: '#D1E004',
                     clrB: '#960CB2',
-                    clrNeutral: '#0EB962',
-                    isCustom: false
+                    clrNeutral: '#0EB962'
                 },
                 {
                     index: 1,
                     title: 'Pink vs Blue',
                     clrA: '#E61077',
                     clrB: '#361CB8',
-                    clrNeutral: '#24C133',
-                    isCustom: false
+                    clrNeutral: '#24C133'
                 },
                 {
                     index: 2,
                     title: 'Pink vs Yellow',
                     clrA: '#ED0C6A',
                     clrB: '#D5E802',
-                    clrNeutral: '#08C24D',
-                    isCustom: false
+                    clrNeutral: '#08C24D'
                 },
                 {
                     index: 3,
                     title: 'Purple vs Turquoise',
                     clrA: '#6B10CC',
                     clrB: '#08CC81',
-                    clrNeutral: '#EB246D',
-                    isCustom: false
+                    clrNeutral: '#EB246D'
                 },
                 {
                     index: 4,
                     title: 'Pink vs Light Blue',
                     clrA: '#E30960',
                     clrB: '#02ADCF',
-                    clrNeutral: '#DDE713',
-                    isCustom: false
+                    clrNeutral: '#DDE713'
                 },
                 {
                     index: 5,
                     title: 'Purple vs Orange',
                     clrA: '#5617C2',
                     clrB: '#FF5F03',
-                    clrNeutral: '#ACE81E',
-                    isCustom: false
+                    clrNeutral: '#ACE81E'
                 },
                 {
                     index: 6,
                     title: 'Pink vs Green',
                     clrA: '#E60572',
                     clrB: '#1BBF0F',
-                    clrNeutral: '#CCE50C',
-                    isCustom: false
+                    clrNeutral: '#CCE50C'
                 },
                 {
                     index: 7,
                     title: 'Yellow vs Blue',
                     clrA: '#F1CE33',
                     clrB: '#4B12BE',
-                    clrNeutral: '#E62E96',
-                    isCustom: false
+                    clrNeutral: '#E62E96'
                 }
             ]
         },
@@ -312,8 +297,7 @@ export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normaliz
                     title: 'Yellow vs Blue (Color Lock)',
                     clrA: '#FEF232',
                     clrB: '#2F27CC',
-                    clrNeutral: '#DC1589',
-                    isCustom: false
+                    clrNeutral: '#DC1589'
                 }
             ]
         }
