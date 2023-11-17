@@ -234,6 +234,36 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
                     isCustom: false
                 }
             ]
+        },
+        {
+            meta: {
+                name: 'Color Lock (Variant 1)'
+            },
+            colors: [
+                {
+                    index: 0,
+                    title: 'Purple vs Yellow',
+                    clrA: '#6236DF',
+                    clrB: '#F0EB24',
+                    clrNeutral: '#B82FB6',
+                    isCustom: false
+                }
+            ]
+        },
+        {
+            meta: {
+                name: 'Color Lock (Variant 2)'
+            },
+            colors: [
+                {
+                    index: 0,
+                    title: 'Blue vs Orange',
+                    clrA: '#2D63D7',
+                    clrB: '#FDB605',
+                    clrNeutral: '#8FD20C',
+                    isCustom: false
+                }
+            ]
         }
     ]
 });
