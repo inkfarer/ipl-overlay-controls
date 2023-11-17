@@ -1,4 +1,5 @@
 <template>
+    <ipl-error-display class="m-b-8" />
     <ipl-message
         v-if="!isSupported || !isConfigured"
         type="warning"
@@ -83,6 +84,7 @@ import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { Configschema } from 'types/schemas';
 import { getMatchImporter } from '../../helpers/BracketHelper';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
+import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 
 const bracketStore = useBracketStore();
 const tournamentDataStore = useTournamentDataStore();
