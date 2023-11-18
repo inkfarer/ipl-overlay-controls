@@ -142,6 +142,7 @@ describe('battlefyDataMapper', () => {
                         id: '354364141',
                         match: 50,
                         name: 'Round 1 Match 50',
+                        shortName: 'Swiss Stage Round 1',
                         round: 1,
                         stageName: 'Swiss Stage',
                         playType: PlayType.PLAY_ALL
@@ -180,6 +181,7 @@ describe('battlefyDataMapper', () => {
                         id: '354364141',
                         match: 23,
                         name: 'Round 3 Match C23',
+                        shortName: 'Elimination Stage Round 3',
                         round: 3,
                         stageName: 'Elimination Stage',
                         playType: PlayType.BEST_OF
