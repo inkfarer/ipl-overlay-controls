@@ -18,28 +18,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, watch, computed, ref } from 'vue';
 import { allValid, IplButton, IplInput, notBlank, provideValidators, validator } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
-import { computed, ref, watchEffect } from 'vue';
-import { useTournamentDataStore } from '../store/tournamentDataStore';
-import { generateMatchNameForRound } from '../../helpers/nextRound';
 
 export default defineComponent({
     name: 'BeginNextMatch',
 
     components: { IplInput, IplButton },
 
-    props: {
-        roundName: {
-            type: String,
-            required: true
-        }
-    },
-
-    setup(props) {
+    setup() {
         const nextRoundStore = useNextRoundStore();
-        const tournamentDataStore = useTournamentDataStore();
         const matchName = ref('');
 
         const validators = {
@@ -47,9 +36,9 @@ export default defineComponent({
         };
         provideValidators(validators);
 
-        watchEffect(() => {
-            matchName.value = generateMatchNameForRound(tournamentDataStore.matchStore, props.roundName);
-        });
+        watch(() => nextRoundStore.nextRound.name, newValue => {
+            matchName.value = newValue;
+        }, { immediate: true });
 
         return {
             matchName,

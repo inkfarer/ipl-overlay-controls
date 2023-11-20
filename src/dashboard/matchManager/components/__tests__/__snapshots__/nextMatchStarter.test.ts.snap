@@ -12,7 +12,7 @@ exports[`NextMatchStarter matches snapshot 1`] = `
     <ipl-data-row-stub label="Team A" value="cool team A"></ipl-data-row-stub>
     <ipl-data-row-stub label="Team B" value="cool team B (long name long name long name lo..."></ipl-data-row-stub>
     <ipl-data-row-stub label="Round" value="dope round"></ipl-data-row-stub>
-    <begin-next-match-stub roundname="dope round" class="m-t-4"></begin-next-match-stub>
+    <begin-next-match-stub class="m-t-4"></begin-next-match-stub>
   </div>
 </div>"
 `;

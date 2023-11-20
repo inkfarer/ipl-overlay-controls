@@ -16,7 +16,6 @@
             :value="roundData.name"
         />
         <begin-next-match
-            :round-name="roundData.name"
             class="m-t-4"
         />
     </ipl-expanding-space>
