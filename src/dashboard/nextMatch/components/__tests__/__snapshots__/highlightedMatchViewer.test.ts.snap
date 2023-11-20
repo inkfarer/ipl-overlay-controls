@@ -3,6 +3,7 @@
 exports[`HighlightedMatchViewer matches snapshot 1`] = `
 "<div data-v-11cc5f1c="" class="ipl-space color-dark">
   <ipl-select-stub modelvalue="1234" label="Match" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
+  <ipl-input-stub name="match-name" label="Match Name" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" class="m-t-4"></ipl-input-stub>
   <ipl-data-row-stub label="Team A" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>
   <ipl-data-row-stub label="Team B" data-test="team-b-name-display" value="mock team"></ipl-data-row-stub>
   <ipl-data-row-stub label="Type of play" data-test="play-type-display" value="Play all"></ipl-data-row-stub>

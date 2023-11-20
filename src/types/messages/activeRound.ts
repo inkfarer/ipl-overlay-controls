@@ -24,7 +24,7 @@ export interface SwapRoundColorRequest {
 }
 
 export interface BeginNextMatchRequest {
-    matchName: string;
+    matchName?: string;
 }
 
 export interface GetNextAndPreviousColorsResponse {

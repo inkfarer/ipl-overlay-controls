@@ -11,6 +11,10 @@ export interface Match {
 	meta: {
 		name: string;
 		/**
+		 * Name to be automatically assigned as the name of the next match on graphics
+		 */
+		shortName: string;
+		/**
 		 * ID of the match, for Battlefy use _id
 		 */
 		id: string;

@@ -9,6 +9,10 @@
           "name": {
             "type": "string"
           },
+          "shortName": {
+            "description": "Name to be automatically assigned as the name of the next match on graphics",
+            "type": "string"
+          },
           "id": {
             "description": "ID of the match, for Battlefy use _id",
             "type": "string"
@@ -34,7 +38,7 @@
             "$ref": "round.json#/$defs/type"
           }
         },
-        "required": ["name", "id"],
+        "required": ["name", "shortName", "id"],
         "additionalProperties": false
       },
       "teamA": {

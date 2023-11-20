@@ -5,7 +5,7 @@
     >
         <template #header-extra>
             <font-awesome-icon
-                v-if="!uncommitted"
+                v-if="!caster.uncommitted"
                 icon="grip-vertical"
                 class="caster-elem-grip"
             />
@@ -14,7 +14,7 @@
             {{ internalCaster.name }}
             <span class="badge badge-blue pronoun-badge">{{ internalCaster.pronouns }}</span>
             <span
-                v-if="uncommitted"
+                v-if="caster.uncommitted"
                 class="badge badge-red uncommitted-badge"
             >
                 Unsaved
@@ -63,7 +63,7 @@
                 :color="buttonColor"
                 :disabled="disableSave"
                 data-test="update-button"
-                :title="uncommitted ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
+                :title="caster.uncommitted ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
                 @click="updateCaster"
                 @right-click="undoChanges"
             />
@@ -94,6 +94,8 @@ import CasterSearch from './casterSearch.vue';
 
 library.add(faTimes, faGripVertical);
 
+type CasterProp = Caster & { id: string, uncommitted: boolean };
+
 export default defineComponent({
     name: 'CasterEditor',
 
@@ -101,16 +103,8 @@ export default defineComponent({
 
     props: {
         caster: {
-            type: Object as PropType<Caster>,
+            type: Object as PropType<CasterProp>,
             required: true
-        },
-        casterId: {
-            type: String,
-            required: true
-        },
-        uncommitted: {
-            type: Boolean,
-            default: false
         }
     },
 
@@ -118,7 +112,7 @@ export default defineComponent({
 
     setup(props, { emit }) {
         const store = useCasterStore();
-        const internalCaster: Ref<Caster> = ref(null);
+        const internalCaster: Ref<CasterProp> = ref(null);
         const isFocused = ref(false);
         const isEdited = computed(() => !isEqual(props.caster, internalCaster.value));
         const key = getCurrentInstance().vnode.key as string;
@@ -136,44 +130,40 @@ export default defineComponent({
             key,
             async updateCaster() {
                 const caster = cloneDeep(internalCaster.value);
-                // @ts-ignore: They exist, I assure you
                 delete caster.id;
-                // @ts-ignore: They exist, I assure you
                 delete caster.uncommitted;
 
-                if (props.uncommitted) {
-                    const newId = await store.saveUncommittedCaster({
-                        id: props.casterId,
-                        caster
-                    });
+                if (props.caster.uncommitted) {
+                    const newId = await store.createCaster(caster);
                     emit('save', newId);
+                    store.removeUncommittedCaster(props.caster.id);
                 } else {
                     store.updateCaster({
-                        id: props.casterId,
+                        id: props.caster.id,
                         newValue: caster
                     });
                 }
             },
             removeCaster() {
-                if (props.uncommitted) {
-                    store.removeUncommittedCaster(props.casterId);
+                if (props.caster.uncommitted) {
+                    store.removeUncommittedCaster(props.caster.id);
                 } else {
-                    store.removeCaster(props.casterId);
+                    store.removeCaster(props.caster.id);
                 }
             },
             setFocused(focused: boolean) {
                 isFocused.value = focused;
             },
             disableSave: computed(() => {
-                return props.uncommitted && Object.keys(store.casters).length >= 3;
+                return props.caster.uncommitted && Object.keys(store.casters).length >= 3;
             }),
             isEdited,
-            buttonColor: computed(() => props.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
-            updateButtonLabel: computed(() => props.uncommitted ? 'Save' : 'Update'),
+            buttonColor: computed(() => props.caster.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
+            updateButtonLabel: computed(() => props.caster.uncommitted ? 'Save' : 'Update'),
             pronounFormatter: (input: string) => input.toLowerCase(),
             twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input,
             undoChanges(event: Event) {
-                if (props.uncommitted) return;
+                if (props.caster.uncommitted) return;
                 event.preventDefault();
 
                 internalCaster.value = cloneDeep(props.caster);

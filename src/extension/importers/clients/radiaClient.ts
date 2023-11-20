@@ -3,11 +3,15 @@ import { GuildInfo, GuildServices } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
-import isEmpty from 'lodash/isEmpty';
 import { SetGuildInfoResponse } from 'types/radia';
+import { isBlank } from '../../../helpers/stringHelper';
 
 const nodecg = nodecgContext.get();
 export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
+    if (isBlank(guildId)) {
+        throw new Error('No guild ID provided.');
+    }
+
     try {
         const result = await axios.get<GuildInfo>(
             `${nodecg.bundleConfig.radia.url}/organisation/guild/${guildId}`,
@@ -20,7 +24,7 @@ export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
 }
 
 export async function hasPredictionSupport(guildId: string): Promise<boolean> {
-    if (isEmpty(nodecg.bundleConfig.radia.authentication)) {
+    if (isBlank(nodecg.bundleConfig.radia.authentication) || isBlank(guildId)) {
         return false;
     }
 
@@ -44,12 +48,16 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
 
 /**
  * Get predictions on from Discord Guild
- * @param {string} guildID Guild ID of discord server
+ * @param {string} guildId Guild ID of discord server
  */
-export async function getPredictions(guildID: string): Promise<PredictionResponse[]> {
+export async function getPredictions(guildId: string): Promise<PredictionResponse[]> {
+    if (isBlank(guildId)) {
+        throw new Error('Cannot retrieve prediction for no guild');
+    }
+
     try {
         const result = await axios.get<PredictionResponse[]>(
-            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildId}`,
             { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
         return result.data;
@@ -60,13 +68,17 @@ export async function getPredictions(guildID: string): Promise<PredictionRespons
 
 /**
  * Patch active Twitch Prediction
- * @param {string} guildID Guild ID of discord server
+ * @param {string} guildId Guild ID of discord server
  * @param data Patch data for prediction
  */
-export async function updatePrediction(guildID: string, data: PatchPrediction): Promise<PredictionResponse> {
+export async function updatePrediction(guildId: string, data: PatchPrediction): Promise<PredictionResponse> {
+    if (isBlank(guildId)) {
+        throw new Error('Cannot update prediction for no guild');
+    }
+
     try {
         const result = await axios.patch<PredictionResponse>(
-            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildId}`,
             data,
             { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
@@ -78,13 +90,17 @@ export async function updatePrediction(guildID: string, data: PatchPrediction): 
 
 /**
  * Create a new Twitch Prediction
- * @param {string} guildID Guild ID of discord server
+ * @param {string} guildId Guild ID of discord server
  * @param data Data to create prediction with
  */
-export async function createPrediction(guildID: string, data: CreatePrediction): Promise<PredictionResponse> {
+export async function createPrediction(guildId: string, data: CreatePrediction): Promise<PredictionResponse> {
+    if (isBlank(guildId)) {
+        throw new Error('Cannot create prediction for no guild');
+    }
+
     try {
         const result = await axios.post<PredictionResponse>(
-            `${nodecg.bundleConfig.radia.url}/predictions/${guildID}`,
+            `${nodecg.bundleConfig.radia.url}/predictions/${guildId}`,
             data,
             { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
@@ -119,6 +135,10 @@ export async function updateTournamentData(
     bracketLink: string,
     tournamentName: string
 ): Promise<SetGuildInfoResponse> {
+    if (isBlank(guildId)) {
+        throw new Error('No guild ID provided to update tournament data for');
+    }
+
     const response = await axios.post<SetGuildInfoResponse>(
         `${nodecg.bundleConfig.radia.url}/organisation/guild/${guildId}`,
         { bracket_link: bracketLink, tournament_name: tournamentName },

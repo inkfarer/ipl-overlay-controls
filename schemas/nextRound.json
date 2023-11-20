@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
     "additionalProperties": false,
-    "required": ["teamA", "teamB", "games", "round", "showOnStream"],
+    "required": ["teamA", "teamB", "games", "round", "showOnStream", "name"],
     "properties": {
         "teamA": {
             "$ref": "defs/team.json#/team"
@@ -25,6 +25,9 @@
                 }
             },
             "required": ["id", "name", "type"]
+        },
+        "name": {
+            "type": "string"
         },
         "showOnStream": {
             "type": "boolean"
@@ -81,6 +84,7 @@
             "type": "BEST_OF"
         },
         "showOnStream": false,
+        "name": "Default Next Match",
         "games": [
             {
                 "stage": "Inkblot Art Academy",

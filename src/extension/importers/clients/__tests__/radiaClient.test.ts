@@ -22,6 +22,10 @@ describe('radiaClient', () => {
     });
 
     describe('getGuildInfo', () => {
+        it('throws an error if the guild ID is missing', async () => {
+            await expect(getGuildInfo('')).rejects.toThrow('No guild ID provided.');
+        });
+
         it('returns the API response', async () => {
             const expectedResult = { twitch_channel: 'iplsplatoon' };
             mockAxios.get.mockResolvedValue({ data: expectedResult });
@@ -99,6 +103,10 @@ describe('radiaClient', () => {
     });
 
     describe('getPredictions', () => {
+        it('throws an error if the guild ID is missing', async () => {
+            await expect(getPredictions('')).rejects.toThrow('Cannot retrieve prediction for no guild');
+        });
+
         it('returns the API response', async () => {
             const expectedResult = [ { id: 'COOL-PREDICTION-1' }, { id: 'COOL-PREDICTION-2' } ];
             mockAxios.get.mockResolvedValue({ data: expectedResult });
@@ -120,6 +128,10 @@ describe('radiaClient', () => {
     });
 
     describe('updatePrediction', () => {
+        it('throws an error if the guild ID is missing', async () => {
+            await expect(updatePrediction('', { id: 'test-id', status: 'RESOLVED' })).rejects.toThrow('Cannot update prediction for no guild');
+        });
+
         it('returns the API response', async () => {
             const expectedResult = { id: 'COOL-PREDICTION-1' };
             mockAxios.patch.mockResolvedValue({ data: expectedResult });
@@ -144,6 +156,11 @@ describe('radiaClient', () => {
     });
 
     describe('createPrediction', () => {
+        it('throws an error if the guild ID is missing', async () => {
+            // @ts-ignore
+            await expect(createPrediction('', { title: 'Who will win?' })).rejects.toThrow('Cannot create prediction for no guild');
+        });
+
         it('returns the API response', async () => {
             const expectedResult = { id: 'COOL-PREDICTION-1' };
             mockAxios.post.mockResolvedValue({ data: expectedResult });
@@ -223,6 +240,10 @@ describe('radiaClient', () => {
     });
 
     describe('updateTournamentData', () => {
+        it('throws an error if the guild ID is missing', async () => {
+            await expect(updateTournamentData('', 'bracket://link', 'Cool Tournament')).rejects.toThrow('No guild ID provided to update tournament data for');
+        });
+
         it('POSTs new tournament data', async () => {
             mockAxios.post.mockResolvedValueOnce({ status: 200 });
 

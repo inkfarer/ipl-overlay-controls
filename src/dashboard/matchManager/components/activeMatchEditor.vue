@@ -147,6 +147,21 @@ export default defineComponent({
         };
         provideValidators(validators);
 
+        const duplicateMatchNames = computed(() => {
+            const roundNameSet = new Set();
+            const result = new Set();
+
+            Object.values(tournamentDataStore.matchStore).forEach(round => {
+                if (roundNameSet.has(round.meta.name)) {
+                    result.add(round.meta.name);
+                }
+
+                roundNameSet.add(round.meta.name);
+            });
+
+            return result;
+        });
+
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
             teams: computed(() => tournamentDataStore.tournamentData.teams.map(team => ({
@@ -176,8 +191,13 @@ export default defineComponent({
                         { teamId: activeRoundStore.activeRound.teamB.id, isVisible: value });
                 }
             }),
-            matches: computed(() => Object.entries(tournamentDataStore.matchStore).map(([ key, value ]) =>
-                ({ value: key, name: value.meta.name }))),
+            matches: computed(() => Object.entries(tournamentDataStore.matchStore).map(([ key, value ]) => {
+                const name = duplicateMatchNames.value.has(value.meta.name)
+                    ? `${value.meta.name} (${value.teamA.name} vs ${value.teamB.name})`
+                    : value.meta.name;
+
+                return ({ value: key, name });
+            })),
             isChanged,
             updateRound() {
                 activeRoundStore.setActiveRound({

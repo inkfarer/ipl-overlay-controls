@@ -1,7 +1,7 @@
-import { PlayType } from '../../types/enums/playType';
+import { PlayType, PlayTypeValues } from '../../types/enums/playType';
 
 export class PlayTypeHelper {
-    static toPrettyString(value: PlayType, gameCount?: number): string {
+    static toPrettyString(value: PlayType | PlayTypeValues, gameCount?: number): string {
         const count = !gameCount ? '' : ` ${gameCount}`;
         return {
             [PlayType.PLAY_ALL]: `Play all${count}`,
