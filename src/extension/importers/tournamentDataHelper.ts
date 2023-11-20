@@ -155,9 +155,9 @@ function normalizeNames(teams: Team[]): Team[] {
 
 export async function updateRadiaTournamentData(tournamentUrl: string, tournamentName: string): Promise<void> {
     if (radiaSettings.value.updateOnImport
-        && !isEmpty(radiaSettings.value.guildID)
-        && !isEmpty(tournamentUrl)
-        && !isEmpty(tournamentName)
+        && !isBlank(radiaSettings.value.guildID)
+        && !isBlank(tournamentUrl)
+        && !isBlank(tournamentName)
     ) {
         try {
             await updateTournamentData(radiaSettings.value.guildID, tournamentUrl, tournamentName);

@@ -15,6 +15,7 @@ import { PredictionDataMapper } from './mappers/predictionDataMapper';
 import { RadiaSocketMessage } from '../types/radiaApi';
 import { DateTime } from 'luxon';
 import isEmpty from 'lodash/isEmpty';
+import { isBlank } from '../../helpers/stringHelper';
 
 const nodecg = nodecgContext.get();
 
@@ -142,7 +143,7 @@ function initSocket(guildId: string): void {
 }
 
 async function attemptSocketConnection(guildId: string): Promise<void> {
-    if (isEmpty(guildId) || isEmpty(nodecg.bundleConfig.radia.socketUrl)) {
+    if (isBlank(guildId) || isBlank(nodecg.bundleConfig.radia.socketUrl)) {
         predictionStore.value.status.predictionsEnabled = false;
         predictionStore.value.status.predictionStatusReason = 'Missing Radia configuration. Check your guild ID and socket URL.';
         predictionStore.value.status.socketOpen = false;
