@@ -42,8 +42,6 @@
             <template #item="{ element }">
                 <caster-editor
                     :key="element.id"
-                    :caster-id="element.id"
-                    :uncommitted="element.uncommitted"
                     data-test="caster-editor"
                     :caster="element"
                     @save="handleCasterSave"

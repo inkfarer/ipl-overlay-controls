@@ -23,8 +23,7 @@ describe('CasterEditor', () => {
     it('fills inputs with caster data', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'test-caster-id', uncommitted: false },
-                casterId: 'casterid'
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'test-caster-id', uncommitted: false }
             }
         });
 
@@ -37,8 +36,7 @@ describe('CasterEditor', () => {
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false });
         const wrapper = mount(CasterEditor, {
             props: {
-                caster,
-                casterId: 'casterid'
+                caster
             }
         });
 
@@ -57,8 +55,7 @@ describe('CasterEditor', () => {
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false });
         const wrapper = mount(CasterEditor, {
             props: {
-                caster,
-                casterId: 'casterid'
+                caster
             }
         });
 
@@ -73,8 +70,7 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false },
-                casterId: 'casterid'
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false }
             }
         });
 
@@ -86,9 +82,7 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button if data is uncommitted', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true },
-                casterId: 'casterid',
-                uncommitted: true
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true }
             }
         });
 
@@ -100,8 +94,7 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button if data is updated', async () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false },
-                casterId: 'casterid'
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false }
             }
         });
 
@@ -116,9 +109,7 @@ describe('CasterEditor', () => {
     it('displays expected badges if caster is uncommitted', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true },
-                casterId: 'casterid',
-                uncommitted: true
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true }
             }
         });
 
@@ -131,9 +122,7 @@ describe('CasterEditor', () => {
     it('displays expected badges if caster is committed', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                casterId: 'casterid',
-                uncommitted: false
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
             }
         });
 
@@ -150,9 +139,7 @@ describe('CasterEditor', () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' }
                 }
             });
 
@@ -168,9 +155,7 @@ describe('CasterEditor', () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' }
                 }
             });
             const event = new Event(null);
@@ -196,9 +181,7 @@ describe('CasterEditor', () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: true, id: 'casterid' },
-                    casterId: 'casterid',
-                    uncommitted: true
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: true, id: 'casterid' }
                 }
             });
 
@@ -215,9 +198,7 @@ describe('CasterEditor', () => {
         it('does nothing on right click if caster is uncommitted', async () => {
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
-                    casterId: 'casterid',
-                    uncommitted: true
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
                 }
             });
             const event = new Event(null);
@@ -249,9 +230,7 @@ describe('CasterEditor', () => {
             };
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
-                    casterId: 'casterid',
-                    uncommitted: true
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
                 }
             });
 
@@ -270,9 +249,7 @@ describe('CasterEditor', () => {
             };
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
 
@@ -286,9 +263,7 @@ describe('CasterEditor', () => {
             store.removeUncommittedCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
-                    casterId: 'casterid',
-                    uncommitted: true
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
                 }
             });
 
@@ -302,9 +277,7 @@ describe('CasterEditor', () => {
             store.removeCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
 
@@ -320,9 +293,7 @@ describe('CasterEditor', () => {
         beforeEach(() => {
             wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
         });
@@ -364,9 +335,7 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = true;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
 
@@ -379,9 +348,7 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = true;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
 
@@ -404,9 +371,7 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = false;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
-                    casterId: 'casterid',
-                    uncommitted: false
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
                 }
             });
 

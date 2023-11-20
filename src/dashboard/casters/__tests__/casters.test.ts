@@ -158,10 +158,12 @@ describe('Casters', () => {
             }
         });
 
-        const editors = wrapper.findAllComponents('caster-editor-stub');
+        const editors = wrapper.findAllComponents<typeof CasterEditor>('caster-editor-stub');
         expect(editors.length).toEqual(2);
-        expect(editors[0].attributes().casterid).toEqual('a');
-        expect(editors[1].attributes().casterid).toEqual('b');
+        // @ts-ignore
+        expect(editors[0].vm.caster.id).toEqual('a');
+        // @ts-ignore
+        expect(editors[1].vm.caster.id).toEqual('b');
     });
 
     it('creates element for every uncommitted caster', async () => {
@@ -184,17 +186,20 @@ describe('Casters', () => {
             }
         });
 
-        const editors = wrapper.findAllComponents('caster-editor-stub');
+        const editors = wrapper.findAllComponents<typeof CasterEditor>('caster-editor-stub');
         expect(editors.length).toEqual(3);
-        const committedAttrs1 = editors[0].attributes();
-        expect(committedAttrs1.casterid).toEqual('a');
-        expect(committedAttrs1.uncommitted).toEqual('false');
-        const uncommittedAttrs1 = editors[1].attributes();
-        expect(uncommittedAttrs1.casterid).toEqual('b');
-        expect(uncommittedAttrs1.uncommitted).toEqual('true');
-        const uncommittedAttrs2 = editors[2].attributes();
-        expect(uncommittedAttrs2.casterid).toEqual('c');
-        expect(uncommittedAttrs2.uncommitted).toEqual('true');
+        // @ts-ignore
+        expect(editors[0].vm.caster.id).toEqual('a');
+        // @ts-ignore
+        expect(editors[0].vm.caster.uncommitted).toEqual(false);
+        // @ts-ignore
+        expect(editors[1].vm.caster.id).toEqual('b');
+        // @ts-ignore
+        expect(editors[1].vm.caster.uncommitted).toEqual(true);
+        // @ts-ignore
+        expect(editors[2].vm.caster.id).toEqual('c');
+        // @ts-ignore
+        expect(editors[2].vm.caster.uncommitted).toEqual(true);
     });
 
     it('handles uncommitted caster emitting save event', async () => {
