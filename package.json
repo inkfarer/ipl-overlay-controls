@@ -147,6 +147,7 @@
         "pinia": "^2.0.35",
         "semver": "^7.3.5",
         "ts-node": "^10.9.1",
+        "uuid": "^9.0.1",
         "vue": "^3.2.20",
         "ws": "^7.5.3"
     },
@@ -160,6 +161,7 @@
         "@types/luxon": "^1.27.1",
         "@types/node": "^18.16.3",
         "@types/semver": "^7.3.7",
+        "@types/uuid": "^9.0.7",
         "@types/webpack": "^5.28.1",
         "@types/webpack-livereload-plugin": "^2.3.2",
         "@types/ws": "^7.4.7",
