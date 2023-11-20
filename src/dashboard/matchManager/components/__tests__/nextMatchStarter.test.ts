@@ -22,7 +22,8 @@ describe('NextMatchStarter', () => {
                 teamB: { id: '345345', name: 'cool team B (long name long name long name long name long name)', showLogo: false, players: []},
                 round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
                 showOnStream: true,
-                games: []
+                games: [],
+                name: 'test next round'
             }
         };
     });

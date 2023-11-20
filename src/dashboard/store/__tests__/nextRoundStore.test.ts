@@ -12,10 +12,10 @@ describe('nextRoundStore', () => {
         it('sends message to extension', () => {
             const store = useNextRoundStore();
 
-            store.setNextRound({ teamAId: '123123', teamBId: '456456', roundId: '340857' });
+            store.setNextRound({ teamAId: '123123', teamBId: '456456', roundId: '340857', name: 'test next round' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound',
-                { teamAId: '123123', teamBId: '456456', roundId: '340857' });
+                { teamAId: '123123', teamBId: '456456', roundId: '340857', name: 'test next round' });
         });
     });
 
