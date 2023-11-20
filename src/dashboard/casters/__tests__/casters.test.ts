@@ -1,6 +1,6 @@
 import Casters from '../casters.vue';
 import { useCasterStore } from '../../store/casterStore';
-import { config, flushPromises, mount } from '@vue/test-utils';
+import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import Draggable from 'vuedraggable';
 import CasterEditor from '../components/casterEditor.vue';
@@ -24,11 +24,11 @@ describe('Casters', () => {
     describe('add caster button', () => {
         it('adds caster and sets it as the active caster on click', async () => {
             const store = useCasterStore();
-            store.addDefaultCaster = jest.fn().mockResolvedValue('new caster id');
+            store.addDefaultCaster = jest.fn().mockReturnValue('new caster id');
             const wrapper = mount(Casters);
 
             wrapper.getComponent<typeof IplButton>('[data-test="add-caster-button"]').vm.$emit('click');
-            await flushPromises();
+            await wrapper.vm.$nextTick();
 
             expect(store.addDefaultCaster).toHaveBeenCalled();
             expect(wrapper.vm.activeCaster).toEqual('new caster id');

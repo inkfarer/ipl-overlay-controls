@@ -94,6 +94,8 @@ import CasterSearch from './casterSearch.vue';
 
 library.add(faTimes, faGripVertical);
 
+type CasterProp = Caster & { id: string, uncommitted: boolean };
+
 export default defineComponent({
     name: 'CasterEditor',
 
@@ -101,7 +103,7 @@ export default defineComponent({
 
     props: {
         caster: {
-            type: Object as PropType<Caster>,
+            type: Object as PropType<CasterProp>,
             required: true
         },
         casterId: {
@@ -118,7 +120,7 @@ export default defineComponent({
 
     setup(props, { emit }) {
         const store = useCasterStore();
-        const internalCaster: Ref<Caster> = ref(null);
+        const internalCaster: Ref<CasterProp> = ref(null);
         const isFocused = ref(false);
         const isEdited = computed(() => !isEqual(props.caster, internalCaster.value));
         const key = getCurrentInstance().vnode.key as string;
@@ -136,17 +138,13 @@ export default defineComponent({
             key,
             async updateCaster() {
                 const caster = cloneDeep(internalCaster.value);
-                // @ts-ignore: They exist, I assure you
                 delete caster.id;
-                // @ts-ignore: They exist, I assure you
                 delete caster.uncommitted;
 
                 if (props.uncommitted) {
-                    const newId = await store.saveUncommittedCaster({
-                        id: props.casterId,
-                        caster
-                    });
+                    const newId = await store.createCaster(caster);
                     emit('save', newId);
+                    store.removeUncommittedCaster(props.casterId);
                 } else {
                     store.updateCaster({
                         id: props.casterId,

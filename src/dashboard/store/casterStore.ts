@@ -49,10 +49,8 @@ export const useCasterStore = defineStore('casters', {
             this.addUncommittedCaster({ id });
             return id;
         },
-        async saveUncommittedCaster({ id, caster }: { id: string, caster: Caster }): Promise<string> {
-            const newId = await nodecg.sendMessage<string>('saveCaster', caster);
-            this.removeUncommittedCaster(id);
-            return newId;
+        async createCaster(caster: Caster): Promise<string> {
+            return nodecg.sendMessage<string>('saveCaster', caster);
         },
         async loadCastersFromVc(): Promise<void> {
             const result = await sendMessage('getLiveCommentators');

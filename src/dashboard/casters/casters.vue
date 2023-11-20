@@ -78,7 +78,7 @@ export default defineComponent({
     setup() {
         const store = useCasterStore();
         const storeRefs = storeToRefs(store);
-        const activeCaster = ref<string>(null);
+        const activeCaster = ref(null);
         const allCasters = computed(() => ({ ...storeRefs.casters.value, ...storeRefs.uncommittedCasters.value }));
 
         const casters = ref([]);
@@ -99,7 +99,7 @@ export default defineComponent({
             activeCaster,
             disableAddCaster: computed(() => Object.keys(allCasters.value).length >= 3),
             async addCaster() {
-                activeCaster.value = await store.addDefaultCaster();
+                activeCaster.value = store.addDefaultCaster();
             },
             handleCasterSave(newId: string) {
                 activeCaster.value = newId;
