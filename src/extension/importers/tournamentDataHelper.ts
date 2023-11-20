@@ -7,7 +7,7 @@ import { generateId } from '../../helpers/generateId';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import isEmpty from 'lodash/isEmpty';
 import { updateTournamentData } from './clients/radiaClient';
-import { ActiveRound, NextRound, RadiaSettings } from '../../types/schemas';
+import { ActiveRound, NextRound, RadiaSettings } from 'schemas';
 import { addDots, isBlank } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
@@ -43,6 +43,9 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
     });
 
     data.teams = normalizeNames(data.teams);
+    if (tournamentData.value.meta.id === data.meta.id && !isBlank(tournamentData.value.meta.shortName)) {
+        data.meta.shortName = tournamentData.value.meta.shortName;
+    }
 
     tournamentData.value = data;
     highlightedMatchData.value = []; // Clear highlighted matches as tournament data has changed

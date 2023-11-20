@@ -29,6 +29,7 @@ import {
     updateRadiaTournamentData,
     updateTournamentDataReplicants
 } from '../tournamentDataHelper';
+import { TournamentData } from 'schemas';
 
 describe('tournamentDataHelper', () => {
     beforeEach(() => {
@@ -36,6 +37,7 @@ describe('tournamentDataHelper', () => {
         jest.resetModules();
 
         replicants.radiaSettings = { guildID: '', updateOnImport: false };
+        replicants.tournamentData = { meta: { id: 'test-initial-tournament', shortName: 'Test Initial Short Name' }, teams: []};
     });
 
     describe('updateTournamentDataReplicants', () => {
@@ -54,6 +56,7 @@ describe('tournamentDataHelper', () => {
 
         it('sorts and assigns team data to tournament data, active round and next round', () => {
             const input = {
+                meta: { id: 'test-tournament' },
                 teams: [
                     {
                         id: '2222',
@@ -89,6 +92,8 @@ describe('tournamentDataHelper', () => {
 
         it('assigns active and next round data if less than 4 teams are available', () => {
             updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     // @ts-ignore
                     {
@@ -109,6 +114,8 @@ describe('tournamentDataHelper', () => {
 
         it('does not assign active or next round teams if they are present in the new tournament data', () => {
             updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     // @ts-ignore
                     {
@@ -139,6 +146,8 @@ describe('tournamentDataHelper', () => {
 
         it('assigns active and next round data if 1 team is available', () => {
             updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     // @ts-ignore
                     {
@@ -154,6 +163,8 @@ describe('tournamentDataHelper', () => {
 
         it('shortens overlong team and player names', () => {
             updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     // @ts-ignore
                     {
@@ -168,6 +179,8 @@ describe('tournamentDataHelper', () => {
             });
 
             expect(replicants.tournamentData).toEqual({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     {
                         id: '121212',
@@ -183,6 +196,8 @@ describe('tournamentDataHelper', () => {
 
         it('assigns active and next round data if 3 teams are available', () => {
             updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: { id: 'test-tournament' },
                 teams: [
                     // @ts-ignore
                     {
@@ -239,6 +254,31 @@ describe('tournamentDataHelper', () => {
 
             expect(mockRadiaClient.updateTournamentData)
                 .toHaveBeenCalledWith('guild-id', 'tournament://cool', 'Cool tournament');
+        });
+
+        it('keeps the existing short name if the updated tournament has the same ID', async () => {
+            replicants.radiaSettings = { guildID: 'guild-id', updateOnImport: true };
+            // @ts-ignore
+            mockRadiaClient.updateTournamentData.mockResolvedValue({});
+
+            updateTournamentDataReplicants({
+                // @ts-ignore
+                meta: {
+                    id: 'test-initial-tournament',
+                    name: 'Cool tournament',
+                    url: 'tournament://cool',
+                    shortName: 'override test tournament name'
+                },
+                teams: [
+                    // @ts-ignore
+                    {
+                        id: '121212',
+                        name: 'Cool Team'
+                    }
+                ]
+            });
+
+            expect((replicants.tournamentData as TournamentData).meta.shortName).toEqual('Test Initial Short Name');
         });
     });
 
