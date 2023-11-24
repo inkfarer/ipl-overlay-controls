@@ -86,10 +86,8 @@ nodecg.listenFor('updateActiveGames', (data: UpdateActiveGamesRequest) => {
     commitActiveRoundToMatchStore();
 });
 
-nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: NodeCG.UnhandledAcknowledgement) => {
-    if (isBlank(data?.matchName)) {
-        return ack(new Error('Match name must not be blank'));
-    }
+nodecg.listenFor('beginNextMatch', (data?: BeginNextMatchRequest) => {
+    const matchName = isBlank(data?.matchName) ? nextRound.value.name : data.matchName;
 
     activeRound.value = {
         ...activeRound.value,
@@ -107,7 +105,7 @@ nodecg.listenFor('beginNextMatch', (data: BeginNextMatchRequest, ack: NodeCG.Unh
             ({ ...game, winner: GameWinner.NO_WINNER, color: undefined })),
         match: {
             id: generateId(),
-            name: data.matchName,
+            name: matchName,
             isCompleted: false,
             type: nextRound.value.round.type
         }

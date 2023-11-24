@@ -101,6 +101,46 @@ describe('ActiveRoundEditor', () => {
                         color: null
                     },
                     games: []
+                },
+                '01011': {
+                    meta: { name: 'duplicate name test', isCompleted: false, type: PlayType.PLAY_ALL },
+                    teamA: {
+                        score: 0,
+                        id: '223123',
+                        name: 'team 1',
+                        showLogo: true,
+                        players: null,
+                        color: null
+                    },
+                    teamB: {
+                        score: 2,
+                        id: '345345',
+                        name: 'team two',
+                        showLogo: false,
+                        players: null,
+                        color: null
+                    },
+                    games: []
+                },
+                '01012': {
+                    meta: { name: 'duplicate name test', isCompleted: false, type: PlayType.PLAY_ALL },
+                    teamA: {
+                        score: 0,
+                        id: '423123',
+                        name: 'team three',
+                        showLogo: true,
+                        players: null,
+                        color: null
+                    },
+                    teamB: {
+                        score: 2,
+                        id: '545345',
+                        name: 'team four',
+                        showLogo: false,
+                        players: null,
+                        color: null
+                    },
+                    games: []
                 }
             },
             roundStore: {}
@@ -130,7 +170,9 @@ describe('ActiveRoundEditor', () => {
         const roundSelector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
         expect(roundSelector.attributes().modelvalue).toEqual('01010');
         expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
-            { name: 'dope round', value: '01010' }
+            { name: 'dope round', value: '01010' },
+            { name: 'duplicate name test (team 1 vs team two)', value: '01011' },
+            { name: 'duplicate name test (team three vs team four)', value: '01012' }
         ]);
     });
 

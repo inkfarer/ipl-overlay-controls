@@ -2,33 +2,18 @@ import BeginNextMatch from '../beginNextMatch.vue';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../store/nextRoundStore';
-import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { IplButton, IplInput } from '@iplsplatoon/vue-components';
 
 describe('BeginNextMatch', () => {
     let pinia: TestingPinia;
 
-    const mockNextRoundHelper = {
-        __esModule: true,
-        generateMatchNameForRound: jest.fn()
-    };
-
     beforeEach(() => {
-        mockNextRoundHelper.generateMatchNameForRound.mockReturnValue('Match Name');
-
         pinia = createTestingPinia();
+        config.global.plugins = [pinia];
 
-        useTournamentDataStore().$state = {
-            matchStore: {
-                match1: {
-                    // @ts-ignore
-                    meta: { name: 'Cool Round' }
-                }
-            }
-        };
+        // @ts-ignore
+        useNextRoundStore().nextRound = { name: 'Cool Round' };
     });
-
-    jest.mock('../../../helpers/nextRound', () => mockNextRoundHelper);
 
     config.global.stubs = {
         IplInput: true,
@@ -36,14 +21,7 @@ describe('BeginNextMatch', () => {
     };
 
     it('matches snapshot', () => {
-        const wrapper = mount(BeginNextMatch, {
-            global: {
-                plugins: [ pinia ]
-            },
-            props: {
-                roundName: 'Cool Round'
-            }
-        });
+        const wrapper = mount(BeginNextMatch);
 
         expect(wrapper.html()).toMatchSnapshot();
     });
@@ -51,14 +29,7 @@ describe('BeginNextMatch', () => {
     it('handles beginning next match', async () => {
         const nextRoundStore = useNextRoundStore();
         nextRoundStore.beginNextMatch = jest.fn();
-        const wrapper = mount(BeginNextMatch, {
-            global: {
-                plugins: [ pinia ]
-            },
-            props: {
-                roundName: 'Cool Round'
-            }
-        });
+        const wrapper = mount(BeginNextMatch);
 
         wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', 'New Match');
         await wrapper.vm.$nextTick();
@@ -68,14 +39,7 @@ describe('BeginNextMatch', () => {
     });
 
     it('disables beginning match if match name is invalid', async () => {
-        const wrapper = mount(BeginNextMatch, {
-            global: {
-                plugins: [ pinia ]
-            },
-            props: {
-                roundName: 'Cool Round'
-            }
-        });
+        const wrapper = mount(BeginNextMatch);
 
         wrapper.getComponent<typeof IplInput>('[name="matchName"]').vm.$emit('update:modelValue', '');
         await wrapper.vm.$nextTick();

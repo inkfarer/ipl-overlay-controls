@@ -257,6 +257,7 @@ export async function getSmashGGStreamQueue(
                         displayIdentifier
                         phase {
                             name
+                            groupCount
                         }
                     }
                     slots {
@@ -316,7 +317,14 @@ export async function getSmashGGStreamQueue(
                 // If there's 2 teams and neither of the objects are null and matched the event we imported
                 if (set.slots.length === 2
                     && !(set.slots.some(slot => slot.entrant === null))
-                    && set.event.id === eventID) {
+                    && set.event.id === eventID
+                ) {
+                    let shortName = set.phaseGroup.phase.name;
+                    if (set.phaseGroup.phase.groupCount > 1) {
+                        shortName += ` Pool ${set.phaseGroup.displayIdentifier}`;
+                    }
+                    shortName += ` Round ${set.round}`;
+
                     highlightedStreamQueue.push({
                         meta: {
                             id: set.id.toString(),
@@ -324,6 +332,7 @@ export async function getSmashGGStreamQueue(
                             round: set.round,
                             match: 0,
                             name: `Set ${set.identifier} - Round ${set.round} - Pool ${set.phaseGroup.displayIdentifier} - ${set.phaseGroup.phase.name}`,
+                            shortName,
                             playType: PlayTypeHelper.fromSmashggSetGamesType(set.setGamesType)
                         },
                         teamA: streamQueueTeamCreator(set.slots[0]),

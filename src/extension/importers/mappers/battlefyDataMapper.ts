@@ -3,7 +3,7 @@ import { BracketType, BracketTypeHelper } from '../../../types/enums/bracketType
 import isEmpty from 'lodash/isEmpty';
 import { MatchTeam } from '../../types/battlefyStage';
 import { HighlightedMatches } from '../../../types/schemas';
-import { HighlightedMatchMetaData } from '../../../types/highlightedMatch';
+import { HighlightedMatchMetadata } from '../../../types/highlightedMatch';
 import { Team } from '../../../types/team';
 import { PlayType } from '../../../types/enums/playType';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
@@ -53,12 +53,13 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
                 matchName += match.matchNumber;
             }
 
-            const metaData: HighlightedMatchMetaData = {
+            const metaData: HighlightedMatchMetadata = {
                 id: match._id,
                 stageName: stage.name,
                 round: match.roundNumber,
                 match: match.matchNumber,
                 name: matchName,
+                shortName: `${stage.name} Round ${match.roundNumber}`,
                 playType: PlayTypeHelper.fromBattlefySeriesStyle(stage.bracket.seriesStyle)
             };
             // If the completedAt exists then we add it to the metadata

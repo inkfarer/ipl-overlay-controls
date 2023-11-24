@@ -73,21 +73,15 @@ describe('casterStore', () => {
         });
     });
 
-    describe('saveUncommittedCaster', () => {
-        it('sends message to save caster and removes it from the uncommitted caster list', async () => {
+    describe('createCaster', () => {
+        it('sends message to save caster', async () => {
             const store = useCasterStore();
             mockSendMessage.mockResolvedValue('new saved caster id');
-            // @ts-ignore
-            store.uncommittedCasters['unsaved caster'] = { name: 'cool caster' };
 
-            const result = await store.saveUncommittedCaster({
-                id: 'unsaved caster',
-                // @ts-ignore
-                caster: { name: 'cool caster!' }
-            });
+            // @ts-ignore
+            const result = await store.createCaster({ name: 'cool caster!' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('saveCaster', { name: 'cool caster!' });
-            expect(store.uncommittedCasters['unsaved caster']).toBeUndefined();
             expect(result).toEqual('new saved caster id');
         });
     });

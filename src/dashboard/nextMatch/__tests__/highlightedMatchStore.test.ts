@@ -12,11 +12,12 @@ describe('highlightedMatchStore', () => {
         it('sends message to extension', () => {
             const store = useHighlightedMatchStore();
 
-            store.setNextMatch({ teamAId: 'teama123', teamBId: 'teamb3409587' });
+            store.setNextMatch({ teamAId: 'teama123', teamBId: 'teamb3409587', name: 'test next round' });
 
             expect(mockSendMessage).toHaveBeenCalledWith('setNextRound', {
                 teamAId: 'teama123',
-                teamBId: 'teamb3409587'
+                teamBId: 'teamb3409587',
+                name: 'test next round'
             });
         });
     });

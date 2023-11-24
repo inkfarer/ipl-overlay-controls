@@ -13,6 +13,7 @@ export interface NextRound {
 		name: string;
 		type: 'BEST_OF' | 'PLAY_ALL';
 	};
+	name: string;
 	showOnStream: boolean;
 	games: {
 		stage: string;

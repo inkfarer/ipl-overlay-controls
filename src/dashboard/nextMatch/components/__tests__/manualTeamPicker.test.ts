@@ -3,7 +3,7 @@ import { config, mount } from '@vue/test-utils';
 import { PlayType } from 'types/enums/playType';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useNextRoundStore } from '../../../store/nextRoundStore';
-import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
+import { IplButton, IplInput, IplSelect } from '@iplsplatoon/vue-components';
 
 describe('ManualTeamPicker', () => {
     let pinia: TestingPinia;
@@ -11,7 +11,8 @@ describe('ManualTeamPicker', () => {
     config.global.stubs = {
         TeamSelect: true,
         RoundSelect: true,
-        IplButton: true
+        IplButton: true,
+        IplInput: true
     };
 
     beforeEach(() => {
@@ -23,7 +24,8 @@ describe('ManualTeamPicker', () => {
                 teamB: { id: '345345', name: 'cool team B', showLogo: false, players: []},
                 round: { id: '0387', name: 'dope round', type: PlayType.PLAY_ALL },
                 showOnStream: true,
-                games: []
+                games: [],
+                name: 'test next round'
             }
         };
     });
@@ -61,13 +63,15 @@ describe('ManualTeamPicker', () => {
         });
 
         wrapper.getComponent<typeof IplSelect>('[data-test="team-a-selector"]').vm.$emit('update:modelValue', '999999');
+        wrapper.getComponent<typeof IplInput>('[name="match-name"]').vm.$emit('update:modelValue', 'test updated round name');
         await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
         expect(store.setNextRound).toHaveBeenCalledWith({
             teamAId: '999999',
             teamBId: '345345',
-            roundId: '0387'
+            roundId: '0387',
+            name: 'test updated round name'
         });
     });
 

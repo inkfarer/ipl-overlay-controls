@@ -1,6 +1,6 @@
 import { ActiveRound, NextRound } from 'schemas';
 import { GameWinner } from 'types/enums/gameWinner';
-import { PlayType } from '../../../types/enums/playType';
+import { PlayType } from 'types/enums/playType';
 import { messageListeners, replicantChangeListeners, replicants } from '../../__mocks__/mockNodecg';
 import { mock } from 'jest-mock-extended';
 import type * as MatchStoreModule from '../matchStore';
@@ -264,26 +264,6 @@ describe('activeRound', () => {
     });
 
     describe('beginNextMatch', () => {
-        it('returns error when no arguments are given', () => {
-            replicants.activeRound = {};
-            const ack = jest.fn();
-
-            messageListeners.beginNextMatch(null, ack);
-
-            expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
-            expect(replicants.activeRound).toEqual({});
-        });
-
-        it('returns error when no match name is given', () => {
-            replicants.activeRound = {};
-            const ack = jest.fn();
-
-            messageListeners.beginNextMatch({ }, ack);
-
-            expect(ack).toHaveBeenCalledWith(new Error('Match name must not be blank'));
-            expect(replicants.activeRound).toEqual({});
-        });
-
         it('replaces active teams with next teams and commits them to a new match', () => {
             mockGenerateId.generateId.mockReturnValue('new match id');
             replicants.nextRound = {
@@ -305,6 +285,32 @@ describe('activeRound', () => {
             };
 
             messageListeners.beginNextMatch({ matchName: 'Cool Match' });
+
+            expect((replicants.activeRound as ActiveRound).match.name).toEqual('Cool Match');
+        });
+
+        it('uses the name of the next round if a match name is not given', () => {
+            mockGenerateId.generateId.mockReturnValue('new match id');
+            replicants.nextRound = {
+                teamA: { id: '123123', testCustomProp: 'hello :)', name: 'Team Three' },
+                teamB: { id: '345354', testCustomProp2: 'hello! ;)', name: 'Team Four' },
+                games: [
+                    { stage: 'MakoMart', mode: 'Rainmaker' },
+                    { stage: 'Manta Maria', mode: 'Tower Control' }
+                ],
+                round: {
+                    name: 'Cool Next Round',
+                    type: PlayType.PLAY_ALL
+                },
+                showOnStream: true,
+                name: 'Cool Match'
+            };
+            replicants.activeRound = {
+                teamA: { name: 'Team One', score: 99, foo: 'bar', color: '#222' },
+                teamB: { name: 'Team Two', score: 98, yee: 'haw', color: '#333' }
+            };
+
+            messageListeners.beginNextMatch();
 
             expect(replicants.activeRound).toEqual({
                 teamA: { id: '123123', name: 'Team Three', score: 0, testCustomProp: 'hello :)', color: '#222' },

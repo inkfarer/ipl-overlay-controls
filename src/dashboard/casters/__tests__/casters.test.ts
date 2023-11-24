@@ -1,6 +1,6 @@
 import Casters from '../casters.vue';
 import { useCasterStore } from '../../store/casterStore';
-import { config, flushPromises, mount } from '@vue/test-utils';
+import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import Draggable from 'vuedraggable';
 import CasterEditor from '../components/casterEditor.vue';
@@ -24,11 +24,11 @@ describe('Casters', () => {
     describe('add caster button', () => {
         it('adds caster and sets it as the active caster on click', async () => {
             const store = useCasterStore();
-            store.addDefaultCaster = jest.fn().mockResolvedValue('new caster id');
+            store.addDefaultCaster = jest.fn().mockReturnValue('new caster id');
             const wrapper = mount(Casters);
 
             wrapper.getComponent<typeof IplButton>('[data-test="add-caster-button"]').vm.$emit('click');
-            await flushPromises();
+            await wrapper.vm.$nextTick();
 
             expect(store.addDefaultCaster).toHaveBeenCalled();
             expect(wrapper.vm.activeCaster).toEqual('new caster id');
@@ -158,10 +158,12 @@ describe('Casters', () => {
             }
         });
 
-        const editors = wrapper.findAllComponents('caster-editor-stub');
+        const editors = wrapper.findAllComponents<typeof CasterEditor>('caster-editor-stub');
         expect(editors.length).toEqual(2);
-        expect(editors[0].attributes().casterid).toEqual('a');
-        expect(editors[1].attributes().casterid).toEqual('b');
+        // @ts-ignore
+        expect(editors[0].vm.caster.id).toEqual('a');
+        // @ts-ignore
+        expect(editors[1].vm.caster.id).toEqual('b');
     });
 
     it('creates element for every uncommitted caster', async () => {
@@ -184,17 +186,20 @@ describe('Casters', () => {
             }
         });
 
-        const editors = wrapper.findAllComponents('caster-editor-stub');
+        const editors = wrapper.findAllComponents<typeof CasterEditor>('caster-editor-stub');
         expect(editors.length).toEqual(3);
-        const committedAttrs1 = editors[0].attributes();
-        expect(committedAttrs1.casterid).toEqual('a');
-        expect(committedAttrs1.uncommitted).toEqual('false');
-        const uncommittedAttrs1 = editors[1].attributes();
-        expect(uncommittedAttrs1.casterid).toEqual('b');
-        expect(uncommittedAttrs1.uncommitted).toEqual('true');
-        const uncommittedAttrs2 = editors[2].attributes();
-        expect(uncommittedAttrs2.casterid).toEqual('c');
-        expect(uncommittedAttrs2.uncommitted).toEqual('true');
+        // @ts-ignore
+        expect(editors[0].vm.caster.id).toEqual('a');
+        // @ts-ignore
+        expect(editors[0].vm.caster.uncommitted).toEqual(false);
+        // @ts-ignore
+        expect(editors[1].vm.caster.id).toEqual('b');
+        // @ts-ignore
+        expect(editors[1].vm.caster.uncommitted).toEqual(true);
+        // @ts-ignore
+        expect(editors[2].vm.caster.id).toEqual('c');
+        // @ts-ignore
+        expect(editors[2].vm.caster.uncommitted).toEqual(true);
     });
 
     it('handles uncommitted caster emitting save event', async () => {

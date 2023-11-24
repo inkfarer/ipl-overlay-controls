@@ -12,6 +12,12 @@
             :options="matchOptions"
             data-test="match-selector"
         />
+        <ipl-input
+            v-model="nextMatchName"
+            class="m-t-4"
+            name="match-name"
+            label="Match Name"
+        />
         <ipl-data-row
             label="Team A"
             :value="addDots(selectedMatchData?.teamA?.name)"
@@ -47,7 +53,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
-import { IplButton, IplSelect, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSelect, IplDataRow, IplMessage, IplSpace, IplInput } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
@@ -58,38 +64,48 @@ import { useTournamentDataStore } from '../../store/tournamentDataStore';
 export default defineComponent({
     name: 'HighlightedMatchViewer',
 
-    components: { RoundSelect, IplMessage, IplDataRow, IplSelect, IplButton, IplSpace },
+    components: { IplInput, RoundSelect, IplMessage, IplDataRow, IplSelect, IplButton, IplSpace },
 
     setup() {
         const highlightedMatchStore = useHighlightedMatchStore();
         const nextRoundStore = useNextRoundStore();
         const tournamentDataStore = useTournamentDataStore();
-        const selectedMatch = ref<string>(null);
-        const selectedRound = ref<string>(null);
+        const selectedMatch = ref(null);
+        const selectedRound = ref(null);
         const selectedRoundData = ref<RoundSelectRound>(null);
+        const nextMatchName = ref('');
 
         watchEffect(() => {
             const nextRound = nextRoundStore.nextRound;
             const equalMatch = highlightedMatchStore.highlightedMatches.find(match =>
-                match.teamA.id === nextRound.teamA.id && match.teamB.id === nextRound.teamB.id);
+                match.teamA.id === nextRound.teamA.id && match.teamB.id === nextRound.teamB.id)
+                ?? highlightedMatchStore.highlightedMatches[0];
 
+            selectedMatch.value = equalMatch?.meta.id ?? null;
             if (equalMatch) {
-                selectedMatch.value = equalMatch.meta.id;
-            } else {
-                selectedMatch.value = highlightedMatchStore.highlightedMatches[0]?.meta?.id ?? null;
+                nextMatchName.value = equalMatch.meta.shortName;
             }
         });
 
         const selectedMatchData = computed(() =>
             highlightedMatchStore.highlightedMatches.find(match => match.meta.id === selectedMatch.value));
+        watch(selectedMatchData, newValue => {
+            if (newValue) {
+                nextMatchName.value = newValue?.meta.shortName;
+            }
+        });
 
         watch(() => nextRoundStore.nextRound.round.id, newId => {
             selectedRound.value = newId;
         }, { immediate: true });
+        watch(() => nextRoundStore.nextRound.name, newValue => {
+            nextMatchName.value = newValue;
+        });
 
         return {
             addDots,
             selectedRoundData,
+            highlightedMatchStore,
             formatPlayType: PlayTypeHelper.toPrettyString,
             matchOptions: computed(() => {
                 const isAllSameStage = highlightedMatchStore.highlightedMatches.every(match =>
@@ -97,22 +113,25 @@ export default defineComponent({
 
                 return highlightedMatchStore.highlightedMatches.map(stage => ({
                     value: stage.meta.id,
-                    name: isAllSameStage ? stage.meta.name : `${stage.meta.name} | ${stage.meta.stageName}`
+                    name: isAllSameStage ? stage.meta.name : `${stage.meta.stageName} | ${stage.meta.name}`
                 }));
             }),
             selectedMatch,
             selectedRound,
             selectedMatchData,
+            nextMatchName,
             disableSetNextMatch: computed(() => !selectedMatchData.value),
             isChanged: computed(() =>
                 nextRoundStore.nextRound.teamA.id !== selectedMatchData.value?.teamA.id
                 || nextRoundStore.nextRound.teamB.id !== selectedMatchData.value?.teamB.id
-                || nextRoundStore.nextRound.round.id !== selectedRound.value ),
+                || nextRoundStore.nextRound.round.id !== selectedRound.value
+                || nextRoundStore.nextRound.name !== nextMatchName.value),
             async handleSetNextMatch() {
                 await highlightedMatchStore.setNextMatch({
                     teamAId: selectedMatchData.value.teamA.id,
                     teamBId: selectedMatchData.value.teamB.id,
-                    roundId: selectedRound.value
+                    roundId: selectedRound.value,
+                    name: nextMatchName.value
                 });
 
                 const playType = selectedMatchData.value?.meta.playType;

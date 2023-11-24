@@ -598,7 +598,8 @@ describe('smashggClient', () => {
                                             phaseGroup: {
                                                 displayIdentifier: 'ID999',
                                                 phase: {
-                                                    name: 'Phase X'
+                                                    name: 'Phase X',
+                                                    groupCount: 1
                                                 }
                                             },
                                             setGamesType: 1,
@@ -655,7 +656,8 @@ describe('smashggClient', () => {
                                             phaseGroup: {
                                                 displayIdentifier: 'ID919',
                                                 phase: {
-                                                    name: 'Phase H'
+                                                    name: 'Phase H',
+                                                    groupCount: 2
                                                 }
                                             },
                                             setGamesType: 2,
@@ -724,7 +726,8 @@ describe('smashggClient', () => {
                                             phaseGroup: {
                                                 displayIdentifier: 'ID988',
                                                 phase: {
-                                                    name: 'Phase R'
+                                                    name: 'Phase R',
+                                                    groupCount: 3
                                                 }
                                             },
                                             event: {
@@ -797,6 +800,7 @@ describe('smashggClient', () => {
                     match: 0,
                     playType: PlayType.BEST_OF,
                     name: 'Set Z - Round 999 - Pool ID999 - Phase X',
+                    shortName: 'Phase X Round 999',
                     round: '999',
                     stageName: 'ID999'
                 },
@@ -840,6 +844,7 @@ describe('smashggClient', () => {
                     match: 0,
                     playType: PlayType.PLAY_ALL,
                     name: 'Set I - Round 987 - Pool ID988 - Phase R',
+                    shortName: 'Phase R Pool ID988 Round 987',
                     round: '987',
                     stageName: 'ID988'
                 },

@@ -107,6 +107,7 @@ export interface SmashggTournamentStreamQueueResponse {
                         displayIdentifier: string
                         phase: {
                             name: string
+                            groupCount: number
                         }
                     },
                     slots: SmashggTournamentStreamQueueSlot[]
