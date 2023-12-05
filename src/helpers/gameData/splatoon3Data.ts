@@ -23,6 +23,8 @@ export interface Splatoon3Stages {
     'Humpback Pump Track': string
     'Crableg Capital': string
     'Shipshape Cargo Co.': string
+    'Robo ROM-en': string
+    'Bluefin Depot': string
 }
 
 export interface Splatoon3Modes {
@@ -55,7 +57,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Barnacle & Dime',
             'Humpback Pump Track': 'Humpback Pump Track',
             'Crableg Capital': 'Crableg Capital',
-            'Shipshape Cargo Co.': 'Shipshape Cargo Co.'
+            'Shipshape Cargo Co.': 'Shipshape Cargo Co.',
+            'Robo ROM-en': 'Robo ROM-en',
+            'Bluefin Depot': 'Bluefin Depot'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -77,7 +81,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Talerfisch & Pock',
             'Humpback Pump Track': 'Buckelwal-Piste',
             'Crableg Capital': 'Majidae Skyline',
-            'Shipshape Cargo Co.': 'Cargo Ship Heavyfish'
+            'Shipshape Cargo Co.': 'Cargo Ship Heavyfish',
+            'Robo ROM-en': 'ROM & RAMen',
+            'Bluefin Depot': 'Blauflossen-Depot'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -99,7 +105,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Halles de Port-merlu',
             'Humpback Pump Track': 'Piste Méroule',
             'Crableg Capital': 'Quartier Crabe-ciels',
-            'Shipshape Cargo Co.': 'Chaland Flétan'
+            'Shipshape Cargo Co.': 'Chaland Flétan',
+            'Robo ROM-en': 'Arène Méca-ramen',
+            'Bluefin Depot': 'Mine Marine'
         }
     },
     stageImagePaths: {
@@ -122,7 +130,9 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
         'Um\'ami Ruins': 'splatoon3/S3_Stage_Umami_Ruins.webp',
         'Barnacle & Dime': 'splatoon3/S3_Stage_Barnacle_&_Dime.webp',
         'Crableg Capital': 'splatoon3/S3_Stage_Crableg_Capital.webp',
-        'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp'
+        'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp',
+        'Robo ROM-en': 'splatoon3/S3_Stage_Robo_ROM-en.webp',
+        'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp'
     },
     modes: {
         [Locale.EN]: {

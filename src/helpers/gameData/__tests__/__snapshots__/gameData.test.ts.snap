@@ -471,6 +471,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
     },
     "stageImagePaths": {
       "Barnacle & Dime": "splatoon3/S3_Stage_Barnacle_&_Dime.webp",
+      "Bluefin Depot": "splatoon3/S3_Stage_Bluefin_Depot.webp",
       "Brinewater Springs": "splatoon3/S3_Stage_Brinewater_Springs.webp",
       "Crableg Capital": "splatoon3/S3_Stage_Crableg_Capital.webp",
       "Eeltail Alley": "splatoon3/S3_Stage_Eeltail_Alley.webp",
@@ -484,6 +485,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
       "Manta Maria": "splatoon3/S3_Stage_Manta_Maria.webp",
       "Mincemeat Metalworks": "splatoon3/S3_Stage_Mincemeat_Metalworks.webp",
       "Museum d'Alfonsino": "splatoon3/S3_Stage_Museum_dAlfonsino.webp",
+      "Robo ROM-en": "splatoon3/S3_Stage_Robo_ROM-en.webp",
       "Scorch Gorge": "splatoon3/S3_Stage_Scorch_Gorge.webp",
       "Shipshape Cargo Co.": "splatoon3/S3_Stage_Shipshape_Cargo_Co..webp",
       "Sturgeon Shipyard": "splatoon3/S3_Stage_Sturgeon_Shipyard.webp",
@@ -494,6 +496,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
     "stages": {
       "DE": {
         "Barnacle & Dime": "Talerfisch & Pock",
+        "Bluefin Depot": "Blauflossen-Depot",
         "Brinewater Springs": "Kusaya-Quellen",
         "Counterpick": "Counterpick",
         "Crableg Capital": "Majidae Skyline",
@@ -508,6 +511,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Manta Maria": "Manta Maria",
         "Mincemeat Metalworks": "Aalstahl-Metallwerk",
         "Museum d'Alfonsino": "Pinakoithek",
+        "Robo ROM-en": "ROM & RAMen",
         "Scorch Gorge": "Sengkluft",
         "Shipshape Cargo Co.": "Cargo Ship Heavyfish",
         "Sturgeon Shipyard": "Störwerft",
@@ -518,6 +522,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
       },
       "EN": {
         "Barnacle & Dime": "Barnacle & Dime",
+        "Bluefin Depot": "Bluefin Depot",
         "Brinewater Springs": "Brinewater Springs",
         "Counterpick": "Counterpick",
         "Crableg Capital": "Crableg Capital",
@@ -532,6 +537,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Manta Maria": "Manta Maria",
         "Mincemeat Metalworks": "Mincemeat Metalworks",
         "Museum d'Alfonsino": "Museum d'Alfonsino",
+        "Robo ROM-en": "Robo ROM-en",
         "Scorch Gorge": "Scorch Gorge",
         "Shipshape Cargo Co.": "Shipshape Cargo Co.",
         "Sturgeon Shipyard": "Sturgeon Shipyard",
@@ -542,6 +548,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
       },
       "EU_FR": {
         "Barnacle & Dime": "Halles de Port-merlu",
+        "Bluefin Depot": "Mine Marine",
         "Brinewater Springs": "Sources Sauret",
         "Counterpick": "Counterpick",
         "Crableg Capital": "Quartier Crabe-ciels",
@@ -556,6 +563,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Manta Maria": "Manta Maria",
         "Mincemeat Metalworks": "Casse Rascasse",
         "Museum d'Alfonsino": "Galeries Guppy",
+        "Robo ROM-en": "Arène Méca-ramen",
         "Scorch Gorge": "Canyon aux colonnes",
         "Shipshape Cargo Co.": "Chaland Flétan",
         "Sturgeon Shipyard": "Chantier Narval",
