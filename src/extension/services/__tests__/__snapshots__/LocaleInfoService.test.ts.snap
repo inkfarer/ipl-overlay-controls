@@ -135,6 +135,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
   },
   "stages": {
     "Barnacle & Dime": "Talerfisch & Pock",
+    "Bluefin Depot": "Blauflossen-Depot",
     "Brinewater Springs": "Kusaya-Quellen",
     "Counterpick": "Counterpick",
     "Crableg Capital": "Majidae Skyline",
@@ -149,6 +150,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Manta Maria": "Manta Maria",
     "Mincemeat Metalworks": "Aalstahl-Metallwerk",
     "Museum d'Alfonsino": "Pinakoithek",
+    "Robo ROM-en": "ROM & RAMen",
     "Scorch Gorge": "Sengkluft",
     "Shipshape Cargo Co.": "Cargo Ship Heavyfish",
     "Sturgeon Shipyard": "Störwerft",
@@ -172,6 +174,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
   },
   "stages": {
     "Barnacle & Dime": "Barnacle & Dime",
+    "Bluefin Depot": "Bluefin Depot",
     "Brinewater Springs": "Brinewater Springs",
     "Counterpick": "Counterpick",
     "Crableg Capital": "Crableg Capital",
@@ -186,6 +189,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Manta Maria": "Manta Maria",
     "Mincemeat Metalworks": "Mincemeat Metalworks",
     "Museum d'Alfonsino": "Museum d'Alfonsino",
+    "Robo ROM-en": "Robo ROM-en",
     "Scorch Gorge": "Scorch Gorge",
     "Shipshape Cargo Co.": "Shipshape Cargo Co.",
     "Sturgeon Shipyard": "Sturgeon Shipyard",
@@ -209,6 +213,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
   },
   "stages": {
     "Barnacle & Dime": "Halles de Port-merlu",
+    "Bluefin Depot": "Mine Marine",
     "Brinewater Springs": "Sources Sauret",
     "Counterpick": "Counterpick",
     "Crableg Capital": "Quartier Crabe-ciels",
@@ -223,6 +228,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Manta Maria": "Manta Maria",
     "Mincemeat Metalworks": "Casse Rascasse",
     "Museum d'Alfonsino": "Galeries Guppy",
+    "Robo ROM-en": "Arène Méca-ramen",
     "Scorch Gorge": "Canyon aux colonnes",
     "Shipshape Cargo Co.": "Chaland Flétan",
     "Sturgeon Shipyard": "Chantier Narval",
