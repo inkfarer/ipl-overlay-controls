@@ -6,6 +6,7 @@ import { handleRoundData } from './roundDataHelper';
 import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
+import { importFromMapsIplabs } from './roundFromMapsIplabs';
 
 const nodecg = nodecgContext.get();
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
@@ -14,6 +15,17 @@ const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.url) {
         ack(new Error('Missing arguments.'));
+        return;
+    }
+
+    if (data.url.includes("maps.iplabs.ink")) {
+        try {
+            const roundData = await importFromMapsIplabs(data.url);
+            updateRounds(roundData);
+            ack(null, roundData.url);
+        } catch (e) {
+            ack(e);
+        }
         return;
     }
 

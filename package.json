@@ -140,6 +140,7 @@
         "clone": "^2.1.2",
         "express-fileupload": "^1.2.1",
         "fs-extra": "^10.0.0",
+        "jsoncrush": "^1.1.8",
         "lastfm": "git+https://github.com/inkfarer/lastfm-node.git",
         "lodash": "^4.17.21",
         "luxon": "2.5.2",
