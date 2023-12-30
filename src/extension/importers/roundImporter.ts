@@ -19,6 +19,11 @@ nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement)
     }
 
     if (data.url.includes("maps.iplabs.ink")) {
+        if (runtimeConfig.value.gameVersion !== GameVersion.SPLATOON_3){
+            ack(new Error('maps.iplabs.ink links only supports Splatoon 3'));
+            return;
+        }
+
         try {
             const roundData = await importFromMapsIplabs(data.url);
             updateRounds(roundData);

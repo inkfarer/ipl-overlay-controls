@@ -12,3 +12,14 @@ interface ImporterGame {
     map?: string;
     mode: string;
 }
+
+export interface MapsIplabsRound {
+    name: string;
+    playStyle: "playAll" | "bestOf";
+    games: MapsIplabsGame[];
+}
+
+export type MapsIplabsGame = "counterpick" | {
+    map: number | string;
+    mode: string;
+}
