@@ -1,8 +1,8 @@
-import { RoundGame, RoundStore } from "types/schemas";
-import JSONCrush from "../../../node_modules/jsoncrush/JSONCrush.js" //blaming webpack for this
-import { generateId } from "src/helpers/generateId";
-import { PlayType } from "types/enums/playType";
-import { MapsIplabsGame, MapsIplabsRound } from "types/importer.js";
+import { RoundGame, RoundStore } from 'types/schemas';
+import JSONCrush from '../../../node_modules/jsoncrush/JSONCrush.js'; //blaming webpack for this
+import { generateId } from 'src/helpers/generateId';
+import { PlayType } from 'types/enums/playType';
+import { MapsIplabsGame, MapsIplabsRound } from 'types/importer.js';
 
 export async function importFromMapsIplabs(url: string): Promise<RoundStore> {
     const urlParams = new URLSearchParams(`?${url.split('?')[1]}`);
@@ -42,15 +42,15 @@ async function decodeV1(compressedContext: string): Promise<RoundStore> {
         for (const gameIndex in contextRound.games) {
             const contextGame = contextRound.games[gameIndex] as MapsIplabsGame;
 
-            if (contextGame === "counterpick") {
+            if (contextGame === 'counterpick') {
                 games.push({
-                    stage: "Unknown Stage",
-                    mode: "Unknown Mode"
+                    stage: 'Unknown Stage',
+                    mode: 'Unknown Mode'
                 });
                 continue;
             }
 
-            if (typeof contextGame.map === "string") {
+            if (typeof contextGame.map === 'string') {
                 games.push({
                     stage: contextGame.map,
                     mode: modeAbbreviationToFullName(contextGame.mode)
@@ -64,7 +64,7 @@ async function decodeV1(compressedContext: string): Promise<RoundStore> {
             });
         }
 
-        let playStyle: PlayType = contextRound.playStyle === "playAll" ? PlayType.PLAY_ALL : PlayType.BEST_OF;
+        let playStyle: PlayType = contextRound.playStyle === 'playAll' ? PlayType.PLAY_ALL : PlayType.BEST_OF;
 
         result[generateId()] = {
             meta: {
@@ -100,26 +100,26 @@ function modeAbbreviationToFullName(abbreviation: string): string {
 //v1 decode requires the maps to be in a certain order.
 //there are better ways to impliment this
 const mapsInOrder = [
-    "Scorch Gorge",
-    "Eeltail Alley",
-    "Hagglefish Market",
-    "Undertow Spillway",
-    "Mincemeat Metalworks",
-    "Hammerhead Bridge",
-    "Museum d'Alfonsino",
-    "Mahi-Mahi Resort",
-    "Inkblot Art Academy",
-    "Sturgeon Shipyard",
-    "MakoMart",
-    "Wahoo World",
-    "Flounder Heights",
-    "Brinewater Springs",
-    "Manta Maria",
-    "Um'ami Ruins",
-    "Humpback Pump Track",
-    "Barnacle & Dime",
-    "Crableg Capital",
-    "Shipshape Cargo Co.",
-    "Bluefin Depot",
-    "Robo ROM-en"
+    'Scorch Gorge',
+    'Eeltail Alley',
+    'Hagglefish Market',
+    'Undertow Spillway',
+    'Mincemeat Metalworks',
+    'Hammerhead Bridge',
+    'Museum d\'Alfonsino',
+    'Mahi-Mahi Resort',
+    'Inkblot Art Academy',
+    'Sturgeon Shipyard',
+    'MakoMart',
+    'Wahoo World',
+    'Flounder Heights',
+    'Brinewater Springs',
+    'Manta Maria',
+    'Um\'ami Ruins',
+    'Humpback Pump Track',
+    'Barnacle & Dime',
+    'Crableg Capital',
+    'Shipshape Cargo Co.',
+    'Bluefin Depot',
+    'Robo ROM-en'
 ];
