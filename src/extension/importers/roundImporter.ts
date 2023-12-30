@@ -18,8 +18,8 @@ nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement)
         return;
     }
 
-    if (data.url.includes("maps.iplabs.ink")) {
-        if (runtimeConfig.value.gameVersion !== GameVersion.SPLATOON_3){
+    if (data.url.includes('maps.iplabs.ink')) {
+        if (runtimeConfig.value.gameVersion !== GameVersion.SPLATOON_3) {
             ack(new Error('maps.iplabs.ink links only supports Splatoon 3'));
             return;
         }

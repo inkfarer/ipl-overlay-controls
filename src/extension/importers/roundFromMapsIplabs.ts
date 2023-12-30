@@ -64,7 +64,7 @@ async function decodeV1(compressedContext: string): Promise<RoundStore> {
             });
         }
 
-        let playStyle: PlayType = contextRound.playStyle === 'playAll' ? PlayType.PLAY_ALL : PlayType.BEST_OF;
+        const playStyle: PlayType = contextRound.playStyle === 'playAll' ? PlayType.PLAY_ALL : PlayType.BEST_OF;
 
         result[generateId()] = {
             meta: {
@@ -79,8 +79,8 @@ async function decodeV1(compressedContext: string): Promise<RoundStore> {
     return result;
 }
 
-function isValidJSONFormat(context: any): boolean {
-    if (context.hasOwnProperty('rounds')) {
+function isValidJSONFormat(context: {rounds: MapsIplabsRound[]}): boolean {
+    if (Object.prototype.hasOwnProperty.call(context, 'rounds')) {
         return context.rounds.length > 0;
     }
     return false;

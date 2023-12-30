@@ -15,11 +15,11 @@ interface ImporterGame {
 
 export interface MapsIplabsRound {
     name: string;
-    playStyle: "playAll" | "bestOf";
+    playStyle: 'playAll' | 'bestOf';
     games: MapsIplabsGame[];
 }
 
-export type MapsIplabsGame = "counterpick" | {
+export type MapsIplabsGame = 'counterpick' | {
     map: number | string;
     mode: string;
 }
