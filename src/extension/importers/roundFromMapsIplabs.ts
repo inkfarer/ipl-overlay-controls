@@ -1,6 +1,6 @@
 import { RoundGame, RoundStore } from 'types/schemas';
-import JSONCrush from '../../../node_modules/jsoncrush/JSONCrush.js'; //blaming webpack for this
-import { generateId } from 'src/helpers/generateId';
+import JSONCrush from 'jsoncrush';
+import { generateId } from '../../helpers/generateId';
 import { PlayType } from 'types/enums/playType';
 import { MapsIplabsGame, MapsIplabsRound } from 'types/importer.js';
 
