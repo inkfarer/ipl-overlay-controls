@@ -4,6 +4,8 @@ import { generateId } from '../../helpers/generateId';
 import { PlayType } from 'types/enums/playType';
 import { MapsIplabsGame, MapsIplabsRound } from 'types/importer.js';
 import { Splatoon3Stages } from '../../helpers/gameData/splatoon3Data';
+import { normalizeStageName } from './roundDataHelper';
+import { GameVersion } from 'types/enums/gameVersion';
 
 export function importFromMapsIplabs(url: string): RoundStore {
     const urlParams = new URLSearchParams(`?${url.split('?')[1]}`);
@@ -52,14 +54,14 @@ function decodeV1(compressedContext: string): RoundStore {
 
             if (typeof contextGame.map === 'string') {
                 games.push({
-                    stage: contextGame.map,
+                    stage: normalizeStageName(contextGame.map, GameVersion.SPLATOON_3),
                     mode: modeAbbreviationToFullName(contextGame.mode)
                 });
                 continue;
             }
 
             games.push({
-                stage: mapsInOrder[contextGame.map],
+                stage: mapsInOrder[contextGame.map] ?? 'Unknown Stage',
                 mode: modeAbbreviationToFullName(contextGame.mode)
             });
         }
