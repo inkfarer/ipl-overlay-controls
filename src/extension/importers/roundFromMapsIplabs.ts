@@ -44,7 +44,7 @@ function decodeV1(compressedContext: string): RoundStore {
 
             if (contextGame === 'counterpick') {
                 games.push({
-                    stage: 'Unknown Stage',
+                    stage: 'Counterpick',
                     mode: 'Unknown Mode'
                 });
                 continue;
