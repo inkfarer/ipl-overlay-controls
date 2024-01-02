@@ -25,7 +25,7 @@ nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement)
         }
 
         try {
-            const roundData = await importFromMapsIplabs(data.url);
+            const roundData = importFromMapsIplabs(data.url);
             updateRounds(roundData);
             ack(null, roundData.url);
         } catch (e) {

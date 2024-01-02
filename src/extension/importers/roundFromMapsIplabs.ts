@@ -3,8 +3,9 @@ import JSONCrush from 'jsoncrush';
 import { generateId } from '../../helpers/generateId';
 import { PlayType } from 'types/enums/playType';
 import { MapsIplabsGame, MapsIplabsRound } from 'types/importer.js';
+import { Splatoon3Stages } from '../../helpers/gameData/splatoon3Data';
 
-export async function importFromMapsIplabs(url: string): Promise<RoundStore> {
+export function importFromMapsIplabs(url: string): RoundStore {
     const urlParams = new URLSearchParams(`?${url.split('?')[1]}`);
     const compressedContext = urlParams.get('c');
     const encodeVersion = parseInt(urlParams.get('v'));
@@ -25,8 +26,7 @@ export async function importFromMapsIplabs(url: string): Promise<RoundStore> {
     throw new Error('Encoding version of maps.iplabs.ink not supported. Try remaking the url.');
 }
 
-async function decodeV1(compressedContext: string): Promise<RoundStore> {
-    
+function decodeV1(compressedContext: string): RoundStore {
     const context = JSON.parse(JSONCrush.uncrush(compressedContext));
     if (!isValidJSONFormat(context)) {
         throw new Error('Invalid URL encoded JSON format.');
@@ -98,8 +98,7 @@ function modeAbbreviationToFullName(abbreviation: string): string {
 }
 
 //v1 decode requires the maps to be in a certain order.
-//there are better ways to impliment this
-const mapsInOrder = [
+const mapsInOrder: (keyof Splatoon3Stages)[] = [
     'Scorch Gorge',
     'Eeltail Alley',
     'Hagglefish Market',
