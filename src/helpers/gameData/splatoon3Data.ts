@@ -2,40 +2,40 @@ import { GameData } from './gameData';
 import { normalizeGameData } from './normalizeGameData';
 import { Locale } from '../../types/enums/Locale';
 
-export interface Splatoon3Stages {
-    'Museum d\'Alfonsino': string
-    'Scorch Gorge': string
-    'Eeltail Alley': string
-    'Hagglefish Market': string
-    'Undertow Spillway': string
-    'Mincemeat Metalworks': string
-    'Hammerhead Bridge': string
-    'Mahi-Mahi Resort': string
-    'Inkblot Art Academy': string
-    'Sturgeon Shipyard': string
-    MakoMart: string
-    'Wahoo World': string
-    'Brinewater Springs': string
-    'Flounder Heights': string
-    'Um\'ami Ruins': string
-    'Manta Maria': string
-    'Barnacle & Dime': string
-    'Humpback Pump Track': string
-    'Crableg Capital': string
-    'Shipshape Cargo Co.': string
-    'Robo ROM-en': string
-    'Bluefin Depot': string
-}
+export const Splatoon3Stages = [
+    'Museum d\'Alfonsino',
+    'Scorch Gorge',
+    'Eeltail Alley',
+    'Hagglefish Market',
+    'Undertow Spillway',
+    'Mincemeat Metalworks',
+    'Hammerhead Bridge',
+    'Mahi-Mahi Resort',
+    'Inkblot Art Academy',
+    'Sturgeon Shipyard',
+    'MakoMart',
+    'Wahoo World',
+    'Brinewater Springs',
+    'Flounder Heights',
+    'Um\'ami Ruins',
+    'Manta Maria',
+    'Barnacle & Dime',
+    'Humpback Pump Track',
+    'Crableg Capital',
+    'Shipshape Cargo Co.',
+    'Robo ROM-en',
+    'Bluefin Depot'
+] as const;
 
-export interface Splatoon3Modes {
-    'Clam Blitz': string
-    'Tower Control': string
-    'Rainmaker': string
-    'Splat Zones': string
-    'Turf War': string
-}
+export const Splatoon3Modes = [
+    'Clam Blitz',
+    'Tower Control',
+    'Rainmaker',
+    'Splat Zones',
+    'Turf War'
+] as const;
 
-export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normalizeGameData({
+export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Modes> = normalizeGameData({
     stages: {
         [Locale.EN]: {
             'Museum d\'Alfonsino': 'Museum d\'Alfonsino',

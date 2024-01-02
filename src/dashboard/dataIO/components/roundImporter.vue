@@ -5,7 +5,7 @@
                 v-show="!useFileUpload"
                 v-model="dataUrl"
                 name="round-data-url"
-                label="Data URL"
+                label="Data URL / maps.iplabs.ink URL"
             />
             <ipl-upload
                 v-show="useFileUpload"
