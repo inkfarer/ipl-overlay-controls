@@ -2,42 +2,42 @@ import { GameData } from './gameData';
 import { normalizeGameData } from './normalizeGameData';
 import { Locale } from '../../types/enums/Locale';
 
-export interface Splatoon2Stages {
-    'Ancho-V Games': string
-    'Arowana Mall': string
-    'Blackbelly Skatepark': string
-    'Camp Triggerfish': string
-    'Goby Arena': string
-    'Humpback Pump Track': string
-    'Inkblot Art Academy': string
-    'Kelp Dome': string
-    'MakoMart': string
-    'Manta Maria': string
-    'Moray Towers': string
-    'Musselforge Fitness': string
-    'New Albacore Hotel': string
-    'Piranha Pit': string
-    'Port Mackerel': string
-    'Shellendorf Institute': string
-    'Shifty Station': string
-    'Snapper Canal': string
-    'Starfish Mainstage': string
-    'Sturgeon Shipyard': string
-    'The Reef': string
-    'Wahoo World': string
-    'Walleye Warehouse': string
-    'Skipper Pavilion': string
-}
+export const Splatoon2Stages = [
+    'Ancho-V Games',
+    'Arowana Mall',
+    'Blackbelly Skatepark',
+    'Camp Triggerfish',
+    'Goby Arena',
+    'Humpback Pump Track',
+    'Inkblot Art Academy',
+    'Kelp Dome',
+    'MakoMart',
+    'Manta Maria',
+    'Moray Towers',
+    'Musselforge Fitness',
+    'New Albacore Hotel',
+    'Piranha Pit',
+    'Port Mackerel',
+    'Shellendorf Institute',
+    'Shifty Station',
+    'Snapper Canal',
+    'Starfish Mainstage',
+    'Sturgeon Shipyard',
+    'The Reef',
+    'Wahoo World',
+    'Walleye Warehouse',
+    'Skipper Pavilion'
+] as const;
 
-export interface Splatoon2Modes {
-    'Clam Blitz': string
-    'Tower Control': string
-    'Rainmaker': string
-    'Splat Zones': string
-    'Turf War': string
-}
+export const Splatoon2Modes = [
+    'Clam Blitz',
+    'Tower Control',
+    'Rainmaker',
+    'Splat Zones',
+    'Turf War'
+] as const;
 
-export const splatoon2Data: GameData<Splatoon2Stages, Splatoon2Modes> = normalizeGameData({
+export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Modes> = normalizeGameData({
     stages: {
         [Locale.EN]: {
             'Ancho-V Games': 'Ancho-V Games',

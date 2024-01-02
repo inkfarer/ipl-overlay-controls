@@ -29,7 +29,9 @@ const commonModeNames: {[key in Locale]: { 'Unknown Mode': string } } = {
     }
 };
 
-export function normalizeGameData<S, M>(existingData: RawGameData<S, M>): GameData<S, M> {
+export function normalizeGameData<S extends readonly string[], M extends readonly string[]>(
+    existingData: RawGameData<S, M>
+): GameData<S, M> {
     const data = cloneDeep(existingData);
 
     return {

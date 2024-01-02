@@ -219,7 +219,12 @@ const extensionConfig: webpack.Configuration = {
     ],
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? false : 'source-map',
-    externals: [nodeExternals()],
+    externals: [
+        nodeExternals({
+            // With our webpack setup, dependencies that only support ESM will have to be included in the bundle.
+            allowlist: ['jsoncrush']
+        })
+    ],
     externalsPresets: { node: true }
 };
 
