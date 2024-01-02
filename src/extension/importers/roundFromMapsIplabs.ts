@@ -37,7 +37,6 @@ function decodeV1(compressedContext: string): RoundStore {
     const result: RoundStore = {};
 
     for (const roundIndex in context.rounds) {
-
         const contextRound = context.rounds[roundIndex] as MapsIplabsRound;
         const games: RoundGame[] = [];
 
@@ -100,7 +99,7 @@ function modeAbbreviationToFullName(abbreviation: string): string {
 }
 
 //v1 decode requires the maps to be in a certain order.
-const mapsInOrder: (keyof Splatoon3Stages)[] = [
+const mapsInOrder: (typeof Splatoon3Stages[number])[] = [
     'Scorch Gorge',
     'Eeltail Alley',
     'Hagglefish Market',
