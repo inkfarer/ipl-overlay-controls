@@ -203,39 +203,37 @@ export default defineComponent({
 
 .colors-container {
     max-height: 180px;
-    overflow: auto;
+    overflow-y: auto;
 }
 
-.color-group > .title {
-    width: 100%;
-}
-
-.color-group:not(.color-names-visible) {
-    display: flex;
-    flex-wrap: wrap;
+.color-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
     margin-bottom: 6px;
 
     > .color-option {
-        width: 58px;
         justify-content: center;
-        margin-bottom: 3px;
-        margin-top: 3px;
+    }
 
-        &:nth-child(3n), &:nth-child(3n + 2) {
-            margin-right: 6px;
-        }
+    > .title {
+        grid-column: 1 / -1;
+        margin: 0;
+    }
+
+    &.color-names-visible {
+        grid-template-columns: 1fr;
     }
 }
 
 .color-option {
-    width: auto;
-    margin: 8px 0;
     background-color: $background-secondary;
     border-radius: $border-radius-inner;
     padding: 6px 10px;
     cursor: pointer;
     transition-property: background-color;
     transition-duration: $transition-duration-low;
+    box-sizing: border-box;
 
     &.is-selected {
         background-color: $blue;
