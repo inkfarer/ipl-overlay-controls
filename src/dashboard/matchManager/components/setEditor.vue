@@ -23,13 +23,13 @@
                 v-show="!editColorsEnabled"
                 v-model="game.stage"
                 data-test="stage-select"
-                class="m-l-6"
+                class="m-l-6 max-width"
             />
             <mode-select
                 v-show="!editColorsEnabled"
                 v-model="game.mode"
                 data-test="mode-select"
-                class="m-l-6"
+                class="m-l-6 max-width"
             />
             <ipl-select
                 v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"

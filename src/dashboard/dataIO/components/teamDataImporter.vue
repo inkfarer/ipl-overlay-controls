@@ -29,6 +29,7 @@
                     v-model="dataSource"
                     label="Source"
                     data-test="source-selector"
+                    name="source-selector"
                     class="data-source-selector"
                     :options="dataSourceOptions"
                 />
@@ -107,7 +108,7 @@
                 label="Update"
                 data-test="update-short-name-button"
                 :color="shortNameChanged ? 'red' : 'blue'"
-                :disabled="!shortNameValidator.isValid"
+                :disabled="!shortNameValid"
                 :title="RIGHT_CLICK_UNDO_MESSAGE"
                 @click="updateShortName"
                 @right-click="undoShortNameChanges"
@@ -123,7 +124,6 @@ import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import {
-    allValid,
     IplButton,
     IplCheckbox,
     IplInput,
@@ -158,7 +158,6 @@ export default defineComponent({
         const useFileUpload = ref(false);
 
         const shortName = ref('');
-        const shortNameValidator = validator(shortName, false, notBlank);
 
         const refreshingTournamentData = ref(false);
 
@@ -167,13 +166,9 @@ export default defineComponent({
             newValue => shortName.value = newValue,
             { immediate: true });
 
-        const validators = {
-            'tournament-id-input': validator(tournamentId, false, notBlank)
-        };
-
-        provideValidators({
-            ...validators,
-            shortName: shortNameValidator
+        const { fieldIsValid } = provideValidators({
+            'tournament-id-input': validator(false, notBlank),
+            shortName: validator(true, notBlank)
         });
 
         return {
@@ -201,6 +196,7 @@ export default defineComponent({
             idLabel: computed(() => {
                 switch (dataSource.value) {
                     case TournamentDataSource.BATTLEFY:
+                    case TournamentDataSource.SENDOU:
                         return 'Tournament URL';
                     case TournamentDataSource.SMASHGG:
                         return 'Tournament Slug';
@@ -241,14 +237,14 @@ export default defineComponent({
             handleSmashggImportCancel() {
                 smashggEvents.value = [];
             },
-            allValid: computed(() => allValid(validators) || (useFileUpload.value && !!teamDataFile.value)),
+            allValid: computed(() => fieldIsValid('tournament-id-input') || (useFileUpload.value && !!teamDataFile.value)),
             tournamentId,
             smashggEvents,
             smashggEvent,
             TournamentDataSource,
 
             shortName,
-            shortNameValidator,
+            shortNameValid: computed(() => fieldIsValid('shortName')),
             shortNameChanged: computed(() =>
                 tournamentDataStore.tournamentData.meta.shortName !== shortName.value),
             updateShortName() {

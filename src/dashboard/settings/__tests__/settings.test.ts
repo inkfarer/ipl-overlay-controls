@@ -35,8 +35,6 @@ describe('Settings', () => {
             }
         });
 
-        wrapper.getComponent<typeof IplSpace>('[data-test="open-sidebar-button"]').vm.$emit('click');
-        await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplSpace>(`[data-test="section-selector_${section}"]`).vm.$emit('click');
         await wrapper.vm.$nextTick();
 
@@ -52,8 +50,6 @@ describe('Settings', () => {
             }
         });
 
-        wrapper.getComponent<typeof IplSpace>('[data-test="open-sidebar-button"]').vm.$emit('click');
-        await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplSpace>('[data-test="section-selector_obs-socket"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 

@@ -2,11 +2,12 @@
 @import './colors.scss';
 @import './badges.scss';
 @import './constants.scss';
+@import '@iplsplatoon/vue-components/style.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 body {
-    margin: 8px;
+    margin: 8px !important;
     font-family: 'Roboto', sans-serif;
 }
 

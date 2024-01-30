@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ScoreboardEditor matches snapshot 1`] = `
-"<div data-v-24769743="" class="ipl-expansion-panel__content">
-  <div data-v-24769743="" class="ipl-expansion-panel__header">
-    <div data-v-24769743="" class="ipl-expansion-panel__header-background"></div>
-    <div data-v-24769743="" class="ipl-expansion-panel__title">Scoreboard</div>
-    <font-awesome-icon-stub data-v-24769743="" icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-24769743="" class="header-extra"></div>
+"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
+  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
+    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">Scoreboard</div>
+    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
-  <div data-v-24769743="" class="content" style="display: none;">
-    <ipl-data-row-stub label="Flavor Text" value="whoa"></ipl-data-row-stub>
+  <div data-v-a1f8a641="" class="content" style="display: none;">
+    <ipl-data-row-stub label="Flavor Text" copiable="false" value="whoa"></ipl-data-row-stub>
     <ipl-toggle-stub modelvalue="false" truelabel="Show" falselabel="Hide" useneutralcolors="false" class="m-t-8" data-test="scoreboard-visible-toggle"></ipl-toggle-stub>
   </div>
 </div>"

@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue';
+import { defineComponent, Ref, ref } from 'vue';
 import {
     IplButton,
     IplSpace,
@@ -44,7 +44,6 @@ import {
     IplUpload,
     provideValidators,
     validator,
-    allValid,
     notBlank
 } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
@@ -60,16 +59,15 @@ export default defineComponent({
         const useFileUpload = ref(false);
         const roundFile: Ref<File> = ref(null);
         const dataUrl: Ref<string> = ref(null);
-        const validators = {
-            'round-data-url': validator(dataUrl, false, notBlank)
-        };
-        provideValidators(validators);
+        const { allValid } = provideValidators({
+            'round-data-url': validator(false, notBlank)
+        });
 
         return {
             useFileUpload,
             roundFile,
             dataUrl,
-            allValid: computed(() => allValid(validators)),
+            allValid,
             async handleImport() {
                 if (useFileUpload.value) {
                     await tournamentDataStore.uploadRoundData({ file: roundFile.value });
