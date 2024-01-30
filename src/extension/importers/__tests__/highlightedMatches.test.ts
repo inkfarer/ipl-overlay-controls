@@ -147,13 +147,17 @@ describe('highlightedMatches', () => {
             });
         });
 
-        it('acknowledges with an error if importing predictions is not supported', () => {
-            replicants.tournamentData = { meta: { source: TournamentDataSource.UPLOAD } };
+        it.each([
+            TournamentDataSource.UNKNOWN,
+            TournamentDataSource.UPLOAD,
+            TournamentDataSource.SENDOU_INK
+        ])('acknowledges with an error when using unsupported source %s', source => {
+            replicants.tournamentData = { meta: { source } };
             const ack = jest.fn();
 
             messageListeners.getHighlightedMatches({ stages: [ ], getAllStages: false }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Invalid source \'UPLOAD\' given.'));
+            expect(ack).toHaveBeenCalledWith(new Error(`Invalid or unsupported source '${source}' given.`));
         });
     });
 });

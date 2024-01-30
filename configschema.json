@@ -26,6 +26,14 @@
                 "socketUrl": { "type": "string" },
                 "authentication": { "type": "string" }
             }
+        },
+        "sendouInk": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["apiKey"],
+            "properties": {
+                "apiKey": { "type": "string" }
+            }
         }
     }
 }

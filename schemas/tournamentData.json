@@ -13,7 +13,7 @@
                 },
                 "source": {
                     "type": "string",
-                    "enum": ["SMASHGG", "BATTLEFY", "UPLOAD", "UNKNOWN"]
+                    "enum": ["SMASHGG", "BATTLEFY", "SENDOU_INK", "UPLOAD", "UNKNOWN"]
                 },
                 "sourceSpecificData": {
                     "type": "object",

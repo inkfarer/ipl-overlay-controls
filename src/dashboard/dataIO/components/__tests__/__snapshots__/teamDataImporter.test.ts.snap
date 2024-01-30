@@ -50,7 +50,7 @@ exports[`teamDataImporter matches snapshot 1`] = `
 "<fieldset class="section-separator-wrapper">
   <legend>Tournament data</legend>
   <div data-v-d255ffee="" class="ipl-space color-dark">
-    <ipl-radio-stub modelvalue="BATTLEFY" label="Source" name="source-selector" options="[object Object],[object Object],[object Object]" data-test="source-selector" class="data-source-selector"></ipl-radio-stub>
+    <ipl-radio-stub modelvalue="BATTLEFY" label="Source" name="source-selector" options="[object Object],[object Object],[object Object],[object Object]" data-test="source-selector" class="data-source-selector"></ipl-radio-stub>
     <ipl-input-stub name="tournament-id-input" label="Tournament URL" modelvalue="" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
     <ipl-upload-stub class="m-t-8" data-test="team-data-upload" style="display: none;"></ipl-upload-stub>
     <div class="layout horizontal center-horizontal"><label data-v-e2240a8c="" class="small m-t-8" data-test="use-file-upload-checkbox" style="display: none;"><input data-v-e2240a8c="" type="checkbox"> Upload file</label></div>

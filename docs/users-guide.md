@@ -52,6 +52,9 @@ A complete configuration file contains the following parameters:
     "url": "https://radia-production",
     "socketUrl": "wss://radia-websocket",
     "authentication": "Your authentication key"
+  },
+  "sendouInk": {
+    "apiKey": "Your sendou.ink API key"
   }
 }
 ```
@@ -107,6 +110,7 @@ panel, select where to import data from, input an ID for the tournament and sele
 
 - For smash.gg, the tournament ID is its "Slug". For example, when the tournament URL is `smash.gg/tournament/riptide-2022/details`, the slug will be `riptide-2022`
 - For Battlefy, a full tournament URL may be used. For example: `https://battlefy.com/inkling-performance-labs/low-ink-april-2022/6247a1b52b7fa6066d2aa144/info?infoTab=details`
+- For sendou.ink, a full tournament URL may be used. For example: `https://sendou.ink/to/5/brackets`
 - For uploaded files, provide a link to a JSON file hosted anywhere on the web or upload one from your local machine using the "Upload file" checkbox.   
   There are two possible JSON formats that can be used when importing custom team data: [Example 1](https://github.com/inkfarer/ipl-overlay-controls/blob/master/examples/example-tournament-data2.json), [Example 2](https://github.com/inkfarer/ipl-overlay-controls/blob/master/examples/example-tournament-data.json)
 

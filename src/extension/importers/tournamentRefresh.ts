@@ -5,6 +5,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData } from './clients/smashggClient';
 import { updateTournamentDataReplicants } from './tournamentDataHelper';
+import { SendouInkClientInstance } from '../clients/SendouInkClient';
 
 const nodecg = nodecgContext.get();
 
@@ -27,6 +28,15 @@ nodecg.listenFor('refreshTournamentData', async (data: never, ack: NodeCG.Unhand
                     await getSmashGGData(
                         tournamentData.value.meta.sourceSpecificData.smashgg.eventData.id,
                         nodecg.bundleConfig?.smashgg?.apiKey));
+                return ack(null);
+            }
+            case TournamentDataSource.SENDOU_INK: {
+                if (SendouInkClientInstance == null) {
+                    return ack(new Error('No sendou.ink API key is configured.'));
+                }
+
+                updateTournamentDataReplicants(
+                    await SendouInkClientInstance.getTournamentData(tournamentData.value.meta.id));
                 return ack(null);
             }
             default:

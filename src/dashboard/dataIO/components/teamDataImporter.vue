@@ -120,7 +120,6 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { Configschema } from 'schemas';
-import isEmpty from 'lodash/isEmpty';
 import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import {
@@ -137,9 +136,10 @@ import {
 } from '@iplsplatoon/vue-components';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
-import { extractBattlefyTournamentId } from '../../helpers/stringHelper';
+import { extractBattlefyTournamentId, extractSendouInkTournamentId } from '../../helpers/stringHelper';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import BorderedSpace from '../../components/BorderedSpace.vue';
+import { isBlank } from '../../../helpers/stringHelper';
 
 export default defineComponent({
     name: 'TeamDataImporter',
@@ -148,8 +148,11 @@ export default defineComponent({
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();
-        const hasSmashggConfig = computed(() => !isEmpty((nodecg.bundleConfig as Configschema).smashgg?.apiKey));
+        const hasSmashggConfig = !isBlank((nodecg.bundleConfig as Configschema).smashgg?.apiKey);
+        const hasSendouInkConfig = !isBlank((nodecg.bundleConfig as Configschema).sendouInk?.apiKey);
         const smashggEvents: Ref<SelectOptions> = ref([]);
+
+        console.log(hasSmashggConfig, hasSendouInkConfig, nodecg.bundleConfig);
 
         const dataSource: Ref<TournamentDataSource> = ref(TournamentDataSource.BATTLEFY);
         const tournamentId = ref('');
@@ -171,32 +174,41 @@ export default defineComponent({
             shortName: validator(true, notBlank)
         });
 
+        function normalizeTournamentId() {
+            switch (dataSource.value) {
+                case TournamentDataSource.BATTLEFY:
+                    return extractBattlefyTournamentId(tournamentId.value);
+                case TournamentDataSource.SENDOU_INK:
+                    return extractSendouInkTournamentId(tournamentId.value);
+                default:
+                    return tournamentId.value;
+            }
+        }
+
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
             teamDataFile,
             useFileUpload,
             tournamentMetadata: computed(() => tournamentDataStore.tournamentData.meta),
-            dataSourceOptions: computed(() => {
-                const options = [
-                    TournamentDataSource.BATTLEFY,
-                    TournamentDataSource.SMASHGG,
-                    TournamentDataSource.UPLOAD
-                ];
-
-                return options.map(option => ({
-                    value: option,
-                    name: TournamentDataSourceHelper.toPrettyString(option),
-                    disabled: option === TournamentDataSource.SMASHGG && !hasSmashggConfig.value
-                }));
-            }),
+            dataSourceOptions: [
+                TournamentDataSource.BATTLEFY,
+                TournamentDataSource.SMASHGG,
+                TournamentDataSource.UPLOAD,
+                TournamentDataSource.SENDOU_INK
+            ].map(option => ({
+                value: option,
+                name: TournamentDataSourceHelper.toPrettyString(option),
+                disabled: (option === TournamentDataSource.SMASHGG && !hasSmashggConfig)
+                    || (option === TournamentDataSource.SENDOU_INK && !hasSendouInkConfig)
+            })),
             dataSource,
-            getDataSourceName(value: TournamentDataSource) {
+            getDataSourceName(value: TournamentDataSource | `${TournamentDataSource}`) {
                 return TournamentDataSourceHelper.toPrettyString(value);
             },
             idLabel: computed(() => {
                 switch (dataSource.value) {
                     case TournamentDataSource.BATTLEFY:
-                    case TournamentDataSource.SENDOU:
+                    case TournamentDataSource.SENDOU_INK:
                         return 'Tournament URL';
                     case TournamentDataSource.SMASHGG:
                         return 'Tournament Slug';
@@ -210,9 +222,7 @@ export default defineComponent({
                 if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
                     return tournamentDataStore.uploadTeamData({ file: teamDataFile.value });
                 } else {
-                    const id = dataSource.value === TournamentDataSource.BATTLEFY
-                        ? extractBattlefyTournamentId(tournamentId.value)
-                        : tournamentId.value;
+                    const id = normalizeTournamentId();
 
                     const result: GetTournamentDataResponse = await tournamentDataStore.getTournamentData({
                         method: dataSource.value,
