@@ -1,4 +1,4 @@
-import { extractBattlefyTournamentId, pluralizeWithoutCount } from '../stringHelper';
+import { extractBattlefyTournamentId, extractSendouInkTournamentId, pluralizeWithoutCount } from '../stringHelper';
 
 describe('stringHelper', () => {
     describe('pluralizeWithoutCount', () => {
@@ -10,6 +10,30 @@ describe('stringHelper', () => {
         it('gives plural form if required', () => {
             expect(pluralizeWithoutCount('knife', 2, 'knives')).toEqual('knives');
             expect(pluralizeWithoutCount('user', 0)).toEqual('users');
+        });
+    });
+
+    describe('extractSendouInkTournamentId', () => {
+        it('returns input if only id is passed in', () => {
+            expect(extractSendouInkTournamentId('5')).toEqual('5');
+        });
+
+        it('extracts id from url', () => {
+            expect(extractSendouInkTournamentId('https://sendou.ink/to/7/brackets')).toEqual('7');
+            expect(extractSendouInkTournamentId('https://sendou.ink/to/9/teams')).toEqual('9');
+            expect(extractSendouInkTournamentId('https://sendou.ink/to/6')).toEqual('6');
+            expect(extractSendouInkTournamentId('http://sendou.ink/to/10/teams')).toEqual('10');
+            expect(extractSendouInkTournamentId('sendou.ink/to/99/teams')).toEqual('99');
+        });
+
+        it('throws if an invalid sendou.ink url is given', () => {
+            const error = new Error('Input URL path is too short - is this a tournament URL?');
+
+            expect(() => extractSendouInkTournamentId('https://sendou.ink')).toThrow(error);
+            expect(() => extractSendouInkTournamentId('https://sendou.ink/')).toThrow(error);
+            expect(() => extractSendouInkTournamentId('https://sendou.ink/to')).toThrow(error);
+            expect(() => extractSendouInkTournamentId('sendou.ink/to')).toThrow(error);
+            expect(() => extractSendouInkTournamentId('sendou.ink')).toThrow(error);
         });
     });
 

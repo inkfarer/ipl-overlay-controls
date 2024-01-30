@@ -66,19 +66,7 @@ describe('Rounds', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('matches snapshot when round sidebar is open', async () => {
-        const wrapper = mount(Rounds, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
-
-        await wrapper.get('[data-test="open-all-rounds-sidebar"]').trigger('click');
-
-        expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    it('resets round store on reset button click', async () => {
+    it('resets round store on reset button click', () => {
         const tournamentDataStore = useTournamentDataStore();
         tournamentDataStore.resetRoundStore = jest.fn();
         const wrapper = mount(Rounds, {
@@ -87,7 +75,6 @@ describe('Rounds', () => {
             }
         });
 
-        await wrapper.get('[data-test="open-all-rounds-sidebar"]').trigger('click');
         wrapper.getComponent<typeof IplButton>('[data-test="reset-rounds-button"]').vm.$emit('click');
 
         expect(tournamentDataStore.resetRoundStore).toHaveBeenCalled();
@@ -120,7 +107,6 @@ describe('Rounds', () => {
         });
         const roundEditor = wrapper.getComponent<typeof RoundEditor>('[data-test="round-editor"]');
 
-        await wrapper.get('[data-test="open-all-rounds-sidebar"]').trigger('click');
         wrapper.getComponent<typeof IplSpace>('[data-test="round-option-9573"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 

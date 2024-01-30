@@ -42,11 +42,14 @@ Visit the [documentation](https://ipl-overlay-controls.readthedocs.io/) to read 
     "url": "https://radia-production",
     "socketUrl": "wss://radia-websocket",
     "authentication": "Your Authentication Key"
+  },
+  "sendouInk": {
+    "apiKey": "Your sendou.ink API key"
   }
 }
 ```
 
-The "lastfm", "smashgg", "radia" sections may be omitted, though functionality will be missing if that is done.
+The "lastfm", "smashgg", "radia", "sendouInk" sections may be omitted, though functionality will be missing if that is done.
 
 8. In the NodeCG root, start NodeCG: `nodecg start`
 

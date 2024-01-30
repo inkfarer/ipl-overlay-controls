@@ -142,10 +142,9 @@ export default defineComponent({
             newValue => matchName.value = newValue,
             { immediate: true });
 
-        const validators = {
-            matchName: validator(matchName, false, notBlank)
-        };
-        provideValidators(validators);
+        provideValidators({
+            matchName: validator(false, notBlank)
+        });
 
         const duplicateMatchNames = computed(() => {
             const roundNameSet = new Set();
@@ -210,7 +209,6 @@ export default defineComponent({
             selectedMatch,
             matchHasProgress,
             addDots,
-            validators,
             undoChanges(event: Event) {
                 event.preventDefault();
 

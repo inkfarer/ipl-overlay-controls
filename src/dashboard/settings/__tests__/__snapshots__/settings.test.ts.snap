@@ -2,47 +2,57 @@
 
 exports[`Settings matches snapshot when OBS socket is disabled 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal m-t-8" data-test="open-sidebar-button">
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">General</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">Last.fm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">Radia</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_obs-socket">OBS Socket</button></div>
+</dialog>
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Settings
-</div>
+</button>
 <obs-socket-settings-stub class="m-t-8"></obs-socket-settings-stub>
 <!--v-if-->"
 `;
 
 exports[`Settings matches snapshot when section general is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal m-t-8" data-test="open-sidebar-button">
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_general">General</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">Last.fm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">Radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs-socket">OBS Socket</button></div>
+</dialog>
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Settings
-</div>
+</button>
 <runtime-config-stub class="m-t-8"></runtime-config-stub>"
 `;
 
 exports[`Settings matches snapshot when section lastfm is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal m-t-8" data-test="open-sidebar-button">
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">General</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_lastfm">Last.fm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">Radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs-socket">OBS Socket</button></div>
+</dialog>
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Settings
-</div>
+</button>
 <lastfm-settings-stub class="m-t-8"></lastfm-settings-stub>"
 `;
 
 exports[`Settings matches snapshot when section obs-socket is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal m-t-8" data-test="open-sidebar-button">
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">General</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">Last.fm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">Radia</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_obs-socket">OBS Socket</button></div>
+</dialog>
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Settings
-</div>
+</button>
 <obs-socket-settings-stub class="m-t-8"></obs-socket-settings-stub>
 <obs-data-picker-stub class="m-t-8"></obs-data-picker-stub>"
 `;
 
 exports[`Settings matches snapshot when section radia is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal m-t-8" data-test="open-sidebar-button">
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">General</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">Last.fm</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_radia">Radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs-socket">OBS Socket</button></div>
+</dialog>
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Settings
-</div>
+</button>
 <radia-settings-stub class="m-t-8"></radia-settings-stub>"
 `;

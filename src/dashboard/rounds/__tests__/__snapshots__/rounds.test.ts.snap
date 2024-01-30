@@ -2,61 +2,33 @@
 
 exports[`Rounds matches snapshot 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<!---->
-<div data-v-24769743="" class="ipl-expansion-panel__content">
-  <div data-v-24769743="" class="ipl-expansion-panel__header">
-    <div data-v-24769743="" class="ipl-expansion-panel__header-background"></div>
-    <div data-v-24769743="" class="ipl-expansion-panel__title">Create Round</div>
-    <font-awesome-icon-stub data-v-24769743="" icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-24769743="" class="header-extra"></div>
-  </div>
-  <div data-v-24769743="" class="content" style="display: none;">
-    <div class="layout horizontal">
-      <ipl-button-stub label="3 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" data-test="new-3-game-round"></ipl-button-stub>
-      <ipl-button-stub label="5 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
+<dialog data-v-ee252566="" inert="">
+  <div data-v-ee252566="" class="content">
+    <div data-v-d255ffee="" class="ipl-space color-light">
+      <ipl-button-stub label="Reset rounds" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="reset-rounds-button"></ipl-button-stub>
     </div>
-    <ipl-button-stub label="7 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
-  </div>
-</div>
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
-  <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
-</div>
-<round-editor-stub roundid="2426" round="[object Object]" isnewround="false" class="m-t-8" data-test="round-editor"></round-editor-stub>"
-`;
-
-exports[`Rounds matches snapshot when round sidebar is open 1`] = `
-"<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
-<div data-v-2b6fb510="" class="ipl-sidebar__wrapper sidebar-transition-enter-from sidebar-transition-enter-active">
-  <div data-v-2b6fb510="" class="background"></div>
-  <div data-v-2b6fb510="" class="content">
-    <div data-v-11cc5f1c="" class="ipl-space color-light">
-      <ipl-button-stub label="Reset rounds" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" data-test="reset-rounds-button"></ipl-button-stub>
-    </div>
-    <div data-v-11cc5f1c="" class="ipl-space color-light layout horizontal m-t-8">
+    <div data-v-d255ffee="" class="ipl-space color-light layout horizontal m-t-8">
       <div class="color-key color-key-next"></div> Next round
-    </div>
-    <div data-v-11cc5f1c="" class="ipl-space color-blue clickable m-t-8 round-option is-next-round" data-test="round-option-2426">dope round the third</div>
-    <div data-v-11cc5f1c="" class="ipl-space color-light clickable m-t-8 round-option" data-test="round-option-9573">dope round the second</div>
-    <div data-v-11cc5f1c="" class="ipl-space color-light clickable m-t-8 round-option" data-test="round-option-0387">dope round</div>
+    </div><button data-v-d255ffee="" class="ipl-space color-blue m-t-8 round-option is-next-round" data-test="round-option-2426">dope round the third</button><button data-v-d255ffee="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-9573">dope round the second</button><button data-v-d255ffee="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-0387">dope round</button>
   </div>
-</div>
-<div data-v-24769743="" class="ipl-expansion-panel__content">
-  <div data-v-24769743="" class="ipl-expansion-panel__header">
-    <div data-v-24769743="" class="ipl-expansion-panel__header-background"></div>
-    <div data-v-24769743="" class="ipl-expansion-panel__title">Create Round</div>
-    <font-awesome-icon-stub data-v-24769743="" icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-24769743="" class="header-extra"></div>
+</dialog>
+<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
+  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
+    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">Create Round</div>
+    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
-  <div data-v-24769743="" class="content" style="display: none;">
+  <div data-v-a1f8a641="" class="content" style="display: none;">
     <div class="layout horizontal">
-      <ipl-button-stub label="3 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" data-test="new-3-game-round"></ipl-button-stub>
-      <ipl-button-stub label="5 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
+      <ipl-button-stub label="3 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="new-3-game-round"></ipl-button-stub>
+      <ipl-button-stub label="5 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
     </div>
-    <ipl-button-stub label="7 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
+    <ipl-button-stub label="7 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
   </div>
 </div>
-<div data-v-11cc5f1c="" class="ipl-space color-dark clickable layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
+<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> All Rounds
-</div>
+</button>
 <round-editor-stub roundid="2426" round="[object Object]" isnewround="false" class="m-t-8" data-test="round-editor"></round-editor-stub>"
 `;
