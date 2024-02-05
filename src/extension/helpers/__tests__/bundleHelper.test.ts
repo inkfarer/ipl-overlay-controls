@@ -13,7 +13,7 @@ describe('bundleHelper', () => {
     }));
 
     beforeEach(() => {
-        process.env.NODECG_ROOT = 'dir/nodecg';
+        process.cwd = () => 'dir/nodecg';
     });
 
     it('reads the bundles directory to compile dependent bundles', () => {
