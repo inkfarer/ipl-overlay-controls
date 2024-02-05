@@ -4,7 +4,7 @@ import { NodecgBundle } from '../../types/nodecgBundle';
 import { GameVersion } from '../../types/enums/gameVersion';
 
 const nodecg = nodecgContext.get();
-const bundlesDir = `${process.env.NODECG_ROOT}/bundles`;
+const bundlesDir = `${process.cwd()}/bundles`;
 const allGameVersions = Object.keys(GameVersion);
 
 export const dependentBundles: Array<NodecgBundle> = readdirSync(bundlesDir, { withFileTypes: true })
