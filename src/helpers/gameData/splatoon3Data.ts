@@ -24,7 +24,8 @@ export const Splatoon3Stages = [
     'Crableg Capital',
     'Shipshape Cargo Co.',
     'Robo ROM-en',
-    'Bluefin Depot'
+    'Bluefin Depot',
+    'Marlin Airport'
 ] as const;
 
 export const Splatoon3Modes = [
@@ -59,7 +60,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Crableg Capital': 'Crableg Capital',
             'Shipshape Cargo Co.': 'Shipshape Cargo Co.',
             'Robo ROM-en': 'Robo ROM-en',
-            'Bluefin Depot': 'Bluefin Depot'
+            'Bluefin Depot': 'Bluefin Depot',
+            'Marlin Airport': 'Marlin Airport'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -83,7 +85,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Crableg Capital': 'Majidae Skyline',
             'Shipshape Cargo Co.': 'Cargo Ship Heavyfish',
             'Robo ROM-en': 'ROM & RAMen',
-            'Bluefin Depot': 'Blauflossen-Depot'
+            'Bluefin Depot': 'Blauflossen-Depot',
+            'Marlin Airport': 'La Ola Airport'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -107,7 +110,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Crableg Capital': 'Quartier Crabe-ciels',
             'Shipshape Cargo Co.': 'Chaland Flétan',
             'Robo ROM-en': 'Arène Méca-ramen',
-            'Bluefin Depot': 'Mine Marine'
+            'Bluefin Depot': 'Mine Marine',
+            'Marlin Airport': 'Terminal Rorqual'
         }
     },
     stageImagePaths: {
@@ -132,7 +136,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         'Crableg Capital': 'splatoon3/S3_Stage_Crableg_Capital.webp',
         'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp',
         'Robo ROM-en': 'splatoon3/S3_Stage_Robo_ROM-en.webp',
-        'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp'
+        'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp',
+        'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp'
     },
     modes: {
         [Locale.EN]: {
