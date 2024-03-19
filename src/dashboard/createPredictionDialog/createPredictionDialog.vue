@@ -77,7 +77,6 @@ import {
     maxLength,
     minValue,
     maxValue,
-    allValid,
     provideValidators
 } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
@@ -101,13 +100,12 @@ export default defineComponent({
         const duration = ref(120);
         const teamAName = ref('');
         const teamBName = ref('');
-        const validators = {
-            title: validator(title, true, maxLength(45)),
-            duration: validator(duration, true, minValue(1), maxValue(1800)),
-            'team-a-name': validator(teamAName, false, maxLength(25)),
-            'team-b-name': validator(teamBName, false, maxLength(25))
-        };
-        provideValidators(validators);
+        const { allValid } = provideValidators({
+            title: validator(true, maxLength(45)),
+            duration: validator(true, minValue(1), maxValue(1800)),
+            'team-a-name': validator(true, maxLength(25)),
+            'team-b-name': validator(true, maxLength(25))
+        });
 
         watch(() => nextRoundStore.nextRound, (newValue, oldValue) => {
             if (newValue.teamA.name !== oldValue?.teamA.name) teamAName.value = addDots(newValue.teamA.name, 25);
@@ -119,7 +117,7 @@ export default defineComponent({
             duration,
             teamAName,
             teamBName,
-            allValid: computed(() => allValid(validators)),
+            allValid,
             isActivePredictionUnresolved: computed(() => [PredictionStatus.ACTIVE, PredictionStatus.LOCKED]
                 .includes(predictionDataStore.predictionStore.currentPrediction?.status as PredictionStatus)),
             async createPrediction() {

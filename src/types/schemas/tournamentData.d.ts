@@ -8,7 +8,7 @@
 export interface TournamentData {
 	meta: {
 		id: string;
-		source: 'SMASHGG' | 'BATTLEFY' | 'UPLOAD' | 'UNKNOWN';
+		source: 'SMASHGG' | 'BATTLEFY' | 'SENDOU_INK' | 'UPLOAD' | 'UNKNOWN';
 		sourceSpecificData?: {
 			smashgg?: {
 				tournamentId: number;

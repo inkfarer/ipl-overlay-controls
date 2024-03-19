@@ -6,8 +6,8 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
-import { GetSmashggEventRequest } from 'types/messages/tournamentData';
-import { GetTournamentDataRequest } from 'types/messages/tournamentData';
+import { GetSmashggEventRequest, GetTournamentDataRequest } from 'types/messages/tournamentData';
+import { SendouInkClientInstance } from '../clients/SendouInkClient';
 
 const nodecg = nodecgContext.get();
 
@@ -46,6 +46,17 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
                 } else {
                     return ack(null, { id: data.id, events });
                 }
+            }
+            case TournamentDataSource.SENDOU_INK: {
+                if (SendouInkClientInstance == null) {
+                    ack(new Error('No sendou.ink API key is configured.'));
+                    break;
+                }
+
+                const serviceData = await SendouInkClientInstance.getTournamentData(data.id);
+                updateTournamentDataReplicants(serviceData);
+                ack(null, { id: serviceData.meta.id });
+                break;
             }
             case TournamentDataSource.UPLOAD: {
                 const serviceData = await getRawData(data.id);

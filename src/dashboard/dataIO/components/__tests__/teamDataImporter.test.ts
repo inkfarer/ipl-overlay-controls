@@ -134,8 +134,9 @@ describe('teamDataImporter', () => {
         expect(wrapper.get('[data-test="saved-data-section"]').html()).toMatchSnapshot();
     });
 
-    it('has expected data source options if smash.gg config is present', () => {
+    it('has expected data source options if bundle config is present', () => {
         mockBundleConfig.smashgg = { apiKey: 'ggkey123' };
+        mockBundleConfig.sendouInk = { apiKey: 'sendoukey345' };
         const wrapper = mount(TeamDataImporter, {
             global: {
                 plugins: [pinia]
@@ -146,12 +147,14 @@ describe('teamDataImporter', () => {
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
             { name: 'Smash.gg', value: TournamentDataSource.SMASHGG, disabled: false },
-            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false }
+            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false },
+            { name: 'sendou.ink', value: TournamentDataSource.SENDOU_INK, disabled: false }
         ]);
     });
 
-    it('has expected data source options if smash.gg config is not present', () => {
+    it('has expected data source options if bundle config is not present', () => {
         mockBundleConfig.smashgg = undefined;
+        mockBundleConfig.sendouInk = undefined;
         const wrapper = mount(TeamDataImporter, {
             global: {
                 plugins: [pinia]
@@ -162,7 +165,8 @@ describe('teamDataImporter', () => {
         expect((sourceSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'Battlefy', value: TournamentDataSource.BATTLEFY, disabled: false },
             { name: 'Smash.gg', value: TournamentDataSource.SMASHGG, disabled: true },
-            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false }
+            { name: 'Uploaded file', value: TournamentDataSource.UPLOAD, disabled: false },
+            { name: 'sendou.ink', value: TournamentDataSource.SENDOU_INK, disabled: true }
         ]);
     });
 

@@ -13,6 +13,9 @@ const defaultBundleConfig = {
         url: 'radia://url',
         socketUrl: 'ws://radia.url',
         authentication: 'radia-auth-12345'
+    },
+    sendouInk: {
+        apiKey: 'sendoukey123'
     }
 };
 

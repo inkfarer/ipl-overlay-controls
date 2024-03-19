@@ -18,8 +18,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, computed, ref } from 'vue';
-import { allValid, IplButton, IplInput, notBlank, provideValidators, validator } from '@iplsplatoon/vue-components';
+import { defineComponent, watch, ref } from 'vue';
+import { IplButton, IplInput, notBlank, provideValidators, validator } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
 
 export default defineComponent({
@@ -31,10 +31,9 @@ export default defineComponent({
         const nextRoundStore = useNextRoundStore();
         const matchName = ref('');
 
-        const validators = {
-            matchName: validator(matchName, false, notBlank)
-        };
-        provideValidators(validators);
+        const { allValid } = provideValidators({
+            matchName: validator(true, notBlank)
+        });
 
         watch(() => nextRoundStore.nextRound.name, newValue => {
             matchName.value = newValue;
@@ -42,7 +41,7 @@ export default defineComponent({
 
         return {
             matchName,
-            allValid: computed(() => allValid(validators)),
+            allValid,
             beginNextMatch() {
                 nextRoundStore.beginNextMatch({ matchName: matchName.value });
             }

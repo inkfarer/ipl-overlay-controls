@@ -5,7 +5,9 @@ import type * as TournamentDataHelper from '../tournamentDataHelper';
 import type * as BattlefyClient from '../clients/battlefyClient';
 import type * as SmashggClient from '../clients/smashggClient';
 import type axios from 'axios';
+import type { SendouInkClient } from '../../clients/SendouInkClient';
 
+const mockSendouInkClient = mock<SendouInkClient>();
 const mockAxios = mock<typeof axios>();
 const mockTournamentDataHelper = mock<typeof TournamentDataHelper>();
 const mockBattlefyClient = mock<typeof BattlefyClient>();
@@ -14,6 +16,7 @@ jest.mock('axios', () => ({ __esModule: true, default: mockAxios }));
 jest.mock('../tournamentDataHelper', () => mockTournamentDataHelper);
 jest.mock('../clients/battlefyClient', () => mockBattlefyClient);
 jest.mock('../clients/smashggClient', () => mockSmashggClient);
+jest.mock('../../clients/SendouInkClient', () => ({ __esModule: true, SendouInkClientInstance: mockSendouInkClient }));
 
 describe('tournamentImporter', () => {
     require('../tournamentImporter');
@@ -50,6 +53,20 @@ describe('tournamentImporter', () => {
                 expect(mockTournamentDataHelper.updateTournamentDataReplicants).toHaveBeenCalledWith(serviceResult);
                 expect(ack).toHaveBeenCalledWith(null, { id: 'bfytourney' });
                 expect(mockBattlefyClient.getBattlefyTournamentData).toHaveBeenCalledWith('bfytourney');
+            });
+
+            it('imports tournament data from sendou.ink', async () => {
+                const ack = jest.fn();
+                const serviceResult = { meta: { id: '111' } };
+                // @ts-ignore
+                mockSendouInkClient.getTournamentData.mockResolvedValue(serviceResult);
+
+                await messageListeners.getTournamentData(
+                    { id: '111', method: TournamentDataSource.SENDOU_INK }, ack);
+
+                expect(mockTournamentDataHelper.updateTournamentDataReplicants).toHaveBeenCalledWith(serviceResult);
+                expect(ack).toHaveBeenCalledWith(null, { id: '111' });
+                expect(mockSendouInkClient.getTournamentData).toHaveBeenCalledWith('111');
             });
 
             it('imports tournament data from Smash.gg if one event is returned', async () => {

@@ -68,7 +68,7 @@ nodecg.listenFor('getHighlightedMatches', async (data: GetHighlightedMatchesMess
             break;
         }
         default:
-            ack(new Error(`Invalid source '${tournamentData.value.meta.source}' given.`));
+            ack(new Error(`Invalid or unsupported source '${tournamentData.value.meta.source}' given.`));
     }
 });
 

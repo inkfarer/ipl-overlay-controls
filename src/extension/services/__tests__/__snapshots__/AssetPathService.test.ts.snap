@@ -32,6 +32,7 @@ exports[`AssetPathService updateAssetPaths updates asset paths as expected for S
 exports[`AssetPathService updateAssetPaths updates asset paths as expected for SPLATOON_3 1`] = `
 {
   "Barnacle & Dime": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Barnacle_&_Dime.webp",
+  "Bluefin Depot": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Bluefin_Depot.webp",
   "Brinewater Springs": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Brinewater_Springs.webp",
   "Crableg Capital": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Crableg_Capital.webp",
   "Eeltail Alley": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Eeltail_Alley.webp",
@@ -43,8 +44,10 @@ exports[`AssetPathService updateAssetPaths updates asset paths as expected for S
   "Mahi-Mahi Resort": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Mahi_Mahi_Resort.webp",
   "MakoMart": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_MakoMart.webp",
   "Manta Maria": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Manta_Maria.webp",
+  "Marlin Airport": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp",
   "Mincemeat Metalworks": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Mincemeat_Metalworks.webp",
   "Museum d'Alfonsino": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Museum_dAlfonsino.webp",
+  "Robo ROM-en": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Robo_ROM-en.webp",
   "Scorch Gorge": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Scorch_Gorge.webp",
   "Shipshape Cargo Co.": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Shipshape_Cargo_Co..webp",
   "Sturgeon Shipyard": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Sturgeon_Shipyard.webp",

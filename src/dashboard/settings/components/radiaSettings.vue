@@ -48,15 +48,14 @@
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import {
     IplButton,
-    IplInput,
-    IplSpace,
     IplCheckbox,
+    IplInput,
     IplMessage,
-    provideValidators,
-    validator,
-    allValid,
+    IplSpace,
     minLength,
-    numeric
+    numeric,
+    provideValidators,
+    validator
 } from '@iplsplatoon/vue-components';
 import { useSettingsStore } from '../../store/settingsStore';
 import isEqual from 'lodash/isEqual';
@@ -84,10 +83,9 @@ export default defineComponent({
             pick(store.radiaSettings, [ 'guildID' ])
         ));
         const settings: Ref<RadiaSettings> = ref(cloneDeep(store.radiaSettings));
-        const validators = {
-            'guild-id': validator(() => settings.value.guildID, true, minLength(17), numeric)
-        };
-        provideValidators(validators);
+        const { allValid } = provideValidators({
+            'guild-id': validator(true, minLength(17), numeric)
+        });
 
         watch(() => store.radiaSettings.guildID, newValue => {
             if (!isFocused.value) {
@@ -107,7 +105,7 @@ export default defineComponent({
                 isFocused.value = event;
             },
             isChanged,
-            isValid: computed(() => allValid(validators)),
+            isValid: allValid,
             buttonColor: computed(() => isChanged.value ? 'red' : 'blue'),
             settings,
             handleUpdate() {

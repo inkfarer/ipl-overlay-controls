@@ -18,4 +18,7 @@ export interface Configschema {
 		socketUrl?: string;
 		authentication?: string;
 	};
+	sendouInk?: {
+		apiKey: string;
+	};
 }

@@ -63,7 +63,8 @@ import {
     validator,
     notBlank,
     provideValidators,
-    allValid, IplToggle, IplMessage
+    IplToggle,
+    IplMessage
 } from '@iplsplatoon/vue-components';
 import { computed, ref, watch } from 'vue';
 import { useObsStore } from '../../store/obsStore';
@@ -103,10 +104,9 @@ export default defineComponent({
             () => obsStore.obsCredentials.password, newValue => socketPassword.value = newValue,
             { immediate: true });
 
-        const validators = {
-            socketUrl: validator(socketUrl, true, notBlank)
-        };
-        provideValidators(validators);
+        const { allValid } = provideValidators({
+            socketUrl: validator(true, notBlank)
+        });
 
         return {
             RIGHT_CLICK_UNDO_MESSAGE,
@@ -116,7 +116,7 @@ export default defineComponent({
             isChanged: computed(() =>
                 socketUrl.value !== obsStore.obsCredentials.address
                 || socketPassword.value !== obsStore.obsCredentials.password),
-            allValid: computed(() => allValid(validators)),
+            allValid,
             statusText: computed(() => ObsStatusHelper.toPrettyString(obsStore.obsData.status as ObsStatus)),
             status: computed(() => obsStore.obsData.status),
             connect() {

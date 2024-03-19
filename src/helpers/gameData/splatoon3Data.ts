@@ -2,38 +2,41 @@ import { GameData } from './gameData';
 import { normalizeGameData } from './normalizeGameData';
 import { Locale } from '../../types/enums/Locale';
 
-export interface Splatoon3Stages {
-    'Museum d\'Alfonsino': string
-    'Scorch Gorge': string
-    'Eeltail Alley': string
-    'Hagglefish Market': string
-    'Undertow Spillway': string
-    'Mincemeat Metalworks': string
-    'Hammerhead Bridge': string
-    'Mahi-Mahi Resort': string
-    'Inkblot Art Academy': string
-    'Sturgeon Shipyard': string
-    MakoMart: string
-    'Wahoo World': string
-    'Brinewater Springs': string
-    'Flounder Heights': string
-    'Um\'ami Ruins': string
-    'Manta Maria': string
-    'Barnacle & Dime': string
-    'Humpback Pump Track': string
-    'Crableg Capital': string
-    'Shipshape Cargo Co.': string
-}
+export const Splatoon3Stages = [
+    'Museum d\'Alfonsino',
+    'Scorch Gorge',
+    'Eeltail Alley',
+    'Hagglefish Market',
+    'Undertow Spillway',
+    'Mincemeat Metalworks',
+    'Hammerhead Bridge',
+    'Mahi-Mahi Resort',
+    'Inkblot Art Academy',
+    'Sturgeon Shipyard',
+    'MakoMart',
+    'Wahoo World',
+    'Brinewater Springs',
+    'Flounder Heights',
+    'Um\'ami Ruins',
+    'Manta Maria',
+    'Barnacle & Dime',
+    'Humpback Pump Track',
+    'Crableg Capital',
+    'Shipshape Cargo Co.',
+    'Robo ROM-en',
+    'Bluefin Depot',
+    'Marlin Airport'
+] as const;
 
-export interface Splatoon3Modes {
-    'Clam Blitz': string
-    'Tower Control': string
-    'Rainmaker': string
-    'Splat Zones': string
-    'Turf War': string
-}
+export const Splatoon3Modes = [
+    'Clam Blitz',
+    'Tower Control',
+    'Rainmaker',
+    'Splat Zones',
+    'Turf War'
+] as const;
 
-export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normalizeGameData({
+export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Modes> = normalizeGameData({
     stages: {
         [Locale.EN]: {
             'Museum d\'Alfonsino': 'Museum d\'Alfonsino',
@@ -55,7 +58,10 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Barnacle & Dime',
             'Humpback Pump Track': 'Humpback Pump Track',
             'Crableg Capital': 'Crableg Capital',
-            'Shipshape Cargo Co.': 'Shipshape Cargo Co.'
+            'Shipshape Cargo Co.': 'Shipshape Cargo Co.',
+            'Robo ROM-en': 'Robo ROM-en',
+            'Bluefin Depot': 'Bluefin Depot',
+            'Marlin Airport': 'Marlin Airport'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -77,7 +83,10 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Talerfisch & Pock',
             'Humpback Pump Track': 'Buckelwal-Piste',
             'Crableg Capital': 'Majidae Skyline',
-            'Shipshape Cargo Co.': 'Cargo Ship Heavyfish'
+            'Shipshape Cargo Co.': 'Cargo Ship Heavyfish',
+            'Robo ROM-en': 'ROM & RAMen',
+            'Bluefin Depot': 'Blauflossen-Depot',
+            'Marlin Airport': 'La Ola Airport'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -99,7 +108,10 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
             'Barnacle & Dime': 'Halles de Port-merlu',
             'Humpback Pump Track': 'Piste Méroule',
             'Crableg Capital': 'Quartier Crabe-ciels',
-            'Shipshape Cargo Co.': 'Chaland Flétan'
+            'Shipshape Cargo Co.': 'Chaland Flétan',
+            'Robo ROM-en': 'Arène Méca-ramen',
+            'Bluefin Depot': 'Mine Marine',
+            'Marlin Airport': 'Terminal Rorqual'
         }
     },
     stageImagePaths: {
@@ -122,7 +134,10 @@ export const splatoon3Data: GameData<Splatoon3Stages, Splatoon3Modes> = normaliz
         'Um\'ami Ruins': 'splatoon3/S3_Stage_Umami_Ruins.webp',
         'Barnacle & Dime': 'splatoon3/S3_Stage_Barnacle_&_Dime.webp',
         'Crableg Capital': 'splatoon3/S3_Stage_Crableg_Capital.webp',
-        'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp'
+        'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp',
+        'Robo ROM-en': 'splatoon3/S3_Stage_Robo_ROM-en.webp',
+        'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp',
+        'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp'
     },
     modes: {
         [Locale.EN]: {

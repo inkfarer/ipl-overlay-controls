@@ -41,7 +41,7 @@ export function handleRoundData(rounds: ImporterRound[], gameVersion: GameVersio
     return result;
 }
 
-function normalizeStageName(name: string, game: GameVersion): string {
+export function normalizeStageName(name: string, game: GameVersion): string {
     const stages = Object.values(perGameData[game].stages[Locale.EN]);
     const lowerCaseStages = stages.map(toLower);
     name = name.toLowerCase();
