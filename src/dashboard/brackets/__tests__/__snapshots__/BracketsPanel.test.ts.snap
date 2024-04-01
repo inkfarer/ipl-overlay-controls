@@ -1,37 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BracketsPanel loaded bracket message displays bracket data 1`] = `
-"<div data-v-11cc5f1c="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-d255ffee="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">Loaded bracket</div>
-  <ipl-data-row-stub label="Event Name" value="Test Event"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Bracket Name" value="Test Bracket"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Event Name" copiable="false" value="Test Event"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Bracket Name" copiable="false" value="Test Bracket"></ipl-data-row-stub>
   <!--v-if-->
   <!--v-if-->
 </div>"
 `;
 
 exports[`BracketsPanel loaded bracket message displays bracket data when a round number is present 1`] = `
-"<div data-v-11cc5f1c="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-d255ffee="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">Loaded bracket</div>
-  <ipl-data-row-stub label="Event Name" value="Test Event"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Bracket Name" value="Test Bracket"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Event Name" copiable="false" value="Test Event"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Bracket Name" copiable="false" value="Test Bracket"></ipl-data-row-stub>
   <!--v-if-->
-  <ipl-data-row-stub label="Round Number" value="Round 8"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Round Number" copiable="false" value="Round 8"></ipl-data-row-stub>
 </div>"
 `;
 
 exports[`BracketsPanel loaded bracket message displays bracket data when more than one match group is loaded 1`] = `
-"<div data-v-11cc5f1c="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-d255ffee="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">Loaded bracket</div>
-  <ipl-data-row-stub label="Event Name" value="Test Event"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Bracket Name" value="Test Bracket"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Match Groups" value="Group One, Group Two"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Event Name" copiable="false" value="Test Event"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Bracket Name" copiable="false" value="Test Bracket"></ipl-data-row-stub>
+  <ipl-data-row-stub label="Match Groups" copiable="false" value="Group One, Group Two"></ipl-data-row-stub>
   <!--v-if-->
 </div>"
 `;
 
 exports[`BracketsPanel loaded bracket message shows the expected message when no bracket is loaded 1`] = `
-"<div data-v-11cc5f1c="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-d255ffee="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">Loaded bracket</div> No brackets currently loaded.
 </div>"
 `;

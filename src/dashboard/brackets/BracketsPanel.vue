@@ -78,7 +78,7 @@ import type NodeCG from '@nodecg/types';
 import { IplButton, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { computed, ref, Ref } from 'vue';
 import { MatchQueryParameter, MatchImporter, MatchQueryResult } from '@tourneyview/importer';
-import MatchQueryParamInput from './MatchQueryParamInput.vue';
+import MatchQueryParamInput from './components/MatchQueryParamInput.vue';
 import { useBracketStore } from '../store/bracketStore';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { Configschema } from 'types/schemas';
