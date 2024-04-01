@@ -151,9 +151,6 @@ export default defineComponent({
         const hasSmashggConfig = !isBlank((nodecg.bundleConfig as Configschema).smashgg?.apiKey);
         const hasSendouInkConfig = !isBlank((nodecg.bundleConfig as Configschema).sendouInk?.apiKey);
         const smashggEvents: Ref<SelectOptions> = ref([]);
-
-        console.log(hasSmashggConfig, hasSendouInkConfig, nodecg.bundleConfig);
-
         const dataSource: Ref<TournamentDataSource> = ref(TournamentDataSource.BATTLEFY);
         const tournamentId = ref('');
         const smashggEvent = ref('');
