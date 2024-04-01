@@ -2,10 +2,10 @@ import { TestingPinia, createTestingPinia } from '@pinia/testing';
 import BracketsPanel from '../BracketsPanel.vue';
 import { useBracketStore } from '../../store/bracketStore';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
-import { config, mount } from '@vue/test-utils';
+import { config, flushPromises, mount } from '@vue/test-utils';
 import { IplButton, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { mockBundleConfig, mockSendMessage } from '../../__mocks__/mockNodecg';
-import { BattlefyImporter } from '@tourneyview/importer';
+import { BattlefyImporter, StartggImporter } from '@tourneyview/importer';
 import MatchQueryParamInput from '../MatchQueryParamInput.vue';
 
 jest.mock('@tourneyview/importer');
@@ -133,6 +133,7 @@ describe('BracketsPanel', () => {
             expect(wrapper.findAllComponents('match-query-param-input-stub').length).toEqual(0);
 
             await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await flushPromises();
 
             expect(BattlefyImporter.prototype.getMatchQueryOptions).toHaveBeenCalledWith('test-tournament-id');
             const paramInputs = wrapper.findAllComponents<typeof MatchQueryParamInput>('match-query-param-input-stub');
@@ -152,6 +153,8 @@ describe('BracketsPanel', () => {
             const wrapper = mount(BracketsPanel);
 
             await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await flushPromises();
+
             const paramInputs = wrapper.findAllComponents<typeof MatchQueryParamInput>('match-query-param-input-stub');
             expect(paramInputs.length).toEqual(1);
             const paramInput = paramInputs.at(0);
@@ -172,6 +175,8 @@ describe('BracketsPanel', () => {
             const wrapper = mount(BracketsPanel);
 
             await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await flushPromises();
+
             const paramInputs = wrapper.findAllComponents<typeof MatchQueryParamInput>('match-query-param-input-stub');
             expect(paramInputs.length).toEqual(1);
             const paramInput = paramInputs.at(0);
@@ -183,6 +188,104 @@ describe('BracketsPanel', () => {
             paramInput.vm.$emit('change', 'testParam', 'testParamValue');
             await wrapper.vm.$nextTick();
             expect(wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').vm.disabled).toEqual(false);
+        });
+
+        describe('start.gg events', () => {
+            beforeEach(() => {
+                useTournamentDataStore().tournamentData.meta.source = 'SMASHGG';
+                useTournamentDataStore().tournamentData.meta.sourceSpecificData = {
+                    smashgg: {
+                        // @ts-ignore
+                        eventData: {
+                            id: 98
+                        }
+                    }
+                };
+            });
+
+            it('loads the expected query parameters if the loaded bracket is available to be selected for importing', async () => {
+                (StartggImporter.prototype.getMatchQueryOptions as jest.Mock).mockResolvedValue([
+                    {
+                        type: 'select',
+                        key: 'eventId',
+                        name: 'Event',
+                        options: [
+                            { name: 'Test Event 1', value: 99 },
+                            {
+                                name: 'Test Event 2',
+                                value: 98,
+                                getParams: jest.fn().mockResolvedValue([
+                                    { type: 'static', value: 'test-bracket', key: 'testEventParam', name: 'Bracket' }
+                                ])
+                            },
+                            { name: 'Test Event 3', value: 97 }
+                        ]
+                    },
+                    { type: 'static', value: 'test', key: 'testRootMatchQueryParam', name: 'Test Root Param' }
+                ]);
+
+                const wrapper = mount(BracketsPanel);
+
+                await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+                await flushPromises();
+
+                expect((wrapper.vm as unknown as Record<string, unknown>).bracketQuery).toEqual([
+                    {
+                        key: 'eventId',
+                        name: 'Event',
+                        type: 'static',
+                        value: 98
+                    },
+                    {
+                        key: 'testEventParam',
+                        name: 'Bracket',
+                        type: 'static',
+                        value: 'test-bracket'
+                    },
+                    {
+                        type: 'static',
+                        value: 'test',
+                        key: 'testRootMatchQueryParam',
+                        name: 'Test Root Param'
+                    }
+                ]);
+            });
+
+            it('loads the expected query parameters if the loaded bracket is not available to be selected for importing', async () => {
+                (StartggImporter.prototype.getMatchQueryOptions as jest.Mock).mockResolvedValue([
+                    {
+                        type: 'select',
+                        key: 'eventId',
+                        name: 'Event',
+                        options: [
+                            { name: 'Test Event 4', value: 96 }
+                        ]
+                    },
+                    { type: 'static', value: 'test', key: 'testRootMatchQueryParam', name: 'Test Root Param' }
+                ]);
+
+                const wrapper = mount(BracketsPanel);
+
+                await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+                await flushPromises();
+
+                expect((wrapper.vm as unknown as Record<string, unknown>).bracketQuery).toEqual([
+                    {
+                        type: 'select',
+                        key: 'eventId',
+                        name: 'Event',
+                        options: [
+                            { name: 'Test Event 4', value: 96 }
+                        ]
+                    },
+                    {
+                        type: 'static',
+                        value: 'test',
+                        key: 'testRootMatchQueryParam',
+                        name: 'Test Root Param'
+                    }
+                ]);
+            });
         });
     });
 });

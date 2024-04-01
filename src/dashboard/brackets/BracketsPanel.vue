@@ -123,7 +123,34 @@ const activeParamsFilled = computed(() => {
 
 async function getMatchQuery() {
     const importer = getImporter();
-    bracketQuery.value = await importer.getMatchQueryOptions(tournamentDataStore.tournamentData.meta.id);
+    const options = await Promise.all((await importer.getMatchQueryOptions(tournamentDataStore.tournamentData.meta.id))
+        .map(async (option) => {
+            // If possible, select the correct event ID automatically.
+            const startggEventId = tournamentDataStore.tournamentData.meta.sourceSpecificData?.smashgg?.eventData.id;
+            if (
+                tournamentDataStore.tournamentData.meta.source === 'SMASHGG'
+                && startggEventId != null
+                && option.key === 'eventId'
+                && option.type === 'select'
+            ) {
+                const eventOption = option.options.find(eventOption => eventOption.value === startggEventId);
+                if (eventOption != null) {
+                    return [
+                        {
+                            name: 'Event',
+                            type: 'static',
+                            key: 'eventId',
+                            value: startggEventId
+                        } satisfies MatchQueryParameter,
+                        ...(await eventOption.getParams())
+                    ];
+                }
+            }
+
+            return option;
+        }));
+
+    bracketQuery.value = options.flat();
 }
 
 async function submitBracketQuery() {
