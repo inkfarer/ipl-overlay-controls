@@ -8,7 +8,7 @@
         },
         "locale": {
             "type": "string",
-            "enum": ["EN", "DE", "EU_FR"]
+            "enum": ["EN", "DE", "EU_FR", "JA"]
         }
     },
     "required": ["gameVersion", "locale"],

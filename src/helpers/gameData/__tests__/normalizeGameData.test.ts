@@ -16,6 +16,10 @@ describe('normalizeGameData', () => {
                 [Locale.EU_FR]: {
                     'Cool Stage': '[EU_FR] Cool Stage',
                     'Dope Stage': '[EU_FR] Dope Stage'
+                },
+                [Locale.JA]: {
+                    'Cool Stage': '[JA] Cool Stage',
+                    'Dope Stage': '[JA] Dope Stage'
                 }
             },
             stageImagePaths: {
@@ -34,6 +38,10 @@ describe('normalizeGameData', () => {
                 [Locale.EU_FR]: {
                     'Turf War': '[EU_FR] Turf War',
                     'Clam Blitz': '[EU_FR] Clam Blitz'
+                },
+                [Locale.JA]: {
+                    'Turf War': '[JA] Turf War',
+                    'Clam Blitz': '[JA] Clam Blitz'
                 }
             },
             colors: [
@@ -85,6 +93,12 @@ describe('normalizeGameData', () => {
                     'Dope Stage': '[EU_FR] Dope Stage',
                     'Unknown Stage': 'Stage à déterminer',
                     Counterpick: 'Counterpick'
+                },
+                [Locale.JA]: {
+                    'Cool Stage': '[JA] Cool Stage',
+                    'Dope Stage': '[JA] Dope Stage',
+                    'Unknown Stage': 'ステージ未選択',
+                    Counterpick: 'カウンターピック'
                 }
             },
             stageImagePaths: {
@@ -106,6 +120,11 @@ describe('normalizeGameData', () => {
                     'Turf War': '[EU_FR] Turf War',
                     'Clam Blitz': '[EU_FR] Clam Blitz',
                     'Unknown Mode': 'Mode à déterminer'
+                },
+                [Locale.JA]: {
+                    'Turf War': '[JA] Turf War',
+                    'Clam Blitz': '[JA] Clam Blitz',
+                    'Unknown Mode': 'ルール未選択'
                 }
             },
             colors: [

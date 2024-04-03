@@ -112,6 +112,31 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'Arène Méca-ramen',
             'Bluefin Depot': 'Mine Marine',
             'Marlin Airport': 'Terminal Rorqual'
+        },
+        [Locale.JA]: {
+            'Museum d\'Alfonsino': 'キンメダイ美術館',
+            'Scorch Gorge': 'ユノハナ大渓谷',
+            'Eeltail Alley': 'ゴンズイ地区',
+            'Hagglefish Market': 'ヤガラ市場',
+            'Undertow Spillway': 'マテガイ放水路',
+            'Mincemeat Metalworks': 'ナメロウ金属',
+            'Hammerhead Bridge': 'マサバ海峡大橋',
+            'Mahi-Mahi Resort': 'マヒマヒリゾート＆スパ',
+            'Inkblot Art Academy': '海女美術大学',
+            'Sturgeon Shipyard': 'チョウザメ造船',
+            MakoMart: 'ザトウマーケット',
+            'Wahoo World': 'スメーシーワールド',
+            'Brinewater Springs': 'クサヤ温泉',
+            'Flounder Heights': 'ヒラメが丘団地',
+            'Um\'ami Ruins': 'ナンプラー遺跡',
+            'Manta Maria': 'マンタマリア号',
+            'Barnacle & Dime': 'タラポートショッピングパーク',
+            'Humpback Pump Track': 'コンブトラック',
+            'Crableg Capital': 'タカアシ経済特区',
+            'Shipshape Cargo Co.': 'オヒョウ海運',
+            'Robo ROM-en': 'バイガイ亭',
+            'Bluefin Depot': 'ネギトロ炭鉱',
+            'Marlin Airport': 'カジキ空港'
         }
     },
     stageImagePaths: {
@@ -160,6 +185,13 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             Rainmaker: 'Mission Bazookarpe',
             'Splat Zones': 'Défense de zone',
             'Turf War': 'Guerre de territoire'
+        },
+        [Locale.JA]: {
+            'Clam Blitz': 'ガチアサリ',
+            'Tower Control': 'ガチヤグラ',
+            Rainmaker: 'ガチホコバトル',
+            'Splat Zones': 'ガチエリア',
+            'Turf War': 'ナワバリバトル'
         }
     },
     colors: [
