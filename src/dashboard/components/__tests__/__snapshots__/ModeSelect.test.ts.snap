@@ -86,3 +86,32 @@ exports[`ModeSelect adds expected options to select when language is EU_FR 1`] =
   },
 ]
 `;
+
+exports[`ModeSelect adds expected options to select when language is JA 1`] = `
+[
+  {
+    "name": "ガチアサリ",
+    "value": "Clam Blitz",
+  },
+  {
+    "name": "ガチエリア",
+    "value": "Splat Zones",
+  },
+  {
+    "name": "ガチホコバトル",
+    "value": "Rainmaker",
+  },
+  {
+    "name": "ガチヤグラ",
+    "value": "Tower Control",
+  },
+  {
+    "name": "ナワバリバトル",
+    "value": "Turf War",
+  },
+  {
+    "name": "ルール未選択",
+    "value": "Unknown Mode",
+  },
+]
+`;

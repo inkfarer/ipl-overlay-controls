@@ -1,7 +1,8 @@
 export enum Locale {
     EN = 'EN',
     DE = 'DE',
-    EU_FR = 'EU_FR'
+    EU_FR = 'EU_FR',
+    JA = 'JA'
 }
 
 export class LocaleHelper {
@@ -9,7 +10,8 @@ export class LocaleHelper {
         return {
             [Locale.EN]: 'English',
             [Locale.DE]: 'Deutsch',
-            [Locale.EU_FR]: 'Français'
+            [Locale.EU_FR]: 'Français',
+            [Locale.JA]: '日本語'
         }[locale];
     }
 }

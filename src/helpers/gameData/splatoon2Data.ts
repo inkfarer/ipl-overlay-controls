@@ -116,6 +116,32 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
             'Wahoo World': 'Parc Carapince',
             'Walleye Warehouse': 'Encrepôt',
             'Skipper Pavilion': 'Lagune aux gobies'
+        },
+        [Locale.JA]: {
+            'Ancho-V Games': 'アンチョビットゲームズ',
+            'Arowana Mall': 'アロワナモール',
+            'Blackbelly Skatepark': 'Ｂバスパーク',
+            'Camp Triggerfish': 'モンガラキャンプ場',
+            'Goby Arena': 'アジフライスタジアム',
+            'Humpback Pump Track': 'コンブトラック',
+            'Inkblot Art Academy': '海女美術大学',
+            'Kelp Dome': 'モズク農園',
+            MakoMart: 'ザトウマーケット',
+            'Manta Maria': 'マンタマリア号',
+            'Moray Towers': 'タチウオパーキング',
+            'Musselforge Fitness': 'フジツボスポーツクラブ',
+            'New Albacore Hotel': 'ホテルニューオートロ',
+            'Piranha Pit': 'ショッツル鉱山',
+            'Port Mackerel': 'ホッケふ頭',
+            'Shellendorf Institute': 'デボン海洋博物館',
+            'Shifty Station': 'ミステリーゾーン',
+            'Snapper Canal': 'エンガワ河川敷',
+            'Starfish Mainstage': 'ガンガゼ野外音楽堂',
+            'Sturgeon Shipyard': 'チョウザメ造船',
+            'The Reef': 'バッテラストリート',
+            'Wahoo World': 'スメーシーワールド',
+            'Walleye Warehouse': 'ハコフグ倉庫',
+            'Skipper Pavilion': 'ムツゴ楼'
         }
     },
     stageImagePaths: {
@@ -165,6 +191,13 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
             Rainmaker: 'Mission Bazookarpe',
             'Splat Zones': 'Défense de zone',
             'Turf War': 'Guerre de territoire'
+        },
+        [Locale.JA]: {
+            'Clam Blitz': 'ガチアサリ',
+            'Tower Control': 'ガチヤグラ',
+            Rainmaker: 'ガチホコバトル',
+            'Splat Zones': 'ガチエリア',
+            'Turf War': 'ナワバリバトル'
         }
     },
     colors: [
