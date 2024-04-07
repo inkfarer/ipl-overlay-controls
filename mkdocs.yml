@@ -8,3 +8,4 @@ nav:
   - User's guide: 'users-guide.md'
   - Development: 'development.md'
   - Dependents: 'dependent-bundles.md'
+  - Localization: 'localization.md'
