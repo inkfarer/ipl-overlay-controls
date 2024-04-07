@@ -1,0 +1,7 @@
+{
+    "casterImport": {
+        "error": {
+            "noCommentatorsReceived": "Got no commentators from API."
+        }
+    }
+}

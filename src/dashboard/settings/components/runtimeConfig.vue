@@ -33,6 +33,13 @@
             :options="localeOptions"
             class="m-t-6"
         />
+        <ipl-select
+            v-model="interfaceLocale"
+            label="Interface Language"
+            data-test="interface-locale-select"
+            :options="interfaceLocaleOptions"
+            class="m-t-6"
+        />
         <ipl-button
             class="m-t-8"
             label="Update"
@@ -56,6 +63,8 @@ import { prettyPrintList } from '../../../helpers/ArrayHelper';
 import { pluralizeWithoutCount } from '../../helpers/stringHelper';
 import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { Locale, LocaleHelper } from 'types/enums/Locale';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
+import { useTranslation } from 'i18next-vue';
 
 export default defineComponent({
     name: 'RuntimeConfig',
@@ -64,6 +73,7 @@ export default defineComponent({
 
     setup() {
         const store = useSettingsStore();
+        const { t } = useTranslation();
 
         const gameVersion = ref<GameVersion>(GameVersion.SPLATOON_2);
         const showIncompatibleBundlesMessage = ref(false);
@@ -71,6 +81,7 @@ export default defineComponent({
         const isGameVersionChanged = computed(() => gameVersion.value !== store.runtimeConfig.gameVersion);
 
         const locale = ref<Locale>(null);
+        const interfaceLocale = ref<InterfaceLocale>(null);
 
         watch(
             () => store.runtimeConfig.gameVersion,
@@ -79,6 +90,10 @@ export default defineComponent({
         watch(
             () => store.runtimeConfig.locale,
             newValue => locale.value = newValue as Locale,
+            { immediate: true });
+        watch(
+            () => store.runtimeConfig.interfaceLocale,
+            newValue => interfaceLocale.value = newValue as InterfaceLocale,
             { immediate: true });
 
         return {
@@ -91,7 +106,9 @@ export default defineComponent({
                 ({ value: version, name: GameVersionHelper.toPrettyString(version) })),
             isGameVersionChanged,
             isChanged: computed(() =>
-                isGameVersionChanged.value || locale.value !== store.runtimeConfig.locale),
+                isGameVersionChanged.value
+                || locale.value !== store.runtimeConfig.locale
+                || interfaceLocale.value !== store.runtimeConfig.interfaceLocale),
             currentGameVersion: computed(() => store.runtimeConfig.gameVersion),
             showIncompatibleBundlesMessage,
             incompatibleBundles,
@@ -99,6 +116,10 @@ export default defineComponent({
             localeOptions: Object.values(Locale).map(locale =>
                 ({ value: locale, name: LocaleHelper.toPrettyString(locale) })),
             locale,
+
+            interfaceLocaleOptions: Object.values(InterfaceLocale).map(locale =>
+                ({ value: locale, name: t(`common:interfaceLanguage.${locale}`) })),
+            interfaceLocale,
 
             async doUpdate() {
                 if (isGameVersionChanged.value) {
@@ -114,12 +135,17 @@ export default defineComponent({
                 if (locale.value !== store.runtimeConfig.locale) {
                     await store.setLocale(locale.value);
                 }
+
+                if (interfaceLocale.value !== store.runtimeConfig.interfaceLocale) {
+                    store.setInterfaceLocale(interfaceLocale.value);
+                }
             },
             undoChanges(event: Event) {
                 event.preventDefault();
 
                 gameVersion.value = store.runtimeConfig.gameVersion as GameVersion;
                 locale.value = store.runtimeConfig.locale as Locale;
+                interfaceLocale.value = store.runtimeConfig.interfaceLocale as InterfaceLocale;
             }
         };
     }
