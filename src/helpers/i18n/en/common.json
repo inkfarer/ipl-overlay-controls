@@ -2,5 +2,23 @@
     "interfaceLanguage": {
         "EN": "English",
         "JA": "日本語"
+    },
+    "largeToggle": {
+        "show": "Show",
+        "hide": "Hide"
+    },
+    "button": {
+        "shortConfirmationMessage": "Confirm?",
+        "confirmationMessage": "Are you sure?",
+        "loading": "Loading...",
+        "error": "Error!",
+        "success": "Done!"
+    },
+    "updateButton": "Update",
+    "validationError": {
+        "minLength_one": "Must be at least {{count}} character",
+        "minLength_other": "Must be at least {{count}} characters",
+        "maxLength_one": "Must not be over {{count}} character",
+        "maxLength_other": "Must not be over {{count}} characters"
     }
 }
