@@ -1,0 +1,11 @@
+{
+    "title": "Music",
+    "nowPlayingLabel_lastfm": "Now Playing (Last.fm)",
+    "nowPlayingLabel_manual": "Now Playing (Manual)",
+    "changeSongManually": {
+        "sectionHeading": "Change song manually",
+        "enableCheckboxLabel": "Enable",
+        "artistInputLabel": "Artist",
+        "songInputLabel": "Song"
+    }
+}

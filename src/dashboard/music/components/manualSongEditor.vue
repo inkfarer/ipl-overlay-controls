@@ -1,25 +1,25 @@
 <template>
-    <ipl-expanding-space title="Change song manually">
+    <ipl-expanding-space :title="$t('changeSongManually.sectionHeading')">
         <ipl-checkbox
             v-model="nowPlayingSource"
-            label="Enable"
+            :label="$t('changeSongManually.enableCheckboxLabel')"
             data-test="enable-manual-input-checkbox"
         />
         <ipl-input
             v-model="manualNowPlaying.artist"
             name="artist"
-            label="Artist"
+            :label="$t('changeSongManually.artistInputLabel')"
             class="m-t-6"
             @focuschange="handleFocusEvent"
         />
         <ipl-input
             v-model="manualNowPlaying.song"
             name="song"
-            label="Song"
+            :label="$t('changeSongManually.songInputLabel')"
             @focuschange="handleFocusEvent"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:updateButton')"
             :color="buttonColor"
             class="m-t-8"
             data-test="manual-song-update-button"
