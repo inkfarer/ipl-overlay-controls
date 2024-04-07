@@ -10,3 +10,4 @@ ipl-overlay-controls can be translated to multiple languages using [i18next](htt
   - `common.json` contains reusable translations
   - `server.json` contains translations used by the backend
   - Other files contain translations used by individual dashboard panels
+    - The `title` translation key can be used to change the title of the dashboard panel.

@@ -16,6 +16,13 @@ export async function initI18n(translationFileName: string): Promise<void> {
             i18next.changeLanguage(newValue.interfaceLocale.toLowerCase()).catch(e => {
                 console.error('Failed to change interface language', e);
             });
+            if (i18next.exists('title')) {
+                try {
+                    window.frameElement.parentElement.setAttribute('display-title', i18next.t('title'));
+                } catch (ignore) {
+
+                }
+            }
         }
     });
 }
