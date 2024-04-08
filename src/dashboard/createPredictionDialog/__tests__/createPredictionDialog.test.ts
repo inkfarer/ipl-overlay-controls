@@ -140,7 +140,7 @@ describe('CreatePredictionDialog', () => {
         await flushPromises();
 
         expect(predictionDataStore.createPrediction).toHaveBeenCalledWith({
-            title: 'Who do you think will win this match?',
+            title: 'translation:defaultPredictionTitle',
             duration: 128,
             teamAName: 'cool team A',
             teamBName: 'cool team B'
@@ -166,7 +166,7 @@ describe('CreatePredictionDialog', () => {
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[type="number"]').attributes().modelvalue).toEqual('120');
-        expect(wrapper.getComponent('[name="title"]').attributes().modelvalue).toEqual('Who do you think will win this match?');
+        expect(wrapper.getComponent('[name="title"]').attributes().modelvalue).toEqual('translation:defaultPredictionTitle');
         expect(wrapper.getComponent('[name="team-a-name"]').attributes().modelvalue).toEqual('cool team A');
         expect(wrapper.getComponent('[name="team-b-name"]').attributes().modelvalue).toEqual('cool team B');
     });

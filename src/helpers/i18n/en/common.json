@@ -20,6 +20,10 @@
         "minLength_one": "Must be at least {{count}} character",
         "minLength_other": "Must be at least {{count}} characters",
         "maxLength_one": "Must not be over {{count}} character",
-        "maxLength_other": "Must not be over {{count}} characters"
+        "maxLength_other": "Must not be over {{count}} characters",
+        "maxValue": "Must not be above {{count}}",
+        "minValue": "Must not be below {{count}}",
+        "numeric": "Must be numeric",
+        "notBlank": "Must not be blank"
     }
 }
