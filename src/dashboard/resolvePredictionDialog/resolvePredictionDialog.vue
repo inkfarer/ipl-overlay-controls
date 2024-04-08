@@ -1,6 +1,6 @@
 <template>
     <ipl-dialog-title
-        title="Resolve Prediction"
+        :title="$t('dialogTitle')"
         @close="closeDialog('resolvePredictionDialog')"
     />
     <ipl-error-display class="m-t-8" />
@@ -9,14 +9,14 @@
         type="warning"
         class="m-t-8"
     >
-        No prediction data loaded.
+        {{ $t('noPredictionDataMessage') }}
     </ipl-message>
     <ipl-message
         v-else-if="status !== PredictionStatus.LOCKED"
         type="info"
         class="m-t-8"
     >
-        This prediction cannot be resolved right now.
+        {{ $t('resolvingNotPossibleMessage') }}
     </ipl-message>
     <template v-else>
         <ipl-message
@@ -24,25 +24,28 @@
             class="m-t-8"
             type="warning"
         >
-            The current round has not been completed!
+            {{ $t('roundNotCompletedWarning') }}
         </ipl-message>
         <ipl-message
             v-if="winningTeam === GameWinner.NO_WINNER"
             type="info"
             class="m-t-8"
         >
-            Unable to determine the current round's winner.
-            <template v-if="!!winningTeamName">The leading team is {{ winningTeamName }}.</template>
+            {{ !winningTeamName
+                ? $t('predictionWinnerUnknownMessage.withoutWinner')
+                : $t('predictionWinnerUnknownMessage.withWinner', { name: winningTeamName }) }}
         </ipl-message>
         <ipl-space class="m-t-8">
             <ipl-label
                 :class="{'winner-label': winningTeam === GameWinner.ALPHA}"
             >
-                {{ winningTeam === GameWinner.ALPHA ? 'Winner - ' : '' }} Team A
+                {{ winningTeam === GameWinner.ALPHA
+                    ? $t('teamAButtonLabel.winner')
+                    : $t('teamAButtonLabel.default') }}
             </ipl-label>
-            <ipl-button
+            <iploc-button
                 async
-                progress-message="Resolving..."
+                :progress-message="$t('buttonResolvingInProgressLabel')"
                 :label="outcomes[0].title"
                 :color="winningTeam === GameWinner.ALPHA ? 'yellow' : 'blue'"
                 data-test="resolve-outcome-1-button"
@@ -51,11 +54,13 @@
             <ipl-label
                 :class="{'winner-label': winningTeam === GameWinner.BRAVO}"
             >
-                {{ winningTeam === GameWinner.BRAVO ? 'Winner - ' : '' }} Team B
+                {{ winningTeam === GameWinner.BRAVO
+                    ? $t('teamBButtonLabel.winner')
+                    : $t('teamBButtonLabel.default') }}
             </ipl-label>
-            <ipl-button
+            <iploc-button
                 async
-                progress-message="Resolving..."
+                :progress-message="$t('buttonResolvingInProgressLabel')"
                 :label="outcomes[1].title"
                 :color="winningTeam === GameWinner.BRAVO ? 'yellow' : 'blue'"
                 data-test="resolve-outcome-2-button"
@@ -67,7 +72,7 @@
 
 <script lang="ts">
 import { computed, ComputedRef, defineComponent } from 'vue';
-import { IplButton, IplSpace, IplLabel, IplMessage, IplDialogTitle } from '@iplsplatoon/vue-components';
+import { IplDialogTitle, IplLabel, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { usePredictionDataStore } from '../store/predictionDataStore';
 import { GameWinner } from 'types/enums/gameWinner';
 import { useActiveRoundStore } from '../store/activeRoundStore';
@@ -75,11 +80,12 @@ import { PredictionStatus } from 'types/enums/predictionStatus';
 import { NodecgDialog } from '../types/dialog';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { closeDialog } from '../helpers/dialogHelper';
+import IplocButton from '../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'ResolvePredictionDialog',
 
-    components: { IplErrorDisplay, IplDialogTitle, IplMessage, IplButton, IplLabel, IplSpace },
+    components: { IplErrorDisplay, IplDialogTitle, IplMessage, IplocButton, IplLabel, IplSpace },
 
     setup() {
         const predictionDataStore = usePredictionDataStore();
