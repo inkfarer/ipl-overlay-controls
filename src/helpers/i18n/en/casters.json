@@ -1,0 +1,21 @@
+{
+    "controls": {
+        "addCaster": "Add caster",
+        "uploadCastersToRadia": "Upload casters to Radia",
+        "loadFromVoiceChat": "Load from VC"
+    },
+    "casterEditor": {
+        "unsavedCasterBadge": "Unsaved",
+        "saveNewCasterButton": "Save",
+        "nameInput": "Name",
+        "twitterInput": "Twitter",
+        "pronounInput": "Pronouns",
+        "imageUrlInput": "Image URL",
+        "videoUrlInput": "Video URL"
+    },
+    "casterSearch": {
+        "buttonLabel": "Search casters",
+        "queryInput": "Query",
+        "noResultsMessage": "Type above to search..."
+    }
+}

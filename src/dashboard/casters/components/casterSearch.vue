@@ -6,7 +6,7 @@
         v-bind="$attrs"
         @click="searchOpen = !searchOpen"
     >
-        <font-awesome-icon icon="search" /> Search casters
+        <font-awesome-icon icon="search" /> {{ $t('casterSearch.buttonLabel') }}
     </ipl-space>
     <ipl-space
         v-if="searchOpen"
@@ -15,7 +15,7 @@
     >
         <ipl-input
             v-model="searchQuery"
-            label="Query"
+            :label="$t('casterSearch.queryInput')"
             name="caster-search-query"
             :loading="searchLoading"
             class="m-b-4"
@@ -24,7 +24,7 @@
             v-if="Object.keys(searchResult).length <= 0"
             class="m-t-8 text-center"
         >
-            Type above to search...
+            {{ $t('casterSearch.noResultsMessage') }}
         </div>
         <template v-else>
             <ipl-space

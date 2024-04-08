@@ -3,7 +3,7 @@
     <ipl-space class="layout horizontal">
         <ipl-button
             :icon="addCasterIcon"
-            label="Add caster"
+            :label="$t('controls.addCaster')"
             color="green"
             :disabled="disableAddCaster"
             data-test="add-caster-button"
@@ -15,16 +15,15 @@
             async
             data-test="upload-casters-button"
             icon="arrow-up-from-bracket"
-            title="Upload casters to Radia"
+            :title="$t('controls.uploadCastersToRadia')"
             @click="uploadCasters"
         />
-        <ipl-button
+        <iploc-button
             v-if="radiaIntegrationEnabled"
             class="m-l-6"
-            label="Load from VC"
+            :label="$t('controls.loadFromVoiceChat')"
             async
             data-test="load-from-vc-button"
-            progress-message="Loading..."
             @click="loadFromVc"
         />
     </ipl-space>
@@ -64,6 +63,7 @@ import { storeToRefs } from 'pinia';
 import { Caster } from 'schemas';
 import Draggable from 'vuedraggable';
 import { sendMessage } from '../helpers/nodecgHelper';
+import IplocButton from '../components/IplocButton.vue';
 
 library.add(faPlus, faArrowUpFromBracket);
 
@@ -71,7 +71,7 @@ export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Casters',
 
-    components: { IplExpandingSpaceGroup, IplErrorDisplay, CasterEditor, IplButton, IplSpace, Draggable },
+    components: { IplExpandingSpaceGroup, IplErrorDisplay, CasterEditor, IplButton, IplSpace, Draggable, IplocButton },
 
     setup() {
         const store = useCasterStore();

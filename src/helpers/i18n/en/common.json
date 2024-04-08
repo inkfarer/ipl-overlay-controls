@@ -12,7 +12,8 @@
         "confirmationMessage": "Are you sure?",
         "loading": "Loading...",
         "error": "Error!",
-        "success": "Done!"
+        "success": "Done!",
+        "rightClickUndoMessage": "Right-click to undo changes."
     },
     "updateButton": "Update",
     "validationError": {
