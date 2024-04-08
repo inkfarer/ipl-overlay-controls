@@ -14,7 +14,7 @@
             data-test="no-prediction-data-message"
             class="m-b-8"
         >
-            No prediction data loaded.
+            {{ $t('noPredictionDataMessage') }}
         </ipl-message>
 
         <ipl-message
@@ -23,10 +23,11 @@
             data-test="socket-closed-message"
             class="m-b-8"
         >
-            Prediction websocket is closed. Data may not be up to date.
-            <ipl-button
+            {{ $t('socketClosedWarning.message') }}
+            <iploc-button
                 small
-                label="Reconnect"
+                :label="$t('socketClosedWarning.reconnectButton.label')"
+                :progress-message="$t('socketClosedWarning.reconnectButton.loadingLabel')"
                 class="m-t-6"
                 color="yellow"
                 data-test="socket-reconnect-button"
@@ -43,13 +44,13 @@
 
         <ipl-space data-test="prediction-management-space">
             <ipl-data-row
-                label="Status"
-                :value="status"
+                :label="$t('predictionStatusLabel')"
+                :value="$t(`common:predictionStatus.${rawStatus}`)"
             />
             <div class="m-t-6 prediction-button-container">
                 <ipl-button
                     v-if="rawStatus === PredictionStatus.LOCKED"
-                    label="Resolve"
+                    :label="$t('resolvePredictionButton')"
                     color="green"
                     data-test="resolve-prediction-button"
                     @click="handleResolve"
@@ -58,38 +59,38 @@
                     v-if="!rawStatus ||
                         rawStatus === PredictionStatus.CANCELED ||
                         rawStatus === PredictionStatus.RESOLVED"
-                    label="New"
+                    :label="$t('createPredictionButton')"
                     color="green"
                     data-test="create-prediction-button"
                     @click="handleCreate"
                 />
-                <ipl-button
+                <iploc-button
                     v-if="rawStatus === PredictionStatus.ACTIVE"
-                    label="Lock"
+                    :label="$t('lockPredictionButton.label')"
                     color="red"
                     requires-confirmation
                     short-confirmation-message
                     async
-                    progress-message="Locking..."
+                    :progress-message="$t('lockPredictionButton.loadingLabel')"
                     data-test="lock-prediction-button"
                     @click="handleLock"
                 />
-                <ipl-button
+                <iploc-button
                     v-if="rawStatus === PredictionStatus.LOCKED || rawStatus === PredictionStatus.ACTIVE"
-                    label="Cancel"
+                    :label="$t('cancelPredictionButton.label')"
                     color="red"
                     requires-confirmation
                     short-confirmation-message
                     async
-                    progress-message="Cancelling..."
+                    :progress-message="$t('cancelPredictionButton.loadingLabel')"
                     data-test="cancel-prediction-button"
                     @click="handleCancel"
                 />
                 <ipl-button
-                    label="Show"
+                    :label="$t('showPredictionButton.label')"
                     data-test="show-prediction-button"
                     disable-on-success
-                    success-message="Sent!"
+                    :success-message="$t('showPredictionButton.labelOnClick')"
                     @click="handleShow"
                 />
             </div>
@@ -105,12 +106,13 @@ import { NodecgDialog } from '../types/dialog';
 import { PredictionStatus } from 'types/enums/predictionStatus';
 import PredictionDataDisplay from './components/predictionDataDisplay.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import IplocButton from '../components/IplocButton.vue';
 
 export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Predictions',
 
-    components: { IplErrorDisplay, PredictionDataDisplay, IplButton, IplDataRow, IplMessage, IplSpace },
+    components: { IplErrorDisplay, PredictionDataDisplay, IplButton, IplDataRow, IplMessage, IplSpace, IplocButton },
 
     setup() {
         const store = usePredictionDataStore();
@@ -118,10 +120,6 @@ export default defineComponent({
         const currentPrediction = computed(() => store.predictionStore.currentPrediction);
 
         return {
-            status: computed(() => {
-                const status = currentPrediction.value?.status;
-                return status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : null;
-            }),
             rawStatus: computed(() => currentPrediction.value?.status as PredictionStatus),
             PredictionStatus,
             hasPredictionData,

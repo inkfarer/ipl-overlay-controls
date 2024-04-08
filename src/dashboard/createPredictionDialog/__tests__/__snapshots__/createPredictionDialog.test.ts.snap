@@ -13,8 +13,8 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
     <ipl-input-stub name="team-b-name" label="translation:teamBNameInput" modelvalue="cool team B" type="text" centered="false" disabled="false" loading="false" theme="default" class="max-width m-l-6"></ipl-input-stub>
   </div>
   <div class="layout horizontal m-t-8">
-    <iploc-button-stub label="translation:createButton" disabled="true" color="green" async="" data-test="create-prediction-button"></iploc-button-stub>
-    <iploc-button-stub label="translation:resetButton" color="red" class="m-l-8" data-test="reset-inputs-button"></iploc-button-stub>
+    <iploc-button-stub shortconfirmationmessage="false" label="translation:createButton" disabled="true" color="green" async="" data-test="create-prediction-button"></iploc-button-stub>
+    <iploc-button-stub shortconfirmationmessage="false" label="translation:resetButton" color="red" class="m-l-8" data-test="reset-inputs-button"></iploc-button-stub>
   </div>
 </div>"
 `;

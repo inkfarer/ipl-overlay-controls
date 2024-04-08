@@ -25,5 +25,11 @@
         "minValue": "Must not be below {{count}}",
         "numeric": "Must be numeric",
         "notBlank": "Must not be blank"
+    },
+    "predictionStatus": {
+        "RESOLVED": "Resolved",
+        "ACTIVE": "Active",
+        "CANCELED": "Canceled",
+        "LOCKED": "Locked"
     }
 }

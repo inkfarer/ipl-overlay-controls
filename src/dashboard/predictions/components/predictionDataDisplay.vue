@@ -7,7 +7,7 @@
             v-if="isActive && secondsRemaining > 0"
             class="text-center"
         >
-            {{ formattedTimeRemaining }} remaining
+            {{ $t('remainingDuration', { seconds: secondsRemaining }) }}
         </div>
 
         <ipl-space
@@ -20,7 +20,7 @@
             >
                 <span class="team-name wrap-anywhere">{{ firstOutcome.title }}</span>
                 <div>
-                    <span>{{ pluralize('point', firstOutcome.pointsUsed) }}</span>
+                    <span>{{ $t('points', { count: firstOutcome.pointsUsed }) }}</span>
                     <span style="float: right">
                         {{ firstOutcome.users }} <font-awesome-icon icon="users" />
                         {{ firstOutcome.percentage }}%
@@ -43,7 +43,7 @@
                     background-color="dark"
                 />
                 <div class="m-t-4">
-                    <span>{{ pluralize('point', secondOutcome.pointsUsed) }}</span>
+                    <span>{{ $t('points', { count: secondOutcome.pointsUsed }) }}</span>
                     <span style="float: right">
                         {{ secondOutcome.users }} <font-awesome-icon icon="users" />
                         {{ secondOutcome.percentage }}%
@@ -61,15 +61,17 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { usePredictionDataStore } from '../../store/predictionDataStore';
 import { Outcome } from 'schemas';
-import { IplSpace, IplProgressBar, pluralize } from '@iplsplatoon/vue-components';
+import { IplSpace, IplProgressBar } from '@iplsplatoon/vue-components';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 
 library.add(faUsers);
 
 export default defineComponent({
     name: 'PredictionDataDisplay',
+
     components: { IplSpace, IplProgressBar, FontAwesomeIcon },
+
     setup() {
         const store = usePredictionDataStore();
 
@@ -77,8 +79,6 @@ export default defineComponent({
         const lockTime = computed(() => DateTime.fromISO(store.predictionStore.currentPrediction?.lockTime));
         const secondsRemaining = ref(0);
         let timeRemainingInterval: number = null;
-        const formattedTimeRemaining = computed(() =>
-            Duration.fromObject({ seconds: secondsRemaining.value }).toFormat('m:ss'));
         watch(isActive, newValue => {
             if (newValue) {
                 timeRemainingInterval = window.setInterval(() => {
@@ -109,12 +109,10 @@ export default defineComponent({
 
         return {
             title: computed(() => currentPrediction.value?.title),
-            formattedTimeRemaining,
             secondsRemaining,
             isActive,
             firstOutcome,
-            secondOutcome,
-            pluralize
+            secondOutcome
         };
     }
 });

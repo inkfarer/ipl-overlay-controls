@@ -15,7 +15,9 @@ import { IplButton } from '@iplsplatoon/vue-components';
 
 type BaseProps = (typeof IplButton)['$props'];
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends /* @vue-ignore */ BaseProps { }
+interface Props extends /* @vue-ignore */ BaseProps {
+    shortConfirmationMessage?: boolean
+}
 
 const props = defineProps<Props>();
 </script>
