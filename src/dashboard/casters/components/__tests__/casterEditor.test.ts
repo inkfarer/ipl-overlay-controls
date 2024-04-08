@@ -75,7 +75,7 @@ describe('CasterEditor', () => {
         });
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
-        expect(attrs.label).toEqual('common:updateButton');
+        expect(attrs.label).toEqual('common:button.update');
         expect(attrs.color).toEqual('blue');
     });
 
@@ -102,7 +102,7 @@ describe('CasterEditor', () => {
         await wrapper.vm.$nextTick();
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
-        expect(attrs.label).toEqual('common:updateButton');
+        expect(attrs.label).toEqual('common:button.update');
         expect(attrs.color).toEqual('red');
     });
 

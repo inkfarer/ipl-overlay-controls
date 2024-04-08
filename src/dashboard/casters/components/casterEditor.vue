@@ -159,7 +159,7 @@ export default defineComponent({
             }),
             isEdited,
             buttonColor: computed(() => props.caster.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
-            updateButtonLabel: computed(() => props.caster.uncommitted ? t('casterEditor.saveNewCasterButtonLabel') : t('common:updateButton')),
+            updateButtonLabel: computed(() => props.caster.uncommitted ? t('casterEditor.saveNewCasterButtonLabel') : t('common:button.update')),
             pronounFormatter: (input: string) => input.toLowerCase(),
             twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input,
             undoChanges(event: Event) {

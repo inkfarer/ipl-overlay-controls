@@ -1,10 +1,10 @@
 <template>
     <ipl-error-display class="m-b-8" />
-    <ipl-expanding-space title="Main Scene">
+    <ipl-expanding-space :title="$t('sceneName.main')">
         <template #header-extra>
             <ipl-button
                 class="show-scene-button m-l-8"
-                label="Show"
+                :label="$t('showSceneButton')"
                 color="green"
                 data-test="show-main-button"
                 :disabled="activeBreakScene === 'main'"
@@ -13,12 +13,12 @@
         </template>
         <ipl-input
             v-model="mainFlavorText"
-            label="Flavor Text"
+            :label="$t('mainScene.flavorTextInput')"
             name="break-main-flavor-text"
             @focuschange="handleMainFlavorTextFocus"
         />
         <div class="layout vertical center-horizontal">
-            <div class="m-t-8">Next stage timer</div>
+            <div class="m-t-8">{{ $t('nextStageTimer.sectionTitle') }}</div>
             <next-stage-time-input
                 v-model="nextRoundTime"
                 data-test="next-stage-time-input"
@@ -27,24 +27,24 @@
             <ipl-checkbox
                 v-model="showNextRoundTime"
                 class="m-t-8"
-                label="Show timer"
+                :label="$t('nextStageTimer.showTimerCheckbox')"
             />
             <ipl-button
                 class="m-t-8"
-                label="Update"
+                :label="$t('common:button.update')"
                 data-test="update-main-scene-button"
                 :color="mainUpdateButtonColor"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="updateMainScene"
                 @right-click="undoMainScene"
             />
         </div>
     </ipl-expanding-space>
     <ipl-space class="layout horizontal center-vertical layout-break-scene m-t-8">
-        <span>Teams</span>
+        <span>{{ $t('sceneName.teams') }}</span>
         <ipl-button
             class="show-scene-button"
-            label="Show"
+            :label="$t('showSceneButton')"
             color="green"
             data-test="show-teams-button"
             :disabled="activeBreakScene === 'teams'"
@@ -52,10 +52,10 @@
         />
     </ipl-space>
     <ipl-space class="layout horizontal center-vertical layout-break-scene m-t-8">
-        <span>Stages</span>
+        <span>{{ $t('sceneName.stages') }}</span>
         <ipl-button
             class="show-scene-button"
-            label="Show"
+            :label="$t('showSceneButton')"
             color="green"
             data-test="show-stages-button"
             :disabled="activeBreakScene === 'stages'"

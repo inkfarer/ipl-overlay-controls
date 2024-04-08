@@ -19,7 +19,7 @@
             @focuschange="handleFocusEvent"
         />
         <ipl-button
-            :label="$t('common:updateButton')"
+            :label="$t('common:button.update')"
             :color="buttonColor"
             class="m-t-8"
             data-test="manual-song-update-button"

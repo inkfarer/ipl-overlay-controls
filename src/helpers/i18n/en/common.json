@@ -13,9 +13,9 @@
         "loading": "Loading...",
         "error": "Error!",
         "success": "Done!",
-        "rightClickUndoMessage": "Right-click to undo changes."
+        "rightClickUndoMessage": "Right-click to undo changes.",
+        "update": "Update"
     },
-    "updateButton": "Update",
     "validationError": {
         "minLength_one": "Must be at least {{count}} character",
         "minLength_other": "Must be at least {{count}} characters",
