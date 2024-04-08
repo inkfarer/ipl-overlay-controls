@@ -275,7 +275,7 @@ exports[`ColorList matches snapshot when using custom color 1`] = `
         <ipl-input-stub name="team-a-color" modelvalue="#889" type="color" centered="false" disabled="false" loading="false" theme="default" style="flex-grow: 1;"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#999" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8" style="flex-grow: 1;"></ipl-input-stub>
       </div>
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="custom-color-submit-btn"></ipl-button-stub>
+      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="custom-color-submit-btn"></ipl-button-stub>
     </div>
   </div>
 </div>"

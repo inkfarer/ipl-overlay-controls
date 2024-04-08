@@ -5,7 +5,7 @@ exports[`Rounds matches snapshot 1`] = `
 <dialog data-v-ee252566="" inert="">
   <div data-v-ee252566="" class="content">
     <div data-v-d255ffee="" class="ipl-space color-light">
-      <ipl-button-stub label="Reset rounds" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="reset-rounds-button"></ipl-button-stub>
+      <ipl-button-stub label="Reset rounds" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="reset-rounds-button"></ipl-button-stub>
     </div>
     <div data-v-d255ffee="" class="ipl-space color-light layout horizontal m-t-8">
       <div class="color-key color-key-next"></div> Next round
@@ -21,10 +21,10 @@ exports[`Rounds matches snapshot 1`] = `
   </div>
   <div data-v-a1f8a641="" class="content" style="display: none;">
     <div class="layout horizontal">
-      <ipl-button-stub label="3 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="new-3-game-round"></ipl-button-stub>
-      <ipl-button-stub label="5 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
+      <ipl-button-stub label="3 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="new-3-game-round"></ipl-button-stub>
+      <ipl-button-stub label="5 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
     </div>
-    <ipl-button-stub label="7 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
+    <ipl-button-stub label="7 Games" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
   </div>
 </div>
 <button data-v-d255ffee="" class="ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">

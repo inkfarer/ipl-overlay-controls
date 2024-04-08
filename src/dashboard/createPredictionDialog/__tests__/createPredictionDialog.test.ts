@@ -18,7 +18,8 @@ describe('CreatePredictionDialog', () => {
         IplInput: true,
         FontAwesomeIcon: true,
         IplErrorDisplay: true,
-        IplDialogTitle: true
+        IplDialogTitle: true,
+        IplocButton: true
     };
 
     beforeEach(() => {
@@ -121,7 +122,7 @@ describe('CreatePredictionDialog', () => {
         wrapper.getComponent<typeof IplInput>('[type="number"]').vm.$emit('update:modelValue', 0);
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent<typeof IplButton>('[data-test="create-prediction-button"]').props().disabled).toEqual(true);
+        expect(wrapper.getComponent('[data-test="create-prediction-button"]').attributes().disabled).toEqual('true');
     });
 
     it('handles creating prediction and closes dialog on create button click', async () => {

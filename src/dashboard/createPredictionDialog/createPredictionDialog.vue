@@ -46,7 +46,7 @@
             />
         </div>
         <div class="layout horizontal m-t-8">
-            <ipl-button
+            <iploc-button
                 label="Create"
                 :disabled="!allValid"
                 color="green"
@@ -54,7 +54,7 @@
                 data-test="create-prediction-button"
                 @click="createPrediction"
             />
-            <ipl-button
+            <iploc-button
                 label="Reset"
                 color="red"
                 class="m-l-8"
@@ -68,13 +68,11 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue';
 import {
-    IplButton,
     IplSpace,
     IplInput,
     IplDialogTitle,
     IplMessage,
     validator,
-    maxLength,
     minValue,
     maxValue,
     provideValidators
@@ -86,11 +84,13 @@ import { NodecgDialog } from '../types/dialog';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { closeDialog } from '../helpers/dialogHelper';
 import { addDots } from '../../helpers/stringHelper';
+import { maxLength } from '../helpers/validators/stringValidators';
+import IplocButton from '../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
 
-    components: { IplErrorDisplay, IplMessage, IplButton, IplInput, IplSpace, IplDialogTitle },
+    components: { IplErrorDisplay, IplMessage, IplInput, IplSpace, IplDialogTitle, IplocButton },
 
     setup() {
         const nextRoundStore = useNextRoundStore();

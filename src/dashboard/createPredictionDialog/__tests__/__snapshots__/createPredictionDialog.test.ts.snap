@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreatePredictionDialog matches snapshot 1`] = `
-"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
   <div class="layout horizontal">
@@ -12,12 +12,15 @@ exports[`CreatePredictionDialog matches snapshot 1`] = `
     <ipl-input-stub name="team-a-name" label="Team A" modelvalue="cool team A" type="text" centered="false" disabled="false" loading="false" theme="default" class="max-width"></ipl-input-stub>
     <ipl-input-stub name="team-b-name" label="Team B" modelvalue="cool team B" type="text" centered="false" disabled="false" loading="false" theme="default" class="max-width m-l-6"></ipl-input-stub>
   </div>
-  <div class="layout horizontal m-t-8"><button data-v-748defd4="" class="ipl-button disabled" disabled="" autocomplete="off" data-test="create-prediction-button"><span data-v-748defd4="" class="label">Create</span></button><button data-v-748defd4="" class="ipl-button m-l-8" style="background-color: rgb(231, 78, 54); color: white;" autocomplete="off" data-test="reset-inputs-button"><span data-v-748defd4="" class="label">Reset</span></button></div>
+  <div class="layout horizontal m-t-8">
+    <iploc-button-stub label="Create" disabled="true" color="green" async="" data-test="create-prediction-button"></iploc-button-stub>
+    <iploc-button-stub label="Reset" color="red" class="m-l-8" data-test="reset-inputs-button"></iploc-button-stub>
+  </div>
 </div>"
 `;
 
 exports[`CreatePredictionDialog matches snapshot when existing prediction is active 1`] = `
-"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
@@ -28,7 +31,7 @@ exports[`CreatePredictionDialog matches snapshot when existing prediction is act
 `;
 
 exports[`CreatePredictionDialog matches snapshot when existing prediction is locked 1`] = `
-"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="Create Prediction" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>

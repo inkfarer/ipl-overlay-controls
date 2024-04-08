@@ -14,8 +14,8 @@ exports[`RoundEditor matches snapshot 1`] = `
   <mode-select-stub modelvalue="Tower Control" data-test="mode-selector-2"></mode-select-stub>
   <stage-select-stub modelvalue="Port Mackerel" class="m-t-8" data-test="stage-selector-2"></stage-select-stub>
   <div class="layout horizontal m-t-8">
-    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="remove-button"></ipl-button-stub>
+    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="remove-button"></ipl-button-stub>
   </div>
 </div>"
 `;
@@ -40,8 +40,8 @@ exports[`RoundEditor matches snapshot when creating new round 1`] = `
   <mode-select-stub modelvalue="Tower Control" data-test="mode-selector-4"></mode-select-stub>
   <stage-select-stub modelvalue="Ancho-V Games" class="m-t-8" data-test="stage-selector-4"></stage-select-stub>
   <div class="layout horizontal m-t-8">
-    <ipl-button-stub label="Save" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button"></ipl-button-stub>
-    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="remove-button"></ipl-button-stub>
+    <ipl-button-stub label="Save" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button"></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="remove-button"></ipl-button-stub>
   </div>
 </div>"
 `;

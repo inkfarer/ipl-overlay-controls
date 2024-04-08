@@ -44,7 +44,9 @@ describe('CasterEditor', () => {
             caster: {
                 name: 'cool caster (edited)',
                 twitter: '@ccaster',
-                pronouns: 'they/them'
+                pronouns: 'they/them',
+                id: 'casterid',
+                uncommitted: false
             }
         });
 
@@ -60,9 +62,7 @@ describe('CasterEditor', () => {
         });
 
         wrapper.getComponent<typeof IplInput>('[name="twitter"]').vm.$emit('focuschange', true);
-        await wrapper.setProps({
-            caster: { name: 'cool caster (edited)', twitter: '@ccaster', pronouns: 'they/them' }
-        });
+        caster.name = 'cool caster (edited)';
 
         expect(wrapper.getComponent('[name="name"]').attributes().modelvalue).toEqual('cool caster');
     });
@@ -75,7 +75,7 @@ describe('CasterEditor', () => {
         });
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
-        expect(attrs.label).toEqual('Update');
+        expect(attrs.label).toEqual('common:updateButton');
         expect(attrs.color).toEqual('blue');
     });
 
@@ -87,7 +87,7 @@ describe('CasterEditor', () => {
         });
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
-        expect(attrs.label).toEqual('Save');
+        expect(attrs.label).toEqual('translation:casterEditor.saveNewCasterButtonLabel');
         expect(attrs.color).toEqual('green');
     });
 
@@ -102,7 +102,7 @@ describe('CasterEditor', () => {
         await wrapper.vm.$nextTick();
 
         const attrs = wrapper.getComponent('[data-test="update-button"]').attributes();
-        expect(attrs.label).toEqual('Update');
+        expect(attrs.label).toEqual('common:updateButton');
         expect(attrs.color).toEqual('red');
     });
 

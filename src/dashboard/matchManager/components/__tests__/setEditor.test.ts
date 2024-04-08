@@ -9,6 +9,7 @@ import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { Locale } from 'types/enums/Locale';
 import { IplButton, IplCheckbox, IplInput, IplSelect } from '@iplsplatoon/vue-components';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 
 describe('setEditor', () => {
     let pinia: TestingPinia;
@@ -113,7 +114,8 @@ describe('setEditor', () => {
         useSettingsStore().$state = {
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2,
-                locale: Locale.EN
+                locale: Locale.EN,
+                interfaceLocale: InterfaceLocale.EN
             }
         };
     });

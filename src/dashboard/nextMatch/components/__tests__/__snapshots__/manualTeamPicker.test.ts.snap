@@ -8,6 +8,6 @@ exports[`ManualTeamPicker matches snapshot 1`] = `
   </div>
   <round-select-stub modelvalue="0387" class="m-t-8" data-test="round-selector"></round-select-stub>
   <ipl-input-stub name="match-name" label="Match Name" modelvalue="test next round" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-  <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="update-button"></ipl-button-stub>
+  <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="update-button"></ipl-button-stub>
 </div>"
 `;

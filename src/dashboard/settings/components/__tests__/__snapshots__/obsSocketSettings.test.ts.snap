@@ -30,7 +30,7 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTED 1`] = `
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
     <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
     <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
     <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTED">Connected</div>
   </div>
 </div>"
@@ -48,7 +48,7 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTING 1`] = `
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
     <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
     <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
     <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTING">Connecting</div>
   </div>
 </div>"
@@ -66,7 +66,7 @@ exports[`ObsSocketSettings matches snapshot when status is NOT_CONNECTED 1`] = `
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
     <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
     <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
     <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_NOT_CONNECTED">Not connected</div>
   </div>
 </div>"

@@ -12,7 +12,7 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
       <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-left"></font-awesome-icon-stub>
       <div class="color" style="border-color: #181e29; background-color: rgb(4, 217, 118);"></div>
       <div class="color" style="border-color: white; background-color: rgb(214, 0, 171);"></div>
-    </div><button data-v-748defd4="" class="ipl-button m-l-6" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="swap-colors-button"><span data-v-748defd4="" class="label">Swap</span></button>
+    </div><button data-v-6fee6548="" class="ipl-button m-l-6" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="swap-colors-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Swap</span></span></button>
     <div class="color-toggle layout horizontal center-vertical center-horizontal m-l-6" data-test="color-toggle-next">
       <div class="color" style="border-color: #181e29; background-color: rgb(254, 242, 50);"></div>
       <div class="color" style="border-color: #181e29; background-color: rgb(46, 210, 254);"></div>
@@ -34,7 +34,7 @@ exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
       <font-awesome-icon-stub icon="chevron-left" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-left"></font-awesome-icon-stub>
       <div class="color" style="border-color: #181e29; background-color: rgb(4, 217, 118);"></div>
       <div class="color" style="border-color: white; background-color: rgb(214, 0, 171);"></div>
-    </div><button data-v-748defd4="" class="ipl-button m-l-6" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="swap-colors-button"><span data-v-748defd4="" class="label">Swap</span></button>
+    </div><button data-v-6fee6548="" class="ipl-button m-l-6" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="swap-colors-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Swap</span></span></button>
     <div class="color-toggle layout horizontal center-vertical center-horizontal m-l-6" data-test="color-toggle-next">
       <div class="color" style="border-color: #181e29; background-color: rgb(254, 242, 50);"></div>
       <div class="color" style="border-color: #181e29; background-color: rgb(46, 210, 254);"></div>

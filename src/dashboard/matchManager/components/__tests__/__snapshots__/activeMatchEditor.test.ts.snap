@@ -22,7 +22,7 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
     </div>
     <ipl-select-stub modelvalue="01010" label="Match" options="[object Object],[object Object],[object Object]" disabled="false" class="m-t-6" data-test="match-selector"></ipl-select-stub>
     <ipl-input-stub name="matchName" label="Match Name" modelvalue="Rad Match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-6"></ipl-input-stub>
-    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-match-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-match-button" title="Right-click to undo changes."></ipl-button-stub>
   </div>
 </div>"
 `;
