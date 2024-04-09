@@ -1,4 +1,8 @@
 {
+    "customColor": {
+        "groupName": "Custom Color",
+        "customColor": "Custom Color"
+    },
     "SPLATOON_3": {
         "rankedModes": {
             "groupName": "Ranked Modes",

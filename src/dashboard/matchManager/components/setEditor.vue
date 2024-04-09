@@ -37,9 +37,9 @@
             <!-- eslint-disable max-len -->
             <ipl-select
                 v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"
-                :model-value="`${game.color?.categoryName ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
+                :model-value="`${game.color?.categoryKey ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
                 :option-groups="colors"
-                class="m-l-6"
+                class="m-l-6 max-width"
                 :disabled="game.winner === GameWinner.NO_WINNER"
                 data-test="color-select"
                 @update:model-value="setGameColor(index, $event)"
@@ -252,14 +252,22 @@ export default defineComponent({
             },
             editColorsEnabled,
             activeColor,
-            colors: computed(() => gameData.value.colors.map(group => ({
-                name: t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`),
-                options: group.colors.map(color => ({
-                    name: t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.${color.key}`),
-                    value: `${group.meta.name}_${color.index}`,
-                    disabled: group.meta.key === 'customColor'
-                }))
-            }))),
+            colors: computed(() => gameData.value.colors.map(group => {
+                return ({
+                    name: group.meta.key === 'customColor'
+                        ? t('colors:customColor.groupName')
+                        : t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`),
+                    options: group.colors.map(color => {
+                        return ({
+                            name: color.isCustom
+                                ? t('colors:customColor.customColor')
+                                : t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.${color.key}`),
+                            value: `${group.meta.key}_${color.key}`,
+                            disabled: group.meta.key === 'customColor'
+                        });
+                    })
+                });
+            })),
             setGameColor(index: number, color: string): void {
                 const colorParts = color.split('_');
                 const category = gameData.value.colors

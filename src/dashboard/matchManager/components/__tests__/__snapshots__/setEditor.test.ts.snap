@@ -12,7 +12,7 @@ exports[`setEditor matches snapshot 1`] = `
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Cool Colors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -30,7 +30,7 @@ exports[`setEditor matches snapshot 1`] = `
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -48,7 +48,7 @@ exports[`setEditor matches snapshot 1`] = `
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -66,7 +66,7 @@ exports[`setEditor matches snapshot 1`] = `
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Humpback Pump Track" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -84,7 +84,7 @@ exports[`setEditor matches snapshot 1`] = `
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="Inkblot Art Academy" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -120,7 +120,7 @@ exports[`setEditor matches snapshot when active round updates to one with less g
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Cool Colors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -138,7 +138,7 @@ exports[`setEditor matches snapshot when active round updates to one with less g
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -156,7 +156,7 @@ exports[`setEditor matches snapshot when active round updates to one with less g
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -192,7 +192,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Cool Colors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -210,7 +210,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -228,7 +228,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -246,7 +246,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Starfish Mainstage" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -264,7 +264,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="The Reef" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -282,7 +282,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-5" class="layout horizontal center-vertical game-editor"><span class="set-number">6</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -300,7 +300,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
     <div data-test="set-editor-6" class="layout horizontal center-vertical game-editor"><span class="set-number">7</span>
       <stage-select-stub modelvalue="Musselforge Fitness" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -336,7 +336,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Cool Colors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -354,7 +354,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -372,7 +372,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -390,7 +390,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Humpback Pump Track" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -408,7 +408,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="Inkblot Art Academy" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -446,7 +446,7 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Cool Colors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -464,7 +464,7 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
@@ -482,7 +482,7 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
-      <ipl-select-stub modelvalue="Custom Color_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
