@@ -63,7 +63,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../../store/settingsStore';
 import { computed, ref, watch } from 'vue';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
-import { Locale, LocaleHelper } from 'types/enums/Locale';
+import { Locale } from 'types/enums/Locale';
 import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 import { useTranslation } from 'i18next-vue';
 
@@ -111,7 +111,7 @@ export default defineComponent({
             incompatibleBundles,
 
             localeOptions: Object.values(Locale).map(locale =>
-                ({ value: locale, name: LocaleHelper.toPrettyString(locale) })),
+                ({ value: locale, name: t(`common:gameLocale.${locale}`) })),
             locale,
 
             interfaceLocaleOptions: Object.values(InterfaceLocale).map(locale =>

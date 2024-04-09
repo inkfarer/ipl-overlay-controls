@@ -30,8 +30,7 @@ describe('versionChecker', () => {
         require('../versionChecker');
 
         expect(mockNodecgLog.warn).toHaveBeenCalledTimes(3);
-        expect(mockNodecgLog.warn).toHaveBeenCalledWith(`Bundle 'bundle-one' expects version ^1.0.0 of ipl-overlay-controls! The installed version is ${version}.`);
-        expect(mockNodecgLog.warn).toHaveBeenCalledWith('Bundle \'bundle-one\' is not compatible with Splatoon 3!');
-        expect(mockNodecgLog.warn).toHaveBeenCalledWith(`Bundle 'bundle-three' expects version ^99.0.0 of ipl-overlay-controls! The installed version is ${version}.`);
+        expect(mockNodecgLog.warn).toHaveBeenCalledWith('translation:versionChecker.incompatibleGameVersionWarning');
+        expect(mockNodecgLog.warn).toHaveBeenCalledWith('translation:versionChecker.incompatibleBundleWarning');
     });
 });

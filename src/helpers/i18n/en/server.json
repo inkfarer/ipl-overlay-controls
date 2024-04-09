@@ -30,7 +30,9 @@
         "battlefyReturnedError": "Got error from Battlefy: {{message}}",
         "battlefyReturnedNoData": "Couldn't get tournament data from Battlefy.",
         "battlefyReturnedUnknownResponse": "Received an unknown response from Battlefy.",
-        "placeholderTournamentName": "Unknown Tournament"
+        "placeholderTournamentName": "Unknown Tournament",
+        "matchName": "Round {{roundNumber}} Match {{matchNumber}}",
+        "shortMatchName": "{{stageName}} Round {{roundNumber}}"
     },
     "radiaClient": {
         "missingGuildId": "No guild ID provided.",
@@ -129,6 +131,10 @@
     },
     "replicantFixer": {
         "resettingActiveColors": "Resetting active round colors as the currently assigned colors are unknown"
+    },
+    "versionChecker": {
+        "incompatibleBundleWarning": "Bundle '{{otherBundle}}' expects version {{compatibleVersion}} of {{thisBundle}}! The installed version is {{installedVersion}}.",
+        "incompatibleGameVersionWarning": "Bundle '{{bundleName}}' is not compatible with $t(common:gameVersion.{{gameVersion}})!"
     },
     "missingRadiaConfigurationWarning": "\"radia\" is not defined in cfg/{{bundleName}}.json! Importing data from the Radia Productions API will not be possible.",
     "invalidArgumentsError": "Invalid arguments."

@@ -8,6 +8,7 @@ import { Team } from '../../../types/team';
 import { PlayType } from '../../../types/enums/playType';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 import { teamExists } from '../tournamentDataHelper';
+import i18next from 'i18next';
 
 export function mapBattlefyStagesToTournamentData(stages: Stage[]):
     { name: string; id: string; type: BracketType, playType: PlayType}[] {
@@ -42,16 +43,20 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
             if (!teamExists(teamAData.id) || !teamExists(teamBData.id)) continue;
 
             // Build MetaData for match
-            let matchName = `Round ${match.roundNumber} Match `;
+            let matchNumber: string;
             if (match.matchType && ['loser', 'winner'].includes(match.matchType)) {
                 if (match.matchType === 'loser') {
-                    matchName += `L${match.matchNumber}`;
+                    matchNumber = `L${match.matchNumber}`;
                 } else if (match.matchType === 'winner') {
-                    matchName += `C${match.matchNumber}`;
+                    matchNumber = `C${match.matchNumber}`;
                 }
             } else {
-                matchName += match.matchNumber;
+                matchNumber = String(match.matchNumber);
             }
+            const matchName = i18next.t('battlefyClient.matchName', {
+                roundNumber: match.roundNumber,
+                matchNumber
+            });
 
             const metaData: HighlightedMatchMetadata = {
                 id: match._id,
@@ -59,7 +64,7 @@ export function mapBattlefyStagesToHighlightedMatches(stages: Stage[]): Highligh
                 round: match.roundNumber,
                 match: match.matchNumber,
                 name: matchName,
-                shortName: `${stage.name} Round ${match.roundNumber}`,
+                shortName: i18next.t('battlefyClient.shortMatchName', { stageName: stage.name, roundNumber: match.roundNumber }),
                 playType: PlayTypeHelper.fromBattlefySeriesStyle(stage.bracket.seriesStyle)
             };
             // If the completedAt exists then we add it to the metadata

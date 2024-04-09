@@ -4,6 +4,12 @@
         "ET": "Eesti",
         "JA": "日本語"
     },
+    "gameLocale": {
+        "EN": "English",
+        "DE": "Deutsch",
+        "EU_FR": "Français",
+        "JA": "日本語"
+    },
     "largeToggle": {
         "show": "Show",
         "hide": "Hide"
