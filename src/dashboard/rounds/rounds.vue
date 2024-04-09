@@ -2,9 +2,9 @@
     <ipl-error-display class="m-b-8" />
     <ipl-sidebar v-model:is-open="openRoundSidebar">
         <ipl-space color="light">
-            <ipl-button
+            <iploc-button
                 color="red"
-                label="Reset rounds"
+                :label="$t('resetRoundsButton')"
                 requires-confirmation
                 data-test="reset-rounds-button"
                 @click="resetRounds"
@@ -14,7 +14,7 @@
             class="layout horizontal m-t-8"
             color="light"
         >
-            <div class="color-key color-key-next" /> Next round
+            <div class="color-key color-key-next" /> {{ $t('roundListNextRoundColorKey') }}
         </ipl-space>
         <ipl-space
             v-for="(round, key) in rounds"
@@ -32,16 +32,16 @@
         </ipl-space>
     </ipl-sidebar>
 
-    <ipl-expanding-space title="Create Round">
+    <ipl-expanding-space :title="$t('createRound.sectionTitle')">
         <div class="layout horizontal">
             <ipl-button
-                label="3 Games"
+                :label="$t('createRound.create3GameRoundButton')"
                 color="green"
                 data-test="new-3-game-round"
                 @click="createRound(3)"
             />
             <ipl-button
-                label="5 Games"
+                :label="$t('createRound.create5GameRoundButton')"
                 color="green"
                 class="m-l-6"
                 data-test="new-5-game-round"
@@ -49,7 +49,7 @@
             />
         </div>
         <ipl-button
-            label="7 Games"
+            :label="$t('createRound.create7GameRoundButton')"
             color="green"
             class="m-t-6"
             data-test="new-7-game-round"
@@ -67,7 +67,7 @@
             icon="bars"
             class="large-icon m-r-8"
         />
-        All Rounds
+        {{ $t('showAllRoundsButton') }}
     </ipl-space>
     <round-editor
         v-if="!!selectedRound"
@@ -100,6 +100,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useNextRoundStore } from '../store/nextRoundStore';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { PlayType } from 'types/enums/playType';
+import IplocButton from '../components/IplocButton.vue';
 
 library.add(faBars);
 
@@ -107,7 +108,16 @@ export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Rounds',
 
-    components: { IplErrorDisplay, IplExpandingSpace, IplSidebar, RoundEditor, IplButton, IplSpace, FontAwesomeIcon },
+    components: {
+        IplErrorDisplay,
+        IplExpandingSpace,
+        IplSidebar,
+        RoundEditor,
+        IplButton,
+        IplSpace,
+        FontAwesomeIcon,
+        IplocButton
+    },
 
     setup() {
         const store = useTournamentDataStore();

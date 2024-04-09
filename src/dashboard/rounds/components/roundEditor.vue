@@ -2,13 +2,13 @@
     <ipl-space>
         <ipl-input
             v-model="roundInternal.meta.name"
-            label="Name"
+            :label="$t('roundNameInput')"
             name="round-name"
         />
         <ipl-radio
             v-model="roundInternal.meta.type"
             name="round-type"
-            label="Type"
+            :label="$t('roundTypeSelect')"
             class="m-t-4"
             :options="typeOptions"
         />
@@ -31,10 +31,10 @@
         </template>
         <div class="layout horizontal m-t-8">
             <ipl-button
-                :label="isNewRound ? 'Save' : 'Update'"
+                :label="isNewRound ? $t('saveNewRoundButton') : $t('common:button.update')"
                 :color="isNewRound ? 'green' : isChanged ? 'red' : 'blue'"
                 data-test="update-button"
-                :title="isNewRound ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
+                :title="isNewRound ? undefined : $t('common:button.rightClickUndoMessage')"
                 @click="handleUpdate"
                 @right-click="undoChanges"
             />
@@ -58,10 +58,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import cloneDeep from 'lodash/cloneDeep';
 import { PlayType } from 'types/enums/playType';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
-import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 import ModeSelect from '../../components/ModeSelect.vue';
 import StageSelect from '../../components/StageSelect.vue';
+import { useTranslation } from 'i18next-vue';
 
 library.add(faTimes);
 
@@ -88,6 +87,7 @@ export default defineComponent({
     emits: ['cancelNewRound', 'createNewRound'],
 
     setup(props, { emit }) {
+        const { t } = useTranslation();
         const store = useTournamentDataStore();
         const roundInternal: Ref<Round> = ref(null);
 
@@ -110,7 +110,6 @@ export default defineComponent({
         }, { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             roundInternal,
             async handleUpdate() {
                 const updates = {
@@ -150,7 +149,7 @@ export default defineComponent({
             typeOptions: computed(() => {
                 return Object.values(PlayType).map(type => ({
                     value: type,
-                    name: PlayTypeHelper.toPrettyString(type, roundInternal.value.games.length)
+                    name: t(`common:playType.${type}`, { count: roundInternal.value.games.length })
                 }));
             }),
             undoChanges(event: Event) {
