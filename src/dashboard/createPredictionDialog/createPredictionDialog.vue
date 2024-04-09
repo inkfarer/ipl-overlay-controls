@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
 import {
     IplSpace,
     IplInput,
@@ -86,6 +86,7 @@ import { maxLength } from '../helpers/validators/stringValidators';
 import IplocButton from '../components/IplocButton.vue';
 import { useTranslation } from 'i18next-vue';
 import { maxValue, minValue } from '../helpers/validators/numberValidators';
+import i18next from 'i18next';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
@@ -106,6 +107,16 @@ export default defineComponent({
             duration: validator(true, minValue(1), maxValue(1800)),
             'team-a-name': validator(true, maxLength(25)),
             'team-b-name': validator(true, maxLength(25))
+        });
+
+        const languageChangeListener = () => {
+            title.value = t('defaultPredictionTitle');
+        };
+        onMounted(() => {
+            i18next.on('languageChanged', languageChangeListener);
+        });
+        onUnmounted(() => {
+            i18next.off('languageChanged', languageChangeListener);
         });
 
         watch(() => nextRoundStore.nextRound, (newValue, oldValue) => {
