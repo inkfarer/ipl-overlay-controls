@@ -31,5 +31,13 @@
         "ACTIVE": "Active",
         "CANCELED": "Canceled",
         "LOCKED": "Locked"
-    }
+    },
+    "tournamentDataSource": {
+        "BATTLEFY": "Battlefy",
+        "SMASHGG": "Start.gg",
+        "UPLOAD": "Uploaded file",
+        "SENDOU_INK": "sendou.ink",
+        "UNKNOWN": "Unknown"
+    },
+    "fileUploadPlaceholder": "Drag a file here or click to browse..."
 }
