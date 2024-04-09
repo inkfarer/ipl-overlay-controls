@@ -38,7 +38,6 @@
 <script lang="ts">
 import { defineComponent, Ref, ref } from 'vue';
 import {
-    IplButton,
     IplSpace,
     IplInput,
     IplCheckbox,
