@@ -116,7 +116,7 @@
                 data-test="update-short-name-button"
                 :color="shortNameChanged ? 'red' : 'blue'"
                 :disabled="!shortNameValid"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="updateShortName"
                 @right-click="undoShortNameChanges"
             />

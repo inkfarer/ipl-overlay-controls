@@ -63,7 +63,7 @@ exports[`teamDataImporter matches snapshot 1`] = `
   </div>
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
     <ipl-input-stub name="shortName" label="translation:teamDataImporter.shortTournamentNameInput" modelvalue="Cool Tournament" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
-    <ipl-button-stub label="common:button.update" color="blue" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-short-name-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-button-stub label="common:button.update" color="blue" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-short-name-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
   </div>
 </fieldset>"
 `;
