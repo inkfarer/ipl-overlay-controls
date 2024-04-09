@@ -14,19 +14,20 @@ const I18nBackend: BackendModule = {
     },
 };
 
-export async function initI18n(defaultNS: string): Promise<void> {
+export async function initI18n(namespaces: string | string[]): Promise<void> {
+    const ns = Array.isArray(namespaces) ? [...namespaces, 'common']: [namespaces, 'common'];
     await i18next
         .use(I18nBackend)
         .init({
             lng: 'en',
             fallbackLng: 'en',
-            ns: [defaultNS, 'common']
+            ns
         });
 
     const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
-    runtimeConfig.on('change', (newValue, oldValue) => {
+    runtimeConfig.on('change', async (newValue, oldValue) => {
         if (!oldValue || newValue.interfaceLocale !== oldValue.interfaceLocale) {
-            i18next.changeLanguage(newValue.interfaceLocale.toLowerCase()).catch(e => {
+            await i18next.changeLanguage(newValue.interfaceLocale.toLowerCase()).catch(e => {
                 console.error('Failed to change interface language', e);
             });
             if (i18next.exists('title')) {
