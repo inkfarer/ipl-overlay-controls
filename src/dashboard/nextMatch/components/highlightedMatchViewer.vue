@@ -3,12 +3,12 @@
         v-if="!matchOptions?.length"
         type="info"
     >
-        No matches loaded.
+        {{ $t('highlightedMatches.noMatchesLoadedMessage') }}
     </ipl-message>
     <ipl-space v-else>
         <ipl-select
             v-model="selectedMatch"
-            label="Match"
+            :label="$t('highlightedMatches.matchSelect')"
             :options="matchOptions"
             data-test="match-selector"
         />
@@ -16,22 +16,23 @@
             v-model="nextMatchName"
             class="m-t-4"
             name="match-name"
-            label="Match Name"
+            :label="$t('highlightedMatches.matchNameInput')"
         />
         <ipl-data-row
-            label="Team A"
+            :label="$t('highlightedMatches.teamADisplayLabel')"
             :value="addDots(selectedMatchData?.teamA?.name)"
             data-test="team-a-name-display"
         />
         <ipl-data-row
-            label="Team B"
+            :label="$t('highlightedMatches.teamBDisplayLabel')"
             :value="addDots(selectedMatchData?.teamB?.name)"
             data-test="team-b-name-display"
         />
         <ipl-data-row
             v-if="!!selectedMatchData?.meta.playType"
-            label="Type of play"
-            :value="formatPlayType(selectedMatchData?.meta.playType, selectedRoundData?.roundData?.games.length)"
+            :label="$t('highlightedMatches.playTypeDisplayLabel')"
+            :value="$t(`common:playType.${selectedMatchData?.meta.playType}`, 
+                       { count: selectedRoundData?.roundData?.games.length })"
             data-test="play-type-display"
         />
         <round-select
@@ -42,7 +43,7 @@
         />
         <ipl-button
             class="m-t-8"
-            label="Update"
+            :label="$t('common:button.update')"
             :color="isChanged ? 'red' : 'blue'"
             :disabled="disableSetNextMatch"
             data-test="set-next-match-button"
@@ -58,7 +59,6 @@ import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { addDots } from '../../../helpers/stringHelper';
-import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 
 export default defineComponent({
@@ -106,7 +106,6 @@ export default defineComponent({
             addDots,
             selectedRoundData,
             highlightedMatchStore,
-            formatPlayType: PlayTypeHelper.toPrettyString,
             matchOptions: computed(() => {
                 const isAllSameStage = highlightedMatchStore.highlightedMatches.every(match =>
                     match.meta.stageName === highlightedMatchStore.highlightedMatches[0].meta.stageName);

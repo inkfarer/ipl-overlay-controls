@@ -39,5 +39,10 @@
         "SENDOU_INK": "sendou.ink",
         "UNKNOWN": "Unknown"
     },
-    "fileUploadPlaceholder": "Drag a file here or click to browse..."
+    "playType": {
+        "BEST_OF": "Best of {{count}}",
+        "PLAY_ALL": "Play all {{count}}"
+    },
+    "fileUploadPlaceholder": "Drag a file here or click to browse...",
+    "roundSelect": "Round"
 }

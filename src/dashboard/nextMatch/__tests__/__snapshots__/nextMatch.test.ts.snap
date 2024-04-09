@@ -3,8 +3,8 @@
 exports[`NextMatch template matches snapshot 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <div data-v-d255ffee="" class="ipl-space color-dark">
-  <ipl-small-toggle-stub label="Choose teams manually" modelvalue="false" disabled="false" data-test="choose-manually-toggle" class="m-b-4"></ipl-small-toggle-stub>
-  <ipl-small-toggle-stub label="Show on stream" modelvalue="true" disabled="false" data-test="show-on-stream-toggle"></ipl-small-toggle-stub>
+  <ipl-small-toggle-stub label="translation:chooseTeamsManuallyToggle" modelvalue="false" disabled="false" data-test="choose-manually-toggle" class="m-b-4"></ipl-small-toggle-stub>
+  <ipl-small-toggle-stub label="translation:showOnStreamToggle" modelvalue="true" disabled="false" data-test="show-on-stream-toggle"></ipl-small-toggle-stub>
 </div>
 <highlighted-match-picker-stub class="m-t-8"></highlighted-match-picker-stub>"
 `;
@@ -12,8 +12,8 @@ exports[`NextMatch template matches snapshot 1`] = `
 exports[`NextMatch template matches snapshot when choosing teams manually 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <div data-v-d255ffee="" class="ipl-space color-dark">
-  <ipl-small-toggle-stub label="Choose teams manually" modelvalue="true" disabled="false" data-test="choose-manually-toggle" class="m-b-4"></ipl-small-toggle-stub>
-  <ipl-small-toggle-stub label="Show on stream" modelvalue="true" disabled="false" data-test="show-on-stream-toggle"></ipl-small-toggle-stub>
+  <ipl-small-toggle-stub label="translation:chooseTeamsManuallyToggle" modelvalue="true" disabled="false" data-test="choose-manually-toggle" class="m-b-4"></ipl-small-toggle-stub>
+  <ipl-small-toggle-stub label="translation:showOnStreamToggle" modelvalue="true" disabled="false" data-test="show-on-stream-toggle"></ipl-small-toggle-stub>
 </div>
 <manual-team-picker-stub class="m-t-8"></manual-team-picker-stub>"
 `;

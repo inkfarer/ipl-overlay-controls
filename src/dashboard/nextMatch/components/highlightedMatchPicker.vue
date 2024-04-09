@@ -4,7 +4,7 @@
         type="info"
         data-test="missing-stages-message"
     >
-        No stages present to import from.
+        {{ $t('highlightedMatches.missingStageDataMessage') }}
     </ipl-message>
     <template v-else>
         <div>

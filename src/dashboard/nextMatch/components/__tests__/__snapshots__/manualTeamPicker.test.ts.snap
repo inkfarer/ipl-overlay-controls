@@ -3,11 +3,11 @@
 exports[`ManualTeamPicker matches snapshot 1`] = `
 "<div data-v-d255ffee="" class="ipl-space color-dark">
   <div class="layout horizontal">
-    <team-select-stub modelvalue="123123" label="Team A" data-test="team-a-selector"></team-select-stub>
-    <team-select-stub modelvalue="345345" label="Team B" class="m-l-8" data-test="team-b-selector"></team-select-stub>
+    <team-select-stub modelvalue="123123" label="translation:manualTeamPicker.teamASelect" data-test="team-a-selector"></team-select-stub>
+    <team-select-stub modelvalue="345345" label="translation:manualTeamPicker.teamBSelect" class="m-l-8" data-test="team-b-selector"></team-select-stub>
   </div>
   <round-select-stub modelvalue="0387" class="m-t-8" data-test="round-selector"></round-select-stub>
-  <ipl-input-stub name="match-name" label="Match Name" modelvalue="test next round" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-  <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="update-button"></ipl-button-stub>
+  <ipl-input-stub name="match-name" label="translation:manualTeamPicker.matchNameInput" modelvalue="test next round" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
+  <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="update-button"></ipl-button-stub>
 </div>"
 `;

@@ -3,12 +3,12 @@
         <div class="layout horizontal">
             <team-select
                 v-model="teamAId"
-                label="Team A"
+                :label="$t('manualTeamPicker.teamASelect')"
                 data-test="team-a-selector"
             />
             <team-select
                 v-model="teamBId"
-                label="Team B"
+                :label="$t('manualTeamPicker.teamBSelect')"
                 class="m-l-8"
                 data-test="team-b-selector"
             />
@@ -22,13 +22,13 @@
             v-model="nextMatchName"
             class="m-t-4"
             name="match-name"
-            label="Match Name"
+            :label="$t('manualTeamPicker.matchNameInput')"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             class="m-t-8"
             :color="isChanged ? 'red' : 'blue'"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
             @click="handleUpdate"
             @right-click="undoChanges"
@@ -43,7 +43,6 @@ import TeamSelect from '../../components/teamSelect.vue';
 import { computed, ref, watch } from 'vue';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import RoundSelect from '../../components/roundSelect.vue';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ManualTeamPicker',
@@ -76,7 +75,6 @@ export default defineComponent({
             { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             teamAId,
             teamBId,
             selectedRound,

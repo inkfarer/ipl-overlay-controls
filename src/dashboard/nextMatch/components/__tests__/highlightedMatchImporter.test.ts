@@ -54,13 +54,13 @@ describe('HighlightedMatchImporter', () => {
         });
 
         const selector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
-        expect(selector.attributes().label).toEqual('Bracket');
+        expect(selector.attributes().label).toEqual('translation:highlightedMatches.matchSourceSelect');
         expect((selector.vm.$props as { options: unknown }).options).toEqual([
             { value: 'swis12', name: 'Swiss' },
             { value: 'de123', name: 'DE' },
             { value: 'se1345', name: 'SE' },
             { value: 'rr1235543', name: 'RR' },
-            { value: 'all', name: 'All Brackets' }
+            { value: 'all', name: 'translation:highlightedMatches.allBattlefyBracketsOption' }
         ]);
     });
 
@@ -91,11 +91,11 @@ describe('HighlightedMatchImporter', () => {
         });
 
         const selector = wrapper.getComponent<typeof IplSelect>('[data-test="match-selector"]');
-        expect(selector.attributes().label).toEqual('Stream');
+        expect(selector.attributes().label).toEqual('translation:highlightedMatches.matchSourceSelect');
         expect((selector.vm.$props as { options: unknown }).options).toEqual([
             { value: '123098', name: 'Cool Stream' },
             { value: '5609823', name: 'Cooler Stream' },
-            { value: 'all', name: 'All Streams' }
+            { value: 'all', name: 'translation:highlightedMatches.allStartggStreamsOption' }
         ]);
     });
 
