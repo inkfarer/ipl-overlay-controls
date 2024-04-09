@@ -72,7 +72,6 @@ import { ActiveBreakScene } from 'schemas';
 import isEqual from 'lodash/isEqual';
 import NextStageTimeInput from './components/nextStageTimeInput.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'BreakScreen',
@@ -101,7 +100,6 @@ export default defineComponent({
         }, { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             activeBreakScene: computed(() => store.activeBreakScene),
             mainFlavorText,
             nextRoundTime,

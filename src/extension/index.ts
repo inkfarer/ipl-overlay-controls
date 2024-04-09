@@ -100,13 +100,10 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
-        nodecg.log.warn(
-            `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
-            + 'Production API will not be possible.'
-        );
+        nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));
 
         predictionStore.value.status.predictionsEnabled = false;
-        predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
+        predictionStore.value.status.predictionStatusReason = 'missingConfiguration';
     } else {
         require('./importers/radiaAvailabilityCheck');
         require('./importers/predictions');

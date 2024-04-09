@@ -57,32 +57,32 @@ describe('roundFromMapsIplabs', () => {
 
         it('throws if the input is missing rounds', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/?c=(\'mapPool!(\'sz.-%2C3%2C4%2C5%2C6%2C7%2C8%2C9*0*1*2*3*4*5*6*7*8*9-0-1%5D~tc.%5D))*%2C1-%2C2.!%5B0*%01.-*_&v=1'))
-                .toThrow('Invalid URL encoded JSON format.');
+                .toThrow('translation:roundFromMapsIplabs.invalidJsonFormat');
         });
 
         it('throws if the input has an empty array of rounds', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/?c=(\'mapPool!(\'sz-0*.%2C3%2C4%2C5%2C6%2C7%2C8%2C9*0*1*2*3*4*5*6*7*8*9.0.1%5D~tc-0*%5D)~rounds-%5D)*%2C1-!%5B.%2C2%01.-*_&v=1'))
-                .toThrow('Invalid URL encoded JSON format.');
+                .toThrow('translation:roundFromMapsIplabs.invalidJsonFormat');
         });
 
         it('throws if the input has no data', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/'))
-                .toThrow('No round data found in maps.iplabs.ink url. (If this is from an older version of the site- try remaking the url.');
+                .toThrow('translation:roundFromMapsIplabs.missingRoundData');
         });
 
         it('throws if the encoding version is unknown', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/?c=.Pool!(\'szC0*I%2C3%2C4%2C5%2C6%2C7%2C8%2C9*0*1*2*3*4*5*6*7*8*9I0I1%5D~tcC0*F~rJdsCB1DbestOfG0-tcHtest%20arbitrary%20stage%20input\'-szHeeltail%20alley\'-gc\')F%2CBTwoDLAllG14-sz\')EEFF*%2C1-~modK.(\'mapB(\'namKRJd%20C!%5BD\'~LStylKE~cJterpick\'F%5D)G\'~gamesC.!H\')%2C.!\'I%2C2JounKe!\'Lplay%01LKJIHGFEDCB.-*_'))
-                .toThrow('Encoding version of maps.iplabs.ink not found.');
+                .toThrow('translation:roundFromMapsIplabs.missingEncodingVersion');
         });
 
         it('throws if the encoding version is too new', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/?c=.Pool!(\'szC0*I%2C3%2C4%2C5%2C6%2C7%2C8%2C9*0*1*2*3*4*5*6*7*8*9I0I1%5D~tcC0*F~rJdsCB1DbestOfG0-tcHtest%20arbitrary%20stage%20input\'-szHeeltail%20alley\'-gc\')F%2CBTwoDLAllG14-sz\')EEFF*%2C1-~modK.(\'mapB(\'namKRJd%20C!%5BD\'~LStylKE~cJterpick\'F%5D)G\'~gamesC.!H\')%2C.!\'I%2C2JounKe!\'Lplay%01LKJIHGFEDCB.-*_&v=2'))
-                .toThrow('Encoding version of maps.iplabs.ink too new. Try updating your overlay controls.');
+                .toThrow('translation:roundFromMapsIplabs.encodingVersionTooNew');
         });
 
         it('throws if the encoding version is otherwise unparseable', () => {
             expect(() => importFromMapsIplabs('https://maps.iplabs.ink/?c=.Pool!(\'szC0*I%2C3%2C4%2C5%2C6%2C7%2C8%2C9*0*1*2*3*4*5*6*7*8*9I0I1%5D~tcC0*F~rJdsCB1DbestOfG0-tcHtest%20arbitrary%20stage%20input\'-szHeeltail%20alley\'-gc\')F%2CBTwoDLAllG14-sz\')EEFF*%2C1-~modK.(\'mapB(\'namKRJd%20C!%5BD\'~LStylKE~cJterpick\'F%5D)G\'~gamesC.!H\')%2C.!\'I%2C2JounKe!\'Lplay%01LKJIHGFEDCB.-*_&v=-1'))
-                .toThrow('Encoding version of maps.iplabs.ink not supported. Try remaking the url.');
+                .toThrow('translation:roundFromMapsIplabs.unsupportedEncodingVersion');
         });
     });
 });

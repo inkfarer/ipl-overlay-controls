@@ -1,6 +1,7 @@
 import type NodeCG from '@nodecg/types';
 import { ActiveRound, RuntimeConfig, SwapColorsInternally } from 'schemas';
 import { perGameData } from '../../helpers/gameData/gameData';
+import i18next from 'i18next';
 
 export class ReplicantFixerService {
     private readonly nodecg: NodeCG.ServerAPI;
@@ -21,7 +22,7 @@ export class ReplicantFixerService {
             group.meta.name === this.activeRound.value.activeColor.categoryName);
 
         if (selectedColorGroup == null) {
-            this.nodecg.log.info('Resetting active round colors as the currently assigned colors are unknown');
+            this.nodecg.log.info(i18next.t('replicantFixer.resettingActiveColors'));
             const newColor = colorCategories[0].colors[0];
 
             this.activeRound.value.activeColor = {

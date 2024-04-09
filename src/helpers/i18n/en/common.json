@@ -32,6 +32,10 @@
         "CANCELED": "Canceled",
         "LOCKED": "Locked"
     },
+    "predictionStatusReason": {
+        "missingConfiguration": "Missing Radia configuration. Check your guild ID and socket URL.",
+        "predictionsNotSupportedByGuild": "Predictions are not supported by the configured guild."
+    },
     "tournamentDataSource": {
         "BATTLEFY": "Battlefy",
         "SMASHGG": "Start.gg",

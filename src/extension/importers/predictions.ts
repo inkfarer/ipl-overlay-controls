@@ -17,6 +17,7 @@ import { DateTime } from 'luxon';
 import isEmpty from 'lodash/isEmpty';
 import { isBlank } from '../../helpers/stringHelper';
 import { PredictionStatus } from 'types/enums/predictionStatus';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -40,14 +41,14 @@ function initSocket(guildId: string): void {
             socketReconnectionCount++;
 
             if (socketReconnectionCount === 1) {
-                nodecg.log.info('Radia websocket has closed.');
+                nodecg.log.info(i18next.t('predictions.socketClosed'));
             }
             socketReconnectionTimeout = setTimeout(() => {
-                nodecg.log.info(`Reconnecting to socket... (Attempt ${socketReconnectionCount})`);
+                nodecg.log.info(i18next.t('predictions.reconnectingToSocket', { count: socketReconnectionCount }));
                 initSocket(guildId);
             }, connectionTimeouts[socketReconnectionCount - 1]);
         } else {
-            nodecg.log.warn('Too many reconnection attempts. Radia websocket is closed.');
+            nodecg.log.warn(i18next.t('predictions.tooManyReconnectionAttempts'));
         }
     }
 
@@ -55,13 +56,15 @@ function initSocket(guildId: string): void {
         clearTimeout(socketPingTimeout);
 
         socketPingTimeout = setTimeout(() => {
-            nodecg.log.warn(`Radia socket has not received a heartbeat message in ${pingMessageInterval} milliseconds. Closing connection...`);
+            nodecg.log.warn(i18next.t('predictions.socketTimeout', { count: pingMessageInterval }));
             socket.terminate();
         }, pingMessageInterval + 1000);
     }
 
     if (isEmpty(nodecg.bundleConfig.radia.socketUrl)) {
-        nodecg.log.warn('Bundle configuration is missing "radia.socketUrl" property! Predictions may not work as expected.');
+        nodecg.log.warn(i18next.t('predictions.missingBundleConfigurationWarning', {
+            bundleName: nodecg.bundleName
+        }));
         return;
     }
 
@@ -73,7 +76,7 @@ function initSocket(guildId: string): void {
         { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
     socket.on('open', () => {
-        nodecg.log.info('Radia websocket is open.');
+        nodecg.log.info(i18next.t('predictions.socketOpen'));
         predictionStore.value.status.socketOpen = true;
         clearTimeout(socketReconnectionTimeout);
         socketReconnectionCount = 0;
@@ -85,15 +88,10 @@ function initSocket(guildId: string): void {
     });
 
     socket.on('error', err => {
-        const messageParts = [];
-        if ('code' in err) {
-            messageParts.push(`Code: ${(err as Error & { code: string }).code}`);
-        }
-        if (err.message) {
-            messageParts.push(`Message: ${err.message}`);
-        }
-
-        nodecg.log.error(`Received error from Radia websocket. ${messageParts.join(', ')}`);
+        nodecg.log.error(i18next.t('predictions.socketReceivedError', {
+            code: (err as Error & { code: string }).code ?? '???',
+            message: err.message
+        }));
     });
 
     socket.on('close', (code) => {
@@ -146,19 +144,19 @@ function initSocket(guildId: string): void {
 async function attemptSocketConnection(guildId: string): Promise<void> {
     if (isBlank(guildId) || isBlank(nodecg.bundleConfig.radia.socketUrl)) {
         predictionStore.value.status.predictionsEnabled = false;
-        predictionStore.value.status.predictionStatusReason = 'Missing Radia configuration. Check your guild ID and socket URL.';
+        predictionStore.value.status.predictionStatusReason = 'missingConfiguration';
         predictionStore.value.status.socketOpen = false;
-        throw new Error('Radia guild ID is not configured!');
+        throw new Error(i18next.t('predictions.missingGuildId'));
     }
 
     const predictionsSupported = await hasPredictionSupport(guildId);
     predictionStore.value.status.predictionsEnabled = predictionsSupported;
     if (!predictionsSupported) {
-        predictionStore.value.status.predictionStatusReason = 'Predictions are not supported by the configured guild.';
+        predictionStore.value.status.predictionStatusReason = 'predictionsNotSupportedByGuild';
         if (socket) {
             socket.close(expectedSocketClosureCode);
         }
-        throw new Error('Unable to proceed as some Radia configuration is missing.');
+        throw new Error(i18next.t('predictions.missingConfigurationError'));
     } else {
         socketReconnectionCount = 0;
         initSocket(guildId);
@@ -172,7 +170,7 @@ radiaSettings.on('change', async (newValue, oldValue) => {
         try {
             await attemptSocketConnection(newValue.guildID);
         } catch (e) {
-            nodecg.log.warn(`Unable to get prediction data: ${e?.toString()}`);
+            nodecg.log.warn(i18next.t('predictions.predictionDataRequestError', { message: String(e) }));
         }
     }
 });
@@ -182,7 +180,7 @@ nodecg.listenFor('reconnectToRadiaSocket', async (data: never, ack: NodeCG.Unhan
         await attemptSocketConnection(radiaSettings.value.guildID);
         ack(null, null);
     } catch (e) {
-        nodecg.log.warn(`Unable to reconnect to Radia websocket: ${e.toString()}`);
+        nodecg.log.warn(i18next.t('predictions.socketReconnectionFailed', { message: e.toString() }));
         return ack(e, null);
     }
 });
@@ -204,7 +202,7 @@ nodecg.listenFor('getPredictions', async (data: never, ack: NodeCG.UnhandledAckn
 nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: NodeCG.UnhandledAcknowledgement) => {
     const currentStatus = predictionStore.value.currentPrediction?.status;
     if (currentStatus === PredictionStatus.ACTIVE || currentStatus === PredictionStatus.LOCKED) {
-        return ack(new Error('An unresolved prediction already exists.'));
+        return ack(new Error(i18next.t('predictions.unresolvedPredictionAlreadyExists')));
     }
 
     try {
@@ -218,27 +216,27 @@ nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: NodeCG.Un
 
 nodecg.listenFor('patchPrediction', async (data: PatchPredictionRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (predictionStore.value.currentPrediction?.id == null) {
-        return ack(new Error('No prediction available to resolve.'));
+        return ack(new Error(i18next.t('predictions.noPredictionAvailable')));
     }
 
     const currentStatus = predictionStore.value.currentPrediction.status;
     switch (data.status) {
         case 'CANCELED': {
             if (currentStatus !== PredictionStatus.ACTIVE && currentStatus !== PredictionStatus.LOCKED) {
-                return ack(new Error('Cannot cancel a prediction that is not locked or active.'));
+                return ack(new Error(i18next.t('predictions.cannotCancelPrediction')));
             }
             break;
         }
         case 'LOCKED':
             if (currentStatus !== PredictionStatus.ACTIVE) {
-                return ack(new Error('Only an active prediction may be locked.'));
+                return ack(new Error(i18next.t('predictions.cannotLockPrediction')));
             }
             break;
         case 'RESOLVED':
             if (data.winning_outcome_id == null) {
-                return ack(new Error('No outcome to resolve provided.'));
+                return ack(new Error(i18next.t('predictions.missingOutcome')));
             } else if (currentStatus !== PredictionStatus.LOCKED) {
-                return ack(new Error('Only a locked prediction may be resolved.'));
+                return ack(new Error(i18next.t('predictions.cannotResolvePrediction')));
             }
             break;
     }

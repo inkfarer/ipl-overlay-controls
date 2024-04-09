@@ -5,6 +5,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { LastFmNowPlaying, LastFmSettings, ManualNowPlaying, NowPlaying, NowPlayingSource } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import type NodeCG from '@nodecg/types';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 const lastFmNowPlaying = nodecg.Replicant<LastFmNowPlaying>('lastFmNowPlaying');
@@ -55,10 +56,7 @@ function handleLastFm() {
     lastFmSettings.on('change', newValue => {
         if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.lastfm)
             || isEmpty(nodecg.bundleConfig.lastfm.apiKey) || isEmpty(nodecg.bundleConfig.lastfm.secret)) {
-            nodecg.log.warn(
-                `"lastfm" configuration is missing in cfg/${nodecg.bundleName}.json! `
-                + 'Getting music information from last.fm automatically will not function.'
-            );
+            nodecg.log.warn(i18next.t('music.missingLastfmConfigWarning', { bundleName: nodecg.bundleName }));
             return;
         } else if (isEmpty(newValue.username)) {
             return;
@@ -85,9 +83,7 @@ function handleLastFm() {
         trackStream.on('error', (e: any) => {
             // Error 6 = "User not found"
             if (e.error === 6) {
-                nodecg.log.info(
-                    `Last.fm couldn't find user "${newValue.username}" - error message: "${e.message}"`
-                );
+                nodecg.log.info(i18next.t('music.userNotFound', { username: newValue.username, message: e.message }));
 
                 trackStream.stop();
             }

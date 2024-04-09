@@ -5,6 +5,7 @@ import { ActiveRound, SwapColorsInternally, TournamentData, MatchStore } from 's
 import isEmpty from 'lodash/isEmpty';
 import { getTeam } from './tournamentDataHelper';
 import cloneDeep from 'lodash/cloneDeep';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -15,7 +16,7 @@ const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 
 export function setWinner(index: number, winner: GameWinner): void {
     if (index >= activeRound.value.games.length || index < 0) {
-        throw new Error(`Cannot set winner for game ${index + 1} as it does not exist.`);
+        throw new Error(i18next.t('activeRoundHelper.gameOutOfRange', { index: index + 1 }));
     }
 
     const newValue = cloneDeep(activeRound.value);
@@ -67,7 +68,7 @@ export function setWinner(index: number, winner: GameWinner): void {
 export function setActiveRoundGames(activeRound: ActiveRound, matchId: string): void {
     const match = matchStore.value[matchId];
     if (isEmpty(match)) {
-        throw new Error(`Could not find match '${matchId}'.`);
+        throw new Error(i18next.t('activeRoundHelper.matchNotFound', { matchId }));
     }
 
     activeRound.match = {
@@ -86,7 +87,7 @@ export function setActiveRoundTeams(activeRound: ActiveRound, teamAId: string, t
     const teamA = getTeam(teamAId, tournamentData.value);
     const teamB = getTeam(teamBId, tournamentData.value);
     if ([teamA, teamB].filter(isEmpty).length > 0) {
-        throw new Error('Could not find a team.');
+        throw new Error(i18next.t('activeRoundHelper.teamNotFound'));
     }
 
     const existingTeamA = cloneDeep(activeRound.teamA);

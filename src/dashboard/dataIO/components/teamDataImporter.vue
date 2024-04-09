@@ -143,7 +143,6 @@ import {
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import { extractBattlefyTournamentId, extractSendouInkTournamentId } from '../../helpers/stringHelper';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import BorderedSpace from '../../components/BorderedSpace.vue';
 import { isBlank } from '../../../helpers/stringHelper';
 import { useTranslation } from 'i18next-vue';
@@ -194,7 +193,6 @@ export default defineComponent({
         }
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             teamDataFile,
             useFileUpload,
             tournamentMetadata: computed(() => tournamentDataStore.tournamentData.meta),

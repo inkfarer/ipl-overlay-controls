@@ -18,7 +18,7 @@ export class RadiaProductionsService {
     async getLiveCommentators(): Promise<{ add: Casters, extra: Casters }> {
         const apiCasters = await this.radiaProductionsClient.getLiveCasters(this.radiaSettings.value.guildID);
         if (apiCasters.length <= 0) {
-            throw new Error(i18next.t('casterImport.error.noCommentatorsReceived'));
+            throw new Error(i18next.t('casterImport.noCommentatorsReceived'));
         }
         const normalizedCasters = apiCasters.map(this.normalizeCaster);
 

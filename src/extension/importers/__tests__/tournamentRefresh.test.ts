@@ -25,7 +25,7 @@ describe('tournamentRefresh', () => {
 
             messageListeners.refreshTournamentData(null, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error(`Cannot refresh data from source '${source}'`));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:tournamentRefresh.unsupportedSource'));
         });
 
         it('returns error when refreshing smash.gg data with no API key present', () => {
@@ -35,7 +35,7 @@ describe('tournamentRefresh', () => {
 
             messageListeners.refreshTournamentData(null, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('No smash.gg API key is configured.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:tournamentImporter.missingStartggApiKey'));
         });
 
         it('updates battlefy tournament data', async () => {

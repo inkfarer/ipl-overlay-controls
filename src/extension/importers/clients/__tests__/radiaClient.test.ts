@@ -16,14 +16,13 @@ import {
 import { mockBundleConfig } from '../../../__mocks__/mockNodecg';
 
 describe('radiaClient', () => {
-
     beforeEach(() => {
         jest.resetAllMocks();
     });
 
     describe('getGuildInfo', () => {
         it('throws an error if the guild ID is missing', async () => {
-            await expect(getGuildInfo('')).rejects.toThrow('No guild ID provided.');
+            await expect(getGuildInfo('')).rejects.toThrow('translation:radiaClient.missingGuildId');
         });
 
         it('returns the API response', async () => {
@@ -104,7 +103,7 @@ describe('radiaClient', () => {
 
     describe('getPredictions', () => {
         it('throws an error if the guild ID is missing', async () => {
-            await expect(getPredictions('')).rejects.toThrow('Cannot retrieve prediction for no guild');
+            await expect(getPredictions('')).rejects.toThrow('translation:radiaClient.missingGuildId');
         });
 
         it('returns the API response', async () => {
@@ -129,7 +128,7 @@ describe('radiaClient', () => {
 
     describe('updatePrediction', () => {
         it('throws an error if the guild ID is missing', async () => {
-            await expect(updatePrediction('', { id: 'test-id', status: 'RESOLVED' })).rejects.toThrow('Cannot update prediction for no guild');
+            await expect(updatePrediction('', { id: 'test-id', status: 'RESOLVED' })).rejects.toThrow('translation:radiaClient.missingGuildId');
         });
 
         it('returns the API response', async () => {
@@ -158,7 +157,7 @@ describe('radiaClient', () => {
     describe('createPrediction', () => {
         it('throws an error if the guild ID is missing', async () => {
             // @ts-ignore
-            await expect(createPrediction('', { title: 'Who will win?' })).rejects.toThrow('Cannot create prediction for no guild');
+            await expect(createPrediction('', { title: 'Who will win?' })).rejects.toThrow('translation:radiaClient.missingGuildId');
         });
 
         it('returns the API response', async () => {
@@ -190,43 +189,7 @@ describe('radiaClient', () => {
             expect(() => handleAxiosError(expectedResult)).toThrow(expectedResult);
         });
 
-        it('sends a message with the response status if no detailed error is given', () => {
-            // @ts-ignore
-            expect(() => handleAxiosError({ response: { status: 400 } }))
-                .toThrow('Radia API call failed with response 400');
-        });
-
-        it('sends a message with the detailed error if it is an object', () => {
-            expect(() => handleAxiosError({
-                // @ts-ignore
-                response: {
-                    status: 500,
-                    data: {
-                        detail: {
-                            err: 'An error has occurred.',
-                            additionalInformation: 'indeed'
-                        }
-                    }
-                }
-            })).toThrow('Radia API call failed with response 500: '
-                + '{"err":"An error has occurred.","additionalInformation":"indeed"}');
-        });
-
-        it('sends a message with the detailed error if it contains a message', () => {
-            expect(() => handleAxiosError({
-                // @ts-ignore
-                response: {
-                    status: 500,
-                    data: {
-                        detail: {
-                            message: 'An error has occurred.'
-                        }
-                    }
-                }
-            })).toThrow('Radia API call failed with response 500: An error has occurred.');
-        });
-
-        it('sends a message with the detailed error if it is not an object', () => {
+        it('sends a message with the detailed error', () => {
             expect(() => handleAxiosError({
                 // @ts-ignore
                 response: {
@@ -235,13 +198,13 @@ describe('radiaClient', () => {
                         detail: 'An error has occurred.'
                     }
                 }
-            })).toThrow('Radia API call failed with response 500: An error has occurred.');
+            })).toThrow('translation:radiaClient.requestFailed');
         });
     });
 
     describe('updateTournamentData', () => {
         it('throws an error if the guild ID is missing', async () => {
-            await expect(updateTournamentData('', 'bracket://link', 'Cool Tournament')).rejects.toThrow('No guild ID provided to update tournament data for');
+            await expect(updateTournamentData('', 'bracket://link', 'Cool Tournament')).rejects.toThrow('translation:radiaClient.missingGuildId');
         });
 
         it('POSTs new tournament data', async () => {
@@ -259,7 +222,7 @@ describe('radiaClient', () => {
             mockAxios.post.mockResolvedValue({ status: 400 });
 
             await expect(updateTournamentData('456', 'bracket://link', 'Rad Tournament'))
-                .rejects.toThrow('Radia API call failed with response 400');
+                .rejects.toThrow('translation:radiaClient.requestFailed');
         });
     });
 });

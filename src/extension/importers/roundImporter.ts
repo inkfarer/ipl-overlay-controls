@@ -7,6 +7,7 @@ import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { importFromMapsIplabs } from './roundFromMapsIplabs';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 const rounds = nodecg.Replicant<RoundStore>('roundStore');
@@ -14,13 +15,13 @@ const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 
 nodecg.listenFor('getRounds', async (data, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.url) {
-        ack(new Error('Missing arguments.'));
+        ack(new Error(i18next.t('invalidArgumentsError')));
         return;
     }
 
     if (data.url.includes('maps.iplabs.ink')) {
         if (runtimeConfig.value.gameVersion !== GameVersion.SPLATOON_3) {
-            ack(new Error('maps.iplabs.ink links only support Splatoon 3'));
+            ack(new Error(i18next.t('roundImporter.badGameVersionForMapsIplabs')));
             return;
         }
 

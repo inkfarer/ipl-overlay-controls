@@ -27,7 +27,7 @@ describe('stringHelper', () => {
         });
 
         it('throws if an invalid sendou.ink url is given', () => {
-            const error = new Error('Input URL path is too short - is this a tournament URL?');
+            const error = new Error('common:stringHelper.invalidSendouInkTournamentUrlError');
 
             expect(() => extractSendouInkTournamentId('https://sendou.ink')).toThrow(error);
             expect(() => extractSendouInkTournamentId('https://sendou.ink/')).toThrow(error);

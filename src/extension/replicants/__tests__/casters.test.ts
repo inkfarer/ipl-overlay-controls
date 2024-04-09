@@ -47,7 +47,7 @@ describe('casters', () => {
             messageListeners.removeCaster({ id: 'some id that does not exist' }, ack);
 
             expect(replicants.casters).toEqual(initialCasters);
-            expect(ack).toHaveBeenCalledWith(new Error('Caster \'some id that does not exist\' not found.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:casters.casterNotFound'));
         });
     });
 
@@ -69,12 +69,12 @@ describe('casters', () => {
     });
 
     describe('setCasterOrder', () => {
-        it.each([null, undefined, '', {}])('returns an error if an no data is given', (data: unknown) => {
+        it.each([null, undefined, '', {}])('returns an error if no data is given (%#)', (data: unknown) => {
             const ack = jest.fn();
 
             messageListeners.setCasterOrder({ casterIds: data }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('"casterIds" must be provided as a list of strings.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:invalidArgumentsError'));
         });
 
         it('returns an error if all caster IDs are not given', () => {
@@ -83,7 +83,7 @@ describe('casters', () => {
 
             messageListeners.setCasterOrder({ casterIds: ['aa']}, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Could not re-order casters as caster ID list has unknown or missing IDs'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:casters.badCasterIdListForReordering'));
         });
 
         it('returns an error if too many caster IDs are given', () => {
@@ -92,7 +92,7 @@ describe('casters', () => {
 
             messageListeners.setCasterOrder({ casterIds: ['bb', 'aa', 'cc']}, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Could not re-order casters as caster ID list has unknown or missing IDs'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:casters.badCasterIdListForReordering'));
         });
 
         it('returns an error if an unknown caster ID is given', () => {
@@ -101,7 +101,7 @@ describe('casters', () => {
 
             messageListeners.setCasterOrder({ casterIds: ['cc', 'aa']}, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Could not re-order casters as caster ID list has unknown or missing IDs'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:casters.badCasterIdListForReordering'));
         });
 
         it('updates the order casters appear in', () => {

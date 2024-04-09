@@ -51,7 +51,7 @@ describe('tournamentDataHelper', () => {
         it('throws error if tournament is missing teams', () => {
             // @ts-ignore
             expect(() => updateTournamentDataReplicants({ teams: []}))
-                .toThrow('Tournament has no teams.');
+                .toThrow('translation:tournamentDataHelper.noTeamsFound');
         });
 
         it('sorts and assigns team data to tournament data, active round and next round', () => {
@@ -291,7 +291,7 @@ describe('tournamentDataHelper', () => {
 
         it('throws error if empty array is given', async () => {
             // @ts-ignore
-            await expect(() => parseUploadedTeamData([])).rejects.toThrow('Provided data is missing teams.');
+            await expect(() => parseUploadedTeamData([])).rejects.toThrow('translation:tournamentDataHelper.noTeamsFound');
         });
 
         it('assigns missing ID and showLogo props to teams if necessary', async () => {
@@ -325,7 +325,7 @@ describe('tournamentDataHelper', () => {
                 meta: {
                     id: 'tournament://cool-tourney',
                     source: TournamentDataSource.UPLOAD,
-                    shortName: 'Unknown Tournament'
+                    shortName: 'translation:tournamentDataHelper.placeholderUploadedTournamentName'
                 },
                 teams: [
                     {
@@ -518,7 +518,7 @@ describe('tournamentDataHelper', () => {
                 meta: {
                     id: 'tournament://rad-tournament',
                     source: TournamentDataSource.UPLOAD,
-                    shortName: 'Unknown Tournament'
+                    shortName: 'translation:tournamentDataHelper.placeholderTournamentName'
                 },
                 teams: [
                     {
@@ -549,7 +549,7 @@ describe('tournamentDataHelper', () => {
                 meta: {
                     id: 'tournament://rad-tournament',
                     source: TournamentDataSource.UPLOAD,
-                    shortName: 'Unknown Tournament'
+                    shortName: 'translation:tournamentDataHelper.placeholderTournamentName'
                 },
                 teams: [
                     {
@@ -584,7 +584,7 @@ describe('tournamentDataHelper', () => {
                 meta: {
                     id: 'tournament://rad-tournament',
                     source: TournamentDataSource.UPLOAD,
-                    shortName: 'Unknown Tournament'
+                    shortName: 'translation:tournamentDataHelper.placeholderTournamentName'
                 },
                 teams: [
                     {
@@ -644,7 +644,7 @@ describe('tournamentDataHelper', () => {
                     shortName: null
                 },
                 teams: undefined
-            }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');
+            }, 'tournament://rad-tournament')).rejects.toThrow('translation:tournamentDataHelper.noTeamsFound');
         });
 
         it('throws error if input has no teams', async () => {
@@ -655,11 +655,11 @@ describe('tournamentDataHelper', () => {
                     shortName: null
                 },
                 teams: []
-            }, 'tournament://rad-tournament')).rejects.toThrow('Provided data is missing teams.');
+            }, 'tournament://rad-tournament')).rejects.toThrow('translation:tournamentDataHelper.noTeamsFound');
         });
 
         it('throws error if input is not array or object', async () => {
-            const expectedError = 'Invalid data provided to parseUploadedTeamData()';
+            const expectedError = 'translation:tournamentDataHelper.tournamentDataParsingFailed';
 
             // @ts-ignore
             await expect(() => parseUploadedTeamData('foobar', '')).rejects.toThrow(expectedError);

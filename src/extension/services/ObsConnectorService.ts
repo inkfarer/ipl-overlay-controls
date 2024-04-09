@@ -3,6 +3,7 @@ import { ObsCredentials, ObsData } from 'schemas';
 import OBSWebSocket, { EventTypes } from 'obs-websocket-js';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { isBlank } from '../../helpers/stringHelper';
+import i18next from 'i18next';
 
 // Authentication failed, Unsupported protocol version, Session invalidated
 const SOCKET_CLOSURE_CODES_FORBIDDING_RECONNECTION = [4009, 4010, 4011];
@@ -37,7 +38,7 @@ export class ObsConnectorService {
     private handleClosure(event: EventTypes['ConnectionClosed']): void {
         if (this.obsData.value.status === ObsStatus.CONNECTED) {
             if (event.code !== 1000) {
-                this.nodecg.log.error('OBS websocket closed with message:', event.message);
+                this.nodecg.log.error(i18next.t('obs.socketClosed', { message: event.message }));
             }
             this.obsData.value.status = ObsStatus.NOT_CONNECTED;
             if (this.obsData.value.enabled) {
@@ -47,7 +48,7 @@ export class ObsConnectorService {
     }
 
     private handleOpening(): void {
-        this.nodecg.log.info('OBS websocket is open.');
+        this.nodecg.log.info(i18next.t('obs.socketOpen'));
         this.obsData.value.status = ObsStatus.CONNECTED;
         this.stopReconnecting();
     }
@@ -74,7 +75,7 @@ export class ObsConnectorService {
             if (reconnectOnFailure) {
                 this.startReconnecting(e.code);
             }
-            throw new Error(`Failed to connect to OBS: ${e.message ?? String(e)}`);
+            throw new Error(i18next.t('obs.obsConnectionFailed', { message: e.message ?? String(e) }));
         }
 
         await this.loadSceneList();
@@ -98,7 +99,7 @@ export class ObsConnectorService {
         this.stopReconnecting();
         this.reconnectionInterval = setInterval(() => {
             this.reconnectionCount++;
-            this.nodecg.log.info(`Attempting to reconnect to OBS... (Attempt ${this.reconnectionCount})`);
+            this.nodecg.log.info(i18next.t('obs.reconnectingToSocket', { count: this.reconnectionCount }));
             this.connect(false).catch(() => {
                 // ignore
             });
@@ -114,7 +115,7 @@ export class ObsConnectorService {
     private updateScenes(scenes: string[]): void {
         // OBS does not allow you to have no scenes.
         if (scenes.length <= 0) {
-            this.nodecg.log.error('Received scene list with no scenes.');
+            this.nodecg.log.error(i18next.t('obs.receivedNoScenes'));
             return;
         }
 

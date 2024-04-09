@@ -6,6 +6,7 @@ import { getBattlefyTournamentData } from './clients/battlefyClient';
 import { getSmashGGData } from './clients/smashggClient';
 import { updateTournamentDataReplicants } from './tournamentDataHelper';
 import { SendouInkClientInstance } from '../clients/SendouInkClient';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -21,7 +22,7 @@ nodecg.listenFor('refreshTournamentData', async (data: never, ack: NodeCG.Unhand
             }
             case TournamentDataSource.SMASHGG: {
                 if (!nodecg.bundleConfig?.smashgg?.apiKey) {
-                    return ack(new Error('No smash.gg API key is configured.'));
+                    return ack(new Error(i18next.t('tournamentImporter.missingStartggApiKey')));
                 }
 
                 updateTournamentDataReplicants(
@@ -32,7 +33,7 @@ nodecg.listenFor('refreshTournamentData', async (data: never, ack: NodeCG.Unhand
             }
             case TournamentDataSource.SENDOU_INK: {
                 if (SendouInkClientInstance == null) {
-                    return ack(new Error('No sendou.ink API key is configured.'));
+                    return ack(new Error(i18next.t('tournamentImporter.missingSendouInkApiKey')));
                 }
 
                 updateTournamentDataReplicants(
@@ -40,7 +41,7 @@ nodecg.listenFor('refreshTournamentData', async (data: never, ack: NodeCG.Unhand
                 return ack(null);
             }
             default:
-                return ack(new Error(`Cannot refresh data from source '${dataSource}'`));
+                return ack(new Error(i18next.t('tournamentRefresh.unsupportedSource', { source: dataSource })));
         }
     } catch (e) {
         ack(e);

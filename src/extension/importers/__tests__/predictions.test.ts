@@ -60,7 +60,7 @@ describe('predictions', () => {
                     status: {
                         predictionsEnabled: false,
                         socketOpen: false,
-                        predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                        predictionStatusReason: 'predictionsNotSupportedByGuild'
                     },
                     currentPrediction: null,
                     modificationTime: '2021-09-10T13:52:29'
@@ -73,10 +73,10 @@ describe('predictions', () => {
 
                 await replicantChangeListeners.radiaSettings({ guildID: '' });
 
-                expect(mockNodecgLog.warn).toHaveBeenCalledWith('Unable to get prediction data: Error: Radia guild ID is not configured!');
+                expect(mockNodecgLog.warn).toHaveBeenCalledWith('translation:predictions.predictionDataRequestError');
                 expect((replicants.predictionStore as PredictionStore).status).toEqual({
                     predictionsEnabled: false,
-                    predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
+                    predictionStatusReason: 'missingConfiguration',
                     socketOpen: false
                 });
                 expect(mockRadiaClient.hasPredictionSupport).not.toHaveBeenCalled();
@@ -284,7 +284,7 @@ describe('predictions', () => {
                         message: 'Error!'
                     });
 
-                    expect(mockNodecgLog.error).toHaveBeenCalledWith('Received error from Radia websocket. Code: 12345, Message: Error!');
+                    expect(mockNodecgLog.error).toHaveBeenCalledWith('translation:predictions.socketReceivedError');
                 });
 
                 it('handles unknown socket message', async () => {
@@ -433,13 +433,13 @@ describe('predictions', () => {
                 status: {
                     predictionsEnabled: false,
                     socketOpen: false,
-                    predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                    predictionStatusReason: 'predictionsNotSupportedByGuild'
                 },
                 currentPrediction: null,
                 modificationTime: '2021-09-10T13:52:29'
             });
             expect(mockWebSocketClass).not.toHaveBeenCalled();
-            expect(ack).toHaveBeenCalledWith(new Error('Unable to proceed as some Radia configuration is missing.'), null);
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingConfigurationError'), null);
         });
 
         it('does nothing if guild ID is empty', async () => {
@@ -451,12 +451,12 @@ describe('predictions', () => {
 
             expect((replicants.predictionStore as PredictionStore).status).toEqual({
                 predictionsEnabled: false,
-                predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
+                predictionStatusReason: 'missingConfiguration',
                 socketOpen: false
             });
             expect(mockRadiaClient.hasPredictionSupport).not.toHaveBeenCalled();
             expect(mockWebSocketClass).not.toHaveBeenCalled();
-            expect(ack).toHaveBeenCalledWith(new Error('Radia guild ID is not configured!'), null);
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingGuildId'), null);
         });
 
         it('fetches prediction data if supported and starts socket', async () => {
@@ -553,7 +553,7 @@ describe('predictions', () => {
 
             await messageListeners.postPrediction({ }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('An unresolved prediction already exists.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.unresolvedPredictionAlreadyExists'));
         });
 
         it('sends given data to API client', async () => {
@@ -600,7 +600,7 @@ describe('predictions', () => {
 
             await messageListeners.patchPrediction({ }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('No prediction available to resolve.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.noPredictionAvailable'));
         });
 
         it.each([
@@ -613,7 +613,7 @@ describe('predictions', () => {
 
             await messageListeners.patchPrediction({ status: 'LOCKED' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Only an active prediction may be locked.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotLockPrediction'));
         });
 
         it.each([
@@ -625,7 +625,7 @@ describe('predictions', () => {
 
             await messageListeners.patchPrediction({ status: 'CANCELED' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Cannot cancel a prediction that is not locked or active.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotCancelPrediction'));
         });
 
         it.each([
@@ -638,7 +638,7 @@ describe('predictions', () => {
 
             await messageListeners.patchPrediction({ status: 'RESOLVED', winning_outcome_id: 'outcome123123' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Only a locked prediction may be resolved.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotResolvePrediction'));
         });
 
         it('returns error when resolving a prediction with no winning outcome', async () => {
@@ -646,7 +646,7 @@ describe('predictions', () => {
 
             await messageListeners.patchPrediction({ status: 'RESOLVED' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('No outcome to resolve provided.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingOutcome'));
         });
 
         it('sends given data to API client', async () => {

@@ -12,6 +12,7 @@ import {
 import isEmpty from 'lodash/isEmpty';
 import { PlayTypeHelper } from '../../../helpers/enums/playTypeHelper';
 import { normalizePronouns } from '../../helpers/PronounNormalizer';
+import i18next from 'i18next';
 
 export async function getSmashGGEvents(slug: string, token: string): Promise<SmashggEvent[]> {
     const query = `query Events($slug: String!) {
@@ -45,10 +46,10 @@ export async function getSmashGGEvents(slug: string, token: string): Promise<Sma
     );
 
     if (!response.data.data.tournament) {
-        throw new Error(`Could not find tournament with slug '${slug}'.`);
+        throw new Error(i18next.t('startggClient.tournamentNotFound', { slug }));
     }
     if (!response.data.data.tournament.events) {
-        throw new Error(`Tournament '${slug}' has no events.`);
+        throw new Error(i18next.t('startggClient.noEventsFoundForTournament', { slug }));
     }
 
     return response.data.data.tournament.events.map(event => ({
@@ -176,7 +177,7 @@ async function getSmashGGPage(
     const { data } = response;
 
     if (!data.data.event) {
-        throw new Error(`Could not find event with id '${eventId}'`);
+        throw new Error(i18next.t('startggClient.eventNotFound', { eventId }));
     }
 
     const pageInfo: Team[] = [];
@@ -319,11 +320,16 @@ export async function getSmashGGStreamQueue(
                     && !(set.slots.some(slot => slot.entrant === null))
                     && set.event.id === eventID
                 ) {
-                    let shortName = set.phaseGroup.phase.name;
-                    if (set.phaseGroup.phase.groupCount > 1) {
-                        shortName += ` Pool ${set.phaseGroup.displayIdentifier}`;
-                    }
-                    shortName += ` Round ${set.round}`;
+                    const shortName = set.phaseGroup.phase.groupCount > 1
+                        ? i18next.t('startggClient.shortRoundName.withPool', {
+                            phaseName: set.phaseGroup.phase.name,
+                            poolName: set.phaseGroup.displayIdentifier,
+                            roundNumber: set.round
+                        })
+                        : i18next.t('startggClient.shortRoundName.withoutPool', {
+                            phaseName: set.phaseGroup.phase.name,
+                            roundNumber: set.round
+                        });
 
                     highlightedStreamQueue.push({
                         meta: {
@@ -331,7 +337,12 @@ export async function getSmashGGStreamQueue(
                             stageName: set.phaseGroup.displayIdentifier,
                             round: set.round,
                             match: 0,
-                            name: `Set ${set.identifier} - Round ${set.round} - Pool ${set.phaseGroup.displayIdentifier} - ${set.phaseGroup.phase.name}`,
+                            name: i18next.t('startggClient.longRoundName', {
+                                set: set.identifier,
+                                round: set.round,
+                                pool: set.phaseGroup.displayIdentifier,
+                                phase: set.phaseGroup.phase.name
+                            }),
                             shortName,
                             playType: PlayTypeHelper.fromSmashggSetGamesType(set.setGamesType)
                         },

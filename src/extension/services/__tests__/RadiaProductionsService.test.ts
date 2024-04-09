@@ -89,7 +89,7 @@ describe('RadiaProductionsService', () => {
         it('throws an error if no commentators were found', async () => {
             radiaProductionsClient.getLiveCasters.mockResolvedValue([]);
 
-            await expect(radiaProductionsService.getLiveCommentators()).rejects.toThrow(new Error('translation:casterImport.error.noCommentatorsReceived'));
+            await expect(radiaProductionsService.getLiveCommentators()).rejects.toThrow(new Error('translation:casterImport.noCommentatorsReceived'));
 
             expect(replicants.casters).toBeUndefined();
         });

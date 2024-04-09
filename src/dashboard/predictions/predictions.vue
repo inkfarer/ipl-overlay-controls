@@ -5,7 +5,7 @@
         type="warning"
         data-test="predictions-disabled-message"
     >
-        {{ predictionStatus.predictionStatusReason }}
+        {{ $t(`common:predictionStatusReason.${predictionStatus.predictionStatusReason}`) }}
     </ipl-message>
     <template v-else>
         <ipl-message
