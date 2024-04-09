@@ -8,7 +8,7 @@ import {
     PredictionProgressEvent,
     PredictionResponse
 } from 'types/prediction';
-import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
+import { CreatePrediction, PatchPredictionRequest } from 'types/predictionRequests';
 import { createPrediction, getPredictions, hasPredictionSupport, updatePrediction } from './clients/radiaClient';
 import WebSocket from 'ws';
 import { PredictionDataMapper } from './mappers/predictionDataMapper';
@@ -16,6 +16,7 @@ import { RadiaSocketMessage } from '../types/radiaApi';
 import { DateTime } from 'luxon';
 import isEmpty from 'lodash/isEmpty';
 import { isBlank } from '../../helpers/stringHelper';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 
 const nodecg = nodecgContext.get();
 
@@ -201,6 +202,11 @@ nodecg.listenFor('getPredictions', async (data: never, ack: NodeCG.UnhandledAckn
 });
 
 nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: NodeCG.UnhandledAcknowledgement) => {
+    const currentStatus = predictionStore.value.currentPrediction?.status;
+    if (currentStatus === PredictionStatus.ACTIVE || currentStatus === PredictionStatus.LOCKED) {
+        return ack(new Error('An unresolved prediction already exists.'));
+    }
+
     try {
         const response = await createPrediction(radiaSettings.value.guildID, data);
         assignPredictionData(response);
@@ -210,9 +216,38 @@ nodecg.listenFor('postPrediction', async (data: CreatePrediction, ack: NodeCG.Un
     }
 });
 
-nodecg.listenFor('patchPrediction', async (data: PatchPrediction, ack: NodeCG.UnhandledAcknowledgement) => {
+nodecg.listenFor('patchPrediction', async (data: PatchPredictionRequest, ack: NodeCG.UnhandledAcknowledgement) => {
+    if (predictionStore.value.currentPrediction?.id == null) {
+        return ack(new Error('No prediction available to resolve.'));
+    }
+
+    const currentStatus = predictionStore.value.currentPrediction.status;
+    switch (data.status) {
+        case 'CANCELED': {
+            if (currentStatus !== PredictionStatus.ACTIVE && currentStatus !== PredictionStatus.LOCKED) {
+                return ack(new Error('Cannot cancel a prediction that is not locked or active.'));
+            }
+            break;
+        }
+        case 'LOCKED':
+            if (currentStatus !== PredictionStatus.ACTIVE) {
+                return ack(new Error('Only an active prediction may be locked.'));
+            }
+            break;
+        case 'RESOLVED':
+            if (data.winning_outcome_id == null) {
+                return ack(new Error('No outcome to resolve provided.'));
+            } else if (currentStatus !== PredictionStatus.LOCKED) {
+                return ack(new Error('Only a locked prediction may be resolved.'));
+            }
+            break;
+    }
+
     try {
-        const response = await updatePrediction(radiaSettings.value.guildID, data);
+        const response = await updatePrediction(radiaSettings.value.guildID, {
+            id: predictionStore.value.currentPrediction.id,
+            ...data
+        });
         assignPredictionData(response);
         ack(null, response);
     } catch (e) {
