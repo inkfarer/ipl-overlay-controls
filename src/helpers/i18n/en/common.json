@@ -53,5 +53,11 @@
         "SPLATOON_3": "Splatoon 3"
     },
     "fileUploadPlaceholder": "Drag a file here or click to browse...",
-    "roundSelect": "Round"
+    "roundSelect": "Round",
+    "tournamentDataStore": {
+        "fileUploadError": "Import failed with status {{statusCode}}: {{message}}"
+    },
+    "stringHelper": {
+        "invalidSendouInkTournamentUrlError": "Input URL path is too short - is this a tournament URL?"
+    }
 }

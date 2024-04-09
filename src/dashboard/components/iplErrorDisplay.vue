@@ -28,7 +28,9 @@ import { addDots } from '../../helpers/stringHelper';
 
 export default defineComponent({
     name: 'IplErrorDisplay',
+
     components: { IplMessage },
+
     setup() {
         const store = useErrorHandlerStore();
 
