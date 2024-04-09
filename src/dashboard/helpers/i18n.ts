@@ -21,7 +21,10 @@ export async function initI18n(namespaces: string | string[]): Promise<void> {
         .init({
             lng: 'en',
             fallbackLng: 'en',
-            ns
+            ns,
+            interpolation: {
+                escapeValue: false
+            }
         });
 
     const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');

@@ -34,7 +34,10 @@ function initI18n(nodecg: NodeCG.ServerAPI) {
     i18next.init({
         lng: 'en',
         fallbackLng: 'en',
-        resources: loadTranslations()
+        resources: loadTranslations(),
+        interpolation: {
+            escapeValue: false
+        }
     });
 
     const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
