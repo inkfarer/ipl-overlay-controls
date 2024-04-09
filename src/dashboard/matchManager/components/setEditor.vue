@@ -1,13 +1,16 @@
 <template>
     <ipl-expanding-space>
         <template #title>
-            Edit match
+            {{ $t('setEditor.sectionTitle') }}
             <template v-if="!!nextGame">
-                <span class="badge badge-blue m-l-6">Next up</span>
+                <span class="badge badge-blue m-l-6">{{ $t('setEditor.nextGameLabel') }}</span>
                 <span class="text-small">
-                    {{ settingsStore.translatedModeName(nextGame.mode) }}
-                    on
-                    {{ settingsStore.translatedStageName(nextGame.stage) }}
+                    {{
+                        $t('setEditor.nextGameTemplate', {
+                            mode: settingsStore.translatedModeName(nextGame.mode),
+                            stage: settingsStore.translatedStageName(nextGame.stage)
+                        })
+                    }}
                 </span>
             </template>
         </template>
@@ -74,7 +77,7 @@
                 <ipl-checkbox
                     :model-value="game.color?.isCustom ?? activeColor.isCustom"
                     :disabled="!game.color"
-                    label="Custom color"
+                    :label="$t('setEditor.customColorCheckbox')"
                     small
                     data-test="custom-color-toggle"
                     @update:model-value="setIsCustomColor(index, $event)"
@@ -82,7 +85,7 @@
                 <ipl-checkbox
                     :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
                     :disabled="!game.color"
-                    label="Swap colors"
+                    :label="$t('setEditor.swapColorsCheckbox')"
                     class="m-l-6"
                     small
                     data-test="swap-colors-toggle"
@@ -124,15 +127,15 @@
         </div>
         <div class="layout horizontal m-t-8">
             <ipl-button
-                label="Update"
+                :label="$t('common:button.update')"
                 :color="gamesChanged ? 'red' : 'blue'"
                 data-test="update-button"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="handleUpdate"
                 @right-click="undoChanges"
             />
-            <ipl-button
-                label="Reset"
+            <iploc-button
+                :label="$t('setEditor.resetButton')"
                 color="red"
                 class="m-l-6"
                 requires-confirmation
@@ -141,7 +144,7 @@
             />
             <ipl-toggle-button
                 v-model="editColorsEnabled"
-                label="Edit colors"
+                :label="$t('setEditor.editColorsToggle')"
                 class="m-l-6"
                 data-test="edit-colors-toggle"
             />
@@ -167,10 +170,11 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import StageSelect from '../../components/StageSelect.vue';
 import ModeSelect from '../../components/ModeSelect.vue';
+import { useTranslation } from 'i18next-vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 library.add(faTimes);
 
@@ -185,10 +189,13 @@ export default defineComponent({
         IplButton,
         IplSelect,
         IplExpandingSpace,
-        IplInput
+        IplInput,
+        IplocButton
     },
 
     setup() {
+        const { t } = useTranslation();
+
         const activeRoundStore = useActiveRoundStore();
         const settingsStore = useSettingsStore();
         const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
@@ -231,7 +238,6 @@ export default defineComponent({
             nextGameIndex.value === -1 ? null : activeRoundStore.activeRound.games[nextGameIndex.value]);
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             games,
             GameWinner,
             gamesChanged,
@@ -247,9 +253,9 @@ export default defineComponent({
             editColorsEnabled,
             activeColor,
             colors: computed(() => gameData.value.colors.map(group => ({
-                name: group.meta.name,
+                name: t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`),
                 options: group.colors.map(color => ({
-                    name: color.title,
+                    name: t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.${color.key}`),
                     value: `${group.meta.name}_${color.index}`,
                     disabled: group.meta.key === 'customColor'
                 }))

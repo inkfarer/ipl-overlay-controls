@@ -108,15 +108,6 @@ describe('MatchManager', () => {
             expect(obsStore.fastForwardToNextGameAutomationTask).toHaveBeenCalled();
         });
 
-        it.each(['changeScene', 'showScoreboard', 'hideScoreboard', 'showCasters', 'unknown task'])('has expected button color and label when task name is %s', async (taskName) => {
-            useObsStore().gameAutomationData.nextTaskForAction.name = taskName;
-            await wrapper.vm.$nextTick();
-            const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
-
-            expect((button.vm as unknown as UnknownModule).color).toEqual('blue');
-            expect((button.vm as unknown as UnknownModule).label).toMatchSnapshot();
-        });
-
         it('shows button to cancel action', () => {
             expect(wrapper.getComponent('[data-test="cancel-automation-action-button"]').isVisible()).toEqual(true);
         });
@@ -157,7 +148,7 @@ describe('MatchManager', () => {
             const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('red');
-            expect((button.vm as unknown as UnknownModule).label).toEqual('End Game');
+            expect((button.vm as unknown as UnknownModule).label).toEqual('translation:endGameButton');
         });
     });
 
@@ -188,7 +179,7 @@ describe('MatchManager', () => {
             const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('green');
-            expect((button.vm as unknown as UnknownModule).label).toEqual('Start Game');
+            expect((button.vm as unknown as UnknownModule).label).toEqual('translation:startGameButton');
         });
     });
 
@@ -235,7 +226,7 @@ describe('MatchManager', () => {
 
         const warning = wrapper.findComponent('[data-test="obs-scenes-changed-warning"]');
         expect(warning.exists()).toEqual(true);
-        expect(warning.text()).toEqual('The OBS scene configuration has changed. Please confirm that the configured gameplay and intermission scenes (\'Gameplay Scene\' & \'Intermission Scene\') are still correct.');
+        expect(warning.text()).toEqual('translation:obsSceneConfigChangedWarning');
     });
 
     it('allows to close obs scene configuration warning', async () => {

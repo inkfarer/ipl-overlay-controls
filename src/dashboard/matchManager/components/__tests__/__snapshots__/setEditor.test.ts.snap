@@ -4,7 +4,7 @@ exports[`setEditor matches snapshot 1`] = `
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Splat Zones on Camp Triggerfish</span></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
@@ -18,8 +18,8 @@ exports[`setEditor matches snapshot 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -36,8 +36,8 @@ exports[`setEditor matches snapshot 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -54,8 +54,8 @@ exports[`setEditor matches snapshot 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -72,8 +72,8 @@ exports[`setEditor matches snapshot 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -90,8 +90,8 @@ exports[`setEditor matches snapshot 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -100,9 +100,9 @@ exports[`setEditor matches snapshot 1`] = `
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
@@ -112,7 +112,7 @@ exports[`setEditor matches snapshot when active round updates to one with less g
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Rainmaker on Blackbelly Skatepark</span></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
@@ -126,8 +126,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -144,8 +144,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -162,8 +162,8 @@ exports[`setEditor matches snapshot when active round updates to one with less g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -172,9 +172,9 @@ exports[`setEditor matches snapshot when active round updates to one with less g
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
@@ -184,7 +184,7 @@ exports[`setEditor matches snapshot when active round updates to one with more g
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Rainmaker on Blackbelly Skatepark</span></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
@@ -198,8 +198,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -216,8 +216,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -234,8 +234,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -252,8 +252,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -270,8 +270,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -288,8 +288,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -306,8 +306,8 @@ exports[`setEditor matches snapshot when active round updates to one with more g
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -316,9 +316,9 @@ exports[`setEditor matches snapshot when active round updates to one with more g
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
@@ -328,7 +328,7 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Splat Zones on Camp Triggerfish</span></div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
@@ -342,8 +342,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -360,8 +360,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -378,8 +378,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -396,8 +396,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -414,8 +414,8 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -424,9 +424,9 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="true" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="true" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
@@ -436,7 +436,7 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle
       <!--v-if-->
     </div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
@@ -452,8 +452,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -470,8 +470,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -488,8 +488,8 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
       <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
@@ -498,9 +498,9 @@ exports[`setEditor matches snapshot with no upcoming round 1`] = `
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"

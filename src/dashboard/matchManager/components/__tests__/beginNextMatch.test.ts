@@ -1,8 +1,8 @@
 import BeginNextMatch from '../beginNextMatch.vue';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
-import { useNextRoundStore } from '../../store/nextRoundStore';
 import { IplButton, IplInput } from '@iplsplatoon/vue-components';
+import { useNextRoundStore } from '../../../store/nextRoundStore';
 
 describe('BeginNextMatch', () => {
     let pinia: TestingPinia;

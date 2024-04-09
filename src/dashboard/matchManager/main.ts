@@ -11,6 +11,9 @@ import { nextRoundReps, useNextRoundStore } from '../store/nextRoundStore';
 import { settingsReps, useSettingsStore } from '../store/settingsStore';
 import { obsReps, useObsStore } from '../store/obsStore';
 import { createPinia } from 'pinia';
+import { initI18n } from '../helpers/i18n';
+import I18NextVue from 'i18next-vue';
+import i18next from 'i18next';
 
 (async () => {
     const app = createApp(Panel);
@@ -23,5 +26,8 @@ import { createPinia } from 'pinia';
     await setUpPiniaReplicants(activeRoundReps, useActiveRoundStore());
     await setUpPiniaReplicants(castersReps, useCasterStore());
     setUpErrorHandler(app);
+    await initI18n('matchManager');
+    await i18next.loadNamespaces('colors');
+    app.use(I18NextVue, { i18next });
     app.mount('#app');
 })();

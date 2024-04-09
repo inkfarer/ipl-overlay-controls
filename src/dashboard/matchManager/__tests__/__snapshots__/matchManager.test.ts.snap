@@ -8,10 +8,10 @@ exports[`MatchManager matches snapshot if obs status is CONNECTED 1`] = `
     <active-color-toggles-stub class="m-t-8"></active-color-toggles-stub>
     <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
       <!--v-if-->
-      <ipl-button-stub label="End Game" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="start-stop-game-button" class="m-b-8"></ipl-button-stub>
+      <ipl-button-stub label="translation:endGameButton" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="start-stop-game-button" class="m-b-8"></ipl-button-stub>
       <div class="layout horizontal">
         <!--v-if-->
-        <ipl-button-stub label="Show casters" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
+        <ipl-button-stub label="translation:showCastersButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="true" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTING 1`] = `
       <!--v-if-->
       <div class="layout horizontal">
         <!--v-if-->
-        <ipl-button-stub label="Show casters" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
+        <ipl-button-stub label="translation:showCastersButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@ exports[`MatchManager matches snapshot if obs status is NOT_CONNECTED 1`] = `
       <!--v-if-->
       <div class="layout horizontal">
         <!--v-if-->
-        <ipl-button-stub label="Show casters" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
+        <ipl-button-stub label="translation:showCastersButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="show-casters-button" class="max-width"></ipl-button-stub>
       </div>
     </div>
   </div>
@@ -59,13 +59,3 @@ exports[`MatchManager matches snapshot if obs status is NOT_CONNECTED 1`] = `
 </div>
 <set-editor-stub class="m-t-8"></set-editor-stub>"
 `;
-
-exports[`MatchManager when automation action is in progress has expected button color and label when task name is changeScene 1`] = `"Change Scene"`;
-
-exports[`MatchManager when automation action is in progress has expected button color and label when task name is hideScoreboard 1`] = `"Hide Scoreboard"`;
-
-exports[`MatchManager when automation action is in progress has expected button color and label when task name is showCasters 1`] = `"Show Casters"`;
-
-exports[`MatchManager when automation action is in progress has expected button color and label when task name is showScoreboard 1`] = `"Show Scoreboard"`;
-
-exports[`MatchManager when automation action is in progress has expected button color and label when task name is unknown task 1`] = `"???"`;

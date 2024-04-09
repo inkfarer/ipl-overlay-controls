@@ -4,7 +4,7 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark" data-test="active-match-editor">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">Active Match</div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:activeMatchEditor.sectionTitle</div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
@@ -12,17 +12,17 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
     <!--v-if-->
     <div class="layout horizontal">
       <div class="layout vertical center-horizontal max-width">
-        <ipl-select-stub modelvalue="123123" label="Team A" options="[object Object],[object Object]" disabled="false" data-test="team-a-selector"></ipl-select-stub>
-        <ipl-checkbox-stub label="Show image" modelvalue="true" small="true" disabled="false" class="m-t-6" data-test="team-a-image-toggle"></ipl-checkbox-stub>
+        <ipl-select-stub modelvalue="123123" label="translation:activeMatchEditor.teamASelect" options="[object Object],[object Object]" disabled="false" data-test="team-a-selector"></ipl-select-stub>
+        <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="true" small="true" disabled="false" class="m-t-6" data-test="team-a-image-toggle"></ipl-checkbox-stub>
       </div>
       <div class="layout vertical center-horizontal max-width m-l-8">
-        <ipl-select-stub modelvalue="345345" label="Team B" options="[object Object],[object Object]" disabled="false" data-test="team-b-selector"></ipl-select-stub>
-        <ipl-checkbox-stub label="Show image" modelvalue="false" small="true" disabled="false" class="m-t-6" data-test="team-b-image-toggle"></ipl-checkbox-stub>
+        <ipl-select-stub modelvalue="345345" label="translation:activeMatchEditor.teamBSelect" options="[object Object],[object Object]" disabled="false" data-test="team-b-selector"></ipl-select-stub>
+        <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="false" small="true" disabled="false" class="m-t-6" data-test="team-b-image-toggle"></ipl-checkbox-stub>
       </div>
     </div>
-    <ipl-select-stub modelvalue="01010" label="Match" options="[object Object],[object Object],[object Object]" disabled="false" class="m-t-6" data-test="match-selector"></ipl-select-stub>
-    <ipl-input-stub name="matchName" label="Match Name" modelvalue="Rad Match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-6"></ipl-input-stub>
-    <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-match-button" title="Right-click to undo changes."></ipl-button-stub>
+    <ipl-select-stub modelvalue="01010" label="translation:activeMatchEditor.matchSelect" options="[object Object],[object Object],[object Object]" disabled="false" class="m-t-6" data-test="match-selector"></ipl-select-stub>
+    <ipl-input-stub name="matchName" label="translation:activeMatchEditor.matchNameInput" modelvalue="Rad Match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-6"></ipl-input-stub>
+    <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-match-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
   </div>
 </div>"
 `;

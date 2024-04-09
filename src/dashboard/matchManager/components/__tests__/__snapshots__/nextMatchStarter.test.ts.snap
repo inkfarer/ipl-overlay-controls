@@ -4,14 +4,14 @@ exports[`NextMatchStarter matches snapshot 1`] = `
 "<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
   <div data-v-a1f8a641="" class="ipl-expanding-space__header">
     <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">Begin Next Match</div>
+    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:nextMatchStarter.sectionTitle</div>
     <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-a1f8a641="" class="header-extra"></div>
   </div>
   <div data-v-a1f8a641="" class="content" style="display: none;">
-    <ipl-data-row-stub label="Team A" copiable="false" value="cool team A"></ipl-data-row-stub>
-    <ipl-data-row-stub label="Team B" copiable="false" value="cool team B (long name long name long name lo..."></ipl-data-row-stub>
-    <ipl-data-row-stub label="Round" copiable="false" value="dope round"></ipl-data-row-stub>
+    <ipl-data-row-stub label="translation:nextMatchStarter.teamADisplayLabel" copiable="false" value="cool team A"></ipl-data-row-stub>
+    <ipl-data-row-stub label="translation:nextMatchStarter.teamBDisplayLabel" copiable="false" value="cool team B (long name long name long name lo..."></ipl-data-row-stub>
+    <ipl-data-row-stub label="translation:nextMatchStarter.roundNameDisplayLabel" copiable="false" value="dope round"></ipl-data-row-stub>
     <begin-next-match-stub class="m-t-4"></begin-next-match-stub>
   </div>
 </div>"

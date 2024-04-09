@@ -1,19 +1,19 @@
 <template>
     <ipl-expanding-space
         key="more-colors"
-        title="More colors"
+        :title="$t('colorList.sectionTitle')"
     >
         <div class="colors-container">
             <div class="layout horizontal center-horizontal m-x-16">
                 <ipl-checkbox
                     v-model="useCustomColor"
-                    label="Use custom color"
+                    :label="$t('colorList.useCustomColorCheckbox')"
                     data-test="use-custom-color-toggle"
                     small
                 />
                 <ipl-checkbox
                     v-model="showColorNames"
-                    label="Show color names"
+                    :label="$t('colorList.showColorNamesCheckbox')"
                     data-test="color-names-toggle"
                     class="m-l-8"
                     small
@@ -29,7 +29,9 @@
                     class="color-group"
                     :class="{ 'color-names-visible': showColorNames }"
                 >
-                    <div class="title">{{ group.meta.name }}</div>
+                    <div class="title">
+                        {{ $t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`) }}
+                    </div>
                     <div
                         v-for="(color, colorIndex) in group.colors"
                         :key="`color_${groupIndex}_${colorIndex}`"
@@ -43,7 +45,7 @@
                             v-show="showColorNames"
                             style="flex-grow: 1"
                         >
-                            {{ color.title }}
+                            {{ $t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.${color.key}`) }}
                         </span>
                         <div class="color-previews layout horizontal">
                             <div
@@ -82,10 +84,10 @@
                 />
             </div>
             <ipl-button
-                label="Update"
+                :label="$t('common:button.update')"
                 class="m-t-8"
                 :color="customColorChanged ? 'red' : 'blue'"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 data-test="custom-color-submit-btn"
                 @click="submitCustomColor"
                 @right-click="undoCustomColorChanges"
@@ -102,7 +104,6 @@ import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingText
 import { themeColors } from '../../styles/colors';
 import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ColorList',
@@ -150,7 +151,7 @@ export default defineComponent({
         }
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
+            settingsStore,
             useCustomColor,
             customColorA,
             customColorB,

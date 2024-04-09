@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BeginNextMatch matches snapshot 1`] = `
+"<div>
+  <ipl-input-stub name="matchName" label="translation:nextMatchStarter.matchNameInput" modelvalue="Cool Round" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+  <ipl-button-stub label="translation:nextMatchStarter.beginNextMatchButton" color="red" disabled="true" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="begin-next-match-button"></ipl-button-stub>
+</div>"
+`;
