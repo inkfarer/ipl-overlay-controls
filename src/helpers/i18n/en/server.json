@@ -82,7 +82,7 @@
         "cannotResolvePrediction": "Only a locked prediction may be resolved."
     },
     "roundFromMapsIplabs": {
-        "missingRoundData": "No round data found in maps.iplabs.ink url. (If this is from an older version of the site - try remaking the url.",
+        "missingRoundData": "No round data found in maps.iplabs.ink url. (If this is from an older version of the site - try remaking the url.)",
         "missingEncodingVersion": "Encoding version of maps.iplabs.ink not found.",
         "encodingVersionTooNew": "Encoding version of maps.iplabs.ink too new. Try updating ipl-overlay-controls.",
         "unsupportedEncodingVersion": "Encoding version of maps.iplabs.ink not supported. Try remaking the url.",

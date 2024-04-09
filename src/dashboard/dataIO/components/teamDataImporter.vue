@@ -8,7 +8,7 @@
                     data-test="smashgg-event-selector"
                     :label="$t('teamDataImporter.startgg.eventSelect')"
                 />
-                <ipl-button
+                <iploc-button
                     class="m-t-8"
                     :label="$t('teamDataImporter.startgg.importButton')"
                     async
@@ -57,7 +57,7 @@
                         data-test="use-file-upload-checkbox"
                     />
                 </div>
-                <ipl-button
+                <iploc-button
                     class="m-t-8"
                     :label="$t('teamDataImporter.importButton')"
                     :disabled="!allValid || refreshingTournamentData"
@@ -93,7 +93,7 @@
                 {{ tournamentMetadata.sourceSpecificData.smashgg.eventData.name }}
                 ({{ tournamentMetadata.sourceSpecificData.smashgg.eventData.game }})
             </template>
-            <ipl-button
+            <iploc-button
                 v-if="tournamentMetadata.source !== TournamentDataSource.UPLOAD &&
                     tournamentMetadata.source !== TournamentDataSource.UNKNOWN"
                 class="m-t-6"
@@ -147,11 +147,22 @@ import BorderedSpace from '../../components/BorderedSpace.vue';
 import { isBlank } from '../../../helpers/stringHelper';
 import { useTranslation } from 'i18next-vue';
 import { notBlank } from '../../helpers/validators/stringValidators';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'TeamDataImporter',
 
-    components: { BorderedSpace, IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace, IplRadio },
+    components: {
+        BorderedSpace,
+        IplCheckbox,
+        IplUpload,
+        IplButton,
+        IplInput,
+        IplSelect,
+        IplSpace,
+        IplRadio,
+        IplocButton
+    },
 
     setup() {
         const { t } = useTranslation();

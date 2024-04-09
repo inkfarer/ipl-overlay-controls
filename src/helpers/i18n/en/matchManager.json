@@ -47,5 +47,8 @@
         "swapColorsCheckbox": "Swap colors",
         "resetButton": "Reset",
         "editColorsToggle": "Edit colors"
+    },
+    "activeRosters": {
+        "sectionTitle": "Active Rosters"
     }
 }

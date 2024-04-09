@@ -22,7 +22,7 @@
                     data-test="use-file-upload-checkbox"
                 />
             </div>
-            <ipl-button
+            <iploc-button
                 :label="$t('roundImporter.importButton')"
                 class="m-t-8"
                 async
@@ -49,11 +49,12 @@ import {
 } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import BorderedSpace from '../../components/BorderedSpace.vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'RoundImporter',
 
-    components: { BorderedSpace, IplUpload, IplButton, IplCheckbox, IplInput, IplSpace },
+    components: { BorderedSpace, IplUpload, IplCheckbox, IplInput, IplSpace, IplocButton },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();

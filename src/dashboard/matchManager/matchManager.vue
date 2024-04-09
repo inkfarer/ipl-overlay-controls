@@ -52,7 +52,7 @@
             <scoreboard-editor class="m-t-8" />
             <ipl-expanding-space
                 key="activeRosters"
-                title="Active Rosters"
+                :title="$t('activeRosters.sectionTitle')"
                 class="m-t-8"
             >
                 <active-roster-display class="m-t-8" />
