@@ -37,7 +37,7 @@
                         class="color-option layout horizontal center-vertical"
                         :class="{ 'is-selected': activeColor.title === color.title &&
                             activeColor.categoryName === group.meta.name }"
-                        @click="setColor(color, group.meta.name)"
+                        @click="setColor(color, group.meta.name, group.meta.key)"
                     >
                         <span
                             v-show="showColorNames"
@@ -161,9 +161,11 @@ export default defineComponent({
             submitCustomColor() {
                 activeRoundStore.setActiveColor({
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     color: {
                         index: 0,
                         title: 'Custom Color',
+                        key: 'customColor',
                         clrA: customColorA.value,
                         clrB: customColorB.value,
                         clrNeutral: '#FFFFFF',
@@ -177,10 +179,11 @@ export default defineComponent({
             getBorderColor(color: string): string {
                 return getContrastingTextColor(color, 'white', themeColors.backgroundColorTertiary);
             },
-            setColor(color: ColorInfo, categoryName: string): void {
+            setColor(color: ColorInfo, categoryName: string, categoryKey: string): void {
                 activeRoundStore.setActiveColor({
                     color: swapColorsInternally.value ? swapColors(color) : color,
-                    categoryName
+                    categoryName,
+                    categoryKey
                 });
             },
             swapColorsInternally,

@@ -31,16 +31,17 @@
                 data-test="mode-select"
                 class="m-l-6 max-width"
             />
+            <!-- eslint-disable max-len -->
             <ipl-select
                 v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"
-                :model-value="
-                    `${game.color?.categoryName ?? activeColor.categoryName}_${game.color?.index ?? activeColor.index}`"
+                :model-value="`${game.color?.categoryName ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
                 :option-groups="colors"
                 class="m-l-6"
                 :disabled="game.winner === GameWinner.NO_WINNER"
                 data-test="color-select"
                 @update:model-value="setGameColor(index, $event)"
             />
+            <!-- eslint-enable max-len -->
             <div
                 v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
                 class="layout horizontal max-width m-l-6"
@@ -250,25 +251,32 @@ export default defineComponent({
                 options: group.colors.map(color => ({
                     name: color.title,
                     value: `${group.meta.name}_${color.index}`,
-                    disabled: group.meta.name === 'Custom Color'
+                    disabled: group.meta.key === 'customColor'
                 }))
             }))),
             setGameColor(index: number, color: string): void {
                 const colorParts = color.split('_');
-                const colorIndex = parseInt(colorParts[1]);
-                const colorObject = gameData.value.colors
-                    .find(group => group.meta.name === colorParts[0])
-                    .colors[colorIndex];
+                const category = gameData.value.colors
+                    .find(group => group.meta.key === colorParts[0]);
+                const colorObject = category.colors.find(color => color.key === colorParts[1]);
                 const colorsSwapped = games.value[index].color?.colorsSwapped
                     ?? activeRoundStore.swapColorsInternally;
 
                 games.value[index].color = {
-                    ...colorObject,
-                    ...colorsSwapped && {
+                    ...(colorsSwapped ? {
                         clrA: colorObject.clrB,
                         clrB: colorObject.clrA
-                    },
-                    categoryName: colorParts[0],
+                    } : {
+                        clrA: colorObject.clrA,
+                        clrB: colorObject.clrB
+                    }),
+                    index: colorObject.index,
+                    title: colorObject.title,
+                    isCustom: colorObject.isCustom,
+                    clrNeutral: colorObject.clrNeutral,
+                    categoryName: category.meta.name,
+                    categoryKey: category.meta.key,
+                    colorKey: colorObject.key,
                     colorsSwapped
                 };
             },
@@ -281,7 +289,9 @@ export default defineComponent({
                 games.value[index].color = {
                     ...games.value[index].color,
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     title: 'Custom Color',
+                    colorKey: 'customColor',
                     index: 0,
                     isCustom
                 };

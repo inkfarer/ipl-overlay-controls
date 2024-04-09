@@ -126,7 +126,8 @@ export function switchToNextColor(): void {
 
     setActiveColor({
         color: nextColor,
-        categoryName: nextColor.categoryName
+        categoryName: nextColor.categoryName,
+        categoryKey: nextColor.categoryKey
     });
 }
 
@@ -137,7 +138,8 @@ export function switchToPreviousColor(): void {
 
     setActiveColor({
         color: previousColor,
-        categoryName: previousColor.categoryName
+        categoryName: previousColor.categoryName,
+        categoryKey: previousColor.categoryKey
     });
 }
 

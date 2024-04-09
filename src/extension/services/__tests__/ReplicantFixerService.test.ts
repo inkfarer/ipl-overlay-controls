@@ -56,10 +56,12 @@ describe('ReplicantFixerService', () => {
             expect(replicants.activeRound).toEqual({
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     clrNeutral: '#F4067E',
                     index: 0,
                     isCustom: false,
-                    title: 'Green vs Grape'
+                    title: 'Green vs Grape',
+                    colorKey: 'greenGrape'
                 },
                 teamA: {
                     color: '#37FC00'

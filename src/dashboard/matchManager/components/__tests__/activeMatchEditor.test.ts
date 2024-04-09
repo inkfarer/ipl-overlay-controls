@@ -41,8 +41,10 @@ describe('ActiveRoundEditor', () => {
                 },
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     index: 0,
                     title: 'coolest color',
+                    colorKey: 'coolestColor',
                     isCustom: false,
                     clrNeutral: '#FFF',
                 },

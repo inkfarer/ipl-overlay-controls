@@ -66,12 +66,14 @@ export function normalizeGameData<S extends readonly string[], M extends readonl
             })),
             {
                 meta: {
-                    name: 'Custom Color'
+                    name: 'Custom Color',
+                    key: 'customColor'
                 },
                 colors: [
                     {
                         index: 0,
                         title: 'Custom Color',
+                        key: 'customColor',
                         clrA: '#000000',
                         clrB: '#FFFFFF',
                         clrNeutral: '#818181',

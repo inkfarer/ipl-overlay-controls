@@ -197,12 +197,14 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
     colors: [
         {
             meta: {
-                name: 'Ranked Modes'
+                name: 'Ranked Modes',
+                key: 'rankedModes'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Orange vs Purple',
+                    key: 'orangePurple',
                     clrA: '#F56522',
                     clrB: '#821CD6',
                     clrNeutral: '#CDFF45'
@@ -210,6 +212,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 1,
                     title: 'Yellow vs Dark Blue',
+                    key: 'yellowDarkBlue',
                     clrA: '#EDD921',
                     clrB: '#461EE6',
                     clrNeutral: '#4445FF'
@@ -217,6 +220,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 2,
                     title: 'Turquoise vs Orange',
+                    key: 'turquoiseOrange',
                     clrA: '#2ADBC6',
                     clrB: '#FA5A41',
                     clrNeutral: '#4445FF'
@@ -224,6 +228,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 3,
                     title: 'Orange vs Dark Blue',
+                    key: 'orangeDarkBlue',
                     clrA: '#FC7735',
                     clrB: '#4048DB',
                     clrNeutral: '#F8F755'
@@ -231,6 +236,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 4,
                     title: 'Turquoise vs Pink',
+                    key: 'turquoisePink',
                     clrA: '#2ADBC3',
                     clrB: '#E34984',
                     clrNeutral: '#7577FF'
@@ -238,6 +244,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 5,
                     title: 'Dark Blue vs Orange',
+                    key: 'darkBlueOrange',
                     clrA: '#2C2CDB',
                     clrB: '#F29C33',
                     clrNeutral: '#FF67EE'
@@ -245,6 +252,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 6,
                     title: 'Yellow vs Purple',
+                    key: 'yellowPurple',
                     clrA: '#EEFC58',
                     clrB: '#7635F0',
                     clrNeutral: '#54FDE8'
@@ -252,6 +260,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 7,
                     title: 'Gold vs Purple',
+                    key: 'goldPurple',
                     clrA: '#EBCC31',
                     clrB: '#A032DB',
                     clrNeutral: '#73DE35'
@@ -259,6 +268,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 8,
                     title: 'Green vs Pink',
+                    key: 'greenPink',
                     clrA: '#B3DE45',
                     clrB: '#D43BCA',
                     clrNeutral: '#FFC042'
@@ -266,6 +276,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     index: 9,
                     title: 'Pink vs Green',
+                    key: 'pinkGreen',
                     clrA: '#F753A1',
                     clrB: '#35CC2D',
                     clrNeutral: '#4A36FF'
@@ -274,12 +285,14 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         },
         {
             meta: {
-                name: 'Color Lock (Variant 1)'
+                name: 'Color Lock (Variant 1)',
+                key: 'colorLock1'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Purple vs Yellow',
+                    key: 'purpleYellow',
                     clrA: '#6236DF',
                     clrB: '#F0EB24',
                     clrNeutral: '#B82FB6'
@@ -288,12 +301,14 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         },
         {
             meta: {
-                name: 'Color Lock (Variant 2)'
+                name: 'Color Lock (Variant 2)',
+                key: 'colorLock2'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Blue vs Orange',
+                    key: 'blueOrange',
                     clrA: '#2D63D7',
                     clrB: '#FDB605',
                     clrNeutral: '#8FD20C'

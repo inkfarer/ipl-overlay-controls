@@ -123,9 +123,11 @@ describe('matchStoreHelper', () => {
             expect(replicants.activeRound).toEqual({
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     clrNeutral: '#F4067E',
                     index: 0,
                     title: 'Green vs Grape',
+                    colorKey: 'greenGrape',
                     isCustom: false
                 },
                 teamA: {
@@ -176,9 +178,11 @@ describe('matchStoreHelper', () => {
             expect(replicants.activeRound).toEqual({
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     clrNeutral: '#F4067E',
                     index: 0,
                     title: 'Green vs Grape',
+                    colorKey: 'greenGrape',
                     isCustom: false
                 },
                 teamA: {

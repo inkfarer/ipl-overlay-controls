@@ -68,6 +68,8 @@ export function setActiveRoundToFirstMatch(resetColors = false): void {
             index: firstColor.index,
             title: firstColor.title,
             categoryName: firstCategory.meta.name,
+            categoryKey: firstCategory.meta.key,
+            colorKey: firstColor.key,
             isCustom: firstColor.isCustom,
             clrNeutral: firstColor.clrNeutral
         };

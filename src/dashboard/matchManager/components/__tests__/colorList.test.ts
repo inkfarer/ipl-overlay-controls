@@ -40,8 +40,10 @@ describe('ColorList', () => {
                 },
                 activeColor: {
                     title: 'Yellow vs Blue',
+                    colorKey: 'yellowBlue',
                     index: 6,
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     isCustom: false,
                     clrNeutral: '#FD5600'
                 },
@@ -123,13 +125,15 @@ describe('ColorList', () => {
 
         expect(store.setActiveColor).toHaveBeenCalledWith({
             categoryName: 'Ranked Modes',
+            categoryKey: 'rankedModes',
             color: {
                 clrA: '#37FC00',
                 clrB: '#7D28FC',
                 clrNeutral: '#F4067E',
                 index: 0,
                 isCustom: false,
-                title: 'Green vs Grape'
+                title: 'Green vs Grape',
+                key: 'greenGrape'
             }
         });
     });
@@ -165,9 +169,11 @@ describe('ColorList', () => {
 
         expect(store.setActiveColor).toHaveBeenCalledWith({
             categoryName: 'Custom Color',
+            categoryKey: 'customColor',
             color: {
                 index: 0,
                 title: 'Custom Color',
+                key: 'customColor',
                 clrA: '#123123',
                 clrB: '#345345',
                 clrNeutral: '#FFFFFF',

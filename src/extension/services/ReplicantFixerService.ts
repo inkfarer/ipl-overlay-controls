@@ -26,10 +26,12 @@ export class ReplicantFixerService {
 
             this.activeRound.value.activeColor = {
                 categoryName: colorCategories[0].meta.name,
+                categoryKey: colorCategories[0].meta.key,
                 clrNeutral: newColor.clrNeutral,
                 index: newColor.index,
                 title: newColor.title,
-                isCustom: newColor.isCustom
+                isCustom: newColor.isCustom,
+                colorKey: newColor.key
             };
             this.activeRound.value.teamA.color = this.swapColorsInternally.value ? newColor.clrB : newColor.clrA;
             this.activeRound.value.teamB.color = this.swapColorsInternally.value ? newColor.clrA : newColor.clrB;

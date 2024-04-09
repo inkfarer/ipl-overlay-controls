@@ -38,6 +38,8 @@ export interface MatchGame {
 }
 export interface Color {
 	index: number;
+	colorKey: string;
+	categoryKey: string;
 	title: string;
 	clrA: string;
 	clrB: string;

@@ -44,8 +44,10 @@ describe('ResolvePredictionDialog', () => {
                 },
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     index: 0,
                     title: 'coolest color',
+                    colorKey: 'coolestColor',
                     isCustom: false,
                     clrNeutral: '#222'
                 },
@@ -63,10 +65,12 @@ describe('ResolvePredictionDialog', () => {
                         color: {
                             index: 2,
                             title: 'Cool Color',
+                            colorKey: 'coolColor',
                             clrA: '#123123',
                             clrB: '#345345',
                             clrNeutral: '#00FF00',
                             categoryName: 'Cool Colors',
+                            categoryKey: 'coolColors',
                             isCustom: false,
                             colorsSwapped: false
                         }
@@ -78,10 +82,12 @@ describe('ResolvePredictionDialog', () => {
                         color: {
                             index: 0,
                             title: 'Cool Color',
+                            colorKey: 'coolColor',
                             clrA: '#837693',
                             clrB: '#206739',
                             clrNeutral: '#00AA00',
                             categoryName: 'Custom Color',
+                            categoryKey: 'customColor',
                             isCustom: true,
                             colorsSwapped: true
                         }
