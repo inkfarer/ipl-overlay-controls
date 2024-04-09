@@ -8,9 +8,13 @@
             closeable
             @close="showIncompatibleBundlesMessage = false"
         >
-            {{ pluralizeWithoutCount('Bundle', incompatibleBundles.length) }} {{ prettyPrintList(incompatibleBundles) }}
-            {{ pluralizeWithoutCount('is', incompatibleBundles.length, 'are') }} incompatible with
-            {{ GameVersionHelper.toPrettyString(currentGameVersion) }}.
+            {{
+                $t('general.incompatibleBundleWarning', {
+                    count: incompatibleBundles.length,
+                    bundles: incompatibleBundles,
+                    gameVersion: currentGameVersion
+                })
+            }}
         </ipl-message>
         <ipl-message
             v-if="isGameVersionChanged"
@@ -18,33 +22,33 @@
             data-test="version-change-warning"
             class="m-b-8"
         >
-            Changing game versions will reset round and match data!
+            {{ $t('general.gameVersionChangeWarning') }}
         </ipl-message>
         <ipl-select
             v-model="gameVersion"
-            label="Game version"
+            :label="$t('general.gameVersionSelect')"
             data-test="game-version-select"
             :options="gameVersionOptions"
         />
         <ipl-select
             v-model="locale"
-            label="Language"
+            :label="$t('general.gameLocaleSelect')"
             data-test="locale-select"
             :options="localeOptions"
             class="m-t-6"
         />
         <ipl-select
             v-model="interfaceLocale"
-            label="Interface Language"
+            :label="$t('general.interfaceLocaleSelect')"
             data-test="interface-locale-select"
             :options="interfaceLocaleOptions"
             class="m-t-6"
         />
         <ipl-button
             class="m-t-8"
-            label="Update"
+            :label="$t('common:button.update')"
             :color="isChanged ? 'red' : 'blue'"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
             @click="doUpdate"
             @right-click="undoChanges"
@@ -55,13 +59,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
-import { GameVersion, GameVersionHelper } from 'types/enums/gameVersion';
+import { GameVersion } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../../store/settingsStore';
 import { computed, ref, watch } from 'vue';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
-import { prettyPrintList } from '../../../helpers/ArrayHelper';
-import { pluralizeWithoutCount } from '../../helpers/stringHelper';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { Locale, LocaleHelper } from 'types/enums/Locale';
 import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 import { useTranslation } from 'i18next-vue';
@@ -97,13 +98,9 @@ export default defineComponent({
             { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
-            prettyPrintList,
-            GameVersionHelper,
             gameVersion,
-            pluralizeWithoutCount,
             gameVersionOptions: Object.values(GameVersion).map(version =>
-                ({ value: version, name: GameVersionHelper.toPrettyString(version) })),
+                ({ value: version, name: t(`common:gameVersion.${version}`) })),
             isGameVersionChanged,
             isChanged: computed(() =>
                 isGameVersionChanged.value

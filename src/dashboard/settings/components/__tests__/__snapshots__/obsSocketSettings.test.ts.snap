@@ -3,16 +3,16 @@
 exports[`ObsSocketSettings matches snapshot when obs socket is disabled 1`] = `
 "<div>
   <div data-v-d255ffee="" class="ipl-space color-dark">
-    <div class="title">OBS Socket</div>
+    <div class="title">translation:sectionName.obs</div>
     <div data-v-bba5f377="" class="ipl-toggle__container" role="switch" tabindex="0">
-      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option">Enable</span><span data-v-bba5f377="" class="false-option selected">Disable</span></div>
+      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option">translation:obs.toggleEnable</span><span data-v-bba5f377="" class="false-option selected">translation:obs.toggleDisable</span></div>
       <div data-v-bba5f377="" class="ipl-toggle__button"></div>
     </div>
   </div>
   <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
     <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
     <div data-v-c35f7b2a="" class="message-content">
-      <!----> OBS websocket is disabled.
+      <!---->translation:obs.socketDisabledMessage
     </div>
   </div>
 </div>"
@@ -21,17 +21,17 @@ exports[`ObsSocketSettings matches snapshot when obs socket is disabled 1`] = `
 exports[`ObsSocketSettings matches snapshot when status is CONNECTED 1`] = `
 "<div>
   <div data-v-d255ffee="" class="ipl-space color-dark">
-    <div class="title">OBS Socket</div>
+    <div class="title">translation:sectionName.obs</div>
     <div data-v-bba5f377="" class="ipl-toggle__container" role="switch" tabindex="0">
-      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">Enable</span><span data-v-bba5f377="" class="false-option">Disable</span></div>
+      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">translation:obs.toggleEnable</span><span data-v-bba5f377="" class="false-option">translation:obs.toggleDisable</span></div>
       <div data-v-bba5f377="" class="ipl-toggle__button is-true"></div>
     </div>
   </div>
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
-    <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTED">Connected</div>
+    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
+    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTED">common:obsStatus.CONNECTED</div>
   </div>
 </div>"
 `;
@@ -39,17 +39,17 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTED 1`] = `
 exports[`ObsSocketSettings matches snapshot when status is CONNECTING 1`] = `
 "<div>
   <div data-v-d255ffee="" class="ipl-space color-dark">
-    <div class="title">OBS Socket</div>
+    <div class="title">translation:sectionName.obs</div>
     <div data-v-bba5f377="" class="ipl-toggle__container" role="switch" tabindex="0">
-      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">Enable</span><span data-v-bba5f377="" class="false-option">Disable</span></div>
+      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">translation:obs.toggleEnable</span><span data-v-bba5f377="" class="false-option">translation:obs.toggleDisable</span></div>
       <div data-v-bba5f377="" class="ipl-toggle__button is-true"></div>
     </div>
   </div>
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
-    <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTING">Connecting</div>
+    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
+    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTING">common:obsStatus.CONNECTING</div>
   </div>
 </div>"
 `;
@@ -57,17 +57,17 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTING 1`] = `
 exports[`ObsSocketSettings matches snapshot when status is NOT_CONNECTED 1`] = `
 "<div>
   <div data-v-d255ffee="" class="ipl-space color-dark">
-    <div class="title">OBS Socket</div>
+    <div class="title">translation:sectionName.obs</div>
     <div data-v-bba5f377="" class="ipl-toggle__container" role="switch" tabindex="0">
-      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">Enable</span><span data-v-bba5f377="" class="false-option">Disable</span></div>
+      <div data-v-bba5f377="" class="ipl-toggle__text"><span data-v-bba5f377="" class="true-option selected">translation:obs.toggleEnable</span><span data-v-bba5f377="" class="false-option">translation:obs.toggleDisable</span></div>
       <div data-v-bba5f377="" class="ipl-toggle__button is-true"></div>
     </div>
   </div>
   <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="Socket address" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
-    <ipl-input-stub name="password" label="Password (Optional)" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="Connect" color="blue" disabled="true" async="true" progressmessage="Connecting..." successmessage="Connected!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="Right-click to undo changes."></ipl-button-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_NOT_CONNECTED">Not connected</div>
+    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
+    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <div data-v-d255ffee="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_NOT_CONNECTED">common:obsStatus.NOT_CONNECTED</div>
   </div>
 </div>"
 `;

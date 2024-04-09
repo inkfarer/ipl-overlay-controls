@@ -43,6 +43,15 @@
         "BEST_OF": "Best of {{count}}",
         "PLAY_ALL": "Play all {{count}}"
     },
+    "obsStatus": {
+        "CONNECTING": "Connecting",
+        "CONNECTED": "Connected",
+        "NOT_CONNECTED": "Not connected"
+    },
+    "gameVersion": {
+        "SPLATOON_2": "Splatoon 2",
+        "SPLATOON_3": "Splatoon 3"
+    },
     "fileUploadPlaceholder": "Drag a file here or click to browse...",
     "roundSelect": "Round"
 }

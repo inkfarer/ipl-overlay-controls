@@ -3,27 +3,27 @@
         v-if="!hasObsData"
         type="info"
     >
-        OBS data is missing. Please connect to an OBS websocket to continue.
+        {{ $t('obs.missingDataMessage') }}
     </ipl-message>
     <ipl-space v-else>
         <ipl-select
             v-model="gameplayScene"
             :options="sceneOptions"
-            label="Gameplay scene"
+            :label="$t('obs.gameplaySceneSelect')"
             data-test="gameplay-scene-select"
         />
         <ipl-select
             v-model="intermissionScene"
             :options="sceneOptions"
-            label="Intermission scene"
+            :label="$t('obs.intermissionSceneSelect')"
             data-test="intermission-scene-select"
             class="m-t-8"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             class="m-t-8"
             :color="isChanged ? 'red' : 'blue'"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
             @click="update"
             @right-click="undoChanges"
@@ -36,7 +36,6 @@ import { defineComponent } from 'vue';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useObsStore } from '../../store/obsStore';
 import { computed, ref, watch } from 'vue';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ObsDataPicker',
@@ -59,7 +58,6 @@ export default defineComponent({
             { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             gameplayScene,
             intermissionScene,
             hasObsData: computed(() => obsStore.obsData.scenes != null),

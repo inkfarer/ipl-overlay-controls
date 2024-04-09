@@ -6,10 +6,11 @@
             class="m-b-8"
             data-test="radia-disabled-warning"
         >
-            Radia integration is disabled.
-            <ipl-button
+            {{ $t('radia.radiaDisabledMessage') }}
+            <iploc-button
                 small
-                label="Attempt to connect"
+                :label="$t('radia.reconnectButton')"
+                :progress-message="$t('radia.loadingReconnectButton')"
                 class="m-t-6"
                 color="yellow"
                 data-test="radia-connect-button"
@@ -17,27 +18,27 @@
                 @click="attemptRadiaReconnect"
             />
         </ipl-message>
-        <div class="title">Radia</div>
+        <div class="title">{{ $t('sectionName.radia') }}</div>
         <ipl-input
             v-model="settings.guildID"
             name="guild-id"
-            label="Guild ID"
+            :label="$t('radia.guildIdInput')"
             @focuschange="handleFocusEvent"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             data-test="update-button"
             class="m-t-8"
             :color="buttonColor"
             :disabled="!isValid"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             @click="handleUpdate"
             @right-click="undoChanges"
         />
         <ipl-checkbox
             v-model="settings.updateOnImport"
             class="m-t-8"
-            label="Update tournament data on import"
+            :label="$t('radia.updateTournamentDataOnImportCheckbox')"
             data-test="update-on-import-checkbox"
             @update:model-value="setUpdateOnImport"
         />
@@ -52,8 +53,6 @@ import {
     IplInput,
     IplMessage,
     IplSpace,
-    minLength,
-    numeric,
     provideValidators,
     validator
 } from '@iplsplatoon/vue-components';
@@ -62,7 +61,8 @@ import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import cloneDeep from 'lodash/cloneDeep';
 import { RadiaSettings } from 'schemas';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { minLength, numeric } from '../../helpers/validators/stringValidators';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'RadiaSettings',
@@ -72,7 +72,8 @@ export default defineComponent({
         IplButton,
         IplInput,
         IplSpace,
-        IplMessage
+        IplMessage,
+        IplocButton
     },
 
     setup() {
@@ -98,7 +99,6 @@ export default defineComponent({
         });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             radiaEnabled: computed(() => store.radiaSettings.enabled),
             focused: isFocused,
             handleFocusEvent(event: boolean) {
