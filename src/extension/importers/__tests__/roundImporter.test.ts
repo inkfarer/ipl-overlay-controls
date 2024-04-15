@@ -70,7 +70,7 @@ describe('roundImporter', () => {
 
             await messageListeners.getRounds({ url: 'https://maps.iplabs.ink/?c=test&v=1' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('maps.iplabs.ink links only support Splatoon 3'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:roundImporter.badGameVersionForMapsIplabs'));
             expect(replicants.roundStore).toEqual({ oldroundoldround: { name: 'Old Round' } });
         });
 
@@ -79,7 +79,7 @@ describe('roundImporter', () => {
 
             await messageListeners.getRounds({ }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Missing arguments.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:invalidArgumentsError'));
         });
 
         it('acknowledges with received errors', async () => {

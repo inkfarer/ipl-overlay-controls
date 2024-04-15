@@ -6,6 +6,7 @@ import { MapsIplabsGame, MapsIplabsRound } from 'types/importer.js';
 import { Splatoon3Stages } from '../../helpers/gameData/splatoon3Data';
 import { normalizeStageName } from './roundDataHelper';
 import { GameVersion } from 'types/enums/gameVersion';
+import i18next from 'i18next';
 
 export function importFromMapsIplabs(url: string): RoundStore {
     const urlParams = new URLSearchParams(`?${url.split('?')[1]}`);
@@ -13,25 +14,25 @@ export function importFromMapsIplabs(url: string): RoundStore {
     const encodeVersion = parseInt(urlParams.get('v'));
 
     if (!compressedContext) {
-        throw new Error('No round data found in maps.iplabs.ink url. (If this is from an older version of the site- try remaking the url.');
+        throw new Error(i18next.t('roundFromMapsIplabs.missingRoundData'));
     }
     if (isNaN(encodeVersion)) {
-        throw new Error('Encoding version of maps.iplabs.ink not found.');
+        throw new Error(i18next.t('roundFromMapsIplabs.missingEncodingVersion'));
     }
 
     if (encodeVersion === 1) {
         return decodeV1(compressedContext);
     } else if (encodeVersion >= 1) {
-        throw new Error('Encoding version of maps.iplabs.ink too new. Try updating your overlay controls.');
+        throw new Error(i18next.t('roundFromMapsIplabs.encodingVersionTooNew'));
     }
     
-    throw new Error('Encoding version of maps.iplabs.ink not supported. Try remaking the url.');
+    throw new Error(i18next.t('roundFromMapsIplabs.unsupportedEncodingVersion'));
 }
 
 function decodeV1(compressedContext: string): RoundStore {
     const context = JSON.parse(JSONCrush.uncrush(compressedContext));
     if (!isValidJSONFormat(context)) {
-        throw new Error('Invalid URL encoded JSON format.');
+        throw new Error(i18next.t('roundFromMapsIplabs.invalidJsonFormat'));
     }
 
     const result: RoundStore = {};

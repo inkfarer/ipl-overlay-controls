@@ -1,0 +1,29 @@
+{
+    "title": "Predictions",
+    "noPredictionDataMessage": "No prediction data loaded.",
+    "socketClosedWarning": {
+        "message": "Prediction websocket is closed. Data may not be up to date.",
+        "reconnectButton": {
+            "label": "Reconnect",
+            "loadingLabel": "Reconnecting..."
+        }
+    },
+    "predictionStatusLabel": "Status",
+    "resolvePredictionButton": "Resolve",
+    "createPredictionButton": "New",
+    "lockPredictionButton": {
+        "label": "Lock",
+        "loadingLabel": "Locking..."
+    },
+    "cancelPredictionButton": {
+        "label": "Cancel",
+        "loadingLabel": "Cancelling..."
+    },
+    "showPredictionButton": {
+        "label": "Show",
+        "labelOnClick": "Sent!"
+    },
+    "remainingDuration": "{{seconds, duration}} remaining",
+    "points_one": "{{count}} point",
+    "points_other": "{{count}} points"
+}

@@ -4,6 +4,7 @@ import * as nodecgContext from '../helpers/nodecg';
 import { ActiveRound, ActiveRoundTeam, NextRound, TournamentData } from 'schemas';
 import { ToggleTeamImageRequest } from 'types/messages/tournamentData';
 import { Team } from 'types/team';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -14,7 +15,7 @@ const nextRound = nodecg.Replicant<NextRound>('nextRound');
 nodecg.listenFor('toggleTeamImage', ( data: ToggleTeamImageRequest, ack: NodeCG.UnhandledAcknowledgement ) => {
     const team = tournamentData.value.teams.filter(team => team.id === data.teamId)[0];
     if (team == null) {
-        return ack(new Error('No team found.'));
+        return ack(new Error(i18next.t('tournamentData.teamNotFound')));
     }
 
     team.showLogo = data.isVisible;

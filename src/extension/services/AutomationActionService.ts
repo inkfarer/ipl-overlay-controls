@@ -10,6 +10,7 @@ import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { switchToNextColor } from '../replicants/activeRound';
 import { ObsConnectorService } from './ObsConnectorService';
 import * as util from 'util';
+import i18next from 'i18next';
 
 interface AutomationActionTask {
     timeout: number
@@ -115,20 +116,20 @@ export class AutomationActionService {
                     }
                 ];
             default:
-                throw new Error(`Unknown GameAutomationTask value '${action}'`);
+                throw new Error(i18next.t('automationActions.unknownTask', { name: action }));
         }
     }
 
     startAutomationAction(action: GameAutomationAction): void {
         if (this.gameAutomationData.value.actionInProgress !== GameAutomationAction.NONE) {
-            throw new Error('An action is already in progress.');
+            throw new Error(i18next.t('automationActions.actionAlreadyOngoing'));
         }
 
         this.gameAutomationData.value.actionInProgress = action;
         this.automationTasks = this.getAutomationTasks(action);
 
         this.queueNextAutomationTask().catch(e => {
-            this.nodecg.log.error('Failed to start automation task:', e.message ?? String(e));
+            this.nodecg.log.error(i18next.t('automationActions.taskStartFailed'), e);
         });
     }
 
@@ -168,13 +169,13 @@ export class AutomationActionService {
                 await result;
             }
         } catch (e) {
-            this.nodecg.log.error('Encountered an error during automation task', e);
+            this.nodecg.log.error(i18next.t('automationActions.errorInTask'), e);
         }
     }
 
     async fastForwardToNextAutomationTask(): Promise<void> {
         if (this.gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
-            throw new Error('No action is in progress.');
+            throw new Error(i18next.t('automationActions.noActionOngoing'));
         }
 
         await this.completeTimedAutomationTask(
@@ -183,7 +184,7 @@ export class AutomationActionService {
 
     cancelAutomationAction(): void {
         if (this.gameAutomationData.value.actionInProgress === GameAutomationAction.NONE) {
-            throw new Error('No action is in progress.');
+            throw new Error(i18next.t('automationActions.noActionOngoing'));
         }
 
         clearTimeout(this.nextAutomationTaskTimeout);

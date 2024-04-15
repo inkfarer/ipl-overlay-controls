@@ -77,14 +77,14 @@ describe('battlefyClient', () => {
             mockGet.mockResolvedValue({ data: { error: 'something has gone wrong' } });
 
             await expect(getBattlefyMatches('aaaa')).rejects
-                .toThrow('Got error from Battlefy: something has gone wrong');
+                .toThrow('translation:battlefyClient.battlefyReturnedError');
         });
 
         it('handles missing data', async () => {
             mockGet.mockResolvedValue({ data: []});
 
             await expect(getBattlefyMatches('aaaa')).rejects
-                .toThrow('Couldn\'t get tournament data from Battlefy.');
+                .toThrow('translation:battlefyClient.battlefyReturnedNoData');
         });
     });
 

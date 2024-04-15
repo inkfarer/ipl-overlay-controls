@@ -3,6 +3,7 @@ import { SelectOptions } from '../types/select';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { SetNextRoundRequest } from 'types/messages/rounds';
 import { defineStore } from 'pinia';
+import i18next from 'i18next';
 
 const highlightedMatches = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -40,7 +41,7 @@ export const useHighlightedMatchStore = defineStore('highlightedMatches', {
                             streamIDs: values.map(value => parseInt(value))
                         });
                     default:
-                        throw new Error(`Cannot import data from source '${this.tournamentData.meta.source}'`);
+                        throw new Error(i18next.t('cannotImportDataError', { source: this.tournamentData.meta.source }));
                 }
             }
         },

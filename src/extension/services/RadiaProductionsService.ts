@@ -2,6 +2,7 @@ import type NodeCG from '@nodecg/types';
 import { RadiaProductionsClient } from '../clients/RadiaProductionsClient';
 import { Casters, RadiaSettings } from 'schemas';
 import { RadiaApiCaster } from '../types/radiaApi';
+import i18next from 'i18next';
 
 export class RadiaProductionsService {
     private readonly radiaProductionsClient: RadiaProductionsClient;
@@ -17,7 +18,7 @@ export class RadiaProductionsService {
     async getLiveCommentators(): Promise<{ add: Casters, extra: Casters }> {
         const apiCasters = await this.radiaProductionsClient.getLiveCasters(this.radiaSettings.value.guildID);
         if (apiCasters.length <= 0) {
-            throw new Error('Got no commentators from API.');
+            throw new Error(i18next.t('casterImport.noCommentatorsReceived'));
         }
         const normalizedCasters = apiCasters.map(this.normalizeCaster);
 

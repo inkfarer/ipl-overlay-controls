@@ -5,6 +5,7 @@ import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournam
 import { updateRounds } from './roundImporter';
 import { RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
@@ -25,7 +26,7 @@ router.post(
             || Array.isArray((req.files as unknown as fileUpload.FileArray).file)
             || ((req.files as unknown as fileUpload.FileArray).file as UploadedFile).mimetype !== 'application/json'
         ) {
-            return res.status(400).send('Invalid attached file or jsonType property provided.');
+            return res.status(400).send(i18next.t('fileImport.invalidFileOrJsonType'));
         }
 
         const file = (req.files as unknown as fileUpload.FileArray).file as UploadedFile;
@@ -36,8 +37,8 @@ router.post(
                 try {
                     updateRounds(handleRoundData(content, runtimeConfig.value.gameVersion as GameVersion));
                 } catch (e) {
-                    nodecg.log.error('Failed to update round data:', e);
-                    return res.status(400).send('Got an error while parsing round data.');
+                    nodecg.log.error(i18next.t('fileImport.roundDataUpdateFailed.console', { message: e }));
+                    return res.status(400).send(i18next.t('fileImport.roundDataUpdateFailed.response'));
                 }
                 break;
             }
@@ -46,8 +47,8 @@ router.post(
                     const resolvedTeams = await parseUploadedTeamData(content, file.name);
                     updateTournamentDataReplicants(resolvedTeams);
                 } catch (e) {
-                    nodecg.log.error('Failed to parse team data:', e);
-                    return res.status(400).send('Got an error while parsing team data.');
+                    nodecg.log.error(i18next.t('fileImport.teamDataUpdateFailed.console', { message: e }));
+                    return res.status(400).send(i18next.t('fileImport.teamDataUpdateFailed.response'));
                 }
                 break;
             }

@@ -12,6 +12,7 @@ import { addDots, isBlank } from '../../helpers/stringHelper';
 import { getBattlefyTournamentInfo, getBattlefyTournamentUrl } from './clients/battlefyClient';
 import { mapBattlefyStagesToTournamentData } from './mappers/battlefyDataMapper';
 import { clearMatchesWithUnknownTeams } from '../replicants/matchStore';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -26,7 +27,7 @@ export function teamExists(teamId: string): boolean {
 
 export function updateTournamentDataReplicants(data: TournamentData): void {
     if (data.teams.length <= 0) {
-        throw new Error('Tournament has no teams.');
+        throw new Error(i18next.t('tournamentDataHelper.noTeamsFound'));
     }
 
     data.teams.sort((a, b) => {
@@ -75,20 +76,20 @@ export function updateTournamentDataReplicants(data: TournamentData): void {
 export async function parseUploadedTeamData(data: Team[] | TournamentData, dataUrl: string): Promise<TournamentData> {
     if (Array.isArray(data)) {
         if (isEmpty(data)) {
-            throw new Error('Provided data is missing teams.');
+            throw new Error(i18next.t('tournamentDataHelper.noTeamsFound'));
         }
 
         return {
             meta: {
                 id: dataUrl,
                 source: TournamentDataSource.UPLOAD,
-                shortName: 'Unknown Tournament'
+                shortName: i18next.t('tournamentDataHelper.placeholderUploadedTournamentName')
             },
             teams: normalizeTeams(data)
         };
     } else if (data instanceof Object) {
         if (isEmpty(data.teams)) {
-            throw new Error('Provided data is missing teams.');
+            throw new Error(i18next.t('tournamentDataHelper.noTeamsFound'));
         }
 
         if (isEmpty(data.meta.id)) {
@@ -120,17 +121,17 @@ export async function parseUploadedTeamData(data: Team[] | TournamentData, dataU
                     data.meta.url = getBattlefyTournamentUrl(battlefyData);
                 }
             } catch (e) {
-                nodecg.log.warn(`Could not fetch Battlefy data for tournament ${data.meta.id}`, e);
+                nodecg.log.warn(i18next.t('tournamentDataHelper.battlefyDataImportFailed', { tournamentId: data.meta.id }), e);
             }
         }
 
         if (isBlank(data.meta.shortName)) {
-            data.meta.shortName = isBlank(data.meta.name) ? 'Unknown Tournament' : data.meta.name;
+            data.meta.shortName = isBlank(data.meta.name) ? i18next.t('tournamentDataHelper.placeholderTournamentName') : data.meta.name;
         }
 
         return result;
     } else {
-        throw new Error('Invalid data provided to parseUploadedTeamData()');
+        throw new Error(i18next.t('tournamentDataHelper.tournamentDataParsingFailed'));
     }
 }
 
@@ -165,7 +166,7 @@ export async function updateRadiaTournamentData(tournamentUrl: string, tournamen
         try {
             await updateTournamentData(radiaSettings.value.guildID, tournamentUrl, tournamentName);
         } catch (e) {
-            nodecg.log.warn(`Radia tournament data update failed: ${e}`);
+            nodecg.log.warn(i18next.t('tournamentDataHelper.radiaTournamentDataUpdateFailed', { message: e }));
         }
     }
 }

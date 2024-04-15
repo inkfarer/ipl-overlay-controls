@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HighlightedMatchViewer matches snapshot 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
-  <ipl-select-stub modelvalue="1234" label="Match" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
-  <ipl-input-stub name="match-name" label="Match Name" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
-  <ipl-data-row-stub label="Team A" copiable="false" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Team B" copiable="false" data-test="team-b-name-display" value="mock team"></ipl-data-row-stub>
-  <ipl-data-row-stub label="Type of play" copiable="false" data-test="play-type-display" value="Play all"></ipl-data-row-stub>
+"<div data-v-868771ad="" class="ipl-space color-dark">
+  <ipl-select-stub modelvalue="1234" label="translation:highlightedMatches.matchSelect" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
+  <ipl-input-stub name="match-name" label="translation:highlightedMatches.matchNameInput" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
+  <ipl-data-row-stub label="translation:highlightedMatches.teamADisplayLabel" copiable="false" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>
+  <ipl-data-row-stub label="translation:highlightedMatches.teamBDisplayLabel" copiable="false" data-test="team-b-name-display" value="mock team"></ipl-data-row-stub>
+  <ipl-data-row-stub label="translation:highlightedMatches.playTypeDisplayLabel" copiable="false" data-test="play-type-display" value="common:playType.PLAY_ALL"></ipl-data-row-stub>
   <round-select-stub modelvalue="0387" class="m-t-4" data-test="round-selector"></round-select-stub>
-  <ipl-button-stub label="Update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="set-next-match-button"></ipl-button-stub>
+  <ipl-button-stub label="common:button.update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="set-next-match-button"></ipl-button-stub>
 </div>"
 `;
 
@@ -16,7 +16,7 @@ exports[`HighlightedMatchViewer matches snapshot when no matches are loaded 1`] 
 "<div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-info">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> No matches loaded.
+    <!---->translation:highlightedMatches.noMatchesLoadedMessage
   </div>
 </div>"
 `;

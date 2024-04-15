@@ -5,6 +5,7 @@ import { RemoveRoundRequest, UpdateRoundStoreRequest } from 'types/messages/roun
 import { setNextRoundGames } from '../helpers/nextRoundHelper';
 import { generateId } from '../../helpers/generateId';
 import { resetRoundStore } from '../helpers/roundStoreHelper';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -13,10 +14,10 @@ const nextRound = nodecg.Replicant<NextRound>('nextRound');
 
 nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.id) {
-        return ack(new Error('No round ID given.'));
+        return ack(new Error(i18next.t('invalidArgumentsError')));
     }
     if (!roundStore.value[data.id]) {
-        return ack(new Error(`Could not find round '${data.id}'`));
+        return ack(new Error(i18next.t('roundStore.roundNotFound', { id: data.id })));
     }
 
     const roundStoreValue = roundStore.value[data.id];
@@ -40,7 +41,7 @@ nodecg.listenFor('updateRound', (data: UpdateRoundStoreRequest, ack: NodeCG.Unha
 
 nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (data.id && roundStore.value[data.id]) {
-        return ack(new Error(`Round '${data.id}' already exists.`));
+        return ack(new Error(i18next.t('roundStore.roundAlreadyExists', { id: data.id })));
     }
 
     const id = data.id ?? generateId();
@@ -68,10 +69,10 @@ nodecg.listenFor('insertRound', (data: UpdateRoundStoreRequest, ack: NodeCG.Unha
 
 nodecg.listenFor('removeRound', (data: RemoveRoundRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (Object.keys(roundStore.value).length <= 1) {
-        return ack(new Error('Cannot delete the last round.'));
+        return ack(new Error(i18next.t('roundStore.cannotDeleteLastRound')));
     }
     if (!roundStore.value[data.roundId]) {
-        return ack(new Error(`Couldn't find round with id '${data.roundId}'.`));
+        return ack(new Error(i18next.t('roundStore.roundNotFound', { id: data.roundId })));
     }
 
     delete roundStore.value[data.roundId];

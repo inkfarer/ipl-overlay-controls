@@ -21,6 +21,7 @@ jest.mock('../mappers/predictionDataMapper', () => ({ PredictionDataMapper: mock
 jest.mock('../clients/radiaClient', () => mockRadiaClient);
 
 import '../predictions';
+import { PredictionStatus } from 'types/enums/predictionStatus';
 
 describe('predictions', () => {
     beforeEach(() => {
@@ -59,7 +60,7 @@ describe('predictions', () => {
                     status: {
                         predictionsEnabled: false,
                         socketOpen: false,
-                        predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                        predictionStatusReason: 'predictionsNotSupportedByGuild'
                     },
                     currentPrediction: null,
                     modificationTime: '2021-09-10T13:52:29'
@@ -72,10 +73,10 @@ describe('predictions', () => {
 
                 await replicantChangeListeners.radiaSettings({ guildID: '' });
 
-                expect(mockNodecgLog.warn).toHaveBeenCalledWith('Unable to get prediction data: Error: Radia guild ID is not configured!');
+                expect(mockNodecgLog.warn).toHaveBeenCalledWith('translation:predictions.predictionDataRequestError');
                 expect((replicants.predictionStore as PredictionStore).status).toEqual({
                     predictionsEnabled: false,
-                    predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
+                    predictionStatusReason: 'missingConfiguration',
                     socketOpen: false
                 });
                 expect(mockRadiaClient.hasPredictionSupport).not.toHaveBeenCalled();
@@ -283,7 +284,7 @@ describe('predictions', () => {
                         message: 'Error!'
                     });
 
-                    expect(mockNodecgLog.error).toHaveBeenCalledWith('Received error from Radia websocket. Code: 12345, Message: Error!');
+                    expect(mockNodecgLog.error).toHaveBeenCalledWith('translation:predictions.socketReceivedError');
                 });
 
                 it('handles unknown socket message', async () => {
@@ -432,13 +433,13 @@ describe('predictions', () => {
                 status: {
                     predictionsEnabled: false,
                     socketOpen: false,
-                    predictionStatusReason: 'Predictions are not supported by the configured guild.'
+                    predictionStatusReason: 'predictionsNotSupportedByGuild'
                 },
                 currentPrediction: null,
                 modificationTime: '2021-09-10T13:52:29'
             });
             expect(mockWebSocketClass).not.toHaveBeenCalled();
-            expect(ack).toHaveBeenCalledWith(new Error('Unable to proceed as some Radia configuration is missing.'), null);
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingConfigurationError'), null);
         });
 
         it('does nothing if guild ID is empty', async () => {
@@ -450,12 +451,12 @@ describe('predictions', () => {
 
             expect((replicants.predictionStore as PredictionStore).status).toEqual({
                 predictionsEnabled: false,
-                predictionStatusReason: 'Missing Radia configuration. Check your guild ID and socket URL.',
+                predictionStatusReason: 'missingConfiguration',
                 socketOpen: false
             });
             expect(mockRadiaClient.hasPredictionSupport).not.toHaveBeenCalled();
             expect(mockWebSocketClass).not.toHaveBeenCalled();
-            expect(ack).toHaveBeenCalledWith(new Error('Radia guild ID is not configured!'), null);
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingGuildId'), null);
         });
 
         it('fetches prediction data if supported and starts socket', async () => {
@@ -539,6 +540,22 @@ describe('predictions', () => {
             replicants.predictionStore = { currentPrediction: null };
         });
 
+        it.each([
+            PredictionStatus.ACTIVE,
+            PredictionStatus.LOCKED
+        ])('returns an error if a prediction already exists with status %s', async (status) => {
+            replicants.predictionStore = {
+                currentPrediction: {
+                    status
+                }
+            };
+            const ack = jest.fn();
+
+            await messageListeners.postPrediction({ }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.unresolvedPredictionAlreadyExists'));
+        });
+
         it('sends given data to API client', async () => {
             const apiResponse = { id: 'UPDATED-PREDICTION', outcomes: [ {} ]};
             const message = { status: 'RESOLVED' };
@@ -568,12 +585,74 @@ describe('predictions', () => {
     describe('patchPrediction', () => {
         beforeEach(() => {
             replicants.radiaSettings = { guildID: '2057205' };
-            replicants.predictionStore = { currentPrediction: null };
+            replicants.predictionStore = {
+                currentPrediction: {
+                    id: 'prediction123123'
+                }
+            };
+        });
+
+        it('returns error if no prediction is stored', async () => {
+            replicants.predictionStore = {
+                currentPrediction: null
+            };
+            const ack = jest.fn();
+
+            await messageListeners.patchPrediction({ }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.noPredictionAvailable'));
+        });
+
+        it.each([
+            PredictionStatus.LOCKED,
+            PredictionStatus.CANCELED,
+            PredictionStatus.RESOLVED
+        ])('returns error when locking a prediction that is %s', async (status) => {
+            (replicants.predictionStore as PredictionStore).currentPrediction.status = status;
+            const ack = jest.fn();
+
+            await messageListeners.patchPrediction({ status: 'LOCKED' }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotLockPrediction'));
+        });
+
+        it.each([
+            PredictionStatus.RESOLVED,
+            PredictionStatus.CANCELED
+        ])('returns error when cancelling a prediction that is %s', async (status) => {
+            (replicants.predictionStore as PredictionStore).currentPrediction.status = status;
+            const ack = jest.fn();
+
+            await messageListeners.patchPrediction({ status: 'CANCELED' }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotCancelPrediction'));
+        });
+
+        it.each([
+            PredictionStatus.RESOLVED,
+            PredictionStatus.CANCELED,
+            PredictionStatus.ACTIVE
+        ])('returns error when resolving a prediction that is %s', async (status) => {
+            (replicants.predictionStore as PredictionStore).currentPrediction.status = status;
+            const ack = jest.fn();
+
+            await messageListeners.patchPrediction({ status: 'RESOLVED', winning_outcome_id: 'outcome123123' }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.cannotResolvePrediction'));
+        });
+
+        it('returns error when resolving a prediction with no winning outcome', async () => {
+            const ack = jest.fn();
+
+            await messageListeners.patchPrediction({ status: 'RESOLVED' }, ack);
+
+            expect(ack).toHaveBeenCalledWith(new Error('translation:predictions.missingOutcome'));
         });
 
         it('sends given data to API client', async () => {
+            (replicants.predictionStore as PredictionStore).currentPrediction.status = 'LOCKED';
             const apiResponse = { id: 'UPDATED-PREDICTION', outcomes: [ {} ]};
-            const message = { status: 'RESOLVED' };
+            const message = { status: 'RESOLVED', winning_outcome_id: 'outcome123123' };
             // @ts-ignore
             mockRadiaClient.updatePrediction.mockResolvedValue(apiResponse);
             // @ts-ignore
@@ -583,7 +662,10 @@ describe('predictions', () => {
             await messageListeners.patchPrediction(message, ack);
 
             expect(ack).toHaveBeenCalledWith(null, apiResponse);
-            expect(mockRadiaClient.updatePrediction).toHaveBeenCalledWith('2057205', message);
+            expect(mockRadiaClient.updatePrediction).toHaveBeenCalledWith('2057205', {
+                id: 'prediction123123',
+                ...message
+            });
             expect((replicants.predictionStore as PredictionStore).currentPrediction).toEqual(apiResponse);
         });
 

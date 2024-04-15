@@ -60,10 +60,12 @@ describe('ActiveColorToggles', () => {
                 },
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     index: 0,
                     title: 'coolest color',
+                    colorKey: 'coolestColor',
                     isCustom: false,
-                    clrNeutral: '#0FAA00',
+                    clrNeutral: '#0FAA00'
                 },
                 match: {
                     id: '01010',

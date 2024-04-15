@@ -4,13 +4,13 @@
         <ipl-small-toggle
             v-if="canImportData"
             v-model="chooseTeamsManually"
-            label="Choose teams manually"
+            :label="$t('chooseTeamsManuallyToggle')"
             data-test="choose-manually-toggle"
             class="m-b-4"
         />
         <ipl-small-toggle
             v-model="showOnStream"
-            label="Show on stream"
+            :label="$t('showOnStreamToggle')"
             data-test="show-on-stream-toggle"
         />
     </ipl-space>

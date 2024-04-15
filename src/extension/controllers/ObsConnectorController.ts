@@ -2,6 +2,7 @@ import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { ObsConnectorService } from '../services/ObsConnectorService';
 import { ObsCredentials, ObsData } from 'schemas';
+import i18next from 'i18next';
 
 export class ObsConnectorController extends BaseController {
     constructor(nodecg: NodeCG.ServerAPI, obsConnectorService: ObsConnectorService) {
@@ -14,7 +15,7 @@ export class ObsConnectorController extends BaseController {
             obsCredentials.value = data;
 
             if (!obsData.value.enabled) {
-                throw new Error('OBS integration is disabled.');
+                throw new Error(i18next.t('obs.obsSocketDisabled'));
             }
 
             obsConnectorService.stopReconnecting();
@@ -24,7 +25,7 @@ export class ObsConnectorController extends BaseController {
         this.listen('setObsData', data => {
             if (!obsData.value.scenes?.some(scene => scene === data.gameplayScene)
                 || !obsData.value.scenes?.some(scene => scene === data.intermissionScene)) {
-                throw new Error('Could not find one or more of the provided scenes.');
+                throw new Error(i18next.t('obs.sceneNotFound'));
             }
 
             obsData.value = {
@@ -36,7 +37,7 @@ export class ObsConnectorController extends BaseController {
 
         this.listen('setObsSocketEnabled', async (enabled) => {
             if (enabled == null) {
-                throw new Error('Invalid arguments.');
+                throw new Error(i18next.t('invalidArgumentsError'));
             }
             obsData.value.enabled = enabled;
             if (!enabled) {

@@ -1,0 +1,26 @@
+{
+    "title": "Next Match",
+    "chooseTeamsManuallyToggle": "Choose teams manually",
+    "showOnStreamToggle": "Show on stream",
+    "highlightedMatches": {
+        "missingStageDataMessage": "No stages present to import from.",
+        "matchSourceSelect": "???",
+        "matchSourceSelect_BATTLEFY": "Bracket",
+        "matchSourceSelect_SMASHGG": "Stream",
+        "allBattlefyBracketsOption": "All Brackets",
+        "allStartggStreamsOption": "All Streams",
+        "importButton": "Import",
+        "noMatchesLoadedMessage": "No matches loaded.",
+        "matchSelect": "Match",
+        "matchNameInput": "Match Name",
+        "teamADisplayLabel": "Team A",
+        "teamBDisplayLabel": "Team B",
+        "playTypeDisplayLabel": "Type of play"
+    },
+    "manualTeamPicker": {
+        "teamASelect": "Team A",
+        "teamBSelect": "Team B",
+        "matchNameInput": "Match Name"
+    },
+    "cannotImportDataError": "Cannot import data from $t(common:tournamentDataSource.{{source}})"
+}

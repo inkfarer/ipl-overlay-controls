@@ -1,0 +1,15 @@
+{
+    "title": "Rounds",
+    "resetRoundsButton": "Reset rounds",
+    "roundListNextRoundColorKey": "Next round",
+    "createRound": {
+        "sectionTitle": "Create Round",
+        "create3GameRoundButton": "3 Games",
+        "create5GameRoundButton": "5 Games",
+        "create7GameRoundButton": "7 Games"
+    },
+    "showAllRoundsButton": "All Rounds",
+    "roundNameInput": "Name",
+    "roundTypeSelect": "Type",
+    "saveNewRoundButton": "Save"
+}

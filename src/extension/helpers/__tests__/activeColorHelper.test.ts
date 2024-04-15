@@ -9,9 +9,11 @@ describe('activeColorHelper', () => {
 
             setActiveColor({
                 categoryName: 'Cool Colors',
+                categoryKey: 'coolColors',
                 color: {
                     index: 1,
                     title: 'Cool Color',
+                    key: 'coolColor',
                     isCustom: false,
                     clrNeutral: '#222',
                     clrA: '#444',
@@ -30,7 +32,9 @@ describe('activeColorHelper', () => {
                 },
                 activeColor: {
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     index: 1,
                     isCustom: false,
                     clrNeutral: '#222'
@@ -52,12 +56,14 @@ describe('activeColorHelper', () => {
 
             expect(getNextColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 clrA: '#FF9E03',
                 clrB: '#B909E0',
                 clrNeutral: '#08C66B',
                 index: 3,
                 isCustom: false,
-                title: 'Mustard vs Purple'
+                title: 'Mustard vs Purple',
+                key: 'mustardPurple',
             });
         });
 
@@ -73,12 +79,14 @@ describe('activeColorHelper', () => {
 
             expect(getNextColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 clrA: '#37FC00',
                 clrB: '#7D28FC',
                 clrNeutral: '#F4067E',
                 index: 0,
                 isCustom: false,
-                title: 'Green vs Grape'
+                title: 'Green vs Grape',
+                key: 'greenGrape'
             });
         });
 
@@ -94,12 +102,14 @@ describe('activeColorHelper', () => {
 
             expect(getNextColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 clrA: '#B909E0',
                 clrB: '#FF9E03',
                 clrNeutral: '#08C66B',
                 index: 3,
                 isCustom: false,
-                title: 'Mustard vs Purple'
+                title: 'Mustard vs Purple',
+                key: 'mustardPurple'
             });
         });
     });
@@ -117,8 +127,10 @@ describe('activeColorHelper', () => {
 
             expect(getPreviousColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 index: 1,
                 title: 'Green vs Magenta',
+                key: 'greenMagenta',
                 clrA: '#04D976',
                 clrB: '#D600AB',
                 clrNeutral: '#D2E500',
@@ -138,8 +150,10 @@ describe('activeColorHelper', () => {
 
             expect(getPreviousColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 index: 6,
                 title: 'Yellow vs Blue',
+                key: 'yellowBlue',
                 clrA: '#FEF232',
                 clrB: '#2ED2FE',
                 clrNeutral: '#FD5600',
@@ -159,8 +173,10 @@ describe('activeColorHelper', () => {
 
             expect(getPreviousColor()).toEqual({
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 index: 1,
                 title: 'Green vs Magenta',
+                key: 'greenMagenta',
                 clrA: '#D600AB',
                 clrB: '#04D976',
                 clrNeutral: '#D2E500',

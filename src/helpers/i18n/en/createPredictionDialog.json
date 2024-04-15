@@ -1,0 +1,12 @@
+{
+    "dialogTitle": "Create Prediction",
+    "activePredictionNotResolvedWarning": "The active prediction has not been resolved!",
+    "titleInput": "Title",
+    "durationInputLabel": "Duration",
+    "durationInputUnit": "seconds",
+    "teamANameInput": "Team A",
+    "teamBNameInput": "Team B",
+    "createButton": "Create",
+    "resetButton": "Reset",
+    "defaultPredictionTitle": "Who do you think will win this match?"
+}

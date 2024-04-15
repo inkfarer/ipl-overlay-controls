@@ -34,7 +34,7 @@ describe('tournamentImporter', () => {
                 await messageListeners.getTournamentData(
                     { id: 'tourney', method: TournamentDataSource.SMASHGG }, ack);
 
-                expect(ack).toHaveBeenCalledWith(new Error('No smash.gg API key is configured.'));
+                expect(ack).toHaveBeenCalledWith(new Error('translation:tournamentImporter.missingStartggApiKey'));
             });
         });
     });
@@ -129,7 +129,7 @@ describe('tournamentImporter', () => {
                     { id: 'tourney://uncool-tournament', method: TournamentDataSource.UPLOAD }, ack);
 
                 expect(ack).toHaveBeenCalledWith(
-                    new Error('Got response code 401 from URL tourney://uncool-tournament'));
+                    new Error('translation:tournamentImporter.rawDataImportFailed'));
                 expect(mockAxios.get).toHaveBeenCalledWith('tourney://uncool-tournament');
             });
         });

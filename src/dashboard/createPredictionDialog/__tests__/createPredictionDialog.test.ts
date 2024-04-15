@@ -18,7 +18,8 @@ describe('CreatePredictionDialog', () => {
         IplInput: true,
         FontAwesomeIcon: true,
         IplErrorDisplay: true,
-        IplDialogTitle: true
+        IplDialogTitle: true,
+        IplocButton: true
     };
 
     beforeEach(() => {
@@ -121,7 +122,7 @@ describe('CreatePredictionDialog', () => {
         wrapper.getComponent<typeof IplInput>('[type="number"]').vm.$emit('update:modelValue', 0);
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.getComponent<typeof IplButton>('[data-test="create-prediction-button"]').props().disabled).toEqual(true);
+        expect(wrapper.getComponent('[data-test="create-prediction-button"]').attributes().disabled).toEqual('true');
     });
 
     it('handles creating prediction and closes dialog on create button click', async () => {
@@ -139,7 +140,7 @@ describe('CreatePredictionDialog', () => {
         await flushPromises();
 
         expect(predictionDataStore.createPrediction).toHaveBeenCalledWith({
-            title: 'Who do you think will win this match?',
+            title: 'translation:defaultPredictionTitle',
             duration: 128,
             teamAName: 'cool team A',
             teamBName: 'cool team B'
@@ -165,7 +166,7 @@ describe('CreatePredictionDialog', () => {
         await wrapper.vm.$nextTick();
 
         expect(wrapper.getComponent('[type="number"]').attributes().modelvalue).toEqual('120');
-        expect(wrapper.getComponent('[name="title"]').attributes().modelvalue).toEqual('Who do you think will win this match?');
+        expect(wrapper.getComponent('[name="title"]').attributes().modelvalue).toEqual('translation:defaultPredictionTitle');
         expect(wrapper.getComponent('[name="team-a-name"]').attributes().modelvalue).toEqual('cool team A');
         expect(wrapper.getComponent('[name="team-b-name"]').attributes().modelvalue).toEqual('cool team B');
     });

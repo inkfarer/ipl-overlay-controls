@@ -1,13 +1,16 @@
 <template>
     <ipl-expanding-space>
         <template #title>
-            Edit match
+            {{ $t('setEditor.sectionTitle') }}
             <template v-if="!!nextGame">
-                <span class="badge badge-blue m-l-6">Next up</span>
+                <span class="badge badge-blue m-l-6">{{ $t('setEditor.nextGameLabel') }}</span>
                 <span class="text-small">
-                    {{ settingsStore.translatedModeName(nextGame.mode) }}
-                    on
-                    {{ settingsStore.translatedStageName(nextGame.stage) }}
+                    {{
+                        $t('setEditor.nextGameTemplate', {
+                            mode: settingsStore.translatedModeName(nextGame.mode),
+                            stage: settingsStore.translatedStageName(nextGame.stage)
+                        })
+                    }}
                 </span>
             </template>
         </template>
@@ -31,16 +34,17 @@
                 data-test="mode-select"
                 class="m-l-6 max-width"
             />
+            <!-- eslint-disable max-len -->
             <ipl-select
                 v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"
-                :model-value="
-                    `${game.color?.categoryName ?? activeColor.categoryName}_${game.color?.index ?? activeColor.index}`"
+                :model-value="`${game.color?.categoryKey ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
                 :option-groups="colors"
-                class="m-l-6"
+                class="m-l-6 max-width"
                 :disabled="game.winner === GameWinner.NO_WINNER"
                 data-test="color-select"
                 @update:model-value="setGameColor(index, $event)"
             />
+            <!-- eslint-enable max-len -->
             <div
                 v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
                 class="layout horizontal max-width m-l-6"
@@ -73,7 +77,7 @@
                 <ipl-checkbox
                     :model-value="game.color?.isCustom ?? activeColor.isCustom"
                     :disabled="!game.color"
-                    label="Custom color"
+                    :label="$t('setEditor.customColorCheckbox')"
                     small
                     data-test="custom-color-toggle"
                     @update:model-value="setIsCustomColor(index, $event)"
@@ -81,7 +85,7 @@
                 <ipl-checkbox
                     :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
                     :disabled="!game.color"
-                    label="Swap colors"
+                    :label="$t('setEditor.swapColorsCheckbox')"
                     class="m-l-6"
                     small
                     data-test="swap-colors-toggle"
@@ -123,15 +127,15 @@
         </div>
         <div class="layout horizontal m-t-8">
             <ipl-button
-                label="Update"
+                :label="$t('common:button.update')"
                 :color="gamesChanged ? 'red' : 'blue'"
                 data-test="update-button"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="handleUpdate"
                 @right-click="undoChanges"
             />
-            <ipl-button
-                label="Reset"
+            <iploc-button
+                :label="$t('setEditor.resetButton')"
                 color="red"
                 class="m-l-6"
                 requires-confirmation
@@ -140,7 +144,7 @@
             />
             <ipl-toggle-button
                 v-model="editColorsEnabled"
-                label="Edit colors"
+                :label="$t('setEditor.editColorsToggle')"
                 class="m-l-6"
                 data-test="edit-colors-toggle"
             />
@@ -166,10 +170,11 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import StageSelect from '../../components/StageSelect.vue';
 import ModeSelect from '../../components/ModeSelect.vue';
+import { useTranslation } from 'i18next-vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 library.add(faTimes);
 
@@ -184,10 +189,13 @@ export default defineComponent({
         IplButton,
         IplSelect,
         IplExpandingSpace,
-        IplInput
+        IplInput,
+        IplocButton
     },
 
     setup() {
+        const { t } = useTranslation();
+
         const activeRoundStore = useActiveRoundStore();
         const settingsStore = useSettingsStore();
         const gameData = computed(() => perGameData[settingsStore.runtimeConfig.gameVersion]);
@@ -230,7 +238,6 @@ export default defineComponent({
             nextGameIndex.value === -1 ? null : activeRoundStore.activeRound.games[nextGameIndex.value]);
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             games,
             GameWinner,
             gamesChanged,
@@ -245,30 +252,45 @@ export default defineComponent({
             },
             editColorsEnabled,
             activeColor,
-            colors: computed(() => gameData.value.colors.map(group => ({
-                name: group.meta.name,
-                options: group.colors.map(color => ({
-                    name: color.title,
-                    value: `${group.meta.name}_${color.index}`,
-                    disabled: group.meta.name === 'Custom Color'
-                }))
-            }))),
+            colors: computed(() => gameData.value.colors.map(group => {
+                return ({
+                    name: group.meta.key === 'customColor'
+                        ? t('colors:customColor.groupName')
+                        : t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`),
+                    options: group.colors.map(color => {
+                        return ({
+                            name: color.isCustom
+                                ? t('colors:customColor.customColor')
+                                : t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.${color.key}`),
+                            value: `${group.meta.key}_${color.key}`,
+                            disabled: group.meta.key === 'customColor'
+                        });
+                    })
+                });
+            })),
             setGameColor(index: number, color: string): void {
                 const colorParts = color.split('_');
-                const colorIndex = parseInt(colorParts[1]);
-                const colorObject = gameData.value.colors
-                    .find(group => group.meta.name === colorParts[0])
-                    .colors[colorIndex];
+                const category = gameData.value.colors
+                    .find(group => group.meta.key === colorParts[0]);
+                const colorObject = category.colors.find(color => color.key === colorParts[1]);
                 const colorsSwapped = games.value[index].color?.colorsSwapped
                     ?? activeRoundStore.swapColorsInternally;
 
                 games.value[index].color = {
-                    ...colorObject,
-                    ...colorsSwapped && {
+                    ...(colorsSwapped ? {
                         clrA: colorObject.clrB,
                         clrB: colorObject.clrA
-                    },
-                    categoryName: colorParts[0],
+                    } : {
+                        clrA: colorObject.clrA,
+                        clrB: colorObject.clrB
+                    }),
+                    index: colorObject.index,
+                    title: colorObject.title,
+                    isCustom: colorObject.isCustom,
+                    clrNeutral: colorObject.clrNeutral,
+                    categoryName: category.meta.name,
+                    categoryKey: category.meta.key,
+                    colorKey: colorObject.key,
                     colorsSwapped
                 };
             },
@@ -281,7 +303,9 @@ export default defineComponent({
                 games.value[index].color = {
                     ...games.value[index].color,
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     title: 'Custom Color',
+                    colorKey: 'customColor',
                     index: 0,
                     isCustom
                 };

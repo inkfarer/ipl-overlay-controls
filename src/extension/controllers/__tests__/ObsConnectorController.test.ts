@@ -21,7 +21,7 @@ describe('ObsConnectorController', () => {
             await expect(() => controllerListeners.connectToObs({
                 address: 'localhost:9090',
                 password: 'test pwd'
-            })).rejects.toThrow(new Error('OBS integration is disabled.'));
+            })).rejects.toThrow(new Error('translation:obs.obsSocketDisabled'));
 
             expect(replicants.obsCredentials).toEqual({
                 address: 'localhost:9090',
@@ -60,7 +60,7 @@ describe('ObsConnectorController', () => {
             };
 
             expect(() => controllerListeners.setObsData({ gameplayScene, intermissionScene }))
-                .toThrow(new Error('Could not find one or more of the provided scenes.'));
+                .toThrow(new Error('translation:obs.sceneNotFound'));
         });
 
         it('re-assigns the gameplay and intermission scenes', () => {
@@ -83,7 +83,7 @@ describe('ObsConnectorController', () => {
     describe('setObsSocketEnabled', () => {
         it('throws an error if the required arguments are not provided', async () => {
             await expect(() => controllerListeners.setObsSocketEnabled())
-                .rejects.toThrow(new Error('Invalid arguments.'));
+                .rejects.toThrow(new Error('translation:invalidArgumentsError'));
             expect(obsConnectorService.disconnect).not.toHaveBeenCalled();
             expect(obsConnectorService.connect).not.toHaveBeenCalled();
         });

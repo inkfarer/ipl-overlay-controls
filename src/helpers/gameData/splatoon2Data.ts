@@ -203,12 +203,14 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
     colors: [
         {
             meta: {
-                name: 'Ranked Modes'
+                name: 'Ranked Modes',
+                key: 'rankedModes'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Green vs Grape',
+                    key: 'greenGrape',
                     clrA: '#37FC00',
                     clrB: '#7D28FC',
                     clrNeutral: '#F4067E'
@@ -216,6 +218,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 1,
                     title: 'Green vs Magenta',
+                    key: 'greenMagenta',
                     clrA: '#04D976',
                     clrB: '#D600AB',
                     clrNeutral: '#D2E500'
@@ -223,6 +226,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 2,
                     title: 'Turquoise vs Orange',
+                    key: 'turquoiseOrange',
                     clrA: '#10E38F',
                     clrB: '#FB7B08',
                     clrNeutral: '#6912CD'
@@ -230,6 +234,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 3,
                     title: 'Mustard vs Purple',
+                    key: 'mustardPurple',
                     clrA: '#FF9E03',
                     clrB: '#B909E0',
                     clrNeutral: '#08C66B'
@@ -237,6 +242,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 4,
                     title: 'Dark Blue vs Green',
+                    key: 'darkBlueGreen',
                     clrA: '#2F27CC',
                     clrB: '#37FC00',
                     clrNeutral: '#EA01B7'
@@ -244,6 +250,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 5,
                     title: 'Purple vs Green',
+                    key: 'purpleGreen',
                     clrA: '#B909E0',
                     clrB: '#37FC00',
                     clrNeutral: '#F87604'
@@ -251,6 +258,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 6,
                     title: 'Yellow vs Blue',
+                    key: 'yellowBlue',
                     clrA: '#FEF232',
                     clrB: '#2ED2FE',
                     clrNeutral: '#FD5600'
@@ -259,12 +267,14 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
         },
         {
             meta: {
-                name: 'Turf War'
+                name: 'Turf War',
+                key: 'turfWar'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Yellow vs Purple',
+                    key: 'yellowPurple',
                     clrA: '#D1E004',
                     clrB: '#960CB2',
                     clrNeutral: '#0EB962'
@@ -272,6 +282,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 1,
                     title: 'Pink vs Blue',
+                    key: 'pinkBlue',
                     clrA: '#E61077',
                     clrB: '#361CB8',
                     clrNeutral: '#24C133'
@@ -279,6 +290,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 2,
                     title: 'Pink vs Yellow',
+                    key: 'pinkYellow',
                     clrA: '#ED0C6A',
                     clrB: '#D5E802',
                     clrNeutral: '#08C24D'
@@ -286,6 +298,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 3,
                     title: 'Purple vs Turquoise',
+                    key: 'purpleTurquoise',
                     clrA: '#6B10CC',
                     clrB: '#08CC81',
                     clrNeutral: '#EB246D'
@@ -293,6 +306,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 4,
                     title: 'Pink vs Light Blue',
+                    key: 'pinkLightBlue',
                     clrA: '#E30960',
                     clrB: '#02ADCF',
                     clrNeutral: '#DDE713'
@@ -300,6 +314,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 5,
                     title: 'Purple vs Orange',
+                    key: 'purpleOrange',
                     clrA: '#5617C2',
                     clrB: '#FF5F03',
                     clrNeutral: '#ACE81E'
@@ -307,6 +322,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 6,
                     title: 'Pink vs Green',
+                    key: 'pinkGreen',
                     clrA: '#E60572',
                     clrB: '#1BBF0F',
                     clrNeutral: '#CCE50C'
@@ -314,6 +330,7 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
                 {
                     index: 7,
                     title: 'Yellow vs Blue',
+                    key: 'yellowBlue',
                     clrA: '#F1CE33',
                     clrB: '#4B12BE',
                     clrNeutral: '#E62E96'
@@ -322,12 +339,14 @@ export const splatoon2Data: GameData<typeof Splatoon2Stages, typeof Splatoon2Mod
         },
         {
             meta: {
-                name: 'Color Lock'
+                name: 'Color Lock',
+                key: 'colorLock'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Yellow vs Blue (Color Lock)',
+                    key: 'yellowBlue',
                     clrA: '#FEF232',
                     clrB: '#2F27CC',
                     clrNeutral: '#DC1589'

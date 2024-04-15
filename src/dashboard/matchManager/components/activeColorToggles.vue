@@ -57,7 +57,7 @@
                 />
             </div>
             <ipl-button
-                label="Swap"
+                :label="$t('swapColorsButton')"
                 class="m-l-6"
                 data-test="swap-colors-button"
                 @click="swapColors"
@@ -187,7 +187,6 @@ span.team-name {
     border-radius: $border-radius-inner;
     transition-duration: $transition-duration-low;
     padding: 6px;
-    cursor: pointer;
 
     &:not(.disabled):hover {
         background-color: $background-secondary-hover;

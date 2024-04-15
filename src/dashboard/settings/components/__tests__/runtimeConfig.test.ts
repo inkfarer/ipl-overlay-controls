@@ -83,27 +83,7 @@ describe('RuntimeConfig', () => {
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
-    it('handles submitting when an incompatible bundle is found', async () => {
-        const store = useSettingsStore();
-        store.runtimeConfig.gameVersion = GameVersion.SPLATOON_3;
-        store.setGameVersion = jest.fn().mockResolvedValue({ incompatibleBundles: ['old-bundle']});
-        const wrapper = mount(RuntimeConfig, {
-            global: {
-                plugins: [pinia]
-            }
-        });
-
-        wrapper.getComponent<typeof IplSelect>('[data-test="game-version-select"]').vm.$emit('update:modelValue', GameVersion.SPLATOON_2);
-        wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
-        await flushPromises();
-
-        expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_2);
-        const warning = wrapper.findComponent('[data-test="incompatible-bundle-warning"]');
-        expect(warning.exists()).toEqual(true);
-        expect(warning.text()).toEqual('Bundle old-bundle is incompatible with Splatoon 3.');
-    });
-
-    it('handles submitting when multiple incompatible bundles are found', async () => {
+    it('handles submitting when incompatible bundles are found', async () => {
         const store = useSettingsStore();
         store.runtimeConfig.gameVersion = GameVersion.SPLATOON_3;
         store.setGameVersion = jest.fn().mockResolvedValue({ incompatibleBundles: ['old-bundle', 'old-bundle-2']});
@@ -120,7 +100,7 @@ describe('RuntimeConfig', () => {
         expect(store.setGameVersion).toHaveBeenCalledWith('SPLATOON_2');
         const warning = wrapper.findComponent('[data-test="incompatible-bundle-warning"]');
         expect(warning.exists()).toEqual(true);
-        expect(warning.text()).toEqual('Bundles old-bundle and old-bundle-2 are incompatible with Splatoon 3.');
+        expect(warning.text()).toEqual('translation:general.incompatibleBundleWarning');
     });
 
     it('handles closing incompatible bundle warning', async () => {

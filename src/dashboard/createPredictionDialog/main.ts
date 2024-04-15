@@ -7,6 +7,9 @@ import { predictionReps, usePredictionDataStore } from '../store/predictionDataS
 import { nextRoundReps, useNextRoundStore } from '../store/nextRoundStore';
 import { setUpErrorHandler } from '../store/errorHandlerStore';
 import { createPinia } from 'pinia';
+import { initI18n } from '../helpers/i18n';
+import I18NextVue from 'i18next-vue';
+import i18next from 'i18next';
 
 (async () => {
     const app = createApp(Panel);
@@ -15,5 +18,7 @@ import { createPinia } from 'pinia';
     await setUpPiniaReplicants(nextRoundReps, useNextRoundStore());
     await setUpPiniaReplicants(predictionReps, usePredictionDataStore());
     setUpErrorHandler(app);
+    await initI18n('createPredictionDialog');
+    app.use(I18NextVue, { i18next });
     app.mount('#app');
 })();

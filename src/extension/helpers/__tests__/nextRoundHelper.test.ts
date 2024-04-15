@@ -48,7 +48,7 @@ describe('nextRoundHelper', () => {
             };
 
             expect(() => setNextRoundGames('aaaaaa'))
-                .toThrow('Could not find round \'aaaaaa\'.');
+                .toThrow('translation:nextRoundHelper.roundNotFound');
         });
     });
 
@@ -78,7 +78,7 @@ describe('nextRoundHelper', () => {
                 .mockReturnValueOnce('TEAM A')
                 .mockReturnValueOnce(undefined);
 
-            expect(() => setNextRoundTeams('aaa', 'bbb')).toThrow('Could not find a team.');
+            expect(() => setNextRoundTeams('aaa', 'bbb')).toThrow('translation:nextRoundHelper.teamNotFound');
         });
     });
 });

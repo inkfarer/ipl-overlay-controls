@@ -47,7 +47,7 @@ describe('tournamentData', () => {
             messageListeners.toggleTeamImage(
                 { teamId: 'this team does not exist', isVisible: true }, mockAck);
 
-            expect(mockAck).toBeCalledWith(new Error('No team found.'));
+            expect(mockAck).toBeCalledWith(new Error('translation:tournamentData.teamNotFound'));
         });
     });
 });

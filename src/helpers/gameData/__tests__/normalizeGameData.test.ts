@@ -47,12 +47,14 @@ describe('normalizeGameData', () => {
             colors: [
                 {
                     meta: {
-                        name: 'Cool Colors'
+                        name: 'Cool Colors',
+                        key: 'coolColors'
                     },
                     colors: [
                         {
                             index: 0,
                             title: 'Color One',
+                            key: 'colorOne',
                             clrA: '#000',
                             clrB: '#FFF',
                             clrNeutral: '#AAA'
@@ -61,12 +63,14 @@ describe('normalizeGameData', () => {
                 },
                 {
                     meta: {
-                        name: 'Cool Colors 2'
+                        name: 'Cool Colors 2',
+                        key: 'coolColors2'
                     },
                     colors: [
                         {
                             index: 0,
                             title: 'Color Two',
+                            key: 'colorTwo',
                             clrA: '#898',
                             clrB: '#999',
                             clrNeutral: '#EEE'
@@ -130,12 +134,14 @@ describe('normalizeGameData', () => {
             colors: [
                 {
                     meta: {
-                        name: 'Cool Colors'
+                        name: 'Cool Colors',
+                        key: 'coolColors'
                     },
                     colors: [
                         {
                             index: 0,
                             title: 'Color One',
+                            key: 'colorOne',
                             clrA: '#000',
                             clrB: '#FFF',
                             clrNeutral: '#AAA',
@@ -145,12 +151,14 @@ describe('normalizeGameData', () => {
                 },
                 {
                     meta: {
-                        name: 'Cool Colors 2'
+                        name: 'Cool Colors 2',
+                        key: 'coolColors2'
                     },
                     colors: [
                         {
                             index: 0,
                             title: 'Color Two',
+                            key: 'colorTwo',
                             clrA: '#898',
                             clrB: '#999',
                             clrNeutral: '#EEE',
@@ -160,12 +168,14 @@ describe('normalizeGameData', () => {
                 },
                 {
                     meta: {
-                        name: 'Custom Color'
+                        name: 'Custom Color',
+                        key: 'customColor'
                     },
                     colors: [
                         {
                             index: 0,
                             title: 'Custom Color',
+                            key: 'customColor',
                             clrA: '#000000',
                             clrB: '#FFFFFF',
                             clrNeutral: '#818181',

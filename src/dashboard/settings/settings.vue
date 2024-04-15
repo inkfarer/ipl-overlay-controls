@@ -2,19 +2,19 @@
     <ipl-error-display class="m-b-8" />
     <ipl-sidebar v-model:is-open="showSidebar">
         <ipl-space
-            v-for="(name, key) in settingsSections"
-            :key="key"
-            :data-test="`section-selector_${key}`"
+            v-for="(section, index) in settingsSections"
+            :key="section.key"
+            :data-test="`section-selector_${section.key}`"
             clickable
-            :color="visibleSection === key ? 'blue' : 'light'"
+            :color="visibleSection === index ? 'blue' : 'light'"
             class="m-b-8"
-            @click="visibleSection = key; showSidebar = false"
+            @click="visibleSection = index; showSidebar = false"
         >
-            {{ name }}
+            {{ section.name }}
         </ipl-space>
     </ipl-sidebar>
     <ipl-space
-        class="layout horizontal m-t-8"
+        class="layout horizontal m-t-8 m-b-8"
         data-test="open-sidebar-button"
         clickable
         @click="showSidebar = true"
@@ -23,27 +23,9 @@
             icon="bars"
             class="large-icon m-r-8"
         />
-        All Settings
+        {{ $t('showAllSettingsButton') }}
     </ipl-space>
-    <lastfm-settings
-        v-if="visibleSection === 'lastfm'"
-        class="m-t-8"
-    />
-    <radia-settings
-        v-else-if="visibleSection === 'radia'"
-        class="m-t-8"
-    />
-    <runtime-config
-        v-else-if="visibleSection === 'general'"
-        class="m-t-8"
-    />
-    <template v-else-if="visibleSection === 'obs-socket'">
-        <obs-socket-settings class="m-t-8" />
-        <obs-data-picker
-            v-if="obsSocketEnabled"
-            class="m-t-8"
-        />
-    </template>
+    <component :is="settingsSections[visibleSection].component" />
 </template>
 
 <script lang="ts">
@@ -59,15 +41,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ObsSocketSettings from './components/obsSocketSettings.vue';
 import ObsDataPicker from './components/obsDataPicker.vue';
 import { useObsStore } from '../store/obsStore';
+import { useTranslation } from 'i18next-vue';
+import ObsSettings from './components/obsSettings.vue';
 
 library.add(faBars);
-
-const settingsSections = {
-    general: 'General',
-    lastfm: 'Last.fm',
-    radia: 'Radia',
-    'obs-socket': 'OBS Socket'
-};
 
 export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
@@ -86,13 +63,37 @@ export default defineComponent({
     },
 
     setup() {
+        const { t } = useTranslation();
         const obsStore = useObsStore();
 
+        const settingsSections = computed(() => [
+            {
+                key: 'general',
+                name: t('sectionName.general'),
+                component: RuntimeConfig
+            },
+            {
+                key: 'lastfm',
+                name: t('sectionName.lastfm'),
+                component: LastfmSettings
+            },
+            {
+                key: 'radia',
+                name: t('sectionName.radia'),
+                component: RadiaSettings
+            },
+            {
+                key: 'obs',
+                name: t('sectionName.obs'),
+                component: ObsSettings
+            }
+        ]);
+
         return {
+            settingsSections,
             obsSocketEnabled: computed(() => obsStore.obsData.enabled),
-            visibleSection: ref<keyof typeof settingsSections>('general'),
-            showSidebar: ref(false),
-            settingsSections
+            visibleSection: ref(0),
+            showSidebar: ref(false)
         };
     }
 });

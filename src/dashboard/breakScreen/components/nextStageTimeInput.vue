@@ -5,7 +5,7 @@
                 v-model="hour"
                 name="hour"
                 type="number"
-                label="Hour"
+                :label="$t('nextStageTimer.hourInput')"
                 :formatter="hourFormatter"
                 centered
                 @focuschange="handleFocusEvent"
@@ -15,14 +15,14 @@
                 v-model="minute"
                 name="min"
                 type="number"
-                label="Min"
+                :label="$t('nextStageTimer.minuteInput')"
                 :formatter="minuteFormatter"
                 centered
                 @focuschange="handleFocusEvent"
             />
             <ipl-select
                 v-model="date"
-                label="Day"
+                :label="$t('nextStageTimer.daySelect')"
                 data-test="next-stage-date-select"
                 :options="dateOptions"
             />

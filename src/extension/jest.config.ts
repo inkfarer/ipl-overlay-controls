@@ -8,5 +8,9 @@ export default {
     transform: {
         '^.+\\.m?[tj]sx?$': 'ts-jest'
     },
-    setupFilesAfterEnv: ['./__mocks__/mockNodecg.ts', './__mocks__/MockBaseController.ts']
+    setupFilesAfterEnv: [
+        './__mocks__/mockNodecg.ts',
+        './__mocks__/MockBaseController.ts',
+        './__mocks__/i18n.ts'
+    ]
 };

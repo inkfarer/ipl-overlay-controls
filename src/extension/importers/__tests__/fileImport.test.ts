@@ -48,7 +48,7 @@ describe('fileImport', () => {
                 null);
 
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
+            expect(mockSend).toHaveBeenCalledWith('translation:fileImport.invalidFileOrJsonType');
         });
 
         it('responds with 400 if data type is not given', () => {
@@ -61,7 +61,7 @@ describe('fileImport', () => {
                 null);
 
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
+            expect(mockSend).toHaveBeenCalledWith('translation:fileImport.invalidFileOrJsonType');
         });
 
         it('responds with 400 if uploaded file is not json', () => {
@@ -76,7 +76,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
+            expect(mockSend).toHaveBeenCalledWith('translation:fileImport.invalidFileOrJsonType');
         });
 
         it('responds with 400 if multiple files are uploaded under the same name', () => {
@@ -91,7 +91,7 @@ describe('fileImport', () => {
             null);
 
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith('Invalid attached file or jsonType property provided.');
+            expect(mockSend).toHaveBeenCalledWith('translation:fileImport.invalidFileOrJsonType');
         });
 
         it('responds with 400 if data type is unknown', () => {

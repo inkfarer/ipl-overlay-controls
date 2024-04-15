@@ -23,7 +23,7 @@ describe('roundStoreHelper', () => {
             expect(replicants.roundStore).toEqual({
                 '00000': {
                     meta: {
-                        name: 'Default Round 1',
+                        name: 'translation:roundStoreHelper.defaultRoundName',
                         type: PlayType.BEST_OF
                     },
                     games: [
@@ -34,7 +34,7 @@ describe('roundStoreHelper', () => {
                 },
                 '11111': {
                     meta: {
-                        name: 'Default Round 2',
+                        name: 'translation:roundStoreHelper.defaultRoundName',
                         type: PlayType.BEST_OF
                     },
                     games: [

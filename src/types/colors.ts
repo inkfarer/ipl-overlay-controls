@@ -1,6 +1,7 @@
 export interface ColorInfo {
     index: number;
     title: string;
+    key: string;
     clrA: string;
     clrB: string;
     clrNeutral: string;
@@ -8,7 +9,7 @@ export interface ColorInfo {
 }
 
 export interface ColorGroup {
-    meta: { name: string };
+    meta: { name: string, key: string };
     colors: ColorInfo[];
 }
 

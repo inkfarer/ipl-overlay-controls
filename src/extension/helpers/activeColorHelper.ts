@@ -26,7 +26,9 @@ export function setActiveColor(data: SetActiveColorRequest): void {
         index: data.color.index,
         title: data.color.title,
         isCustom: data.color.isCustom,
-        clrNeutral: data.color.clrNeutral
+        clrNeutral: data.color.clrNeutral,
+        colorKey: data.color.key,
+        categoryKey: data.categoryKey
     };
     newActiveRound.teamA.color = data.color.clrA;
     newActiveRound.teamB.color = data.color.clrB;
@@ -46,7 +48,8 @@ export function getNextColor(): ColorWithCategory {
 
     return {
         ...(swapColorsInternally.value ? swapColors(nextColor) : nextColor),
-        categoryName: selectedColorGroup.meta.name
+        categoryName: selectedColorGroup.meta.name,
+        categoryKey: selectedColorGroup.meta.key
     };
 }
 
@@ -58,6 +61,7 @@ export function getPreviousColor(): ColorWithCategory {
 
     return {
         ...(swapColorsInternally.value ? swapColors(previousColor) : previousColor),
-        categoryName: selectedColorGroup.meta.name
+        categoryName: selectedColorGroup.meta.name,
+        categoryKey: selectedColorGroup.meta.key
     };
 }

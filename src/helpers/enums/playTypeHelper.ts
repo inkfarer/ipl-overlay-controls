@@ -1,14 +1,6 @@
-import { PlayType, PlayTypeValues } from '../../types/enums/playType';
+import { PlayType } from '../../types/enums/playType';
 
 export class PlayTypeHelper {
-    static toPrettyString(value: PlayType | PlayTypeValues, gameCount?: number): string {
-        const count = !gameCount ? '' : ` ${gameCount}`;
-        return {
-            [PlayType.PLAY_ALL]: `Play all${count}`,
-            [PlayType.BEST_OF]: `Best of${count}`
-        }[value];
-    }
-
     static fromBattlefySeriesStyle(value: string): PlayType | undefined {
         switch (value?.toLowerCase()) {
             case 'gamespermatch':

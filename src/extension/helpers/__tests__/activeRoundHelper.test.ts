@@ -134,7 +134,7 @@ describe('activeRoundHelper', () => {
             };
 
             expect(() => setWinner(1,GameWinner.BRAVO))
-                .toThrow('Cannot set winner for game 2 as it does not exist.');
+                .toThrow('translation:activeRoundHelper.gameOutOfRange');
         });
 
         it('updates round store', () => {
@@ -189,7 +189,7 @@ describe('activeRoundHelper', () => {
             };
 
             expect(() => setActiveRoundGames(({} as ActiveRound), 'this match does not exist'))
-                .toThrow('Could not find match \'this match does not exist\'.');
+                .toThrow('translation:activeRoundHelper.matchNotFound');
         });
     });
 
@@ -247,7 +247,7 @@ describe('activeRoundHelper', () => {
             };
 
             expect(() => setActiveRoundTeams(({} as ActiveRound), '456456', '123123'))
-                .toThrow('Could not find a team.');
+                .toThrow('translation:activeRoundHelper.teamNotFound');
         });
     });
 });

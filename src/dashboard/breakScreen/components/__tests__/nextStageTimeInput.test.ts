@@ -101,9 +101,13 @@ describe('NextStageTimeInput', () => {
     });
 
     describe('hourFormatter', () => {
-        const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
+        let formatter: (input: string) => string;
 
-        const formatter = wrapper.getComponent<typeof IplInput>('[name="hour"]').vm.$props.formatter;
+        beforeEach(() => {
+            const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
+
+            formatter = wrapper.getComponent<typeof IplInput>('[name="hour"]').vm.$props.formatter;
+        });
 
         it('normalizes numbers below 0 to zero', () => {
             expect(formatter('-1')).toEqual('00');
@@ -123,9 +127,13 @@ describe('NextStageTimeInput', () => {
     });
 
     describe('minuteFormatter', () => {
-        const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
+        let formatter: (input: string) => string;
 
-        const formatter = wrapper.getComponent<typeof IplInput>('[name="min"]').vm.$props.formatter;
+        beforeEach(() => {
+            const wrapper = mount(NextStageTimeInput, { props: { modelValue: '2020-12-24T05:54:00Z' } });
+
+            formatter = wrapper.getComponent<typeof IplInput>('[name="min"]').vm.$props.formatter;
+        });
 
         it('normalizes numbers below 0 to zero', () => {
             expect(formatter('-1')).toEqual('00');

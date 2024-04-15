@@ -1,99 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ResolvePredictionDialog matches snapshot when the current round is not completed 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> The current round has not been completed!
+    <!---->translation:roundNotCompletedWarning
   </div>
 </div>
 <!--v-if-->
-<div data-v-d255ffee="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label"> Team A </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-748defd4="" class="label">First Team</span></button><label data-v-820fd73e="" class="ipl-label winner-label">Winner - Team B </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-748defd4="" class="label">Second Team</span></button></div>"
+<div data-v-868771ad="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label">translation:teamAButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">First Team</span></span></button><label data-v-820fd73e="" class="ipl-label winner-label">translation:teamBButtonLabel.winner</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Second Team</span></span></button></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the prediction is not locked 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> This prediction cannot be resolved right now.
+    <!---->translation:resolvingNotPossibleMessage
   </div>
 </div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner cannot be determined automatically 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> The current round has not been completed!
+    <!---->translation:roundNotCompletedWarning
   </div>
 </div>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> Unable to determine the current round's winner. The leading team is unknown team b.
+    <!---->translation:predictionWinnerUnknownMessage.withWinner
   </div>
 </div>
-<div data-v-d255ffee="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label"> Team A </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-748defd4="" class="label">First Team</span></button><label data-v-820fd73e="" class="ipl-label"> Team B </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-748defd4="" class="label">Second Team</span></button></div>"
+<div data-v-868771ad="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label">translation:teamAButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">First Team</span></span></button><label data-v-820fd73e="" class="ipl-label">translation:teamBButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Second Team</span></span></button></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team A 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> The current round has not been completed!
+    <!---->translation:roundNotCompletedWarning
   </div>
 </div>
 <!--v-if-->
-<div data-v-d255ffee="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label winner-label">Winner - Team A </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-748defd4="" class="label">First Team</span></button><label data-v-820fd73e="" class="ipl-label"> Team B </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-748defd4="" class="label">Second Team</span></button></div>"
+<div data-v-868771ad="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label winner-label">translation:teamAButtonLabel.winner</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">First Team</span></span></button><label data-v-820fd73e="" class="ipl-label">translation:teamBButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Second Team</span></span></button></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner is determined as team B 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> The current round has not been completed!
+    <!---->translation:roundNotCompletedWarning
   </div>
 </div>
 <!--v-if-->
-<div data-v-d255ffee="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label"> Team A </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-748defd4="" class="label">First Team</span></button><label data-v-820fd73e="" class="ipl-label winner-label">Winner - Team B </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-748defd4="" class="label">Second Team</span></button></div>"
+<div data-v-868771ad="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label">translation:teamAButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">First Team</span></span></button><label data-v-820fd73e="" class="ipl-label winner-label">translation:teamBButtonLabel.winner</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(255, 199, 0); color: rgb(51, 51, 51);" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Second Team</span></span></button></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot when the winner name cannot be determined 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> The current round has not been completed!
+    <!---->translation:roundNotCompletedWarning
   </div>
 </div>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-info m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> Unable to determine the current round's winner.
-    <!--v-if-->
+    <!---->translation:predictionWinnerUnknownMessage.withoutWinner
   </div>
 </div>
-<div data-v-d255ffee="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label"> Team A </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-748defd4="" class="label">First Team</span></button><label data-v-820fd73e="" class="ipl-label"> Team B </label><button data-v-748defd4="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-748defd4="" class="label">Second Team</span></button></div>"
+<div data-v-868771ad="" class="ipl-space color-dark m-t-8"><label data-v-820fd73e="" class="ipl-label">translation:teamAButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-1-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">First Team</span></span></button><label data-v-820fd73e="" class="ipl-label">translation:teamBButtonLabel.default</label><button data-v-6fee6548="" class="ipl-button" style="background-color: rgb(97, 85, 189); color: white;" autocomplete="off" data-test="resolve-outcome-2-button"><span data-v-6fee6548="" class="label"><span data-v-6fee6548="" class="default-label">Second Team</span></span></button></div>"
 `;
 
 exports[`ResolvePredictionDialog matches snapshot with missing prediction data 1`] = `
-"<ipl-dialog-title-stub title="Resolve Prediction" closingdisabled="false"></ipl-dialog-title-stub>
+"<ipl-dialog-title-stub title="translation:dialogTitle" closingdisabled="false" color="primary"></ipl-dialog-title-stub>
 <ipl-error-display-stub class="m-t-8"></ipl-error-display-stub>
 <div data-v-c35f7b2a="" class="ipl-message__wrapper ipl-message__type-warning m-t-8">
   <font-awesome-icon-stub data-v-c35f7b2a="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
   <div data-v-c35f7b2a="" class="message-content">
-    <!----> No prediction data loaded.
+    <!---->translation:noPredictionDataMessage
   </div>
 </div>"
 `;

@@ -1,29 +1,29 @@
 <template>
-    <ipl-expanding-space title="Change song manually">
+    <ipl-expanding-space :title="$t('changeSongManually.sectionHeading')">
         <ipl-checkbox
             v-model="nowPlayingSource"
-            label="Enable"
+            :label="$t('changeSongManually.enableCheckboxLabel')"
             data-test="enable-manual-input-checkbox"
         />
         <ipl-input
             v-model="manualNowPlaying.artist"
             name="artist"
-            label="Artist"
+            :label="$t('changeSongManually.artistInputLabel')"
             class="m-t-6"
             @focuschange="handleFocusEvent"
         />
         <ipl-input
             v-model="manualNowPlaying.song"
             name="song"
-            label="Song"
+            :label="$t('changeSongManually.songInputLabel')"
             @focuschange="handleFocusEvent"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             :color="buttonColor"
             class="m-t-8"
             data-test="manual-song-update-button"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             @click="handleUpdate"
             @right-click="undo"
         />
@@ -36,7 +36,6 @@ import { useMusicStore } from '../musicStore';
 import { IplButton, IplInput, IplCheckbox, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'ManualSongEditor',
@@ -56,7 +55,6 @@ export default defineComponent({
         });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             nowPlayingSource: computed({
                 get() {
                     return musicStore.nowPlayingSource === 'manual';
