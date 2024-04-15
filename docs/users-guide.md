@@ -190,8 +190,17 @@ On the left side of the dashboard panel, a preview of the colors in play is show
 incorrect for the current match.  
 The color for the "Alpha" team in-game is designated by the "α" symbol and the color for the "Bravo" team in-game is designated by the "β" symbol.  
 The left side of the dashboard can be used to switch to the previous and next color in the sequence of colors. When each
-game is played  in the same private battle room, the colors follow a predictable order, which is followed by the dashboard. 
-(Although, please note that ranked modes and turf war have separate sets of ink colors)
+game is played in the same private battle room, the colors follow a predictable order, which is followed by the dashboard.
+
+#### Finding ink colors
+
+When a match's ink colors are unknown (For example, when joining a new Private Battle room), use the "More colors" section 
+includes a feature to make searching for the color easier:
+
+![A flowchart explaining how to find an unknown color in a match](img/color-finder.png)
+
+If in doubt, the player icons along the top of the screen can give a good clue of what colors are currently in play mid-match. 
+Be aware that they change position depending on which team is being spectated, though.
 
 ### Showing and hiding the scoreboard
 
