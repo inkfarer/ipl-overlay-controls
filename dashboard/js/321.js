@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[321],{2321:a=>{a.exports=JSON.parse('{"title":"Music","nowPlayingLabel_lastfm":"Now Playing (Last.fm)","nowPlayingLabel_manual":"Now Playing (Manual)","changeSongManually":{"sectionHeading":"Change song manually","enableCheckboxLabel":"Enable","artistInputLabel":"Artist","songInputLabel":"Song"}}')}}]);
