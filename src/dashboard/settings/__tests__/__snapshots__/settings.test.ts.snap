@@ -3,9 +3,9 @@
 exports[`Settings matches snapshot when section general is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <dialog data-v-ee252566="" inert="">
-  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
+  <div data-v-ee252566="" class="content"><button data-v-868771ad="" class="ipl-space color-blue m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
 </dialog>
-<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
+<button data-v-868771ad="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> translation:showAllSettingsButton
 </button>
 <runtime-config-stub></runtime-config-stub>"
@@ -14,9 +14,9 @@ exports[`Settings matches snapshot when section general is selected 1`] = `
 exports[`Settings matches snapshot when section lastfm is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <dialog data-v-ee252566="" inert="">
-  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
+  <div data-v-ee252566="" class="content"><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-868771ad="" class="ipl-space color-blue m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
 </dialog>
-<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
+<button data-v-868771ad="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> translation:showAllSettingsButton
 </button>
 <lastfm-settings-stub></lastfm-settings-stub>"
@@ -25,9 +25,9 @@ exports[`Settings matches snapshot when section lastfm is selected 1`] = `
 exports[`Settings matches snapshot when section obs is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <dialog data-v-ee252566="" inert="">
-  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
+  <div data-v-ee252566="" class="content"><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-868771ad="" class="ipl-space color-blue m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
 </dialog>
-<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
+<button data-v-868771ad="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> translation:showAllSettingsButton
 </button>
 <obs-settings-stub></obs-settings-stub>"
@@ -36,9 +36,9 @@ exports[`Settings matches snapshot when section obs is selected 1`] = `
 exports[`Settings matches snapshot when section radia is selected 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <dialog data-v-ee252566="" inert="">
-  <div data-v-ee252566="" class="content"><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-d255ffee="" class="ipl-space color-blue m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-d255ffee="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
+  <div data-v-ee252566="" class="content"><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_general">translation:sectionName.general</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_lastfm">translation:sectionName.lastfm</button><button data-v-868771ad="" class="ipl-space color-blue m-b-8" data-test="section-selector_radia">translation:sectionName.radia</button><button data-v-868771ad="" class="ipl-space color-light m-b-8" data-test="section-selector_obs">translation:sectionName.obs</button></div>
 </dialog>
-<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
+<button data-v-868771ad="" class="ipl-space color-dark layout horizontal m-t-8 m-b-8" data-test="open-sidebar-button">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> translation:showAllSettingsButton
 </button>
 <radia-settings-stub></radia-settings-stub>"

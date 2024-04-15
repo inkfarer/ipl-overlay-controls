@@ -4,22 +4,22 @@ exports[`Rounds matches snapshot 1`] = `
 "<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
 <dialog data-v-ee252566="" inert="">
   <div data-v-ee252566="" class="content">
-    <div data-v-d255ffee="" class="ipl-space color-light">
+    <div data-v-868771ad="" class="ipl-space color-light">
       <ipl-button-stub label="translation:resetRoundsButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="reset-rounds-button"></ipl-button-stub>
     </div>
-    <div data-v-d255ffee="" class="ipl-space color-light layout horizontal m-t-8">
+    <div data-v-868771ad="" class="ipl-space color-light layout horizontal m-t-8">
       <div class="color-key color-key-next"></div> translation:roundListNextRoundColorKey
-    </div><button data-v-d255ffee="" class="ipl-space color-blue m-t-8 round-option is-next-round" data-test="round-option-2426">dope round the third</button><button data-v-d255ffee="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-9573">dope round the second</button><button data-v-d255ffee="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-0387">dope round</button>
+    </div><button data-v-868771ad="" class="ipl-space color-blue m-t-8 round-option is-next-round" data-test="round-option-2426">dope round the third</button><button data-v-868771ad="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-9573">dope round the second</button><button data-v-868771ad="" class="ipl-space color-light m-t-8 round-option" data-test="round-option-0387">dope round</button>
   </div>
 </dialog>
-<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:createRound.sectionTitle</div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:createRound.sectionTitle</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div class="layout horizontal">
       <ipl-button-stub label="translation:createRound.create3GameRoundButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="new-3-game-round"></ipl-button-stub>
       <ipl-button-stub label="translation:createRound.create5GameRoundButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="new-5-game-round"></ipl-button-stub>
@@ -27,7 +27,7 @@ exports[`Rounds matches snapshot 1`] = `
     <ipl-button-stub label="translation:createRound.create7GameRoundButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="new-7-game-round"></ipl-button-stub>
   </div>
 </div>
-<button data-v-d255ffee="" class="ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
+<button data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical round-menu-space m-t-8" data-test="open-all-rounds-sidebar">
   <font-awesome-icon-stub icon="bars" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="large-icon m-r-8"></font-awesome-icon-stub> translation:showAllRoundsButton
 </button>
 <round-editor-stub roundid="2426" round="[object Object]" isnewround="false" class="m-t-8" data-test="round-editor"></round-editor-stub>"

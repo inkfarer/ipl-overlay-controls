@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ScoreboardEditor matches snapshot 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:scoreboardEditor.sectionTitle</div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:scoreboardEditor.sectionTitle</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <ipl-data-row-stub label="translation:scoreboardEditor.flavorTextDisplayLabel" copiable="false" value="whoa"></ipl-data-row-stub>
     <ipl-toggle-stub modelvalue="false" truelabel="common:largeToggle.show" falselabel="common:largeToggle.hide" useneutralcolors="false" class="m-t-8" data-test="scoreboard-visible-toggle"></ipl-toggle-stub>
   </div>

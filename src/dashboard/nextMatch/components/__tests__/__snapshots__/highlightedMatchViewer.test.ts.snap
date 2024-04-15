@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HighlightedMatchViewer matches snapshot 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <ipl-select-stub modelvalue="1234" label="translation:highlightedMatches.matchSelect" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
   <ipl-input-stub name="match-name" label="translation:highlightedMatches.matchNameInput" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-4"></ipl-input-stub>
   <ipl-data-row-stub label="translation:highlightedMatches.teamADisplayLabel" copiable="false" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>

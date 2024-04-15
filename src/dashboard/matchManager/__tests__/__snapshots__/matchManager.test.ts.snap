@@ -6,7 +6,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTED 1`] = `
   <div class="max-width">
     <score-display-stub></score-display-stub>
     <active-color-toggles-stub class="m-t-8"></active-color-toggles-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
+    <div data-v-868771ad="" class="ipl-space color-dark m-t-8">
       <!--v-if-->
       <ipl-button-stub label="translation:endGameButton" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="start-stop-game-button" class="m-b-8"></ipl-button-stub>
       <div class="layout horizontal">
@@ -26,7 +26,7 @@ exports[`MatchManager matches snapshot if obs status is CONNECTING 1`] = `
   <div class="max-width">
     <score-display-stub></score-display-stub>
     <active-color-toggles-stub class="m-t-8"></active-color-toggles-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
+    <div data-v-868771ad="" class="ipl-space color-dark m-t-8">
       <!--v-if-->
       <!--v-if-->
       <div class="layout horizontal">
@@ -46,7 +46,7 @@ exports[`MatchManager matches snapshot if obs status is NOT_CONNECTED 1`] = `
   <div class="max-width">
     <score-display-stub></score-display-stub>
     <active-color-toggles-stub class="m-t-8"></active-color-toggles-stub>
-    <div data-v-d255ffee="" class="ipl-space color-dark m-t-8">
+    <div data-v-868771ad="" class="ipl-space color-dark m-t-8">
       <!--v-if-->
       <!--v-if-->
       <div class="layout horizontal">

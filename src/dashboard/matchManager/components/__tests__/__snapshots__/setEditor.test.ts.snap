@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`setEditor matches snapshot 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
@@ -109,14 +109,14 @@ exports[`setEditor matches snapshot 1`] = `
 `;
 
 exports[`setEditor matches snapshot when active round updates to one with less games than the previous one 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
@@ -181,14 +181,14 @@ exports[`setEditor matches snapshot when active round updates to one with less g
 `;
 
 exports[`setEditor matches snapshot when active round updates to one with more games than the previous one 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
@@ -325,14 +325,14 @@ exports[`setEditor matches snapshot when active round updates to one with more g
 `;
 
 exports[`setEditor matches snapshot when editing colors 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
@@ -433,16 +433,16 @@ exports[`setEditor matches snapshot when editing colors 1`] = `
 `;
 
 exports[`setEditor matches snapshot with no upcoming round 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle
       <!--v-if-->
     </div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
       <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->

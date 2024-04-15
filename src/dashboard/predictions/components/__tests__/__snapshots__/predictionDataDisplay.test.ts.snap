@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PredictionDataDisplay matches snapshot 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <div class="title">Who will win?</div>
   <!--v-if-->
-  <div data-v-d255ffee="" class="ipl-space color-light prediction-outcomes-space">
+  <div data-v-868771ad="" class="ipl-space color-light prediction-outcomes-space">
     <div class="outcome"><span class="team-name wrap-anywhere">First Team</span>
       <div><span>translation:points</span><span style="float: right;">5 <font-awesome-icon-stub icon="users" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false"></font-awesome-icon-stub> 100% </span></div>
       <ipl-progress-bar-stub color="blue" backgroundcolor="dark" class="m-t-4" value="100"></ipl-progress-bar-stub>
@@ -18,10 +18,10 @@ exports[`PredictionDataDisplay matches snapshot 1`] = `
 `;
 
 exports[`PredictionDataDisplay matches snapshot with newly started prediction 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <div class="title">Who will win?</div>
   <!--v-if-->
-  <div data-v-d255ffee="" class="ipl-space color-light prediction-outcomes-space">
+  <div data-v-868771ad="" class="ipl-space color-light prediction-outcomes-space">
     <div class="outcome"><span class="team-name wrap-anywhere">First Team</span>
       <div><span>translation:points</span><span style="float: right;">5 <font-awesome-icon-stub icon="users" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false"></font-awesome-icon-stub> 0% </span></div>
       <ipl-progress-bar-stub color="blue" backgroundcolor="dark" class="m-t-4" value="0"></ipl-progress-bar-stub>
@@ -35,10 +35,10 @@ exports[`PredictionDataDisplay matches snapshot with newly started prediction 1`
 `;
 
 exports[`PredictionDataDisplay matches snapshot with timer 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <div class="title">Who will win?</div>
   <div class="text-center">translation:remainingDuration</div>
-  <div data-v-d255ffee="" class="ipl-space color-light prediction-outcomes-space">
+  <div data-v-868771ad="" class="ipl-space color-light prediction-outcomes-space">
     <div class="outcome"><span class="team-name wrap-anywhere">First Team</span>
       <div><span>translation:points</span><span style="float: right;">5 <font-awesome-icon-stub icon="users" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false"></font-awesome-icon-stub> 100% </span></div>
       <ipl-progress-bar-stub color="blue" backgroundcolor="dark" class="m-t-4" value="100"></ipl-progress-bar-stub>
@@ -52,10 +52,10 @@ exports[`PredictionDataDisplay matches snapshot with timer 1`] = `
 `;
 
 exports[`PredictionDataDisplay matches snapshot with winner 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <div class="title">Who will win?</div>
   <!--v-if-->
-  <div data-v-d255ffee="" class="ipl-space color-light prediction-outcomes-space">
+  <div data-v-868771ad="" class="ipl-space color-light prediction-outcomes-space">
     <div class="outcome"><span class="team-name wrap-anywhere">First Team</span>
       <div><span>translation:points</span><span style="float: right;">5 <font-awesome-icon-stub icon="users" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false"></font-awesome-icon-stub> 18% </span></div>
       <ipl-progress-bar-stub color="blue" backgroundcolor="dark" class="m-t-4" value="18"></ipl-progress-bar-stub>

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ObsDataPicker matches snapshot 1`] = `
-"<div data-v-d255ffee="" class="ipl-space color-dark">
+"<div data-v-868771ad="" class="ipl-space color-dark">
   <ipl-select-stub modelvalue="Scene One" label="translation:obs.gameplaySceneSelect" options="[object Object],[object Object],[object Object]" disabled="false" data-test="gameplay-scene-select"></ipl-select-stub>
   <ipl-select-stub modelvalue="Scene Two" label="translation:obs.intermissionSceneSelect" options="[object Object],[object Object],[object Object]" disabled="false" data-test="intermission-scene-select" class="m-t-8"></ipl-select-stub>
   <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="update-button"></ipl-button-stub>

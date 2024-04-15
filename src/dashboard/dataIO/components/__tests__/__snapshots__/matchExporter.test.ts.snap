@@ -3,7 +3,7 @@
 exports[`MatchExporter matches snapshot 1`] = `
 "<fieldset class="section-separator-wrapper">
   <legend>translation:matchExporter.sectionTitle</legend>
-  <div data-v-d255ffee="" class="ipl-space color-dark">
+  <div data-v-868771ad="" class="ipl-space color-dark">
     <div class="text-small text-center">translation:matchExporter.matchCount</div>
     <ipl-button-stub label="translation:matchExporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/match-data" inline="false" class="m-t-4"></ipl-button-stub>
   </div>
@@ -13,7 +13,7 @@ exports[`MatchExporter matches snapshot 1`] = `
 exports[`MatchExporter matches snapshot with one match 1`] = `
 "<fieldset class="section-separator-wrapper">
   <legend>translation:matchExporter.sectionTitle</legend>
-  <div data-v-d255ffee="" class="ipl-space color-dark">
+  <div data-v-868771ad="" class="ipl-space color-dark">
     <div class="text-small text-center">translation:matchExporter.matchCount</div>
     <ipl-button-stub label="translation:matchExporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/match-data" inline="false" class="m-t-4"></ipl-button-stub>
   </div>
