@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorFinder matches snapshot 1`] = `
+"<div>
+  <div class="options-title">translation:colorFinder.firstColorLabel</div>
+  <div class="color-finder-options"><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_0">
+      <div class="color-display" style="background-color: rgb(245, 101, 34);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_1">
+      <div class="color-display" style="background-color: rgb(237, 217, 33);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_2">
+      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
+      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
+      <div class="color-display" style="background-color: rgb(179, 222, 69);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_5">
+      <div class="color-display" style="background-color: rgb(247, 83, 161);"></div>
+    </button></div>
+  <div class="options-title">translation:colorFinder.secondColorLabel</div>
+  <div class="color-finder-options">
+    <div data-v-868771ad="" class="ipl-space color-dark color-option disabled">
+      <div class="color-display" style="border-color: white;"></div>
+    </div>
+  </div>
+  <team-color-display-stub class="m-t-8"></team-color-display-stub>
+  <div class="layout horizontal m-t-8">
+    <ipl-button-stub label="translation:colorFinder.applyButton" color="blue" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="apply-button"></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-8" title="translation:colorFinder.cancelButtonTitle" data-test="cancel-button"></ipl-button-stub>
+  </div>
+</div>"
+`;
+
+exports[`ColorFinder matches snapshot after selecting the first color 1`] = `
+"<div>
+  <div class="options-title">translation:colorFinder.firstColorLabel</div>
+  <div class="color-finder-options"><button data-v-868771ad="" class="ipl-space color-blue color-option" data-test="first-color-option_0">
+      <div class="color-display" style="background-color: rgb(245, 101, 34);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_1">
+      <div class="color-display" style="background-color: rgb(237, 217, 33);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_2">
+      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
+      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
+      <div class="color-display" style="background-color: rgb(179, 222, 69);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_5">
+      <div class="color-display" style="background-color: rgb(247, 83, 161);"></div>
+    </button></div>
+  <div class="options-title">translation:colorFinder.secondColorLabel</div>
+  <div class="color-finder-options"><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="second-color-option_0">
+      <div class="color-display" style="background-color: rgb(130, 28, 214); border-color: white;"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="second-color-option_1">
+      <div class="color-display" style="background-color: rgb(64, 72, 219); border-color: white;"></div>
+    </button></div>
+  <team-color-display-stub class="m-t-8" teamacolor="#F56522"></team-color-display-stub>
+  <div class="layout horizontal m-t-8">
+    <ipl-button-stub label="translation:colorFinder.applyButton" color="blue" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="apply-button"></ipl-button-stub>
+    <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-8" title="translation:colorFinder.cancelButtonTitle" data-test="cancel-button"></ipl-button-stub>
+  </div>
+</div>"
+`;

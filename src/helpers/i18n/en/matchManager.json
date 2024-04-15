@@ -14,7 +14,14 @@
     "colorList": {
         "sectionTitle": "More colors",
         "useCustomColorCheckbox": "Use custom color",
-        "showColorNamesCheckbox": "Show color names"
+        "showColorNamesCheckbox": "Show color names",
+        "colorFinderHint": "Click to find color"
+    },
+    "colorFinder": {
+        "firstColorLabel": "First Color",
+        "secondColorLabel": "Second Color",
+        "applyButton": "Apply",
+        "cancelButtonTitle": "Cancel"
     },
     "activeMatchEditor": {
         "sectionTitle": "Active Match",
