@@ -12,6 +12,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#F4067E",
             "index": 0,
             "isCustom": false,
+            "key": "greenGrape",
             "title": "Green vs Grape",
           },
           {
@@ -20,6 +21,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#D2E500",
             "index": 1,
             "isCustom": false,
+            "key": "greenMagenta",
             "title": "Green vs Magenta",
           },
           {
@@ -28,6 +30,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#6912CD",
             "index": 2,
             "isCustom": false,
+            "key": "turquoiseOrange",
             "title": "Turquoise vs Orange",
           },
           {
@@ -36,6 +39,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#08C66B",
             "index": 3,
             "isCustom": false,
+            "key": "mustardPurple",
             "title": "Mustard vs Purple",
           },
           {
@@ -44,6 +48,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#EA01B7",
             "index": 4,
             "isCustom": false,
+            "key": "darkBlueGreen",
             "title": "Dark Blue vs Green",
           },
           {
@@ -52,6 +57,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#F87604",
             "index": 5,
             "isCustom": false,
+            "key": "purpleGreen",
             "title": "Purple vs Green",
           },
           {
@@ -60,10 +66,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#FD5600",
             "index": 6,
             "isCustom": false,
+            "key": "yellowBlue",
             "title": "Yellow vs Blue",
           },
         ],
         "meta": {
+          "key": "rankedModes",
           "name": "Ranked Modes",
         },
       },
@@ -75,6 +83,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#0EB962",
             "index": 0,
             "isCustom": false,
+            "key": "yellowPurple",
             "title": "Yellow vs Purple",
           },
           {
@@ -83,6 +92,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#24C133",
             "index": 1,
             "isCustom": false,
+            "key": "pinkBlue",
             "title": "Pink vs Blue",
           },
           {
@@ -91,6 +101,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#08C24D",
             "index": 2,
             "isCustom": false,
+            "key": "pinkYellow",
             "title": "Pink vs Yellow",
           },
           {
@@ -99,6 +110,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#EB246D",
             "index": 3,
             "isCustom": false,
+            "key": "purpleTurquoise",
             "title": "Purple vs Turquoise",
           },
           {
@@ -107,6 +119,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#DDE713",
             "index": 4,
             "isCustom": false,
+            "key": "pinkLightBlue",
             "title": "Pink vs Light Blue",
           },
           {
@@ -115,6 +128,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#ACE81E",
             "index": 5,
             "isCustom": false,
+            "key": "purpleOrange",
             "title": "Purple vs Orange",
           },
           {
@@ -123,6 +137,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#CCE50C",
             "index": 6,
             "isCustom": false,
+            "key": "pinkGreen",
             "title": "Pink vs Green",
           },
           {
@@ -131,10 +146,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#E62E96",
             "index": 7,
             "isCustom": false,
+            "key": "yellowBlue",
             "title": "Yellow vs Blue",
           },
         ],
         "meta": {
+          "key": "turfWar",
           "name": "Turf War",
         },
       },
@@ -146,10 +163,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#DC1589",
             "index": 0,
             "isCustom": false,
+            "key": "yellowBlue",
             "title": "Yellow vs Blue (Color Lock)",
           },
         ],
         "meta": {
+          "key": "colorLock",
           "name": "Color Lock",
         },
       },
@@ -161,10 +180,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#818181",
             "index": 0,
             "isCustom": true,
+            "key": "customColor",
             "title": "Custom Color",
           },
         ],
         "meta": {
+          "key": "customColor",
           "name": "Custom Color",
         },
       },
@@ -354,6 +375,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#CDFF45",
             "index": 0,
             "isCustom": false,
+            "key": "orangePurple",
             "title": "Orange vs Purple",
           },
           {
@@ -362,6 +384,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#4445FF",
             "index": 1,
             "isCustom": false,
+            "key": "yellowDarkBlue",
             "title": "Yellow vs Dark Blue",
           },
           {
@@ -370,6 +393,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#4445FF",
             "index": 2,
             "isCustom": false,
+            "key": "turquoiseOrange",
             "title": "Turquoise vs Orange",
           },
           {
@@ -378,6 +402,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#F8F755",
             "index": 3,
             "isCustom": false,
+            "key": "orangeDarkBlue",
             "title": "Orange vs Dark Blue",
           },
           {
@@ -386,6 +411,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#7577FF",
             "index": 4,
             "isCustom": false,
+            "key": "turquoisePink",
             "title": "Turquoise vs Pink",
           },
           {
@@ -394,6 +420,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#FF67EE",
             "index": 5,
             "isCustom": false,
+            "key": "darkBlueOrange",
             "title": "Dark Blue vs Orange",
           },
           {
@@ -402,6 +429,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#54FDE8",
             "index": 6,
             "isCustom": false,
+            "key": "yellowPurple",
             "title": "Yellow vs Purple",
           },
           {
@@ -410,6 +438,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#73DE35",
             "index": 7,
             "isCustom": false,
+            "key": "goldPurple",
             "title": "Gold vs Purple",
           },
           {
@@ -418,6 +447,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#FFC042",
             "index": 8,
             "isCustom": false,
+            "key": "greenPink",
             "title": "Green vs Pink",
           },
           {
@@ -426,10 +456,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#4A36FF",
             "index": 9,
             "isCustom": false,
+            "key": "pinkGreen",
             "title": "Pink vs Green",
           },
         ],
         "meta": {
+          "key": "rankedModes",
           "name": "Ranked Modes",
         },
       },
@@ -441,10 +473,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#B82FB6",
             "index": 0,
             "isCustom": false,
+            "key": "purpleYellow",
             "title": "Purple vs Yellow",
           },
         ],
         "meta": {
+          "key": "colorLock1",
           "name": "Color Lock (Variant 1)",
         },
       },
@@ -456,10 +490,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#8FD20C",
             "index": 0,
             "isCustom": false,
+            "key": "blueOrange",
             "title": "Blue vs Orange",
           },
         ],
         "meta": {
+          "key": "colorLock2",
           "name": "Color Lock (Variant 2)",
         },
       },
@@ -471,10 +507,12 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "clrNeutral": "#818181",
             "index": 0,
             "isCustom": true,
+            "key": "customColor",
             "title": "Custom Color",
           },
         ],
         "meta": {
+          "key": "customColor",
           "name": "Custom Color",
         },
       },

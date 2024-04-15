@@ -79,7 +79,7 @@ describe('tournamentDataStore', () => {
             try {
                 await store.uploadTeamData({ file });
             } catch (e) {
-                expect(e.message).toEqual('Import failed with status 500: Error!');
+                expect(e.message).toEqual('common:tournamentDataStore.fileUploadError');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                     method: 'POST',
                     body: expectedFormData
@@ -118,7 +118,7 @@ describe('tournamentDataStore', () => {
             try {
                 await store.uploadRoundData({ file });
             } catch (e) {
-                expect(e.message).toEqual('Import failed with status 401: Error!!');
+                expect(e.message).toEqual('common:tournamentDataStore.fileUploadError');
                 expect(fetch).toHaveBeenCalledWith('/ipl-overlay-controls/upload-tournament-json', {
                     method: 'POST',
                     body: expectedFormData

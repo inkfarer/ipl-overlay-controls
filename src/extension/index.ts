@@ -7,8 +7,52 @@ import { ObsConnectorController } from './controllers/ObsConnectorController';
 import { AssetPathService } from './services/AssetPathService';
 import { GameVersion } from 'types/enums/gameVersion';
 
+import i18next, { type Resource } from 'i18next';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
+
+function loadTranslation(locale: string, name: string) {
+    try {
+        return require(`../helpers/i18n/${locale.toLowerCase()}/${name}.json`);
+    } catch (ignore) {
+        return null;
+    }
+}
+
+function loadTranslations(): Resource {
+    const result: Resource = { };
+    for (const locale of Object.values(InterfaceLocale)) {
+        result[locale.toLowerCase()] = {
+            common: loadTranslation(locale, 'common'),
+            translation: loadTranslation(locale, 'server')
+        };
+    }
+
+    return result;
+}
+
+function initI18n(nodecg: NodeCG.ServerAPI) {
+    i18next.init({
+        lng: 'en',
+        fallbackLng: 'en',
+        resources: loadTranslations(),
+        interpolation: {
+            escapeValue: false
+        }
+    });
+
+    const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+    runtimeConfig.on('change', (newValue, oldValue) => {
+        if (!oldValue || newValue.interfaceLocale !== oldValue.interfaceLocale) {
+            i18next.changeLanguage(newValue.interfaceLocale.toLowerCase()).catch(e => {
+                nodecg.log.error('Failed to change interface language', e);
+            });
+        }
+    });
+}
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
+    initI18n(nodecg);
     nodecgContext.set(nodecg);
 
     require('./importers/music');
@@ -59,13 +103,10 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
-        nodecg.log.warn(
-            `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
-            + 'Production API will not be possible.'
-        );
+        nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));
 
         predictionStore.value.status.predictionsEnabled = false;
-        predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
+        predictionStore.value.status.predictionStatusReason = 'missingConfiguration';
     } else {
         require('./importers/radiaAvailabilityCheck');
         require('./importers/predictions');

@@ -6,6 +6,7 @@ import { perGameData } from '../../helpers/gameData/gameData';
 import { randomFromArray } from '../../helpers/ArrayHelper';
 import omit from 'lodash/omit';
 import { Locale } from '../../types/enums/Locale';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -27,7 +28,7 @@ export function resetRoundStore(): void {
     roundStore.value = {
         [defaultRoundId]: {
             meta: {
-                name: 'Default Round 1',
+                name: i18next.t('roundStoreHelper.defaultRoundName', { roundNumber: 1 }),
                 type: PlayType.BEST_OF
             },
             games: [
@@ -38,7 +39,7 @@ export function resetRoundStore(): void {
         },
         [secondDefaultRoundId]: {
             meta: {
-                name: 'Default Round 2',
+                name: i18next.t('roundStoreHelper.defaultRoundName', { roundNumber: 2 }),
                 type: PlayType.BEST_OF
             },
             games: [

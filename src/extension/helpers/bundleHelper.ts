@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'fs';
 import * as nodecgContext from './nodecg';
 import { NodecgBundle } from '../../types/nodecgBundle';
 import { GameVersion } from '../../types/enums/gameVersion';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 const bundlesDir = `${process.cwd()}/bundles`;
@@ -15,7 +16,7 @@ export const dependentBundles: Array<NodecgBundle> = readdirSync(bundlesDir, { w
             const parsedPackage = JSON.parse(readFileSync(bundlePackagePath, 'utf-8'));
             const gameVersions = normalizeGameVersions(parsedPackage.compatibleGameVersions);
             if (gameVersions.length <= 0) {
-                nodecg.log.warn(`Could not parse compatible game versions for bundle '${bundle.name}'.`);
+                nodecg.log.warn(i18next.t('bundleHelper.gameVersionParsingFailedWarning', { bundleName: bundle.name }));
             }
 
             if ('compatibleDashboardVersion' in parsedPackage) {

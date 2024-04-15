@@ -13,9 +13,7 @@
                     closeable
                     @close="showObsConfigurationChangedWarning = false"
                 >
-                    The OBS scene configuration has changed.
-                    Please confirm that the configured gameplay and intermission scenes
-                    ('{{ gameplayScene }}' & '{{ intermissionScene }}') are still correct.
+                    {{ $t('obsSceneConfigChangedWarning', { gameplayScene, intermissionScene }) }}
                 </ipl-message>
                 <ipl-button
                     v-if="isObsConnected"
@@ -29,7 +27,7 @@
                 <div class="layout horizontal">
                     <ipl-button
                         v-if="actionInProgress"
-                        label="Cancel action"
+                        :label="$t('cancelAutomationActionButton')"
                         small
                         data-test="cancel-automation-action-button"
                         color="red"
@@ -37,7 +35,7 @@
                         @click="cancelAutomationAction"
                     />
                     <ipl-button
-                        label="Show casters"
+                        :label="$t('showCastersButton')"
                         :disabled="disableShowCasters"
                         :small="isObsConnected"
                         data-test="show-casters-button"
@@ -54,7 +52,7 @@
             <scoreboard-editor class="m-t-8" />
             <ipl-expanding-space
                 key="activeRosters"
-                title="Active Rosters"
+                :title="$t('activeRosters.sectionTitle')"
                 class="m-t-8"
             >
                 <active-roster-display class="m-t-8" />
@@ -88,6 +86,7 @@ import { ObsStatus } from 'types/enums/ObsStatus';
 import ActiveRosterDisplay from '../components/activeRosterDisplay.vue';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { sendMessage } from '../helpers/nodecgHelper';
+import { useTranslation } from 'i18next-vue';
 
 export default defineComponent({
     name: 'ActiveRound',
@@ -110,6 +109,8 @@ export default defineComponent({
     },
 
     setup() {
+        const { t } = useTranslation();
+
         const casterStore = useCasterStore();
         const obsStore = useObsStore();
         const disableShowCasters = ref(false);
@@ -152,14 +153,9 @@ export default defineComponent({
             actionInProgress,
             startStopLabel: computed(() => {
                 if (!actionInProgress.value) {
-                    return gameplaySceneActive.value ? 'End Game' : 'Start Game';
+                    return gameplaySceneActive.value ? t('endGameButton') : t('startGameButton');
                 } else {
-                    return {
-                        changeScene: 'Change Scene',
-                        showScoreboard: 'Show Scoreboard',
-                        showCasters: 'Show Casters',
-                        hideScoreboard: 'Hide Scoreboard'
-                    }[obsStore.gameAutomationData?.nextTaskForAction.name] ?? '???';
+                    return t('automationActionTask', { context: obsStore.gameAutomationData?.nextTaskForAction.name });
                 }
             }),
             startStopColor: computed(() => {

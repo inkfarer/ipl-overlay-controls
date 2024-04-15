@@ -16,6 +16,8 @@ export interface ActiveRound {
 	teamB: ActiveRoundTeam;
 	activeColor: {
 		index: number;
+		colorKey: string;
+		categoryKey: string;
 		title: string;
 		categoryName: string;
 		isCustom: boolean;
@@ -52,6 +54,8 @@ export interface Player {
 }
 export interface Color {
 	index: number;
+	colorKey: string;
+	categoryKey: string;
 	title: string;
 	clrA: string;
 	clrB: string;

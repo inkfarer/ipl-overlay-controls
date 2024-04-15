@@ -181,7 +181,7 @@ describe('ObsConnectorService', () => {
             jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
             jest.spyOn(service, 'startReconnecting');
 
-            await expect(() => service.connect()).rejects.toThrow(new Error('Failed to connect to OBS: test error'));
+            await expect(() => service.connect()).rejects.toThrow(new Error('translation:obs.obsConnectionFailed'));
 
             expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
@@ -201,7 +201,7 @@ describe('ObsConnectorService', () => {
             jest.spyOn(service, 'startReconnecting');
 
             await expect(() => service.connect(false))
-                .rejects.toThrow(new Error('Failed to connect to OBS: test error'));
+                .rejects.toThrow(new Error('translation:obs.obsConnectionFailed'));
 
             expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();

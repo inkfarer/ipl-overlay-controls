@@ -9,12 +9,17 @@
         "locale": {
             "type": "string",
             "enum": ["EN", "DE", "EU_FR", "JA"]
+        },
+        "interfaceLocale": {
+            "type": "string",
+            "enum": ["EN", "JA"]
         }
     },
-    "required": ["gameVersion", "locale"],
+    "required": ["gameVersion", "locale", "interfaceLocale"],
     "additionalProperties": false,
     "default": {
         "gameVersion": "SPLATOON_3",
-        "locale": "EN"
+        "locale": "EN",
+        "interfaceLocale": "EN"
     }
 }

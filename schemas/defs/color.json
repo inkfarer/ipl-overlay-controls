@@ -6,8 +6,15 @@
             "index": {
                 "type": "number"
             },
-            "title": {
+            "colorKey": {
                 "type": "string"
+            },
+            "categoryKey": {
+                "type": "string"
+            },
+            "title": {
+                "type": "string",
+                "deprecated": true
             },
             "clrA": {
                 "type": "string"
@@ -19,12 +26,13 @@
                 "type": "string"
             },
             "categoryName": {
-                "type": "string"
+                "type": "string",
+                "deprecated": true
             },
             "isCustom": {
                 "type": "boolean"
             }
         },
-        "required": ["index", "title", "clrA", "clrB", "clrNeutral", "categoryName", "isCustom"]
+        "required": ["index", "title", "clrA", "clrB", "clrNeutral", "categoryName", "isCustom", "categoryKey", "colorKey"]
     }
 }

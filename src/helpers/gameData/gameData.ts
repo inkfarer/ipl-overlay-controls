@@ -5,7 +5,7 @@ import { splatoon3Data, Splatoon3Modes, Splatoon3Stages } from './splatoon3Data'
 import { Locale } from '../../types/enums/Locale';
 
 interface RawColorGroup {
-    meta: { name: string; };
+    meta: { name: string; key: string; };
     colors: Omit<ColorInfo, 'isCustom'>[];
 }
 

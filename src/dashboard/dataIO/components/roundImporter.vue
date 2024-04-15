@@ -1,31 +1,32 @@
 <template>
-    <bordered-space label="Round data">
+    <bordered-space :label="$t('roundImporter.sectionTitle')">
         <ipl-space>
             <ipl-input
                 v-show="!useFileUpload"
                 v-model="dataUrl"
                 name="round-data-url"
-                label="Data URL / maps.iplabs.ink URL"
+                :label="$t('roundImporter.roundDataUrlInput')"
             />
             <ipl-upload
                 v-show="useFileUpload"
                 v-model="roundFile"
                 data-test="round-file-upload"
+                :placeholder="$t('common:fileUploadPlaceholder')"
             />
             <div class="layout horizontal center-horizontal">
                 <ipl-checkbox
                     v-model="useFileUpload"
                     small
                     class="m-t-8"
-                    label="Upload file"
+                    :label="$t('roundImporter.uploadFileCheckbox')"
                     data-test="use-file-upload-checkbox"
                 />
             </div>
-            <ipl-button
-                label="Import"
+            <iploc-button
+                :label="$t('roundImporter.importButton')"
                 class="m-t-8"
                 async
-                progress-message="Importing..."
+                :progress-message="$t('roundImporter.loadingImportButton')"
                 data-test="import-button"
                 :disabled="(!useFileUpload && !allValid) || (useFileUpload && !roundFile)"
                 @click="handleImport"
@@ -37,7 +38,6 @@
 <script lang="ts">
 import { defineComponent, Ref, ref } from 'vue';
 import {
-    IplButton,
     IplSpace,
     IplInput,
     IplCheckbox,
@@ -48,11 +48,12 @@ import {
 } from '@iplsplatoon/vue-components';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import BorderedSpace from '../../components/BorderedSpace.vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'RoundImporter',
 
-    components: { BorderedSpace, IplUpload, IplButton, IplCheckbox, IplInput, IplSpace },
+    components: { BorderedSpace, IplUpload, IplCheckbox, IplInput, IplSpace, IplocButton },
 
     setup() {
         const tournamentDataStore = useTournamentDataStore();

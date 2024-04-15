@@ -25,32 +25,6 @@ describe('Music', () => {
         expect(store.setMusicShown).toHaveBeenCalledWith(true);
     });
 
-    it('displays expected source value if source is manual', async () => {
-        const pinia = createTestingPinia();
-        const store = useMusicStore();
-        store.nowPlayingSource = 'manual';
-        const wrapper = mount(Music, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
-
-        expect(wrapper.get('.ipl-label').text()).toEqual('Now Playing (Manual)');
-    });
-
-    it('displays expected source value if source is lastfm', () => {
-        const pinia = createTestingPinia();
-        const store = useMusicStore();
-        store.nowPlayingSource = 'lastfm';
-        const wrapper = mount(Music, {
-            global: {
-                plugins: [ pinia ]
-            }
-        });
-
-        expect(wrapper.get('.ipl-label').text()).toEqual('Now Playing (Last.fm)');
-    });
-
     it('displays now playing song', () => {
         const pinia = createTestingPinia();
         const store = useMusicStore();

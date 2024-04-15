@@ -3,10 +3,10 @@
         <ipl-input
             v-model="matchName"
             name="matchName"
-            label="Match Name"
+            :label="$t('nextMatchStarter.matchNameInput')"
         />
-        <ipl-button
-            label="Begin next match"
+        <iploc-button
+            :label="$t('nextMatchStarter.beginNextMatchButton')"
             color="red"
             class="m-t-8"
             requires-confirmation
@@ -19,13 +19,15 @@
 
 <script lang="ts">
 import { defineComponent, watch, ref } from 'vue';
-import { IplButton, IplInput, notBlank, provideValidators, validator } from '@iplsplatoon/vue-components';
-import { useNextRoundStore } from '../store/nextRoundStore';
+import { IplInput, provideValidators, validator } from '@iplsplatoon/vue-components';
+import { useNextRoundStore } from '../../store/nextRoundStore';
+import { notBlank } from '../../helpers/validators/stringValidators';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'BeginNextMatch',
 
-    components: { IplInput, IplButton },
+    components: { IplInput, IplocButton },
 
     setup() {
         const nextRoundStore = useNextRoundStore();

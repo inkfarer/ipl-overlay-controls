@@ -2,6 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getTeam } from './tournamentDataHelper';
 import * as nodecgContext from './nodecg';
 import { NextRound, RoundStore, TournamentData } from 'schemas';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
@@ -12,7 +13,7 @@ const roundStore = nodecg.Replicant<RoundStore>('roundStore');
 export function setNextRoundGames(roundId: string): void {
     const round = roundStore.value[roundId];
     if (isEmpty(round)) {
-        throw new Error(`Could not find round '${roundId}'.`);
+        throw new Error(i18next.t('nextRoundHelper.roundNotFound', { roundId }));
     }
 
     nextRound.value.round = {
@@ -27,7 +28,7 @@ export function setNextRoundTeams(teamAId: string, teamBId: string): void {
     const teamA = getTeam(teamAId, tournamentData.value);
     const teamB = getTeam(teamBId, tournamentData.value);
     if ([teamA, teamB].filter(isEmpty).length > 0) {
-        throw new Error('Could not find a team.');
+        throw new Error(i18next.t('nextRoundHelper.teamNotFound'));
     }
 
     nextRound.value.teamA = teamA;

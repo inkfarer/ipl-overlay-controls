@@ -1,0 +1,19 @@
+{
+    "title": "Break Screen",
+    "sceneName": {
+        "main": "Main Scene",
+        "teams": "Teams",
+        "stages": "Stages"
+    },
+    "showSceneButton": "Show",
+    "mainScene": {
+        "flavorTextInput": "Flavor Text"
+    },
+    "nextStageTimer": {
+        "sectionTitle": "Next stage timer",
+        "showTimerCheckbox": "Show timer",
+        "hourInput": "Hour",
+        "minuteInput": "Min",
+        "daySelect": "Day"
+    }
+}

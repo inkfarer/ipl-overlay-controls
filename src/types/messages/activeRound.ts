@@ -2,7 +2,7 @@ import { GameWinner } from 'types/enums/gameWinner';
 import { ActiveRoundGame } from 'types/activeRoundGame';
 import { ColorInfo } from 'types/colors';
 
-export type ColorWithCategory = ColorInfo & { categoryName: string };
+export type ColorWithCategory = ColorInfo & { categoryName: string, categoryKey: string };
 
 export interface UpdateActiveGamesRequest {
     games: ActiveRoundGame[];
@@ -16,6 +16,7 @@ export interface SetWinnerRequest {
 export interface SetActiveColorRequest {
     color: ColorInfo;
     categoryName: string;
+    categoryKey: string;
 }
 
 export interface SwapRoundColorRequest {
