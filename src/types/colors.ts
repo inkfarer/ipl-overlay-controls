@@ -8,9 +8,15 @@ export interface ColorInfo {
     isCustom: boolean;
 }
 
+export interface ColorFinderOption {
+    optionColor: string;
+    matchingColorKeys: string[];
+}
+
 export interface ColorGroup {
     meta: { name: string, key: string };
     colors: ColorInfo[];
+    colorFinderOptions?: ColorFinderOption[];
 }
 
 export interface GameColor {

@@ -5,6 +5,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
   "SPLATOON_2": {
     "colors": [
       {
+        "colorFinderOptions": undefined,
         "colors": [
           {
             "clrA": "#37FC00",
@@ -76,6 +77,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         },
       },
       {
+        "colorFinderOptions": undefined,
         "colors": [
           {
             "clrA": "#D1E004",
@@ -156,6 +158,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         },
       },
       {
+        "colorFinderOptions": undefined,
         "colors": [
           {
             "clrA": "#FEF232",
@@ -368,6 +371,48 @@ exports[`gameData perGameData matches snapshot 1`] = `
   "SPLATOON_3": {
     "colors": [
       {
+        "colorFinderOptions": [
+          {
+            "matchingColorKeys": [
+              "orangePurple",
+              "orangeDarkBlue",
+            ],
+            "optionColor": "#F56522",
+          },
+          {
+            "matchingColorKeys": [
+              "yellowDarkBlue",
+              "goldPurple",
+              "yellowPurple",
+            ],
+            "optionColor": "#EDD921",
+          },
+          {
+            "matchingColorKeys": [
+              "turquoiseOrange",
+              "turquoisePink",
+            ],
+            "optionColor": "#2ADBC6",
+          },
+          {
+            "matchingColorKeys": [
+              "darkBlueOrange",
+            ],
+            "optionColor": "#2C2CDB",
+          },
+          {
+            "matchingColorKeys": [
+              "greenPink",
+            ],
+            "optionColor": "#B3DE45",
+          },
+          {
+            "matchingColorKeys": [
+              "pinkGreen",
+            ],
+            "optionColor": "#F753A1",
+          },
+        ],
         "colors": [
           {
             "clrA": "#F56522",
@@ -466,6 +511,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         },
       },
       {
+        "colorFinderOptions": undefined,
         "colors": [
           {
             "clrA": "#6236DF",
@@ -483,6 +529,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         },
       },
       {
+        "colorFinderOptions": undefined,
         "colors": [
           {
             "clrA": "#2D63D7",

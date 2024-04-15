@@ -281,6 +281,32 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     clrB: '#35CC2D',
                     clrNeutral: '#4A36FF'
                 }
+            ],
+            colorFinderOptions: [
+                {
+                    optionColor: '#F56522',
+                    matchingColorKeys: ['orangePurple', 'orangeDarkBlue']
+                },
+                {
+                    optionColor: '#EDD921',
+                    matchingColorKeys: ['yellowDarkBlue', 'goldPurple', 'yellowPurple']
+                },
+                {
+                    optionColor: '#2ADBC6',
+                    matchingColorKeys: ['turquoiseOrange', 'turquoisePink']
+                },
+                {
+                    optionColor: '#2C2CDB',
+                    matchingColorKeys: ['darkBlueOrange']
+                },
+                {
+                    optionColor: '#B3DE45',
+                    matchingColorKeys: ['greenPink']
+                },
+                {
+                    optionColor: '#F753A1',
+                    matchingColorKeys: ['pinkGreen']
+                }
             ]
         },
         {

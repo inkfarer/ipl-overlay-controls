@@ -59,6 +59,16 @@ describe('normalizeGameData', () => {
                             clrB: '#FFF',
                             clrNeutral: '#AAA'
                         }
+                    ],
+                    colorFinderOptions: [
+                        {
+                            optionColor: '#001',
+                            matchingColorKeys: ['colorOne', 'colorTwo']
+                        },
+                        {
+                            optionColor: '#002',
+                            matchingColorKeys: ['colorThree']
+                        }
                     ]
                 },
                 {
@@ -146,6 +156,12 @@ describe('normalizeGameData', () => {
                             clrB: '#FFF',
                             clrNeutral: '#AAA',
                             isCustom: false
+                        }
+                    ],
+                    colorFinderOptions: [
+                        {
+                            optionColor: '#001',
+                            matchingColorKeys: ['colorOne']
                         }
                     ]
                 },

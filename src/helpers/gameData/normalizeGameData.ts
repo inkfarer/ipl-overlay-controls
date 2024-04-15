@@ -62,7 +62,14 @@ export function normalizeGameData<S extends readonly string[], M extends readonl
         colors: [
             ...data.colors.map(colorGroup => ({
                 ...colorGroup,
-                colors: colorGroup.colors.map(color => ({ ...color, isCustom: false }))
+                colors: colorGroup.colors.map(color => ({ ...color, isCustom: false })),
+                colorFinderOptions: colorGroup.colorFinderOptions
+                    ?.map(option => ({
+                        optionColor: option.optionColor,
+                        matchingColorKeys: option.matchingColorKeys
+                            .filter(key => colorGroup.colors.some(color => color.key === key))
+                    }))
+                    ?.filter(option => !!option.matchingColorKeys.length)
             })),
             {
                 meta: {
