@@ -1,4 +1,3 @@
 export enum InterfaceLocale {
-    EN = 'EN',
-    JA = 'JA'
+    EN = 'EN'
 }

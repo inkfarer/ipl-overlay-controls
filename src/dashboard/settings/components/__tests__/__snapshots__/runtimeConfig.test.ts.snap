@@ -23,7 +23,7 @@ exports[`RuntimeConfig matches snapshot when changing data 1`] = `
   </div>
   <ipl-select-stub modelvalue="SPLATOON_3" label="translation:general.gameVersionSelect" options="[object Object],[object Object]" disabled="false" data-test="game-version-select"></ipl-select-stub>
   <ipl-select-stub label="translation:general.gameLocaleSelect" options="[object Object],[object Object],[object Object],[object Object]" disabled="false" data-test="locale-select" class="m-t-6"></ipl-select-stub>
-  <ipl-select-stub label="translation:general.interfaceLocaleSelect" options="[object Object],[object Object]" disabled="false" data-test="interface-locale-select" class="m-t-6"></ipl-select-stub>
+  <ipl-select-stub label="translation:general.interfaceLocaleSelect" options="[object Object]" disabled="false" data-test="interface-locale-select" class="m-t-6"></ipl-select-stub>
   <ipl-button-stub label="common:button.update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="update-button"></ipl-button-stub>
 </div>"
 `;
