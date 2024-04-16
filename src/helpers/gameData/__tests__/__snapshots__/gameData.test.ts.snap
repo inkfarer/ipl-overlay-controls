@@ -468,13 +468,13 @@ exports[`gameData perGameData matches snapshot 1`] = `
       {
         "colors": [
           {
-            "clrA": "#6236DF",
-            "clrB": "#F0EB24",
+            "clrA": "#F0EB24",
+            "clrB": "#6236DF",
             "clrNeutral": "#B82FB6",
             "index": 0,
             "isCustom": false,
-            "key": "purpleYellow",
-            "title": "Purple vs Yellow",
+            "key": "yellowPurple",
+            "title": "Yellow vs Purple",
           },
         ],
         "meta": {
@@ -485,13 +485,13 @@ exports[`gameData perGameData matches snapshot 1`] = `
       {
         "colors": [
           {
-            "clrA": "#2D63D7",
-            "clrB": "#FDB605",
+            "clrA": "#FDB605",
+            "clrB": "#2D63D7",
             "clrNeutral": "#8FD20C",
             "index": 0,
             "isCustom": false,
-            "key": "blueOrange",
-            "title": "Blue vs Orange",
+            "key": "orangeBlue",
+            "title": "Orange vs Blue",
           },
         ],
         "meta": {

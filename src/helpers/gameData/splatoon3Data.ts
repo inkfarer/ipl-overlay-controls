@@ -291,10 +291,10 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             colors: [
                 {
                     index: 0,
-                    title: 'Purple vs Yellow',
-                    key: 'purpleYellow',
-                    clrA: '#6236DF',
-                    clrB: '#F0EB24',
+                    title: 'Yellow vs Purple',
+                    key: 'yellowPurple',
+                    clrA: '#F0EB24',
+                    clrB: '#6236DF',
                     clrNeutral: '#B82FB6'
                 }
             ]
@@ -307,10 +307,10 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             colors: [
                 {
                     index: 0,
-                    title: 'Blue vs Orange',
-                    key: 'blueOrange',
-                    clrA: '#2D63D7',
-                    clrB: '#FDB605',
+                    title: 'Orange vs Blue',
+                    key: 'orangeBlue',
+                    clrA: '#FDB605',
+                    clrB: '#2D63D7',
                     clrNeutral: '#8FD20C'
                 }
             ]
