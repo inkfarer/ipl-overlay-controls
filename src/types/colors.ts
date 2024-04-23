@@ -4,6 +4,11 @@ export interface ColorInfo {
     key: string;
     clrA: string;
     clrB: string;
+    // "Reference Colors" are closer to the real colors displayed in the game UI
+    // They can be defined to help automatically define the ink colors while still
+    // displaying a different color in the graphics
+    referenceClrA?: string;
+    referenceClrB?: string;
     clrNeutral: string;
     isCustom: boolean;
 }

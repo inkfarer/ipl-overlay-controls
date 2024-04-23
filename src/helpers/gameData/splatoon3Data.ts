@@ -207,6 +207,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'orangePurple',
                     clrA: '#F56522',
                     clrB: '#821CD6',
+                    referenceClrA: '#C64D24',
+                    referenceClrB: '#6C0AB3',
                     clrNeutral: '#CDFF45'
                 },
                 {
@@ -215,6 +217,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'yellowDarkBlue',
                     clrA: '#EDD921',
                     clrB: '#461EE6',
+                    referenceClrA: '#D3CD23',
+                    referenceClrB: '#4010C9',
                     clrNeutral: '#4445FF'
                 },
                 {
@@ -223,6 +227,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'turquoiseOrange',
                     clrA: '#2ADBC6',
                     clrB: '#FA5A41',
+                    referenceClrA: '#37D5B2',
+                    referenceClrB: '#CF453F',
                     clrNeutral: '#4445FF'
                 },
                 {
@@ -231,6 +237,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'orangeDarkBlue',
                     clrA: '#FC7735',
                     clrB: '#4048DB',
+                    referenceClrA: '#D9633A',
+                    referenceClrB: '#423BC4',
                     clrNeutral: '#F8F755'
                 },
                 {
@@ -239,6 +247,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'turquoisePink',
                     clrA: '#2ADBC3',
                     clrB: '#E34984',
+                    referenceClrA: '#35D3AE',
+                    referenceClrB: '#BE2C74',
                     clrNeutral: '#7577FF'
                 },
                 {
@@ -247,6 +257,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'darkBlueOrange',
                     clrA: '#2C2CDB',
                     clrB: '#F29C33',
+                    referenceClrA: '#261DAD',
+                    referenceClrB: '#DD8E3A',
                     clrNeutral: '#FF67EE'
                 },
                 {
@@ -255,6 +267,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'yellowPurple',
                     clrA: '#EEFC58',
                     clrB: '#7635F0',
+                    referenceClrA: '#C2DC4C',
+                    referenceClrB: '#641FCA',
                     clrNeutral: '#54FDE8'
                 },
                 {
@@ -263,6 +277,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'goldPurple',
                     clrA: '#EBCC31',
                     clrB: '#A032DB',
+                    referenceClrA: '#CFBC33',
+                    referenceClrB: '#901BC4',
                     clrNeutral: '#73DE35'
                 },
                 {
@@ -271,6 +287,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'greenPink',
                     clrA: '#B3DE45',
                     clrB: '#D43BCA',
+                    referenceClrA: '#A6DA44',
+                    referenceClrB: '#B31FB0',
                     clrNeutral: '#FFC042'
                 },
                 {
@@ -279,6 +297,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'pinkGreen',
                     clrA: '#F753A1',
                     clrB: '#35CC2D',
+                    referenceClrA: '#B82079',
+                    referenceClrB: '#39D42D',
                     clrNeutral: '#4A36FF'
                 }
             ]
@@ -295,6 +315,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'yellowPurple',
                     clrA: '#F0EB24',
                     clrB: '#6236DF',
+                    referenceClrA: '#CAC531',
+                    referenceClrB: '#5529BC',
                     clrNeutral: '#B82FB6'
                 }
             ]
@@ -311,6 +333,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                     key: 'orangeBlue',
                     clrA: '#FDB605',
                     clrB: '#2D63D7',
+                    referenceClrA: '#D5972C',
+                    referenceClrB: '#2858BC',
                     clrNeutral: '#8FD20C'
                 }
             ]
