@@ -216,8 +216,8 @@ export class ObsConnectorService {
         if (SOCKET_CLOSURE_CODES_FORBIDDING_RECONNECTION.includes(socketClosureCode)) return;
 
         this.stopReconnecting();
-        this.nodecg.log.info(i18next.t('obs.reconnectingToSocket'));
         this.reconnectionInterval = setInterval(() => {
+            this.nodecg.log.info(i18next.t('obs.reconnectingToSocket'));
             this.connect(false).catch(() => {
                 // ignore
             });
