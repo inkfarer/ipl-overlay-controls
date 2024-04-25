@@ -65,7 +65,6 @@ export class ObsConnectorController extends BaseController {
                 throw new Error(i18next.t('obs.missingGameplayInput'));
             }
             const sourceScreenshot = await obsConnectorService.getSourceScreenshot(gameplayInput);
-            // todo: on fail, write screenshot to disk
             const colors = await screenshotParserService.sampleTeamColors(sourceScreenshot);
             setActiveColor({
                 categoryName: colors.categoryName,

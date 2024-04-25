@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import Color from 'colorjs.io';
 import mean from 'lodash/mean';
 import type NodeCG from '@nodecg/types';
-import { RuntimeConfig } from 'schemas';
+import { Configschema, RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import i18next from 'i18next';
 import { ColorWithCategory } from 'types/messages/activeRound';
@@ -10,10 +10,14 @@ import { perGameData } from '../../helpers/gameData/gameData';
 import cloneDeep from 'lodash/cloneDeep';
 
 export class ScreenshotParserService {
+    private readonly nodecg: NodeCG.ServerAPI<Configschema>;
     private runtimeConfig: NodeCG.ServerReplicant<RuntimeConfig>;
+    private readonly saveBadScreenshotsToDisk: boolean;
 
-    constructor(nodecg: NodeCG.ServerAPI) {
+    constructor(nodecg: NodeCG.ServerAPI<Configschema>) {
+        this.nodecg = nodecg;
         this.runtimeConfig = nodecg.Replicant('runtimeConfig');
+        this.saveBadScreenshotsToDisk = nodecg.bundleConfig.screenshotParser?.saveBadScreenshotsToDisk ?? false;
     }
 
     async sampleTeamColors(screenshot: sharp.Sharp): Promise<ColorWithCategory | null> {
@@ -28,28 +32,36 @@ export class ScreenshotParserService {
             height: 1080
         });
 
-        return this.findClosestTeamColor([
-            await this.samplePoints(screenshot, [
-                { top: 29, left: 567 },
-                { top: 29, left: 655 },
-                { top: 29, left: 744 },
-                { top: 29, left: 833 },
-                { top: 104, left: 544 },
-                { top: 104, left: 632 },
-                { top: 104, left: 720 },
-                { top: 104, left: 809 }
-            ]),
-            await this.samplePoints(screenshot, [
-                { top: 29, left: 1084 },
-                { top: 29, left: 1172 },
-                { top: 29, left: 1261 },
-                { top: 29, left: 1349 },
-                { top: 104, left: 1060 },
-                { top: 104, left: 1148 },
-                { top: 104, left: 1236 },
-                { top: 104, left: 1324 }
-            ])
-        ]);
+        try {
+            return this.findClosestTeamColor([
+                await this.samplePoints(screenshot, [
+                    { top: 29, left: 567 },
+                    { top: 29, left: 655 },
+                    { top: 29, left: 744 },
+                    { top: 29, left: 833 },
+                    { top: 104, left: 544 },
+                    { top: 104, left: 632 },
+                    { top: 104, left: 720 },
+                    { top: 104, left: 809 }
+                ]),
+                await this.samplePoints(screenshot, [
+                    { top: 29, left: 1084 },
+                    { top: 29, left: 1172 },
+                    { top: 29, left: 1261 },
+                    { top: 29, left: 1349 },
+                    { top: 104, left: 1060 },
+                    { top: 104, left: 1148 },
+                    { top: 104, left: 1236 },
+                    { top: 104, left: 1324 }
+                ])
+            ]);
+        } catch (e) {
+            if (this.saveBadScreenshotsToDisk) {
+                await this.writeToDisk(screenshot);
+            }
+
+            throw e;
+        }
     }
 
     private findClosestTeamColor(colors: [Color, Color]): ColorWithCategory | null {
@@ -147,5 +159,9 @@ export class ScreenshotParserService {
             dominant.g / 255,
             dominant.b / 255
         ]);
+    }
+
+    private async writeToDisk(screenshot: sharp.Sharp): Promise<void> {
+        await screenshot.toFile(`./bundles/${this.nodecg.bundleName}/iploc-failed-color-parse-${+new Date()}.png`);
     }
 }
