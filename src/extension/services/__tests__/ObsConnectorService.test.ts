@@ -361,6 +361,20 @@ describe('ObsConnectorService', () => {
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('wss://obs-socket', 'test pwd');
         });
 
+        it('adds missing protocol to socket address', async () => {
+            replicants.obsCredentials = {
+                address: 'localhost:4455',
+                password: 'test pwd'
+            };
+            const service = new ObsConnectorService(mockNodecg);
+
+            await service.connect();
+
+            expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
+            expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
+            expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('ws://localhost:4455', 'test pwd');
+        });
+
         it('starts reconnecting on connection failure', async () => {
             replicants.obsCredentials = {
                 address: 'wss://obs-socket',

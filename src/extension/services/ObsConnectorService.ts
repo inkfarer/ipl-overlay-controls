@@ -49,7 +49,7 @@ export class ObsConnectorService {
 
         if (this.obsData.value.enabled) {
             this.connect().catch(e => {
-                nodecg.log.error(i18next.t('obs.errorWhileConnecting', { message: e.toString() }));
+                nodecg.log.error(i18next.t('obs.errorWhileConnecting'), e.toString());
             });
         }
     }
@@ -164,10 +164,12 @@ export class ObsConnectorService {
         await this.socket.disconnect();
         this.obsData.value.status = ObsStatus.CONNECTING;
 
+        const address = this.obsCredentials.value.address.indexOf('://') === -1
+            ? `ws://${this.obsCredentials.value.address}`
+            : this.obsCredentials.value.address;
         try {
-            // todo: if address does not start with http(s), add it manually (client side?)
             await this.socket.connect(
-                this.obsCredentials.value.address,
+                address,
                 isBlank(this.obsCredentials.value.password) ? undefined : this.obsCredentials.value.password);
         } catch (e) {
             this.obsData.value.status = ObsStatus.NOT_CONNECTED;

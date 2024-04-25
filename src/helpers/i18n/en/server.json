@@ -8,7 +8,7 @@
         "inputNotFound": "Could not find one or more of the provided inputs.",
         "socketClosed": "OBS websocket closed with message: {{message}}",
         "socketOpen": "OBS websocket is open.",
-        "errorWhileConnecting": "Error while connecting to OBS: {{message}}",
+        "errorWhileConnecting": "Error while connecting to OBS:",
         "obsConnectionFailed": "Failed to connect to OBS: {{message}}",
         "reconnectingToSocket": "Attempting to reconnect to OBS...",
         "receivedNoScenes": "Received scene list from OBS with no scenes. This should not be possible!",
