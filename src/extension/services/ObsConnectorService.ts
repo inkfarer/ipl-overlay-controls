@@ -42,11 +42,12 @@ export class ObsConnectorService {
         this.reconnectionCount = 0;
         this.screenshotImageFormat = null;
 
-        this.socket.on('ConnectionClosed', e => this.handleClosure(e));
-        this.socket.on('ConnectionOpened', () => this.handleOpening());
-        this.socket.on('Identified', () => this.handleIdentification());
-        this.socket.on('SceneListChanged', e => this.handleSceneListChange(e));
-        this.socket.on('CurrentProgramSceneChanged', e => this.handleProgramSceneChange(e));
+        this.socket.on('ConnectionClosed', e => this.handleClosure(e))
+            .on('ConnectionOpened', () => this.handleOpening())
+            .on('Identified', () => this.handleIdentification())
+            .on('SceneListChanged', e => this.handleSceneListChange(e))
+            .on('CurrentProgramSceneChanged', e => this.handleProgramSceneChange(e))
+            .on('CurrentSceneCollectionChanged', this.handleSceneCollectionChange.bind(this));
 
         if (this.obsData.value.enabled) {
             this.connect().catch(e => {
@@ -79,6 +80,15 @@ export class ObsConnectorService {
             this.loadInputs()
         ]).catch(e => {
             this.nodecg.log.error(i18next.t('obs.errorAfterSocketOpen'), e);
+        });
+    }
+
+    private handleSceneCollectionChange(): void {
+        Promise.all([
+            this.loadSceneList(),
+            this.loadInputs()
+        ]).catch(e => {
+            this.nodecg.log.error(i18next.t('obs.errorAfterSceneCollectionChange'), e);
         });
     }
 

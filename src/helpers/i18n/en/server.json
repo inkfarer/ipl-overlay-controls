@@ -16,6 +16,7 @@
         "missingScreenshotImageFormat": "Screenshot image format is undefined. Cannot continue.",
         "sceneItemLoadingFailed": "Failed to load items for scene {{sceneName}}:",
         "errorAfterSocketOpen": "Error loading OBS data:",
+        "errorAfterSceneCollectionChange": "Error loading OBS data after scene collection change:",
         "missingGameplayInput": "Gameplay input is unset. Change it from the Settings dashboard panel."
     },
     "activeRoundHelper": {

@@ -127,6 +127,19 @@ describe('ObsConnectorService', () => {
         });
     });
 
+    describe('handleSceneCollectionChange', () => {
+        it('loads required data from obs', () => {
+            const service = new ObsConnectorService(mockNodecg);
+            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
+            jest.spyOn(service as any, 'loadInputs').mockResolvedValue(null);
+
+            service['handleSceneCollectionChange']();
+
+            expect(service['loadSceneList']).toHaveBeenCalledTimes(1);
+            expect(service['loadInputs']).toHaveBeenCalledTimes(1);
+        });
+    });
+
     describe('handleOpening', () => {
         it('updates status and stops reconnecting', () => {
             const service = new ObsConnectorService(mockNodecg);
