@@ -547,14 +547,12 @@ describe('ObsConnectorService', () => {
             const service = new ObsConnectorService(mockNodecg);
             const interval = 'interval (test)';
             (service as any).reconnectionInterval = interval;
-            (service as any).reconnectionCount = 100;
             jest.spyOn(global, 'clearInterval');
 
             service.stopReconnecting();
 
             expect(clearInterval).toHaveBeenCalledWith(interval);
             expect((service as any).reconnectionInterval).toBeNull();
-            expect((service as any).reconnectionCount).toEqual(0);
         });
     });
 

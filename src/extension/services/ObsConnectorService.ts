@@ -31,7 +31,6 @@ export class ObsConnectorService {
     private obsCredentials: NodeCG.ServerReplicant<ObsCredentials>;
     private socket: OBSWebSocket;
     private reconnectionInterval: NodeJS.Timeout;
-    private reconnectionCount: number;
     private screenshotImageFormat: ScreenshotImageFormat | null;
 
     constructor(nodecg: NodeCG.ServerAPI) {
@@ -39,7 +38,6 @@ export class ObsConnectorService {
         this.obsData = nodecg.Replicant('obsData');
         this.obsCredentials = nodecg.Replicant('obsCredentials');
         this.socket = new OBSWebSocket();
-        this.reconnectionCount = 0;
         this.screenshotImageFormat = null;
 
         this.socket.on('ConnectionClosed', e => this.handleClosure(e))
@@ -216,9 +214,8 @@ export class ObsConnectorService {
         if (SOCKET_CLOSURE_CODES_FORBIDDING_RECONNECTION.includes(socketClosureCode)) return;
 
         this.stopReconnecting();
+        this.nodecg.log.info(i18next.t('obs.reconnectingToSocket'));
         this.reconnectionInterval = setInterval(() => {
-            this.reconnectionCount++;
-            this.nodecg.log.info(i18next.t('obs.reconnectingToSocket', { count: this.reconnectionCount }));
             this.connect(false).catch(() => {
                 // ignore
             });
@@ -228,7 +225,6 @@ export class ObsConnectorService {
     stopReconnecting(): void {
         clearInterval(this.reconnectionInterval);
         this.reconnectionInterval = null;
-        this.reconnectionCount = 0;
     }
 
     private updateScenes(scenes: string[]): void {
