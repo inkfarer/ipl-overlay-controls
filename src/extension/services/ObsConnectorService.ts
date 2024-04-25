@@ -125,7 +125,7 @@ export class ObsConnectorService {
         }
 
         if (this.obsData.value.gameplayInput != null && event.inputName === this.obsData.value.gameplayInput) {
-            this.obsData.value.gameplayInput = null;
+            this.obsData.value.gameplayInput = undefined;
         }
     }
 
@@ -187,7 +187,7 @@ export class ObsConnectorService {
             this.obsData.value.gameplayInput != null
             && !inputs.inputs.some(input => input.inputName === this.obsData.value.gameplayInput)
         ) {
-            this.obsData.value.gameplayInput = null;
+            this.obsData.value.gameplayInput = undefined;
         }
 
         this.socket

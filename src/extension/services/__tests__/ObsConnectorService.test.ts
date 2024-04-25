@@ -253,7 +253,7 @@ describe('ObsConnectorService', () => {
                 inputUuid: 'test-uuid-3584'
             });
 
-            expect((replicants.obsData as ObsData).gameplayInput).toBeNull();
+            expect((replicants.obsData as ObsData).gameplayInput).toBeUndefined();
         });
     });
 
@@ -462,7 +462,7 @@ describe('ObsConnectorService', () => {
 
             await service['loadInputs']();
 
-            expect((replicants.obsData as ObsData).gameplayInput).toBeNull();
+            expect((replicants.obsData as ObsData).gameplayInput).toBeUndefined();
             expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetInputList');
         });
     });
