@@ -1,5 +1,4 @@
 import { GameAutomationData, ObsCredentials, ObsData } from 'schemas';
-import { SetObsDataRequest } from 'types/messages/obs';
 import { defineStore } from 'pinia';
 
 const obsData = nodecg.Replicant<ObsData>('obsData');
@@ -23,9 +22,6 @@ export const useObsStore = defineStore('obs', {
     actions: {
         async connect({ address, password }: { address: string, password?: string }): Promise<void> {
             return nodecg.sendMessage('connectToObs', { address, password });
-        },
-        async setData(data: SetObsDataRequest): Promise<void> {
-            return nodecg.sendMessage('setObsData', data);
         },
         async startGame(): Promise<void> {
             return nodecg.sendMessage('startGame');

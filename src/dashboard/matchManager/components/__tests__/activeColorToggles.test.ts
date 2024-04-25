@@ -7,6 +7,9 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { IplButton } from '@iplsplatoon/vue-components';
+import { useObsStore } from '../../../store/obsStore';
+import { ObsStatus } from 'types/enums/ObsStatus';
+import { mockSendMessage } from '../../../__mocks__/mockNodecg';
 
 describe('ActiveColorToggles', () => {
     let pinia: TestingPinia;
@@ -18,6 +21,9 @@ describe('ActiveColorToggles', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
         config.global.plugins = [pinia];
+
+        const obsStore = useObsStore();
+        obsStore.obsData = { enabled: false, status: ObsStatus.NOT_CONNECTED };
 
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.getNextAndPreviousColors = jest.fn().mockResolvedValue({
@@ -191,5 +197,42 @@ describe('ActiveColorToggles', () => {
         wrapper.getComponent<typeof IplButton>('[data-test="swap-colors-button"]').vm.$emit('click');
 
         expect(activeRoundStore.swapColors).toHaveBeenCalled();
+    });
+
+    it('does not show button for reading colors from obs if obs socket is disabled', () => {
+        const obsStore = useObsStore();
+        obsStore.obsData = { enabled: false, status: ObsStatus.NOT_CONNECTED };
+        const wrapper = mount(ActiveColorToggles);
+
+        expect(wrapper.find('[data-test="read-colors-from-source-button"]').exists()).toEqual(false);
+        expect(wrapper.find('[data-test="missing-gameplay-input-warning"]').exists()).toEqual(false);
+    });
+
+    it('handles reading colors from OBS', () => {
+        const obsStore = useObsStore();
+        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED };
+        const wrapper = mount(ActiveColorToggles);
+
+        wrapper.getComponent<typeof IplButton>('[data-test="read-colors-from-source-button"]').vm.$emit('click');
+
+        expect(mockSendMessage).toHaveBeenCalledWith('setActiveColorsFromGameplaySource', undefined);
+    });
+
+    it('displays a warning if the gameplay input is unset', () => {
+        const obsStore = useObsStore();
+        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED, gameplayInput: undefined };
+        const wrapper = mount(ActiveColorToggles);
+
+        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        expect(warningElem.exists()).toEqual(true);
+        expect(warningElem.text()).toEqual('translation:missingObsGameplayInputWarning');
+    });
+
+    it('does not display a warning if the gameplay input is set', () => {
+        const obsStore = useObsStore();
+        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED, gameplayInput: 'Video Capture Device' };
+        const wrapper = mount(ActiveColorToggles);
+
+        expect(wrapper.find('[data-test="missing-gameplay-input-warning"]').exists()).toEqual(false);
     });
 });

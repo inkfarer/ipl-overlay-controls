@@ -1,5 +1,15 @@
 <template>
     <ipl-space>
+        <ipl-message
+            v-if="obsStore.obsData.enabled && showMissingGameplayInputWarning"
+            type="warning"
+            closeable
+            class="m-b-8"
+            data-test="missing-gameplay-input-warning"
+            @close="showMissingGameplayInputWarning = false"
+        >
+            {{ $t('missingObsGameplayInputWarning') }}
+        </ipl-message>
         <div class="layout horizontal">
             <span class="max-width text-small team-name wrap-anywhere">
                 {{ addDots(activeRound.teamA.name, 36) }}
@@ -82,6 +92,15 @@
                 />
             </div>
         </div>
+        <ipl-button
+            v-if="obsStore.obsData.enabled"
+            class="m-t-6"
+            :label="$t('readColorsFromSourceScreenshotButton')"
+            small
+            async
+            data-test="read-colors-from-source-button"
+            @click="readColorsFromSourceScreenshot"
+        />
     </ipl-space>
 </template>
 
@@ -91,21 +110,24 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
-import { IplButton, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplSpace, IplMessage } from '@iplsplatoon/vue-components';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { getContrastingTextColor } from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
 import { addDots } from '../../../helpers/stringHelper';
 import { ColorWithCategory, GetNextAndPreviousColorsResponse } from 'types/messages/activeRound';
+import { sendMessage } from '../../helpers/nodecgHelper';
+import { useObsStore } from '../../store/obsStore';
 
 library.add(faChevronRight, faChevronLeft);
 
 export default defineComponent({
     name: 'ActiveColorToggles',
 
-    components: { IplSpace, IplButton, FontAwesomeIcon },
+    components: { IplSpace, IplButton, IplMessage, FontAwesomeIcon },
 
     setup() {
+        const obsStore = useObsStore();
         const activeRoundStore = useActiveRoundStore();
 
         const activeRound = computed(() => activeRoundStore.activeRound);
@@ -122,7 +144,8 @@ export default defineComponent({
 
                 nextColor.value = colors.nextColor;
                 previousColor.value = colors.previousColor;
-            }, { immediate: true });
+            },
+            { immediate: true });
         
         const colorTogglesDisabled = computed(() => {
             const activeColorIndex = activeRound.value.activeColor.index;
@@ -131,7 +154,18 @@ export default defineComponent({
                 || activeRoundStore.activeRound.activeColor.isCustom;
         });
 
+        const showMissingGameplayInputWarning = ref(false);
+        watch(
+            () => obsStore.obsData.gameplayInput,
+            (newValue) => {
+                showMissingGameplayInputWarning.value = newValue == null;
+            },
+            { immediate: true }
+        );
+
         return {
+            obsStore,
+            showMissingGameplayInputWarning,
             activeRound,
             colorTogglesDisabled,
             getBorderColor(color?: string): string {
@@ -152,6 +186,9 @@ export default defineComponent({
             },
             switchToPreviousColor() {
                 activeRoundStore.switchToPreviousColor();
+            },
+            async readColorsFromSourceScreenshot() {
+                await sendMessage('setActiveColorsFromGameplaySource');
             }
         };
     }

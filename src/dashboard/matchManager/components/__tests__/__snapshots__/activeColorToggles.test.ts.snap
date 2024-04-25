@@ -2,6 +2,7 @@
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
 "<div data-v-868771ad="" class="ipl-space color-dark">
+  <!--v-if-->
   <div class="layout horizontal"><span class="max-width text-small team-name wrap-anywhere">Team One</span><span class="max-width text-small team-name wrap-anywhere text-right m-l-6">Team Two (Really long name for te...</span></div>
   <div class="layout horizontal m-t-4">
     <div class="color-display text-right" style="color: rgb(24, 30, 41);" data-test="team-a-color-display">α</div>
@@ -19,11 +20,13 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
       <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-right"></font-awesome-icon-stub>
     </div>
   </div>
+  <!--v-if-->
 </div>"
 `;
 
 exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
 "<div data-v-868771ad="" class="ipl-space color-dark">
+  <!--v-if-->
   <div class="layout horizontal"><span class="max-width text-small team-name wrap-anywhere">Team One</span><span class="max-width text-small team-name wrap-anywhere text-right m-l-6">Team Two (Really long name for te...</span></div>
   <div class="layout horizontal m-t-4">
     <div class="color-display text-right" style="color: rgb(24, 30, 41);" data-test="team-a-color-display">β</div>
@@ -41,5 +44,6 @@ exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
       <font-awesome-icon-stub icon="chevron-right" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon-right"></font-awesome-icon-stub>
     </div>
   </div>
+  <!--v-if-->
 </div>"
 `;

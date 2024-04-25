@@ -35,10 +35,14 @@ export class ObsConnectorController extends BaseController {
                 || !obsData.value.scenes?.some(scene => scene === data.intermissionScene)) {
                 throw new Error(i18next.t('obs.sceneNotFound'));
             }
+            if (!obsData.value.inputs?.some(input => input.name === data.gameplayInput)) {
+                throw new Error(i18next.t('obs.inputNotFound'));
+            }
 
             obsData.value = {
                 ...obsData.value,
                 gameplayScene: data.gameplayScene,
+                gameplayInput: data.gameplayInput,
                 intermissionScene: data.intermissionScene
             };
         });

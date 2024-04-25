@@ -11,6 +11,8 @@
     "cancelAutomationActionButton": "Cancel action",
     "showCastersButton": "Show casters",
     "swapColorsButton": "Swap",
+    "readColorsFromSourceScreenshotButton": "Read colors from OBS",
+    "missingObsGameplayInputWarning": "The OBS gameplay source is unset. Reading colors from OBS will fail. Please set a gameplay source from the Settings dashboard panel.",
     "colorList": {
         "sectionTitle": "More colors",
         "useCustomColorCheckbox": "Use custom color",

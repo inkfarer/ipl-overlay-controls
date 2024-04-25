@@ -17,17 +17,6 @@ describe('obsStore', () => {
         });
     });
 
-    describe('setData', () => {
-        it('sends message to extension', () => {
-            const store = useObsStore();
-
-            // @ts-ignore
-            store.setData({ address: '192.168.1.2' });
-
-            expect(mockSendMessage).toHaveBeenCalledWith('setObsData', { address: '192.168.1.2' });
-        });
-    });
-
     describe('startGame', () => {
         it('sends message to extension', () => {
             const store = useObsStore();

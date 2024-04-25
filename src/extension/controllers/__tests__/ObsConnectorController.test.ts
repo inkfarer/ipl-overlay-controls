@@ -72,19 +72,48 @@ describe('ObsConnectorController', () => {
                 .toThrow(new Error('translation:obs.sceneNotFound'));
         });
 
+        it('throws an error if the gameplay input is not found', () => {
+            replicants.obsData = {
+                inputs: [
+                    { name: 'test-input-1' },
+                    { name: 'test-input-2' }
+                ],
+                scenes: ['scene1', 'scene2']
+            };
+
+            expect(() => controllerListeners.setObsData({
+                gameplayScene: 'scene1',
+                intermissionScene: 'scene2',
+                gameplayInput: 'test-input-3'
+            })).toThrow(new Error('translation:obs.inputNotFound'));
+        });
+
         it('re-assigns the gameplay and intermission scenes', () => {
             replicants.obsData = {
                 enabled: true,
-                scenes: ['scene1', 'scene2', 'scene3']
+                scenes: ['scene1', 'scene2', 'scene3'],
+                inputs: [
+                    { name: 'test-input-1' },
+                    { name: 'test-input-2' }
+                ],
             };
 
-            controllerListeners.setObsData({ gameplayScene: 'scene2', intermissionScene: 'scene3' });
+            controllerListeners.setObsData({
+                gameplayScene: 'scene2',
+                intermissionScene: 'scene3',
+                gameplayInput: 'test-input-1'
+            });
 
             expect(replicants.obsData).toEqual({
                 enabled: true,
                 scenes: ['scene1', 'scene2', 'scene3'],
+                inputs: [
+                    { name: 'test-input-1' },
+                    { name: 'test-input-2' }
+                ],
                 gameplayScene: 'scene2',
-                intermissionScene: 'scene3'
+                intermissionScene: 'scene3',
+                gameplayInput: 'test-input-1'
             });
         });
     });

@@ -4,6 +4,7 @@ import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
+import { mockSendMessage } from '../../../__mocks__/mockNodecg';
 
 describe('ObsDataPicker', () => {
     let pinia: TestingPinia;
@@ -24,7 +25,20 @@ describe('ObsDataPicker', () => {
             status: ObsStatus.CONNECTED,
             scenes: ['Scene One', 'Scene Two', 'Scene Three'],
             gameplayScene: 'Scene One',
-            intermissionScene: 'Scene Two'
+            intermissionScene: 'Scene Two',
+            gameplayInput: 'Test Input One',
+            inputs: [
+                {
+                    name: 'Test Input One',
+                    uuid: 'test-uuid-1',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'Test Input Two',
+                    uuid: 'test-uuid-2',
+                    noVideoOutput: true
+                }
+            ]
         };
     });
 
@@ -64,8 +78,6 @@ describe('ObsDataPicker', () => {
     });
 
     it('handles updating data', async () => {
-        const store = useObsStore();
-        store.setData = jest.fn();
         const wrapper = mount(ObsDataPicker, {
             global: {
                 plugins: [pinia]
@@ -76,8 +88,9 @@ describe('ObsDataPicker', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.setData).toHaveBeenCalledWith({
+        expect(mockSendMessage).toHaveBeenCalledWith('setObsData', {
             gameplayScene: 'Scene One',
+            gameplayInput: 'Test Input One',
             intermissionScene: 'Scene Three'
         });
     });
