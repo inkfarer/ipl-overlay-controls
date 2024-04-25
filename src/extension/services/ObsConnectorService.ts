@@ -4,9 +4,26 @@ import OBSWebSocket, { EventTypes } from 'obs-websocket-js';
 import { ObsStatus } from 'types/enums/ObsStatus';
 import { isBlank } from '../../helpers/stringHelper';
 import i18next from 'i18next';
+import Sharp from 'sharp';
 
 // Authentication failed, Unsupported protocol version, Session invalidated
 const SOCKET_CLOSURE_CODES_FORBIDDING_RECONNECTION = [4009, 4010, 4011];
+const SUPPORTED_SCREENSHOT_IMAGE_FORMATS = ['webp', 'jpg', 'jpeg', 'png', 'tiff'] as const;
+type ScreenshotImageFormat = typeof SUPPORTED_SCREENSHOT_IMAGE_FORMATS[number];
+// Checked from OBS's source - Under each source's 'obs_source_info' struct, the output_flags property defines if a
+// source outputs video or not. The websocket doesn't expose these details by itself...
+const OBS_INPUT_KINDS_WITHOUT_VIDEO = [
+    'sck_audio_capture',
+    'coreaudio_input_capture',
+    'coreaudio_output_capture',
+    'oss_input_capture',
+    'pulse_input_capture',
+    'pulse_output_capture',
+    'alsa_input_capture',
+    'jack_output_capture',
+    'audio_line',
+    'sndio_output_capture'
+];
 
 export class ObsConnectorService {
     private readonly nodecg: NodeCG.ServerAPI;
@@ -15,6 +32,7 @@ export class ObsConnectorService {
     private socket: OBSWebSocket;
     private reconnectionInterval: NodeJS.Timeout;
     private reconnectionCount: number;
+    private screenshotImageFormat: ScreenshotImageFormat | null;
 
     constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
@@ -22,15 +40,17 @@ export class ObsConnectorService {
         this.obsCredentials = nodecg.Replicant('obsCredentials');
         this.socket = new OBSWebSocket();
         this.reconnectionCount = 0;
+        this.screenshotImageFormat = null;
 
         this.socket.on('ConnectionClosed', e => this.handleClosure(e));
         this.socket.on('ConnectionOpened', () => this.handleOpening());
+        this.socket.on('Identified', () => this.handleIdentification());
         this.socket.on('SceneListChanged', e => this.handleSceneListChange(e));
         this.socket.on('CurrentProgramSceneChanged', e => this.handleProgramSceneChange(e));
 
         if (this.obsData.value.enabled) {
-            this.connect().catch(() => {
-                // ignore
+            this.connect().catch(e => {
+                nodecg.log.error(i18next.t('obs.errorWhileConnecting', { message: e.toString() }));
             });
         }
     }
@@ -45,6 +65,21 @@ export class ObsConnectorService {
                 this.startReconnecting(event.code);
             }
         }
+
+        this.socket
+            .off('InputCreated')
+            .off('InputRemoved')
+            .off('InputNameChanged');
+    }
+
+    private handleIdentification(): void {
+        Promise.all([
+            this.loadSceneList(),
+            this.getScreenshotImageFormat(),
+            this.loadInputs()
+        ]).catch(e => {
+            this.nodecg.log.error(i18next.t('obs.errorAfterSocketOpen'), e);
+        });
     }
 
     private handleOpening(): void {
@@ -53,8 +88,64 @@ export class ObsConnectorService {
         this.stopReconnecting();
     }
 
+    private async getScreenshotImageFormat(): Promise<void> {
+        const version = await this.socket.call('GetVersion');
+        for (const format of SUPPORTED_SCREENSHOT_IMAGE_FORMATS) {
+            if (version.supportedImageFormats.includes(format)) {
+                this.screenshotImageFormat = format;
+                return;
+            }
+        }
+        this.screenshotImageFormat = null;
+    }
+
     private handleSceneListChange(event: EventTypes['SceneListChanged']): void {
         this.updateScenes(event.scenes.map(scene => String(scene.sceneName)));
+    }
+
+    private handleInputCreation(event: EventTypes['InputCreated']): void {
+        if (this.obsData.value.inputs == null) {
+            this.obsData.value.inputs = [{
+                name: event.inputName,
+                uuid: event.inputUuid,
+                noVideoOutput: OBS_INPUT_KINDS_WITHOUT_VIDEO.includes(event.inputKind)
+            }];
+        } else {
+            this.obsData.value.inputs.push({
+                name: event.inputName,
+                uuid: event.inputUuid,
+                noVideoOutput: OBS_INPUT_KINDS_WITHOUT_VIDEO.includes(event.inputKind)
+            });
+        }
+    }
+
+    private handleInputRemoval(event: EventTypes['InputRemoved']): void {
+        if (this.obsData.value.inputs != null) {
+            this.obsData.value.inputs = this.obsData.value.inputs.filter(input => input.name !== event.inputName);
+        }
+
+        if (this.obsData.value.gameplayInput != null && event.inputName === this.obsData.value.gameplayInput) {
+            this.obsData.value.gameplayInput = null;
+        }
+    }
+
+    private handleInputNameChange(event: EventTypes['InputNameChanged']): void {
+        if (this.obsData.value.inputs != null) {
+            this.obsData.value.inputs = this.obsData.value.inputs.map(input => {
+                if (input.name === event.oldInputName) {
+                    return {
+                        ...input,
+                        name: event.inputName
+                    };
+                }
+
+                return input;
+            });
+        }
+
+        if (this.obsData.value.gameplayInput != null && this.obsData.value.gameplayInput === event.oldInputName) {
+            this.obsData.value.gameplayInput = event.inputName;
+        }
     }
 
     private handleProgramSceneChange(event: EventTypes['CurrentProgramSceneChanged']): void {
@@ -77,8 +168,6 @@ export class ObsConnectorService {
             }
             throw new Error(i18next.t('obs.obsConnectionFailed', { message: e.message ?? String(e) }));
         }
-
-        await this.loadSceneList();
     }
 
     async disconnect(): Promise<void> {
@@ -86,9 +175,29 @@ export class ObsConnectorService {
         await this.socket.disconnect();
     }
 
+    private async loadInputs(): Promise<void> {
+        const inputs = await this.socket.call('GetInputList');
+        this.obsData.value.inputs = inputs.inputs.map(input => ({
+            name: String(input.inputName),
+            uuid: input.inputUuid == null ? null : String(input.inputUuid),
+            noVideoOutput: OBS_INPUT_KINDS_WITHOUT_VIDEO.includes(String(input.inputKind))
+        }));
+
+        if (
+            this.obsData.value.gameplayInput != null
+            && !inputs.inputs.some(input => input.inputName === this.obsData.value.gameplayInput)
+        ) {
+            this.obsData.value.gameplayInput = null;
+        }
+
+        this.socket
+            .on('InputCreated', this.handleInputCreation.bind(this))
+            .on('InputRemoved', this.handleInputRemoval.bind(this))
+            .on('InputNameChanged', this.handleInputNameChange.bind(this));
+    }
+
     private async loadSceneList(): Promise<void> {
         const scenes = await this.socket.call('GetSceneList');
-
         this.obsData.value.currentScene = scenes.currentProgramSceneName;
         this.updateScenes(scenes.scenes.map(scene => String(scene.sceneName)));
     }
@@ -139,5 +248,23 @@ export class ObsConnectorService {
 
     setCurrentScene(scene: string): Promise<void> {
         return this.socket.call('SetCurrentProgramScene', { sceneName: scene });
+    }
+
+    async getSourceScreenshot(source: string): Promise<Sharp.Sharp> {
+        if (this.obsData.value.status !== ObsStatus.CONNECTED) {
+            throw new Error(i18next.t('obs.socketNotOpen'));
+        }
+        if (this.screenshotImageFormat == null) {
+            throw new Error(i18next.t('obs.missingScreenshotImageFormat'));
+        }
+
+        const response = await this.socket.call('GetSourceScreenshot', {
+            sourceName: source,
+            imageFormat: this.screenshotImageFormat
+        });
+        const base64WithoutHeader = response.imageData.substring(response.imageData.indexOf(',') + 1);
+        const buffer = Buffer.from(base64WithoutHeader, 'base64');
+
+        return Sharp(buffer);
     }
 }

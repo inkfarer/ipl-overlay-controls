@@ -1,15 +1,23 @@
 import type NodeCG from '@nodecg/types';
 import { BaseController } from './BaseController';
 import { ObsConnectorService } from '../services/ObsConnectorService';
-import { ObsCredentials, ObsData } from 'schemas';
+import { ObsCredentials, ObsData, SwapColorsInternally } from 'schemas';
 import i18next from 'i18next';
+import { ScreenshotParserService } from '../services/ScreenshotParserService';
+import { setActiveColor } from '../helpers/activeColorHelper';
+import { swapColors } from '../../helpers/ColorHelper';
 
 export class ObsConnectorController extends BaseController {
-    constructor(nodecg: NodeCG.ServerAPI, obsConnectorService: ObsConnectorService) {
+    constructor(
+        nodecg: NodeCG.ServerAPI,
+        obsConnectorService: ObsConnectorService,
+        screenshotParserService: ScreenshotParserService
+    ) {
         super(nodecg);
 
         const obsCredentials = nodecg.Replicant<ObsCredentials>('obsCredentials');
         const obsData = nodecg.Replicant<ObsData>('obsData');
+        const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
 
         this.listen('connectToObs', async (data) => {
             obsCredentials.value = data;
@@ -45,6 +53,21 @@ export class ObsConnectorController extends BaseController {
             } else {
                 await obsConnectorService.connect();
             }
+        });
+
+        this.listen('setActiveColorsFromGameplaySource', async () => {
+            const gameplayInput = obsData.value.gameplayInput;
+            if (gameplayInput == null) {
+                throw new Error(i18next.t('obs.missingGameplayInput'));
+            }
+            const sourceScreenshot = await obsConnectorService.getSourceScreenshot(gameplayInput);
+            // todo: on fail, write screenshot to disk
+            const colors = await screenshotParserService.sampleTeamColors(sourceScreenshot);
+            setActiveColor({
+                categoryName: colors.categoryName,
+                categoryKey: colors.categoryKey,
+                color: swapColorsInternally.value ? swapColors(colors) : colors
+            });
         });
     }
 }

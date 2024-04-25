@@ -1,9 +1,12 @@
 import { ObsConnectorService } from '../ObsConnectorService';
 import { mockNodecg, replicants } from '../../__mocks__/mockNodecg';
 import OBSWebSocket, { OBSWebSocketError } from 'obs-websocket-js';
-import { ObsStatus } from '../../../types/enums/ObsStatus';
-import { ObsData } from '../../../types/schemas';
+import { ObsStatus } from 'types/enums/ObsStatus';
+import { ObsData } from 'schemas';
 import { flushPromises } from '@vue/test-utils';
+import Sharp from 'sharp';
+
+jest.mock('sharp');
 
 describe('ObsConnectorService', () => {
     beforeEach(() => {
@@ -109,6 +112,21 @@ describe('ObsConnectorService', () => {
         });
     });
 
+    describe('handleIdentification', () => {
+        it('loads required data from obs', () => {
+            const service = new ObsConnectorService(mockNodecg);
+            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
+            jest.spyOn(service as any, 'getScreenshotImageFormat').mockResolvedValue(null);
+            jest.spyOn(service as any, 'loadInputs').mockResolvedValue(null);
+
+            service['handleIdentification']();
+
+            expect(service['loadSceneList']).toHaveBeenCalledTimes(1);
+            expect(service['getScreenshotImageFormat']).toHaveBeenCalledTimes(1);
+            expect(service['loadInputs']).toHaveBeenCalledTimes(1);
+        });
+    });
+
     describe('handleOpening', () => {
         it('updates status and stops reconnecting', () => {
             const service = new ObsConnectorService(mockNodecg);
@@ -137,10 +155,173 @@ describe('ObsConnectorService', () => {
         });
     });
 
+    describe('handleInputCreation', () => {
+        it('handles the list of inputs being empty', () => {
+            (replicants.obsData as ObsData).inputs = null;
+            const service = new ObsConnectorService(mockNodecg);
+
+            // @ts-ignore
+            service['handleInputCreation']({
+                inputName: 'test-input',
+                inputUuid: 'test-uuid-1234',
+                inputKind: 'video-input'
+            });
+
+            expect((replicants.obsData as ObsData).inputs).toEqual([{
+                name: 'test-input',
+                uuid: 'test-uuid-1234',
+                noVideoOutput: false
+            }]);
+        });
+        
+        it('adds a new input to the list', () => {
+            (replicants.obsData as ObsData).inputs = [{
+                name: 'test-input',
+                uuid: 'test-uuid-1234',
+                noVideoOutput: true
+            }];
+            const service = new ObsConnectorService(mockNodecg);
+
+            // @ts-ignore
+            service['handleInputCreation']({
+                inputName: 'new-test-input',
+                inputUuid: 'test-uuid-3456',
+                inputKind: 'video-input'
+            });
+
+            expect((replicants.obsData as ObsData).inputs).toEqual([
+                {
+                    name: 'test-input',
+                    uuid: 'test-uuid-1234',
+                    noVideoOutput: true
+                },
+                {
+                    name: 'new-test-input',
+                    uuid: 'test-uuid-3456',
+                    noVideoOutput: false
+                }
+            ]);
+        });
+    });
+
+    describe('handleInputRemoval', () => {
+        it('removes the given input from the list', () => {
+            (replicants.obsData as ObsData).inputs = [
+                {
+                    name: 'test-input',
+                    uuid: 'test-uuid-1234',
+                    noVideoOutput: true
+                },
+                {
+                    name: 'test-input-2',
+                    uuid: 'test-uuid-2346',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'test-input-3',
+                    uuid: 'test-uuid-8367',
+                    noVideoOutput: false
+                }
+            ];
+            const service = new ObsConnectorService(mockNodecg);
+
+            service['handleInputRemoval']({
+                inputUuid: 'test-uuid-2346',
+                inputName: 'test-input-2'
+            });
+
+            expect((replicants.obsData as ObsData).inputs).toEqual([
+                {
+                    name: 'test-input',
+                    uuid: 'test-uuid-1234',
+                    noVideoOutput: true
+                },
+                {
+                    name: 'test-input-3',
+                    uuid: 'test-uuid-8367',
+                    noVideoOutput: false
+                }
+            ]);
+        });
+
+        it('unsets the gameplay input if it was deleted', () => {
+            (replicants.obsData as ObsData).gameplayInput = 'test-gameplay-input';
+            const service = new ObsConnectorService(mockNodecg);
+
+            service['handleInputRemoval']({
+                inputName: 'test-gameplay-input',
+                inputUuid: 'test-uuid-3584'
+            });
+
+            expect((replicants.obsData as ObsData).gameplayInput).toBeNull();
+        });
+    });
+
+    describe('handleInputNameChange', () => {
+        it('updates the list of inputs', () => {
+            (replicants.obsData as ObsData).inputs = [
+                {
+                    name: 'test-input',
+                    uuid: 'test-uuid-1234',
+                    noVideoOutput: true
+                },
+                {
+                    name: 'test-input-2',
+                    uuid: 'test-uuid-2346',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'test-input-3',
+                    uuid: 'test-uuid-8367',
+                    noVideoOutput: false
+                }
+            ];
+            const service = new ObsConnectorService(mockNodecg);
+
+            service['handleInputNameChange']({
+                oldInputName: 'test-input-2',
+                inputName: 'new-test-input-2',
+                inputUuid: 'test-uuid-2346'
+            });
+
+            expect((replicants.obsData as ObsData).inputs).toEqual([
+                {
+                    name: 'test-input',
+                    uuid: 'test-uuid-1234',
+                    noVideoOutput: true
+                },
+                {
+                    name: 'new-test-input-2',
+                    uuid: 'test-uuid-2346',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'test-input-3',
+                    uuid: 'test-uuid-8367',
+                    noVideoOutput: false
+                }
+            ]);
+        });
+
+        it('updates the gameplay input name if required', () => {
+            (replicants.obsData as ObsData).gameplayInput = 'test-gameplay-input';
+            const service = new ObsConnectorService(mockNodecg);
+
+            service['handleInputNameChange']({
+                oldInputName: 'test-gameplay-input',
+                inputName: 'new-test-gameplay-input',
+                inputUuid: 'test-uuid-7462'
+            });
+
+            expect((replicants.obsData as ObsData).gameplayInput).toEqual('new-test-gameplay-input');
+        });
+    });
+
     describe('handleProgramSceneChange', () => {
         it('updates scenes', () => {
             const service = new ObsConnectorService(mockNodecg);
 
+            // @ts-ignore
             service['handleProgramSceneChange']({
                 sceneName: 'new-scene'
             });
@@ -153,20 +334,18 @@ describe('ObsConnectorService', () => {
     });
 
     describe('connect', () => {
-        it('connects to the obs socket and loads the list of scenes', async () => {
+        it('connects to the obs socket', async () => {
             replicants.obsCredentials = {
                 address: 'wss://obs-socket',
                 password: 'test pwd'
             };
             const service = new ObsConnectorService(mockNodecg);
-            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
 
             await service.connect();
 
             expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('wss://obs-socket', 'test pwd');
-            expect(service['loadSceneList']).toHaveBeenCalled();
         });
 
         it('starts reconnecting on connection failure', async () => {
@@ -223,8 +402,74 @@ describe('ObsConnectorService', () => {
         });
     });
 
+    describe('loadInputs', () => {
+        it('loads the list of inputs', async () => {
+            jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
+                inputs: [
+                    {
+                        inputName: 'test-input-1',
+                        inputUuid: 'test-uuid-1',
+                        inputKind: 'test-video-input'
+                    },
+                    {
+                        inputName: 'test-input-2',
+                        inputUuid: 'test-uuid-2',
+                        inputKind: 'test-video-input'
+                    },
+                    {
+                        inputName: 'test-input-3',
+                        inputUuid: 'test-uuid-3',
+                        inputKind: 'sck_audio_capture'
+                    }
+                ]
+            });
+            const service = new ObsConnectorService(mockNodecg);
+
+            await service['loadInputs']();
+
+            expect((replicants.obsData as ObsData).inputs).toEqual([
+                {
+                    name: 'test-input-1',
+                    uuid: 'test-uuid-1',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'test-input-2',
+                    uuid: 'test-uuid-2',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'test-input-3',
+                    uuid: 'test-uuid-3',
+                    noVideoOutput: true
+                }
+            ]);
+            expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetInputList');
+        });
+
+        it('unsets the gameplay input if it does not exist in obs', async () => {
+            (replicants.obsData as ObsData).gameplayInput = 'test-input-4';
+            jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
+                inputs: [
+                    {
+                        inputName: 'test-input-1',
+                        inputUuid: 'test-uuid-1',
+                        inputKind: 'test-video-input'
+                    }
+                ]
+            });
+            const service = new ObsConnectorService(mockNodecg);
+
+            await service['loadInputs']();
+
+            expect((replicants.obsData as ObsData).gameplayInput).toBeNull();
+            expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetInputList');
+        });
+    });
+
     describe('loadSceneList', () => {
         it('loads and updates scene data', async () => {
+            // @ts-ignore
             jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
                 currentProgramSceneName: 'scene1',
                 scenes: [
@@ -390,6 +635,45 @@ describe('ObsConnectorService', () => {
                 ]
             });
             expect(mockNodecg.sendMessage).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('getSourceScreenshot', () => {
+        it.each([
+            ObsStatus.NOT_CONNECTED,
+            ObsStatus.CONNECTING
+        ])('throws an error if the obs socket status is %s', async (status) => {
+            (replicants.obsData as ObsData).status = status;
+            const service = new ObsConnectorService(mockNodecg);
+
+            await expect(service.getSourceScreenshot('test-source')).rejects.toThrow(new Error('translation:obs.socketNotOpen'));
+        });
+
+        it('throws an error if the screenshot image format is unknown', async () => {
+            (replicants.obsData as ObsData).status = ObsStatus.CONNECTED;
+            const service = new ObsConnectorService(mockNodecg);
+            service['screenshotImageFormat'] = null;
+
+            await expect(service.getSourceScreenshot('test-source')).rejects.toThrow(new Error('translation:obs.missingScreenshotImageFormat'));
+        });
+
+        it('requests a source screenshot from obs', async () => {
+            jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
+                imageData: 'data:image/webp;base64,dGVzdHRlc3Q'
+            });
+            (Sharp as unknown as jest.Mock).mockReturnValue('test-sharp-result');
+            (replicants.obsData as ObsData).status = ObsStatus.CONNECTED;
+            const service = new ObsConnectorService(mockNodecg);
+            service['screenshotImageFormat'] = 'webp';
+
+            const result = await service.getSourceScreenshot('Test Source');
+
+            expect(result).toEqual('test-sharp-result');
+            expect(Sharp).toHaveBeenCalledWith(Buffer.from('dGVzdHRlc3Q', 'base64'));
+            expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetSourceScreenshot', {
+                sourceName: 'Test Source',
+                imageFormat: 'webp'
+            });
         });
     });
 });

@@ -7,6 +7,7 @@ export interface MessageInputMap {
     connectToObs: ObsCredentials
     setObsData: SetObsDataRequest
     setObsSocketEnabled: boolean
+    setActiveColorsFromGameplaySource: never
 
     startGame: never
     endGame: never

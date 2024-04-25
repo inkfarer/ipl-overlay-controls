@@ -7,9 +7,15 @@
         "sceneNotFound": "Could not find one or more of the provided scenes.",
         "socketClosed": "OBS websocket closed with message: {{message}}",
         "socketOpen": "OBS websocket is open.",
+        "errorWhileConnecting": "Error while connecting to OBS: {{message}}",
         "obsConnectionFailed": "Failed to connect to OBS: {{message}}",
         "reconnectingToSocket": "Attempting to reconnect to OBS... (Attempt {{count}})",
-        "receivedNoScenes": "Received scene list from OBS with no scenes. This should not be possible!"
+        "receivedNoScenes": "Received scene list from OBS with no scenes. This should not be possible!",
+        "socketNotOpen": "OBS websocket is not open.",
+        "missingScreenshotImageFormat": "Screenshot image format is undefined. Cannot continue.",
+        "sceneItemLoadingFailed": "Failed to load items for scene {{sceneName}}:",
+        "errorAfterSocketOpen": "Error loading OBS data:",
+        "missingGameplayInput": "Gameplay input is unset. Change it from the Settings dashboard panel."
     },
     "activeRoundHelper": {
         "gameOutOfRange": "Cannot set winner for game {{index}} as it does not exist.",
