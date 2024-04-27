@@ -209,7 +209,7 @@ describe('ActiveColorToggles', () => {
         const wrapper = mount(ActiveColorToggles);
 
         expect(wrapper.find('[data-test="read-colors-from-source-button"]').exists()).toEqual(false);
-        expect(wrapper.find('[data-test="missing-gameplay-input-warning"]').exists()).toEqual(false);
+        expect(wrapper.find('[data-test="bad-obs-config-warning"]').exists()).toEqual(false);
     });
 
     it('handles reading colors from OBS', () => {
@@ -243,9 +243,9 @@ describe('ActiveColorToggles', () => {
         jest.runAllTimers();
         await wrapper.vm.$nextTick();
 
-        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        const warningElem = wrapper.find('[data-test="bad-obs-config-warning"]');
         expect(warningElem.exists()).toEqual(true);
-        expect(warningElem.text()).toEqual('translation:missingObsConfigWarning');
+        expect(warningElem.text()).toEqual('translation:badObsConfigWarning');
     });
 
     it('displays a warning if some OBS config values are not valid', async () => {
@@ -278,9 +278,9 @@ describe('ActiveColorToggles', () => {
         jest.runAllTimers();
         await wrapper.vm.$nextTick();
 
-        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        const warningElem = wrapper.find('[data-test="bad-obs-config-warning"]');
         expect(warningElem.exists()).toEqual(true);
-        expect(warningElem.text()).toEqual('translation:missingObsConfigWarning');
+        expect(warningElem.text()).toEqual('translation:badObsConfigWarning');
     });
 
     it('does not display a warning if OBS config is all valid', () => {
@@ -301,7 +301,7 @@ describe('ActiveColorToggles', () => {
         };
         const wrapper = mount(ActiveColorToggles);
 
-        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        const warningElem = wrapper.find('[data-test="bad-obs-config-warning"]');
         expect(warningElem.exists()).toEqual(false);
     });
 });

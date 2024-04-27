@@ -1,14 +1,14 @@
 <template>
     <ipl-space>
         <ipl-message
-            v-if="obsStore.obsState.enabled && obsStore.obsState.status === 'CONNECTED' && showMissingObsConfigWarning"
+            v-if="obsStore.obsState.enabled && obsStore.obsState.status === 'CONNECTED' && showBadObsConfigWarning"
             type="warning"
             closeable
             class="m-b-8"
-            data-test="missing-gameplay-input-warning"
-            @close="showMissingObsConfigWarning = false"
+            data-test="bad-obs-config-warning"
+            @close="showBadObsConfigWarning = false"
         >
-            {{ $t('missingObsConfigWarning') }}
+            {{ $t('badObsConfigWarning') }}
         </ipl-message>
         <div class="layout horizontal">
             <span class="max-width text-small team-name wrap-anywhere">
@@ -159,17 +159,20 @@ export default defineComponent({
         // We want to wait a moment before running the check to prevent the warning message from flickering briefly
         // when a scene or source is renamed
         let obsConfigCheckTimeout: number | null = null;
-        const showMissingObsConfigWarning = ref(false);
+        const showBadObsConfigWarning = ref(false);
         watch(() => obsStore.currentConfig, checkObsConfig, { immediate: true });
-        watch(() => [obsStore.obsState.inputs, obsStore.obsState.scenes], checkObsConfig);
+        watch(() => obsStore.obsState.inputs, checkObsConfig);
+        watch(() => obsStore.obsState.scenes, checkObsConfig);
 
         function checkObsConfig() {
-            if (obsConfigCheckTimeout != null) return;
+            if (obsConfigCheckTimeout != null) {
+                clearTimeout(obsConfigCheckTimeout);
+            }
 
             obsConfigCheckTimeout = window.setTimeout(() => {
                 const config = obsStore.currentConfig;
                 if (config == null) {
-                    showMissingObsConfigWarning.value = true;
+                    showBadObsConfigWarning.value = true;
                     return;
                 }
 
@@ -177,7 +180,7 @@ export default defineComponent({
                     config.gameplayInput == null
                     || !obsStore.obsState.inputs?.some(input => config.gameplayInput === input.name)
                 ) {
-                    showMissingObsConfigWarning.value = true;
+                    showBadObsConfigWarning.value = true;
                     return;
                 }
 
@@ -187,12 +190,12 @@ export default defineComponent({
                         sceneName == null
                         || !obsStore.obsState.scenes?.some(scene => scene === sceneName)
                     ) {
-                        showMissingObsConfigWarning.value = true;
+                        showBadObsConfigWarning.value = true;
                         return;
                     }
                 }
 
-                showMissingObsConfigWarning.value = false;
+                showBadObsConfigWarning.value = false;
 
                 obsConfigCheckTimeout = null;
             }, 50);
@@ -200,7 +203,7 @@ export default defineComponent({
 
         return {
             obsStore,
-            showMissingObsConfigWarning,
+            showBadObsConfigWarning,
             activeRound,
             colorTogglesDisabled,
             getBorderColor(color?: string): string {
