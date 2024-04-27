@@ -4,7 +4,7 @@
  */
 
 import type NodeCG from '@nodecg/types';
-import { GameAutomationData, ObsData, RuntimeConfig, ScoreboardData } from 'schemas';
+import { GameAutomationData, RuntimeConfig, ScoreboardData } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { switchToNextColor } from '../replicants/activeRound';
@@ -34,8 +34,8 @@ const startTimings: Record<GameVersion, GameStartTimings> = {
         showCasters: 12000
     },
     [GameVersion.SPLATOON_3]: {
-        showScoreboard: 11500,
-        showCasters: 12000
+        showScoreboard: 14000,
+        showCasters: 10000
     }
 };
 
@@ -52,7 +52,6 @@ const endTimings: Record<GameVersion, GameEndTimings> = {
 
 export class AutomationActionService {
     private nodecg: NodeCG.ServerAPI;
-    private obsData: NodeCG.ServerReplicant<ObsData>;
     private scoreboardData: NodeCG.ServerReplicant<ScoreboardData>;
     private runtimeConfig: NodeCG.ServerReplicant<RuntimeConfig>;
     private gameAutomationData: NodeCG.ServerReplicant<GameAutomationData>;
@@ -62,7 +61,6 @@ export class AutomationActionService {
 
     constructor(nodecg: NodeCG.ServerAPI, obsConnectorService: ObsConnectorService) {
         this.nodecg = nodecg;
-        this.obsData = nodecg.Replicant<ObsData>('obsData');
         this.scoreboardData = nodecg.Replicant<ScoreboardData>('scoreboardData');
         this.runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
         this.gameAutomationData = nodecg.Replicant<GameAutomationData>('gameAutomationData');
@@ -80,7 +78,10 @@ export class AutomationActionService {
                         name: 'changeScene',
                         action: async () => {
                             switchToNextColor();
-                            await this.obsConnectorService.setCurrentScene(this.obsData.value.gameplayScene);
+                            const config = this.obsConnectorService.findCurrentConfig();
+                            if (config?.gameplayScene != null) {
+                                await this.obsConnectorService.setCurrentScene(config.gameplayScene);
+                            }
                         }
                     },
                     {
@@ -111,7 +112,10 @@ export class AutomationActionService {
                         timeout: endTimings[gameVersion].changeScene,
                         name: 'changeScene',
                         action: async () => {
-                            await this.obsConnectorService.setCurrentScene(this.obsData.value.intermissionScene);
+                            const config = this.obsConnectorService.findCurrentConfig();
+                            if (config?.intermissionScene != null) {
+                                await this.obsConnectorService.setCurrentScene(config.intermissionScene);
+                            }
                         }
                     }
                 ];
