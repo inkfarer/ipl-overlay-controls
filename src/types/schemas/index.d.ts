@@ -36,9 +36,11 @@ export * from './nowPlaying';
 // @ts-ignore
 export * from './nowPlayingSource';
 // @ts-ignore
+export * from './obsConfig';
+// @ts-ignore
 export * from './obsCredentials';
 // @ts-ignore
-export * from './obsData';
+export * from './obsState';
 // @ts-ignore
 export * from './predictionStore';
 // @ts-ignore

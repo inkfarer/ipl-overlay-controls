@@ -13,5 +13,5 @@ import { useObsStore } from '../../store/obsStore';
 import { computed } from 'vue';
 
 const obsStore = useObsStore();
-const obsSocketEnabled = computed(() => obsStore.obsData.enabled);
+const obsSocketEnabled = computed(() => obsStore.obsState.enabled);
 </script>

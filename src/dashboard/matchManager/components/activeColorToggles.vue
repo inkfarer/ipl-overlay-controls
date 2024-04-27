@@ -1,14 +1,14 @@
 <template>
     <ipl-space>
         <ipl-message
-            v-if="obsStore.obsData.enabled && showMissingGameplayInputWarning"
+            v-if="obsStore.obsState.enabled && obsStore.obsState.status === 'CONNECTED' && showMissingObsConfigWarning"
             type="warning"
             closeable
             class="m-b-8"
             data-test="missing-gameplay-input-warning"
-            @close="showMissingGameplayInputWarning = false"
+            @close="showMissingObsConfigWarning = false"
         >
-            {{ $t('missingObsGameplayInputWarning') }}
+            {{ $t('missingObsConfigWarning') }}
         </ipl-message>
         <div class="layout horizontal">
             <span class="max-width text-small team-name wrap-anywhere">
@@ -93,8 +93,8 @@
             </div>
         </div>
         <ipl-button
-            v-if="obsStore.obsData.enabled"
-            :disabled="obsStore.obsData.status !== 'CONNECTED' || obsStore.obsData.gameplayInput == null"
+            v-if="obsStore.obsState.enabled"
+            :disabled="obsStore.obsState.status !== 'CONNECTED' || obsStore.currentConfig?.gameplayInput == null"
             class="m-t-6"
             :label="$t('readColorsFromSourceScreenshotButton')"
             small
@@ -119,6 +119,7 @@ import { addDots } from '../../../helpers/stringHelper';
 import { ColorWithCategory, GetNextAndPreviousColorsResponse } from 'types/messages/activeRound';
 import { sendMessage } from '../../helpers/nodecgHelper';
 import { useObsStore } from '../../store/obsStore';
+import { ObsConfigItem } from 'schemas';
 
 library.add(faChevronRight, faChevronLeft);
 
@@ -155,18 +156,51 @@ export default defineComponent({
                 || activeRoundStore.activeRound.activeColor.isCustom;
         });
 
-        const showMissingGameplayInputWarning = ref(false);
-        watch(
-            () => obsStore.obsData.gameplayInput,
-            (newValue) => {
-                showMissingGameplayInputWarning.value = newValue == null;
-            },
-            { immediate: true }
-        );
+        // We want to wait a moment before running the check to prevent the warning message from flickering briefly
+        // when a scene or source is renamed
+        let obsConfigCheckTimeout: number | null = null;
+        const showMissingObsConfigWarning = ref(false);
+        watch(() => obsStore.currentConfig, checkObsConfig, { immediate: true });
+        watch(() => [obsStore.obsState.inputs, obsStore.obsState.scenes], checkObsConfig);
+
+        function checkObsConfig() {
+            if (obsConfigCheckTimeout != null) return;
+
+            obsConfigCheckTimeout = window.setTimeout(() => {
+                const config = obsStore.currentConfig;
+                if (config == null) {
+                    showMissingObsConfigWarning.value = true;
+                    return;
+                }
+
+                if (
+                    config.gameplayInput == null
+                    || !obsStore.obsState.inputs?.some(input => config.gameplayInput === input.name)
+                ) {
+                    showMissingObsConfigWarning.value = true;
+                    return;
+                }
+
+                for (const sceneKey of ['gameplayScene', 'intermissionScene'] as (keyof ObsConfigItem)[]) {
+                    const sceneName = config[sceneKey];
+                    if (
+                        sceneName == null
+                        || !obsStore.obsState.scenes?.some(scene => scene === sceneName)
+                    ) {
+                        showMissingObsConfigWarning.value = true;
+                        return;
+                    }
+                }
+
+                showMissingObsConfigWarning.value = false;
+
+                obsConfigCheckTimeout = null;
+            }, 50);
+        }
 
         return {
             obsStore,
-            showMissingGameplayInputWarning,
+            showMissingObsConfigWarning,
             activeRound,
             colorTogglesDisabled,
             getBorderColor(color?: string): string {

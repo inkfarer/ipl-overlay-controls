@@ -18,12 +18,16 @@ describe('ActiveColorToggles', () => {
         FontAwesomeIcon: true
     };
 
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
     beforeEach(() => {
         pinia = createTestingPinia();
         config.global.plugins = [pinia];
 
         const obsStore = useObsStore();
-        obsStore.obsData = { enabled: false, status: ObsStatus.NOT_CONNECTED };
+        obsStore.obsState = { enabled: false, status: ObsStatus.NOT_CONNECTED };
 
         const activeRoundStore = useActiveRoundStore();
         activeRoundStore.getNextAndPreviousColors = jest.fn().mockResolvedValue({
@@ -201,7 +205,7 @@ describe('ActiveColorToggles', () => {
 
     it('does not show button for reading colors from obs if obs socket is disabled', () => {
         const obsStore = useObsStore();
-        obsStore.obsData = { enabled: false, status: ObsStatus.NOT_CONNECTED };
+        obsStore.obsState = { enabled: false, status: ObsStatus.NOT_CONNECTED };
         const wrapper = mount(ActiveColorToggles);
 
         expect(wrapper.find('[data-test="read-colors-from-source-button"]').exists()).toEqual(false);
@@ -210,7 +214,7 @@ describe('ActiveColorToggles', () => {
 
     it('handles reading colors from OBS', () => {
         const obsStore = useObsStore();
-        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED };
+        obsStore.obsState = { enabled: true, status: ObsStatus.CONNECTED };
         const wrapper = mount(ActiveColorToggles);
 
         wrapper.getComponent<typeof IplButton>('[data-test="read-colors-from-source-button"]').vm.$emit('click');
@@ -218,21 +222,86 @@ describe('ActiveColorToggles', () => {
         expect(mockSendMessage).toHaveBeenCalledWith('setActiveColorsFromGameplaySource', undefined);
     });
 
-    it('displays a warning if the gameplay input is unset', () => {
+    it('displays a warning if some OBS config becomes unset', async () => {
+        jest.useFakeTimers();
         const obsStore = useObsStore();
-        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED, gameplayInput: undefined };
+        obsStore.obsState = { enabled: true, status: ObsStatus.CONNECTED };
+        // @ts-ignore
+        obsStore.currentConfig = {
+            gameplayInput: 'Video Capture Device',
+            gameplayScene: 'gameplay',
+            intermissionScene: 'intermission'
+        };
         const wrapper = mount(ActiveColorToggles);
+
+        // @ts-ignore
+        obsStore.currentConfig = {
+            gameplayInput: 'Video Capture Device',
+            gameplayScene: undefined,
+            intermissionScene: 'intermission'
+        };
+        jest.runAllTimers();
+        await wrapper.vm.$nextTick();
 
         const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
         expect(warningElem.exists()).toEqual(true);
-        expect(warningElem.text()).toEqual('translation:missingObsGameplayInputWarning');
+        expect(warningElem.text()).toEqual('translation:missingObsConfigWarning');
     });
 
-    it('does not display a warning if the gameplay input is set', () => {
+    it('displays a warning if some OBS config values are not valid', async () => {
+        jest.useFakeTimers();
         const obsStore = useObsStore();
-        obsStore.obsData = { enabled: true, status: ObsStatus.CONNECTED, gameplayInput: 'Video Capture Device' };
+        obsStore.obsState = {
+            enabled: true,
+            status: ObsStatus.CONNECTED,
+            scenes: ['gameplay', 'intermission', 'scene3'],
+            inputs: [
+                { name: 'Video Capture Device', noVideoOutput: false }
+            ]
+        };
+        // @ts-ignore
+        obsStore.currentConfig = {
+            gameplayInput: 'Video Capture Device',
+            gameplayScene: 'gameplay',
+            intermissionScene: 'intermission'
+        };
         const wrapper = mount(ActiveColorToggles);
 
-        expect(wrapper.find('[data-test="missing-gameplay-input-warning"]').exists()).toEqual(false);
+        obsStore.obsState = {
+            enabled: true,
+            status: ObsStatus.CONNECTED,
+            scenes: ['gameplay', 'scene3'],
+            inputs: [
+                { name: 'Video Capture Device', noVideoOutput: false }
+            ]
+        };
+        jest.runAllTimers();
+        await wrapper.vm.$nextTick();
+
+        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        expect(warningElem.exists()).toEqual(true);
+        expect(warningElem.text()).toEqual('translation:missingObsConfigWarning');
+    });
+
+    it('does not display a warning if OBS config is all valid', () => {
+        const obsStore = useObsStore();
+        obsStore.obsState = {
+            enabled: true,
+            status: ObsStatus.CONNECTED,
+            scenes: ['gameplay', 'intermission', 'scene3'],
+            inputs: [
+                { name: 'Video Capture Device', noVideoOutput: false }
+            ]
+        };
+        // @ts-ignore
+        obsStore.currentConfig = {
+            gameplayInput: 'Video Capture Device',
+            gameplayScene: 'gameplay',
+            intermissionScene: 'intermission'
+        };
+        const wrapper = mount(ActiveColorToggles);
+
+        const warningElem = wrapper.find('[data-test="missing-gameplay-input-warning"]');
+        expect(warningElem.exists()).toEqual(false);
     });
 });

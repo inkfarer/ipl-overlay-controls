@@ -20,13 +20,10 @@ describe('ObsDataPicker', () => {
 
         const obsStore = useObsStore();
         obsStore.obsCredentials = null;
-        obsStore.obsData = {
+        obsStore.obsState = {
             enabled: true,
             status: ObsStatus.CONNECTED,
             scenes: ['Scene One', 'Scene Two', 'Scene Three'],
-            gameplayScene: 'Scene One',
-            intermissionScene: 'Scene Two',
-            gameplayInput: 'Test Input One',
             inputs: [
                 {
                     name: 'Test Input One',
@@ -39,6 +36,12 @@ describe('ObsDataPicker', () => {
                     noVideoOutput: true
                 }
             ]
+        };
+        // @ts-ignore
+        obsStore.currentConfig = {
+            gameplayScene: 'Scene One',
+            intermissionScene: 'Scene Two',
+            gameplayInput: 'Test Input One'
         };
     });
 
@@ -54,7 +57,7 @@ describe('ObsDataPicker', () => {
 
     it('matches snapshot without scene data', () => {
         const store = useObsStore();
-        store.obsData.scenes = null;
+        store.obsState.scenes = null;
         const wrapper = mount(ObsDataPicker, {
             global: {
                 plugins: [pinia]
@@ -77,6 +80,22 @@ describe('ObsDataPicker', () => {
         expect(wrapper.getComponent('[data-test="update-button"]').attributes().color).toEqual('red');
     });
 
+    it('disables updating if any data is missing', async () => {
+        // @ts-ignore
+        useObsStore().currentConfig = {
+            gameplayScene: null,
+            intermissionScene: 'Scene Two',
+            gameplayInput: 'Test Input One'
+        };
+        const wrapper = mount(ObsDataPicker, {
+            global: {
+                plugins: [pinia]
+            }
+        });
+
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.disabled).toEqual(true);
+    });
+
     it('handles updating data', async () => {
         const wrapper = mount(ObsDataPicker, {
             global: {
@@ -88,7 +107,7 @@ describe('ObsDataPicker', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
-        expect(mockSendMessage).toHaveBeenCalledWith('setObsData', {
+        expect(mockSendMessage).toHaveBeenCalledWith('setObsConfig', {
             gameplayScene: 'Scene One',
             gameplayInput: 'Test Input One',
             intermissionScene: 'Scene Three'

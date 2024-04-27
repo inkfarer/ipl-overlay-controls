@@ -12,7 +12,7 @@
     "showCastersButton": "Show casters",
     "swapColorsButton": "Swap",
     "readColorsFromSourceScreenshotButton": "Read colors from OBS",
-    "missingObsGameplayInputWarning": "The OBS gameplay source is unset. Reading colors from OBS will fail. Please set a gameplay source from the Settings dashboard panel.",
+    "missingObsConfigWarning": "Some OBS configuration is missing or invalid. Please ensure it is correct from the Settings dashboard panel.",
     "colorList": {
         "sectionTitle": "More Colors",
         "useCustomColorCheckbox": "Use custom color",

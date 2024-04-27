@@ -2,25 +2,29 @@ import { ObsConnectorService } from '../ObsConnectorService';
 import { mockNodecg, replicants } from '../../__mocks__/mockNodecg';
 import OBSWebSocket, { OBSWebSocketError } from 'obs-websocket-js';
 import { ObsStatus } from 'types/enums/ObsStatus';
-import { ObsData } from 'schemas';
+import { ObsState } from 'schemas';
 import { flushPromises } from '@vue/test-utils';
 import Sharp from 'sharp';
 
 jest.mock('sharp');
 
 describe('ObsConnectorService', () => {
+    let service: ObsConnectorService;
+
     beforeEach(() => {
         jest.useFakeTimers();
         jest.spyOn(OBSWebSocket.prototype, 'connect').mockResolvedValue(null);
         jest.spyOn(OBSWebSocket.prototype, 'disconnect').mockResolvedValue(null);
         jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue(null);
-        replicants.obsData = {
+        replicants.obsState = {
             enabled: false
         };
         replicants.obsCredentials = {
             address: 'wss://test-obs',
             password: 'test pwd'
         };
+
+        service = new ObsConnectorService(mockNodecg);
     });
 
     afterEach(() => {
@@ -31,7 +35,7 @@ describe('ObsConnectorService', () => {
     describe('constructor', () => {
         it('does not attempt connection if obs is not enabled', () => {
             jest.spyOn(ObsConnectorService.prototype, 'connect');
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: false
             };
 
@@ -42,7 +46,7 @@ describe('ObsConnectorService', () => {
 
         it('connects to OBS if integration is enabled', async () => {
             jest.spyOn(ObsConnectorService.prototype, 'connect').mockResolvedValue(null);
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: true
             };
             replicants.obsCredentials = {
@@ -56,18 +60,50 @@ describe('ObsConnectorService', () => {
         });
     });
 
+    describe('updateConfig', () => {
+        it('replaces existing config', () => {
+            replicants.obsConfig = [
+                { sceneCollection: 'test-sc-1', intermissionScene: 'test-scene' },
+                { sceneCollection: 'test-sc-2', gameplayScene: 'test-scene-2' },
+                { sceneCollection: 'test-sc-3', intermissionScene: 'test-scene-3' }
+            ];
+
+            service.updateConfig({ sceneCollection: 'test-sc-2', gameplayInput: 'test-gameplay-input' });
+
+            expect(replicants.obsConfig).toEqual([
+                { sceneCollection: 'test-sc-1', intermissionScene: 'test-scene' },
+                { sceneCollection: 'test-sc-2', gameplayInput: 'test-gameplay-input' },
+                { sceneCollection: 'test-sc-3', intermissionScene: 'test-scene-3' }
+            ]);
+        });
+
+        it('creates a new config item if required', () => {
+            replicants.obsConfig = [
+                { sceneCollection: 'test-sc-1', intermissionScene: 'test-scene' },
+                { sceneCollection: 'test-sc-3', intermissionScene: 'test-scene-3' }
+            ];
+
+            service.updateConfig({ sceneCollection: 'test-sc-2', gameplayInput: 'test-gameplay-input' });
+
+            expect(replicants.obsConfig).toEqual([
+                { sceneCollection: 'test-sc-1', intermissionScene: 'test-scene' },
+                { sceneCollection: 'test-sc-3', intermissionScene: 'test-scene-3' },
+                { sceneCollection: 'test-sc-2', gameplayInput: 'test-gameplay-input' }
+            ]);
+        });
+    });
+
     describe('handleClosure', () => {
         it('updates obs status and does not try to reconnect if obs is disabled', () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: false,
                 status: ObsStatus.CONNECTED
             };
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'startReconnecting');
 
             service['handleClosure'](new OBSWebSocketError(9999, 'message'));
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: false,
                 status: ObsStatus.NOT_CONNECTED
             });
@@ -75,16 +111,15 @@ describe('ObsConnectorService', () => {
         });
 
         it('updates obs status and tries to reconnect if obs is enabled', () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: true,
                 status: ObsStatus.CONNECTED
             };
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'startReconnecting');
 
             service['handleClosure'](new OBSWebSocketError(9999, 'message'));
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: true,
                 status: ObsStatus.NOT_CONNECTED
             });
@@ -95,16 +130,15 @@ describe('ObsConnectorService', () => {
             ObsStatus.CONNECTING,
             ObsStatus.NOT_CONNECTED
         ])('does nothing if obs status is %s', status => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: true,
                 status
             };
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'startReconnecting');
 
             service['handleClosure'](new OBSWebSocketError(9999, 'message'));
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: true,
                 status
             });
@@ -113,65 +147,79 @@ describe('ObsConnectorService', () => {
     });
 
     describe('handleIdentification', () => {
-        it('loads required data from obs', () => {
-            const service = new ObsConnectorService(mockNodecg);
-            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
-            jest.spyOn(service as any, 'getScreenshotImageFormat').mockResolvedValue(null);
-            jest.spyOn(service as any, 'loadInputs').mockResolvedValue(null);
+        it('loads required data from obs', async () => {
+            jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
+                currentSceneCollectionName: 'test-scene-collection',
+                sceneCollections: []
+            });
+            jest.spyOn(service as any, 'loadState').mockResolvedValue(null);
+            jest.spyOn(service as any, 'loadScreenshotImageFormat').mockResolvedValue(null);
 
-            service['handleIdentification']();
+            await service['handleIdentification']();
 
-            expect(service['loadSceneList']).toHaveBeenCalledTimes(1);
-            expect(service['getScreenshotImageFormat']).toHaveBeenCalledTimes(1);
-            expect(service['loadInputs']).toHaveBeenCalledTimes(1);
+            expect(service['loadScreenshotImageFormat']).toHaveBeenCalled();
+            expect(service['loadState']).toHaveBeenCalledWith('test-scene-collection');
         });
     });
 
     describe('handleSceneCollectionChange', () => {
         it('loads required data from obs', () => {
-            const service = new ObsConnectorService(mockNodecg);
-            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
-            jest.spyOn(service as any, 'loadInputs').mockResolvedValue(null);
+            jest.spyOn(service as any, 'loadState').mockResolvedValue(null);
 
-            service['handleSceneCollectionChange']();
+            service['handleSceneCollectionChange']({ sceneCollectionName: 'new-scene-collection' });
 
-            expect(service['loadSceneList']).toHaveBeenCalledTimes(1);
-            expect(service['loadInputs']).toHaveBeenCalledTimes(1);
+            expect(service['loadState']).toHaveBeenCalledWith('new-scene-collection');
+        });
+    });
+
+    describe('loadState', () => {
+        it('updates the state replicant', async () => {
+            replicants.obsState = {
+                enabled: true,
+                status: ObsStatus.CONNECTED
+            };
+            jest.spyOn(service as any, 'getScenes').mockResolvedValue({
+                currentScene: 'scene1',
+                scenes: ['scene1', 'scene2']
+            });
+            jest.spyOn(service as any, 'getInputs').mockResolvedValue([
+                { name: 'test-input-1' },
+                { name: 'test-input-2' }
+            ]);
+
+            await service['loadState']('test-scene-collection');
+
+            expect(replicants.obsState).toEqual({
+                enabled: true,
+                status: ObsStatus.CONNECTED,
+                currentScene: 'scene1',
+                scenes: ['scene1', 'scene2'],
+                currentSceneCollection: 'test-scene-collection',
+                inputs: [
+                    { name: 'test-input-1' },
+                    { name: 'test-input-2' }
+                ]
+            });
         });
     });
 
     describe('handleOpening', () => {
         it('updates status and stops reconnecting', () => {
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'stopReconnecting');
 
             service['handleOpening']();
 
             expect(service.stopReconnecting).toHaveBeenCalled();
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: false,
                 status: ObsStatus.CONNECTED
             });
         });
     });
 
-    describe('handleSceneListChange', () => {
-        it('updates scenes', () => {
-            const service = new ObsConnectorService(mockNodecg);
-            jest.spyOn(service as any, 'updateScenes').mockReturnValue(null);
-
-            service['handleSceneListChange']({
-                scenes: [{ sceneName: 'scene1' }, { sceneName: 'scene2' }, { sceneName: 'scene3' }]
-            });
-
-            expect(service['updateScenes']).toHaveBeenCalledWith(['scene1', 'scene2', 'scene3']);
-        });
-    });
-
     describe('handleInputCreation', () => {
         it('handles the list of inputs being empty', () => {
-            (replicants.obsData as ObsData).inputs = null;
-            const service = new ObsConnectorService(mockNodecg);
+            (replicants.obsState as ObsState).inputs = null;
 
             // @ts-ignore
             service['handleInputCreation']({
@@ -180,7 +228,7 @@ describe('ObsConnectorService', () => {
                 inputKind: 'video-input'
             });
 
-            expect((replicants.obsData as ObsData).inputs).toEqual([{
+            expect((replicants.obsState as ObsState).inputs).toEqual([{
                 name: 'test-input',
                 uuid: 'test-uuid-1234',
                 noVideoOutput: false
@@ -188,12 +236,11 @@ describe('ObsConnectorService', () => {
         });
         
         it('adds a new input to the list', () => {
-            (replicants.obsData as ObsData).inputs = [{
+            (replicants.obsState as ObsState).inputs = [{
                 name: 'test-input',
                 uuid: 'test-uuid-1234',
                 noVideoOutput: true
             }];
-            const service = new ObsConnectorService(mockNodecg);
 
             // @ts-ignore
             service['handleInputCreation']({
@@ -202,7 +249,7 @@ describe('ObsConnectorService', () => {
                 inputKind: 'video-input'
             });
 
-            expect((replicants.obsData as ObsData).inputs).toEqual([
+            expect((replicants.obsState as ObsState).inputs).toEqual([
                 {
                     name: 'test-input',
                     uuid: 'test-uuid-1234',
@@ -219,7 +266,7 @@ describe('ObsConnectorService', () => {
 
     describe('handleInputRemoval', () => {
         it('removes the given input from the list', () => {
-            (replicants.obsData as ObsData).inputs = [
+            (replicants.obsState as ObsState).inputs = [
                 {
                     name: 'test-input',
                     uuid: 'test-uuid-1234',
@@ -236,14 +283,13 @@ describe('ObsConnectorService', () => {
                     noVideoOutput: false
                 }
             ];
-            const service = new ObsConnectorService(mockNodecg);
 
             service['handleInputRemoval']({
                 inputUuid: 'test-uuid-2346',
                 inputName: 'test-input-2'
             });
 
-            expect((replicants.obsData as ObsData).inputs).toEqual([
+            expect((replicants.obsState as ObsState).inputs).toEqual([
                 {
                     name: 'test-input',
                     uuid: 'test-uuid-1234',
@@ -256,23 +302,11 @@ describe('ObsConnectorService', () => {
                 }
             ]);
         });
-
-        it('unsets the gameplay input if it was deleted', () => {
-            (replicants.obsData as ObsData).gameplayInput = 'test-gameplay-input';
-            const service = new ObsConnectorService(mockNodecg);
-
-            service['handleInputRemoval']({
-                inputName: 'test-gameplay-input',
-                inputUuid: 'test-uuid-3584'
-            });
-
-            expect((replicants.obsData as ObsData).gameplayInput).toBeUndefined();
-        });
     });
 
     describe('handleInputNameChange', () => {
         it('updates the list of inputs', () => {
-            (replicants.obsData as ObsData).inputs = [
+            (replicants.obsState as ObsState).inputs = [
                 {
                     name: 'test-input',
                     uuid: 'test-uuid-1234',
@@ -289,7 +323,6 @@ describe('ObsConnectorService', () => {
                     noVideoOutput: false
                 }
             ];
-            const service = new ObsConnectorService(mockNodecg);
 
             service['handleInputNameChange']({
                 oldInputName: 'test-input-2',
@@ -297,7 +330,7 @@ describe('ObsConnectorService', () => {
                 inputUuid: 'test-uuid-2346'
             });
 
-            expect((replicants.obsData as ObsData).inputs).toEqual([
+            expect((replicants.obsState as ObsState).inputs).toEqual([
                 {
                     name: 'test-input',
                     uuid: 'test-uuid-1234',
@@ -317,8 +350,11 @@ describe('ObsConnectorService', () => {
         });
 
         it('updates the gameplay input name if required', () => {
-            (replicants.obsData as ObsData).gameplayInput = 'test-gameplay-input';
-            const service = new ObsConnectorService(mockNodecg);
+            jest.spyOn(service, 'findCurrentConfig').mockReturnValue({
+                sceneCollection: 'test-scene-collection',
+                gameplayInput: 'test-gameplay-input'
+            });
+            jest.spyOn(service, 'updateConfig').mockReturnValue(undefined);
 
             service['handleInputNameChange']({
                 oldInputName: 'test-gameplay-input',
@@ -326,20 +362,130 @@ describe('ObsConnectorService', () => {
                 inputUuid: 'test-uuid-7462'
             });
 
-            expect((replicants.obsData as ObsData).gameplayInput).toEqual('new-test-gameplay-input');
+            expect(service.updateConfig).toHaveBeenCalledWith({
+                sceneCollection: 'test-scene-collection',
+                gameplayInput: 'new-test-gameplay-input'
+            });
+        });
+    });
+
+    describe('handleSceneCreation', () => {
+        it('ignores groups', () => {
+            replicants.obsState = {
+                scenes: ['scene1']
+            };
+
+            service['handleSceneCreation']({
+                isGroup: true,
+                sceneName: 'scene2',
+                sceneUuid: 'test-uuid'
+            });
+
+            expect(replicants.obsState).toEqual({
+                scenes: ['scene1']
+            });
+        });
+
+        it('updates the list of scenes', () => {
+            replicants.obsState = {
+                scenes: ['scene1']
+            };
+
+            service['handleSceneCreation']({
+                isGroup: false,
+                sceneName: 'scene2',
+                sceneUuid: 'test-uuid'
+            });
+
+            expect(replicants.obsState).toEqual({
+                scenes: ['scene1', 'scene2']
+            });
+        });
+
+        it('handles the list of scenes being missing', () => {
+            replicants.obsState = {
+                scenes: undefined
+            };
+
+            service['handleSceneCreation']({
+                isGroup: false,
+                sceneName: 'scene2',
+                sceneUuid: 'test-uuid'
+            });
+
+            expect(replicants.obsState).toEqual({
+                scenes: ['scene2']
+            });
+        });
+    });
+
+    describe('handleSceneRemoval', () => {
+        it('updates state', () => {
+            replicants.obsState = {
+                scenes: ['scene1', 'scene2', 'scene3']
+            };
+
+            service['handleSceneRemoval']({
+                sceneName: 'scene2',
+                sceneUuid: 'test-uuid',
+                isGroup: false
+            });
+
+            expect(replicants.obsState).toEqual({
+                scenes: ['scene1', 'scene3']
+            });
+        });
+    });
+
+    describe('handleSceneNameChange', () => {
+        it('updates state', () => {
+            replicants.obsState = {
+                scenes: ['scene1', 'scene2', 'scene3']
+            };
+            jest.spyOn(service, 'updateConfig').mockReturnValue(undefined);
+
+            service['handleSceneNameChange']({
+                sceneName: 'scene2-new',
+                oldSceneName: 'scene2',
+                sceneUuid: 'test-uuid'
+            });
+
+            expect(service.updateConfig).not.toHaveBeenCalled();
+            expect(replicants.obsState).toEqual({
+                scenes: ['scene1', 'scene2-new', 'scene3']
+            });
+        });
+
+        it('updates config if needed', () => {
+            jest.spyOn(service, 'findCurrentConfig').mockReturnValue({
+                sceneCollection: 'test-scene-collection',
+                gameplayScene: 'test-renamed-scene',
+                intermissionScene: 'test-renamed-scene'
+            });
+            jest.spyOn(service, 'updateConfig').mockReturnValue(undefined);
+
+            service['handleSceneNameChange']({
+                oldSceneName: 'test-renamed-scene',
+                sceneName: 'new-test-renamed-scene',
+                sceneUuid: 'test-uuid-7462'
+            });
+
+            expect(service.updateConfig).toHaveBeenCalledWith({
+                sceneCollection: 'test-scene-collection',
+                gameplayScene: 'new-test-renamed-scene',
+                intermissionScene: 'new-test-renamed-scene'
+            });
         });
     });
 
     describe('handleProgramSceneChange', () => {
         it('updates scenes', () => {
-            const service = new ObsConnectorService(mockNodecg);
-
             // @ts-ignore
             service['handleProgramSceneChange']({
                 sceneName: 'new-scene'
             });
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: false,
                 currentScene: 'new-scene'
             });
@@ -352,11 +498,10 @@ describe('ObsConnectorService', () => {
                 address: 'wss://obs-socket',
                 password: 'test pwd'
             };
-            const service = new ObsConnectorService(mockNodecg);
 
             await service.connect();
 
-            expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
+            expect(replicants.obsState).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('wss://obs-socket', 'test pwd');
         });
@@ -366,11 +511,10 @@ describe('ObsConnectorService', () => {
                 address: 'localhost:4455',
                 password: 'test pwd'
             };
-            const service = new ObsConnectorService(mockNodecg);
 
             await service.connect();
 
-            expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
+            expect(replicants.obsState).toEqual({ enabled: false, status: ObsStatus.CONNECTING });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('ws://localhost:4455', 'test pwd');
         });
@@ -380,20 +524,17 @@ describe('ObsConnectorService', () => {
                 address: 'wss://obs-socket',
                 password: 'test pwd'
             };
-            const service = new ObsConnectorService(mockNodecg);
             const error = new Error('test error');
             Object.defineProperty(error, 'code', { value: 10000 });
             jest.spyOn(OBSWebSocket.prototype, 'connect').mockRejectedValue(error);
-            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
             jest.spyOn(service, 'startReconnecting');
 
             await expect(() => service.connect()).rejects.toThrow(new Error('translation:obs.obsConnectionFailed'));
 
-            expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
+            expect(replicants.obsState).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('wss://obs-socket', 'test pwd');
             expect(service.startReconnecting).toHaveBeenCalledWith(10000);
-            expect(service['loadSceneList']).not.toHaveBeenCalled();
         });
 
         it('does not start reconnecting on error if specified in arguments', async () => {
@@ -401,25 +542,21 @@ describe('ObsConnectorService', () => {
                 address: 'wss://obs-socket',
                 password: 'test pwd'
             };
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(OBSWebSocket.prototype, 'connect').mockRejectedValue(new Error('test error'));
-            jest.spyOn(service as any, 'loadSceneList').mockResolvedValue(null);
             jest.spyOn(service, 'startReconnecting');
 
             await expect(() => service.connect(false))
                 .rejects.toThrow(new Error('translation:obs.obsConnectionFailed'));
 
-            expect(replicants.obsData).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
+            expect(replicants.obsState).toEqual({ enabled: false, status: ObsStatus.NOT_CONNECTED });
             expect(OBSWebSocket.prototype.disconnect).toHaveBeenCalled();
             expect(OBSWebSocket.prototype.connect).toHaveBeenCalledWith('wss://obs-socket', 'test pwd');
             expect(service.startReconnecting).not.toHaveBeenCalled();
-            expect(service['loadSceneList']).not.toHaveBeenCalled();
         });
     });
 
     describe('disconnect', () => {
         it('disconnects from socket and stops reconnecting', async () => {
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'stopReconnecting');
 
             await service.disconnect();
@@ -429,7 +566,7 @@ describe('ObsConnectorService', () => {
         });
     });
 
-    describe('loadInputs', () => {
+    describe('getInputs', () => {
         it('loads the list of inputs', async () => {
             jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
                 inputs: [
@@ -450,11 +587,10 @@ describe('ObsConnectorService', () => {
                     }
                 ]
             });
-            const service = new ObsConnectorService(mockNodecg);
 
-            await service['loadInputs']();
+            const result = await service['getInputs']();
 
-            expect((replicants.obsData as ObsData).inputs).toEqual([
+            expect(result).toEqual([
                 {
                     name: 'test-input-1',
                     uuid: 'test-uuid-1',
@@ -473,29 +609,10 @@ describe('ObsConnectorService', () => {
             ]);
             expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetInputList');
         });
-
-        it('unsets the gameplay input if it does not exist in obs', async () => {
-            (replicants.obsData as ObsData).gameplayInput = 'test-input-4';
-            jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
-                inputs: [
-                    {
-                        inputName: 'test-input-1',
-                        inputUuid: 'test-uuid-1',
-                        inputKind: 'test-video-input'
-                    }
-                ]
-            });
-            const service = new ObsConnectorService(mockNodecg);
-
-            await service['loadInputs']();
-
-            expect((replicants.obsData as ObsData).gameplayInput).toBeUndefined();
-            expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetInputList');
-        });
     });
 
-    describe('loadSceneList', () => {
-        it('loads and updates scene data', async () => {
+    describe('getScenes', () => {
+        it('loads the list of scenes', async () => {
             // @ts-ignore
             jest.spyOn(OBSWebSocket.prototype, 'call').mockResolvedValue({
                 currentProgramSceneName: 'scene1',
@@ -505,14 +622,14 @@ describe('ObsConnectorService', () => {
                     { sceneName: 'scene3' }
                 ]
             });
-            const service = new ObsConnectorService(mockNodecg);
-            jest.spyOn(service as any, 'updateScenes');
 
-            await service['loadSceneList']();
+            const result = await service['getScenes']();
 
             expect(OBSWebSocket.prototype.call).toHaveBeenCalledWith('GetSceneList');
-            expect((replicants.obsData as ObsData).currentScene).toEqual('scene1');
-            expect(service['updateScenes']).toHaveBeenCalledWith(['scene1', 'scene2', 'scene3']);
+            expect(result).toEqual({
+                currentScene: 'scene1',
+                scenes: ['scene1', 'scene2', 'scene3']
+            });
         });
     });
 
@@ -526,7 +643,6 @@ describe('ObsConnectorService', () => {
         });
 
         it.each([4009, 4010, 4011])('does nothing if closure code is %d', code => {
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'stopReconnecting');
             jest.spyOn(global, 'setInterval');
 
@@ -537,7 +653,6 @@ describe('ObsConnectorService', () => {
         });
 
         it('sets an interval to reconnect to the socket', () => {
-            const service = new ObsConnectorService(mockNodecg);
             jest.spyOn(service, 'stopReconnecting');
             jest.spyOn(global, 'setInterval');
             jest.spyOn(service, 'connect');
@@ -558,7 +673,6 @@ describe('ObsConnectorService', () => {
 
     describe('stopReconnecting', () => {
         it('clears the reconnection interval', () => {
-            const service = new ObsConnectorService(mockNodecg);
             const interval = 'interval (test)';
             (service as any).reconnectionInterval = interval;
             jest.spyOn(global, 'clearInterval');
@@ -570,113 +684,18 @@ describe('ObsConnectorService', () => {
         });
     });
 
-    describe('updateScenes', () => {
-        it('does nothing if an empty list is provided', () => {
-            replicants.obsData = {
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission'
-            };
-            const service = new ObsConnectorService(mockNodecg);
-
-            service['updateScenes']([]);
-
-            expect(replicants.obsData).toEqual({
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission'
-            });
-            expect(mockNodecg.sendMessage).not.toHaveBeenCalled();
-        });
-
-        it('updates the gameplay scene and sends a message if the gameplay scene is no longer found', () => {
-            replicants.obsData = {
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission'
-            };
-            const service = new ObsConnectorService(mockNodecg);
-
-            service['updateScenes']([
-                'scene1',
-                'intermission'
-            ]);
-
-            expect(replicants.obsData).toEqual({
-                gameplayScene: 'scene1',
-                intermissionScene: 'intermission',
-                scenes: [
-                    'scene1',
-                    'intermission'
-                ]
-            });
-            expect(mockNodecg.sendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
-        });
-
-        it('updates the intermission scene and sends a message if the intermission scene is no longer found', () => {
-            replicants.obsData = {
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission'
-            };
-            const service = new ObsConnectorService(mockNodecg);
-
-            service['updateScenes']([
-                'gameplay',
-                'scene2'
-            ]);
-
-            expect(replicants.obsData).toEqual({
-                gameplayScene: 'gameplay',
-                intermissionScene: 'scene2',
-                scenes: [
-                    'gameplay',
-                    'scene2'
-                ]
-            });
-            expect(mockNodecg.sendMessage).toHaveBeenCalledWith('obsSceneConfigurationChangedAfterUpdate');
-        });
-
-        it('updates the list of scenes', () => {
-            replicants.obsData = {
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission',
-                scenes: [
-                    'gameplay',
-                    'intermission'
-                ]
-            };
-            const service = new ObsConnectorService(mockNodecg);
-
-            service['updateScenes']([
-                'gameplay',
-                'intermission',
-                'new scene'
-            ]);
-
-            expect(replicants.obsData).toEqual({
-                gameplayScene: 'gameplay',
-                intermissionScene: 'intermission',
-                scenes: [
-                    'gameplay',
-                    'intermission',
-                    'new scene'
-                ]
-            });
-            expect(mockNodecg.sendMessage).not.toHaveBeenCalled();
-        });
-    });
-
     describe('getSourceScreenshot', () => {
         it.each([
             ObsStatus.NOT_CONNECTED,
             ObsStatus.CONNECTING
         ])('throws an error if the obs socket status is %s', async (status) => {
-            (replicants.obsData as ObsData).status = status;
-            const service = new ObsConnectorService(mockNodecg);
+            (replicants.obsState as ObsState).status = status;
 
             await expect(service.getSourceScreenshot('test-source')).rejects.toThrow(new Error('translation:obs.socketNotOpen'));
         });
 
         it('throws an error if the screenshot image format is unknown', async () => {
-            (replicants.obsData as ObsData).status = ObsStatus.CONNECTED;
-            const service = new ObsConnectorService(mockNodecg);
+            (replicants.obsState as ObsState).status = ObsStatus.CONNECTED;
             service['screenshotImageFormat'] = null;
 
             await expect(service.getSourceScreenshot('test-source')).rejects.toThrow(new Error('translation:obs.missingScreenshotImageFormat'));
@@ -687,8 +706,7 @@ describe('ObsConnectorService', () => {
                 imageData: 'data:image/webp;base64,dGVzdHRlc3Q'
             });
             (Sharp as unknown as jest.Mock).mockReturnValue('test-sharp-result');
-            (replicants.obsData as ObsData).status = ObsStatus.CONNECTED;
-            const service = new ObsConnectorService(mockNodecg);
+            (replicants.obsState as ObsState).status = ObsStatus.CONNECTED;
             service['screenshotImageFormat'] = 'webp';
 
             const result = await service.getSourceScreenshot('Test Source');
@@ -699,6 +717,35 @@ describe('ObsConnectorService', () => {
                 sourceName: 'Test Source',
                 imageFormat: 'webp'
             });
+        });
+    });
+
+    describe('findConfig', () => {
+        it('finds configuration for the given scene collection', () => {
+            const config = [
+                { sceneCollection: 'test-sc-1', gameplayScene: 'test-gameplay-scene' },
+                { sceneCollection: 'test-sc-2', intermissionScene: 'test-intermission-scene' },
+                { sceneCollection: 'test-sc-3', gameplayScene: 'test-gameplay-scene', intermissionScene: 'test-intermission-scene' }
+            ];
+            replicants.obsConfig = config;
+
+            expect(service['findConfig']('test-sc-1')).toEqual(config[0]);
+            expect(service['findConfig']('test-sc-2')).toEqual(config[1]);
+            expect(service['findConfig'](undefined)).toBeUndefined();
+        });
+    });
+
+    describe('findCurrentConfig', () => {
+        it('gets the config for the current scene collection', () => {
+            const config = [
+                { sceneCollection: 'test-sc-1', gameplayScene: 'test-gameplay-scene' },
+                { sceneCollection: 'test-sc-2', intermissionScene: 'test-intermission-scene' },
+                { sceneCollection: 'test-sc-3', gameplayScene: 'test-gameplay-scene', intermissionScene: 'test-intermission-scene' }
+            ];
+            replicants.obsConfig = config;
+            replicants.obsState = { currentSceneCollection: 'test-sc-3' };
+
+            expect(service.findCurrentConfig()).toEqual(config[2]);
         });
     });
 });

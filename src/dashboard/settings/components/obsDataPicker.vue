@@ -32,6 +32,7 @@
             :color="isChanged ? 'red' : 'blue'"
             :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
+            :disabled="anyOptionsMissing"
             @click="update"
             @right-click="undoChanges"
         />
@@ -58,34 +59,32 @@ export default defineComponent({
         const intermissionScene = ref('');
 
         watch(
-            () => obsStore.obsData.gameplayInput,
-            scene => gameplayInput.value = scene,
-            { immediate: true });
-        watch(
-            () => obsStore.obsData.gameplayScene,
-            scene => gameplayScene.value = scene,
-            { immediate: true });
-        watch(
-            () => obsStore.obsData.intermissionScene,
-            scene => intermissionScene.value = scene,
+            () => obsStore.currentConfig,
+            newConfig => {
+                gameplayInput.value = newConfig?.gameplayInput ?? null;
+                gameplayScene.value = newConfig?.gameplayScene ?? null;
+                intermissionScene.value = newConfig?.intermissionScene ?? null;
+            },
             { immediate: true });
 
         return {
             gameplayInput,
             gameplayScene,
             intermissionScene,
-            hasObsData: computed(() => obsStore.obsData.scenes != null),
-            sceneOptions: computed(() => obsStore.obsData.scenes?.map(scene =>
+            hasObsData: computed(() => obsStore.obsState.scenes != null),
+            sceneOptions: computed(() => obsStore.obsState.scenes?.map(scene =>
                 ({ value: scene, name: scene })) ?? []),
-            videoInputOptions: computed(() => (obsStore.obsData.inputs ?? [])
+            videoInputOptions: computed(() => (obsStore.obsState.inputs ?? [])
                 .filter(input => !input.noVideoOutput)
                 .map(input => ({ value: input.name, name: input.name }))),
             isChanged: computed(() =>
-                gameplayScene.value !== obsStore.obsData.gameplayScene
-                || intermissionScene.value !== obsStore.obsData.intermissionScene
-                || gameplayInput.value !== obsStore.obsData.gameplayInput),
+                gameplayScene.value !== obsStore.currentConfig?.gameplayScene
+                || intermissionScene.value !== obsStore.currentConfig?.intermissionScene
+                || gameplayInput.value !== obsStore.currentConfig?.gameplayInput),
+            anyOptionsMissing: computed(() =>
+                gameplayScene.value == null || intermissionScene.value == null || gameplayInput.value == null),
             async update() {
-                await sendMessage('setObsData', {
+                await sendMessage('setObsConfig', {
                     gameplayScene: gameplayScene.value,
                     intermissionScene: intermissionScene.value,
                     gameplayInput: gameplayInput.value
@@ -94,9 +93,9 @@ export default defineComponent({
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                gameplayInput.value = obsStore.obsData.gameplayInput;
-                gameplayScene.value = obsStore.obsData.gameplayScene;
-                intermissionScene.value = obsStore.obsData.intermissionScene;
+                gameplayInput.value = obsStore.currentConfig?.gameplayInput;
+                gameplayScene.value = obsStore.currentConfig?.gameplayScene;
+                intermissionScene.value = obsStore.currentConfig?.intermissionScene;
             }
         };
     }

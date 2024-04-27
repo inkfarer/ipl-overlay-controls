@@ -23,7 +23,7 @@ describe('ObsConnectorController', () => {
 
     describe('connectToObs', () => {
         it('re-assigns credentials and throws an error if obs integration is disabled', async () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: false
             };
 
@@ -41,7 +41,7 @@ describe('ObsConnectorController', () => {
         });
 
         it('connects to OBS if integration is enabled', async () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: true
             };
 
@@ -59,21 +59,21 @@ describe('ObsConnectorController', () => {
         });
     });
 
-    describe('setObsData', () => {
+    describe('setObsConfig', () => {
         it.each([
             ['scene1', 'scene3'],
             ['scene3', 'scene1']
         ])('throws an error if the gameplay scene is not found (%#)', (gameplayScene, intermissionScene) => {
-            replicants.obsData = {
+            replicants.obsState = {
                 scenes: ['scene1', 'scene2']
             };
 
-            expect(() => controllerListeners.setObsData({ gameplayScene, intermissionScene }))
+            expect(() => controllerListeners.setObsConfig({ gameplayScene, intermissionScene }))
                 .toThrow(new Error('translation:obs.sceneNotFound'));
         });
 
         it('throws an error if the gameplay input is not found', () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 inputs: [
                     { name: 'test-input-1' },
                     { name: 'test-input-2' }
@@ -81,7 +81,7 @@ describe('ObsConnectorController', () => {
                 scenes: ['scene1', 'scene2']
             };
 
-            expect(() => controllerListeners.setObsData({
+            expect(() => controllerListeners.setObsConfig({
                 gameplayScene: 'scene1',
                 intermissionScene: 'scene2',
                 gameplayInput: 'test-input-3'
@@ -89,28 +89,25 @@ describe('ObsConnectorController', () => {
         });
 
         it('re-assigns the gameplay and intermission scenes', () => {
-            replicants.obsData = {
+            replicants.obsState = {
                 enabled: true,
                 scenes: ['scene1', 'scene2', 'scene3'],
                 inputs: [
                     { name: 'test-input-1' },
                     { name: 'test-input-2' }
                 ],
+                currentSceneCollection: 'test-scene-collection'
             };
+            jest.spyOn(obsConnectorService, 'updateConfig').mockReturnValue(undefined);
 
-            controllerListeners.setObsData({
+            controllerListeners.setObsConfig({
                 gameplayScene: 'scene2',
                 intermissionScene: 'scene3',
                 gameplayInput: 'test-input-1'
             });
 
-            expect(replicants.obsData).toEqual({
-                enabled: true,
-                scenes: ['scene1', 'scene2', 'scene3'],
-                inputs: [
-                    { name: 'test-input-1' },
-                    { name: 'test-input-2' }
-                ],
+            expect(obsConnectorService.updateConfig).toHaveBeenCalledWith({
+                sceneCollection: 'test-scene-collection',
                 gameplayScene: 'scene2',
                 intermissionScene: 'scene3',
                 gameplayInput: 'test-input-1'
@@ -127,11 +124,11 @@ describe('ObsConnectorController', () => {
         });
 
         it('disconnects from obs when disabling the socket', async () => {
-            replicants.obsData = {};
+            replicants.obsState = {};
 
             await controllerListeners.setObsSocketEnabled(false);
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: false
             });
             expect(obsConnectorService.disconnect).toHaveBeenCalled();
@@ -139,11 +136,11 @@ describe('ObsConnectorController', () => {
         });
 
         it('connects to obs when enabling the socket', async () => {
-            replicants.obsData = {};
+            replicants.obsState = {};
 
             await controllerListeners.setObsSocketEnabled(true);
 
-            expect(replicants.obsData).toEqual({
+            expect(replicants.obsState).toEqual({
                 enabled: true
             });
             expect(obsConnectorService.connect).toHaveBeenCalled();
@@ -153,15 +150,15 @@ describe('ObsConnectorController', () => {
 
     describe('setActiveColorsFromGameplaySource', () => {
         it('throws an error when the gameplay input is missing', async () => {
-            replicants.obsData = { };
+            replicants.obsState = { };
             await expect(controllerListeners.setActiveColorsFromGameplaySource())
                 .rejects.toThrow(new Error('translation:obs.missingGameplayInput'));
         });
 
         it('requests a source screenshot from obs and parses its colors', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 gameplayInput: 'Video Capture Device'
-            };
+            });
             replicants.swapColorsInternally = false;
             const testImage = Sharp();
             (obsConnectorService.getSourceScreenshot as jest.Mock).mockResolvedValue(testImage);
@@ -189,9 +186,9 @@ describe('ObsConnectorController', () => {
         });
 
         it('correctly updates colors if they have been swapped', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 gameplayInput: 'Capture!!'
-            };
+            });
             replicants.swapColorsInternally = true;
             const testImage = Sharp();
             (obsConnectorService.getSourceScreenshot as jest.Mock).mockResolvedValue(testImage);

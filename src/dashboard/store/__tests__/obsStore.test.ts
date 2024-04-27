@@ -1,6 +1,7 @@
 import { useObsStore } from '../obsStore';
 import { mockSendMessage } from '../../__mocks__/mockNodecg';
 import { createPinia, setActivePinia } from 'pinia';
+import { ObsStatus } from 'types/enums/ObsStatus';
 
 describe('obsStore', () => {
     beforeEach(() => {
@@ -54,6 +55,41 @@ describe('obsStore', () => {
             store.setEnabled(false);
 
             expect(mockSendMessage).toHaveBeenCalledWith('setObsSocketEnabled', false);
+        });
+    });
+
+    describe('currentConfig', () => {
+        it('returns nothing if current scene collection is unknown', () => {
+            const store = useObsStore();
+            store.obsState = { enabled: true, status: ObsStatus.CONNECTED };
+            store.obsConfig = [];
+            expect(store.currentConfig).toBeUndefined();
+        });
+
+        it('returns nothing if current scene collection has no config', () => {
+            const store = useObsStore();
+            store.obsState = {
+                enabled: true,
+                status: ObsStatus.CONNECTED,
+                currentSceneCollection: 'test-scene-collection'
+            };
+            store.obsConfig = [];
+            expect(store.currentConfig).toBeUndefined();
+        });
+
+        it('returns config for the current scene collection', () => {
+            const store = useObsStore();
+            store.obsState = {
+                enabled: true,
+                status: ObsStatus.CONNECTED,
+                currentSceneCollection: 'test-scene-collection'
+            };
+            store.obsConfig = [
+                { sceneCollection: 'test-scene-collection-2', gameplayInput: 'test-gameplay-input-2' },
+                { sceneCollection: 'test-scene-collection', gameplayInput: 'test-gameplay-input' }
+            ];
+
+            expect(store.currentConfig).toEqual({ sceneCollection: 'test-scene-collection', gameplayInput: 'test-gameplay-input' });
         });
     });
 });

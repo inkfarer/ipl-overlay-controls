@@ -6,6 +6,7 @@
         "obsSocketDisabled": "OBS integration is disabled.",
         "sceneNotFound": "Could not find one or more of the provided scenes.",
         "inputNotFound": "Could not find one or more of the provided inputs.",
+        "missingCurrentSceneCollection": "The current scene collection is unknown.",
         "socketClosed": "OBS websocket closed with message: {{message}}",
         "socketOpen": "OBS websocket is open.",
         "errorWhileConnecting": "Error while connecting to OBS:",
