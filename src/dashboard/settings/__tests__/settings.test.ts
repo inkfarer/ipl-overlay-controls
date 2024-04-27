@@ -21,7 +21,7 @@ describe('Settings', () => {
 
         useObsStore().$state = {
             // @ts-ignore
-            obsData: {
+            obsState: {
                 enabled: true
             }
         };

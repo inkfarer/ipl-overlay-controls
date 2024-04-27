@@ -4,6 +4,7 @@ import { ObsStatus } from 'types/enums/ObsStatus';
 import { config, mount } from '@vue/test-utils';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { IplButton, IplSelect } from '@iplsplatoon/vue-components';
+import { mockSendMessage } from '../../../__mocks__/mockNodecg';
 
 describe('ObsDataPicker', () => {
     let pinia: TestingPinia;
@@ -19,12 +20,28 @@ describe('ObsDataPicker', () => {
 
         const obsStore = useObsStore();
         obsStore.obsCredentials = null;
-        obsStore.obsData = {
+        obsStore.obsState = {
             enabled: true,
             status: ObsStatus.CONNECTED,
             scenes: ['Scene One', 'Scene Two', 'Scene Three'],
+            inputs: [
+                {
+                    name: 'Test Input One',
+                    uuid: 'test-uuid-1',
+                    noVideoOutput: false
+                },
+                {
+                    name: 'Test Input Two',
+                    uuid: 'test-uuid-2',
+                    noVideoOutput: true
+                }
+            ]
+        };
+        // @ts-ignore
+        obsStore.currentConfig = {
             gameplayScene: 'Scene One',
-            intermissionScene: 'Scene Two'
+            intermissionScene: 'Scene Two',
+            gameplayInput: 'Test Input One'
         };
     });
 
@@ -40,7 +57,7 @@ describe('ObsDataPicker', () => {
 
     it('matches snapshot without scene data', () => {
         const store = useObsStore();
-        store.obsData.scenes = null;
+        store.obsState.scenes = null;
         const wrapper = mount(ObsDataPicker, {
             global: {
                 plugins: [pinia]
@@ -63,9 +80,23 @@ describe('ObsDataPicker', () => {
         expect(wrapper.getComponent('[data-test="update-button"]').attributes().color).toEqual('red');
     });
 
+    it('disables updating if any data is missing', async () => {
+        // @ts-ignore
+        useObsStore().currentConfig = {
+            gameplayScene: null,
+            intermissionScene: 'Scene Two',
+            gameplayInput: 'Test Input One'
+        };
+        const wrapper = mount(ObsDataPicker, {
+            global: {
+                plugins: [pinia]
+            }
+        });
+
+        expect(wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.disabled).toEqual(true);
+    });
+
     it('handles updating data', async () => {
-        const store = useObsStore();
-        store.setData = jest.fn();
         const wrapper = mount(ObsDataPicker, {
             global: {
                 plugins: [pinia]
@@ -76,8 +107,9 @@ describe('ObsDataPicker', () => {
         await wrapper.vm.$nextTick();
         wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
-        expect(store.setData).toHaveBeenCalledWith({
+        expect(mockSendMessage).toHaveBeenCalledWith('setObsConfig', {
             gameplayScene: 'Scene One',
+            gameplayInput: 'Test Input One',
             intermissionScene: 'Scene Three'
         });
     });

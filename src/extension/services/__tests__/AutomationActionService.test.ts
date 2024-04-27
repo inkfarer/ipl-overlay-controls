@@ -20,7 +20,7 @@ describe('AutomationActionService', () => {
         jest.restoreAllMocks();
         jest.useFakeTimers();
         jest.spyOn(Date.prototype, 'getTime').mockReturnValue(10000);
-        replicants.obsData = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
+        replicants.obsState = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
         replicants.scoreboardData = {};
         replicants.gameAutomationData = {
             actionInProgress: GameAutomationAction.NONE,
@@ -41,9 +41,9 @@ describe('AutomationActionService', () => {
         });
 
         it('returns expected actions for starting a game', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 gameplayScene: 'gameplay scene'
-            };
+            });
             replicants.scoreboardData = {
                 isVisible: false
             };
@@ -68,9 +68,9 @@ describe('AutomationActionService', () => {
         });
 
         it('returns expected actions for ending a game', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 intermissionScene: 'intermission scene'
-            };
+            });
             replicants.scoreboardData = {
                 isVisible: true
             };

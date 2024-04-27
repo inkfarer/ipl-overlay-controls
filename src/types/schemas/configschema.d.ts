@@ -6,6 +6,9 @@
  */
 
 export interface Configschema {
+	screenshotParser?: {
+		saveBadScreenshotsToDisk?: boolean;
+	};
 	lastfm?: {
 		apiKey?: string;
 		secret?: string;

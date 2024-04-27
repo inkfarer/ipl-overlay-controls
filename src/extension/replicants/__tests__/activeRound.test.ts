@@ -137,7 +137,44 @@ describe('activeRound', () => {
             expect(mockActiveRoundHelper.setWinner).toHaveBeenCalledWith(3, GameWinner.ALPHA);
         });
 
+        it('hides the next match from stream if choosing score for the first match', () => {
+            replicants.nextRound = { showOnStream: true };
+            replicants.activeRound = {
+                teamA: { score: 0 },
+                teamB: { score: 0 }
+            };
+
+            messageListeners.setWinner({ winner: GameWinner.ALPHA });
+
+            expect((replicants.nextRound as NextRound).showOnStream).toEqual(false);
+        });
+
+        it('hides the next match from stream if choosing score for the first match with a given index', () => {
+            replicants.nextRound = { showOnStream: true };
+            replicants.activeRound = {
+                teamA: { score: 0 },
+                teamB: { score: 1 }
+            };
+
+            messageListeners.setWinner({ winner: GameWinner.ALPHA, roundIndex: 0 });
+
+            expect((replicants.nextRound as NextRound).showOnStream).toEqual(false);
+        });
+
+        it('does not hide the next match from stream if choosing score for matches after the first one', () => {
+            replicants.nextRound = { showOnStream: true };
+            replicants.activeRound = {
+                teamA: { score: 1 },
+                teamB: { score: 0 }
+            };
+
+            messageListeners.setWinner({ winner: GameWinner.ALPHA });
+
+            expect((replicants.nextRound as NextRound).showOnStream).toEqual(true);
+        });
+
         it('sends a callback when setWinner throws an error', () => {
+            replicants.nextRound = { showOnStream: false };
             replicants.activeRound = {
                 teamA: { score: 0 },
                 teamB: { score: 0 }
@@ -327,7 +364,6 @@ describe('activeRound', () => {
                 }
             });
             expect(mockMatchStoreModule.commitActiveRoundToMatchStore).toHaveBeenCalled();
-            expect((replicants.nextRound as NextRound).showOnStream).toEqual(false);
         });
     });
 

@@ -5,16 +5,6 @@
             <score-display />
             <active-color-toggles class="m-t-8" />
             <ipl-space class="m-t-8">
-                <ipl-message
-                    v-if="showObsConfigurationChangedWarning"
-                    type="warning"
-                    class="m-b-8"
-                    data-test="obs-scenes-changed-warning"
-                    closeable
-                    @close="showObsConfigurationChangedWarning = false"
-                >
-                    {{ $t('obsSceneConfigChangedWarning', { gameplayScene, intermissionScene }) }}
-                </ipl-message>
                 <ipl-button
                     v-if="isObsConnected"
                     :label="startStopLabel"
@@ -74,8 +64,7 @@ import {
     IplSpace,
     IplExpandingSpaceGroup,
     IplExpandingSpace,
-    isBlank,
-    IplMessage
+    isBlank
 } from '@iplsplatoon/vue-components';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
@@ -92,7 +81,6 @@ export default defineComponent({
     name: 'ActiveRound',
 
     components: {
-        IplMessage,
         IplExpandingSpace,
         ActiveRosterDisplay,
         NextMatchStarter,
@@ -127,7 +115,8 @@ export default defineComponent({
         const actionInProgress = computed(() =>
             obsStore.gameAutomationData?.actionInProgress !== GameAutomationAction.NONE
             && !isBlank(obsStore.gameAutomationData?.nextTaskForAction?.name));
-        const gameplaySceneActive = computed(() => obsStore.obsData.gameplayScene === obsStore.obsData.currentScene);
+        const gameplaySceneActive = computed(() =>
+            obsStore.currentConfig?.gameplayScene === obsStore.obsState.currentScene);
 
         const now = ref(new Date().getTime());
         const setCurrentTimeInterval = setInterval(() => {
@@ -138,14 +127,9 @@ export default defineComponent({
             clearInterval(setCurrentTimeInterval);
         });
 
-        const showObsConfigurationChangedWarning = ref(false);
-        nodecg.listenFor('obsSceneConfigurationChangedAfterUpdate', () => {
-            showObsConfigurationChangedWarning.value = true;
-        });
-
         return {
             disableShowCasters,
-            isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
+            isObsConnected: computed(() => obsStore.obsState.status === ObsStatus.CONNECTED),
             showCasters() {
                 casterStore.showCasters();
             },
@@ -182,11 +166,7 @@ export default defineComponent({
             startStopDisabled: computed(() => {
                 return actionInProgress.value
                     && obsStore.gameAutomationData?.nextTaskForAction?.executionTimeMillis - 1000 < now.value;
-            }),
-
-            gameplayScene: computed(() => obsStore.obsData.gameplayScene),
-            intermissionScene: computed(() => obsStore.obsData.intermissionScene),
-            showObsConfigurationChangedWarning
+            })
         };
     }
 });

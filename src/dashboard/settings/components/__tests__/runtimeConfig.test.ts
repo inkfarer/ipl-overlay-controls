@@ -4,6 +4,8 @@ import RuntimeConfig from '../runtimeConfig.vue';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { IplButton, IplMessage, IplSelect } from '@iplsplatoon/vue-components';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
+import { Locale } from 'types/enums/Locale';
 
 describe('RuntimeConfig', () => {
     let pinia: TestingPinia;
@@ -19,9 +21,10 @@ describe('RuntimeConfig', () => {
         useSettingsStore().$state = {
             lastFmSettings: null,
             radiaSettings: null,
-            // @ts-ignore
             runtimeConfig: {
-                gameVersion: GameVersion.SPLATOON_2
+                gameVersion: GameVersion.SPLATOON_2,
+                interfaceLocale: InterfaceLocale.EN,
+                locale: Locale.EN
             }
         };
     });

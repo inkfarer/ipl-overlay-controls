@@ -376,6 +376,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 0,
             "isCustom": false,
             "key": "orangePurple",
+            "referenceClrA": "#C64D24",
+            "referenceClrB": "#6C0AB3",
             "title": "Orange vs Purple",
           },
           {
@@ -385,6 +387,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 1,
             "isCustom": false,
             "key": "yellowDarkBlue",
+            "referenceClrA": "#D3CD23",
+            "referenceClrB": "#4010C9",
             "title": "Yellow vs Dark Blue",
           },
           {
@@ -394,6 +398,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 2,
             "isCustom": false,
             "key": "turquoiseOrange",
+            "referenceClrA": "#37D5B2",
+            "referenceClrB": "#CF453F",
             "title": "Turquoise vs Orange",
           },
           {
@@ -403,6 +409,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 3,
             "isCustom": false,
             "key": "orangeDarkBlue",
+            "referenceClrA": "#D9633A",
+            "referenceClrB": "#423BC4",
             "title": "Orange vs Dark Blue",
           },
           {
@@ -412,6 +420,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 4,
             "isCustom": false,
             "key": "turquoisePink",
+            "referenceClrA": "#35D3AE",
+            "referenceClrB": "#BE2C74",
             "title": "Turquoise vs Pink",
           },
           {
@@ -421,6 +431,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 5,
             "isCustom": false,
             "key": "darkBlueOrange",
+            "referenceClrA": "#261DAD",
+            "referenceClrB": "#DD8E3A",
             "title": "Dark Blue vs Orange",
           },
           {
@@ -430,6 +442,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 6,
             "isCustom": false,
             "key": "yellowPurple",
+            "referenceClrA": "#C2DC4C",
+            "referenceClrB": "#641FCA",
             "title": "Yellow vs Purple",
           },
           {
@@ -439,6 +453,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 7,
             "isCustom": false,
             "key": "goldPurple",
+            "referenceClrA": "#CFBC33",
+            "referenceClrB": "#901BC4",
             "title": "Gold vs Purple",
           },
           {
@@ -448,6 +464,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 8,
             "isCustom": false,
             "key": "greenPink",
+            "referenceClrA": "#A6DA44",
+            "referenceClrB": "#B31FB0",
             "title": "Green vs Pink",
           },
           {
@@ -457,6 +475,8 @@ exports[`gameData perGameData matches snapshot 1`] = `
             "index": 9,
             "isCustom": false,
             "key": "pinkGreen",
+            "referenceClrA": "#B82079",
+            "referenceClrB": "#39D42D",
             "title": "Pink vs Green",
           },
         ],
@@ -468,13 +488,15 @@ exports[`gameData perGameData matches snapshot 1`] = `
       {
         "colors": [
           {
-            "clrA": "#6236DF",
-            "clrB": "#F0EB24",
+            "clrA": "#F0EB24",
+            "clrB": "#6236DF",
             "clrNeutral": "#B82FB6",
             "index": 0,
             "isCustom": false,
-            "key": "purpleYellow",
-            "title": "Purple vs Yellow",
+            "key": "yellowPurple",
+            "referenceClrA": "#CAC531",
+            "referenceClrB": "#5529BC",
+            "title": "Yellow vs Purple",
           },
         ],
         "meta": {
@@ -485,13 +507,15 @@ exports[`gameData perGameData matches snapshot 1`] = `
       {
         "colors": [
           {
-            "clrA": "#2D63D7",
-            "clrB": "#FDB605",
+            "clrA": "#FDB605",
+            "clrB": "#2D63D7",
             "clrNeutral": "#8FD20C",
             "index": 0,
             "isCustom": false,
-            "key": "blueOrange",
-            "title": "Blue vs Orange",
+            "key": "orangeBlue",
+            "referenceClrA": "#D5972C",
+            "referenceClrB": "#2858BC",
+            "title": "Orange vs Blue",
           },
         ],
         "meta": {

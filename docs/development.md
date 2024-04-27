@@ -27,6 +27,11 @@ By default, bundles are marked as compatible with Splatoon 2.
 To define a different set of compatible games for your bundle, add the following to your bundle's `package.json` file:  
 `"compatibleGameVersions": ["SPLATOON_2", "SPLATOON_3"]`
 
+## Debugging the screenshot parser
+
+By setting `screenshotParser.saveBadScreenshotsToDisk` to `true` in the bundle configuration file (`<nodecg>/cfg/ipl-overlay-controls.json`), 
+ipl-overlay-controls will save to disk screenshots that it failed to read ink colors from.
+
 ## Team data
 
 ipl-overlay-controls supports importing team data from smash.gg and Battlefy.  

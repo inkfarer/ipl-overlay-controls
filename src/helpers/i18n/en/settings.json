@@ -12,6 +12,7 @@
     },
     "obs": {
         "missingDataMessage": "OBS data is missing. Please connect to an OBS websocket to continue.",
+        "gameplayInputSelect": "Gameplay source",
         "gameplaySceneSelect": "Gameplay scene",
         "intermissionSceneSelect": "Intermission scene",
         "toggleEnable": "Enable",

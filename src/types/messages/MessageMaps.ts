@@ -1,12 +1,13 @@
 import { Casters, ObsCredentials } from 'schemas';
-import { SetObsDataRequest } from './obs';
+import { SetObsConfigRequest } from './obs';
 import { SetGameVersionMessage, SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { Locale } from 'types/enums/Locale';
 
 export interface MessageInputMap {
     connectToObs: ObsCredentials
-    setObsData: SetObsDataRequest
+    setObsConfig: SetObsConfigRequest
     setObsSocketEnabled: boolean
+    setActiveColorsFromGameplaySource: never
 
     startGame: never
     endGame: never
