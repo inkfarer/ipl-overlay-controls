@@ -9,7 +9,13 @@ export interface ObsData {
 	enabled: boolean;
 	status: 'CONNECTED' | 'CONNECTING' | 'NOT_CONNECTED';
 	scenes?: string[];
+	inputs?: {
+		name: string;
+		uuid?: string | null;
+		noVideoOutput: boolean;
+	}[];
 	currentScene?: string;
 	gameplayScene?: string;
+	gameplayInput?: string;
 	intermissionScene?: string;
 }

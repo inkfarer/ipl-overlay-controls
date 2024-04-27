@@ -40,7 +40,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ObsSocketSettings from './components/obsSocketSettings.vue';
 import ObsDataPicker from './components/obsDataPicker.vue';
-import { useObsStore } from '../store/obsStore';
 import { useTranslation } from 'i18next-vue';
 import ObsSettings from './components/obsSettings.vue';
 
@@ -64,7 +63,6 @@ export default defineComponent({
 
     setup() {
         const { t } = useTranslation();
-        const obsStore = useObsStore();
 
         const settingsSections = computed(() => [
             {
@@ -91,7 +89,6 @@ export default defineComponent({
 
         return {
             settingsSections,
-            obsSocketEnabled: computed(() => obsStore.obsData.enabled),
             visibleSection: ref(0),
             showSidebar: ref(false)
         };

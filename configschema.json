@@ -3,6 +3,13 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "screenshotParser": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "saveBadScreenshotsToDisk": { "type": "boolean" }
+            }
+        },
         "lastfm": {
             "type": "object",
             "additionalProperties": false,

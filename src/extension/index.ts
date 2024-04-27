@@ -3,7 +3,6 @@ import * as nodecgContext from './helpers/nodecg';
 import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
-import { ObsConnectorController } from './controllers/ObsConnectorController';
 import { AssetPathService } from './services/AssetPathService';
 import { GameVersion } from 'types/enums/gameVersion';
 
@@ -78,9 +77,13 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const { ReplicantFixerService } = require('./services/ReplicantFixerService');
     const { LocaleInfoService } = require('./services/LocaleInfoService');
     const { RuntimeConfigController } = require('./controllers/RuntimeConfigController');
+    const { ScreenshotParserService } = require('./services/ScreenshotParserService');
+    const { ObsConnectorController } = require('./controllers/ObsConnectorController');
+
+    const screenshotParserService = new ScreenshotParserService(nodecg);
 
     const obsConnectorService = new ObsConnectorService(nodecg);
-    new ObsConnectorController(nodecg, obsConnectorService);
+    new ObsConnectorController(nodecg, obsConnectorService, screenshotParserService);
 
     const automationActionService = new AutomationActionService(nodecg, obsConnectorService);
     automationActionService.resetGameAutomationData();

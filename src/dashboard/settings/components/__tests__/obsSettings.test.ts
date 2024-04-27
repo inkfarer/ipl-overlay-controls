@@ -20,7 +20,7 @@ describe('obsSettings', () => {
     it('shows the obs data picker when the obs socket is enabled', () => {
         const obsStore = useObsStore();
         // @ts-ignore
-        obsStore.obsData = { enabled: true };
+        obsStore.obsState = { enabled: true };
         const wrapper = mount(ObsSettings);
 
         expect(wrapper.find('obs-data-picker-stub').exists()).toEqual(true);
@@ -29,7 +29,7 @@ describe('obsSettings', () => {
     it('hides the obs data picker when the obs socket is disabled', () => {
         const obsStore = useObsStore();
         // @ts-ignore
-        obsStore.obsData = { enabled: false };
+        obsStore.obsState = { enabled: false };
         const wrapper = mount(ObsSettings);
 
         expect(wrapper.find('obs-data-picker-stub').exists()).toEqual(false);

@@ -19,11 +19,11 @@
         },
         "colorLock1": {
             "groupName": "Color Lock (Variant 1)",
-            "purpleYellow": "Purple vs Yellow"
+            "yellowPurple": "Yellow vs Purple"
         },
         "colorLock2": {
             "groupName": "Color Lock (Variant 2)",
-            "blueOrange": "Blue vs Orange"
+            "orangeBlue": "Orange vs Blue"
         }
     },
     "SPLATOON_2": {
