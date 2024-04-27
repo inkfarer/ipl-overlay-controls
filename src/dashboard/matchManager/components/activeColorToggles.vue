@@ -94,6 +94,7 @@
         </div>
         <ipl-button
             v-if="obsStore.obsData.enabled"
+            :disabled="obsStore.obsData.status !== 'CONNECTED' || obsStore.obsData.gameplayInput == null"
             class="m-t-6"
             :label="$t('readColorsFromSourceScreenshotButton')"
             small
