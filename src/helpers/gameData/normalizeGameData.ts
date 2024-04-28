@@ -14,6 +14,10 @@ const commonStageNames: {[key in Locale]: { 'Unknown Stage': string, 'Counterpic
     [Locale.EU_FR]: {
         'Unknown Stage': 'Stage à déterminer',
         Counterpick: 'Counterpick'
+    },
+    [Locale.JA]: {
+        'Unknown Stage': 'ステージ未選択',
+        Counterpick: 'カウンターピック'
     }
 };
 
@@ -26,6 +30,9 @@ const commonModeNames: {[key in Locale]: { 'Unknown Mode': string } } = {
     },
     [Locale.EU_FR]: {
         'Unknown Mode': 'Mode à déterminer',
+    },
+    [Locale.JA]: {
+        'Unknown Mode': 'ルール未選択'
     }
 };
 
@@ -59,12 +66,14 @@ export function normalizeGameData<S extends readonly string[], M extends readonl
             })),
             {
                 meta: {
-                    name: 'Custom Color'
+                    name: 'Custom Color',
+                    key: 'customColor'
                 },
                 colors: [
                     {
                         index: 0,
                         title: 'Custom Color',
+                        key: 'customColor',
                         clrA: '#000000',
                         clrB: '#FFFFFF',
                         clrNeutral: '#818181',

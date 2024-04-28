@@ -41,8 +41,10 @@ describe('ActiveRoundEditor', () => {
                 },
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     index: 0,
                     title: 'coolest color',
+                    colorKey: 'coolestColor',
                     isCustom: false,
                     clrNeutral: '#FFF',
                 },
@@ -171,8 +173,8 @@ describe('ActiveRoundEditor', () => {
         expect(roundSelector.attributes().modelvalue).toEqual('01010');
         expect((roundSelector.vm.$props as { options: unknown }).options).toEqual([
             { name: 'dope round', value: '01010' },
-            { name: 'duplicate name test (team 1 vs team two)', value: '01011' },
-            { name: 'duplicate name test (team three vs team four)', value: '01012' }
+            { name: 'translation:activeMatchEditor.duplicateMatchNameOption', value: '01011' },
+            { name: 'translation:activeMatchEditor.duplicateMatchNameOption', value: '01012' }
         ]);
     });
 
@@ -360,7 +362,7 @@ describe('ActiveRoundEditor', () => {
 
         const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' already has saved progress. (Cool Team (long name long name long name long... vs Cool Team 2)');
+        expect(roundProgressMessage.text()).toEqual('translation:activeMatchEditor.selectedMatchHasProgressMessage');
     });
 
     it('displays message if selected round is completed', async () => {
@@ -384,7 +386,7 @@ describe('ActiveRoundEditor', () => {
 
         const roundProgressMessage = wrapper.findComponent('[data-test="match-progress-message"]');
         expect(roundProgressMessage.exists()).toEqual(true);
-        expect(roundProgressMessage.text()).toEqual('\'dope round\' is already completed. (Cool Team vs Cool Team 2)');
+        expect(roundProgressMessage.text()).toEqual('translation:activeMatchEditor.selectedMatchCompletedMessage');
     });
 
     it('changes selected teams if a new round is selected', async () => {
@@ -413,7 +415,7 @@ describe('ActiveRoundEditor', () => {
         roundSelector.vm.$emit('update:modelValue', '12345');
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findComponent('[data-test="match-progress-message"]').text()).toEqual('\'dope round 2\' already has saved progress. (Cool Team 3 vs Cool Team 4)');
+        expect(wrapper.findComponent('[data-test="match-progress-message"]').text()).toEqual('translation:activeMatchEditor.selectedMatchHasProgressMessage');
         expect(wrapper.getComponent('[data-test="team-a-selector"]').attributes().modelvalue).toEqual('789789');
         expect(wrapper.getComponent('[data-test="team-b-selector"]').attributes().modelvalue).toEqual('678678');
     });

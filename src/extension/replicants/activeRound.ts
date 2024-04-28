@@ -47,6 +47,10 @@ nodecg.listenFor('setWinner', (data: SetWinnerRequest, ack: NodeCG.UnhandledAckn
     const scoreSum = activeRound.value.teamA.score + activeRound.value.teamB.score;
     const index = data.roundIndex != null ? data.roundIndex : scoreSum;
 
+    if (index === 0 && data.winner !== GameWinner.NO_WINNER) {
+        nextRound.value.showOnStream = false;
+    }
+
     try {
         setWinner(index, data.winner);
     } catch (e) {
@@ -112,7 +116,6 @@ nodecg.listenFor('beginNextMatch', (data?: BeginNextMatchRequest) => {
     };
 
     commitActiveRoundToMatchStore();
-    nextRound.value.showOnStream = false;
 });
 
 nodecg.listenFor('setActiveColor', (data: SetActiveColorRequest) => {
@@ -126,7 +129,8 @@ export function switchToNextColor(): void {
 
     setActiveColor({
         color: nextColor,
-        categoryName: nextColor.categoryName
+        categoryName: nextColor.categoryName,
+        categoryKey: nextColor.categoryKey
     });
 }
 
@@ -137,7 +141,8 @@ export function switchToPreviousColor(): void {
 
     setActiveColor({
         color: previousColor,
-        categoryName: previousColor.categoryName
+        categoryName: previousColor.categoryName,
+        categoryKey: previousColor.categoryKey
     });
 }
 

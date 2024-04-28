@@ -1,59 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ColorList matches snapshot 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">More colors</div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:colorList.sectionTitle</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div class="colors-container">
       <div class="layout horizontal center-horizontal m-x-16">
-        <ipl-checkbox-stub label="Use custom color" modelvalue="false" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Show color names" modelvalue="false" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.useCustomColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.showColorNamesCheckbox" modelvalue="false" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
       </div>
       <div class="m-t-8">
         <div class="color-group">
-          <div class="title">Ranked Modes</div>
-          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Green vs Grape</span>
+          <div class="title">colors:SPLATOON_2.rankedModes.groupName</div>
+          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.greenGrape</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(125, 40, 252); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Green vs Magenta</span>
+          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.greenMagenta</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(4, 217, 118); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(214, 0, 171); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Turquoise vs Orange</span>
+          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.turquoiseOrange</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(16, 227, 143); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(251, 123, 8); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Mustard vs Purple</span>
+          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.mustardPurple</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(255, 158, 3); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Dark Blue vs Green</span>
+          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.darkBlueGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Purple vs Green</span>
+          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.purpleGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1; display: none;">Yellow vs Blue</span>
+          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(46, 210, 254); border-color: #181e29;"></div>
@@ -61,50 +61,50 @@ exports[`ColorList matches snapshot 1`] = `
           </div>
         </div>
         <div class="color-group">
-          <div class="title">Turf War</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Yellow vs Purple</span>
+          <div class="title">colors:SPLATOON_2.turfWar.groupName</div>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.yellowPurple</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(209, 224, 4); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(150, 12, 178); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Pink vs Blue</span>
+          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(230, 16, 119); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(54, 28, 184); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Pink vs Yellow</span>
+          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkYellow</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(237, 12, 106); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(213, 232, 2); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Purple vs Turquoise</span>
+          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.purpleTurquoise</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(107, 16, 204); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(8, 204, 129); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Pink vs Light Blue</span>
+          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkLightBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(227, 9, 96); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(2, 173, 207); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Purple vs Orange</span>
+          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.purpleOrange</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(86, 23, 194); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(255, 95, 3); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Pink vs Green</span>
+          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(230, 5, 114); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(27, 191, 15); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Yellow vs Blue</span>
+          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(241, 206, 51); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(75, 18, 190); border-color: white;"></div>
@@ -112,8 +112,8 @@ exports[`ColorList matches snapshot 1`] = `
           </div>
         </div>
         <div class="color-group">
-          <div class="title">Color Lock</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">Yellow vs Blue (Color Lock)</span>
+          <div class="title">colors:SPLATOON_2.colorLock.groupName</div>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.colorLock.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
@@ -128,59 +128,59 @@ exports[`ColorList matches snapshot 1`] = `
 `;
 
 exports[`ColorList matches snapshot when color names are shown 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">More colors</div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:colorList.sectionTitle</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div class="colors-container">
       <div class="layout horizontal center-horizontal m-x-16">
-        <ipl-checkbox-stub label="Use custom color" modelvalue="false" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Show color names" modelvalue="true" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.useCustomColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.showColorNamesCheckbox" modelvalue="true" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
       </div>
       <div class="m-t-8">
         <div class="color-group color-names-visible">
-          <div class="title">Ranked Modes</div>
-          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Green vs Grape</span>
+          <div class="title">colors:SPLATOON_2.rankedModes.groupName</div>
+          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.greenGrape</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(125, 40, 252); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Green vs Magenta</span>
+          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.greenMagenta</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(4, 217, 118); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(214, 0, 171); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Turquoise vs Orange</span>
+          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.turquoiseOrange</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(16, 227, 143); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(251, 123, 8); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Mustard vs Purple</span>
+          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.mustardPurple</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(255, 158, 3); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Dark Blue vs Green</span>
+          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.darkBlueGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Purple vs Green</span>
+          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.purpleGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1;">Yellow vs Blue</span>
+          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(46, 210, 254); border-color: #181e29;"></div>
@@ -188,50 +188,50 @@ exports[`ColorList matches snapshot when color names are shown 1`] = `
           </div>
         </div>
         <div class="color-group color-names-visible">
-          <div class="title">Turf War</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Yellow vs Purple</span>
+          <div class="title">colors:SPLATOON_2.turfWar.groupName</div>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.yellowPurple</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(209, 224, 4); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(150, 12, 178); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Pink vs Blue</span>
+          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(230, 16, 119); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(54, 28, 184); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Pink vs Yellow</span>
+          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkYellow</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(237, 12, 106); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(213, 232, 2); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Purple vs Turquoise</span>
+          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.purpleTurquoise</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(107, 16, 204); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(8, 204, 129); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Pink vs Light Blue</span>
+          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkLightBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(227, 9, 96); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(2, 173, 207); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Purple vs Orange</span>
+          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.purpleOrange</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(86, 23, 194); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(255, 95, 3); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Pink vs Green</span>
+          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkGreen</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(230, 5, 114); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(27, 191, 15); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Yellow vs Blue</span>
+          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(241, 206, 51); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(75, 18, 190); border-color: white;"></div>
@@ -239,8 +239,8 @@ exports[`ColorList matches snapshot when color names are shown 1`] = `
           </div>
         </div>
         <div class="color-group color-names-visible">
-          <div class="title">Color Lock</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">Yellow vs Blue (Color Lock)</span>
+          <div class="title">colors:SPLATOON_2.colorLock.groupName</div>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.colorLock.yellowBlue</span>
             <div class="color-previews layout horizontal">
               <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
               <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
@@ -255,18 +255,18 @@ exports[`ColorList matches snapshot when color names are shown 1`] = `
 `;
 
 exports[`ColorList matches snapshot when using custom color 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title">More colors</div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:colorList.sectionTitle</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div class="colors-container">
       <div class="layout horizontal center-horizontal m-x-16">
-        <ipl-checkbox-stub label="Use custom color" modelvalue="true" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Show color names" modelvalue="false" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.useCustomColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="use-custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:colorList.showColorNamesCheckbox" modelvalue="false" small="true" disabled="false" data-test="color-names-toggle" class="m-l-8"></ipl-checkbox-stub>
       </div>
       <!--v-if-->
     </div>
@@ -275,7 +275,7 @@ exports[`ColorList matches snapshot when using custom color 1`] = `
         <ipl-input-stub name="team-a-color" modelvalue="#889" type="color" centered="false" disabled="false" loading="false" theme="default" style="flex-grow: 1;"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#999" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8" style="flex-grow: 1;"></ipl-input-stub>
       </div>
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="Right-click to undo changes." data-test="custom-color-submit-btn"></ipl-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="custom-color-submit-btn"></ipl-button-stub>
     </div>
   </div>
 </div>"

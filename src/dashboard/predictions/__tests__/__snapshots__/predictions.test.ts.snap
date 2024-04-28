@@ -4,38 +4,38 @@ exports[`Predictions shows expected buttons if prediction status is ACTIVE 1`] =
 "<div class="m-t-6 prediction-button-container">
   <!--v-if-->
   <!--v-if-->
-  <ipl-button-stub label="Lock" color="red" disabled="false" async="true" progressmessage="Locking..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="lock-prediction-button"></ipl-button-stub>
-  <ipl-button-stub label="Cancel" color="red" disabled="false" async="true" progressmessage="Cancelling..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="cancel-prediction-button"></ipl-button-stub>
-  <ipl-button-stub label="Show" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Sent!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:lockPredictionButton.label" color="red" disabled="false" async="true" progressmessage="translation:lockPredictionButton.loadingLabel" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.shortConfirmationMessage" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="lock-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:cancelPredictionButton.label" color="red" disabled="false" async="true" progressmessage="translation:cancelPredictionButton.loadingLabel" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.shortConfirmationMessage" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="cancel-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:showPredictionButton.label" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="translation:showPredictionButton.labelOnClick" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
 </div>"
 `;
 
 exports[`Predictions shows expected buttons if prediction status is CANCELED 1`] = `
 "<div class="m-t-6 prediction-button-container">
   <!--v-if-->
-  <ipl-button-stub label="New" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="create-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:createPredictionButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="create-prediction-button"></ipl-button-stub>
   <!--v-if-->
   <!--v-if-->
-  <ipl-button-stub label="Show" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Sent!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:showPredictionButton.label" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="translation:showPredictionButton.labelOnClick" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
 </div>"
 `;
 
 exports[`Predictions shows expected buttons if prediction status is LOCKED 1`] = `
 "<div class="m-t-6 prediction-button-container">
-  <ipl-button-stub label="Resolve" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="resolve-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:resolvePredictionButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="resolve-prediction-button"></ipl-button-stub>
   <!--v-if-->
   <!--v-if-->
-  <ipl-button-stub label="Cancel" color="red" disabled="false" async="true" progressmessage="Cancelling..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="cancel-prediction-button"></ipl-button-stub>
-  <ipl-button-stub label="Show" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Sent!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:cancelPredictionButton.label" color="red" disabled="false" async="true" progressmessage="translation:cancelPredictionButton.loadingLabel" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.shortConfirmationMessage" shortconfirmationmessage="true" small="false" disableonsuccess="false" inline="false" data-test="cancel-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:showPredictionButton.label" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="translation:showPredictionButton.labelOnClick" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
 </div>"
 `;
 
 exports[`Predictions shows expected buttons if prediction status is RESOLVED 1`] = `
 "<div class="m-t-6 prediction-button-container">
   <!--v-if-->
-  <ipl-button-stub label="New" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="create-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:createPredictionButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="create-prediction-button"></ipl-button-stub>
   <!--v-if-->
   <!--v-if-->
-  <ipl-button-stub label="Show" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Sent!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:showPredictionButton.label" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="translation:showPredictionButton.labelOnClick" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="true" inline="false" data-test="show-prediction-button"></ipl-button-stub>
 </div>"
 `;

@@ -60,7 +60,7 @@ describe('Predictions', () => {
     it('shows warning if predictions are not enabled', () => {
         const store = usePredictionDataStore();
         store.predictionStore.status.predictionsEnabled = false;
-        store.predictionStore.status.predictionStatusReason = 'Predictions are disabled!';
+        store.predictionStore.status.predictionStatusReason = 'predictionsDisabled';
         store.predictionStore.currentPrediction = undefined;
         const wrapper = mount(Predictions, {
             global: {
@@ -75,7 +75,7 @@ describe('Predictions', () => {
         expect(wrapper.findComponent('[data-test="socket-reconnect-button"]').exists()).toEqual(false);
         const predictionsDisabledMessage = wrapper.findComponent('[data-test="predictions-disabled-message"]');
         expect(predictionsDisabledMessage.isVisible()).toEqual(true);
-        expect(predictionsDisabledMessage.text()).toEqual('Predictions are disabled!');
+        expect(predictionsDisabledMessage.text()).toEqual('common:predictionStatusReason.predictionsDisabled');
     });
 
     it('shows message and management space if prediction data is missing', () => {

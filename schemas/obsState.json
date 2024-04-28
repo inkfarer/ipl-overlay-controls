@@ -16,13 +16,29 @@
                 "type": "string"
             }
         },
+        "inputs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": ["string", "null"]
+                    },
+                    "noVideoOutput": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "noVideoOutput"]
+            }
+        },
         "currentScene": {
             "type": "string"
         },
-        "gameplayScene": {
-            "type": "string"
-        },
-        "intermissionScene": {
+        "currentSceneCollection": {
             "type": "string"
         }
     },

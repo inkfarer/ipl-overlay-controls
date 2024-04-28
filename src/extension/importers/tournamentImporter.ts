@@ -8,19 +8,17 @@ import { getSmashGGData, getSmashGGEvents } from './clients/smashggClient';
 import { parseUploadedTeamData, updateTournamentDataReplicants } from './tournamentDataHelper';
 import { GetSmashggEventRequest, GetTournamentDataRequest } from 'types/messages/tournamentData';
 import { SendouInkClientInstance } from '../clients/SendouInkClient';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 
 if (!nodecg.bundleConfig || typeof nodecg.bundleConfig.smashgg === 'undefined') {
-    nodecg.log.warn(
-        `"smashgg" is not defined in cfg/${nodecg.bundleName}.json! `
-        + 'Importing tournament data from smash.gg will not be possible.'
-    );
+    nodecg.log.warn(i18next.t('tournamentImporter.missingStartggConfigurationWarning', { bundleName: nodecg.bundleName }));
 }
 
 nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack: NodeCG.UnhandledAcknowledgement) => {
     if (!data.id || !data.method) {
-        ack(new Error('Missing arguments.'), null);
+        ack(new Error(i18next.t('invalidArgumentsError')), null);
         return;
     }
 
@@ -34,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             }
             case TournamentDataSource.SMASHGG: {
                 if (!nodecg.bundleConfig?.smashgg?.apiKey) {
-                    ack(new Error('No smash.gg API key is configured.'));
+                    ack(new Error(i18next.t('tournamentImporter.missingStartggApiKey')));
                     break;
                 }
 
@@ -49,7 +47,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             }
             case TournamentDataSource.SENDOU_INK: {
                 if (SendouInkClientInstance == null) {
-                    ack(new Error('No sendou.ink API key is configured.'));
+                    ack(new Error(i18next.t('tournamentImporter.missingSendouInkApiKey')));
                     break;
                 }
 
@@ -65,7 +63,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
                 break;
             }
             default:
-                return ack(new Error('Invalid method given.'));
+                return ack(new Error(i18next.t('invalidArgumentsError')));
         }
     } catch (e) {
         ack(e);
@@ -91,6 +89,9 @@ async function getRawData(url: string): Promise<TournamentData> {
     if (response.status === 200) {
         return parseUploadedTeamData(response.data, url);
     } else {
-        throw new Error(`Got response code ${response.status} from URL ${url}`);
+        throw new Error(i18next.t('tournamentImporter.rawDataImportFailed', {
+            statusCode: response.status,
+            url
+        }));
     }
 }

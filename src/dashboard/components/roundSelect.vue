@@ -2,7 +2,7 @@
     <div>
         <ipl-select
             v-model="value"
-            label="Round"
+            :label="$t('common:roundSelect')"
             :options="roundOptions"
             data-test="round-selector"
         />

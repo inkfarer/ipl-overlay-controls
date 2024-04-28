@@ -96,7 +96,7 @@ describe('highlightedMatchStore', () => {
                     { value: '102938210598', name: 'Cool Stream' },
                     { value: '4059678', name: 'Cooler Stream' }
                 ]
-            })).rejects.toThrow('Cannot import data from source \'UPLOAD\'');
+            })).rejects.toThrow('translation:cannotImportDataError');
 
             expect(mockSendMessage).not.toHaveBeenCalled();
         });

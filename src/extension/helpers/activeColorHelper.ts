@@ -2,22 +2,15 @@ import { ColorWithCategory, SetActiveColorRequest } from '../../types/messages/a
 import * as nodecgContext from './nodecg';
 import { ActiveRound, RuntimeConfig, SwapColorsInternally } from '../../types/schemas';
 import cloneDeep from 'lodash/cloneDeep';
-import { ColorGroup, ColorInfo } from '../../types/colors';
+import { ColorGroup } from '../../types/colors';
 import { perGameData } from '../../helpers/gameData/gameData';
+import { swapColors } from '../../helpers/ColorHelper';
 
 const nodecg = nodecgContext.get();
 
 const activeRound = nodecg.Replicant<ActiveRound>('activeRound');
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
 const swapColorsInternally = nodecg.Replicant<SwapColorsInternally>('swapColorsInternally');
-
-function swapColors(data: ColorInfo): ColorInfo {
-    return {
-        ...data,
-        clrA: data.clrB,
-        clrB: data.clrA
-    };
-}
 
 export function setActiveColor(data: SetActiveColorRequest): void {
     const newActiveRound = cloneDeep(activeRound.value);
@@ -26,7 +19,9 @@ export function setActiveColor(data: SetActiveColorRequest): void {
         index: data.color.index,
         title: data.color.title,
         isCustom: data.color.isCustom,
-        clrNeutral: data.color.clrNeutral
+        clrNeutral: data.color.clrNeutral,
+        colorKey: data.color.key,
+        categoryKey: data.categoryKey
     };
     newActiveRound.teamA.color = data.color.clrA;
     newActiveRound.teamB.color = data.color.clrB;
@@ -46,7 +41,8 @@ export function getNextColor(): ColorWithCategory {
 
     return {
         ...(swapColorsInternally.value ? swapColors(nextColor) : nextColor),
-        categoryName: selectedColorGroup.meta.name
+        categoryName: selectedColorGroup.meta.name,
+        categoryKey: selectedColorGroup.meta.key
     };
 }
 
@@ -58,6 +54,7 @@ export function getPreviousColor(): ColorWithCategory {
 
     return {
         ...(swapColorsInternally.value ? swapColors(previousColor) : previousColor),
-        categoryName: selectedColorGroup.meta.name
+        categoryName: selectedColorGroup.meta.name,
+        categoryKey: selectedColorGroup.meta.key
     };
 }

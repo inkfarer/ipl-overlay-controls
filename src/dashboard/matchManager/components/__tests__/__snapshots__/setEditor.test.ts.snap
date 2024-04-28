@@ -1,506 +1,506 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`setEditor matches snapshot 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Splat Zones on Camp Triggerfish</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Cool Colors_2" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Humpback Pump Track" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="Inkblot Art Academy" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
 `;
 
 exports[`setEditor matches snapshot when active round updates to one with less games than the previous one 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Rainmaker on Blackbelly Skatepark</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Cool Colors_2" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#345345" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#345345" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
 `;
 
 exports[`setEditor matches snapshot when active round updates to one with more games than the previous one 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Rainmaker on Blackbelly Skatepark</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Cool Colors_2" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#345345" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#345345" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Starfish Mainstage" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="The Reef" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-5" class="layout horizontal center-vertical game-editor"><span class="set-number">6</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-6" class="layout horizontal center-vertical game-editor"><span class="set-number">7</span>
       <stage-select-stub modelvalue="Musselforge Fitness" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
 `;
 
 exports[`setEditor matches snapshot when editing colors 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match <span class="badge badge-blue m-l-6">Next up</span><span class="text-small">Splat Zones on Camp Triggerfish</span></div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle <span class="badge badge-blue m-l-6">translation:setEditor.nextGameLabel</span><span class="text-small">translation:setEditor.nextGameTemplate</span></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
-      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub>
-      <ipl-select-stub modelvalue="Cool Colors_2" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style=""></ipl-select-stub>
+      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
-      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor is-next-game"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-3" class="layout horizontal center-vertical game-editor"><span class="set-number">4</span>
       <stage-select-stub modelvalue="Humpback Pump Track" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
-      <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub>
+      <mode-select-stub modelvalue="Clam Blitz" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-4" class="layout horizontal center-vertical game-editor"><span class="set-number">5</span>
       <stage-select-stub modelvalue="Inkblot Art Academy" data-test="stage-select" class="m-l-6 max-width" style="display: none;"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub>
-      <ipl-select-stub modelvalue="Ranked Modes_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6" data-test="color-select" style=""></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width" style="display: none;"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="rankedModes_coolestColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="true" class="m-l-6 max-width" data-test="color-select" style=""></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" type="color" centered="false" disabled="true" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="true" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="true" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="true" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="true" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"
 `;
 
 exports[`setEditor matches snapshot with no upcoming round 1`] = `
-"<div data-v-a1f8a641="" class="ipl-expanding-space color-dark">
-  <div data-v-a1f8a641="" class="ipl-expanding-space__header">
-    <div data-v-a1f8a641="" class="ipl-expanding-space__header-background" tabindex="0"></div>
-    <div data-v-a1f8a641="" class="ipl-expanding-space__title"> Edit match
+"<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:setEditor.sectionTitle
       <!--v-if-->
     </div>
-    <font-awesome-icon-stub data-v-a1f8a641="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
-    <div data-v-a1f8a641="" class="header-extra"></div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra"></div>
   </div>
-  <div data-v-a1f8a641="" class="content" style="display: none;">
+  <div data-v-31c8f953="" class="content" style="display: none;">
     <div data-test="set-editor-0" class="layout horizontal center-vertical game-editor"><span class="set-number">1</span>
       <stage-select-stub modelvalue="Blackbelly Skatepark" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Cool Colors_2" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Rainmaker" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="coolColors_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#123123" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#345345" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="false" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="false" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#123123" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #123123; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#345345" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #345345; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-1" class="layout horizontal center-vertical game-editor"><span class="set-number">2</span>
       <stage-select-stub modelvalue="MakoMart" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Tower Control" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 8px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div data-test="set-editor-2" class="layout horizontal center-vertical game-editor"><span class="set-number">3</span>
       <stage-select-stub modelvalue="Camp Triggerfish" data-test="stage-select" class="m-l-6 max-width"></stage-select-stub>
-      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub>
-      <ipl-select-stub modelvalue="Custom Color_0" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6" data-test="color-select" style="display: none;"></ipl-select-stub>
+      <mode-select-stub modelvalue="Splat Zones" data-test="mode-select" class="m-l-6 max-width"></mode-select-stub><!-- eslint-disable max-len -->
+      <ipl-select-stub modelvalue="customColor_coolColor" optiongroups="[object Object],[object Object],[object Object],[object Object]" disabled="false" class="m-l-6 max-width" data-test="color-select" style="display: none;"></ipl-select-stub><!-- eslint-enable max-len -->
       <div class="layout horizontal max-width m-l-6" style="display: none;">
         <ipl-input-stub name="team-a-color" modelvalue="#837693" type="color" centered="false" disabled="false" loading="false" theme="default" class="max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-a"></ipl-input-stub>
         <ipl-input-stub name="team-b-color" modelvalue="#206739" type="color" centered="false" disabled="false" loading="false" theme="default" class="m-l-8 max-width custom-color-select" style="flex-grow: 1;" data-test="custom-color-select-b"></ipl-input-stub>
       </div>
       <div class="color-editor-toggles layout horizontal" style="display: none;">
-        <ipl-checkbox-stub label="Custom color" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
-        <ipl-checkbox-stub label="Swap colors" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.customColorCheckbox" modelvalue="true" small="true" disabled="false" data-test="custom-color-toggle"></ipl-checkbox-stub>
+        <ipl-checkbox-stub label="translation:setEditor.swapColorsCheckbox" modelvalue="true" small="true" disabled="false" class="m-l-6" data-test="swap-colors-toggle"></ipl-checkbox-stub>
       </div>
-      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
+      <ipl-button-stub icon="times" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6 no-winner-button" data-test="set-winner-button-none"></ipl-button-stub>
       <div class="winner-selection m-l-6 layout horizontal">
-        <ipl-button-stub label="A" color="#837693" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 8px;" data-test="set-winner-button-a"></ipl-button-stub>
-        <ipl-button-stub label="B" color="#206739" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
+        <ipl-button-stub label="A" color="#837693" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #837693; border-width: 0px 0px 0px 8px;" data-test="set-winner-button-a"></ipl-button-stub>
+        <ipl-button-stub label="B" color="#206739" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" style="border-color: #206739; border-width: 0px 0px 0px 0px;" data-test="set-winner-button-b"></ipl-button-stub>
       </div>
     </div>
     <div class="layout horizontal m-t-8">
-      <ipl-button-stub label="Update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="Right-click to undo changes."></ipl-button-stub>
-      <ipl-button-stub label="Reset" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" requiresconfirmation="true" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
-      <ipl-toggle-button-stub label="Edit colors" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" data-test="update-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-button-stub label="translation:setEditor.resetButton" color="red" disabled="false" async="false" progressmessage="common:button.loading" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="true" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-l-6" data-test="reset-button"></ipl-button-stub>
+      <ipl-toggle-button-stub label="translation:setEditor.editColorsToggle" modelvalue="false" class="m-l-6" data-test="edit-colors-toggle"></ipl-toggle-button-stub>
     </div>
   </div>
 </div>"

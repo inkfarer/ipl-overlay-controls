@@ -5,18 +5,6 @@
             <score-display />
             <active-color-toggles class="m-t-8" />
             <ipl-space class="m-t-8">
-                <ipl-message
-                    v-if="showObsConfigurationChangedWarning"
-                    type="warning"
-                    class="m-b-8"
-                    data-test="obs-scenes-changed-warning"
-                    closeable
-                    @close="showObsConfigurationChangedWarning = false"
-                >
-                    The OBS scene configuration has changed.
-                    Please confirm that the configured gameplay and intermission scenes
-                    ('{{ gameplayScene }}' & '{{ intermissionScene }}') are still correct.
-                </ipl-message>
                 <ipl-button
                     v-if="isObsConnected"
                     :label="startStopLabel"
@@ -29,7 +17,7 @@
                 <div class="layout horizontal">
                     <ipl-button
                         v-if="actionInProgress"
-                        label="Cancel action"
+                        :label="$t('cancelAutomationActionButton')"
                         small
                         data-test="cancel-automation-action-button"
                         color="red"
@@ -37,7 +25,7 @@
                         @click="cancelAutomationAction"
                     />
                     <ipl-button
-                        label="Show casters"
+                        :label="$t('showCastersButton')"
                         :disabled="disableShowCasters"
                         :small="isObsConnected"
                         data-test="show-casters-button"
@@ -54,7 +42,7 @@
             <scoreboard-editor class="m-t-8" />
             <ipl-expanding-space
                 key="activeRosters"
-                title="Active Rosters"
+                :title="$t('activeRosters.sectionTitle')"
                 class="m-t-8"
             >
                 <active-roster-display class="m-t-8" />
@@ -76,8 +64,7 @@ import {
     IplSpace,
     IplExpandingSpaceGroup,
     IplExpandingSpace,
-    isBlank,
-    IplMessage
+    isBlank
 } from '@iplsplatoon/vue-components';
 import { useCasterStore } from '../store/casterStore';
 import ScoreboardEditor from './components/scoreboardEditor.vue';
@@ -88,12 +75,12 @@ import { ObsStatus } from 'types/enums/ObsStatus';
 import ActiveRosterDisplay from '../components/activeRosterDisplay.vue';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { sendMessage } from '../helpers/nodecgHelper';
+import { useTranslation } from 'i18next-vue';
 
 export default defineComponent({
     name: 'ActiveRound',
 
     components: {
-        IplMessage,
         IplExpandingSpace,
         ActiveRosterDisplay,
         NextMatchStarter,
@@ -110,6 +97,8 @@ export default defineComponent({
     },
 
     setup() {
+        const { t } = useTranslation();
+
         const casterStore = useCasterStore();
         const obsStore = useObsStore();
         const disableShowCasters = ref(false);
@@ -126,7 +115,8 @@ export default defineComponent({
         const actionInProgress = computed(() =>
             obsStore.gameAutomationData?.actionInProgress !== GameAutomationAction.NONE
             && !isBlank(obsStore.gameAutomationData?.nextTaskForAction?.name));
-        const gameplaySceneActive = computed(() => obsStore.obsData.gameplayScene === obsStore.obsData.currentScene);
+        const gameplaySceneActive = computed(() =>
+            obsStore.currentConfig?.gameplayScene === obsStore.obsState.currentScene);
 
         const now = ref(new Date().getTime());
         const setCurrentTimeInterval = setInterval(() => {
@@ -137,14 +127,9 @@ export default defineComponent({
             clearInterval(setCurrentTimeInterval);
         });
 
-        const showObsConfigurationChangedWarning = ref(false);
-        nodecg.listenFor('obsSceneConfigurationChangedAfterUpdate', () => {
-            showObsConfigurationChangedWarning.value = true;
-        });
-
         return {
             disableShowCasters,
-            isObsConnected: computed(() => obsStore.obsData.status === ObsStatus.CONNECTED),
+            isObsConnected: computed(() => obsStore.obsState.status === ObsStatus.CONNECTED),
             showCasters() {
                 casterStore.showCasters();
             },
@@ -152,14 +137,9 @@ export default defineComponent({
             actionInProgress,
             startStopLabel: computed(() => {
                 if (!actionInProgress.value) {
-                    return gameplaySceneActive.value ? 'End Game' : 'Start Game';
+                    return gameplaySceneActive.value ? t('endGameButton') : t('startGameButton');
                 } else {
-                    return {
-                        changeScene: 'Change Scene',
-                        showScoreboard: 'Show Scoreboard',
-                        showCasters: 'Show Casters',
-                        hideScoreboard: 'Hide Scoreboard'
-                    }[obsStore.gameAutomationData?.nextTaskForAction.name] ?? '???';
+                    return t('automationActionTask', { context: obsStore.gameAutomationData?.nextTaskForAction.name });
                 }
             }),
             startStopColor: computed(() => {
@@ -186,11 +166,7 @@ export default defineComponent({
             startStopDisabled: computed(() => {
                 return actionInProgress.value
                     && obsStore.gameAutomationData?.nextTaskForAction?.executionTimeMillis - 1000 < now.value;
-            }),
-
-            gameplayScene: computed(() => obsStore.obsData.gameplayScene),
-            intermissionScene: computed(() => obsStore.obsData.intermissionScene),
-            showObsConfigurationChangedWarning
+            })
         };
     }
 });

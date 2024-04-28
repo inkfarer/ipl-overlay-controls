@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
     "definitions": {
         "activeRoundTeam": {
             "type": "object",
@@ -42,11 +42,19 @@
                 "index": {
                     "type": "number"
                 },
-                "title": {
+                "colorKey": {
                     "type": "string"
                 },
-                "categoryName": {
+                "categoryKey": {
                     "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "deprecated": true
+                },
+                "categoryName": {
+                    "type": "string",
+                    "deprecated": true
                 },
                 "isCustom": {
                     "type": "boolean"
@@ -55,7 +63,7 @@
                     "type": "string"
                 }
             },
-            "required": ["index", "title", "categoryName", "isCustom", "clrNeutral"]
+            "required": ["index", "title", "colorKey", "categoryKey", "categoryName", "isCustom", "clrNeutral"]
         },
         "match": {
             "type": "object",
@@ -127,7 +135,7 @@
             "id": "AAA",
             "name": "Placeholder Team A",
             "score": 0,
-            "color": "#37FC00",
+            "color": "#F56522",
             "showLogo": true,
             "players": [
                 {
@@ -142,7 +150,7 @@
             "id": "BBB",
             "name": "Placeholder Team B",
             "score": 0,
-            "color": "#7D28FC",
+            "color": "#821CD6",
             "showLogo": true,
             "players": [
                 {
@@ -155,10 +163,12 @@
         },
         "activeColor": {
             "index": 0,
-            "title": "Green vs Grape",
+            "title": "Orange vs Purple",
             "categoryName": "Ranked Modes",
             "isCustom": false,
-            "clrNeutral": "#F4067E"
+            "clrNeutral": "#CDFF45",
+            "categoryKey": "rankedModes",
+            "colorKey": "orangePurple"
         },
         "match": {
             "id": "00000",
@@ -171,11 +181,13 @@
                 "winner": "none",
                 "color": {
                     "index": 0,
-                    "title": "Green vs Grape",
-                    "clrA": "#37FC00",
-                    "clrB": "#7D28FC",
-                    "clrNeutral": "#F4067E",
+                    "title": "Orange vs Purple",
+                    "colorKey": "orangePurple",
+                    "clrA": "#F56522",
+                    "clrB": "#821CD6",
+                    "clrNeutral": "#CDFF45",
                     "categoryName": "Ranked Modes",
+                    "categoryKey": "rankedModes",
                     "colorsSwapped": false,
                     "isCustom": false
                 },
@@ -184,31 +196,13 @@
             },
             {
                 "winner": "none",
-                "color": {
-                    "index": 1,
-                    "title": "Green vs Magenta",
-                    "clrA": "#04D976",
-                    "clrB": "#D600AB",
-                    "clrNeutral": "#D2E500",
-                    "categoryName": "Ranked Modes",
-                    "colorsSwapped": false,
-                    "isCustom": false
-                },
+                "color": null,
                 "stage": "Inkblot Art Academy",
                 "mode": "Tower Control"
             },
             {
                 "winner": "none",
-                "color": {
-                    "index": 2,
-                    "title": "Turquoise vs Orange",
-                    "clrA": "#10E38F",
-                    "clrB": "#FB7B08",
-                    "clrNeutral": "#6912CD",
-                    "categoryName": "Ranked Modes",
-                    "colorsSwapped": false,
-                    "isCustom": false
-                },
+                "color": null,
                 "stage": "Wahoo World",
                 "mode": "Rainmaker"
             }

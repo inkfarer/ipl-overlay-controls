@@ -1,17 +1,17 @@
 <template>
     <ipl-space>
-        <div class="title">Last.fm</div>
+        <div class="title">{{ $t('sectionName.lastfm') }}</div>
         <ipl-input
             v-model="settings.username"
             name="username"
-            label="Username"
+            :label="$t('lastfm.usernameInput')"
             @focuschange="handleFocusEvent"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             class="m-t-8"
             :color="buttonColor"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
             @click="handleUpdate"
             @right-click="undoChanges"
@@ -26,7 +26,6 @@ import { useSettingsStore } from '../../store/settingsStore';
 import isEqual from 'lodash/isEqual';
 import { LastFmSettings } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 
 export default defineComponent({
     name: 'LastfmSettings',
@@ -50,7 +49,6 @@ export default defineComponent({
         }, { deep: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             focused: isFocused,
             handleFocusEvent(event: boolean) {
                 isFocused.value = event;

@@ -60,12 +60,12 @@ exports[`AutomationActionService getAutomationTasks has expected timings for gam
   {
     "action": [Function],
     "name": "showScoreboard",
-    "timeout": 11500,
+    "timeout": 14000,
   },
   {
     "action": [Function],
     "name": "showCasters",
-    "timeout": 12000,
+    "timeout": 10000,
   },
 ]
 `;

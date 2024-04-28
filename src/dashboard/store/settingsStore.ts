@@ -4,6 +4,7 @@ import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { defineStore } from 'pinia';
 import { Locale } from 'types/enums/Locale';
 import { perGameData } from '../../helpers/gameData/gameData';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
@@ -53,6 +54,9 @@ export const useSettingsStore = defineStore('settings', {
         },
         setLocale(newValue: Locale): Promise<void> {
             return nodecg.sendMessage('setLocale', newValue);
+        },
+        setInterfaceLocale(newValue: `${InterfaceLocale}`) {
+            runtimeConfig.value.interfaceLocale = newValue;
         }
     }
 });

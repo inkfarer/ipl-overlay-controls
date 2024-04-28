@@ -7,7 +7,7 @@ import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useObsStore } from '../../store/obsStore';
 import { GameAutomationAction } from 'types/enums/GameAutomationAction';
 import { UnknownModule } from '../../../helpers/__mocks__/module';
-import { IplButton, IplMessage } from '@iplsplatoon/vue-components';
+import { IplButton } from '@iplsplatoon/vue-components';
 
 describe('MatchManager', () => {
     let pinia: TestingPinia;
@@ -34,7 +34,7 @@ describe('MatchManager', () => {
 
         useObsStore().$state = {
             // @ts-ignore
-            obsData: {
+            obsState: {
                 status: ObsStatus.CONNECTED
             }
         };
@@ -42,7 +42,7 @@ describe('MatchManager', () => {
 
     it.each(Object.values(ObsStatus))('matches snapshot if obs status is %s', status => {
         const obsStore = useObsStore();
-        obsStore.obsData.status = status;
+        obsStore.obsState.status = status;
         const wrapper = mount(MatchManager);
 
         expect(wrapper.html()).toMatchSnapshot();
@@ -108,15 +108,6 @@ describe('MatchManager', () => {
             expect(obsStore.fastForwardToNextGameAutomationTask).toHaveBeenCalled();
         });
 
-        it.each(['changeScene', 'showScoreboard', 'hideScoreboard', 'showCasters', 'unknown task'])('has expected button color and label when task name is %s', async (taskName) => {
-            useObsStore().gameAutomationData.nextTaskForAction.name = taskName;
-            await wrapper.vm.$nextTick();
-            const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
-
-            expect((button.vm as unknown as UnknownModule).color).toEqual('blue');
-            expect((button.vm as unknown as UnknownModule).label).toMatchSnapshot();
-        });
-
         it('shows button to cancel action', () => {
             expect(wrapper.getComponent('[data-test="cancel-automation-action-button"]').isVisible()).toEqual(true);
         });
@@ -139,8 +130,9 @@ describe('MatchManager', () => {
             obsStore.gameAutomationData = {
                 actionInProgress: GameAutomationAction.NONE
             };
-            obsStore.obsData.currentScene = 'Gameplay Scene';
-            obsStore.obsData.gameplayScene = 'Gameplay Scene';
+            obsStore.obsState.currentScene = 'Gameplay Scene';
+            // @ts-ignore
+            obsStore.currentConfig = { gameplayScene: 'Gameplay Scene' };
             wrapper = mount(MatchManager);
         });
 
@@ -157,7 +149,7 @@ describe('MatchManager', () => {
             const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('red');
-            expect((button.vm as unknown as UnknownModule).label).toEqual('End Game');
+            expect((button.vm as unknown as UnknownModule).label).toEqual('translation:endGameButton');
         });
     });
 
@@ -170,8 +162,9 @@ describe('MatchManager', () => {
             obsStore.gameAutomationData = {
                 actionInProgress: GameAutomationAction.NONE
             };
-            obsStore.obsData.currentScene = 'another scene';
-            obsStore.obsData.gameplayScene = 'Gameplay Scene';
+            obsStore.obsState.currentScene = 'another scene';
+            // @ts-ignore
+            obsStore.currentConfig = { gameplayScene: 'Gameplay Scene' };
             wrapper = mount(MatchManager);
         });
 
@@ -188,7 +181,7 @@ describe('MatchManager', () => {
             const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
             expect((button.vm as unknown as UnknownModule).color).toEqual('green');
-            expect((button.vm as unknown as UnknownModule).label).toEqual('Start Game');
+            expect((button.vm as unknown as UnknownModule).label).toEqual('translation:startGameButton');
         });
     });
 
@@ -216,40 +209,5 @@ describe('MatchManager', () => {
         const button = wrapper.getComponent<typeof IplButton>('[data-test="start-stop-game-button"]');
 
         expect((button.vm as unknown as UnknownModule).disabled).toEqual(false);
-    });
-
-    it('does not show scene configuration change warning by default', () => {
-        const wrapper = mount(MatchManager);
-
-        expect(wrapper.findComponent('[data-test="obs-scenes-changed-warning"]').exists()).toEqual(false);
-    });
-
-    it('shows warning if obs scene configuration is changed', async () => {
-        const obsStore = useObsStore();
-        obsStore.obsData.gameplayScene = 'Gameplay Scene';
-        obsStore.obsData.intermissionScene = 'Intermission Scene';
-        const wrapper = mount(MatchManager);
-
-        messageListeners.obsSceneConfigurationChangedAfterUpdate();
-        await wrapper.vm.$nextTick();
-
-        const warning = wrapper.findComponent('[data-test="obs-scenes-changed-warning"]');
-        expect(warning.exists()).toEqual(true);
-        expect(warning.text()).toEqual('The OBS scene configuration has changed. Please confirm that the configured gameplay and intermission scenes (\'Gameplay Scene\' & \'Intermission Scene\') are still correct.');
-    });
-
-    it('allows to close obs scene configuration warning', async () => {
-        const wrapper = mount(MatchManager);
-
-        messageListeners.obsSceneConfigurationChangedAfterUpdate();
-        await wrapper.vm.$nextTick();
-
-        const warning = wrapper.findComponent<typeof IplMessage>('[data-test="obs-scenes-changed-warning"]');
-        expect(warning.exists()).toEqual(true);
-
-        warning.vm.$emit('close');
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.findComponent('[data-test="obs-scenes-changed-warning"]').exists()).toEqual(false);
     });
 });

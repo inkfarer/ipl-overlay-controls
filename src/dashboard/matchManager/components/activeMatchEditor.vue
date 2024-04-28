@@ -1,7 +1,7 @@
 <template>
     <ipl-expanding-space
         key="teams-rounds"
-        title="Active Match"
+        :title="$t('activeMatchEditor.sectionTitle')"
         data-test="active-match-editor"
     >
         <ipl-message
@@ -9,24 +9,30 @@
             type="info"
             data-test="match-progress-message"
         >
-            {{ selectedMatch.meta.isCompleted
-                ? `'${selectedMatch.meta.name}' is already completed.`
-                : `'${selectedMatch.meta.name}' already has saved progress.` }}
-            {{ `(${addDots(selectedMatch.teamA.name)} vs ${addDots(selectedMatch.teamB.name)})` }}
+            {{ 
+                $t(selectedMatch.meta.isCompleted 
+                       ? 'activeMatchEditor.selectedMatchCompletedMessage'
+                       : 'activeMatchEditor.selectedMatchHasProgressMessage', 
+                   {
+                       matchName: selectedMatch.meta.name,
+                       teamA: addDots(selectedMatch.teamA.name),
+                       teamB: addDots(selectedMatch.teamB.name)
+                   }) 
+            }}
         </ipl-message>
 
         <div class="layout horizontal">
             <div class="layout vertical center-horizontal max-width">
                 <ipl-select
                     v-model="teamAId"
-                    label="Team A"
+                    :label="$t('activeMatchEditor.teamASelect')"
                     data-test="team-a-selector"
                     :options="teams"
                 />
                 <ipl-checkbox
                     v-model="teamAImageShown"
                     class="m-t-6"
-                    label="Show image"
+                    :label="$t('activeMatchEditor.showTeamImageCheckbox')"
                     data-test="team-a-image-toggle"
                     small
                 />
@@ -34,14 +40,14 @@
             <div class="layout vertical center-horizontal max-width m-l-8">
                 <ipl-select
                     v-model="teamBId"
-                    label="Team B"
+                    :label="$t('activeMatchEditor.teamBSelect')"
                     data-test="team-b-selector"
                     :options="teams"
                 />
                 <ipl-checkbox
                     v-model="teamBImageShown"
                     class="m-t-6"
-                    label="Show image"
+                    :label="$t('activeMatchEditor.showTeamImageCheckbox')"
                     data-test="team-b-image-toggle"
                     small
                 />
@@ -52,20 +58,20 @@
             class="m-t-6"
             :options="matches"
             data-test="match-selector"
-            label="Match"
+            :label="$t('activeMatchEditor.matchSelect')"
         />
         <ipl-input
             v-model="matchName"
             name="matchName"
-            label="Match Name"
+            :label="$t('activeMatchEditor.matchNameInput')"
             class="m-t-6"
         />
         <ipl-button
             class="m-t-8"
-            label="Update"
+            :label="$t('common:button.update')"
             :color="isChanged ? 'red' : 'blue'"
             data-test="update-match-button"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             @click="updateRound"
             @right-click="undoChanges"
         />
@@ -88,7 +94,7 @@ import {
     notBlank,
     validator
 } from '@iplsplatoon/vue-components';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { useTranslation } from 'i18next-vue';
 
 export default defineComponent({
     name: 'ActiveRoundEditor',
@@ -96,6 +102,8 @@ export default defineComponent({
     components: { IplExpandingSpace, IplMessage, IplButton, IplCheckbox, IplSelect, IplInput },
 
     setup() {
+        const { t } = useTranslation();
+
         const tournamentDataStore = useTournamentDataStore();
         const activeRoundStore = useActiveRoundStore();
 
@@ -162,7 +170,6 @@ export default defineComponent({
         });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             teams: computed(() => tournamentDataStore.tournamentData.teams.map(team => ({
                 value: team.id,
                 name: addDots(team.name)
@@ -192,7 +199,11 @@ export default defineComponent({
             }),
             matches: computed(() => Object.entries(tournamentDataStore.matchStore).map(([ key, value ]) => {
                 const name = duplicateMatchNames.value.has(value.meta.name)
-                    ? `${value.meta.name} (${value.teamA.name} vs ${value.teamB.name})`
+                    ? t('activeMatchEditor.duplicateMatchNameOption', {
+                        matchName: value.meta.name,
+                        teamA: value.teamA.name,
+                        teamB: value.teamB.name
+                    })
                     : value.meta.name;
 
                 return ({ value: key, name });

@@ -18,13 +18,13 @@ describe('ObsSocketSettings', () => {
         pinia = createTestingPinia();
 
         const obsStore = useObsStore();
-        obsStore.obsData = { status: ObsStatus.CONNECTED, enabled: true };
+        obsStore.obsState = { status: ObsStatus.CONNECTED, enabled: true };
         obsStore.obsCredentials = { address: 'localhost:4444', password: 'pwd' };
     });
 
     it.each(Object.values(ObsStatus))('matches snapshot when status is %s', status => {
         const store = useObsStore();
-        store.obsData.status = status;
+        store.obsState.status = status;
         const wrapper = mount(ObsSocketSettings, {
             global: {
                 plugins: [pinia]
@@ -36,7 +36,7 @@ describe('ObsSocketSettings', () => {
 
     it('matches snapshot when obs socket is disabled', () => {
         const store = useObsStore();
-        store.obsData.enabled = false;
+        store.obsState.enabled = false;
         const wrapper = mount(ObsSocketSettings, {
             global: {
                 plugins: [pinia]

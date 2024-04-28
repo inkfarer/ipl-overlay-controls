@@ -326,3 +326,112 @@ exports[`StageSelect adds expected options to select when language is EU_FR 1`] 
   },
 ]
 `;
+
+exports[`StageSelect adds expected options to select when language is JA 1`] = `
+[
+  {
+    "name": "アジフライスタジアム",
+    "value": "Goby Arena",
+  },
+  {
+    "name": "アロワナモール",
+    "value": "Arowana Mall",
+  },
+  {
+    "name": "アンチョビットゲームズ",
+    "value": "Ancho-V Games",
+  },
+  {
+    "name": "エンガワ河川敷",
+    "value": "Snapper Canal",
+  },
+  {
+    "name": "カウンターピック",
+    "value": "Counterpick",
+  },
+  {
+    "name": "ガンガゼ野外音楽堂",
+    "value": "Starfish Mainstage",
+  },
+  {
+    "name": "コンブトラック",
+    "value": "Humpback Pump Track",
+  },
+  {
+    "name": "ザトウマーケット",
+    "value": "MakoMart",
+  },
+  {
+    "name": "ショッツル鉱山",
+    "value": "Piranha Pit",
+  },
+  {
+    "name": "ステージ未選択",
+    "value": "Unknown Stage",
+  },
+  {
+    "name": "スメーシーワールド",
+    "value": "Wahoo World",
+  },
+  {
+    "name": "タチウオパーキング",
+    "value": "Moray Towers",
+  },
+  {
+    "name": "チョウザメ造船",
+    "value": "Sturgeon Shipyard",
+  },
+  {
+    "name": "デボン海洋博物館",
+    "value": "Shellendorf Institute",
+  },
+  {
+    "name": "ハコフグ倉庫",
+    "value": "Walleye Warehouse",
+  },
+  {
+    "name": "バッテラストリート",
+    "value": "The Reef",
+  },
+  {
+    "name": "フジツボスポーツクラブ",
+    "value": "Musselforge Fitness",
+  },
+  {
+    "name": "ホッケふ頭",
+    "value": "Port Mackerel",
+  },
+  {
+    "name": "ホテルニューオートロ",
+    "value": "New Albacore Hotel",
+  },
+  {
+    "name": "マンタマリア号",
+    "value": "Manta Maria",
+  },
+  {
+    "name": "ミステリーゾーン",
+    "value": "Shifty Station",
+  },
+  {
+    "name": "ムツゴ楼",
+    "value": "Skipper Pavilion",
+  },
+  {
+    "name": "モズク農園",
+    "value": "Kelp Dome",
+  },
+  {
+    "name": "モンガラキャンプ場",
+    "value": "Camp Triggerfish",
+  },
+  {
+    "name": "海女美術大学",
+    "value": "Inkblot Art Academy",
+  },
+  {
+    "name": "Ｂバスパーク",
+    "value": "Blackbelly Skatepark",
+  },
+]
+`;

@@ -7,10 +7,12 @@ export interface ActiveRoundGame {
     color?: {
         index: number;
         title: string;
+        colorKey: string;
         clrA: string;
         clrB: string;
         clrNeutral: string;
         categoryName: string;
+        categoryKey: string;
         colorsSwapped: boolean;
         isCustom: boolean;
     };

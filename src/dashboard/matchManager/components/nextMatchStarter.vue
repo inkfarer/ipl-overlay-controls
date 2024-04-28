@@ -1,18 +1,18 @@
 <template>
     <ipl-expanding-space
         key="next-round"
-        title="Begin Next Match"
+        :title="$t('nextMatchStarter.sectionTitle')"
     >
         <ipl-data-row
-            label="Team A"
+            :label="$t('nextMatchStarter.teamADisplayLabel')"
             :value="roundData.teamAName"
         />
         <ipl-data-row
-            label="Team B"
+            :label="$t('nextMatchStarter.teamBDisplayLabel')"
             :value="roundData.teamBName"
         />
         <ipl-data-row
-            label="Round"
+            :label="$t('nextMatchStarter.roundNameDisplayLabel')"
             :value="roundData.name"
         />
         <begin-next-match
@@ -26,7 +26,7 @@ import { computed, defineComponent } from 'vue';
 import { IplDataRow, IplExpandingSpace } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { addDots } from '../../../helpers/stringHelper';
-import BeginNextMatch from '../../components/beginNextMatch.vue';
+import BeginNextMatch from './beginNextMatch.vue';
 
 export default defineComponent({
     name: 'NextMatchStarter',

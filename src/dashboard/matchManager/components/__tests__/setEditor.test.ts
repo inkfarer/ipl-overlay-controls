@@ -9,6 +9,7 @@ import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { useSettingsStore } from '../../../store/settingsStore';
 import { Locale } from 'types/enums/Locale';
 import { IplButton, IplCheckbox, IplInput, IplSelect } from '@iplsplatoon/vue-components';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 
 describe('setEditor', () => {
     let pinia: TestingPinia;
@@ -47,8 +48,10 @@ describe('setEditor', () => {
                 },
                 activeColor: {
                     categoryName: 'Ranked Modes',
+                    categoryKey: 'rankedModes',
                     index: 0,
                     title: 'coolest color',
+                    colorKey: 'coolestColor',
                     isCustom: false,
                     clrNeutral: '#00AAA0',
                 },
@@ -66,10 +69,12 @@ describe('setEditor', () => {
                         color: {
                             index: 2,
                             title: 'Cool Color',
+                            colorKey: 'coolColor',
                             clrA: '#123123',
                             clrB: '#345345',
                             clrNeutral: '#FF00FF',
                             categoryName: 'Cool Colors',
+                            categoryKey: 'coolColors',
                             isCustom: false,
                             colorsSwapped: false
                         }
@@ -81,10 +86,12 @@ describe('setEditor', () => {
                         color: {
                             index: 0,
                             title: 'Cool Color',
+                            colorKey: 'coolColor',
                             clrA: '#837693',
                             clrB: '#206739',
                             clrNeutral: '#FF8563',
                             categoryName: 'Custom Color',
+                            categoryKey: 'customColor',
                             isCustom: true,
                             colorsSwapped: true
                         }
@@ -113,7 +120,8 @@ describe('setEditor', () => {
         useSettingsStore().$state = {
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2,
-                locale: Locale.EN
+                locale: Locale.EN,
+                interfaceLocale: InterfaceLocale.EN
             }
         };
     });
@@ -138,10 +146,12 @@ describe('setEditor', () => {
                 color: {
                     index: 2,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#123123',
                     clrB: '#345345',
                     clrNeutral: '#00BB00',
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     isCustom: false,
                     colorsSwapped: false
                 }
@@ -153,10 +163,12 @@ describe('setEditor', () => {
                 color: {
                     index: 0,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#00EE00',
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     isCustom: true,
                     colorsSwapped: true
                 }
@@ -168,10 +180,12 @@ describe('setEditor', () => {
                 color: {
                     index: 0,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#00FFF0',
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     isCustom: true,
                     colorsSwapped: true
                 }
@@ -230,6 +244,7 @@ describe('setEditor', () => {
             {
                 color: {
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     clrA: '#123123',
                     clrB: '#345345',
                     clrNeutral: '#FF00FF',
@@ -237,6 +252,7 @@ describe('setEditor', () => {
                     index: 2,
                     isCustom: false,
                     title: 'Cool Color',
+                    colorKey: 'coolColor'
                 },
                 mode: 'Rainmaker',
                 stage: 'Moray Towers',
@@ -245,6 +261,7 @@ describe('setEditor', () => {
             {
                 color: {
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#FF8563',
@@ -252,6 +269,7 @@ describe('setEditor', () => {
                     index: 0,
                     isCustom: true,
                     title: 'Cool Color',
+                    colorKey: 'coolColor'
                 },
                 mode: 'Tower Control',
                 stage: 'MakoMart',
@@ -393,17 +411,19 @@ describe('setEditor', () => {
         });
 
         wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] [data-test="color-select"]')
-            .vm.$emit('update:modelValue', 'Ranked Modes_1');
+            .vm.$emit('update:modelValue', 'rankedModes_greenMagenta');
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
             categoryName: 'Ranked Modes',
+            categoryKey: 'rankedModes',
             clrA: '#04D976',
             clrB: '#D600AB',
             clrNeutral: '#D2E500',
             colorsSwapped: false,
             index: 1,
             isCustom: false,
-            title: 'Green vs Magenta'
+            title: 'Green vs Magenta',
+            colorKey: 'greenMagenta'
         });
     });
 
@@ -421,13 +441,15 @@ describe('setEditor', () => {
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
             categoryName: 'Cool Colors',
+            categoryKey: 'coolColors',
             clrA: '#234234',
             clrB: '#567567',
             clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 2,
             isCustom: false,
-            title: 'Cool Color'
+            title: 'Cool Color',
+            colorKey: 'coolColor'
         });
     });
 
@@ -443,13 +465,15 @@ describe('setEditor', () => {
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
             categoryName: 'Custom Color',
+            categoryKey: 'customColor',
             clrA: '#123123',
             clrB: '#345345',
             clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 0,
             isCustom: true,
-            title: 'Custom Color'
+            title: 'Custom Color',
+            colorKey: 'customColor'
         });
     });
 
@@ -465,13 +489,15 @@ describe('setEditor', () => {
 
         expect((wrapper.vm as unknown as { games: ActiveRoundGame[] }).games[0].color).toEqual({
             categoryName: 'Custom Color',
+            categoryKey: 'customColor',
             clrA: '#123123',
             clrB: '#345345',
             clrNeutral: '#FF00FF',
             colorsSwapped: false,
             index: 0,
             isCustom: false,
-            title: 'Custom Color'
+            title: 'Custom Color',
+            colorKey: 'customColor'
         });
     });
 
@@ -503,7 +529,7 @@ describe('setEditor', () => {
         wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] > [data-test="mode-select"]')
             .vm.$emit('update:modelValue', 'Splat Zones');
         wrapper.getComponent<typeof IplSelect>('[data-test="set-editor-0"] [data-test="color-select"]')
-            .vm.$emit('update:modelValue', 'Ranked Modes_2');
+            .vm.$emit('update:modelValue', 'rankedModes_turquoiseOrange');
         store.activeRound.games = [
             {
                 winner: GameWinner.NO_WINNER,
@@ -512,10 +538,12 @@ describe('setEditor', () => {
                 color: {
                     index: 2,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#123123',
                     clrB: '#345345',
                     clrNeutral: '#FF00FF',
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     isCustom: false,
                     colorsSwapped: false
                 }
@@ -527,10 +555,12 @@ describe('setEditor', () => {
                 color: {
                     index: 0,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#FF8563',
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     isCustom: true,
                     colorsSwapped: true
                 }
@@ -550,10 +580,12 @@ describe('setEditor', () => {
             color: {
                 index: 2,
                 title: 'Turquoise vs Orange',
+                colorKey: 'turquoiseOrange',
                 clrA: '#10E38F',
                 clrB: '#FB7B08',
                 clrNeutral: '#6912CD',
                 categoryName: 'Ranked Modes',
+                categoryKey: 'rankedModes',
                 isCustom: false,
                 colorsSwapped: false
             }
@@ -576,10 +608,12 @@ describe('setEditor', () => {
                 color: {
                     index: 2,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#123123',
                     clrB: '#345345',
                     clrNeutral: '#00FF00',
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     isCustom: false,
                     colorsSwapped: false
                 }
@@ -591,10 +625,12 @@ describe('setEditor', () => {
                 color: {
                     index: 0,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#00AA00',
                     categoryName: 'Custom Color',
+                    categoryKey: 'customColor',
                     isCustom: true,
                     colorsSwapped: true
                 }
@@ -626,10 +662,12 @@ describe('setEditor', () => {
                 color: {
                     index: 2,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#123123',
                     clrB: '#345345',
                     clrNeutral: '#00FF00',
                     categoryName: 'Cool Colors',
+                    categoryKey: 'coolColors',
                     isCustom: false,
                     colorsSwapped: false
                 }
@@ -641,10 +679,12 @@ describe('setEditor', () => {
                 color: {
                     index: 0,
                     title: 'Cool Color',
+                    colorKey: 'coolColor',
                     clrA: '#837693',
                     clrB: '#206739',
                     clrNeutral: '#00AA00',
                     categoryName: 'Custom Color',
+                    categoryKey: 'coolColors',
                     isCustom: true,
                     colorsSwapped: true
                 }

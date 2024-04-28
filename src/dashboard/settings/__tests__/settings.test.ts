@@ -11,8 +11,7 @@ describe('Settings', () => {
         IplErrorDisplay: true,
         LastfmSettings: true,
         RadiaSettings: true,
-        ObsSocketSettings: true,
-        ObsDataPicker: true,
+        ObsSettings: true,
         RuntimeConfig: true,
         FontAwesomeIcon: true
     };
@@ -22,13 +21,13 @@ describe('Settings', () => {
 
         useObsStore().$state = {
             // @ts-ignore
-            obsData: {
+            obsState: {
                 enabled: true
             }
         };
     });
 
-    it.each(['lastfm', 'radia', 'general', 'obs-socket'])('matches snapshot when section %s is selected', async (section) => {
+    it.each(['lastfm', 'radia', 'general', 'obs'])('matches snapshot when section %s is selected', async (section) => {
         const wrapper = mount(Settings, {
             global: {
                 plugins: [pinia]
@@ -36,21 +35,6 @@ describe('Settings', () => {
         });
 
         wrapper.getComponent<typeof IplSpace>(`[data-test="section-selector_${section}"]`).vm.$emit('click');
-        await wrapper.vm.$nextTick();
-
-        expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    it('matches snapshot when OBS socket is disabled', async () => {
-        const obsStore = useObsStore();
-        obsStore.obsData.enabled = false;
-        const wrapper = mount(Settings, {
-            global: {
-                plugins: [pinia]
-            }
-        });
-
-        wrapper.getComponent<typeof IplSpace>('[data-test="section-selector_obs-socket"]').vm.$emit('click');
         await wrapper.vm.$nextTick();
 
         expect(wrapper.html()).toMatchSnapshot();

@@ -27,7 +27,7 @@ describe('roundStore', () => {
                 id: 'aaa'
             }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Round \'aaa\' already exists.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:roundStore.roundAlreadyExists'));
         });
 
         it('creates new round', () => {
@@ -126,7 +126,7 @@ describe('roundStore', () => {
                 id: 'aaaggg'
             }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Could not find round \'aaaggg\''));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:roundStore.roundNotFound'));
         });
 
         it('returns an error if no round id is given', () => {
@@ -135,7 +135,7 @@ describe('roundStore', () => {
 
             messageListeners.updateRound({}, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('No round ID given.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:invalidArgumentsError'));
         });
 
         it('updates existing rounds', () => {
@@ -240,7 +240,7 @@ describe('roundStore', () => {
 
             messageListeners.removeRound({ roundId: 'gggggg' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Cannot delete the last round.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:roundStore.cannotDeleteLastRound'));
         });
 
         it('acknowledges with error if the round cannot be found', () => {
@@ -253,7 +253,7 @@ describe('roundStore', () => {
 
             messageListeners.removeRound({ roundId: 'gggggg' }, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('Couldn\'t find round with id \'gggggg\'.'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:roundStore.roundNotFound'));
         });
 
         it('sets next round to first round if active round is being deleted', () => {

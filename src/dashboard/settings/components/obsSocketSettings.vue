@@ -1,11 +1,11 @@
 <template>
     <div>
         <ipl-space>
-            <div class="title">OBS Socket</div>
+            <div class="title">{{ $t('sectionName.obs') }}</div>
             <ipl-toggle
                 v-model="socketEnabled"
-                true-label="Enable"
-                false-label="Disable"
+                :true-label="$t('obs.toggleEnable')"
+                :false-label="$t('obs.toggleDisable')"
             />
         </ipl-space>
         <ipl-space
@@ -15,25 +15,25 @@
             <ipl-input
                 v-model="socketUrl"
                 name="socketUrl"
-                label="Socket address"
+                :label="$t('obs.socketUrlInput')"
             />
             <ipl-input
                 v-model="socketPassword"
                 name="password"
-                label="Password (Optional)"
+                :label="$t('obs.passwordInput')"
                 type="password"
                 class="m-t-4"
             />
-            <ipl-button
-                label="Connect"
+            <iploc-button
+                :label="$t('obs.connectButton')"
                 class="m-t-8"
                 :color="isChanged ? 'red' : 'blue'"
                 :disabled="!allValid"
                 data-test="socket-connect-button"
                 async
-                progress-message="Connecting..."
-                success-message="Connected!"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :progress-message="$t('obs.loadingConnectButton')"
+                :success-message="$t('obs.connectButtonSuccess')"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="connect"
                 @right-click="undoChanges"
             />
@@ -49,7 +49,7 @@
             type="info"
             class="m-t-8"
         >
-            OBS websocket is disabled.
+            {{ $t('obs.socketDisabledMessage') }}
         </ipl-message>
     </div>
 </template>
@@ -59,7 +59,6 @@ import { defineComponent } from 'vue';
 import {
     IplSpace,
     IplInput,
-    IplButton,
     validator,
     notBlank,
     provideValidators,
@@ -68,22 +67,23 @@ import {
 } from '@iplsplatoon/vue-components';
 import { computed, ref, watch } from 'vue';
 import { useObsStore } from '../../store/obsStore';
-import { ObsStatus, ObsStatusHelper } from 'types/enums/ObsStatus';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { useErrorHandlerStore } from '../../store/errorHandlerStore';
+import { useTranslation } from 'i18next-vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'ObsSocketSettings',
 
-    components: { IplMessage, IplToggle, IplButton, IplSpace, IplInput },
+    components: { IplMessage, IplToggle, IplocButton, IplSpace, IplInput },
 
     setup() {
+        const { t } = useTranslation();
         const obsStore = useObsStore();
         const errorHandlerStore = useErrorHandlerStore();
 
         const socketEnabled = computed({
             get() {
-                return obsStore.obsData.enabled;
+                return obsStore.obsState.enabled;
             },
             async set(value: boolean): Promise<void> {
                 try {
@@ -109,7 +109,6 @@ export default defineComponent({
         });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             socketEnabled,
             socketUrl,
             socketPassword,
@@ -117,8 +116,8 @@ export default defineComponent({
                 socketUrl.value !== obsStore.obsCredentials.address
                 || socketPassword.value !== obsStore.obsCredentials.password),
             allValid,
-            statusText: computed(() => ObsStatusHelper.toPrettyString(obsStore.obsData.status as ObsStatus)),
-            status: computed(() => obsStore.obsData.status),
+            statusText: computed(() => t(`common:obsStatus.${obsStore.obsState.status}`)),
+            status: computed(() => obsStore.obsState.status),
             connect() {
                 return obsStore.connect({ address: socketUrl.value, password: socketPassword.value });
             },

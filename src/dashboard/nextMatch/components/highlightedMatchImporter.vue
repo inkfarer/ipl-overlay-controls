@@ -2,12 +2,12 @@
     <ipl-space>
         <ipl-multi-select
             v-model="selectedMatchOptions"
-            :label="matchSelectLabel"
+            :label="$t('highlightedMatches.matchSourceSelect', { context: tournamentDataSource })"
             :options="matchSelectOptions"
             data-test="match-selector"
         />
-        <ipl-button
-            label="Import"
+        <iploc-button
+            :label="$t('highlightedMatches.importButton')"
             class="m-t-8"
             async
             :disabled="importDisabled"
@@ -19,33 +19,27 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, Ref } from 'vue';
-import { IplButton, IplMultiSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplMultiSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import { SelectOptions } from '../../types/select';
 import { BracketType } from 'types/enums/bracketType';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import { useTranslation } from 'i18next-vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'HighlightedMatchImporter',
 
-    components: { IplSpace, IplButton, IplMultiSelect },
+    components: { IplSpace, IplocButton, IplMultiSelect },
 
     setup() {
+        const { t } = useTranslation();
         const store = useHighlightedMatchStore();
         const tournamentDataSource = computed(() => store.tournamentData.meta.source as TournamentDataSource);
         const selectedMatchOptions: Ref<SelectOptions> = ref([]);
 
         return {
-            matchSelectLabel: computed(() => {
-                switch (tournamentDataSource.value) {
-                    case TournamentDataSource.BATTLEFY:
-                        return 'Bracket';
-                    case TournamentDataSource.SMASHGG:
-                        return 'Stream';
-                    default:
-                        return '';
-                }
-            }),
+            tournamentDataSource,
             matchSelectOptions: computed(() => {
                 switch (tournamentDataSource.value) {
                     case TournamentDataSource.BATTLEFY:
@@ -59,7 +53,10 @@ export default defineComponent({
                                     value: stage.id,
                                     name: stage.name
                                 }))),
-                            { name: 'All Brackets', value: 'all' }
+                            {
+                                name: t('highlightedMatches.allBattlefyBracketsOption'),
+                                value: 'all'
+                            }
                         ];
                     case TournamentDataSource.SMASHGG:
                         return [
@@ -67,7 +64,10 @@ export default defineComponent({
                                 value: stream.id.toString(),
                                 name: stream.streamName
                             }))),
-                            { name: 'All Streams', value: 'all' }
+                            {
+                                name: t('highlightedMatches.allStartggStreamsOption'),
+                                value: 'all'
+                            }
                         ];
                     default:
                         return [];

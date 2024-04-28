@@ -141,8 +141,8 @@ describe('battlefyDataMapper', () => {
                         completionTime: '2020-05-30',
                         id: '354364141',
                         match: 50,
-                        name: 'Round 1 Match 50',
-                        shortName: 'Swiss Stage Round 1',
+                        name: 'translation:battlefyClient.matchName',
+                        shortName: 'translation:battlefyClient.shortMatchName',
                         round: 1,
                         stageName: 'Swiss Stage',
                         playType: PlayType.PLAY_ALL
@@ -180,8 +180,8 @@ describe('battlefyDataMapper', () => {
                     meta: {
                         id: '354364141',
                         match: 23,
-                        name: 'Round 3 Match C23',
-                        shortName: 'Elimination Stage Round 3',
+                        name: 'translation:battlefyClient.matchName',
+                        shortName: 'translation:battlefyClient.shortMatchName',
                         round: 3,
                         stageName: 'Elimination Stage',
                         playType: PlayType.BEST_OF

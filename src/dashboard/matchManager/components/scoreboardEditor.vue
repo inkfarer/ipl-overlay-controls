@@ -1,13 +1,13 @@
 <template>
     <ipl-expanding-space
         key="scoreboard"
-        title="Scoreboard"
+        :title="$t('scoreboardEditor.sectionTitle')"
     >
         <ipl-data-row
-            label="Flavor Text"
+            :label="$t('scoreboardEditor.flavorTextDisplayLabel')"
             :value="flavorText"
         />
-        <ipl-toggle
+        <iploc-toggle
             v-model="scoreboardData.isVisible"
             class="m-t-8"
             data-test="scoreboard-visible-toggle"
@@ -18,15 +18,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
-import { IplToggle, IplExpandingSpace, IplDataRow } from '@iplsplatoon/vue-components';
+import { IplExpandingSpace, IplDataRow } from '@iplsplatoon/vue-components';
 import { useScoreboardStore } from '../../store/scoreboardStore';
 import { ScoreboardData } from 'schemas';
 import cloneDeep from 'lodash/cloneDeep';
+import IplocToggle from '../../components/IplocToggle.vue';
 
 export default defineComponent({
     name: 'ScoreboardEditor',
 
-    components: { IplDataRow, IplToggle, IplExpandingSpace },
+    components: { IplDataRow, IplExpandingSpace, IplocToggle },
 
     setup() {
         const store = useScoreboardStore();

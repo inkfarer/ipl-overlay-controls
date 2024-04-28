@@ -20,7 +20,7 @@ describe('AutomationActionService', () => {
         jest.restoreAllMocks();
         jest.useFakeTimers();
         jest.spyOn(Date.prototype, 'getTime').mockReturnValue(10000);
-        replicants.obsData = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
+        replicants.obsState = { gameplayScene: 'Gameplay Scene', intermissionScene: 'Break Scene' };
         replicants.scoreboardData = {};
         replicants.gameAutomationData = {
             actionInProgress: GameAutomationAction.NONE,
@@ -41,9 +41,9 @@ describe('AutomationActionService', () => {
         });
 
         it('returns expected actions for starting a game', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 gameplayScene: 'gameplay scene'
-            };
+            });
             replicants.scoreboardData = {
                 isVisible: false
             };
@@ -68,9 +68,9 @@ describe('AutomationActionService', () => {
         });
 
         it('returns expected actions for ending a game', async () => {
-            replicants.obsData = {
+            (obsConnectorService.findCurrentConfig as jest.Mock).mockReturnValue({
                 intermissionScene: 'intermission scene'
-            };
+            });
             replicants.scoreboardData = {
                 isVisible: true
             };
@@ -109,7 +109,7 @@ describe('AutomationActionService', () => {
 
             // @ts-ignore
             expect(() => service['getAutomationTasks']('asdasdasdasd'))
-                .toThrow(new Error('Unknown GameAutomationTask value \'asdasdasdasd\''));
+                .toThrow(new Error('translation:automationActions.unknownTask'));
         });
     });
 
@@ -121,7 +121,7 @@ describe('AutomationActionService', () => {
             const service = new AutomationActionService(mockNodecg, obsConnectorService);
 
             expect(() => service.startAutomationAction(GameAutomationAction.END_GAME))
-                .toThrow(new Error('An action is already in progress.'));
+                .toThrow(new Error('translation:automationActions.actionAlreadyOngoing'));
         });
 
         it('updates automation data and starts the specified action', () => {
@@ -365,7 +365,7 @@ describe('AutomationActionService', () => {
             const service = new AutomationActionService(mockNodecg, obsConnectorService);
 
             await expect(service.fastForwardToNextAutomationTask())
-                .rejects.toThrow(new Error('No action is in progress.'));
+                .rejects.toThrow(new Error('translation:automationActions.noActionOngoing'));
         });
 
         it('completes the next automation task', async () => {
@@ -458,7 +458,7 @@ describe('AutomationActionService', () => {
             jest.spyOn(global, 'clearTimeout');
             const service = new AutomationActionService(mockNodecg, obsConnectorService);
 
-            expect(() => service.cancelAutomationAction()).toThrow(new Error('No action is in progress.'));
+            expect(() => service.cancelAutomationAction()).toThrow(new Error('translation:automationActions.noActionOngoing'));
 
             expect(service.resetGameAutomationData).not.toHaveBeenCalled();
             expect(clearTimeout).not.toHaveBeenCalled();

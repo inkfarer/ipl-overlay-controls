@@ -112,6 +112,31 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'Arène Méca-ramen',
             'Bluefin Depot': 'Mine Marine',
             'Marlin Airport': 'Terminal Rorqual'
+        },
+        [Locale.JA]: {
+            'Museum d\'Alfonsino': 'キンメダイ美術館',
+            'Scorch Gorge': 'ユノハナ大渓谷',
+            'Eeltail Alley': 'ゴンズイ地区',
+            'Hagglefish Market': 'ヤガラ市場',
+            'Undertow Spillway': 'マテガイ放水路',
+            'Mincemeat Metalworks': 'ナメロウ金属',
+            'Hammerhead Bridge': 'マサバ海峡大橋',
+            'Mahi-Mahi Resort': 'マヒマヒリゾート＆スパ',
+            'Inkblot Art Academy': '海女美術大学',
+            'Sturgeon Shipyard': 'チョウザメ造船',
+            MakoMart: 'ザトウマーケット',
+            'Wahoo World': 'スメーシーワールド',
+            'Brinewater Springs': 'クサヤ温泉',
+            'Flounder Heights': 'ヒラメが丘団地',
+            'Um\'ami Ruins': 'ナンプラー遺跡',
+            'Manta Maria': 'マンタマリア号',
+            'Barnacle & Dime': 'タラポートショッピングパーク',
+            'Humpback Pump Track': 'コンブトラック',
+            'Crableg Capital': 'タカアシ経済特区',
+            'Shipshape Cargo Co.': 'オヒョウ海運',
+            'Robo ROM-en': 'バイガイ亭',
+            'Bluefin Depot': 'ネギトロ炭鉱',
+            'Marlin Airport': 'カジキ空港'
         }
     },
     stageImagePaths: {
@@ -160,110 +185,156 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             Rainmaker: 'Mission Bazookarpe',
             'Splat Zones': 'Défense de zone',
             'Turf War': 'Guerre de territoire'
+        },
+        [Locale.JA]: {
+            'Clam Blitz': 'ガチアサリ',
+            'Tower Control': 'ガチヤグラ',
+            Rainmaker: 'ガチホコバトル',
+            'Splat Zones': 'ガチエリア',
+            'Turf War': 'ナワバリバトル'
         }
     },
     colors: [
         {
             meta: {
-                name: 'Ranked Modes'
+                name: 'Ranked Modes',
+                key: 'rankedModes'
             },
             colors: [
                 {
                     index: 0,
                     title: 'Orange vs Purple',
+                    key: 'orangePurple',
                     clrA: '#F56522',
                     clrB: '#821CD6',
+                    referenceClrA: '#C64D24',
+                    referenceClrB: '#6C0AB3',
                     clrNeutral: '#CDFF45'
                 },
                 {
                     index: 1,
                     title: 'Yellow vs Dark Blue',
+                    key: 'yellowDarkBlue',
                     clrA: '#EDD921',
                     clrB: '#461EE6',
+                    referenceClrA: '#D3CD23',
+                    referenceClrB: '#4010C9',
                     clrNeutral: '#4445FF'
                 },
                 {
                     index: 2,
                     title: 'Turquoise vs Orange',
+                    key: 'turquoiseOrange',
                     clrA: '#2ADBC6',
                     clrB: '#FA5A41',
+                    referenceClrA: '#37D5B2',
+                    referenceClrB: '#CF453F',
                     clrNeutral: '#4445FF'
                 },
                 {
                     index: 3,
                     title: 'Orange vs Dark Blue',
+                    key: 'orangeDarkBlue',
                     clrA: '#FC7735',
                     clrB: '#4048DB',
+                    referenceClrA: '#D9633A',
+                    referenceClrB: '#423BC4',
                     clrNeutral: '#F8F755'
                 },
                 {
                     index: 4,
                     title: 'Turquoise vs Pink',
+                    key: 'turquoisePink',
                     clrA: '#2ADBC3',
                     clrB: '#E34984',
+                    referenceClrA: '#35D3AE',
+                    referenceClrB: '#BE2C74',
                     clrNeutral: '#7577FF'
                 },
                 {
                     index: 5,
                     title: 'Dark Blue vs Orange',
+                    key: 'darkBlueOrange',
                     clrA: '#2C2CDB',
                     clrB: '#F29C33',
+                    referenceClrA: '#261DAD',
+                    referenceClrB: '#DD8E3A',
                     clrNeutral: '#FF67EE'
                 },
                 {
                     index: 6,
                     title: 'Yellow vs Purple',
+                    key: 'yellowPurple',
                     clrA: '#EEFC58',
                     clrB: '#7635F0',
+                    referenceClrA: '#C2DC4C',
+                    referenceClrB: '#641FCA',
                     clrNeutral: '#54FDE8'
                 },
                 {
                     index: 7,
                     title: 'Gold vs Purple',
+                    key: 'goldPurple',
                     clrA: '#EBCC31',
                     clrB: '#A032DB',
+                    referenceClrA: '#CFBC33',
+                    referenceClrB: '#901BC4',
                     clrNeutral: '#73DE35'
                 },
                 {
                     index: 8,
                     title: 'Green vs Pink',
+                    key: 'greenPink',
                     clrA: '#B3DE45',
                     clrB: '#D43BCA',
+                    referenceClrA: '#A6DA44',
+                    referenceClrB: '#B31FB0',
                     clrNeutral: '#FFC042'
                 },
                 {
                     index: 9,
                     title: 'Pink vs Green',
+                    key: 'pinkGreen',
                     clrA: '#F753A1',
                     clrB: '#35CC2D',
+                    referenceClrA: '#B82079',
+                    referenceClrB: '#39D42D',
                     clrNeutral: '#4A36FF'
                 }
             ]
         },
         {
             meta: {
-                name: 'Color Lock (Variant 1)'
+                name: 'Color Lock (Variant 1)',
+                key: 'colorLock1'
             },
             colors: [
                 {
                     index: 0,
-                    title: 'Purple vs Yellow',
-                    clrA: '#6236DF',
-                    clrB: '#F0EB24',
+                    title: 'Yellow vs Purple',
+                    key: 'yellowPurple',
+                    clrA: '#F0EB24',
+                    clrB: '#6236DF',
+                    referenceClrA: '#CAC531',
+                    referenceClrB: '#5529BC',
                     clrNeutral: '#B82FB6'
                 }
             ]
         },
         {
             meta: {
-                name: 'Color Lock (Variant 2)'
+                name: 'Color Lock (Variant 2)',
+                key: 'colorLock2'
             },
             colors: [
                 {
                     index: 0,
-                    title: 'Blue vs Orange',
-                    clrA: '#2D63D7',
-                    clrB: '#FDB605',
+                    title: 'Orange vs Blue',
+                    key: 'orangeBlue',
+                    clrA: '#FDB605',
+                    clrB: '#2D63D7',
+                    referenceClrA: '#D5972C',
+                    referenceClrB: '#2858BC',
                     clrNeutral: '#8FD20C'
                 }
             ]

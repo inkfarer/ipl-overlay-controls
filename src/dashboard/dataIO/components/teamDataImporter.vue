@@ -1,24 +1,24 @@
 <template>
-    <bordered-space label="Tournament data">
+    <bordered-space :label="$t('teamDataImporter.sectionTitle')">
         <ipl-space>
             <template v-if="smashggEvents.length > 1">
                 <ipl-select
                     v-model="smashggEvent"
                     :options="smashggEvents"
                     data-test="smashgg-event-selector"
-                    label="Event"
+                    :label="$t('teamDataImporter.startgg.eventSelect')"
                 />
-                <ipl-button
+                <iploc-button
                     class="m-t-8"
-                    label="Import"
+                    :label="$t('teamDataImporter.startgg.importButton')"
                     async
-                    progress-message="Importing..."
+                    :progress-message="$t('teamDataImporter.startgg.loadingImportButton')"
                     data-test="smashgg-event-import-button"
                     @click="handleSmashggEventImport"
                 />
                 <ipl-button
                     class="m-t-8"
-                    label="Cancel"
+                    :label="$t('teamDataImporter.startgg.cancelImportButton')"
                     color="red"
                     data-test="smashgg-event-import-cancel-button"
                     @click="handleSmashggImportCancel"
@@ -27,7 +27,7 @@
             <template v-else>
                 <ipl-radio
                     v-model="dataSource"
-                    label="Source"
+                    :label="$t('teamDataImporter.dataSourceSelect')"
                     data-test="source-selector"
                     name="source-selector"
                     class="data-source-selector"
@@ -36,7 +36,7 @@
                 <ipl-input
                     v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
                     v-model="tournamentId"
-                    :label="idLabel"
+                    :label="$t('teamDataImporter.tournamentIdInput', { context: dataSource })"
                     name="tournament-id-input"
                     class="m-t-4"
                 />
@@ -44,24 +44,25 @@
                     v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
                     v-model="teamDataFile"
                     class="m-t-8"
+                    :placeholder="$t('common:fileUploadPlaceholder')"
                     data-test="team-data-upload"
                 />
                 <div class="layout horizontal center-horizontal">
                     <ipl-checkbox
                         v-show="dataSource === TournamentDataSource.UPLOAD"
                         v-model="useFileUpload"
-                        label="Upload file"
+                        :label="$t('teamDataImporter.uploadFileCheckbox')"
                         class="m-t-8"
                         small
                         data-test="use-file-upload-checkbox"
                     />
                 </div>
-                <ipl-button
+                <iploc-button
                     class="m-t-8"
-                    label="Import"
+                    :label="$t('teamDataImporter.importButton')"
                     :disabled="!allValid || refreshingTournamentData"
                     async
-                    progress-message="Importing..."
+                    :progress-message="$t('teamDataImporter.loadingImportButton')"
                     data-test="import-button"
                     @click="handleImport"
                 />
@@ -71,14 +72,20 @@
             data-test="saved-data-section"
             class="text-center m-t-8"
         >
-            <div class="title">Saved data</div>
+            <div class="title">{{ $t('teamDataImporter.savedDataSection.title') }}</div>
             <a
                 v-if="!!tournamentMetadata.url"
                 :href="tournamentMetadata.url"
                 target="_blank"
-            >{{ tournamentMetadata.name ?? 'No name' }}</a>
-            <span v-else>{{ tournamentMetadata.name ?? 'No name' }}</span>
-            <span class="badge badge-blue m-l-6">{{ getDataSourceName(tournamentMetadata.source) }}</span>
+            >
+                {{ tournamentMetadata.name ?? $t('teamDataImporter.savedDataSection.tournamentNamePlaceholder') }}
+            </a>
+            <span v-else>
+                {{ tournamentMetadata.name ?? $t('teamDataImporter.savedDataSection.tournamentNamePlaceholder') }}
+            </span>
+            <span class="badge badge-blue m-l-6">
+                {{ $t(`common:tournamentDataSource.${tournamentMetadata.source}`) }}
+            </span>
             <br>
             {{ tournamentMetadata.id }}
             <template v-if="tournamentMetadata.source === TournamentDataSource.SMASHGG">
@@ -86,13 +93,13 @@
                 {{ tournamentMetadata.sourceSpecificData.smashgg.eventData.name }}
                 ({{ tournamentMetadata.sourceSpecificData.smashgg.eventData.game }})
             </template>
-            <ipl-button
+            <iploc-button
                 v-if="tournamentMetadata.source !== TournamentDataSource.UPLOAD &&
                     tournamentMetadata.source !== TournamentDataSource.UNKNOWN"
                 class="m-t-6"
-                label="Refresh"
+                :label="$t('teamDataImporter.savedDataSection.refreshButton')"
                 async
-                progress-message="Refreshing..."
+                :progress-message="$t('teamDataImporter.savedDataSection.loadingRefreshButton')"
                 data-test="refresh-button"
                 @click="handleRefresh"
             />
@@ -100,16 +107,16 @@
         <ipl-space class="m-t-8">
             <ipl-input
                 v-model="shortName"
-                label="Short tournament name"
+                :label="$t('teamDataImporter.shortTournamentNameInput')"
                 name="shortName"
             />
             <ipl-button
                 class="m-t-8"
-                label="Update"
+                :label="$t('common:button.update')"
                 data-test="update-short-name-button"
                 :color="shortNameChanged ? 'red' : 'blue'"
                 :disabled="!shortNameValid"
-                :title="RIGHT_CLICK_UNDO_MESSAGE"
+                :title="$t('common:button.rightClickUndoMessage')"
                 @click="updateShortName"
                 @right-click="undoShortNameChanges"
             />
@@ -120,7 +127,7 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from 'vue';
 import { Configschema } from 'schemas';
-import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
+import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import {
     IplButton,
@@ -130,23 +137,36 @@ import {
     IplSelect,
     IplSpace,
     IplUpload,
-    notBlank,
     provideValidators,
     validator
 } from '@iplsplatoon/vue-components';
 import { SelectOptions } from '../../types/select';
 import { GetTournamentDataResponse } from 'types/messages/tournamentData';
 import { extractBattlefyTournamentId, extractSendouInkTournamentId } from '../../helpers/stringHelper';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import BorderedSpace from '../../components/BorderedSpace.vue';
 import { isBlank } from '../../../helpers/stringHelper';
+import { useTranslation } from 'i18next-vue';
+import { notBlank } from '../../helpers/validators/stringValidators';
+import IplocButton from '../../components/IplocButton.vue';
 
 export default defineComponent({
     name: 'TeamDataImporter',
 
-    components: { BorderedSpace, IplCheckbox, IplUpload, IplButton, IplInput, IplSelect, IplSpace, IplRadio },
+    components: {
+        BorderedSpace,
+        IplCheckbox,
+        IplUpload,
+        IplButton,
+        IplInput,
+        IplSelect,
+        IplSpace,
+        IplRadio,
+        IplocButton
+    },
 
     setup() {
+        const { t } = useTranslation();
+
         const tournamentDataStore = useTournamentDataStore();
         const hasSmashggConfig = !isBlank((nodecg.bundleConfig as Configschema).smashgg?.apiKey);
         const hasSendouInkConfig = !isBlank((nodecg.bundleConfig as Configschema).sendouInk?.apiKey);
@@ -183,7 +203,6 @@ export default defineComponent({
         }
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
             teamDataFile,
             useFileUpload,
             tournamentMetadata: computed(() => tournamentDataStore.tournamentData.meta),
@@ -194,27 +213,11 @@ export default defineComponent({
                 TournamentDataSource.SENDOU_INK
             ].map(option => ({
                 value: option,
-                name: TournamentDataSourceHelper.toPrettyString(option),
+                name: t(`common:tournamentDataSource.${option}`),
                 disabled: (option === TournamentDataSource.SMASHGG && !hasSmashggConfig)
                     || (option === TournamentDataSource.SENDOU_INK && !hasSendouInkConfig)
             })),
             dataSource,
-            getDataSourceName(value: TournamentDataSource | `${TournamentDataSource}`) {
-                return TournamentDataSourceHelper.toPrettyString(value);
-            },
-            idLabel: computed(() => {
-                switch (dataSource.value) {
-                    case TournamentDataSource.BATTLEFY:
-                    case TournamentDataSource.SENDOU_INK:
-                        return 'Tournament URL';
-                    case TournamentDataSource.SMASHGG:
-                        return 'Tournament Slug';
-                    case TournamentDataSource.UPLOAD:
-                        return 'Data URL';
-                    default:
-                        throw new Error(`Unknown tournament data source '${dataSource.value}'`);
-                }
-            }),
             async handleImport() {
                 if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
                     return tournamentDataStore.uploadTeamData({ file: teamDataFile.value });

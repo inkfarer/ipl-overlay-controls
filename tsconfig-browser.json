@@ -25,6 +25,9 @@
             ],
             "schemas": [
                 "src/types/schemas/index"
+            ],
+            "@i18n/*": [
+                "src/helpers/i18n/*"
             ]
         }
     },

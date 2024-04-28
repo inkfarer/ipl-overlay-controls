@@ -1,6 +1,6 @@
 <template>
     <ipl-dialog-title
-        title="Create Prediction"
+        :title="$t('dialogTitle')"
         @close="closeDialog('createPredictionDialog')"
     />
     <ipl-error-display class="m-t-8" />
@@ -9,7 +9,7 @@
         type="warning"
         class="m-t-8"
     >
-        The active prediction has not been resolved!
+        {{ $t('activePredictionNotResolvedWarning') }}
     </ipl-message>
     <ipl-space
         v-else
@@ -18,14 +18,14 @@
         <div class="layout horizontal">
             <ipl-input
                 v-model="title"
-                label="Title"
+                :label="$t('titleInput')"
                 name="title"
                 class="title-input"
             />
             <ipl-input
                 v-model="duration"
-                label="Duration"
-                extra="seconds"
+                :label="$t('durationInputLabel')"
+                :extra="$t('durationInputUnit')"
                 name="duration"
                 type="number"
                 class="m-l-6 duration-input"
@@ -36,26 +36,26 @@
                 v-model="teamAName"
                 name="team-a-name"
                 class="max-width"
-                label="Team A"
+                :label="$t('teamANameInput')"
             />
             <ipl-input
                 v-model="teamBName"
                 name="team-b-name"
                 class="max-width m-l-6"
-                label="Team B"
+                :label="$t('teamBNameInput')"
             />
         </div>
         <div class="layout horizontal m-t-8">
-            <ipl-button
-                label="Create"
+            <iploc-button
+                :label="$t('createButton')"
                 :disabled="!allValid"
                 color="green"
                 async
                 data-test="create-prediction-button"
                 @click="createPrediction"
             />
-            <ipl-button
-                label="Reset"
+            <iploc-button
+                :label="$t('resetButton')"
                 color="red"
                 class="m-l-8"
                 data-test="reset-inputs-button"
@@ -66,17 +66,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
 import {
-    IplButton,
     IplSpace,
     IplInput,
     IplDialogTitle,
     IplMessage,
     validator,
-    maxLength,
-    minValue,
-    maxValue,
     provideValidators
 } from '@iplsplatoon/vue-components';
 import { useNextRoundStore } from '../store/nextRoundStore';
@@ -86,17 +82,23 @@ import { NodecgDialog } from '../types/dialog';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
 import { closeDialog } from '../helpers/dialogHelper';
 import { addDots } from '../../helpers/stringHelper';
+import { maxLength } from '../helpers/validators/stringValidators';
+import IplocButton from '../components/IplocButton.vue';
+import { useTranslation } from 'i18next-vue';
+import { maxValue, minValue } from '../helpers/validators/numberValidators';
+import i18next from 'i18next';
 
 export default defineComponent({
     name: 'CreatePredictionDialog',
 
-    components: { IplErrorDisplay, IplMessage, IplButton, IplInput, IplSpace, IplDialogTitle },
+    components: { IplErrorDisplay, IplMessage, IplInput, IplSpace, IplDialogTitle, IplocButton },
 
     setup() {
         const nextRoundStore = useNextRoundStore();
         const predictionDataStore = usePredictionDataStore();
+        const { t } = useTranslation();
 
-        const title = ref('Who do you think will win this match?');
+        const title = ref(t('defaultPredictionTitle'));
         const duration = ref(120);
         const teamAName = ref('');
         const teamBName = ref('');
@@ -105,6 +107,16 @@ export default defineComponent({
             duration: validator(true, minValue(1), maxValue(1800)),
             'team-a-name': validator(true, maxLength(25)),
             'team-b-name': validator(true, maxLength(25))
+        });
+
+        const languageChangeListener = () => {
+            title.value = t('defaultPredictionTitle');
+        };
+        onMounted(() => {
+            i18next.on('languageChanged', languageChangeListener);
+        });
+        onUnmounted(() => {
+            i18next.off('languageChanged', languageChangeListener);
         });
 
         watch(() => nextRoundStore.nextRound, (newValue, oldValue) => {
@@ -130,7 +142,7 @@ export default defineComponent({
                 (nodecg.getDialog('createPredictionDialog') as NodecgDialog).close();
             },
             resetInputs() {
-                title.value = 'Who do you think will win this match?';
+                title.value = t('defaultPredictionTitle');
                 duration.value = 120;
                 teamAName.value = nextRoundStore.nextRound.teamA.name;
                 teamBName.value = nextRoundStore.nextRound.teamB.name;

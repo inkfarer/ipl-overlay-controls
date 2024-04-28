@@ -3,13 +3,56 @@ import * as nodecgContext from './helpers/nodecg';
 import { Configschema, PredictionStore, RadiaSettings, RuntimeConfig } from 'schemas';
 import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
-import { ObsConnectorController } from './controllers/ObsConnectorController';
 import { AssetPathService } from './services/AssetPathService';
 import { GameVersion } from 'types/enums/gameVersion';
 import { BracketController } from './controllers/BracketController';
 
+import i18next, { type Resource } from 'i18next';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
+
+function loadTranslation(locale: string, name: string) {
+    try {
+        return require(`../helpers/i18n/${locale.toLowerCase()}/${name}.json`);
+    } catch (ignore) {
+        return null;
+    }
+}
+
+function loadTranslations(): Resource {
+    const result: Resource = { };
+    for (const locale of Object.values(InterfaceLocale)) {
+        result[locale.toLowerCase()] = {
+            common: loadTranslation(locale, 'common'),
+            translation: loadTranslation(locale, 'server')
+        };
+    }
+
+    return result;
+}
+
+function initI18n(nodecg: NodeCG.ServerAPI) {
+    i18next.init({
+        lng: 'en',
+        fallbackLng: 'en',
+        resources: loadTranslations(),
+        interpolation: {
+            escapeValue: false
+        }
+    });
+
+    const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+    runtimeConfig.on('change', (newValue, oldValue) => {
+        if (!oldValue || newValue.interfaceLocale !== oldValue.interfaceLocale) {
+            i18next.changeLanguage(newValue.interfaceLocale.toLowerCase()).catch(e => {
+                nodecg.log.error('Failed to change interface language', e);
+            });
+        }
+    });
+}
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
+    initI18n(nodecg);
     nodecgContext.set(nodecg);
 
     require('./importers/music');
@@ -35,9 +78,13 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const { ReplicantFixerService } = require('./services/ReplicantFixerService');
     const { LocaleInfoService } = require('./services/LocaleInfoService');
     const { RuntimeConfigController } = require('./controllers/RuntimeConfigController');
+    const { ScreenshotParserService } = require('./services/ScreenshotParserService');
+    const { ObsConnectorController } = require('./controllers/ObsConnectorController');
+
+    const screenshotParserService = new ScreenshotParserService(nodecg);
 
     const obsConnectorService = new ObsConnectorService(nodecg);
-    new ObsConnectorController(nodecg, obsConnectorService);
+    new ObsConnectorController(nodecg, obsConnectorService, screenshotParserService);
 
     const automationActionService = new AutomationActionService(nodecg, obsConnectorService);
     automationActionService.resetGameAutomationData();
@@ -62,13 +109,10 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     new BracketController(nodecg);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
-        nodecg.log.warn(
-            `"radia" is not defined in cfg/${nodecg.bundleName}.json! The ability to import data via the Radia `
-            + 'Production API will not be possible.'
-        );
+        nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));
 
         predictionStore.value.status.predictionsEnabled = false;
-        predictionStore.value.status.predictionStatusReason = 'Missing bundle configuration.';
+        predictionStore.value.status.predictionStatusReason = 'missingConfiguration';
     } else {
         require('./importers/radiaAvailabilityCheck');
         require('./importers/predictions');

@@ -5,6 +5,7 @@ import { GameVersion } from 'types/enums/gameVersion';
 import { Locale } from 'types/enums/Locale';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { IplSelect } from '@iplsplatoon/vue-components';
+import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 
 describe('ModeSelect', () => {
     let pinia: TestingPinia;
@@ -16,7 +17,8 @@ describe('ModeSelect', () => {
 
         useSettingsStore().runtimeConfig = {
             gameVersion: GameVersion.SPLATOON_2,
-            locale: Locale.EN
+            locale: Locale.EN,
+            interfaceLocale: InterfaceLocale.EN
         };
     });
 

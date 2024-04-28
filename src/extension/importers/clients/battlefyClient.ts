@@ -6,6 +6,7 @@ import {
     mapBattlefyStagesToHighlightedMatches,
     mapBattlefyStagesToTournamentData
 } from '../mappers/battlefyDataMapper';
+import i18next from 'i18next';
 
 /**
  * Returns the matches with isMarkedLive as true for a list of Battlefy Stages
@@ -35,9 +36,9 @@ export async function getBattlefyMatches(
     const { data } = battlefyResponse;
 
     if (data.error) {
-        throw new Error(`Got error from Battlefy: ${data.error}`);
+        throw new Error(i18next.t('battlefyClient.battlefyReturnedError', { message: data.error }));
     } else if (!data[0]) {
-        throw new Error('Couldn\'t get tournament data from Battlefy.');
+        throw new Error(i18next.t('battlefyClient.battlefyReturnedNoData'));
     }
 
     const battlefyTournamentData: BattlefyTournamentData = data[0];
@@ -68,7 +69,7 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                     if (data.error) {
                         return reject(new Error(data.error));
                     } else {
-                        return reject(new Error('Received an unknown response from Battlefy.'));
+                        return reject(new Error(i18next.t('battlefyClient.battlefyReturnedUnknownResponse')));
                     }
                 }
 
@@ -77,7 +78,7 @@ export async function getBattlefyTournamentData(id: string): Promise<TournamentD
                         id,
                         source: TournamentDataSource.BATTLEFY,
                         name: tournamentInfo.name,
-                        shortName: tournamentInfo.name ?? 'Unknown Tournament',
+                        shortName: tournamentInfo.name ?? i18next.t('battlefyClient.placeholderTournamentName'),
                         url: getBattlefyTournamentUrl(tournamentInfo)
                     },
                     teams: data

@@ -5,11 +5,12 @@ import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
 import { RadiaError, SetGuildInfoResponse } from 'types/radia';
 import { isBlank } from '../../../helpers/stringHelper';
+import i18next from 'i18next';
 
 const nodecg = nodecgContext.get();
 export async function getGuildInfo(guildId: string): Promise<GuildInfo> {
     if (isBlank(guildId)) {
-        throw new Error('No guild ID provided.');
+        throw new Error(i18next.t('radiaClient.missingGuildId'));
     }
 
     try {
@@ -37,11 +38,11 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
         if (result.status === 200) {
             return typeof result.data.twitch === 'boolean' ? result.data.twitch : false;
         } else {
-            nodecg.log.error(`Guild Check Auth Error: ${result.data.detail}`);
+            nodecg.log.error(i18next.t('radiaClient.predictionSupportCheckError', { message: result.data.detail }));
             return false;
         }
     } catch (e) {
-        nodecg.log.error(`Guild Check Auth Error: ${e}`);
+        nodecg.log.error(i18next.t('radiaClient.predictionSupportCheckError', { message: e }));
         return false;
     }
 }
@@ -52,7 +53,7 @@ export async function hasPredictionSupport(guildId: string): Promise<boolean> {
  */
 export async function getPredictions(guildId: string): Promise<PredictionResponse[]> {
     if (isBlank(guildId)) {
-        throw new Error('Cannot retrieve prediction for no guild');
+        throw new Error(i18next.t('radiaClient.missingGuildId'));
     }
 
     try {
@@ -73,7 +74,7 @@ export async function getPredictions(guildId: string): Promise<PredictionRespons
  */
 export async function updatePrediction(guildId: string, data: PatchPrediction): Promise<PredictionResponse> {
     if (isBlank(guildId)) {
-        throw new Error('Cannot update prediction for no guild');
+        throw new Error(i18next.t('radiaClient.missingGuildId'));
     }
 
     try {
@@ -95,7 +96,7 @@ export async function updatePrediction(guildId: string, data: PatchPrediction): 
  */
 export async function createPrediction(guildId: string, data: CreatePrediction): Promise<PredictionResponse> {
     if (isBlank(guildId)) {
-        throw new Error('Cannot create prediction for no guild');
+        throw new Error(i18next.t('radiaClient.missingGuildId'));
     }
 
     try {
@@ -112,7 +113,7 @@ export async function createPrediction(guildId: string, data: CreatePrediction):
 
 export function handleAxiosError(e: AxiosError<RadiaError> | Error): void {
     if ('response' in e) {
-        let message = `Radia API call failed with response ${e.response.status}`;
+        let message = i18next.t('radiaClient.requestFailed', { statusCode: e.response.status });
         if (e.response.data?.detail) {
             if (typeof e.response.data.detail === 'object') {
                 if ('message' in e.response.data.detail && e.response.data.detail.message != null) {
@@ -136,7 +137,7 @@ export async function updateTournamentData(
     tournamentName: string
 ): Promise<SetGuildInfoResponse> {
     if (isBlank(guildId)) {
-        throw new Error('No guild ID provided to update tournament data for');
+        throw new Error(i18next.t('radiaClient.missingGuildId'));
     }
 
     const response = await axios.post<SetGuildInfoResponse>(
@@ -145,7 +146,7 @@ export async function updateTournamentData(
         { headers: { Authorization: nodecg.bundleConfig.radia.authentication } });
 
     if (response.status !== 200) {
-        throw new Error(`Radia API call failed with response ${response.status.toString()}`);
+        throw new Error(i18next.t('radiaClient.requestFailed', { statusCode: response.status }));
     }
     return response.data;
 }

@@ -33,7 +33,7 @@ Install ipl-overlay-controls in NCGMGR by clicking the "Plus" icon in the bundle
 
 ## Configuration
 
-### Setting authentication keys
+### Creating the configuration file
 
 For some features of ipl-overlay-controls to function properly, some configuration parameters must be set.  
 To start, create the configuration file at `<nodecg>/cfg/ipl-overlay-controls.json`
@@ -41,12 +41,15 @@ A complete configuration file contains the following parameters:
 
 ```json
 {
+  "screenshotParser": {
+    "saveBadScreenshotsToDisk": false
+  },
   "lastfm": {
     "apiKey": "Your last.fm API key",
     "secret": "Your last.fm API secret"
   },
   "smashgg": {
-    "apiKey": "Your smash.gg API key"
+    "apiKey": "Your start.gg API key"
   },
   "radia": {
     "url": "https://radia-production",
@@ -59,7 +62,7 @@ A complete configuration file contains the following parameters:
 }
 ```
 
-Any configuration parameters may be omitted from the file, but functionality will be missing if that is done.
+Any configuration parameters may be omitted from the file.
 
 ### Settings in the dashboard
 
@@ -185,13 +188,16 @@ match to play.
 
 ### Managing ink colors
 
-When a game starts, use the "More colors" section of the Match Manager panel to pick the colors in play.  
+When a game starts, use the "Read colors from OBS" button to attempt to automatically determine the ink colors in play. 
+Press the button after the game UI is fully visible, but before the match timer has started. [Photo reference](img/screenshot-parser-timing-reference.webp)  
+If the OBS socket is not in use or is unable to parse the ink colors, use the "More Colors" section of the Match Manager 
+panel to pick the colors in play. 
+
 On the left side of the dashboard panel, a preview of the colors in play is shown. The colors may be swapped if they are
 incorrect for the current match.  
 The color for the "Alpha" team in-game is designated by the "α" symbol and the color for the "Bravo" team in-game is designated by the "β" symbol.  
 The left side of the dashboard can be used to switch to the previous and next color in the sequence of colors. When each
-game is played  in the same private battle room, the colors follow a predictable order, which is followed by the dashboard. 
-(Although, please note that ranked modes and turf war have separate sets of ink colors)
+game is played in the same private battle room, the colors follow a predictable order, which is followed by the dashboard. 
 
 ### Showing and hiding the scoreboard
 

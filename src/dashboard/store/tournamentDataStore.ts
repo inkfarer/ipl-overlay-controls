@@ -6,6 +6,7 @@ import {
 } from 'types/messages/tournamentData';
 import { UpdateRoundStoreRequest, UpdateRoundStoreResponse } from 'types/messages/roundStore';
 import { defineStore } from 'pinia';
+import i18next from 'i18next';
 
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
 const roundStore = nodecg.Replicant<RoundStore>('roundStore');
@@ -74,6 +75,8 @@ async function sendLocalFile(dataType: 'teams' | 'rounds', file: File): Promise<
 
     if (response.status !== 200) {
         const responseText = await response.text();
-        throw new Error(`Import failed with status ${response.status}: ${responseText}`);
+        throw new Error(i18next.t(
+            'common:tournamentDataStore.fileUploadError',
+            { statusCode: response.status, message: responseText }));
     }
 }

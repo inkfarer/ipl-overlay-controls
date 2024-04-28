@@ -3,28 +3,36 @@
         v-if="!hasObsData"
         type="info"
     >
-        OBS data is missing. Please connect to an OBS websocket to continue.
+        {{ $t('obs.missingDataMessage') }}
     </ipl-message>
     <ipl-space v-else>
         <ipl-select
+            v-model="gameplayInput"
+            :options="videoInputOptions"
+            :label="$t('obs.gameplayInputSelect')"
+            data-test="gameplay-input-select"
+        />
+        <ipl-select
             v-model="gameplayScene"
             :options="sceneOptions"
-            label="Gameplay scene"
+            :label="$t('obs.gameplaySceneSelect')"
             data-test="gameplay-scene-select"
+            class="m-t-8"
         />
         <ipl-select
             v-model="intermissionScene"
             :options="sceneOptions"
-            label="Intermission scene"
+            :label="$t('obs.intermissionSceneSelect')"
             data-test="intermission-scene-select"
             class="m-t-8"
         />
         <ipl-button
-            label="Update"
+            :label="$t('common:button.update')"
             class="m-t-8"
             :color="isChanged ? 'red' : 'blue'"
-            :title="RIGHT_CLICK_UNDO_MESSAGE"
+            :title="$t('common:button.rightClickUndoMessage')"
             data-test="update-button"
+            :disabled="anyOptionsMissing"
             @click="update"
             @right-click="undoChanges"
         />
@@ -36,7 +44,7 @@ import { defineComponent } from 'vue';
 import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { useObsStore } from '../../store/obsStore';
 import { computed, ref, watch } from 'vue';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
+import { sendMessage } from '../../helpers/nodecgHelper';
 
 export default defineComponent({
     name: 'ObsDataPicker',
@@ -46,39 +54,48 @@ export default defineComponent({
     setup() {
         const obsStore = useObsStore();
 
+        const gameplayInput = ref('');
         const gameplayScene = ref('');
         const intermissionScene = ref('');
 
         watch(
-            () => obsStore.obsData.gameplayScene,
-            scene => gameplayScene.value = scene,
-            { immediate: true });
-        watch(
-            () => obsStore.obsData.intermissionScene,
-            scene => intermissionScene.value = scene,
+            () => obsStore.currentConfig,
+            newConfig => {
+                gameplayInput.value = newConfig?.gameplayInput ?? null;
+                gameplayScene.value = newConfig?.gameplayScene ?? null;
+                intermissionScene.value = newConfig?.intermissionScene ?? null;
+            },
             { immediate: true });
 
         return {
-            RIGHT_CLICK_UNDO_MESSAGE,
+            gameplayInput,
             gameplayScene,
             intermissionScene,
-            hasObsData: computed(() => obsStore.obsData.scenes != null),
-            sceneOptions: computed(() => obsStore.obsData.scenes?.map(scene =>
+            hasObsData: computed(() => obsStore.obsState.scenes != null),
+            sceneOptions: computed(() => obsStore.obsState.scenes?.map(scene =>
                 ({ value: scene, name: scene })) ?? []),
+            videoInputOptions: computed(() => (obsStore.obsState.inputs ?? [])
+                .filter(input => !input.noVideoOutput)
+                .map(input => ({ value: input.name, name: input.name }))),
             isChanged: computed(() =>
-                gameplayScene.value !== obsStore.obsData.gameplayScene
-                || intermissionScene.value !== obsStore.obsData.intermissionScene),
-            update() {
-                obsStore.setData({
+                gameplayScene.value !== obsStore.currentConfig?.gameplayScene
+                || intermissionScene.value !== obsStore.currentConfig?.intermissionScene
+                || gameplayInput.value !== obsStore.currentConfig?.gameplayInput),
+            anyOptionsMissing: computed(() =>
+                gameplayScene.value == null || intermissionScene.value == null || gameplayInput.value == null),
+            async update() {
+                await sendMessage('setObsConfig', {
                     gameplayScene: gameplayScene.value,
-                    intermissionScene: intermissionScene.value
+                    intermissionScene: intermissionScene.value,
+                    gameplayInput: gameplayInput.value
                 });
             },
             undoChanges(event: Event) {
                 event.preventDefault();
 
-                gameplayScene.value = obsStore.obsData.gameplayScene;
-                intermissionScene.value = obsStore.obsData.intermissionScene;
+                gameplayInput.value = obsStore.currentConfig?.gameplayInput;
+                gameplayScene.value = obsStore.currentConfig?.gameplayScene;
+                intermissionScene.value = obsStore.currentConfig?.intermissionScene;
             }
         };
     }

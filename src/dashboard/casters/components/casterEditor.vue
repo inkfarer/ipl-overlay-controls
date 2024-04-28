@@ -17,7 +17,7 @@
                 v-if="caster.uncommitted"
                 class="badge badge-red uncommitted-badge"
             >
-                Unsaved
+                {{ $t('casterEditor.unsavedCasterBadge') }}
             </span>
         </template>
         <caster-search
@@ -28,33 +28,33 @@
         <ipl-input
             v-model="internalCaster.name"
             name="name"
-            label="Name"
+            :label="$t('casterEditor.nameInput')"
             @focuschange="setFocused"
         />
         <ipl-input
             v-model="internalCaster.twitter"
             name="twitter"
-            label="Twitter"
+            :label="$t('casterEditor.twitterInput')"
             :formatter="twitterFormatter"
             @focuschange="setFocused"
         />
         <ipl-input
             v-model="internalCaster.pronouns"
             name="pronouns"
-            label="Pronouns"
+            :label="$t('casterEditor.pronounInput')"
             :formatter="pronounFormatter"
             @focuschange="setFocused"
         />
         <ipl-input
             v-model="internalCaster.imageUrl"
             name="imageUrl"
-            label="Image URL"
+            :label="$t('casterEditor.imageUrlInput')"
             @focuschange="setFocused"
         />
         <ipl-input
             v-model="internalCaster.videoUrl"
             name="videoUrl"
-            label="Video URL"
+            :label="$t('casterEditor.videoUrlInput')"
             @focuschange="setFocused"
         />
         <div class="layout horizontal m-t-8">
@@ -63,7 +63,7 @@
                 :color="buttonColor"
                 :disabled="disableSave"
                 data-test="update-button"
-                :title="caster.uncommitted ? undefined : RIGHT_CLICK_UNDO_MESSAGE"
+                :title="caster.uncommitted ? undefined : $t('common:button.rightClickUndoMessage')"
                 @click="updateCaster"
                 @right-click="undoChanges"
             />
@@ -87,10 +87,10 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { RIGHT_CLICK_UNDO_MESSAGE } from '../../../extension/helpers/strings';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import CasterSearch from './casterSearch.vue';
+import { useTranslation } from 'i18next-vue';
 
 library.add(faTimes, faGripVertical);
 
@@ -116,6 +116,7 @@ export default defineComponent({
         const isFocused = ref(false);
         const isEdited = computed(() => !isEqual(props.caster, internalCaster.value));
         const key = getCurrentInstance().vnode.key as string;
+        const { t } = useTranslation();
 
         watch(() => props.caster, (newValue, oldValue) => {
             if (!isFocused.value && !isEqual(newValue, oldValue)) {
@@ -125,7 +126,6 @@ export default defineComponent({
 
         return {
             store,
-            RIGHT_CLICK_UNDO_MESSAGE,
             internalCaster,
             key,
             async updateCaster() {
@@ -159,7 +159,7 @@ export default defineComponent({
             }),
             isEdited,
             buttonColor: computed(() => props.caster.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
-            updateButtonLabel: computed(() => props.caster.uncommitted ? 'Save' : 'Update'),
+            updateButtonLabel: computed(() => props.caster.uncommitted ? t('casterEditor.saveNewCasterButtonLabel') : t('common:button.update')),
             pronounFormatter: (input: string) => input.toLowerCase(),
             twitterFormatter: (input: string) => input.startsWith('@') ? input : '@' + input,
             undoChanges(event: Event) {

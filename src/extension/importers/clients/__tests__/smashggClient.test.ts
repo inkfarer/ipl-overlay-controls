@@ -84,7 +84,7 @@ describe('smashggClient', () => {
             });
 
             await expect(() => getSmashGGEvents('event', 'apdjwiadhjwio'))
-                .rejects.toThrow(new Error('Could not find tournament with slug \'event\'.'));
+                .rejects.toThrow(new Error('translation:startggClient.tournamentNotFound'));
         });
 
         it('throws error if tournament has no events', async () => {
@@ -99,7 +99,7 @@ describe('smashggClient', () => {
             });
 
             await expect(() => getSmashGGEvents('eventte', 'apdjwiadhjwio'))
-                .rejects.toThrow(new Error('Tournament \'eventte\' has no events.'));
+                .rejects.toThrow(new Error('translation:startggClient.noEventsFoundForTournament'));
         });
     });
 
@@ -555,7 +555,7 @@ describe('smashggClient', () => {
             });
 
             await expect(() => getSmashGGData(12345, '149083257830574'))
-                .rejects.toEqual(new Error('Could not find event with id \'12345\''));
+                .rejects.toEqual(new Error('translation:startggClient.eventNotFound'));
         });
     });
 
@@ -799,8 +799,8 @@ describe('smashggClient', () => {
                     id: '999',
                     match: 0,
                     playType: PlayType.BEST_OF,
-                    name: 'Set Z - Round 999 - Pool ID999 - Phase X',
-                    shortName: 'Phase X Round 999',
+                    name: 'translation:startggClient.longRoundName',
+                    shortName: 'translation:startggClient.shortRoundName.withoutPool',
                     round: '999',
                     stageName: 'ID999'
                 },
@@ -843,8 +843,8 @@ describe('smashggClient', () => {
                     id: '988',
                     match: 0,
                     playType: PlayType.PLAY_ALL,
-                    name: 'Set I - Round 987 - Pool ID988 - Phase R',
-                    shortName: 'Phase R Pool ID988 Round 987',
+                    name: 'translation:startggClient.longRoundName',
+                    shortName: 'translation:startggClient.shortRoundName.withPool',
                     round: '987',
                     stageName: 'ID988'
                 },

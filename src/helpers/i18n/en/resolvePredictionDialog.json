@@ -1,0 +1,19 @@
+{
+    "dialogTitle": "Resolve Prediction",
+    "noPredictionDataMessage": "No prediction data loaded.",
+    "resolvingNotPossibleMessage": "This prediction cannot be resolved right now.",
+    "roundNotCompletedWarning": "The current round has not been completed!",
+    "predictionWinnerUnknownMessage": {
+        "withoutWinner": "Unable to determine the current round's winner.",
+        "withWinner": "Unable to determine the current round's winner. The leading team is {{name}}"
+    },
+    "teamAButtonLabel": {
+        "default": "Team A",
+        "winner": "Winner - Team A"
+    },
+    "teamBButtonLabel": {
+        "default": "Team B",
+        "winner": "Winner - Team B"
+    },
+    "buttonResolvingInProgressLabel": "Resolving..."
+}
