@@ -5,12 +5,11 @@
         type="warning"
     >
         <template v-if="!isSupported">
-            Unsupported source ({{ TournamentDataSourceHelper
-                .toPrettyString(tournamentDataStore.tournamentData.meta.source as TournamentDataSource) }})
+            {{ $t('common:brackets.unsupportedSourceError', 
+                  { source: tournamentDataStore.tournamentData.meta.source }) }}
         </template>
         <template v-else>
-            Missing configuration for source '{{ TournamentDataSourceHelper
-                .toPrettyString(tournamentDataStore.tournamentData.meta.source as TournamentDataSource) }}'
+            {{ $t('missingConfigurationWarning', { source: tournamentDataStore.tournamentData.meta.source }) }}
         </template>
     </ipl-message>
     <template v-else>
@@ -18,34 +17,34 @@
             class="m-b-8"
             data-test="loaded-bracket-space"
         >
-            <div class="title">Loaded bracket</div>
+            <div class="title">{{ $t('loadedBracketSection.title') }}</div>
             <template v-if="bracketStore.bracketData == null">
-                No brackets currently loaded.
+                {{ $t('loadedBracketSection.noDataMessage') }}
             </template>
             <template v-else>
                 <ipl-data-row
-                    label="Event Name"
+                    :label="$t('loadedBracketSection.eventNameRow')"
                     :value="bracketStore.bracketData.eventName"
                 />
                 <ipl-data-row 
-                    label="Bracket Name"
+                    :label="$t('loadedBracketSection.bracketNameRow')"
                     :value="bracketStore.bracketData.name"
                 />
                 <ipl-data-row 
                     v-if="matchGroupNames !== bracketStore.bracketData.name"
-                    label="Match Groups"
+                    :label="$t('loadedBracketSection.matchGroupsRow')"
                     :value="matchGroupNames"
                 />
                 <ipl-data-row
                     v-if="bracketStore.bracketData.roundNumber != null"
-                    label="Round Number"
+                    :label="$t('loadedBracketSection.roundNumberRow')"
                     :value="`Round ${bracketStore.bracketData.roundNumber}`"
                 />
             </template>
         </ipl-space>
         <ipl-space>
-            <ipl-button
-                label="Load bracket data"
+            <iploc-button
+                :label="$t('bracketLoaderSection.loadDataButton')"
                 data-test="load-bracket-data-button"
                 async
                 @click="getMatchQuery"
@@ -60,10 +59,10 @@
                 @parameter-remove="key => activeParams.delete(key)"
                 @loading="isLoading = $event"
             />
-            <ipl-button
+            <iploc-button
                 v-if="bracketQuery.length > 0"
                 async
-                label="Submit"
+                :label="$t('bracketLoaderSection.submitBracketQueryButton')"
                 data-test="submit-bracket-query-button"
                 class="m-t-8"
                 :disabled="!activeParamsFilled || isLoading"
@@ -75,7 +74,7 @@
 
 <script setup lang="ts">
 import type NodeCG from '@nodecg/types';
-import { IplButton, IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
+import { IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { computed, ref, Ref } from 'vue';
 import { MatchQueryParameter, MatchImporter, MatchQueryResult } from '@tourneyview/importer';
 import MatchQueryParamInput from './components/MatchQueryParamInput.vue';
@@ -83,8 +82,9 @@ import { useBracketStore } from '../store/bracketStore';
 import { useTournamentDataStore } from '../store/tournamentDataStore';
 import { Configschema } from 'types/schemas';
 import { getMatchImporter } from '../../helpers/BracketHelper';
-import { TournamentDataSource, TournamentDataSourceHelper } from 'types/enums/tournamentDataSource';
+import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import IplocButton from '../components/IplocButton.vue';
 
 const bracketStore = useBracketStore();
 const tournamentDataStore = useTournamentDataStore();

@@ -3,17 +3,18 @@ import BracketsPanel from '../BracketsPanel.vue';
 import { useBracketStore } from '../../store/bracketStore';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
 import { config, flushPromises, mount } from '@vue/test-utils';
-import { IplButton, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
+import { IplMessage, IplSpace } from '@iplsplatoon/vue-components';
 import { mockBundleConfig, mockSendMessage } from '../../__mocks__/mockNodecg';
 import { BattlefyImporter, StartggImporter } from '@tourneyview/importer';
 import MatchQueryParamInput from '../MatchQueryParamInput.vue';
+import IplocButton from '../../components/IplocButton.vue';
 
 jest.mock('@tourneyview/importer');
 
 describe('BracketsPanel', () => {
     config.global.stubs = {
         IplDataRow: true,
-        IplButton: true,
+        IplocButton: true,
         MatchQueryParamInput: true
     };
 
@@ -45,7 +46,7 @@ describe('BracketsPanel', () => {
             expect(wrapper.findAllComponents(IplSpace).length).toEqual(0);
             const message = wrapper.getComponent(IplMessage);
             expect(message.vm.type).toEqual('warning');
-            expect(message.text()).toEqual('Unsupported source (Uploaded file)');
+            expect(message.text()).toEqual('common:brackets.unsupportedSourceError');
         });
         
         it('is visible if start.gg is unconfigured', () => {
@@ -61,7 +62,7 @@ describe('BracketsPanel', () => {
             expect(wrapper.findAllComponents(IplSpace).length).toEqual(0);
             const message = wrapper.getComponent(IplMessage);
             expect(message.vm.type).toEqual('warning');
-            expect(message.text()).toEqual('Missing configuration for source \'Smash.gg\'');
+            expect(message.text()).toEqual('translation:missingConfigurationWarning');
         });
     });
 
@@ -132,7 +133,7 @@ describe('BracketsPanel', () => {
 
             expect(wrapper.findAllComponents('match-query-param-input-stub').length).toEqual(0);
 
-            await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await wrapper.getComponent('[data-test="load-bracket-data-button"]').trigger('click');
             await flushPromises();
 
             expect(BattlefyImporter.prototype.getMatchQueryOptions).toHaveBeenCalledWith('test-tournament-id');
@@ -142,7 +143,7 @@ describe('BracketsPanel', () => {
             paramInput.vm.$emit('parameter-add', 'testParam');
             paramInput.vm.$emit('change', 'testParam', 'testParamValue');
 
-            await wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').trigger('click');
+            await wrapper.getComponent('[data-test="submit-bracket-query-button"]').trigger('click');
             expect(mockSendMessage).toHaveBeenCalledWith('getBracket', { testParam: 'testParamValue' });
         });
 
@@ -152,7 +153,7 @@ describe('BracketsPanel', () => {
             ]);
             const wrapper = mount(BracketsPanel);
 
-            await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await wrapper.getComponent('[data-test="load-bracket-data-button"]').trigger('click');
             await flushPromises();
 
             const paramInputs = wrapper.findAllComponents<typeof MatchQueryParamInput>('match-query-param-input-stub');
@@ -161,11 +162,11 @@ describe('BracketsPanel', () => {
 
             paramInput.vm.$emit('loading', true);
             await wrapper.vm.$nextTick();
-            expect(wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').vm.disabled).toEqual(true);
+            expect(wrapper.getComponent<typeof IplocButton>('[data-test="submit-bracket-query-button"]').attributes().disabled).toEqual('true');
             
             paramInput.vm.$emit('loading', false);
             await wrapper.vm.$nextTick();
-            expect(wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').vm.disabled).toEqual(false);
+            expect(wrapper.getComponent<typeof IplocButton>('[data-test="submit-bracket-query-button"]').attributes().disabled).toEqual('false');
         });
 
         it('disables submitting a query if data is missing', async () => {
@@ -174,7 +175,7 @@ describe('BracketsPanel', () => {
             ]);
             const wrapper = mount(BracketsPanel);
 
-            await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+            await wrapper.getComponent('[data-test="load-bracket-data-button"]').trigger('click');
             await flushPromises();
 
             const paramInputs = wrapper.findAllComponents<typeof MatchQueryParamInput>('match-query-param-input-stub');
@@ -183,11 +184,11 @@ describe('BracketsPanel', () => {
 
             paramInput.vm.$emit('parameter-add', 'testParam');
             await wrapper.vm.$nextTick();
-            expect(wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').vm.disabled).toEqual(true);
+            expect(wrapper.getComponent<typeof IplocButton>('[data-test="submit-bracket-query-button"]').attributes().disabled).toEqual('true');
 
             paramInput.vm.$emit('change', 'testParam', 'testParamValue');
             await wrapper.vm.$nextTick();
-            expect(wrapper.getComponent<typeof IplButton>('[data-test="submit-bracket-query-button"]').vm.disabled).toEqual(false);
+            expect(wrapper.getComponent<typeof IplocButton>('[data-test="submit-bracket-query-button"]').attributes().disabled).toEqual('false');
         });
 
         describe('start.gg events', () => {
@@ -226,7 +227,7 @@ describe('BracketsPanel', () => {
 
                 const wrapper = mount(BracketsPanel);
 
-                await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+                await wrapper.getComponent('[data-test="load-bracket-data-button"]').trigger('click');
                 await flushPromises();
 
                 expect((wrapper.vm as unknown as Record<string, unknown>).bracketQuery).toEqual([
@@ -266,7 +267,7 @@ describe('BracketsPanel', () => {
 
                 const wrapper = mount(BracketsPanel);
 
-                await wrapper.getComponent<typeof IplButton>('[data-test="load-bracket-data-button"]').trigger('click');
+                await wrapper.getComponent('[data-test="load-bracket-data-button"]').trigger('click');
                 await flushPromises();
 
                 expect((wrapper.vm as unknown as Record<string, unknown>).bracketQuery).toEqual([

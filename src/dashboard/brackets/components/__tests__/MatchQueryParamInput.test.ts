@@ -26,7 +26,7 @@ describe('MatchQueryParamInput', () => {
             expect(input.vm.min).toEqual(2);
             expect(input.vm.max).toEqual(9);
             expect(input.vm.modelValue).toEqual('7');
-            expect(input.vm.label).toEqual('test-number-range');
+            expect(input.vm.label).toEqual('translation:bracketQueryParam.numberRangeParam');
         });
         
         it('handles the input changing', () => {
@@ -72,7 +72,7 @@ describe('MatchQueryParamInput', () => {
             });
 
             const select = wrapper.getComponent(IplSelect);
-            expect(select.vm.label).toEqual('test-select');
+            expect(select.vm.label).toEqual('translation:bracketQueryParam.selectParam');
             expect(select.vm.modelValue).toEqual('999');
             expect(select.vm.options).toEqual([
                 { name: 'option one', value: '999', originalValue: 999 },

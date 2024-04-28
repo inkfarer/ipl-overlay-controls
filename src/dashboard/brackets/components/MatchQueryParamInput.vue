@@ -5,13 +5,13 @@
             :min="props.param.min"
             :max="props.param.max"
             :model-value="props.query[props.param.key]"
-            :label="props.param.name"
+            :label="$t(`bracketQueryParam.${props.param.key}`, props.param.name)"
             @update:model-value="emit('change', props.param.key, $event)"
         />
         <ipl-select
             v-else-if="props.param.type === 'select'"
             :model-value="props.query[props.param.key] == null ? null : String(props.query[props.param.key])"
-            :label="props.param.name"
+            :label="$t(`bracketQueryParam.${props.param.key}`, props.param.name)"
             :options="props.param.options.map(option => 
                 ({ name: option.name, value: String(option.value), originalValue: option.value }))"
             @update:model-value="onSelect"

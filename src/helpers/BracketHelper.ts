@@ -1,6 +1,7 @@
 import { BattlefyImporter, MatchImporter, MatchQueryResult, StartggImporter } from '@tourneyview/importer';
 import { TournamentDataSource } from '../types/enums/tournamentDataSource';
 import { Configschema } from '../types/schemas';
+import i18next from 'i18next';
 
 export function getMatchImporter(
     source: TournamentDataSource,
@@ -12,6 +13,6 @@ export function getMatchImporter(
         case TournamentDataSource.SMASHGG:
             return new StartggImporter(bundleConfig.smashgg?.apiKey);
         default:
-            throw new Error(`Cannot get importer for source '${source}'`);
+            throw new Error(i18next.t('common:brackets.unsupportedSourceError', { source }));
     }
 }
