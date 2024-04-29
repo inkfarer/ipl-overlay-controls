@@ -47,6 +47,47 @@ describe('activeRoundHelper', () => {
             expect(activeRound.teamB.score).toBe(1);
         });
 
+        it('correctly declares match completion when type is best of', () => {
+            replicants.activeRound = {
+                teamA: { score: 0 },
+                teamB: { score: 1 },
+                match: { type: PlayType.BEST_OF },
+                games: [
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.NO_WINNER }
+                ]
+            } as ActiveRound;
+
+            setWinner(0, GameWinner.BRAVO);
+            expect((replicants.activeRound as ActiveRound).match.isCompleted).toBe(true);
+
+            setWinner(2, GameWinner.ALPHA);
+            expect((replicants.activeRound as ActiveRound).match.isCompleted).toBe(true);
+
+            setWinner(0, GameWinner.NO_WINNER);
+            expect((replicants.activeRound as ActiveRound).match.isCompleted).toBe(false);
+        });
+
+        it('correctly declares match completion when type is play all', () => {
+            replicants.activeRound = {
+                teamA: { score: 0 },
+                teamB: { score: 1 },
+                match: { type: PlayType.PLAY_ALL },
+                games: [
+                    { winner: GameWinner.NO_WINNER },
+                    { winner: GameWinner.BRAVO },
+                    { winner: GameWinner.NO_WINNER }
+                ]
+            } as ActiveRound;
+
+            setWinner(0, GameWinner.BRAVO);
+            expect((replicants.activeRound as ActiveRound).match.isCompleted).toBe(false);
+
+            setWinner(2, GameWinner.ALPHA);
+            expect((replicants.activeRound as ActiveRound).match.isCompleted).toBe(true);
+        });
+
         it('sets color if not already set', () => {
             replicants.swapColorsInternally = false;
             replicants.activeRound = {

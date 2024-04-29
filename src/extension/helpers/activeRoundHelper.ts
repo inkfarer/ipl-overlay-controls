@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getTeam } from './tournamentDataHelper';
 import cloneDeep from 'lodash/cloneDeep';
 import i18next from 'i18next';
+import { PlayType } from 'types/enums/playType';
 
 const nodecg = nodecgContext.get();
 
@@ -58,8 +59,12 @@ export function setWinner(index: number, winner: GameWinner): void {
         }
     }
 
-    const winThreshold = newValue.games.length / 2;
-    newValue.match.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
+    if (newValue.match.type === PlayType.BEST_OF) {
+        const winThreshold = newValue.games.length / 2;
+        newValue.match.isCompleted = (newValue.teamA.score > winThreshold || newValue.teamB.score > winThreshold);
+    } else {
+        newValue.match.isCompleted = !newValue.games.some(game => game.winner === GameWinner.NO_WINNER);
+    }
 
     activeRound.value = newValue;
     commitActiveRoundToMatchStore();
