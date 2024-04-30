@@ -33,10 +33,12 @@ export interface ActiveRound {
 		winner: 'none' | 'alpha' | 'bravo';
 		stage: string;
 		mode: string;
-		color?: Color & {
-			colorsSwapped: boolean;
-			[k: string]: unknown;
-		};
+		color?:
+			| null
+			| (Color & {
+					colorsSwapped: boolean;
+					[k: string]: unknown;
+			  });
 		[k: string]: unknown;
 	}[];
 }
