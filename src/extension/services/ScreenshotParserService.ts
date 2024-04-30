@@ -67,6 +67,7 @@ export class ScreenshotParserService {
     private findClosestTeamColor(colors: [Color, Color]): ColorWithCategory | null {
         const SAFE_COLOR_DELTA_E = 10;
         const gameColors = cloneDeep(perGameData[this.runtimeConfig.value.gameVersion].colors)
+            .filter(group => !group.meta.key.toLowerCase().includes('colorlock'))
             .flatMap(group => group.colors.map(color => ({
                 ...color,
                 categoryName: group.meta.name,

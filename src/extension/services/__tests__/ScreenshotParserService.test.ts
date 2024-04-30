@@ -19,8 +19,6 @@ describe('ScreenshotParserService', () => {
         const colorGroups = perGameData[GameVersion.SPLATOON_3].colors;
 
         it.each([
-            ['yellowPurple', 'colorLock1', 'color_colorLock1.webp'],
-            ['orangeBlue', 'colorLock2', 'color_colorLock2.webp'],
             ['darkBlueOrange', 'rankedModes', 'color_darkBlueOrange.webp'],
             ['goldPurple', 'rankedModes', 'color_goldPurple.webp'],
             ['greenPink', 'rankedModes', 'color_greenPink.webp'],
@@ -31,7 +29,6 @@ describe('ScreenshotParserService', () => {
             ['turquoisePink', 'rankedModes', 'color_turquoisePink.webp'],
             ['yellowDarkBlue', 'rankedModes', 'color_yellowDarkBlue.webp'],
             ['yellowPurple', 'rankedModes', 'color_yellowPurple.webp'],
-            ['yellowPurple', 'colorLock1', 'color_colorLock1_720p.webp'],
             ['goldPurple', 'rankedModes', 'color_goldPurple_720p.webp'],
             ['pinkGreen', 'rankedModes', 'color_pinkGreen_720p.webp']
         ])('finds color %s in group %s (image: %s)', async (colorKey, groupKey, image) => {
