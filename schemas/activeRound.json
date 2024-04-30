@@ -104,19 +104,24 @@
                         "type": "string"
                     },
                     "color": {
-                        "type": "object",
-                        "allOf": [
+                        "anyOf": [
+                            { "type": "null" },
                             {
-                                "$ref": "defs/color.json#/color"
-                            },
-                            {
-                                "properties": {
-                                    "colorsSwapped": {
-                                        "type": "boolean"
+                                "type": "object",
+                                "allOf": [
+                                    {
+                                        "$ref": "defs/color.json#/color"
+                                    },
+                                    {
+                                        "properties": {
+                                            "colorsSwapped": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "colorsSwapped"
+                                        ]
                                     }
-                                },
-                                "required": [
-                                    "colorsSwapped"
                                 ]
                             }
                         ]
