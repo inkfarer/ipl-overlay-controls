@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import type NodeCG from '@nodecg/types';
 import { IplDataRow, IplMessage, IplSpace } from '@iplsplatoon/vue-components';
-import { computed, ref, Ref } from 'vue';
+import { computed, ref, Ref, watch } from 'vue';
 import { MatchQueryParameter, MatchImporter, MatchQueryResult } from '@tourneyview/importer';
 import MatchQueryParamInput from './components/MatchQueryParamInput.vue';
 import { useBracketStore } from '../store/bracketStore';
@@ -129,8 +129,13 @@ const activeParamsFilled = computed(() => {
     return Array.from(activeParams.value).every(param => queryResult.value[param] != null);
 });
 
+watch(() => tournamentDataStore.tournamentData.meta.id, () => {
+    bracketQuery.value = [];
+});
+
 async function getMatchQuery() {
     const importer = getImporter();
+    bracketQuery.value = [];
     const options = await Promise.all((await importer.getMatchQueryOptions(tournamentDataStore.tournamentData.meta.id))
         .map(async (option) => {
             // If possible, select the correct event ID automatically.
