@@ -1,4 +1,4 @@
-import { BattlefyImporter, StartggImporter } from '@tourneyview/importer';
+import { BattlefyImporter, SendouInkImporter, StartggImporter } from '@tourneyview/importer';
 import { TournamentDataSource } from '../../types/enums/tournamentDataSource';
 import { getMatchImporter } from '../BracketHelper';
 jest.mock('@tourneyview/importer');
@@ -16,6 +16,13 @@ describe('BracketHelper', () => {
 
             expect(result).toBeInstanceOf(StartggImporter);
             expect(StartggImporter).toHaveBeenCalledWith('test-api-key');
+        });
+
+        it('returns the expected result for sendou.ink tournaments', () => {
+            const result = getMatchImporter(TournamentDataSource.SENDOU_INK, { sendouInk: { apiKey: 'test-api-key' } });
+
+            expect(result).toBeInstanceOf(SendouInkImporter);
+            expect(SendouInkImporter).toHaveBeenCalledWith('test-api-key');
         });
     });
 });

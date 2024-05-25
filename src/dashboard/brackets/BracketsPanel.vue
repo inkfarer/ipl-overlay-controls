@@ -88,8 +88,16 @@ import IplocButton from '../components/IplocButton.vue';
 
 const bracketStore = useBracketStore();
 const tournamentDataStore = useTournamentDataStore();
-const isSupported = computed(() => ['BATTLEFY', 'SMASHGG'].includes(tournamentDataStore.tournamentData.meta.source));
-const isConfigured = computed(() => tournamentDataStore.tournamentData.meta.source !== 'SMASHGG' || (nodecg as NodeCG.ClientAPI<Configschema>).bundleConfig?.smashgg?.apiKey != null);
+const isSupported = computed(() => ['BATTLEFY', 'SMASHGG', 'SENDOU_INK'].includes(tournamentDataStore.tournamentData.meta.source));
+const isConfigured = computed(() => {
+    if (tournamentDataStore.tournamentData.meta.source === 'SMASHGG') {
+        return (nodecg as NodeCG.ClientAPI<Configschema>).bundleConfig?.smashgg?.apiKey != null;
+    } else if (tournamentDataStore.tournamentData.meta.source === 'SENDOU_INK') {
+        return (nodecg as NodeCG.ClientAPI<Configschema>).bundleConfig?.sendouInk?.apiKey != null;
+    }
+
+    return true;
+});
 
 const matchGroupNames = computed(() => {
     if (bracketStore.bracketData == null) {

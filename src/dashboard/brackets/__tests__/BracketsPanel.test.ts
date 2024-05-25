@@ -64,6 +64,22 @@ describe('BracketsPanel', () => {
             expect(message.vm.type).toEqual('warning');
             expect(message.text()).toEqual('translation:missingConfigurationWarning');
         });
+
+        it('is visible if sendou.ink is unconfigured', () => {
+            mockBundleConfig.sendouInk = null;
+            useTournamentDataStore().tournamentData = {
+                // @ts-ignore
+                meta: {
+                    source: 'SENDOU_INK'
+                }
+            };
+            const wrapper = mount(BracketsPanel);
+
+            expect(wrapper.findAllComponents(IplSpace).length).toEqual(0);
+            const message = wrapper.getComponent(IplMessage);
+            expect(message.vm.type).toEqual('warning');
+            expect(message.text()).toEqual('translation:missingConfigurationWarning');
+        });
     });
 
     describe('loaded bracket message', () => {
