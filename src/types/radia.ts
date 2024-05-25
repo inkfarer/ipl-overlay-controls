@@ -4,3 +4,7 @@ export interface SetGuildInfoResponse {
     bracket_link: string
     tournament_name: string
 }
+
+export interface RadiaError {
+    detail: unknown
+}
