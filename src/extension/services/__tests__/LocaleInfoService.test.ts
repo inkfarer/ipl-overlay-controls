@@ -11,24 +11,7 @@ describe('LocaleInfoService', () => {
         localeInfoService = new LocaleInfoService(mockNodecg);
     });
 
-    describe('initIfNeeded', () => {
-        it('does nothing if locale info is present', () => {
-            const originalLocaleInfo = {
-                modes: {
-                    'Turf War': 'TURF'
-                },
-                stages: {
-                    'Ancho-V Games': 'ANCHOV'
-                }
-            };
-            replicants.localeInfo = originalLocaleInfo;
-            replicants.runtimeConfig = { locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 };
-
-            localeInfoService.initIfNeeded();
-
-            expect(replicants.localeInfo).toEqual(originalLocaleInfo);
-        });
-
+    describe('initLocaleInfo', () => {
         it('updates locale info if no locale info is present', () => {
             replicants.localeInfo = {
                 modes: { },
@@ -36,7 +19,7 @@ describe('LocaleInfoService', () => {
             };
             replicants.runtimeConfig = { locale: Locale.DE, gameVersion: GameVersion.SPLATOON_2 };
 
-            localeInfoService.initIfNeeded();
+            localeInfoService.initLocaleInfo();
 
             expect(replicants.localeInfo).toEqual({
                 modes: {
