@@ -9,7 +9,7 @@ export class AssetPathService {
 
     constructor(nodecg: NodeCG.ServerAPI) {
         this.nodecg = nodecg;
-        this.assetPaths = nodecg.Replicant<AssetPaths>('assetPaths');
+        this.assetPaths = nodecg.Replicant<AssetPaths>('assetPaths', { persistent: false });
     }
 
     updateAssetPaths(gameVersion: GameVersion) {

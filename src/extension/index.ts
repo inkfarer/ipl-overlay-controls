@@ -102,7 +102,7 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     assetPathService.updateAssetPaths(runtimeConfig.value.gameVersion as GameVersion);
 
     const localeInfoService = new LocaleInfoService(nodecg);
-    localeInfoService.initIfNeeded();
+    localeInfoService.initLocaleInfo();
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {

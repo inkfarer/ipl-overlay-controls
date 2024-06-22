@@ -79,7 +79,7 @@ export default defineComponent({
                 getOption(tomorrow)
             ];
 
-            if (!time.value.hasSame(today, 'days') && !time.value.hasSame(tomorrow, 'days')) {
+            if (!time.value.hasSame(today, 'day') && !time.value.hasSame(tomorrow, 'day')) {
                 result.push(getOption(time.value));
             }
 
