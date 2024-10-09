@@ -25,7 +25,8 @@ export const Splatoon3Stages = [
     'Shipshape Cargo Co.',
     'Robo ROM-en',
     'Bluefin Depot',
-    'Marlin Airport'
+    'Marlin Airport',
+    'Lemuria Hub'
 ] as const;
 
 export const Splatoon3Modes = [
@@ -61,7 +62,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Shipshape Cargo Co.': 'Shipshape Cargo Co.',
             'Robo ROM-en': 'Robo ROM-en',
             'Bluefin Depot': 'Bluefin Depot',
-            'Marlin Airport': 'Marlin Airport'
+            'Marlin Airport': 'Marlin Airport',
+            'Lemuria Hub': 'Lemuria Hub'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -86,7 +88,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Shipshape Cargo Co.': 'Cargo Ship Heavyfish',
             'Robo ROM-en': 'ROM & RAMen',
             'Bluefin Depot': 'Blauflossen-Depot',
-            'Marlin Airport': 'La Ola Airport'
+            'Marlin Airport': 'La Ola Airport',
+            'Lemuria Hub': 'Bahnhof Lemuria'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -111,7 +114,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Shipshape Cargo Co.': 'Chaland Flétan',
             'Robo ROM-en': 'Arène Méca-ramen',
             'Bluefin Depot': 'Mine Marine',
-            'Marlin Airport': 'Terminal Rorqual'
+            'Marlin Airport': 'Terminal Rorqual',
+            'Lemuria Hub': 'Gare Aiguillat'
         },
         [Locale.JA]: {
             'Museum d\'Alfonsino': 'キンメダイ美術館',
@@ -136,7 +140,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Shipshape Cargo Co.': 'オヒョウ海運',
             'Robo ROM-en': 'バイガイ亭',
             'Bluefin Depot': 'ネギトロ炭鉱',
-            'Marlin Airport': 'カジキ空港'
+            'Marlin Airport': 'カジキ空港',
+            'Lemuria Hub': 'リュウグウターミナル'
         }
     },
     stageImagePaths: {
@@ -162,7 +167,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         'Shipshape Cargo Co.': 'splatoon3/S3_Stage_Shipshape_Cargo_Co..webp',
         'Robo ROM-en': 'splatoon3/S3_Stage_Robo_ROM-en.webp',
         'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp',
-        'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp'
+        'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp',
+        'Lemuria Hub': 'splatoon3/S3_Stage_Lemuria_Hub.webp'
     },
     modes: {
         [Locale.EN]: {
