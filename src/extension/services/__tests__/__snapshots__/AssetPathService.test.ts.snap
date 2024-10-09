@@ -41,6 +41,7 @@ exports[`AssetPathService updateAssetPaths updates asset paths as expected for S
   "Hammerhead Bridge": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Hammerhead_Bridge.webp",
   "Humpback Pump Track": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Humpback_Pump_Track.webp",
   "Inkblot Art Academy": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Inkblot_Art_Academy.webp",
+  "Lemuria Hub": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Lemuria_Hub.webp",
   "Mahi-Mahi Resort": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Mahi_Mahi_Resort.webp",
   "MakoMart": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_MakoMart.webp",
   "Manta Maria": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Manta_Maria.webp",

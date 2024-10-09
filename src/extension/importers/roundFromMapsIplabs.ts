@@ -122,5 +122,6 @@ const mapsInOrder: (typeof Splatoon3Stages[number])[] = [
     'Crableg Capital',
     'Shipshape Cargo Co.',
     'Bluefin Depot',
-    'Robo ROM-en'
+    'Robo ROM-en',
+    'Lemuria Hub'
 ];
