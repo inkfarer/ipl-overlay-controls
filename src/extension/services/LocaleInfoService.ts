@@ -9,22 +9,17 @@ export class LocaleInfoService {
     private runtimeConfig: NodeCG.ServerReplicant<RuntimeConfig>;
 
     constructor(nodecg: NodeCG.ServerAPI) {
-        this.localeInfo = nodecg.Replicant<LocaleInfo>('localeInfo');
+        this.localeInfo = nodecg.Replicant<LocaleInfo>('localeInfo', { persistent: false });
         this.runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
     }
 
-    initIfNeeded() {
-        if (
-            Object.keys(this.localeInfo.value.modes).length <= 0
-            && Object.keys(this.localeInfo.value.stages).length <= 0
-        ) {
-            this.updateLocaleInfo(
-                this.runtimeConfig.value.locale as Locale,
-                this.runtimeConfig.value.gameVersion as GameVersion);
-        }
+    initLocaleInfo() {
+        this.updateLocaleInfo(
+            this.runtimeConfig.value.locale,
+            this.runtimeConfig.value.gameVersion);
     }
 
-    updateLocaleInfo(locale: Locale, gameVersion: GameVersion) {
+    updateLocaleInfo(locale: Locale | `${Locale}`, gameVersion: GameVersion | `${GameVersion}`) {
         const gameData = perGameData[gameVersion];
 
         this.localeInfo.value = {

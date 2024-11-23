@@ -7,7 +7,7 @@ describe('NextStageTimeInput', () => {
     const mockNow = '2021-01-23T05:54:00Z';
 
     beforeEach(() => {
-        jest.spyOn(DateTime, 'now').mockReturnValue(DateTime.fromISO(mockNow));
+        jest.spyOn(DateTime, 'now').mockReturnValue(DateTime.fromISO(mockNow) as DateTime);
     });
 
     config.global.stubs = {
