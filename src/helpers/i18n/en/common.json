@@ -70,5 +70,8 @@
     },
     "stringHelper": {
         "invalidSendouInkTournamentUrlError": "Input URL path is too short - is this a tournament URL?"
+    },
+    "brackets": {
+        "unsupportedSourceError": "Tournament source $t(common:tournamentDataSource.{{source}}) is not supported."
     }
 }

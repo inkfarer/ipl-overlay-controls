@@ -3,7 +3,7 @@ import { GuildInfo, GuildServices } from '../../types/radiaApi';
 import * as nodecgContext from '../../helpers/nodecg';
 import { PredictionResponse } from 'types/prediction';
 import { CreatePrediction, PatchPrediction } from 'types/predictionRequests';
-import { SetGuildInfoResponse } from 'types/radia';
+import { RadiaError, SetGuildInfoResponse } from 'types/radia';
 import { isBlank } from '../../../helpers/stringHelper';
 import i18next from 'i18next';
 
@@ -111,12 +111,12 @@ export async function createPrediction(guildId: string, data: CreatePrediction):
     }
 }
 
-export function handleAxiosError(e: AxiosError<{ detail: unknown }> | Error): void {
+export function handleAxiosError(e: AxiosError<RadiaError> | Error): void {
     if ('response' in e) {
         let message = i18next.t('radiaClient.requestFailed', { statusCode: e.response.status });
         if (e.response.data?.detail) {
             if (typeof e.response.data.detail === 'object') {
-                if ('message' in e.response.data.detail) {
+                if ('message' in e.response.data.detail && e.response.data.detail.message != null) {
                     message += `: ${e.response.data.detail.message}`;
                 } else {
                     message += `: ${JSON.stringify(e.response.data.detail)}`;
