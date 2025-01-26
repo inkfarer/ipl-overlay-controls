@@ -34,7 +34,7 @@ describe('tournamentImporter', () => {
                 await messageListeners.getTournamentData(
                     { id: 'tourney', method: TournamentDataSource.SMASHGG }, ack);
 
-                expect(ack).toHaveBeenCalledWith(new Error('translation:tournamentImporter.missingStartggApiKey'));
+                expect(ack).toHaveBeenCalledWith(new Error('translation:common.missingStartggApiKey'));
             });
         });
     });

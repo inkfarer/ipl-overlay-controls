@@ -32,7 +32,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             }
             case TournamentDataSource.SMASHGG: {
                 if (!nodecg.bundleConfig?.smashgg?.apiKey) {
-                    ack(new Error(i18next.t('tournamentImporter.missingStartggApiKey')));
+                    ack(new Error(i18next.t('common.missingStartggApiKey')));
                     break;
                 }
 
@@ -47,7 +47,7 @@ nodecg.listenFor('getTournamentData', async (data: GetTournamentDataRequest, ack
             }
             case TournamentDataSource.SENDOU_INK: {
                 if (SendouInkClientInstance == null) {
-                    ack(new Error(i18next.t('tournamentImporter.missingSendouInkApiKey')));
+                    ack(new Error(i18next.t('common.missingSendouInkApiKey')));
                     break;
                 }
 

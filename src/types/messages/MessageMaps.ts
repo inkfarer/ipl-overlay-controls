@@ -2,6 +2,7 @@ import { Casters, ObsCredentials } from 'schemas';
 import { SetObsConfigRequest } from './obs';
 import { SetGameVersionMessage, SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { Locale } from 'types/enums/Locale';
+import { GetHighlightedMatchesMessage } from 'types/messages/highlightedMatches';
 
 export interface MessageInputMap {
     connectToObs: ObsCredentials
@@ -20,6 +21,8 @@ export interface MessageInputMap {
 
     setGameVersion: SetGameVersionMessage
     setLocale: Locale
+
+    'highlightedMatches:import': GetHighlightedMatchesMessage
 }
 
 type MessagesWithoutReturnValues = Exclude<keyof MessageInputMap, keyof InnerMessageResultMap>;

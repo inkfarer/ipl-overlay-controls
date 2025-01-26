@@ -29,7 +29,7 @@ describe('highlightedMatchStore', () => {
             // @ts-ignore
             await store.getHighlightedMatches({ options: [ { value: 'all' } ]});
 
-            expect(mockSendMessage).toHaveBeenCalledWith('getHighlightedMatches', { getAllMatches: true });
+            expect(mockSendMessage).toHaveBeenCalledWith('highlightedMatches:import', { getAllMatches: true });
         });
 
         it('fetches stages if tournament is imported from battlefy', async () => {
@@ -50,7 +50,7 @@ describe('highlightedMatchStore', () => {
                 ]
             });
 
-            expect(mockSendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
+            expect(mockSendMessage).toHaveBeenCalledWith('highlightedMatches:import', {
                 getAllMatches: false,
                 stages: [ 'bracket123', 'bracket456' ]
             });
@@ -74,7 +74,7 @@ describe('highlightedMatchStore', () => {
                 ]
             });
 
-            expect(mockSendMessage).toHaveBeenCalledWith('getHighlightedMatches', {
+            expect(mockSendMessage).toHaveBeenCalledWith('highlightedMatches:import', {
                 getAllMatches: false,
                 streamIDs: [ 102938210598, 4059678 ]
             });
