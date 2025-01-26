@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import { ObsConnectorService } from './services/ObsConnectorService';
 import { AssetPathService } from './services/AssetPathService';
 import { GameVersion } from 'types/enums/gameVersion';
+import { BracketController } from './controllers/BracketController';
 
 import i18next, { type Resource } from 'i18next';
 import { InterfaceLocale } from 'types/enums/InterfaceLocale';
@@ -104,6 +105,8 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const localeInfoService = new LocaleInfoService(nodecg);
     localeInfoService.initLocaleInfo();
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
+
+    new BracketController(nodecg);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));

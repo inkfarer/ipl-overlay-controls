@@ -212,7 +212,6 @@ To use this feature, configure an API URL and authorization key from the bundle 
 
 Currently, the code required in [Radia-Productions API](https://github.com/IPLSplatoon/Radia-Productions) for this function is **not publicly accessible**. If you would like access to this system you can contact `vlee489#5801` via Discord for queries on access to this section of [Radia-Productions](https://github.com/IPLSplatoon/Radia-Productions).
 
-
 ## Assets
 
 ipl-overlay-controls has some commonly used game assets for dependent bundles to use.
@@ -221,3 +220,13 @@ ipl-overlay-controls has some commonly used game assets for dependent bundles to
 *Replicant* [(Schema)](https://github.com/inkfarer/ipl-overlay-controls/blob/4.4.0/schemas/assetPaths.json)
 
 Intended to be read-only; contains `stageImages`, a map of stage names to the paths of their respective images. Only changes when the game version is changed.
+
+## Brackets
+
+ipl-overlay-controls allows importing bracket data from supported tournament platforms, powered, by [tourneyview](https://github.com/IPLSplatoon/tourneyview).  
+An example of a bundle including bracket rendering support is [sj-overlays](https://github.com/IPLSplatoon/sj-overlays/blob/master/src/graphics/pages/bracket/BracketGraphic.vue#L112).
+
+### bracketData
+*Replicant* (No Schema)
+
+Contains imported bracket data. Can be consumed by the [@tourneyview/renderer](https://www.npmjs.com/package/@tourneyview/renderer) package.
