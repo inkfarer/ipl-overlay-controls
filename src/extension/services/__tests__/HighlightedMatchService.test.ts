@@ -3,11 +3,14 @@ import * as BattlefyClient from '../../importers/clients/battlefyClient';
 import * as SmashggClient from '../../importers/clients/smashggClient';
 import { mock } from 'jest-mock-extended';
 import { TournamentDataSource } from 'types/enums/tournamentDataSource';
+import type { SendouInkClient } from '../../clients/SendouInkClient';
 
+const mockSendouInkClient = mock<SendouInkClient>();
 const mockBattlefyClient = mock<typeof BattlefyClient>();
 const mockSmashggClient = mock<typeof SmashggClient>();
 jest.mock('../../importers/clients/battlefyClient', () => mockBattlefyClient);
 jest.mock('../../importers/clients/smashggClient', () => mockSmashggClient);
+jest.mock('../../clients/SendouInkClient', () => ({ __esModule: true, SendouInkClientInstance: mockSendouInkClient }));
 
 import { HighlightedMatchService } from '../HighlightedMatchService';
 
@@ -101,10 +104,162 @@ describe('HighlightedMatchService', () => {
             });
         });
 
+        describe('source: SENDOU_INK', () => {
+            it('imports matches from sendou.ink', async () => {
+                replicants.tournamentData = {
+                    meta: { source: TournamentDataSource.SENDOU_INK, id: '99999' },
+                    teams: [
+                        { id: '11', name: 'Test Team 1' },
+                        { id: '22', name: 'Test Team 2' },
+                        { id: '33', name: 'Test Team 3' },
+                        { id: '44', name: 'Test Team 4' }
+                    ]
+                };
+                mockSendouInkClient.getCastedMatches.mockResolvedValue({
+                    current: [
+                        {
+                            matchId: 111,
+                            channel: {
+                                type: 'TWITCH',
+                                channelId: 'iplsplatoon'
+                            }
+                        },
+                        {
+                            matchId: 222,
+                            channel: {
+                                type: 'TWITCH',
+                                channelId: 'iplsplatoon'
+                            }
+                        }
+                    ],
+                    future: [
+                        {
+                            matchId: 333,
+                            channel: {
+                                type: 'TWITCH',
+                                channelId: 'iplsplatoon'
+                            }
+                        },
+                        {
+                            matchId: 444,
+                            channel: null
+                        }
+                    ]
+                });
+                mockSendouInkClient.getMatch
+                    .mockResolvedValueOnce({
+                        teamOne: {
+                            id: 11,
+                            score: 0
+                        },
+                        teamTwo: {
+                            id: 22,
+                            score: 1
+                        },
+                        url: 'mock-sendou-ink://test-match-one',
+                        mapList: [
+                            {
+                                map: {
+                                    mode: 'SZ',
+                                    stage: {
+                                        id: 19,
+                                        name: 'Shipshape Cargo Co.'
+                                    }
+                                },
+                                participatedUserIds: [1, 2, 3],
+                                winnerTeamId: 22,
+                                source: 'TO'
+                            },
+                            {
+                                map: {
+                                    mode: 'SZ',
+                                    stage: {
+                                        id: 10,
+                                        name: 'MakoMart'
+                                    }
+                                },
+                                participatedUserIds: [1, 2, 3],
+                                winnerTeamId: null,
+                                source: 'COUNTERPICK'
+                            }
+                        ],
+                        bracketName: 'Test Bracket',
+                        roundName: 'Round One'
+                    })
+                    .mockResolvedValueOnce({
+                        teamOne: {
+                            id: 22,
+                            score: 0
+                        },
+                        teamTwo: {
+                            id: 33,
+                            score: 0
+                        },
+                        url: 'mock-sendou-ink://test-match-two',
+                        mapList: null,
+                        bracketName: 'Test Bracket',
+                        roundName: 'Round Two'
+                    })
+                    .mockResolvedValueOnce({
+                        teamOne: {
+                            id: 44,
+                            score: 0
+                        },
+                        teamTwo: null,
+                        url: 'mock-sendou-ink://test-match-three',
+                        mapList: null,
+                        bracketName: null,
+                        roundName: 'Round Three'
+                    })
+                    .mockResolvedValueOnce({
+                        teamOne: {
+                            id: 55,
+                            score: 0
+                        },
+                        teamTwo: {
+                            id: 33,
+                            score: 0
+                        },
+                        url: 'mock-sendou-ink://test-match-four',
+                        mapList: null,
+                        bracketName: 'Test Bracket',
+                        roundName: null
+                    });
+
+                await service.get({ getAllMatches: false });
+
+                expect(replicants.highlightedMatches).toEqual([
+                    {
+                        meta: {
+                            id: '111',
+                            name: 'Round One on Test Bracket',
+                            shortName: 'Round One'
+                        },
+                        teamA: { id: '11', name: 'Test Team 1' },
+                        teamB: { id: '22', name: 'Test Team 2' }
+                    },
+                    {
+                        meta: {
+                            id: '222',
+                            name: 'Round Two on Test Bracket',
+                            shortName: 'Round Two'
+                        },
+                        teamA: { id: '22', name: 'Test Team 2' },
+                        teamB: { id: '33', name: 'Test Team 3' }
+                    }
+                ]);
+                expect(mockSendouInkClient.getCastedMatches).toHaveBeenCalledTimes(1);
+                expect(mockSendouInkClient.getMatch).toHaveBeenCalledTimes(4);
+                expect(mockSendouInkClient.getMatch).toHaveBeenCalledWith(111);
+                expect(mockSendouInkClient.getMatch).toHaveBeenCalledWith(222);
+                expect(mockSendouInkClient.getMatch).toHaveBeenCalledWith(333);
+                expect(mockSendouInkClient.getMatch).toHaveBeenCalledWith(444);
+            });
+        });
+
         it.each([
             TournamentDataSource.UNKNOWN,
-            TournamentDataSource.UPLOAD,
-            TournamentDataSource.SENDOU_INK
+            TournamentDataSource.UPLOAD
         ])('throws error when using unsupported source %s', async (source) => {
             replicants.tournamentData = { meta: { source } };
 

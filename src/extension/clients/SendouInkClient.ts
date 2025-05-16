@@ -40,6 +40,49 @@ type SendouInkStageWithMode = {
     }
 }
 
+type SendouInkCastedMatchChannel = {
+    type: 'TWITCH'
+    channelId: string
+}
+
+type SendouInkCastedMatchesResponse = {
+    current: {
+        matchId: number
+        channel: SendouInkCastedMatchChannel
+    }[]
+    future: {
+        matchId: number
+        channel: SendouInkCastedMatchChannel | null
+    }[]
+}
+
+type SendouInkTournamentMatchTeam = {
+    id: number
+    score: number
+}
+
+type SendouInkMapListMap = {
+    map: {
+        mode: string
+        stage: {
+            id: number
+            name: string
+        }
+    }
+    source: number | 'DEFAULT' | 'TIEBREAKER' | 'BOTH' | 'TO' | 'COUNTERPICK'
+    winnerTeamId: number | null
+    participatedUserIds: number[] | null
+}
+
+type SendouInkGetTournamentMatchResponse = {
+    teamOne: SendouInkTournamentMatchTeam | null
+    teamTwo: SendouInkTournamentMatchTeam | null
+    mapList: SendouInkMapListMap[] | null
+    bracketName: string | null
+    roundName: string | null
+    url: string
+}
+
 export class SendouInkClient {
     private readonly axios: AxiosInstance;
 
@@ -73,6 +116,16 @@ export class SendouInkClient {
                 }))
             }))
         };
+    }
+
+    async getCastedMatches(tournamentId: string): Promise<SendouInkCastedMatchesResponse> {
+        const response = await this.axios.get<SendouInkCastedMatchesResponse>(`/tournament/${tournamentId}/casted`);
+        return response.data;
+    }
+
+    async getMatch(matchId: number): Promise<SendouInkGetTournamentMatchResponse> {
+        const response = await this.axios.get<SendouInkGetTournamentMatchResponse>(`/tournament-match/${matchId}`);
+        return response.data;
     }
 }
 

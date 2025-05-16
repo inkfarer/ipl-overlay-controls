@@ -41,6 +41,8 @@ export const useHighlightedMatchStore = defineStore('highlightedMatches', {
                             getAllMatches: false,
                             streamIDs: values.map(value => parseInt(value))
                         });
+                    case TournamentDataSource.SENDOU_INK:
+                        return sendMessage('highlightedMatches:import', { getAllMatches: true });
                     default:
                         throw new Error(i18next.t('cannotImportDataError', { source: this.tournamentData.meta.source }));
                 }
