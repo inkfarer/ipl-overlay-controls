@@ -258,6 +258,17 @@ predicted and stop the prediction, while locking it stops more points from being
 When a match has ended, click "Resolve" to end the prediction. In most cases, the correct winner will be
 highlighted based on who won the active match.
 
+### Displaying bracket information
+
+![The interface for loading bracket data](img/brackets.png)
+
+ipl-overlay-controls can load bracket data from supported tournament platforms. Note that this feature must be paired 
+with graphics that supports displaying bracket data.
+
+When available, the "Brackets" dashboard panel will display information about the loaded bracket at the top of the panel. 
+Select "Load Bracket Data" at the bottom of the panel to begin loading a new bracket. Select the required parameters, 
+press "Submit" and a new bracket will be loaded.
+
 ## After a stream
 
 ### Exporting match data
