@@ -112,8 +112,6 @@
     },
     "tournamentImporter": {
         "missingStartggConfigurationWarning": "\"smashgg\" is not defined in cfg/{{bundleName}}.json! Importing tournament data from start.gg will not be possible.",
-        "missingStartggApiKey": "No start.gg API key is configured.",
-        "missingSendouInkApiKey": "No sendou.ink API key is configured.",
         "rawDataImportFailed": "Got response code {{statusCode}} from {{url}}"
     },
     "tournamentRefresh": {
@@ -149,6 +147,14 @@
         "badGameVersion": "Colors cannot be detected for $t(common:gameVersion.{{gameVersion}}).",
         "noMatchingColors": "Sampled ink colors couldn't be matched to any existing color combinations.",
         "badColorSamples": "All sampled colors were too different from each other."
+    },
+    "highlightedMatches": {
+        "missingArguments": "Missing arguments.",
+        "unsupportedSource": "Cannot import highlighted matches data from $t(common:tournamentDataSource.{{source}})."
+    },
+    "common": {
+        "missingStartggApiKey": "No start.gg API key is configured.",
+        "missingSendouInkApiKey": "No sendou.ink API key is configured."
     },
     "missingRadiaConfigurationWarning": "\"radia\" is not defined in cfg/{{bundleName}}.json! Importing data from the Radia Productions API will not be possible.",
     "invalidArgumentsError": "Invalid arguments."

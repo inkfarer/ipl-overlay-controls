@@ -35,7 +35,7 @@ describe('tournamentRefresh', () => {
 
             messageListeners.refreshTournamentData(null, ack);
 
-            expect(ack).toHaveBeenCalledWith(new Error('translation:tournamentImporter.missingStartggApiKey'));
+            expect(ack).toHaveBeenCalledWith(new Error('translation:common.missingStartggApiKey'));
         });
 
         it('updates battlefy tournament data', async () => {

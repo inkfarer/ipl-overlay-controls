@@ -43,8 +43,13 @@ export default defineComponent({
         const nextRoundStore = useNextRoundStore();
         const highlightedMatchStore = useHighlightedMatchStore();
         const chooseTeamsManually = ref(false);
-        const canImportData = computed(() => [TournamentDataSource.BATTLEFY, TournamentDataSource.SMASHGG]
-            .includes(highlightedMatchStore.tournamentData.meta.source as TournamentDataSource));
+        const canImportData = computed(() =>
+            [
+                TournamentDataSource.BATTLEFY,
+                TournamentDataSource.SMASHGG,
+                TournamentDataSource.SENDOU_INK
+            ]
+                .includes(highlightedMatchStore.tournamentData.meta.source as TournamentDataSource));
 
         return {
             canImportData,

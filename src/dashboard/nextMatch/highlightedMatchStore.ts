@@ -4,6 +4,7 @@ import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 import { SetNextRoundRequest } from 'types/messages/rounds';
 import { defineStore } from 'pinia';
 import i18next from 'i18next';
+import { sendMessage } from '../helpers/nodecgHelper';
 
 const highlightedMatches = nodecg.Replicant<HighlightedMatches>('highlightedMatches');
 const tournamentData = nodecg.Replicant<TournamentData>('tournamentData');
@@ -25,21 +26,23 @@ export const useHighlightedMatchStore = defineStore('highlightedMatches', {
             const getAllMatches = options.some(option => option.value === 'all');
 
             if (getAllMatches) {
-                return nodecg.sendMessage('getHighlightedMatches', { getAllMatches });
+                return sendMessage('highlightedMatches:import', { getAllMatches });
             } else {
                 const values = options.map(option => option.value);
 
                 switch (this.tournamentData.meta.source) {
                     case TournamentDataSource.BATTLEFY:
-                        return nodecg.sendMessage('getHighlightedMatches', {
+                        return sendMessage('highlightedMatches:import', {
                             getAllMatches: false,
                             stages: values
                         });
                     case TournamentDataSource.SMASHGG:
-                        return nodecg.sendMessage('getHighlightedMatches', {
+                        return sendMessage('highlightedMatches:import', {
                             getAllMatches: false,
                             streamIDs: values.map(value => parseInt(value))
                         });
+                    case TournamentDataSource.SENDOU_INK:
+                        return sendMessage('highlightedMatches:import', { getAllMatches: true });
                     default:
                         throw new Error(i18next.t('cannotImportDataError', { source: this.tournamentData.meta.source }));
                 }
