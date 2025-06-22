@@ -1,14 +1,15 @@
 <template>
     <ipl-space>
         <ipl-multi-select
+            v-if="showMatchSelector"
             v-model="selectedMatchOptions"
             :label="$t('highlightedMatches.matchSourceSelect', { context: tournamentDataSource })"
             :options="matchSelectOptions"
             data-test="match-selector"
+            class="m-b-8"
         />
         <iploc-button
             :label="$t('highlightedMatches.importButton')"
-            class="m-t-8"
             async
             :disabled="importDisabled"
             data-test="import-button"
@@ -37,9 +38,11 @@ export default defineComponent({
         const store = useHighlightedMatchStore();
         const tournamentDataSource = computed(() => store.tournamentData.meta.source as TournamentDataSource);
         const selectedMatchOptions: Ref<SelectOptions> = ref([]);
+        const showMatchSelector = computed(() => tournamentDataSource.value !== TournamentDataSource.SENDOU_INK);
 
         return {
             tournamentDataSource,
+            showMatchSelector,
             matchSelectOptions: computed(() => {
                 switch (tournamentDataSource.value) {
                     case TournamentDataSource.BATTLEFY:
@@ -77,7 +80,7 @@ export default defineComponent({
             async handleImport() {
                 return store.getHighlightedMatches({ options: selectedMatchOptions.value });
             },
-            importDisabled: computed(() => selectedMatchOptions.value?.length <= 0)
+            importDisabled: computed(() => showMatchSelector.value && selectedMatchOptions.value?.length <= 0)
         };
     }
 

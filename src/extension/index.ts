@@ -60,7 +60,6 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     require('./importers/tournamentRefresh');
     require('./importers/roundImporter');
     require('./importers/fileImport');
-    require('./importers/highlightedMatches');
     require('./replicants/activeRound');
     require('./replicants/nextRound');
     require('./replicants/tournamentData');
@@ -80,6 +79,8 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const { RuntimeConfigController } = require('./controllers/RuntimeConfigController');
     const { ScreenshotParserService } = require('./services/ScreenshotParserService');
     const { ObsConnectorController } = require('./controllers/ObsConnectorController');
+    const { HighlightedMatchService } = require('./services/HighlightedMatchService');
+    const { HighlightedMatchController } = require('./controllers/HighlightedMatchController');
 
     const screenshotParserService = new ScreenshotParserService(nodecg);
 
@@ -107,6 +108,9 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     new RuntimeConfigController(nodecg, localeInfoService, assetPathService);
 
     new BracketController(nodecg);
+
+    const highlightedMatchService = new HighlightedMatchService(nodecg);
+    new HighlightedMatchController(nodecg, highlightedMatchService);
 
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));

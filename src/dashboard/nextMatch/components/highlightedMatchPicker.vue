@@ -22,6 +22,7 @@ import { IplMessage } from '@iplsplatoon/vue-components';
 import { useHighlightedMatchStore } from '../highlightedMatchStore';
 import { computed } from 'vue';
 import isEmpty from 'lodash/isEmpty';
+import { TournamentDataSource } from 'types/enums/tournamentDataSource';
 
 export default defineComponent({
     name: 'HighlightedMatchPicker',
@@ -32,7 +33,9 @@ export default defineComponent({
         const store = useHighlightedMatchStore();
 
         return {
-            stageDataPresent: computed(() => !isEmpty(store.tournamentData.stages)
+            stageDataPresent: computed(() =>
+                store.tournamentData.meta.source === TournamentDataSource.SENDOU_INK
+                || !isEmpty(store.tournamentData.stages)
                 || !isEmpty(store.tournamentData.meta.sourceSpecificData?.smashgg?.streams))
         };
     }

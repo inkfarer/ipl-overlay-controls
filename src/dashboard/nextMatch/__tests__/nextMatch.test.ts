@@ -51,7 +51,8 @@ describe('NextMatch', () => {
 
     const importableSources = [
         TournamentDataSource.SMASHGG,
-        TournamentDataSource.BATTLEFY
+        TournamentDataSource.BATTLEFY,
+        TournamentDataSource.SENDOU_INK
     ];
 
     it.each(difference(Object.values(TournamentDataSource), importableSources))('disables importing from source if the source is %s', source => {
