@@ -12,6 +12,8 @@ export class ActiveBundleService {
         this.bundles = nodecg.Replicant('bundles', 'nodecg');
 
         this.bundles.on('change', (newValue) => {
+            if (newValue.length === 0) return;
+
             this.runtimeConfig.value.activeGraphicsBundles = this.runtimeConfig.value.activeGraphicsBundles
                 .filter(bundleName => newValue.some(otherBundle =>
                     otherBundle.name !== this.nodecg.bundleName && otherBundle.name === bundleName));
