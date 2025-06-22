@@ -22,6 +22,7 @@ type SendouInkGetTournamentTeamsResponse = Array<{
     url: string
     seed: number | null
     mapPool: Array<SendouInkStageWithMode> | null
+    logoUrl: string | null
     members: Array<{
         userId: number
         name: string
@@ -111,6 +112,7 @@ export class SendouInkClient {
                 id: String(team.id),
                 name: team.name,
                 showLogo: true,
+                logoUrl: team.logoUrl ?? undefined,
                 players: team.members.map(member => ({
                     name: member.name
                 }))
