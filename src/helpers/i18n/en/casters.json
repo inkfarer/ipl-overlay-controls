@@ -7,7 +7,7 @@
     },
     "casterEditor": {
         "unsavedCasterBadge": "Unsaved",
-        "saveNewCasterButton": "Save",
+        "saveNewCasterButtonLabel": "Save",
         "nameInput": "Name",
         "twitterInput": "Twitter",
         "pronounInput": "Pronouns",
