@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["scenes"],
+        "properties": {
+            "scenes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["value"],
+                    "properties": {
+                        "value": {
+                            "type": "string"
+                        },
+                        "names": {
+                            "type": "object",
+                            "properties": {
+                                "EN": { "type": "string" },
+                                "JA": { "type": "string" }
+                            },
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

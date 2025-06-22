@@ -27,6 +27,38 @@ By default, bundles are marked as compatible with Splatoon 2.
 To define a different set of compatible games for your bundle, add the following to your bundle's `package.json` file:  
 `"compatibleGameVersions": ["SPLATOON_2", "SPLATOON_3"]`
 
+## Defining custom intermission scenes
+
+By default, only three intermission "Scenes" are available - Main, teams and stages. 
+To declare more scenes, your bundle must declare them first:
+
+1. Declare `ipl-overlay-controls` as a dependent of your graphics bundle:
+```
+{
+    [...]
+    "nodecg": {
+        [...]
+        "bundleDependencies": {
+            "ipl-overlay-controls": "^4.18.0"
+        }
+    }
+}
+```
+2. Declare additional scenes within your extension code:
+```js
+module.exports = (nodecg) => {
+    nodecg.extensions['ipl-overlay-controls'].bundleConfigDeclarationService.declareCustomScenes(nodecg.bundleName, [
+        {
+            value: 'casters',
+            names: {
+                EN: 'Casters',
+                JA: 'キャスト'
+            }
+        }
+    ]);
+}
+```
+
 ## Debugging the screenshot parser
 
 By setting `screenshotParser.saveBadScreenshotsToDisk` to `true` in the bundle configuration file (`<nodecg>/cfg/ipl-overlay-controls.json`), 

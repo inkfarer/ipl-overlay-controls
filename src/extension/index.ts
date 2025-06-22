@@ -9,6 +9,8 @@ import { BracketController } from './controllers/BracketController';
 
 import i18next, { type Resource } from 'i18next';
 import { InterfaceLocale } from 'types/enums/InterfaceLocale';
+import { ActiveBundleService } from './services/ActiveBundleService';
+import { BundleConfigDeclarationService } from './services/BundleConfigDeclarationService';
 
 function loadTranslation(locale: string, name: string) {
     try {
@@ -51,7 +53,7 @@ function initI18n(nodecg: NodeCG.ServerAPI) {
 }
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
+export = (nodecg: NodeCG.ServerAPI<Configschema>) => {
     initI18n(nodecg);
     nodecgContext.set(nodecg);
 
@@ -112,6 +114,9 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
     const highlightedMatchService = new HighlightedMatchService(nodecg);
     new HighlightedMatchController(nodecg, highlightedMatchService);
 
+    new ActiveBundleService(nodecg);
+    const bundleConfigDeclarationService = new BundleConfigDeclarationService(nodecg);
+
     if (isEmpty(nodecg.bundleConfig) || isEmpty(nodecg.bundleConfig.radia)) {
         nodecg.log.warn(i18next.t('missingRadiaConfigurationWarning', { bundleName: nodecg.bundleName }));
 
@@ -131,4 +136,8 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>): void => {
         const radiaProductionsService = new RadiaProductionsService(nodecg, radiaProductionsClient);
         new CasterImportController(nodecg, radiaProductionsService);
     }
+
+    return {
+        bundleConfigDeclarationService
+    };
 };

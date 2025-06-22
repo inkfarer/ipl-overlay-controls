@@ -37,6 +37,7 @@
         "gameVersionChangeWarning": "Changing game versions will reset round and match data!",
         "gameVersionSelect": "Game version",
         "gameLocaleSelect": "Game language",
-        "interfaceLocaleSelect": "Interface language"
+        "interfaceLocaleSelect": "Interface language",
+        "activeGraphicsBundleSelect": "Active bundles"
     }
 }

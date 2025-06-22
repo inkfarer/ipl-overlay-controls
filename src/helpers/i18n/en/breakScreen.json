@@ -15,5 +15,6 @@
         "hourInput": "Hour",
         "minuteInput": "Min",
         "daySelect": "Day"
-    }
+    },
+    "sceneConfigLink": "More options are available. Click to change active bundles in the Settings panel."
 }

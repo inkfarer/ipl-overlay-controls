@@ -62,6 +62,33 @@
             @click="setActiveBreakScene('stages')"
         />
     </ipl-space>
+    <ipl-space
+        v-for="scene in customScenes"
+        :key="`show-scene-button__${scene.value}`"
+        class="layout horizontal center-vertical layout-break-scene m-t-8"
+    >
+        <span>{{ scene.name }}</span>
+        <ipl-button
+            class="show-scene-button"
+            :label="$t('showSceneButton')"
+            color="green"
+            :data-test="`show-scene-button__${scene.value}`"
+            :disabled="activeBreakScene === scene.value"
+            @click="setActiveBreakScene(scene.value)"
+        />
+    </ipl-space>
+    <a
+        v-if="hasMoreBundlesWithDeclaredScenes"
+        href="/dashboard/#workspace/ipl%20setup"
+        target="_top"
+    >
+        <ipl-space
+            class="extra-layout-button m-t-8"
+            clickable
+        >
+            {{ $t('sceneConfigLink') }}
+        </ipl-space>
+    </a>
 </template>
 
 <script lang="ts">
@@ -72,6 +99,7 @@ import { ActiveBreakScene } from 'schemas';
 import isEqual from 'lodash/isEqual';
 import NextStageTimeInput from './components/nextStageTimeInput.vue';
 import IplErrorDisplay from '../components/iplErrorDisplay.vue';
+import { useTranslation } from 'i18next-vue';
 
 export default defineComponent({
     name: 'BreakScreen',
@@ -79,6 +107,7 @@ export default defineComponent({
     components: { IplErrorDisplay, IplCheckbox, NextStageTimeInput, IplInput, IplExpandingSpace, IplButton, IplSpace },
 
     setup() {
+        const i18n = useTranslation();
         const store = useBreakScreenStore();
         const mainFlavorText = ref('');
         const nextRoundTime = ref('');
@@ -132,7 +161,29 @@ export default defineComponent({
                 nextRoundTimeFocused.value = event;
             },
             mainFlavorTextFocused,
-            nextRoundTimeFocused
+            nextRoundTimeFocused,
+            hasMoreBundlesWithDeclaredScenes: computed(() => Object.keys(store.bundleDeclaredConfig)
+                .some(bundleWithConfig => !store.runtimeConfig.activeGraphicsBundles
+                    .some(activeBundle => activeBundle === bundleWithConfig))),
+            customScenes: computed(() => {
+                const result: { name: string, value: string }[] = [];
+
+                store.runtimeConfig.activeGraphicsBundles.forEach(activeBundle => {
+                    const declaredConfig = store.bundleDeclaredConfig[activeBundle];
+                    if (declaredConfig != null) {
+                        declaredConfig.scenes.forEach(scene => {
+                            if (!result.some(otherScene => scene.value === otherScene.value)) {
+                                result.push({
+                                    value: scene.value,
+                                    name: scene.names?.[i18n.i18next.language.toUpperCase()] ?? scene.value
+                                });
+                            }
+                        });
+                    }
+                });
+
+                return result;
+            })
         };
     }
 });
@@ -149,5 +200,16 @@ export default defineComponent({
     span {
         flex-grow: 1;
     }
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.extra-layout-button {
+    padding: 4px;
+    text-align: center !important;
+    color: var(--ipl-input-color) !important;
+    font-size: 0.75em !important;
 }
 </style>

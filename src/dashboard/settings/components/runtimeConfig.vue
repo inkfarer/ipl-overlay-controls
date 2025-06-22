@@ -44,6 +44,12 @@
             :options="interfaceLocaleOptions"
             class="m-t-6"
         />
+        <ipl-multi-select
+            v-model="activeGraphicsBundles"
+            :options="bundleOptions"
+            :label="$t('general.activeGraphicsBundleSelect')"
+            class="m-t-6"
+        />
         <ipl-button
             class="m-t-8"
             :label="$t('common:button.update')"
@@ -58,7 +64,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IplButton, IplMessage, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
+import { IplButton, IplMessage, IplMultiSelect, IplSelect, IplSpace } from '@iplsplatoon/vue-components';
 import { GameVersion } from 'types/enums/gameVersion';
 import { useSettingsStore } from '../../store/settingsStore';
 import { computed, ref, watch } from 'vue';
@@ -66,11 +72,12 @@ import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
 import { Locale } from 'types/enums/Locale';
 import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 import { useTranslation } from 'i18next-vue';
+import { SelectOptions } from '../../types/select';
 
 export default defineComponent({
     name: 'RuntimeConfig',
 
-    components: { IplMessage, IplButton, IplSelect, IplSpace },
+    components: { IplMultiSelect, IplMessage, IplButton, IplSelect, IplSpace },
 
     setup() {
         const store = useSettingsStore();
@@ -83,6 +90,7 @@ export default defineComponent({
 
         const locale = ref<Locale>(null);
         const interfaceLocale = ref<InterfaceLocale>(null);
+        const activeGraphicsBundles = ref<SelectOptions>([]);
 
         watch(
             () => store.runtimeConfig.gameVersion,
@@ -96,6 +104,10 @@ export default defineComponent({
             () => store.runtimeConfig.interfaceLocale,
             newValue => interfaceLocale.value = newValue as InterfaceLocale,
             { immediate: true });
+        watch(
+            () => store.runtimeConfig.activeGraphicsBundles,
+            newValue => activeGraphicsBundles.value = newValue.map(bundle => ({ name: bundle, value: bundle })),
+            { immediate: true });
 
         return {
             gameVersion,
@@ -105,7 +117,10 @@ export default defineComponent({
             isChanged: computed(() =>
                 isGameVersionChanged.value
                 || locale.value !== store.runtimeConfig.locale
-                || interfaceLocale.value !== store.runtimeConfig.interfaceLocale),
+                || interfaceLocale.value !== store.runtimeConfig.interfaceLocale
+                || activeGraphicsBundles.value.length !== store.runtimeConfig.activeGraphicsBundles.length
+                || activeGraphicsBundles.value
+                    .some((bundle, i) => store.runtimeConfig.activeGraphicsBundles[i] !== bundle.value)),
             currentGameVersion: computed(() => store.runtimeConfig.gameVersion),
             showIncompatibleBundlesMessage,
             incompatibleBundles,
@@ -117,6 +132,11 @@ export default defineComponent({
             interfaceLocaleOptions: Object.values(InterfaceLocale).map(locale =>
                 ({ value: locale, name: t(`common:interfaceLanguage.${locale}`) })),
             interfaceLocale,
+
+            activeGraphicsBundles,
+            bundleOptions: computed(() => store.bundles
+                .filter(bundle => bundle.name !== nodecg.bundleName)
+                .map(bundle => ({ name: bundle.name, value: bundle.name }))),
 
             async doUpdate() {
                 if (isGameVersionChanged.value) {
@@ -136,6 +156,8 @@ export default defineComponent({
                 if (interfaceLocale.value !== store.runtimeConfig.interfaceLocale) {
                     store.setInterfaceLocale(interfaceLocale.value);
                 }
+
+                store.setActiveGraphicsBundles(activeGraphicsBundles.value.map(bundle => bundle.value));
             },
             undoChanges(event: Event) {
                 event.preventDefault();
@@ -143,6 +165,8 @@ export default defineComponent({
                 gameVersion.value = store.runtimeConfig.gameVersion as GameVersion;
                 locale.value = store.runtimeConfig.locale as Locale;
                 interfaceLocale.value = store.runtimeConfig.interfaceLocale as InterfaceLocale;
+                activeGraphicsBundles.value = store.runtimeConfig.activeGraphicsBundles
+                    .map(bundle => ({ name: bundle, value: bundle }));
             }
         };
     }

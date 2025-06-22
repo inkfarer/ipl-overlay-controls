@@ -6,11 +6,15 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface GameAutomationData {
-	actionInProgress?: 'END_GAME' | 'START_GAME' | 'NONE';
-	nextTaskForAction?: {
-		name: string;
-		index: number;
-		executionTimeMillis: number;
-	} | null;
+export interface BundleDeclaredConfig {
+	[k: string]: {
+		scenes: {
+			value: string;
+			names?: {
+				EN?: string;
+				JA?: string;
+				[k: string]: string;
+			};
+		}[];
+	};
 }
