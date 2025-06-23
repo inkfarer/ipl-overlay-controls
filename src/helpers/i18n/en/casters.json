@@ -3,7 +3,8 @@
     "controls": {
         "addCaster": "Add caster",
         "uploadCastersToRadia": "Upload casters to Radia",
-        "loadFromVoiceChat": "Load from VC"
+        "loadFromVoiceChat": "Load from VC",
+        "casterSetSelect": "Caster set"
     },
     "casterEditor": {
         "unsavedCasterBadge": "Unsaved",

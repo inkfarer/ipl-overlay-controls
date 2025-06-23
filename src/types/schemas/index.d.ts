@@ -55,3 +55,7 @@ export * from './scoreboardData';
 export * from './swapColorsInternally';
 // @ts-ignore
 export * from './tournamentData';
+// @ts-ignore
+export * from './bundleDeclaredConfig';
+// @ts-ignore
+export * from './bundleCasterSets';

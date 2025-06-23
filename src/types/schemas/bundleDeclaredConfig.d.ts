@@ -8,13 +8,19 @@
 
 export interface BundleDeclaredConfig {
 	[k: string]: {
-		scenes: {
+		scenes?: {
 			value: string;
-			names?: {
-				EN?: string;
-				JA?: string;
-				[k: string]: string;
-			};
+			names?: TranslatableNames;
+		}[];
+		casterSets?: {
+			key: string;
+			maxItems: number;
+			names?: TranslatableNames;
 		}[];
 	};
+}
+export interface TranslatableNames {
+	EN?: string;
+	JA?: string;
+	[k: string]: string;
 }

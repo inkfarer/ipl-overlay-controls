@@ -3,6 +3,7 @@ import { mockSendMessage, replicants } from '../../__mocks__/mockNodecg';
 import { Casters } from 'schemas';
 import * as generateId from '../../../helpers/generateId';
 import { createPinia, setActivePinia } from 'pinia';
+import { mockNodecg } from '../../../extension/__mocks__/mockNodecg';
 
 describe('casterStore', () => {
     beforeEach(() => {
@@ -18,7 +19,7 @@ describe('casterStore', () => {
             const store = useCasterStore();
 
             // @ts-ignore
-            store.updateCaster({ id: '123123', newValue: 'cool caster' });
+            store.updateCaster(mockNodecg.bundleName, 'casters', '123123', 'cool caster');
 
             expect((replicants.casters as Casters)['123123']).toEqual('cool caster');
         });
@@ -29,7 +30,7 @@ describe('casterStore', () => {
             const store = useCasterStore();
 
             // @ts-ignore
-            store.addUncommittedCaster({ id: '4095687', caster: 'cool caster' });
+            store.addUncommittedCaster(mockNodecg.bundleName, 'casters', '4095687', 'cool caster');
 
             expect(store.uncommittedCasters['4095687']).toEqual('cool caster');
         });
@@ -41,7 +42,7 @@ describe('casterStore', () => {
             // @ts-ignore
             store.uncommittedCasters['60389'] = { name: 'cool caster' };
 
-            store.removeUncommittedCaster('60389');
+            store.removeUncommittedCaster(mockNodecg.bundleName, 'casters', '60389');
 
             expect(store.uncommittedCasters['60389']).toBeUndefined();
         });
@@ -51,9 +52,9 @@ describe('casterStore', () => {
         it('sends message to remove caster', () => {
             const store = useCasterStore();
 
-            store.removeCaster('oldcaster');
+            store.removeCaster(mockNodecg.bundleName, 'casters', 'oldcaster');
 
-            expect(mockSendMessage).toHaveBeenCalledWith('removeCaster', { id: 'oldcaster' });
+            expect(mockSendMessage).toHaveBeenCalledWith('removeCaster', { bundleName: mockNodecg.bundleName, casterSetKey: 'casters', id: 'oldcaster' });
         });
     });
 
@@ -62,7 +63,7 @@ describe('casterStore', () => {
             const store = useCasterStore();
             jest.spyOn(generateId, 'generateId').mockReturnValue('new caster id');
 
-            const result = await store.addDefaultCaster();
+            const result = await store.addDefaultCaster(mockNodecg.bundleName, 'casters');
 
             expect(store.uncommittedCasters['new caster id']).toEqual({
                 name: 'New Caster',
@@ -79,9 +80,9 @@ describe('casterStore', () => {
             mockSendMessage.mockResolvedValue('new saved caster id');
 
             // @ts-ignore
-            const result = await store.createCaster({ name: 'cool caster!' });
+            const result = await store.createCaster(mockNodecg.bundleName, 'casters', { name: 'cool caster!' });
 
-            expect(mockSendMessage).toHaveBeenCalledWith('saveCaster', { name: 'cool caster!' });
+            expect(mockSendMessage).toHaveBeenCalledWith('saveCaster', { bundleName: mockNodecg.bundleName, casterSetKey: 'casters', caster: { name: 'cool caster!' } });
             expect(result).toEqual('new saved caster id');
         });
     });
@@ -131,9 +132,9 @@ describe('casterStore', () => {
         it('sends message to extension', () => {
             const store = useCasterStore();
 
-            store.setCasterOrder(['aa', 'bb']);
+            store.setCasterOrder(mockNodecg.bundleName, 'casters', ['aa', 'bb']);
 
-            expect(mockSendMessage).toHaveBeenCalledWith('setCasterOrder', { casterIds: ['aa', 'bb']});
+            expect(mockSendMessage).toHaveBeenCalledWith('setCasterOrder', { bundleName: mockNodecg.bundleName, casterSetKey: 'casters', casterIds: ['aa', 'bb']});
         });
     });
 });
