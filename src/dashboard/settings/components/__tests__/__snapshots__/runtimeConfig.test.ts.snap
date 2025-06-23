@@ -7,6 +7,17 @@ exports[`RuntimeConfig matches snapshot 1`] = `
   <ipl-select-stub modelvalue="SPLATOON_2" label="translation:general.gameVersionSelect" options="[object Object],[object Object]" disabled="false" data-test="game-version-select"></ipl-select-stub>
   <ipl-select-stub modelvalue="EN" label="translation:general.gameLocaleSelect" options="[object Object],[object Object],[object Object],[object Object]" disabled="false" data-test="locale-select" class="m-t-6"></ipl-select-stub>
   <ipl-select-stub modelvalue="EN" label="translation:general.interfaceLocaleSelect" options="[object Object]" disabled="false" data-test="interface-locale-select" class="m-t-6"></ipl-select-stub>
+  <div data-v-16c86706="" class="ipl-multi-select m-t-6"><label data-v-820fd73e="" data-v-16c86706="" class="ipl-label">translation:general.activeGraphicsBundleSelect</label><select data-v-16c86706="">
+      <option data-v-16c86706="" value="sj-overlays">sj-overlays</option>
+    </select>
+    <div data-v-16c86706="" class="elem-display"><button data-v-16c86706="" class="option">sj-overlays <svg data-v-16c86706="" class="svg-inline--fa fa-xmark remove-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path class="" fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
+        </svg></button>
+      <div data-v-16c86706="" class="icon-container"><svg data-v-16c86706="" class="svg-inline--fa fa-chevron-down icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path class="" fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+        </svg></div>
+    </div>
+  </div>
   <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="update-button"></ipl-button-stub>
 </div>"
 `;
@@ -24,6 +35,17 @@ exports[`RuntimeConfig matches snapshot when changing data 1`] = `
   <ipl-select-stub modelvalue="SPLATOON_3" label="translation:general.gameVersionSelect" options="[object Object],[object Object]" disabled="false" data-test="game-version-select"></ipl-select-stub>
   <ipl-select-stub modelvalue="EN" label="translation:general.gameLocaleSelect" options="[object Object],[object Object],[object Object],[object Object]" disabled="false" data-test="locale-select" class="m-t-6"></ipl-select-stub>
   <ipl-select-stub modelvalue="EN" label="translation:general.interfaceLocaleSelect" options="[object Object]" disabled="false" data-test="interface-locale-select" class="m-t-6"></ipl-select-stub>
+  <div data-v-16c86706="" class="ipl-multi-select m-t-6"><label data-v-820fd73e="" data-v-16c86706="" class="ipl-label">translation:general.activeGraphicsBundleSelect</label><select data-v-16c86706="">
+      <option data-v-16c86706="" value="sj-overlays">sj-overlays</option>
+    </select>
+    <div data-v-16c86706="" class="elem-display"><button data-v-16c86706="" class="option">sj-overlays <svg data-v-16c86706="" class="svg-inline--fa fa-xmark remove-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path class="" fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
+        </svg></button>
+      <div data-v-16c86706="" class="icon-container"><svg data-v-16c86706="" class="svg-inline--fa fa-chevron-down icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path class="" fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+        </svg></div>
+    </div>
+  </div>
   <ipl-button-stub label="common:button.update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" title="common:button.rightClickUndoMessage" data-test="update-button"></ipl-button-stub>
 </div>"
 `;

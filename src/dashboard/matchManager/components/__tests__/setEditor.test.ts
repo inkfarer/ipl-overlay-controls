@@ -121,7 +121,8 @@ describe('setEditor', () => {
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2,
                 locale: Locale.EN,
-                interfaceLocale: InterfaceLocale.EN
+                interfaceLocale: InterfaceLocale.EN,
+                activeGraphicsBundles: []
             }
         };
     });
