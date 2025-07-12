@@ -27,7 +27,7 @@ export const Splatoon3Stages = [
     'Bluefin Depot',
     'Marlin Airport',
     'Lemuria Hub',
-	'Urchin Underpass'
+    'Urchin Underpass'
 ] as const;
 
 export const Splatoon3Modes = [
@@ -65,7 +65,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Bluefin Depot': 'Bluefin Depot',
             'Marlin Airport': 'Marlin Airport',
             'Lemuria Hub': 'Lemuria Hub',
-			'Urchin Underpass': 'Urchin Underpass'
+            'Urchin Underpass': 'Urchin Underpass'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -92,7 +92,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Bluefin Depot': 'Blauflossen-Depot',
             'Marlin Airport': 'La Ola Airport',
             'Lemuria Hub': 'Bahnhof Lemuria',
-			'Urchin Underpass': 'Knooppunt Kabeljauw'
+            'Urchin Underpass': 'Knooppunt Kabeljauw'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -119,7 +119,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Bluefin Depot': 'Mine Marine',
             'Marlin Airport': 'Terminal Rorqual',
             'Lemuria Hub': 'Gare Aiguillat',
-			'Urchin Underpass': 'Passage Turbot'
+            'Urchin Underpass': 'Passage Turbot'
         },
         [Locale.JA]: {
             'Museum d\'Alfonsino': 'キンメダイ美術館',
@@ -146,7 +146,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Bluefin Depot': 'ネギトロ炭鉱',
             'Marlin Airport': 'カジキ空港',
             'Lemuria Hub': 'リュウグウターミナル',
-			'Urchin Underpass': 'デカライン高架下'
+            'Urchin Underpass': 'デカライン高架下'
         }
     },
     stageImagePaths: {
@@ -174,7 +174,7 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp',
         'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp',
         'Lemuria Hub': 'splatoon3/S3_Stage_Lemuria_Hub.webp',
-		'Urchin Underpass': 'splatoon3/S3_Stage_Urchin_Underpass.webp'
+        'Urchin Underpass': 'splatoon3/S3_Stage_Urchin_Underpass.webp'
     },
     modes: {
         [Locale.EN]: {
