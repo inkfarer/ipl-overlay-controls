@@ -599,6 +599,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
       "Sturgeon Shipyard": "splatoon3/S3_Stage_Sturgeon_Shipyard.webp",
       "Um'ami Ruins": "splatoon3/S3_Stage_Umami_Ruins.webp",
       "Undertow Spillway": "splatoon3/S3_Stage_Undertow_Spillway.webp",
+      "Urchin Underpass": "splatoon3/S3_Stage_Urchin_Underpass.webp",
       "Wahoo World": "splatoon3/S3_Stage_Wahoo_World.webp",
     },
     "stages": {
@@ -628,6 +629,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Um'ami Ruins": "Um'ami-Ruinen",
         "Undertow Spillway": "Schwertmuschel-Reservoir",
         "Unknown Stage": "Unbekannte Arena",
+        "Urchin Underpass": "Knooppunt Kabeljauw",
         "Wahoo World": "Flunder-Funpark",
       },
       "EN": {
@@ -656,6 +658,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Um'ami Ruins": "Um'ami Ruins",
         "Undertow Spillway": "Undertow Spillway",
         "Unknown Stage": "Unknown Stage",
+        "Urchin Underpass": "Urchin Underpass",
         "Wahoo World": "Wahoo World",
       },
       "EU_FR": {
@@ -684,6 +687,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Um'ami Ruins": "Ruines Uma'mi",
         "Undertow Spillway": "Réservoir Rigadelle",
         "Unknown Stage": "Stage à déterminer",
+        "Urchin Underpass": "Passage Turbot",
         "Wahoo World": "Parc Carapince",
       },
       "JA": {
@@ -712,6 +716,7 @@ exports[`gameData perGameData matches snapshot 1`] = `
         "Um'ami Ruins": "ナンプラー遺跡",
         "Undertow Spillway": "マテガイ放水路",
         "Unknown Stage": "ステージ未選択",
+        "Urchin Underpass": "デカライン高架下",
         "Wahoo World": "スメーシーワールド",
       },
     },
