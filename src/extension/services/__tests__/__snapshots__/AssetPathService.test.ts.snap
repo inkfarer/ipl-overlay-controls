@@ -54,6 +54,7 @@ exports[`AssetPathService updateAssetPaths updates asset paths as expected for S
   "Sturgeon Shipyard": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Sturgeon_Shipyard.webp",
   "Um'ami Ruins": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Umami_Ruins.webp",
   "Undertow Spillway": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Undertow_Spillway.webp",
+  "Urchin Underpass": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Urchin_Underpass.webp",
   "Wahoo World": "/bundles/ipl-overlay-controls/stage-images/splatoon3/S3_Stage_Wahoo_World.webp",
 }
 `;

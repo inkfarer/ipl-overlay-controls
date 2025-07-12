@@ -200,6 +200,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Um'ami Ruins": "Um'ami-Ruinen",
     "Undertow Spillway": "Schwertmuschel-Reservoir",
     "Unknown Stage": "Unbekannte Arena",
+    "Urchin Underpass": "Knooppunt Kabeljauw",
     "Wahoo World": "Flunder-Funpark",
   },
 }
@@ -241,6 +242,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Um'ami Ruins": "Um'ami Ruins",
     "Undertow Spillway": "Undertow Spillway",
     "Unknown Stage": "Unknown Stage",
+    "Urchin Underpass": "Urchin Underpass",
     "Wahoo World": "Wahoo World",
   },
 }
@@ -282,6 +284,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Um'ami Ruins": "Ruines Uma'mi",
     "Undertow Spillway": "Réservoir Rigadelle",
     "Unknown Stage": "Stage à déterminer",
+    "Urchin Underpass": "Passage Turbot",
     "Wahoo World": "Parc Carapince",
   },
 }
@@ -323,6 +326,7 @@ exports[`LocaleInfoService updateLocaleInfo generates expected locale info when 
     "Um'ami Ruins": "ナンプラー遺跡",
     "Undertow Spillway": "マテガイ放水路",
     "Unknown Stage": "ステージ未選択",
+    "Urchin Underpass": "デカライン高架下",
     "Wahoo World": "スメーシーワールド",
   },
 }
