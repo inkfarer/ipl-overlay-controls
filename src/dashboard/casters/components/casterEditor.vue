@@ -102,6 +102,14 @@ export default defineComponent({
     components: { CasterSearch, IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
 
     props: {
+        bundleName: {
+            type: String,
+            required: true
+        },
+        casterSetKey: {
+            type: String,
+            required: true
+        },
         caster: {
             type: Object as PropType<CasterProp>,
             required: true
@@ -134,21 +142,18 @@ export default defineComponent({
                 delete caster.uncommitted;
 
                 if (props.caster.uncommitted) {
-                    const newId = await store.createCaster(caster);
+                    const newId = await store.createCaster(props.bundleName, props.casterSetKey, caster);
                     emit('save', newId);
-                    store.removeUncommittedCaster(props.caster.id);
+                    store.removeUncommittedCaster(props.bundleName, props.casterSetKey, props.caster.id);
                 } else {
-                    store.updateCaster({
-                        id: props.caster.id,
-                        newValue: caster
-                    });
+                    store.updateCaster(props.bundleName, props.casterSetKey, props.caster.id, caster);
                 }
             },
             removeCaster() {
                 if (props.caster.uncommitted) {
-                    store.removeUncommittedCaster(props.caster.id);
+                    store.removeUncommittedCaster(props.bundleName, props.casterSetKey, props.caster.id);
                 } else {
-                    store.removeCaster(props.caster.id);
+                    store.removeCaster(props.bundleName, props.casterSetKey, props.caster.id);
                 }
             },
             setFocused(focused: boolean) {

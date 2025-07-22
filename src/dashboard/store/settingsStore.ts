@@ -1,3 +1,4 @@
+import type NodeCG from '@nodecg/types';
 import { LastFmSettings, RadiaSettings, RuntimeConfig } from 'schemas';
 import { GameVersion } from 'types/enums/gameVersion';
 import { SetGameVersionResponse } from 'types/messages/runtimeConfig';
@@ -9,13 +10,15 @@ import { InterfaceLocale } from 'types/enums/InterfaceLocale';
 const lastFmSettings = nodecg.Replicant<LastFmSettings>('lastFmSettings');
 const radiaSettings = nodecg.Replicant<RadiaSettings>('radiaSettings');
 const runtimeConfig = nodecg.Replicant<RuntimeConfig>('runtimeConfig');
+const bundles = nodecg.Replicant<NodeCG.Bundle[]>('bundles', 'nodecg');
 
-export const settingsReps = [lastFmSettings, radiaSettings, runtimeConfig];
+export const settingsReps = [lastFmSettings, radiaSettings, runtimeConfig, bundles];
 
 export interface SettingsStore {
     lastFmSettings: LastFmSettings
     radiaSettings: RadiaSettings
     runtimeConfig: RuntimeConfig
+    bundles: NodeCG.Bundle[]
 }
 
 export const useSettingsStore = defineStore('settings', {
@@ -26,7 +29,8 @@ export const useSettingsStore = defineStore('settings', {
             enabled: null,
             updateOnImport: null
         },
-        runtimeConfig: null
+        runtimeConfig: null,
+        bundles: []
     } as SettingsStore),
     getters: {
         translatedModeName: state =>
@@ -57,6 +61,9 @@ export const useSettingsStore = defineStore('settings', {
         },
         setInterfaceLocale(newValue: `${InterfaceLocale}`) {
             runtimeConfig.value.interfaceLocale = newValue;
+        },
+        setActiveGraphicsBundles(newValue: string[]) {
+            runtimeConfig.value.activeGraphicsBundles = newValue;
         }
     }
 });

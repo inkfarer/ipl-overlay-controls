@@ -19,10 +19,11 @@ export const dependentBundles: Array<NodecgBundle> = readdirSync(bundlesDir, { w
                 nodecg.log.warn(i18next.t('bundleHelper.gameVersionParsingFailedWarning', { bundleName: bundle.name }));
             }
 
-            if ('compatibleDashboardVersion' in parsedPackage) {
+            if ('compatibleDashboardVersion' in parsedPackage || ('bundleDependencies' in parsedPackage && nodecg.bundleName in parsedPackage.bundleDependencies)) {
                 return ({
                     name: bundle.name,
-                    compatibleDashboardVersion: parsedPackage.compatibleDashboardVersion,
+                    compatibleDashboardVersion: parsedPackage.compatibleDashboardVersion
+                        ?? parsedPackage.bundleDependencies[nodecg.bundleName],
                     compatibleGameVersions: gameVersions ?? []
                 });
             }

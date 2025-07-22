@@ -24,8 +24,11 @@ describe('RuntimeConfig', () => {
             runtimeConfig: {
                 gameVersion: GameVersion.SPLATOON_2,
                 interfaceLocale: InterfaceLocale.EN,
-                locale: Locale.EN
-            }
+                locale: Locale.EN,
+                activeGraphicsBundles: ['sj-overlays']
+            },
+            // @ts-ignore
+            bundles: [{ name: 'ipl-overlay-controls' }, { name: 'sj-overlays' }]
         };
     });
 
@@ -55,6 +58,7 @@ describe('RuntimeConfig', () => {
     it('handles submitting', async () => {
         const store = useSettingsStore();
         store.setGameVersion = jest.fn().mockResolvedValue({ incompatibleBundles: []});
+        store.setActiveGraphicsBundles = jest.fn();
         const wrapper = mount(RuntimeConfig, {
             global: {
                 plugins: [pinia]
@@ -66,6 +70,7 @@ describe('RuntimeConfig', () => {
         await flushPromises();
 
         expect(store.setGameVersion).toHaveBeenCalledWith(GameVersion.SPLATOON_3);
+        expect(store.setActiveGraphicsBundles).toHaveBeenCalledWith(['sj-overlays']);
         expect(wrapper.findComponent('[data-test="incompatible-bundle-warning"]').exists()).toEqual(false);
     });
 

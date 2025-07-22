@@ -6,11 +6,17 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface GameAutomationData {
-	actionInProgress?: 'END_GAME' | 'START_GAME' | 'NONE';
-	nextTaskForAction?: {
-		name: string;
-		index: number;
-		executionTimeMillis: number;
-	} | null;
+export interface BundleCasterSets {
+	[k: string]: {
+		[k: string]: {
+			[k: string]: Caster;
+		};
+	};
+}
+export interface Caster {
+	name: string;
+	twitter: string;
+	pronouns: string;
+	imageUrl?: string;
+	videoUrl?: string;
 }
