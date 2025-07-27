@@ -73,5 +73,10 @@
     },
     "brackets": {
         "unsupportedSourceError": "Tournament source $t(common:tournamentDataSource.{{source}}) is not supported."
+    },
+    "nextRoundUnknownStageSelect": {
+        "gameSeparatorLabel": "Game {{index}}",
+        "unknownModeSelectLabel": "Mode",
+        "unknownStageSelectLabel": "Stage"
     }
 }

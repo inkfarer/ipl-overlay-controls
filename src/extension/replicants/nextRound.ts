@@ -13,6 +13,9 @@ nodecg.listenFor('setNextRound', (data: SetNextRoundRequest, ack: NodeCG.Unhandl
         if (data.roundId) {
             setNextRoundGames(data.roundId);
         }
+        if (data.games) {
+            nextRound.value.games = data.games;
+        }
         nextRound.value.name = data.name;
     } catch (e) {
         return ack(e);

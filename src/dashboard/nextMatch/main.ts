@@ -10,6 +10,7 @@ import { createPinia } from 'pinia';
 import { initI18n } from '../helpers/i18n';
 import I18NextVue from 'i18next-vue';
 import i18next from 'i18next';
+import { settingsReps, useSettingsStore } from '../store/settingsStore';
 
 (async () => {
     const app = createApp(Panel);
@@ -17,6 +18,7 @@ import i18next from 'i18next';
     await setUpPiniaReplicants(highlightedMatchReps, useHighlightedMatchStore());
     await setUpPiniaReplicants(tournamentDataReps, useTournamentDataStore());
     await setUpPiniaReplicants(nextRoundReps, useNextRoundStore());
+    await setUpPiniaReplicants(settingsReps, useSettingsStore());
     setUpErrorHandler(app);
     await initI18n('nextMatch');
     app.use(I18NextVue, { i18next });

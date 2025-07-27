@@ -39,7 +39,13 @@
             v-model="selectedRound"
             class="m-t-4"
             data-test="round-selector"
-            @update:round-data="selectedRoundData = $event"
+            @update:round-data="onRoundDataUpdate"
+        />
+        <next-round-unknown-stage-select
+            v-if="selectedRoundData != null"
+            :round="selectedRoundData.roundData"
+            @update:mode="gameOverrides[$event.index].mode = $event.mode"
+            @update:stage="gameOverrides[$event.index].stage = $event.stage"
         />
         <ipl-button
             class="m-t-8"
@@ -60,11 +66,23 @@ import RoundSelect, { RoundSelectRound } from '../../components/roundSelect.vue'
 import { useNextRoundStore } from '../../store/nextRoundStore';
 import { addDots } from '../../../helpers/stringHelper';
 import { useTournamentDataStore } from '../../store/tournamentDataStore';
+import NextRoundUnknownStageSelect from '../../components/NextRoundUnknownStageSelect.vue';
+import { Round, RoundGame } from 'schemas';
+import cloneDeep from 'lodash/cloneDeep';
 
 export default defineComponent({
     name: 'HighlightedMatchViewer',
 
-    components: { IplInput, RoundSelect, IplMessage, IplDataRow, IplSelect, IplButton, IplSpace },
+    components: {
+        NextRoundUnknownStageSelect,
+        IplInput,
+        RoundSelect,
+        IplMessage,
+        IplDataRow,
+        IplSelect,
+        IplButton,
+        IplSpace
+    },
 
     setup() {
         const highlightedMatchStore = useHighlightedMatchStore();
@@ -73,6 +91,7 @@ export default defineComponent({
         const selectedMatch = ref(null);
         const selectedRound = ref(null);
         const selectedRoundData = ref<RoundSelectRound>(null);
+        const gameOverrides = ref<RoundGame[]>([]);
         const nextMatchName = ref('');
 
         watchEffect(() => {
@@ -118,6 +137,7 @@ export default defineComponent({
             selectedMatch,
             selectedRound,
             selectedMatchData,
+            gameOverrides,
             nextMatchName,
             disableSetNextMatch: computed(() => !selectedMatchData.value),
             isChanged: computed(() =>
@@ -130,6 +150,7 @@ export default defineComponent({
                     teamAId: selectedMatchData.value.teamA.id,
                     teamBId: selectedMatchData.value.teamB.id,
                     roundId: selectedRound.value,
+                    games: gameOverrides.value,
                     name: nextMatchName.value
                 });
 
@@ -140,6 +161,11 @@ export default defineComponent({
                         type: playType
                     });
                 }
+            },
+            cloneDeep,
+            onRoundDataUpdate(newValue: { id: string, roundData: Round }) {
+                selectedRoundData.value = newValue;
+                gameOverrides.value = cloneDeep(newValue.roundData.games);
             }
         };
     }
