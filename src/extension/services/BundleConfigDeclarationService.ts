@@ -28,7 +28,7 @@ export class BundleConfigDeclarationService {
         if (this.bundleDeclaredConfig.value[bundleName]) {
             this.bundleDeclaredConfig.value[bundleName].scenes = scenes;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { scenes };
+            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), scenes };
         }
     }
 
@@ -36,7 +36,7 @@ export class BundleConfigDeclarationService {
         if (this.bundleDeclaredConfig.value[bundleName]) {
             this.bundleDeclaredConfig.value[bundleName].casterSets = casterSets;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { casterSets };
+            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), casterSets };
         }
 
         if (this.bundleCasterSets.value[bundleName] == null) {
@@ -47,5 +47,12 @@ export class BundleConfigDeclarationService {
                 this.bundleCasterSets.value[bundleName][casterSet.key] = DEFAULT_CASTERS;
             }
         });
+    }
+
+    private getBlankBundleDeclaredConfig(): BundleDeclaredConfig[string] {
+        return {
+            casterSets: [],
+            scenes: []
+        };
     }
 }
