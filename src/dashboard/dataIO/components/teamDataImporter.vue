@@ -103,6 +103,11 @@
                 data-test="refresh-button"
                 @click="handleRefresh"
             />
+            <ipl-button
+                :label="$t('teamDataImporter.exportButton')"
+                class="m-t-8"
+                :href="`/${bundleName}/tournament-data`"
+            />
         </ipl-space>
         <ipl-space class="m-t-8">
             <ipl-input
@@ -276,7 +281,8 @@ export default defineComponent({
                 } finally {
                     refreshingTournamentData.value = false;
                 }
-            }
+            },
+            bundleName: nodecg.bundleName
         };
     }
 });

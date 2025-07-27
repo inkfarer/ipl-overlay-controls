@@ -15,6 +15,7 @@
     },
     "teamDataImporter": {
         "sectionTitle": "Tournament data",
+        "exportButton": "Export",
         "startgg": {
             "eventSelect": "Event",
             "importButton": "Import",

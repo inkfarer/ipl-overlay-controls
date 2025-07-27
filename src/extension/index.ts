@@ -67,6 +67,7 @@ export = (nodecg: NodeCG.ServerAPI<Configschema>) => {
     require('./replicants/tournamentData');
     require('./replicants/casters');
     require('./replicants/matchRoutes');
+    require('./replicants/tournamentDataRoutes');
     require('./replicants/matchStore');
     require('./replicants/roundStore');
     require('./replicants/scoreboardData');
