@@ -42,7 +42,7 @@ export class ActiveBundleService {
                 newValue.activeGraphicsBundles.forEach(bundle => {
                     const bundleConfig = this.bundleDeclaredConfig.value[bundle];
                     if (bundleConfig != null) {
-                        bundleConfig.scenes.forEach(scene => {
+                        bundleConfig.scenes?.forEach(scene => {
                             allowedBreakScenes.add(scene.value);
                         });
                     }

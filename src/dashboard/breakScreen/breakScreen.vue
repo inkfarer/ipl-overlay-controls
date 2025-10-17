@@ -171,7 +171,7 @@ export default defineComponent({
                 store.runtimeConfig.activeGraphicsBundles.forEach(activeBundle => {
                     const declaredConfig = store.bundleDeclaredConfig[activeBundle];
                     if (declaredConfig != null) {
-                        declaredConfig.scenes.forEach(scene => {
+                        declaredConfig.scenes?.forEach(scene => {
                             if (!result.some(otherScene => scene.value === otherScene.value)) {
                                 result.push({
                                     value: scene.value,
