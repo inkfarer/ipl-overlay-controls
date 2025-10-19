@@ -134,7 +134,9 @@ describe('ColorList', () => {
                 index: 0,
                 isCustom: false,
                 title: 'Orange vs Purple',
-                key: 'orangePurple'
+                key: 'orangePurple',
+                referenceClrA: '#C64D24',
+                referenceClrB: '#6C0AB3'
             }
         });
     });

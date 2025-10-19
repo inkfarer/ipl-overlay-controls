@@ -2,6 +2,7 @@
 
 exports[`ActiveColorToggles matches snapshot 1`] = `
 "<div data-v-868771ad="" class="ipl-space color-dark">
+  <!--v-if-->
   <team-color-display-stub></team-color-display-stub>
   <div class="layout horizontal m-t-6 color-toggle-container">
     <div class="color-toggle layout horizontal center-vertical center-horizontal" data-test="color-toggle-previous">
@@ -21,6 +22,7 @@ exports[`ActiveColorToggles matches snapshot 1`] = `
 
 exports[`ActiveColorToggles matches snapshot with swapped colors 1`] = `
 "<div data-v-868771ad="" class="ipl-space color-dark">
+  <!--v-if-->
   <team-color-display-stub></team-color-display-stub>
   <div class="layout horizontal m-t-6 color-toggle-container">
     <div class="color-toggle layout horizontal center-vertical center-horizontal" data-test="color-toggle-previous">

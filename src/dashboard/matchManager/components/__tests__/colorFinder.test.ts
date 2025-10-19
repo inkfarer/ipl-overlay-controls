@@ -69,6 +69,8 @@ describe('ColorFinder', () => {
                 index: 3,
                 isCustom: false,
                 key: 'orangeDarkBlue',
+                referenceClrA: '#D9633A',
+                referenceClrB: '#423BC4',
                 title: 'Orange vs Dark Blue'
             }
         });
@@ -99,6 +101,8 @@ describe('ColorFinder', () => {
                 index: 3,
                 isCustom: false,
                 key: 'orangeDarkBlue',
+                referenceClrA: '#D9633A',
+                referenceClrB: '#423BC4',
                 title: 'Orange vs Dark Blue'
             }
         });
@@ -127,6 +131,8 @@ describe('ColorFinder', () => {
                 index: 5,
                 isCustom: false,
                 key: 'darkBlueOrange',
+                referenceClrA: '#261DAD',
+                referenceClrB: '#DD8E3A',
                 title: 'Dark Blue vs Orange'
             }
         });

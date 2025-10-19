@@ -80,19 +80,19 @@ exports[`ColorList matches snapshot 1`] = `
         </div>
         <div class="color-group">
           <div class="title">colors:SPLATOON_3.colorLock1.groupName</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock1.purpleYellow</span>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock1.yellowPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(240, 235, 36); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
             </div>
           </div>
         </div>
         <div class="color-group">
           <div class="title">colors:SPLATOON_3.colorLock2.groupName</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock2.blueOrange</span>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock2.orangeBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(253, 182, 5); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
             </div>
           </div>
         </div>
@@ -183,19 +183,19 @@ exports[`ColorList matches snapshot when color names are shown 1`] = `
         </div>
         <div class="color-group color-names-visible">
           <div class="title">colors:SPLATOON_3.colorLock1.groupName</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock1.purpleYellow</span>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock1.yellowPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(240, 235, 36); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
             </div>
           </div>
         </div>
         <div class="color-group color-names-visible">
           <div class="title">colors:SPLATOON_3.colorLock2.groupName</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock2.blueOrange</span>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock2.orangeBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
               <div class="color-preview" style="background-color: rgb(253, 182, 5); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
             </div>
           </div>
         </div>
