@@ -16,107 +16,83 @@ exports[`ColorList matches snapshot 1`] = `
       </div>
       <div class="m-t-8">
         <div class="color-group">
-          <div class="title">colors:SPLATOON_2.rankedModes.groupName</div>
-          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.greenGrape</span>
+          <ipl-button-stub color="transparent" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="title" data-test="color-finder-opener-0"></ipl-button-stub>
+          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.orangePurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(125, 40, 252); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(245, 101, 34); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(130, 28, 214); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.greenMagenta</span>
+          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.yellowDarkBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(4, 217, 118); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(214, 0, 171); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(237, 217, 33); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(70, 30, 230); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.turquoiseOrange</span>
+          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.turquoiseOrange</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(16, 227, 143); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(251, 123, 8); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(42, 219, 198); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(250, 90, 65); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.mustardPurple</span>
+          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.orangeDarkBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(255, 158, 3); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(252, 119, 53); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(64, 72, 219); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.darkBlueGreen</span>
+          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.turquoisePink</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(42, 219, 195); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(227, 73, 132); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.purpleGreen</span>
+          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.darkBlueOrange</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(242, 156, 51); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.rankedModes.yellowBlue</span>
+          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.yellowPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(46, 210, 254); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(238, 252, 88); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(118, 53, 240); border-color: white;"></div>
             </div>
           </div>
-        </div>
-        <div class="color-group">
-          <div class="title">colors:SPLATOON_2.turfWar.groupName</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.yellowPurple</span>
+          <div data-test="color-option-0-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.goldPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(209, 224, 4); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(150, 12, 178); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(235, 204, 49); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(160, 50, 219); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkBlue</span>
+          <div data-test="color-option-0-8" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.greenPink</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(230, 16, 119); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(54, 28, 184); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(179, 222, 69); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(212, 59, 202); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkYellow</span>
+          <div data-test="color-option-0-9" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.rankedModes.pinkGreen</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(237, 12, 106); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(213, 232, 2); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.purpleTurquoise</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(107, 16, 204); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(8, 204, 129); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkLightBlue</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(227, 9, 96); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(2, 173, 207); border-color: white;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.purpleOrange</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(86, 23, 194); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(255, 95, 3); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.pinkGreen</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(230, 5, 114); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(27, 191, 15); border-color: white;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.turfWar.yellowBlue</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(241, 206, 51); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(75, 18, 190); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(247, 83, 161); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(53, 204, 45); border-color: #181e29;"></div>
             </div>
           </div>
         </div>
         <div class="color-group">
-          <div class="title">colors:SPLATOON_2.colorLock.groupName</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_2.colorLock.yellowBlue</span>
+          <div class="title">colors:SPLATOON_3.colorLock1.groupName</div>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock1.purpleYellow</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(240, 235, 36); border-color: #181e29;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="color-group">
+          <div class="title">colors:SPLATOON_3.colorLock2.groupName</div>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1; display: none;">colors:SPLATOON_3.colorLock2.blueOrange</span>
+            <div class="color-previews layout horizontal">
+              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(253, 182, 5); border-color: #181e29;"></div>
             </div>
           </div>
         </div>
@@ -143,107 +119,83 @@ exports[`ColorList matches snapshot when color names are shown 1`] = `
       </div>
       <div class="m-t-8">
         <div class="color-group color-names-visible">
-          <div class="title">colors:SPLATOON_2.rankedModes.groupName</div>
-          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.greenGrape</span>
+          <ipl-button-stub color="transparent" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="title" data-test="color-finder-opener-0"></ipl-button-stub>
+          <div data-test="color-option-0-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.orangePurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(125, 40, 252); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(245, 101, 34); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(130, 28, 214); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.greenMagenta</span>
+          <div data-test="color-option-0-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.yellowDarkBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(4, 217, 118); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(214, 0, 171); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(237, 217, 33); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(70, 30, 230); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.turquoiseOrange</span>
+          <div data-test="color-option-0-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.turquoiseOrange</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(16, 227, 143); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(251, 123, 8); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(42, 219, 198); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(250, 90, 65); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.mustardPurple</span>
+          <div data-test="color-option-0-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.orangeDarkBlue</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(255, 158, 3); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(252, 119, 53); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(64, 72, 219); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.darkBlueGreen</span>
+          <div data-test="color-option-0-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.turquoisePink</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(42, 219, 195); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(227, 73, 132); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.purpleGreen</span>
+          <div data-test="color-option-0-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.darkBlueOrange</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(185, 9, 224); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(55, 252, 0); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(242, 156, 51); border-color: #181e29;"></div>
             </div>
           </div>
-          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical is-selected"><span style="flex-grow: 1;">colors:SPLATOON_2.rankedModes.yellowBlue</span>
+          <div data-test="color-option-0-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.yellowPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(46, 210, 254); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(238, 252, 88); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(118, 53, 240); border-color: white;"></div>
             </div>
           </div>
-        </div>
-        <div class="color-group color-names-visible">
-          <div class="title">colors:SPLATOON_2.turfWar.groupName</div>
-          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.yellowPurple</span>
+          <div data-test="color-option-0-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.goldPurple</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(209, 224, 4); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(150, 12, 178); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(235, 204, 49); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(160, 50, 219); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-1" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkBlue</span>
+          <div data-test="color-option-0-8" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.greenPink</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(230, 16, 119); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(54, 28, 184); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(179, 222, 69); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(212, 59, 202); border-color: white;"></div>
             </div>
           </div>
-          <div data-test="color-option-1-2" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkYellow</span>
+          <div data-test="color-option-0-9" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.rankedModes.pinkGreen</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(237, 12, 106); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(213, 232, 2); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-3" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.purpleTurquoise</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(107, 16, 204); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(8, 204, 129); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-4" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkLightBlue</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(227, 9, 96); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(2, 173, 207); border-color: white;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-5" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.purpleOrange</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(86, 23, 194); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(255, 95, 3); border-color: #181e29;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-6" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.pinkGreen</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(230, 5, 114); border-color: white;"></div>
-              <div class="color-preview" style="background-color: rgb(27, 191, 15); border-color: white;"></div>
-            </div>
-          </div>
-          <div data-test="color-option-1-7" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.turfWar.yellowBlue</span>
-            <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(241, 206, 51); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(75, 18, 190); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(247, 83, 161); border-color: #181e29;"></div>
+              <div class="color-preview" style="background-color: rgb(53, 204, 45); border-color: #181e29;"></div>
             </div>
           </div>
         </div>
         <div class="color-group color-names-visible">
-          <div class="title">colors:SPLATOON_2.colorLock.groupName</div>
-          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_2.colorLock.yellowBlue</span>
+          <div class="title">colors:SPLATOON_3.colorLock1.groupName</div>
+          <div data-test="color-option-1-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock1.purpleYellow</span>
             <div class="color-previews layout horizontal">
-              <div class="color-preview" style="background-color: rgb(254, 242, 50); border-color: #181e29;"></div>
-              <div class="color-preview" style="background-color: rgb(47, 39, 204); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(98, 54, 223); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(240, 235, 36); border-color: #181e29;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="color-group color-names-visible">
+          <div class="title">colors:SPLATOON_3.colorLock2.groupName</div>
+          <div data-test="color-option-2-0" class="color-option layout horizontal center-vertical"><span style="flex-grow: 1;">colors:SPLATOON_3.colorLock2.blueOrange</span>
+            <div class="color-previews layout horizontal">
+              <div class="color-preview" style="background-color: rgb(45, 99, 215); border-color: white;"></div>
+              <div class="color-preview" style="background-color: rgb(253, 182, 5); border-color: #181e29;"></div>
             </div>
           </div>
         </div>

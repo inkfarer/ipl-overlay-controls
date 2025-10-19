@@ -3,7 +3,16 @@
         key="more-colors"
         :title="$t('colorList.sectionTitle')"
     >
-        <div class="colors-container">
+        <color-finder
+            v-if="colorFinderOpen"
+            class="colors-container"
+            :color-group-key="colorFinderKey"
+            @close="colorFinderOpen = false"
+        />
+        <div
+            v-else
+            class="colors-container"
+        >
             <div class="layout horizontal center-horizontal m-x-16">
                 <ipl-checkbox
                     v-model="useCustomColor"
@@ -29,7 +38,20 @@
                     class="color-group"
                     :class="{ 'color-names-visible': showColorNames }"
                 >
-                    <div class="title">
+                    <ipl-button
+                        v-if="group.colorFinderOptions != null"
+                        color="transparent"
+                        class="title"
+                        :data-test="`color-finder-opener-${groupIndex}`"
+                        @click="openColorFinder(group.meta.key)"
+                    >
+                        {{ $t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`) }}<br>
+                        <span class="color-finder-info-text">{{ $t('colorList.colorFinderHint') }}</span>
+                    </ipl-button>
+                    <div
+                        v-else
+                        class="title"
+                    >
                         {{ $t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`) }}
                     </div>
                     <div
@@ -104,11 +126,13 @@ import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingText
 import { themeColors } from '../../styles/colors';
 import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
+import ColorFinder from './colorFinder.vue';
+import { swapColors } from '../../../helpers/ColorHelper';
 
 export default defineComponent({
     name: 'ColorList',
 
-    components: { IplButton, IplInput, IplCheckbox, IplExpandingSpace },
+    components: { ColorFinder, IplButton, IplInput, IplCheckbox, IplExpandingSpace },
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
@@ -142,13 +166,8 @@ export default defineComponent({
             useCustomColor.value = newValue;
         }, { immediate: true });
 
-        function swapColors(data: ColorInfo): ColorInfo {
-            return {
-                ...data,
-                clrA: data.clrB,
-                clrB: data.clrA
-            };
-        }
+        const colorFinderKey = ref<string | null>(null);
+        const colorFinderOpen = ref(false);
 
         return {
             settingsStore,
@@ -195,7 +214,14 @@ export default defineComponent({
                 customColorB.value = activeRoundStore.activeRound.teamB.color;
             },
 
-            showColorNames: ref(false)
+            showColorNames: ref(false),
+
+            colorFinderKey,
+            colorFinderOpen,
+            openColorFinder(key: string) {
+                colorFinderKey.value = key;
+                colorFinderOpen.value = true;
+            }
         };
     }
 });
@@ -206,7 +232,8 @@ export default defineComponent({
 @import './src/dashboard/styles/constants';
 
 .colors-container {
-    max-height: 180px;
+    max-height: 220px;
+    min-height: 220px;
     overflow-y: auto;
 }
 
@@ -223,6 +250,17 @@ export default defineComponent({
     > .title {
         grid-column: 1 / -1;
         margin: 0;
+
+        &.ipl-button {
+            padding: 2px;
+            line-height: 1em;
+        }
+    }
+
+    .color-finder-info-text {
+        font-size: 0.75em;
+        color: var(--ipl-input-color);
+        font-weight: 400;
     }
 
     &.color-names-visible {
@@ -234,7 +272,6 @@ export default defineComponent({
     background-color: $background-secondary;
     border-radius: $border-radius-inner;
     padding: 6px 10px;
-    cursor: pointer;
     transition-property: background-color;
     transition-duration: $transition-duration-low;
     box-sizing: border-box;

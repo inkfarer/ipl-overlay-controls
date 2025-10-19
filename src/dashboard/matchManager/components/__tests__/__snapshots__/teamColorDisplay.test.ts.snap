@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`teamColorDisplay matches snapshot 1`] = `
+"<div>
+  <div class="layout horizontal"><span class="max-width text-small team-name wrap-anywhere">Cool First Team</span><span class="max-width text-small team-name wrap-anywhere text-right m-l-6">Cool Second Team (long name for t...</span></div>
+  <div class="layout horizontal m-t-4">
+    <div class="color-display text-right" style="background-color: rgb(44, 44, 219); color: white;" data-test="team-a-color-display">α</div>
+    <div class="color-display m-l-6" style="background-color: rgb(245, 101, 34);" data-test="team-b-color-display">β</div>
+  </div>
+</div>"
+`;
+
+exports[`teamColorDisplay matches snapshot when colors are missing 1`] = `
+"<div>
+  <div class="layout horizontal"><span class="max-width text-small team-name wrap-anywhere">Cool First Team</span><span class="max-width text-small team-name wrap-anywhere text-right m-l-6">Cool Second Team (long name for t...</span></div>
+  <div class="layout horizontal m-t-4">
+    <div class="color-display text-right" data-test="team-a-color-display">α</div>
+    <div class="color-display m-l-6" data-test="team-b-color-display">β</div>
+  </div>
+</div>"
+`;
+
+exports[`teamColorDisplay matches snapshot when colors are swapped 1`] = `
+"<div>
+  <div class="layout horizontal"><span class="max-width text-small team-name wrap-anywhere">Cool First Team</span><span class="max-width text-small team-name wrap-anywhere text-right m-l-6">Cool Second Team (long name for t...</span></div>
+  <div class="layout horizontal m-t-4">
+    <div class="color-display text-right" style="background-color: rgb(44, 44, 219); color: white;" data-test="team-a-color-display">β</div>
+    <div class="color-display m-l-6" style="background-color: rgb(245, 101, 34);" data-test="team-b-color-display">α</div>
+  </div>
+</div>"
+`;

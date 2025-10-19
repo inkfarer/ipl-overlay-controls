@@ -14,7 +14,8 @@ describe('ColorList', () => {
         IplCheckbox: true,
         IplInput: true,
         IplButton: true,
-        FontAwesomeIcon: true
+        FontAwesomeIcon: true,
+        ColorFinder: true
     };
 
     beforeEach(() => {
@@ -72,7 +73,7 @@ describe('ColorList', () => {
         useSettingsStore().$state = {
             // @ts-ignore
             runtimeConfig: {
-                gameVersion: GameVersion.SPLATOON_2
+                gameVersion: GameVersion.SPLATOON_3
             }
         };
     });
@@ -127,13 +128,13 @@ describe('ColorList', () => {
             categoryName: 'Ranked Modes',
             categoryKey: 'rankedModes',
             color: {
-                clrA: '#37FC00',
-                clrB: '#7D28FC',
-                clrNeutral: '#F4067E',
+                clrA: '#F56522',
+                clrB: '#821CD6',
+                clrNeutral: '#CDFF45',
                 index: 0,
                 isCustom: false,
-                title: 'Green vs Grape',
-                key: 'greenGrape'
+                title: 'Orange vs Purple',
+                key: 'orangePurple'
             }
         });
     });
@@ -264,5 +265,19 @@ describe('ColorList', () => {
 
         expect(wrapper.getComponent('[name="team-a-color"]').attributes().modelvalue).toEqual('#889');
         expect(wrapper.getComponent('[name="team-b-color"]').attributes().modelvalue).toEqual('#999');
+    });
+
+    it('allows opening a color finder', async () => {
+        const wrapper = mount(ColorList, {
+            global: {
+                plugins: [ pinia ]
+            }
+        });
+
+        await wrapper.get('[data-test="color-finder-opener-0"]').trigger('click');
+
+        const finder = wrapper.find('color-finder-stub');
+        expect(finder.exists()).toEqual(true);
+        expect(finder.attributes().colorgroupkey).toEqual('rankedModes');
     });
 });
