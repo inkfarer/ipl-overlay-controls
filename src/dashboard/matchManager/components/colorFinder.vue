@@ -48,6 +48,10 @@
                         borderColor: getBorderColor(option.clrB)
                     }"
                 />
+                <div>
+                    <!-- eslint-disable-next-line -->
+                    {{ $t(`colors:colorFinderHints.${settingsStore.runtimeConfig.gameVersion}.${colorGroupKey}.${option.key}`) }}
+                </div>
             </ipl-space>
         </div>
         <team-color-display
@@ -180,7 +184,6 @@ function getBorderColor(color: string): string {
 <style scoped lang="scss">
 .options-title {
     font-weight: 700;
-    margin-bottom: 2px;
 
     &:not(:first-child) {
         margin-top: 8px;
@@ -188,13 +191,17 @@ function getBorderColor(color: string): string {
 }
 
 .color-finder-options {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .color-option {
     padding: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    display: flex !important;
+    width: auto !important;
+    align-items: center;
 
     &.disabled {
         background-color: var(--ipl-bg-tertiary);
@@ -206,8 +213,13 @@ function getBorderColor(color: string): string {
     box-sizing: border-box;
     border-style: solid;
     border-width: 2px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+    width: 1.65em;
+    height: 1.65em;
     border-radius: 999px;
+    margin-right: 6px;
+
+    &:last-child {
+        margin-right: 0;
+    }
 }
 </style>

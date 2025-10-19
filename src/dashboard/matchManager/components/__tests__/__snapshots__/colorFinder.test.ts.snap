@@ -8,11 +8,11 @@ exports[`ColorFinder matches snapshot 1`] = `
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_1">
       <div class="color-display" style="background-color: rgb(237, 217, 33);"></div>
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_2">
-      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
-    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
-      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
-    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
       <div class="color-display" style="background-color: rgb(179, 222, 69);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
+      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
+      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_5">
       <div class="color-display" style="background-color: rgb(247, 83, 161);"></div>
     </button></div>
@@ -38,19 +38,25 @@ exports[`ColorFinder matches snapshot after selecting the first color 1`] = `
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_1">
       <div class="color-display" style="background-color: rgb(237, 217, 33);"></div>
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_2">
-      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
-    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
-      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
-    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
       <div class="color-display" style="background-color: rgb(179, 222, 69);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_3">
+      <div class="color-display" style="background-color: rgb(42, 219, 198);"></div>
+    </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_4">
+      <div class="color-display" style="background-color: rgb(44, 44, 219); border-color: white;"></div>
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="first-color-option_5">
       <div class="color-display" style="background-color: rgb(247, 83, 161);"></div>
     </button></div>
   <div class="options-title">translation:colorFinder.secondColorLabel</div>
   <div class="color-finder-options"><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="second-color-option_0">
       <div class="color-display" style="background-color: rgb(130, 28, 214); border-color: white;"></div>
+      <div>
+        <!-- eslint-disable-next-line --> colors:colorFinderHints.SPLATOON_3.rankedModes.orangePurple
+      </div>
     </button><button data-v-868771ad="" class="ipl-space color-secondary color-option" data-test="second-color-option_1">
       <div class="color-display" style="background-color: rgb(64, 72, 219); border-color: white;"></div>
+      <div>
+        <!-- eslint-disable-next-line --> colors:colorFinderHints.SPLATOON_3.rankedModes.orangeDarkBlue
+      </div>
     </button></div>
   <team-color-display-stub class="m-t-8" teamacolor="#F56522"></team-color-display-stub>
   <div class="layout horizontal m-t-8">

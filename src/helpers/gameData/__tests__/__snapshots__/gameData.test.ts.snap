@@ -382,10 +382,16 @@ exports[`gameData perGameData matches snapshot 1`] = `
           {
             "matchingColorKeys": [
               "yellowDarkBlue",
-              "goldPurple",
               "yellowPurple",
+              "goldPurple",
             ],
             "optionColor": "#EDD921",
+          },
+          {
+            "matchingColorKeys": [
+              "greenPink",
+            ],
+            "optionColor": "#B3DE45",
           },
           {
             "matchingColorKeys": [
@@ -399,12 +405,6 @@ exports[`gameData perGameData matches snapshot 1`] = `
               "darkBlueOrange",
             ],
             "optionColor": "#2C2CDB",
-          },
-          {
-            "matchingColorKeys": [
-              "greenPink",
-            ],
-            "optionColor": "#B3DE45",
           },
           {
             "matchingColorKeys": [

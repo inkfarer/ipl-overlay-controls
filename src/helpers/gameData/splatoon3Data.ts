@@ -315,7 +315,11 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 },
                 {
                     optionColor: '#EDD921',
-                    matchingColorKeys: ['yellowDarkBlue', 'goldPurple', 'yellowPurple']
+                    matchingColorKeys: ['yellowDarkBlue', 'yellowPurple', 'goldPurple']
+                },
+                {
+                    optionColor: '#B3DE45',
+                    matchingColorKeys: ['greenPink']
                 },
                 {
                     optionColor: '#2ADBC6',
@@ -324,10 +328,6 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
                 {
                     optionColor: '#2C2CDB',
                     matchingColorKeys: ['darkBlueOrange']
-                },
-                {
-                    optionColor: '#B3DE45',
-                    matchingColorKeys: ['greenPink']
                 },
                 {
                     optionColor: '#F753A1',

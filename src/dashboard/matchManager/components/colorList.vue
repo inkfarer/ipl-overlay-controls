@@ -5,7 +5,6 @@
     >
         <color-finder
             v-if="colorFinderOpen"
-            class="colors-container"
             :color-group-key="colorFinderKey"
             @close="colorFinderOpen = false"
         />

@@ -118,7 +118,7 @@ describe('ColorFinder', () => {
             }
         });
 
-        await wrapper.get('[data-test="first-color-option_3"]').trigger('click');
+        await wrapper.get('[data-test="first-color-option_4"]').trigger('click');
         await wrapper.get('[data-test="apply-button"]').trigger('click');
 
         expect(activeRoundStore.setActiveColor).toHaveBeenCalledWith({
