@@ -123,5 +123,6 @@ const mapsInOrder: (typeof Splatoon3Stages[number])[] = [
     'Shipshape Cargo Co.',
     'Bluefin Depot',
     'Robo ROM-en',
-    'Lemuria Hub'
+    'Lemuria Hub',
+    'Urchin Underpass'
 ];

@@ -26,7 +26,8 @@ export const Splatoon3Stages = [
     'Robo ROM-en',
     'Bluefin Depot',
     'Marlin Airport',
-    'Lemuria Hub'
+    'Lemuria Hub',
+    'Urchin Underpass'
 ] as const;
 
 export const Splatoon3Modes = [
@@ -63,7 +64,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'Robo ROM-en',
             'Bluefin Depot': 'Bluefin Depot',
             'Marlin Airport': 'Marlin Airport',
-            'Lemuria Hub': 'Lemuria Hub'
+            'Lemuria Hub': 'Lemuria Hub',
+            'Urchin Underpass': 'Urchin Underpass'
         },
         [Locale.DE]: {
             'Museum d\'Alfonsino': 'Pinakoithek',
@@ -89,7 +91,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'ROM & RAMen',
             'Bluefin Depot': 'Blauflossen-Depot',
             'Marlin Airport': 'La Ola Airport',
-            'Lemuria Hub': 'Bahnhof Lemuria'
+            'Lemuria Hub': 'Bahnhof Lemuria',
+            'Urchin Underpass': 'Knooppunt Kabeljauw'
         },
         [Locale.EU_FR]: {
             'Museum d\'Alfonsino': 'Galeries Guppy',
@@ -115,7 +118,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'Arène Méca-ramen',
             'Bluefin Depot': 'Mine Marine',
             'Marlin Airport': 'Terminal Rorqual',
-            'Lemuria Hub': 'Gare Aiguillat'
+            'Lemuria Hub': 'Gare Aiguillat',
+            'Urchin Underpass': 'Passage Turbot'
         },
         [Locale.JA]: {
             'Museum d\'Alfonsino': 'キンメダイ美術館',
@@ -141,7 +145,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
             'Robo ROM-en': 'バイガイ亭',
             'Bluefin Depot': 'ネギトロ炭鉱',
             'Marlin Airport': 'カジキ空港',
-            'Lemuria Hub': 'リュウグウターミナル'
+            'Lemuria Hub': 'リュウグウターミナル',
+            'Urchin Underpass': 'デカライン高架下'
         }
     },
     stageImagePaths: {
@@ -168,7 +173,8 @@ export const splatoon3Data: GameData<typeof Splatoon3Stages, typeof Splatoon3Mod
         'Robo ROM-en': 'splatoon3/S3_Stage_Robo_ROM-en.webp',
         'Bluefin Depot': 'splatoon3/S3_Stage_Bluefin_Depot.webp',
         'Marlin Airport': 'splatoon3/S3_Marlin_Airport_Fresh_Season_2024_trailer.webp',
-        'Lemuria Hub': 'splatoon3/S3_Stage_Lemuria_Hub.webp'
+        'Lemuria Hub': 'splatoon3/S3_Stage_Lemuria_Hub.webp',
+        'Urchin Underpass': 'splatoon3/S3_Stage_Urchin_Underpass.webp'
     },
     modes: {
         [Locale.EN]: {
