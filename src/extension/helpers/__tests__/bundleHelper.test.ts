@@ -52,7 +52,7 @@ describe('bundleHelper', () => {
             .mockReturnValueOnce(JSON.stringify({
                 compatibleDashboardVersion: '^1.0.0',
                 compatibleGameVersions: [ 'SPLATOON_3', 'random string' ]}))
-            .mockReturnValueOnce(JSON.stringify({ compatibleDashboardVersion: '^12.0.1' }))
+            .mockReturnValueOnce(JSON.stringify({ bundleDependencies: { 'other-bundle': '^10.0.0', 'ipl-overlay-controls': '^12.0.1' } }))
             .mockReturnValueOnce('{ "name": "non-dependent-bundle" }');
 
         expect(require('../bundleHelper').dependentBundles).toEqual([

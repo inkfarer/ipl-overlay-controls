@@ -44,6 +44,7 @@
 
         <ipl-space data-test="prediction-management-space">
             <ipl-data-row
+                v-if="rawStatus != null"
                 :label="$t('predictionStatusLabel')"
                 :value="$t(`common:predictionStatus.${rawStatus}`)"
             />

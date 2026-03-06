@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+
+    "definitions": {
+        "translatableNames": {
+            "type": "object",
+            "properties": {
+                "EN": { "type": "string" },
+                "JA": { "type": "string" }
+            },
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    },
+
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "scenes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["value"],
+                    "properties": {
+                        "value": {
+                            "type": "string"
+                        },
+                        "names": {
+                            "$ref": "#/definitions/translatableNames"
+                        }
+                    }
+                }
+            },
+            "casterSets": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["key", "maxItems"],
+                    "properties": {
+                        "key": {
+                            "type": "string"
+                        },
+                        "maxItems": {
+                            "type": "number"
+                        },
+                        "names": {
+                            "$ref": "#/definitions/translatableNames"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

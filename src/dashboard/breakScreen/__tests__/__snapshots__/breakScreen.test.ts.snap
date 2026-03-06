@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BreakScreen matches snapshot with custom scenes 1`] = `
+"<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
+<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:sceneName.main</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra">
+      <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button m-l-8" data-test="show-main-button"></ipl-button-stub>
+    </div>
+  </div>
+  <div data-v-31c8f953="" class="content" style="display: none;">
+    <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+    <div class="layout vertical center-horizontal">
+      <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
+      <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
+      <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </div>
+  </div>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.teams</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-teams-button"></ipl-button-stub>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.stages</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-stages-button"></ipl-button-stub>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>casters</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-scene-button__casters"></ipl-button-stub>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>stats</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-scene-button__stats"></ipl-button-stub>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>analysts</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-scene-button__analysts"></ipl-button-stub>
+</div>
+<a href="/dashboard/#workspace/ipl%20setup" target="_top"><button data-v-868771ad="" class="ipl-space color-dark extra-layout-button m-t-8">translation:sceneConfigLink</button></a>"
+`;
+
+exports[`BreakScreen matches snapshot without custom scenes 1`] = `
+"<ipl-error-display-stub class="m-b-8"></ipl-error-display-stub>
+<div data-v-31c8f953="" class="ipl-expanding-space color-dark">
+  <div data-v-31c8f953="" class="ipl-expanding-space__header">
+    <div data-v-31c8f953="" class="ipl-expanding-space__header-background" tabindex="0"></div>
+    <div data-v-31c8f953="" class="ipl-expanding-space__title">translation:sceneName.main</div>
+    <font-awesome-icon-stub data-v-31c8f953="" icon="[object Object]" border="false" fixedwidth="false" flip="false" listitem="false" pulse="false" swapopacity="false" spin="false" symbol="false" inverse="false" bounce="false" shake="false" beat="false" fade="false" beatfade="false" flash="false" spinpulse="false" spinreverse="false" class="icon"></font-awesome-icon-stub>
+    <div data-v-31c8f953="" class="header-extra">
+      <ipl-button-stub label="translation:showSceneButton" color="green" disabled="true" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button m-l-8" data-test="show-main-button"></ipl-button-stub>
+    </div>
+  </div>
+  <div data-v-31c8f953="" class="content" style="display: none;">
+    <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>
+    <div class="layout vertical center-horizontal">
+      <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
+      <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
+      <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </div>
+  </div>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.teams</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-teams-button"></ipl-button-stub>
+</div>
+<div data-v-868771ad="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.stages</span>
+  <ipl-button-stub label="translation:showSceneButton" color="green" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="show-scene-button" data-test="show-stages-button"></ipl-button-stub>
+</div>
+<!--v-if-->"
+`;

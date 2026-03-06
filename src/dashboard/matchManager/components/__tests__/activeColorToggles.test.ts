@@ -15,7 +15,8 @@ describe('ActiveColorToggles', () => {
     let pinia: TestingPinia;
 
     config.global.stubs = {
-        FontAwesomeIcon: true
+        FontAwesomeIcon: true,
+        TeamColorDisplay: true
     };
 
     afterEach(() => {

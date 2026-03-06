@@ -5,6 +5,7 @@ import { reactive } from 'vue';
 import { createTestingPinia, TestingPinia } from '@pinia/testing';
 import { IplButton, IplInput } from '@iplsplatoon/vue-components';
 import CasterSearch from '../casterSearch.vue';
+import { mockNodecg } from '../../../../extension/__mocks__/mockNodecg';
 
 describe('CasterEditor', () => {
     let pinia: TestingPinia;
@@ -23,7 +24,9 @@ describe('CasterEditor', () => {
     it('fills inputs with caster data', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'test-caster-id', uncommitted: false }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'test-caster-id', uncommitted: false },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -36,7 +39,9 @@ describe('CasterEditor', () => {
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false });
         const wrapper = mount(CasterEditor, {
             props: {
-                caster
+                caster,
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -57,7 +62,9 @@ describe('CasterEditor', () => {
         const caster = reactive({ name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false });
         const wrapper = mount(CasterEditor, {
             props: {
-                caster
+                caster,
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -70,7 +77,9 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -82,7 +91,9 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button if data is uncommitted', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -94,7 +105,9 @@ describe('CasterEditor', () => {
     it('has expected label and color on update button if data is updated', async () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: false },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -109,7 +122,9 @@ describe('CasterEditor', () => {
     it('displays expected badges if caster is uncommitted', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'they/them', id: 'casterid', uncommitted: true },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -122,7 +137,9 @@ describe('CasterEditor', () => {
     it('displays expected badges if caster is committed', () => {
         const wrapper = mount(CasterEditor, {
             props: {
-                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                casterSetKey: 'casters',
+                bundleName: mockNodecg.bundleName
             }
         });
 
@@ -139,23 +156,28 @@ describe('CasterEditor', () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
             wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
 
-            expect(store.updateCaster).toHaveBeenCalledWith({
-                id: 'casterid',
-                newValue: { name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' }
-            });
+            expect(store.updateCaster).toHaveBeenCalledWith(
+                mockNodecg.bundleName,
+                'casters',
+                'casterid',
+                { name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' });
         });
 
         it('reverts changes on right click if caster is committed', async () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: false, id: 'casterid' },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
             const event = new Event(null);
@@ -181,15 +203,17 @@ describe('CasterEditor', () => {
             // @ts-ignore
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: true, id: 'casterid' }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', uncommitted: true, id: 'casterid' },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
             wrapper.getComponent<typeof IplButton>('[data-test="update-button"]').vm.$emit('click');
             await flushPromises();
 
-            expect(store.createCaster).toHaveBeenCalledWith({ name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' });
-            expect(store.removeUncommittedCaster).toHaveBeenCalledWith('casterid');
+            expect(store.createCaster).toHaveBeenCalledWith(mockNodecg.bundleName, 'casters', { name: 'cool caster', pronouns: 'he/him', twitter: '@ccaster' });
+            expect(store.removeUncommittedCaster).toHaveBeenCalledWith(mockNodecg.bundleName, 'casters', 'casterid');
             const saveEvents = wrapper.emitted('save');
             expect(saveEvents.length).toEqual(1);
             expect(saveEvents[0]).toEqual(['new-caster-id']);
@@ -198,7 +222,9 @@ describe('CasterEditor', () => {
         it('does nothing on right click if caster is uncommitted', async () => {
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
             const event = new Event(null);
@@ -230,7 +256,9 @@ describe('CasterEditor', () => {
             };
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
@@ -249,7 +277,9 @@ describe('CasterEditor', () => {
             };
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
@@ -263,13 +293,15 @@ describe('CasterEditor', () => {
             store.removeUncommittedCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
             wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
-            expect(store.removeUncommittedCaster).toHaveBeenCalledWith('casterid');
+            expect(store.removeUncommittedCaster).toHaveBeenCalledWith(mockNodecg.bundleName, 'casters', 'casterid');
         });
 
         it('sends remove event to store if committed', () => {
@@ -277,13 +309,15 @@ describe('CasterEditor', () => {
             store.removeCaster = jest.fn();
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
             wrapper.getComponent<typeof IplButton>('[data-test="remove-button"]').vm.$emit('click');
 
-            expect(store.removeCaster).toHaveBeenCalledWith('casterid');
+            expect(store.removeCaster).toHaveBeenCalledWith(mockNodecg.bundleName, 'casters', 'casterid');
         });
     });
 
@@ -293,7 +327,9 @@ describe('CasterEditor', () => {
         beforeEach(() => {
             wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
         });
@@ -335,7 +371,9 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = true;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
@@ -348,7 +386,9 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = true;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 
@@ -371,7 +411,9 @@ describe('CasterEditor', () => {
             store.radiaIntegrationEnabled = false;
             const wrapper = mount(CasterEditor, {
                 props: {
-                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false }
+                    caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: false },
+                    casterSetKey: 'casters',
+                    bundleName: mockNodecg.bundleName
                 }
             });
 

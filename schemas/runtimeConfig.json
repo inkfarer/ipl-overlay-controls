@@ -13,13 +13,20 @@
         "interfaceLocale": {
             "type": "string",
             "enum": ["EN", "JA"]
+        },
+        "activeGraphicsBundles": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         }
     },
-    "required": ["gameVersion", "locale", "interfaceLocale"],
+    "required": ["gameVersion", "locale", "interfaceLocale", "activeGraphicsBundles"],
     "additionalProperties": false,
     "default": {
         "gameVersion": "SPLATOON_3",
         "locale": "EN",
-        "interfaceLocale": "EN"
+        "interfaceLocale": "EN",
+        "activeGraphicsBundles": []
     }
 }

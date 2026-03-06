@@ -1,6 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "type": "string",
-    "enum": ["main", "stages", "teams"],
+    "anyOf": [
+        {
+            "type": "string",
+            "enum": ["main", "stages", "teams"]
+        },
+        {
+            "type": "string"
+        }
+    ],
     "default": "main"
 }

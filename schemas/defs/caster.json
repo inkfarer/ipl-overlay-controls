@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$defs": {
+        "caster": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "twitter",
+                "pronouns"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "pronouns": {
+                    "type": "string"
+                },
+                "imageUrl": {
+                    "type": "string"
+                },
+                "videoUrl": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

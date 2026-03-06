@@ -24,7 +24,8 @@ describe('lastfmSettings', () => {
                 enabled: null,
                 updateOnImport: null
             },
-            runtimeConfig: null
+            runtimeConfig: null,
+            bundles: []
         };
     });
 
