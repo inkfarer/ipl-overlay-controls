@@ -6,6 +6,7 @@ import Draggable from 'vuedraggable';
 import CasterEditor from '../components/casterEditor.vue';
 import { IplButton } from '@iplsplatoon/vue-components';
 import { mockSendMessage } from '../../__mocks__/mockNodecg';
+import { mockNodecg } from '../../../extension/__mocks__/mockNodecg';
 
 describe('Casters', () => {
     config.global.stubs = {
@@ -19,6 +20,10 @@ describe('Casters', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
         config.global.plugins = [pinia];
+        // @ts-ignore
+        useCasterStore().runtimeConfig = {
+            activeGraphicsBundles: ['other-bundle']
+        };
     });
 
     describe('add caster button', () => {
@@ -245,6 +250,6 @@ describe('Casters', () => {
 
         await wrapper.getComponent<typeof Draggable>('[data-test="casters-draggable"]').vm.$emit('end');
 
-        expect(store.setCasterOrder).toHaveBeenCalledWith(['b', 'c']);
+        expect(store.setCasterOrder).toHaveBeenCalledWith(mockNodecg.bundleName, 'casters', ['b', 'c']);
     });
 });

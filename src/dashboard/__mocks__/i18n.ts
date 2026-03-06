@@ -3,7 +3,7 @@ import { config } from '@vue/test-utils';
 
 jest.mock('i18next-vue', () => ({
     __esModule: true,
-    useTranslation: () => ({ t: i18next.t })
+    useTranslation: () => ({ t: i18next.t, i18next })
 }));
 
 beforeAll(async () => {
