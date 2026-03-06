@@ -1,5 +1,5 @@
 import type NodeCG from '@nodecg/types';
-import { BundleDeclaredConfig } from 'types/schemas/bundleDeclaredConfig';
+import { BundleDeclaredConfig, TranslatableNames } from 'types/schemas/bundleDeclaredConfig';
 import { BundleCasterSets } from 'schemas';
 
 const DEFAULT_CASTERS = {
@@ -15,6 +15,11 @@ const DEFAULT_CASTERS = {
     }
 };
 
+type MaybeTranslatableNames = { name: string; } | { names: TranslatableNames; };
+
+export type BundleDeclaredScene = { value: string; } & MaybeTranslatableNames;
+export type BundleDeclaredCasterSet = { key: string; maxItems: number; } & MaybeTranslatableNames;
+
 export class BundleConfigDeclarationService {
     private bundleDeclaredConfig: NodeCG.ServerReplicant<BundleDeclaredConfig>;
     private bundleCasterSets: NodeCG.ServerReplicant<BundleCasterSets>;
@@ -24,25 +29,29 @@ export class BundleConfigDeclarationService {
         this.bundleCasterSets = nodecg.Replicant('bundleCasterSets');
     }
 
-    declareCustomScenes(bundleName: string, scenes: BundleDeclaredConfig[string]['scenes']) {
+    declareCustomScenes(bundleName: string, scenes: BundleDeclaredScene[]) {
+        const normalizedScenes = this.normalizeNames(scenes);
+
         if (this.bundleDeclaredConfig.value[bundleName]) {
-            this.bundleDeclaredConfig.value[bundleName].scenes = scenes;
+            this.bundleDeclaredConfig.value[bundleName].scenes = normalizedScenes;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), scenes };
+            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), scenes: normalizedScenes };
         }
     }
 
-    declareCasterSets(bundleName: string, casterSets: BundleDeclaredConfig[string]['casterSets']) {
+    declareCasterSets(bundleName: string, casterSets: BundleDeclaredCasterSet[]) {
+        const normalizedCasterSets = this.normalizeNames(casterSets);
+
         if (this.bundleDeclaredConfig.value[bundleName]) {
-            this.bundleDeclaredConfig.value[bundleName].casterSets = casterSets;
+            this.bundleDeclaredConfig.value[bundleName].casterSets = normalizedCasterSets;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), casterSets };
+            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), casterSets: normalizedCasterSets };
         }
 
         if (this.bundleCasterSets.value[bundleName] == null) {
             this.bundleCasterSets.value[bundleName] = {};
         }
-        casterSets.forEach(casterSet => {
+        normalizedCasterSets.forEach(casterSet => {
             if (this.bundleCasterSets.value[bundleName][casterSet.key] == null) {
                 this.bundleCasterSets.value[bundleName][casterSet.key] = DEFAULT_CASTERS;
             }
@@ -54,5 +63,25 @@ export class BundleConfigDeclarationService {
             casterSets: [],
             scenes: []
         };
+    }
+
+    private normalizeNames<
+        T extends object
+    >(arr: (T & MaybeTranslatableNames)[]): (T & { names: TranslatableNames; })[] {
+        return arr.map(item => {
+            const result = {
+                ...item
+            } as (T & { names: TranslatableNames; });
+
+            if ('name' in item) {
+                result.names = {
+                    EN: item.name
+                };
+
+                delete (result as Record<string, unknown>).name;
+            }
+
+            return result;
+        });
     }
 }

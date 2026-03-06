@@ -3,6 +3,22 @@
         "groupName": "Custom Color",
         "customColor": "Custom Color"
     },
+    "colorFinderHints": {
+        "SPLATOON_3": {
+            "rankedModes": {
+                "orangePurple": "Purple",
+                "orangeDarkBlue": "Blue",
+                "yellowDarkBlue": "Blue",
+                "yellowPurple": "Violet",
+                "goldPurple": "Purple",
+                "turquoiseOrange": "Orange",
+                "turquoisePink": "Pink",
+                "darkBlueOrange": "Orange",
+                "greenPink": "Pink",
+                "pinkGreen": "Green"
+            }
+        }
+    },
     "SPLATOON_3": {
         "rankedModes": {
             "groupName": "Ranked Modes",

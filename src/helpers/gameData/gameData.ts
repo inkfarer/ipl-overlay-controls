@@ -4,9 +4,15 @@ import { splatoon2Data, Splatoon2Modes, Splatoon2Stages } from './splatoon2Data'
 import { splatoon3Data, Splatoon3Modes, Splatoon3Stages } from './splatoon3Data';
 import { Locale } from '../../types/enums/Locale';
 
+interface RawColorFinderOption {
+    optionColor: string;
+    matchingColorKeys: string[];
+}
+
 interface RawColorGroup {
     meta: { name: string; key: string; };
     colors: Omit<ColorInfo, 'isCustom'>[];
+    colorFinderOptions?: RawColorFinderOption[];
 }
 
 export interface RawGameData<S extends readonly string[], M extends readonly string[]> {
