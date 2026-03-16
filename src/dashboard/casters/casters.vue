@@ -57,6 +57,7 @@
                     :caster="element"
                     :bundle-name="selectedCasterSetMeta.bundleName"
                     :caster-set-key="selectedCasterSetMeta.casterSetKey"
+                    :disable-creation="disableAddCaster"
                     @save="handleCasterSave"
                 />
             </template>
