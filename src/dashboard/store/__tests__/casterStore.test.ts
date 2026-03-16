@@ -34,6 +34,15 @@ describe('casterStore', () => {
 
             expect(store.uncommittedCasters['4095687']).toEqual('cool caster');
         });
+
+        it('adds uncommitted casters to bundle defined state', () => {
+            const store = useCasterStore();
+
+            // @ts-ignore
+            store.addUncommittedCaster('testBundle', 'testCasterSet', '111112', 'cool caster');
+
+            expect(store.uncommittedBundleCasters['testBundle']['testCasterSet']['111112']).toEqual('cool caster');
+        });
     });
 
     describe('removeUncommittedCaster', () => {
@@ -45,6 +54,27 @@ describe('casterStore', () => {
             store.removeUncommittedCaster(mockNodecg.bundleName, 'casters', '60389');
 
             expect(store.uncommittedCasters['60389']).toBeUndefined();
+        });
+
+        it('removes uncommitted casters from bundle defined state', () => {
+            const store = useCasterStore();
+            // @ts-ignore
+            store.uncommittedBundleCasters = {
+                testBundle: {
+                    testCasterSet: {
+                        // @ts-ignore
+                        '1111': { name: 'cool caster 1' },
+                        // @ts-ignore
+                        '2222': { name: 'cool caster 1' }
+                    }
+                }
+            };
+
+            store.removeUncommittedCaster('testBundle', 'testCasterSet', '1111');
+
+            expect(store.uncommittedBundleCasters['testBundle']['testCasterSet']).toEqual({
+                '2222': { name: 'cool caster 1' }
+            });
         });
     });
 
@@ -66,6 +96,20 @@ describe('casterStore', () => {
             const result = await store.addDefaultCaster(mockNodecg.bundleName, 'casters');
 
             expect(store.uncommittedCasters['new caster id']).toEqual({
+                name: 'New Caster',
+                twitter: '',
+                pronouns: '?/?'
+            });
+            expect(result).toEqual('new caster id');
+        });
+
+        it('creates caster in bundle defined state', async () => {
+            const store = useCasterStore();
+            jest.spyOn(generateId, 'generateId').mockReturnValue('new caster id');
+
+            const result = await store.addDefaultCaster('testBundle', 'testCasterSet');
+
+            expect(store.uncommittedBundleCasters['testBundle']['testCasterSet']['new caster id']).toEqual({
                 name: 'New Caster',
                 twitter: '',
                 pronouns: '?/?'

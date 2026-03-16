@@ -57,7 +57,7 @@ export const useCasterStore = defineStore('casters', {
             if (bundleName === nodecg.bundleName) {
                 delete this.uncommittedCasters[id];
             } else {
-                delete this.uncommittedBundleCasters[bundleName][casterSetKey];
+                delete this.uncommittedBundleCasters[bundleName][casterSetKey][id];
             }
         },
         addUncommittedCaster(bundleName: string, casterSetKey: string, id: string, caster?: Caster): void {

@@ -57,7 +57,7 @@
                     :caster="element"
                     :bundle-name="selectedCasterSetMeta.bundleName"
                     :caster-set-key="selectedCasterSetMeta.casterSetKey"
-                    :disable-creation="disableAddCaster"
+                    :disable-creation="disableCasterCreation"
                     @save="handleCasterSave"
                 />
             </template>
@@ -204,6 +204,15 @@ export default defineComponent({
                 });
 
                 return result;
+            }),
+            disableCasterCreation: computed(() => {
+                if (selectedCasterSetMeta.value.bundleName === nodecg.bundleName) {
+                    return Object.keys(store.casters).length >= 3;
+                } else {
+                    // eslint-disable-next-line max-len
+                    return Object.keys(store.bundleCasterSets[selectedCasterSetMeta.value.bundleName][selectedCasterSetMeta.value.casterSetKey]).length
+                        >= selectedCasterSetMeta.value.maxItems;
+                }
             })
         };
     }
