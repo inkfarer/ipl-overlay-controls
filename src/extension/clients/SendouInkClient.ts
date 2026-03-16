@@ -113,6 +113,7 @@ export class SendouInkClient {
                 name: team.name,
                 showLogo: true,
                 logoUrl: team.logoUrl ?? undefined,
+                seed: team.seed,
                 players: team.members.map(member => ({
                     userId: member.userId,
                     name: member.name
