@@ -61,7 +61,7 @@
             <ipl-button
                 :label="updateButtonLabel"
                 :color="buttonColor"
-                :disabled="disableSave"
+                :disabled="caster.uncommitted && disableCreation"
                 data-test="update-button"
                 :title="caster.uncommitted ? undefined : $t('common:button.rightClickUndoMessage')"
                 @click="updateCaster"
@@ -113,6 +113,9 @@ export default defineComponent({
         caster: {
             type: Object as PropType<CasterProp>,
             required: true
+        },
+        disableCreation: {
+            type: Boolean
         }
     },
 
@@ -159,9 +162,6 @@ export default defineComponent({
             setFocused(focused: boolean) {
                 isFocused.value = focused;
             },
-            disableSave: computed(() => {
-                return props.caster.uncommitted && Object.keys(store.casters).length >= 3;
-            }),
             isEdited,
             buttonColor: computed(() => props.caster.uncommitted ? 'green' : isEdited.value ? 'red' : 'blue'),
             updateButtonLabel: computed(() => props.caster.uncommitted ? t('casterEditor.saveNewCasterButtonLabel') : t('common:button.update')),

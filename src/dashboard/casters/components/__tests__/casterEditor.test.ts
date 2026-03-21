@@ -244,21 +244,13 @@ describe('CasterEditor', () => {
             expect(event.preventDefault).not.toHaveBeenCalled();
         });
 
-        it('is disabled if there are three or more casters and the given caster is uncommitted', () => {
-            const store = useCasterStore();
-            store.casters = {
-                // @ts-ignore
-                a: {},
-                // @ts-ignore
-                b: {},
-                // @ts-ignore
-                c: {}
-            };
+        it('is disabled when creating new casters is disabled', () => {
             const wrapper = mount(CasterEditor, {
                 props: {
                     caster: { name: 'cool caster', twitter: '@ccaster', pronouns: 'he/him', id: 'casterid', uncommitted: true },
                     casterSetKey: 'casters',
-                    bundleName: mockNodecg.bundleName
+                    bundleName: mockNodecg.bundleName,
+                    disableCreation: true
                 }
             });
 
