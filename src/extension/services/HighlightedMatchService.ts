@@ -1,5 +1,5 @@
 import type NodeCG from '@nodecg/types';
-import { Configschema, HighlightedMatches, TournamentData } from 'schemas';
+import { Configschema, HighlightedMatches, Match, TournamentData } from 'schemas';
 import { GetHighlightedMatchesMessage } from 'types/messages/highlightedMatches';
 import { getBattlefyMatches } from '../importers/clients/battlefyClient';
 import i18next from 'i18next';
@@ -66,9 +66,22 @@ export class HighlightedMatchService {
         const matches = await SendouInkClientInstance.getCastedMatches(this.tournamentData.value.meta.id);
 
         const matchDetails = await Promise.all([
-            ...matches.current.map(match => match.matchId),
-            ...matches.future.map(match => match.matchId)
-        ].map(async (matchId) => ({ matchId, ...(await SendouInkClientInstance.getMatch(matchId)) })));
+            ...matches.current.map(match => ({
+                matchId: match.matchId,
+                matchType: 'CURRENT' as const,
+                channelType: match.channel.type,
+                channelId: match.channel.channelId
+            })),
+            ...matches.future.map(match => ({
+                matchId: match.matchId,
+                matchType: 'FUTURE' as const,
+                channelType: match.channel?.type,
+                channelId: match.channel?.channelId
+            }))
+        ].map(async (match) => ({
+            ...match,
+            ...(await SendouInkClientInstance.getMatch(match.matchId))
+        })));
 
         this.updateHighlightedMatches(matchDetails.map(match => {
             if (match.teamOne == null || match.teamTwo == null) return null;
@@ -91,11 +104,18 @@ export class HighlightedMatchService {
                 meta: {
                     name: matchName,
                     shortName: shortMatchName,
-                    id: String(match.matchId)
+                    id: String(match.matchId),
+                    sourceSpecificData: {
+                        sendou: {
+                            matchType: match.matchType,
+                            channelType: match.channelType,
+                            channelId: match.channelId
+                        }
+                    }
                 },
                 teamA: cloneDeep(teamA),
                 teamB: cloneDeep(teamB)
-            };
+            } satisfies Match;
         }).filter(match => match != null));
     }
 

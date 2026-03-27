@@ -3,6 +3,7 @@
 exports[`teamDataImporter displays data of existing tournament if it has smash.gg data 1`] = `
 "<div data-v-868771ad="" class="ipl-space color-dark text-center m-t-8" data-test="saved-data-section">
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="smashgg://cool-tournament" target="_blank">cool tournament</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.SMASHGG</span><br> 123123asd <br> Cool Event (Splatoon 2) <ipl-button-stub label="translation:teamDataImporter.savedDataSection.refreshButton" color="blue" disabled="false" async="true" progressmessage="translation:teamDataImporter.savedDataSection.loadingRefreshButton" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="refresh-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -11,6 +12,7 @@ exports[`teamDataImporter displays data of existing tournament if it is missing 
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="tounament://cool-tournament" target="_blank">translation:teamDataImporter.savedDataSection.tournamentNamePlaceholder</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.BATTLEFY</span><br> 123123asd
   <!--v-if-->
   <ipl-button-stub label="translation:teamDataImporter.savedDataSection.refreshButton" color="blue" disabled="false" async="true" progressmessage="translation:teamDataImporter.savedDataSection.loadingRefreshButton" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="refresh-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -19,6 +21,7 @@ exports[`teamDataImporter displays data of existing tournament if it is missing 
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><span>cool tournament</span><span class="badge badge-blue m-l-6">common:tournamentDataSource.BATTLEFY</span><br> 123123asd
   <!--v-if-->
   <ipl-button-stub label="translation:teamDataImporter.savedDataSection.refreshButton" color="blue" disabled="false" async="true" progressmessage="translation:teamDataImporter.savedDataSection.loadingRefreshButton" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="refresh-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -27,6 +30,7 @@ exports[`teamDataImporter displays data of existing tournament when its source i
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="tournament://cool-tournament" target="_blank">Cool Tournament</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.BATTLEFY</span><br> 123123asd
   <!--v-if-->
   <ipl-button-stub label="translation:teamDataImporter.savedDataSection.refreshButton" color="blue" disabled="false" async="true" progressmessage="translation:teamDataImporter.savedDataSection.loadingRefreshButton" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="refresh-button"></ipl-button-stub>
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -35,6 +39,7 @@ exports[`teamDataImporter displays data of existing tournament when its source i
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="tournament://cool-tournament" target="_blank">Cool Tournament</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.UNKNOWN</span><br> 123123asd
   <!--v-if-->
   <!--v-if-->
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -43,6 +48,7 @@ exports[`teamDataImporter displays data of existing tournament when its source i
   <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="tournament://cool-tournament" target="_blank">Cool Tournament</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.UPLOAD</span><br> 123123asd
   <!--v-if-->
   <!--v-if-->
+  <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
 </div>"
 `;
 
@@ -60,6 +66,7 @@ exports[`teamDataImporter matches snapshot 1`] = `
     <div class="title">translation:teamDataImporter.savedDataSection.title</div><a href="tournament://cool-tournament" target="_blank">Cool Tournament</a><span class="badge badge-blue m-l-6">common:tournamentDataSource.BATTLEFY</span><br> 123123asd
     <!--v-if-->
     <ipl-button-stub label="translation:teamDataImporter.savedDataSection.refreshButton" color="blue" disabled="false" async="true" progressmessage="translation:teamDataImporter.savedDataSection.loadingRefreshButton" successmessage="common:button.success" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-6" data-test="refresh-button"></ipl-button-stub>
+    <ipl-button-stub label="translation:teamDataImporter.exportButton" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" href="/ipl-overlay-controls/tournament-data" inline="false" class="m-t-8"></ipl-button-stub>
   </div>
   <div data-v-868771ad="" class="ipl-space color-dark m-t-8">
     <ipl-input-stub name="shortName" label="translation:teamDataImporter.shortTournamentNameInput" modelvalue="Cool Tournament" type="text" centered="false" disabled="false" loading="false" theme="default"></ipl-input-stub>

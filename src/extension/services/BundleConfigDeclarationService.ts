@@ -35,7 +35,10 @@ export class BundleConfigDeclarationService {
         if (this.bundleDeclaredConfig.value[bundleName]) {
             this.bundleDeclaredConfig.value[bundleName].scenes = normalizedScenes;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), scenes: normalizedScenes };
+            this.bundleDeclaredConfig.value[bundleName] = {
+                ...this.getBlankBundleDeclaredConfig(),
+                scenes: normalizedScenes
+            };
         }
     }
 
@@ -45,7 +48,10 @@ export class BundleConfigDeclarationService {
         if (this.bundleDeclaredConfig.value[bundleName]) {
             this.bundleDeclaredConfig.value[bundleName].casterSets = normalizedCasterSets;
         } else {
-            this.bundleDeclaredConfig.value[bundleName] = { ...this.getBlankBundleDeclaredConfig(), casterSets: normalizedCasterSets };
+            this.bundleDeclaredConfig.value[bundleName] = {
+                ...this.getBlankBundleDeclaredConfig(),
+                casterSets: normalizedCasterSets
+            };
         }
 
         if (this.bundleCasterSets.value[bundleName] == null) {

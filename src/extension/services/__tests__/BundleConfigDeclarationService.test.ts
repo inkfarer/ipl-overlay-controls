@@ -25,7 +25,8 @@ describe('BundleConfigDeclarationService', () => {
                     scenes: [
                         { names: { EN: 'Casters' }, value: 'casters' },
                         { names: { EN: 'Bracket', JA: 'ブラケット' }, value: 'bracket' }
-                    ]
+                    ],
+                    casterSets: []
                 }
             });
         });
@@ -60,7 +61,8 @@ describe('BundleConfigDeclarationService', () => {
                     scenes: [
                         { names: { EN: 'Casters' }, value: 'casters' },
                         { names: { EN: 'Bracket', JA: 'ブラケット' }, value: 'bracket' }
-                    ]
+                    ],
+                    casterSets: []
                 }
             });
         });
@@ -78,7 +80,8 @@ describe('BundleConfigDeclarationService', () => {
                     casterSets: [
                         { names: { EN: 'Analysts' }, key: 'analysts', maxItems: 4 },
                         { names: { EN: 'Interview', JA: 'インタービュー' }, key: 'interview', maxItems: 6 },
-                    ]
+                    ],
+                    scenes: []
                 }
             });
         });
@@ -106,7 +109,8 @@ describe('BundleConfigDeclarationService', () => {
                     casterSets: [
                         { names: { EN: 'Analysts' }, key: 'analysts', maxItems: 4 },
                         { names: { EN: 'Interview', JA: 'インタービュー' }, key: 'interview', maxItems: 6 },
-                    ]
+                    ],
+                    scenes: []
                 }
             });
         });

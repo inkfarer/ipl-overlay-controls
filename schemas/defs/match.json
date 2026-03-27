@@ -36,6 +36,29 @@
           },
           "playType": {
             "$ref": "round.json#/$defs/type"
+          },
+          "sourceSpecificData": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sendou": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["matchType"],
+                "properties": {
+                  "matchType": {
+                    "type": "string",
+                    "enum": ["CURRENT", "FUTURE"]
+                  },
+                  "channelType": {
+                    "type": "string"
+                  },
+                  "channelId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         },
         "required": ["name", "shortName", "id"],

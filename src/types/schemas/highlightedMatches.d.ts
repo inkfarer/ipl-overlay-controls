@@ -36,6 +36,13 @@ export interface Match {
 		 */
 		match?: number;
 		playType?: 'BEST_OF' | 'PLAY_ALL';
+		sourceSpecificData?: {
+			sendou?: {
+				matchType: 'CURRENT' | 'FUTURE';
+				channelType: string;
+				channelId: string;
+			};
+		};
 	};
 	teamA: Team;
 	teamB: Team;

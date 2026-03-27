@@ -128,7 +128,7 @@ describe('HighlightedMatchService', () => {
                             matchId: 222,
                             channel: {
                                 type: 'TWITCH',
-                                channelId: 'iplsplatoon'
+                                channelId: 'iplsplatoon2'
                             }
                         }
                     ],
@@ -233,7 +233,14 @@ describe('HighlightedMatchService', () => {
                         meta: {
                             id: '111',
                             name: 'Round One on Test Bracket',
-                            shortName: 'Round One'
+                            shortName: 'Round One',
+                            sourceSpecificData: {
+                                sendou: {
+                                    channelId: 'iplsplatoon',
+                                    channelType: 'TWITCH',
+                                    matchType: 'CURRENT'
+                                }
+                            }
                         },
                         teamA: { id: '11', name: 'Test Team 1' },
                         teamB: { id: '22', name: 'Test Team 2' }
@@ -242,7 +249,14 @@ describe('HighlightedMatchService', () => {
                         meta: {
                             id: '222',
                             name: 'Round Two on Test Bracket',
-                            shortName: 'Round Two'
+                            shortName: 'Round Two',
+                            sourceSpecificData: {
+                                sendou: {
+                                    channelId: 'iplsplatoon2',
+                                    channelType: 'TWITCH',
+                                    matchType: 'CURRENT'
+                                }
+                            }
                         },
                         teamA: { id: '22', name: 'Test Team 2' },
                         teamB: { id: '33', name: 'Test Team 3' }

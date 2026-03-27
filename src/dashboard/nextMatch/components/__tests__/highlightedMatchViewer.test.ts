@@ -177,6 +177,7 @@ describe('HighlightedMatchViewer', () => {
 
         expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
             name: 'cooler match',
+            games: [],
             teamAId: '1234',
             teamBId: '5678',
             roundId: '0387'
@@ -214,6 +215,7 @@ describe('HighlightedMatchViewer', () => {
 
         expect(highlightedMatchStore.setNextMatch).toHaveBeenCalledWith({
             name: 'cooler match',
+            games: [],
             teamAId: '1234',
             teamBId: '5678',
             roundId: '0387'
