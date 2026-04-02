@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[158],{2158:e=>{e.exports=JSON.parse('{"title":"Observers","noObserversMessage":"Add an observer...","nameInput":"Name","twitterInput":"Twitter","pronounInput":"Pronouns","addButton":"Add observer","saveAllButton":"Save all","removeObserverButton":"Remove"}')}}]);

@@ -7,12 +7,6 @@
 /*! #__NO_SIDE_EFFECTS__ */
 
 /**
-* @vue/reactivity v3.4.29
-* (c) 2018-present Yuxi (Evan) You and Vue contributors
-* @license MIT
-**/
-
-/**
 * @vue/runtime-dom v3.4.29
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
