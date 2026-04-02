@@ -14,10 +14,5 @@
         "pronounInput": "Pronouns",
         "imageUrlInput": "Image URL",
         "videoUrlInput": "Video URL"
-    },
-    "casterSearch": {
-        "buttonLabel": "Search casters",
-        "queryInput": "Query",
-        "noResultsMessage": "Type above to search..."
     }
 }

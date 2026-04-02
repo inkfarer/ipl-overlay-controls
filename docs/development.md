@@ -137,6 +137,14 @@ Casters (Also known as Commentators) are the heart of a quality tournament broad
 Contains information about the current casters.  
 A maximum of 3 casters are allowed to be shown at a time by the dashboard and schema to simplify overlay design.
 
+### currentObservers
+
+*Replicant* [(Schema)](https://github.com/inkfarer/ipl-overlay-controls/blob/master/schemas/currentObservers.json)
+
+Contains information about the talent currently spectating the match.
+May contain multiple elements, but the vast majority of events only have one observer active at a time.
+Graphics are welcome to ignore any observers past the 1st or 2nd item in the list if doing so is deemed appropriate.
+
 ### mainShowCasters
 
 *Message* [(more info)](https://www.nodecg.dev/docs/concepts-and-terminology#messages)

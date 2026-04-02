@@ -53,13 +53,15 @@
                     >
                         {{ $t(`colors:${settingsStore.runtimeConfig.gameVersion}.${group.meta.key}.groupName`) }}
                     </div>
-                    <div
+                    <ipl-space
                         v-for="(color, colorIndex) in group.colors"
                         :key="`color_${groupIndex}_${colorIndex}`"
                         :data-test="`color-option-${groupIndex}-${colorIndex}`"
                         class="color-option layout horizontal center-vertical"
                         :class="{ 'is-selected': activeColor.title === color.title &&
                             activeColor.categoryName === group.meta.name }"
+                        clickable
+                        color="secondary"
                         @click="setColor(color, group.meta.name, group.meta.key)"
                     >
                         <span
@@ -84,7 +86,7 @@
                                 }"
                             />
                         </div>
-                    </div>
+                    </ipl-space>
                 </div>
             </div>
         </div>
@@ -121,7 +123,14 @@
 import { computed, defineComponent, ref, watch } from 'vue';
 import { useActiveRoundStore } from '../../store/activeRoundStore';
 import { ColorInfo } from 'types/colors';
-import { IplButton, IplExpandingSpace, IplCheckbox, IplInput, getContrastingTextColor } from '@iplsplatoon/vue-components';
+import {
+    IplButton,
+    IplExpandingSpace,
+    IplCheckbox,
+    IplInput,
+    getContrastingTextColor,
+    IplSpace
+} from '@iplsplatoon/vue-components';
 import { themeColors } from '../../styles/colors';
 import { useSettingsStore } from '../../store/settingsStore';
 import { perGameData } from '../../../helpers/gameData/gameData';
@@ -131,7 +140,7 @@ import { swapColors } from '../../../helpers/ColorHelper';
 export default defineComponent({
     name: 'ColorList',
 
-    components: { ColorFinder, IplButton, IplInput, IplCheckbox, IplExpandingSpace },
+    components: { IplSpace, ColorFinder, IplButton, IplInput, IplCheckbox, IplExpandingSpace },
 
     setup() {
         const activeRoundStore = useActiveRoundStore();
@@ -270,10 +279,11 @@ export default defineComponent({
 .color-option {
     background-color: $background-secondary;
     border-radius: $border-radius-inner;
-    padding: 6px 10px;
+    padding: 6px 10px !important;
     transition-property: background-color;
     transition-duration: $transition-duration-low;
     box-sizing: border-box;
+    display: flex !important;
 
     &.is-selected {
         background-color: $blue;

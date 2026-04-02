@@ -71,6 +71,8 @@ onMounted(() => {
     emit('parameterAdd', props.param.key);
     if (props.param.type === 'static') {
         emit('change', props.param.key, props.param.value);
+    } else if (props.param.key === 'matchType' && props.param.type === 'select') {
+        emit('change', props.param.key, props.param.options[0].value);
     }
 });
 

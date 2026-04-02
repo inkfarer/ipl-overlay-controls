@@ -21,7 +21,8 @@ describe('teamDataImporter', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
 
-        useTournamentDataStore().$state = {
+        const tournamentDataStore = useTournamentDataStore();
+        tournamentDataStore.$state = {
             tournamentData: {
                 meta: {
                     id: '123123',
@@ -34,6 +35,7 @@ describe('teamDataImporter', () => {
             roundStore: {},
             matchStore: {}
         };
+        tournamentDataStore.uploadTeamData = jest.fn().mockResolvedValue(undefined);
     });
 
     it('matches snapshot', () => {
@@ -236,7 +238,6 @@ describe('teamDataImporter', () => {
     it('dispatches to store on file import', async () => {
         const file = new File([], 'mock-file');
         const store = useTournamentDataStore();
-        store.uploadTeamData = jest.fn();
         const wrapper = mount(TeamDataImporter, {
             global: {
                 plugins: [pinia]

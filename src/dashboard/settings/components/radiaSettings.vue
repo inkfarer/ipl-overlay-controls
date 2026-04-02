@@ -19,22 +19,25 @@
             />
         </ipl-message>
         <div class="title">{{ $t('sectionName.radia') }}</div>
-        <ipl-input
-            v-model="settings.guildID"
-            name="guild-id"
-            :label="$t('radia.guildIdInput')"
-            @focuschange="handleFocusEvent"
-        />
-        <ipl-button
-            :label="$t('common:button.update')"
-            data-test="update-button"
-            class="m-t-8"
-            :color="buttonColor"
-            :disabled="!isValid"
-            :title="$t('common:button.rightClickUndoMessage')"
-            @click="handleUpdate"
-            @right-click="undoChanges"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="settings.guildID"
+                name="guild-id"
+                :label="$t('radia.guildIdInput')"
+                @focuschange="handleFocusEvent"
+            />
+            <ipl-button
+                :label="$t('common:button.update')"
+                data-test="update-button"
+                type="submit"
+                class="m-t-8"
+                :color="buttonColor"
+                :disabled="!isValid"
+                :title="$t('common:button.rightClickUndoMessage')"
+                @click="handleUpdate"
+                @right-click="undoChanges"
+            />
+        </form>
         <ipl-checkbox
             v-model="settings.updateOnImport"
             class="m-t-8"

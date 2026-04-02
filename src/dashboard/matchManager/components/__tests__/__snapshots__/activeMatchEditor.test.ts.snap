@@ -10,19 +10,21 @@ exports[`ActiveRoundEditor matches snapshot and has expected values for select o
   </div>
   <div data-v-31c8f953="" class="content" style="display: none;">
     <!--v-if-->
-    <div class="layout horizontal">
-      <div class="layout vertical center-horizontal max-width">
-        <ipl-select-stub modelvalue="123123" label="translation:activeMatchEditor.teamASelect" options="[object Object],[object Object]" disabled="false" data-test="team-a-selector"></ipl-select-stub>
-        <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="true" small="true" disabled="false" class="m-t-6" data-test="team-a-image-toggle"></ipl-checkbox-stub>
+    <form>
+      <div class="layout horizontal">
+        <div class="layout vertical center-horizontal max-width">
+          <ipl-select-stub modelvalue="123123" label="translation:activeMatchEditor.teamASelect" options="[object Object],[object Object]" disabled="false" data-test="team-a-selector"></ipl-select-stub>
+          <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="true" small="true" disabled="false" class="m-t-6" data-test="team-a-image-toggle"></ipl-checkbox-stub>
+        </div>
+        <div class="layout vertical center-horizontal max-width m-l-8">
+          <ipl-select-stub modelvalue="345345" label="translation:activeMatchEditor.teamBSelect" options="[object Object],[object Object]" disabled="false" data-test="team-b-selector"></ipl-select-stub>
+          <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="false" small="true" disabled="false" class="m-t-6" data-test="team-b-image-toggle"></ipl-checkbox-stub>
+        </div>
       </div>
-      <div class="layout vertical center-horizontal max-width m-l-8">
-        <ipl-select-stub modelvalue="345345" label="translation:activeMatchEditor.teamBSelect" options="[object Object],[object Object]" disabled="false" data-test="team-b-selector"></ipl-select-stub>
-        <ipl-checkbox-stub label="translation:activeMatchEditor.showTeamImageCheckbox" modelvalue="false" small="true" disabled="false" class="m-t-6" data-test="team-b-image-toggle"></ipl-checkbox-stub>
-      </div>
-    </div>
-    <ipl-select-stub modelvalue="01010" label="translation:activeMatchEditor.matchSelect" options="[object Object],[object Object],[object Object]" disabled="false" class="m-t-6" data-test="match-selector"></ipl-select-stub>
-    <ipl-input-stub name="matchName" label="translation:activeMatchEditor.matchNameInput" modelvalue="Rad Match" type="text" centered="false" disabled="false" loading="false" theme="default" class="m-t-6"></ipl-input-stub>
-    <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" class="m-t-8" data-test="update-match-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      <ipl-select-stub modelvalue="01010" label="translation:activeMatchEditor.matchSelect" options="[object Object],[object Object],[object Object]" disabled="false" class="m-t-6" data-test="match-selector"></ipl-select-stub>
+      <ipl-input-stub name="matchName" label="translation:activeMatchEditor.matchNameInput" modelvalue="Rad Match" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-6"></ipl-input-stub>
+      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="update-match-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </form>
   </div>
 </div>"
 `;

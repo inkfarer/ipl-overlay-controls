@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "$ref": "defs/caster.json#/$defs/caster"
+    },
+    "default": []
+}
