@@ -1,38 +1,41 @@
 <template>
     <ipl-space>
-        <div class="layout horizontal">
-            <team-select
-                v-model="teamAId"
-                :label="$t('manualTeamPicker.teamASelect')"
-                data-test="team-a-selector"
+        <form @submit.prevent>
+            <div class="layout horizontal">
+                <team-select
+                    v-model="teamAId"
+                    :label="$t('manualTeamPicker.teamASelect')"
+                    data-test="team-a-selector"
+                />
+                <team-select
+                    v-model="teamBId"
+                    :label="$t('manualTeamPicker.teamBSelect')"
+                    class="m-l-8"
+                    data-test="team-b-selector"
+                />
+            </div>
+            <round-select
+                v-model="selectedRound"
+                class="m-t-8"
+                data-test="round-selector"
             />
-            <team-select
-                v-model="teamBId"
-                :label="$t('manualTeamPicker.teamBSelect')"
-                class="m-l-8"
-                data-test="team-b-selector"
+            <ipl-input
+                v-model="nextMatchName"
+                class="m-t-4"
+                name="match-name"
+                :label="$t('manualTeamPicker.matchNameInput')"
             />
-        </div>
-        <round-select
-            v-model="selectedRound"
-            class="m-t-8"
-            data-test="round-selector"
-        />
-        <ipl-input
-            v-model="nextMatchName"
-            class="m-t-4"
-            name="match-name"
-            :label="$t('manualTeamPicker.matchNameInput')"
-        />
-        <ipl-button
-            :label="$t('common:button.update')"
-            class="m-t-8"
-            :color="isChanged ? 'red' : 'blue'"
-            :title="$t('common:button.rightClickUndoMessage')"
-            data-test="update-button"
-            @click="handleUpdate"
-            @right-click="undoChanges"
-        />
+            <ipl-button
+                :label="$t('common:button.update')"
+                class="m-t-8"
+                :color="isChanged ? 'red' : 'blue'"
+                :title="$t('common:button.rightClickUndoMessage')"
+                data-test="update-button"
+                type="submit"
+                @click="handleUpdate"
+                @right-click="undoChanges"
+            />
+        </form>
     </ipl-space>
 </template>
 

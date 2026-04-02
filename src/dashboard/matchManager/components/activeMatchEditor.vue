@@ -21,60 +21,63 @@
             }}
         </ipl-message>
 
-        <div class="layout horizontal">
-            <div class="layout vertical center-horizontal max-width">
-                <ipl-select
-                    v-model="teamAId"
-                    :label="$t('activeMatchEditor.teamASelect')"
-                    data-test="team-a-selector"
-                    :options="teams"
-                />
-                <ipl-checkbox
-                    v-model="teamAImageShown"
-                    class="m-t-6"
-                    :label="$t('activeMatchEditor.showTeamImageCheckbox')"
-                    data-test="team-a-image-toggle"
-                    small
-                />
+        <form @submit.prevent>
+            <div class="layout horizontal">
+                <div class="layout vertical center-horizontal max-width">
+                    <ipl-select
+                        v-model="teamAId"
+                        :label="$t('activeMatchEditor.teamASelect')"
+                        data-test="team-a-selector"
+                        :options="teams"
+                    />
+                    <ipl-checkbox
+                        v-model="teamAImageShown"
+                        class="m-t-6"
+                        :label="$t('activeMatchEditor.showTeamImageCheckbox')"
+                        data-test="team-a-image-toggle"
+                        small
+                    />
+                </div>
+                <div class="layout vertical center-horizontal max-width m-l-8">
+                    <ipl-select
+                        v-model="teamBId"
+                        :label="$t('activeMatchEditor.teamBSelect')"
+                        data-test="team-b-selector"
+                        :options="teams"
+                    />
+                    <ipl-checkbox
+                        v-model="teamBImageShown"
+                        class="m-t-6"
+                        :label="$t('activeMatchEditor.showTeamImageCheckbox')"
+                        data-test="team-b-image-toggle"
+                        small
+                    />
+                </div>
             </div>
-            <div class="layout vertical center-horizontal max-width m-l-8">
-                <ipl-select
-                    v-model="teamBId"
-                    :label="$t('activeMatchEditor.teamBSelect')"
-                    data-test="team-b-selector"
-                    :options="teams"
-                />
-                <ipl-checkbox
-                    v-model="teamBImageShown"
-                    class="m-t-6"
-                    :label="$t('activeMatchEditor.showTeamImageCheckbox')"
-                    data-test="team-b-image-toggle"
-                    small
-                />
-            </div>
-        </div>
-        <ipl-select
-            v-model="matchId"
-            class="m-t-6"
-            :options="matches"
-            data-test="match-selector"
-            :label="$t('activeMatchEditor.matchSelect')"
-        />
-        <ipl-input
-            v-model="matchName"
-            name="matchName"
-            :label="$t('activeMatchEditor.matchNameInput')"
-            class="m-t-6"
-        />
-        <ipl-button
-            class="m-t-8"
-            :label="$t('common:button.update')"
-            :color="isChanged ? 'red' : 'blue'"
-            data-test="update-match-button"
-            :title="$t('common:button.rightClickUndoMessage')"
-            @click="updateRound"
-            @right-click="undoChanges"
-        />
+            <ipl-select
+                v-model="matchId"
+                class="m-t-6"
+                :options="matches"
+                data-test="match-selector"
+                :label="$t('activeMatchEditor.matchSelect')"
+            />
+            <ipl-input
+                v-model="matchName"
+                name="matchName"
+                :label="$t('activeMatchEditor.matchNameInput')"
+                class="m-t-6"
+            />
+            <ipl-button
+                class="m-t-8"
+                :label="$t('common:button.update')"
+                :color="isChanged ? 'red' : 'blue'"
+                data-test="update-match-button"
+                :title="$t('common:button.rightClickUndoMessage')"
+                type="submit"
+                @click="updateRound"
+                @right-click="undoChanges"
+            />
+        </form>
     </ipl-expanding-space>
 </template>
 

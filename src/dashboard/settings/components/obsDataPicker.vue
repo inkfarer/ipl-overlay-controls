@@ -6,36 +6,39 @@
         {{ $t('obs.missingDataMessage') }}
     </ipl-message>
     <ipl-space v-else>
-        <ipl-select
-            v-model="gameplayInput"
-            :options="videoInputOptions"
-            :label="$t('obs.gameplayInputSelect')"
-            data-test="gameplay-input-select"
-        />
-        <ipl-select
-            v-model="gameplayScene"
-            :options="sceneOptions"
-            :label="$t('obs.gameplaySceneSelect')"
-            data-test="gameplay-scene-select"
-            class="m-t-8"
-        />
-        <ipl-select
-            v-model="intermissionScene"
-            :options="sceneOptions"
-            :label="$t('obs.intermissionSceneSelect')"
-            data-test="intermission-scene-select"
-            class="m-t-8"
-        />
-        <ipl-button
-            :label="$t('common:button.update')"
-            class="m-t-8"
-            :color="isChanged ? 'red' : 'blue'"
-            :title="$t('common:button.rightClickUndoMessage')"
-            data-test="update-button"
-            :disabled="anyOptionsMissing"
-            @click="update"
-            @right-click="undoChanges"
-        />
+        <form @submit.prevent>
+            <ipl-select
+                v-model="gameplayInput"
+                :options="videoInputOptions"
+                :label="$t('obs.gameplayInputSelect')"
+                data-test="gameplay-input-select"
+            />
+            <ipl-select
+                v-model="gameplayScene"
+                :options="sceneOptions"
+                :label="$t('obs.gameplaySceneSelect')"
+                data-test="gameplay-scene-select"
+                class="m-t-8"
+            />
+            <ipl-select
+                v-model="intermissionScene"
+                :options="sceneOptions"
+                :label="$t('obs.intermissionSceneSelect')"
+                data-test="intermission-scene-select"
+                class="m-t-8"
+            />
+            <ipl-button
+                :label="$t('common:button.update')"
+                class="m-t-8"
+                type="submit"
+                :color="isChanged ? 'red' : 'blue'"
+                :title="$t('common:button.rightClickUndoMessage')"
+                data-test="update-button"
+                :disabled="anyOptionsMissing"
+                @click="update"
+                @right-click="undoChanges"
+            />
+        </form>
     </ipl-space>
 </template>
 

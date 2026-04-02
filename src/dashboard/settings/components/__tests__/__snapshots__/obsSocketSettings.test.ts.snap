@@ -28,9 +28,11 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTED 1`] = `
     </div>
   </div>
   <div data-v-50982c2d="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
-    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <form>
+      <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
+      <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
+      <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </form>
     <div data-v-50982c2d="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTED">common:obsStatus.CONNECTED</div>
   </div>
 </div>"
@@ -46,9 +48,11 @@ exports[`ObsSocketSettings matches snapshot when status is CONNECTING 1`] = `
     </div>
   </div>
   <div data-v-50982c2d="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
-    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <form>
+      <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
+      <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
+      <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </form>
     <div data-v-50982c2d="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_CONNECTING">common:obsStatus.CONNECTING</div>
   </div>
 </div>"
@@ -64,9 +68,11 @@ exports[`ObsSocketSettings matches snapshot when status is NOT_CONNECTED 1`] = `
     </div>
   </div>
   <div data-v-50982c2d="" class="ipl-space color-dark m-t-8">
-    <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
-    <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
-    <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    <form>
+      <ipl-input-stub name="socketUrl" label="translation:obs.socketUrlInput" modelvalue="localhost:4444" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
+      <ipl-input-stub name="password" label="translation:obs.passwordInput" modelvalue="pwd" type="password" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
+      <ipl-button-stub label="translation:obs.connectButton" color="blue" disabled="true" async="true" progressmessage="translation:obs.loadingConnectButton" successmessage="translation:obs.connectButtonSuccess" errormessage="common:button.error" requiresconfirmation="false" confirmationmessage="common:button.confirmationMessage" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="socket-connect-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+    </form>
     <div data-v-50982c2d="" class="ipl-space color-dark text-center m-t-8 text-semibold rounded-inner obs-status_NOT_CONNECTED">common:obsStatus.NOT_CONNECTED</div>
   </div>
 </div>"

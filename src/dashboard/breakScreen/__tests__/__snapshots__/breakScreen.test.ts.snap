@@ -12,13 +12,15 @@ exports[`BreakScreen matches snapshot with custom scenes 1`] = `
     </div>
   </div>
   <div data-v-31c8f953="" class="content" style="display: none;">
-    <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
-    <div class="layout vertical center-horizontal">
-      <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
-      <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
-      <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
-      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
-    </div>
+    <form>
+      <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
+      <div class="layout vertical center-horizontal">
+        <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
+        <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
+        <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
+        <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      </div>
+    </form>
   </div>
 </div>
 <div data-v-50982c2d="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.teams</span>
@@ -51,13 +53,15 @@ exports[`BreakScreen matches snapshot without custom scenes 1`] = `
     </div>
   </div>
   <div data-v-31c8f953="" class="content" style="display: none;">
-    <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
-    <div class="layout vertical center-horizontal">
-      <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
-      <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
-      <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
-      <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
-    </div>
+    <form>
+      <ipl-input-stub name="break-main-flavor-text" label="translation:mainScene.flavorTextInput" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false"></ipl-input-stub>
+      <div class="layout vertical center-horizontal">
+        <div class="m-t-8">translation:nextStageTimer.sectionTitle</div>
+        <next-stage-time-input-stub data-test="next-stage-time-input"></next-stage-time-input-stub>
+        <ipl-checkbox-stub label="translation:nextStageTimer.showTimerCheckbox" small="false" disabled="false" class="m-t-8"></ipl-checkbox-stub>
+        <ipl-button-stub label="common:button.update" color="blue" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="update-main-scene-button" title="common:button.rightClickUndoMessage"></ipl-button-stub>
+      </div>
+    </form>
   </div>
 </div>
 <div data-v-50982c2d="" class="ipl-space color-dark layout horizontal center-vertical layout-break-scene m-t-8"><span>translation:sceneName.teams</span>

@@ -2,13 +2,15 @@
 
 exports[`HighlightedMatchViewer matches snapshot 1`] = `
 "<div data-v-50982c2d="" class="ipl-space color-dark">
-  <ipl-select-stub modelvalue="1234" label="translation:highlightedMatches.matchSelect" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
-  <ipl-input-stub name="match-name" label="translation:highlightedMatches.matchNameInput" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
-  <ipl-data-row-stub label="translation:highlightedMatches.teamADisplayLabel" copiable="false" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>
-  <ipl-data-row-stub label="translation:highlightedMatches.teamBDisplayLabel" copiable="false" data-test="team-b-name-display" value="mock team"></ipl-data-row-stub>
-  <ipl-data-row-stub label="translation:highlightedMatches.playTypeDisplayLabel" copiable="false" data-test="play-type-display" value="common:playType.PLAY_ALL"></ipl-data-row-stub>
-  <round-select-stub modelvalue="0387" class="m-t-4" data-test="round-selector"></round-select-stub>
-  <ipl-button-stub label="common:button.update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="button" class="m-t-8" data-test="set-next-match-button"></ipl-button-stub>
+  <form>
+    <ipl-select-stub modelvalue="1234" label="translation:highlightedMatches.matchSelect" options="[object Object],[object Object]" disabled="false" data-test="match-selector"></ipl-select-stub>
+    <ipl-input-stub name="match-name" label="translation:highlightedMatches.matchNameInput" modelvalue="cool match" type="text" centered="false" disabled="false" loading="false" theme="default" autofocus="false" class="m-t-4"></ipl-input-stub>
+    <ipl-data-row-stub label="translation:highlightedMatches.teamADisplayLabel" copiable="false" data-test="team-a-name-display" value="mock team"></ipl-data-row-stub>
+    <ipl-data-row-stub label="translation:highlightedMatches.teamBDisplayLabel" copiable="false" data-test="team-b-name-display" value="mock team"></ipl-data-row-stub>
+    <ipl-data-row-stub label="translation:highlightedMatches.playTypeDisplayLabel" copiable="false" data-test="play-type-display" value="common:playType.PLAY_ALL"></ipl-data-row-stub>
+    <round-select-stub modelvalue="0387" class="m-t-4" data-test="round-selector"></round-select-stub>
+    <ipl-button-stub label="common:button.update" color="red" disabled="false" async="false" progressmessage="Working..." successmessage="Done!" errormessage="Error!" requiresconfirmation="false" shortconfirmationmessage="false" small="false" disableonsuccess="false" inline="false" type="submit" class="m-t-8" data-test="set-next-match-button"></ipl-button-stub>
+  </form>
 </div>"
 `;
 

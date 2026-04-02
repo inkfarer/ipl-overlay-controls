@@ -14,12 +14,13 @@
         class="caster-search__content"
     >
         <ipl-input
+            ref="queryInput"
             v-model="searchQuery"
             :label="$t('common:casterSearch.queryInput')"
-            ref="queryInput"
             name="caster-search-query"
             :loading="searchLoading"
             class="m-b-4"
+            @keydown.esc="toggle"
         />
         <div
             v-if="Object.keys(searchResult).length <= 0"

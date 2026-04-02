@@ -24,41 +24,44 @@
         >
             {{ $t('general.gameVersionChangeWarning') }}
         </ipl-message>
-        <ipl-select
-            v-model="gameVersion"
-            :label="$t('general.gameVersionSelect')"
-            data-test="game-version-select"
-            :options="gameVersionOptions"
-        />
-        <ipl-select
-            v-model="locale"
-            :label="$t('general.gameLocaleSelect')"
-            data-test="locale-select"
-            :options="localeOptions"
-            class="m-t-6"
-        />
-        <ipl-select
-            v-model="interfaceLocale"
-            :label="$t('general.interfaceLocaleSelect')"
-            data-test="interface-locale-select"
-            :options="interfaceLocaleOptions"
-            class="m-t-6"
-        />
-        <ipl-multi-select
-            v-model="activeGraphicsBundles"
-            :options="bundleOptions"
-            :label="$t('general.activeGraphicsBundleSelect')"
-            class="m-t-6"
-        />
-        <ipl-button
-            class="m-t-8"
-            :label="$t('common:button.update')"
-            :color="isChanged ? 'red' : 'blue'"
-            :title="$t('common:button.rightClickUndoMessage')"
-            data-test="update-button"
-            @click="doUpdate"
-            @right-click="undoChanges"
-        />
+        <form @submit.prevent>
+            <ipl-select
+                v-model="gameVersion"
+                :label="$t('general.gameVersionSelect')"
+                data-test="game-version-select"
+                :options="gameVersionOptions"
+            />
+            <ipl-select
+                v-model="locale"
+                :label="$t('general.gameLocaleSelect')"
+                data-test="locale-select"
+                :options="localeOptions"
+                class="m-t-6"
+            />
+            <ipl-select
+                v-model="interfaceLocale"
+                :label="$t('general.interfaceLocaleSelect')"
+                data-test="interface-locale-select"
+                :options="interfaceLocaleOptions"
+                class="m-t-6"
+            />
+            <ipl-multi-select
+                v-model="activeGraphicsBundles"
+                :options="bundleOptions"
+                :label="$t('general.activeGraphicsBundleSelect')"
+                class="m-t-6"
+            />
+            <ipl-button
+                class="m-t-8"
+                :label="$t('common:button.update')"
+                :color="isChanged ? 'red' : 'blue'"
+                :title="$t('common:button.rightClickUndoMessage')"
+                data-test="update-button"
+                type="submit"
+                @click="doUpdate"
+                @right-click="undoChanges"
+            />
+        </form>
     </ipl-space>
 </template>
 

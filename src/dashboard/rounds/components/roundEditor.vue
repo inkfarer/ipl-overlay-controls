@@ -1,51 +1,54 @@
 <template>
     <ipl-space>
-        <ipl-input
-            v-model="roundInternal.meta.name"
-            :label="$t('roundNameInput')"
-            name="round-name"
-        />
-        <ipl-radio
-            v-model="roundInternal.meta.type"
-            name="round-type"
-            :label="$t('roundTypeSelect')"
-            class="m-t-4"
-            :options="typeOptions"
-        />
-        <template
-            v-for="(game, index) in roundInternal.games"
-            :key="`game-editor-${index}`"
-        >
-            <div class="separator">
-                <span>{{ index + 1 }}</span>
+        <form @submit.prevent>
+            <ipl-input
+                v-model="roundInternal.meta.name"
+                :label="$t('roundNameInput')"
+                name="round-name"
+            />
+            <ipl-radio
+                v-model="roundInternal.meta.type"
+                name="round-type"
+                :label="$t('roundTypeSelect')"
+                class="m-t-4"
+                :options="typeOptions"
+            />
+            <template
+                v-for="(game, index) in roundInternal.games"
+                :key="`game-editor-${index}`"
+            >
+                <div class="separator">
+                    <span>{{ index + 1 }}</span>
+                </div>
+                <mode-select
+                    v-model="game.mode"
+                    :data-test="`mode-selector-${index}`"
+                />
+                <stage-select
+                    v-model="game.stage"
+                    class="m-t-8"
+                    :data-test="`stage-selector-${index}`"
+                />
+            </template>
+            <div class="layout horizontal m-t-8">
+                <ipl-button
+                    :label="isNewRound ? $t('saveNewRoundButton') : $t('common:button.update')"
+                    :color="isNewRound ? 'green' : isChanged ? 'red' : 'blue'"
+                    data-test="update-button"
+                    :title="isNewRound ? undefined : $t('common:button.rightClickUndoMessage')"
+                    type="submit"
+                    @click="handleUpdate"
+                    @right-click="undoChanges"
+                />
+                <ipl-button
+                    icon="times"
+                    class="m-l-6"
+                    color="red"
+                    data-test="remove-button"
+                    @click="handleDelete"
+                />
             </div>
-            <mode-select
-                v-model="game.mode"
-                :data-test="`mode-selector-${index}`"
-            />
-            <stage-select
-                v-model="game.stage"
-                class="m-t-8"
-                :data-test="`stage-selector-${index}`"
-            />
-        </template>
-        <div class="layout horizontal m-t-8">
-            <ipl-button
-                :label="isNewRound ? $t('saveNewRoundButton') : $t('common:button.update')"
-                :color="isNewRound ? 'green' : isChanged ? 'red' : 'blue'"
-                data-test="update-button"
-                :title="isNewRound ? undefined : $t('common:button.rightClickUndoMessage')"
-                @click="handleUpdate"
-                @right-click="undoChanges"
-            />
-            <ipl-button
-                icon="times"
-                class="m-l-6"
-                color="red"
-                data-test="remove-button"
-                @click="handleDelete"
-            />
-        </div>
+        </form>
     </ipl-space>
 </template>
 

@@ -1,21 +1,24 @@
 <template>
     <ipl-space>
         <div class="title">{{ $t('sectionName.lastfm') }}</div>
-        <ipl-input
-            v-model="settings.username"
-            name="username"
-            :label="$t('lastfm.usernameInput')"
-            @focuschange="handleFocusEvent"
-        />
-        <ipl-button
-            :label="$t('common:button.update')"
-            class="m-t-8"
-            :color="buttonColor"
-            :title="$t('common:button.rightClickUndoMessage')"
-            data-test="update-button"
-            @click="handleUpdate"
-            @right-click="undoChanges"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="settings.username"
+                name="username"
+                :label="$t('lastfm.usernameInput')"
+                @focuschange="handleFocusEvent"
+            />
+            <ipl-button
+                :label="$t('common:button.update')"
+                class="m-t-8"
+                type="submit"
+                :color="buttonColor"
+                :title="$t('common:button.rightClickUndoMessage')"
+                data-test="update-button"
+                @click="handleUpdate"
+                @right-click="undoChanges"
+            />
+        </form>
     </ipl-space>
 </template>
 

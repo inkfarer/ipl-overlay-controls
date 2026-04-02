@@ -30,56 +30,59 @@
             data-test="caster-search"
             @select="onSearchSelect"
         />
-        <ipl-input
-            v-model="internalCaster.name"
-            name="name"
-            :label="$t('casterEditor.nameInput')"
-            @focuschange="setFocused"
-        />
-        <ipl-input
-            v-model="internalCaster.twitter"
-            name="twitter"
-            :label="$t('casterEditor.twitterInput')"
-            :formatter="twitterFormatter"
-            @focuschange="setFocused"
-        />
-        <ipl-input
-            v-model="internalCaster.pronouns"
-            name="pronouns"
-            :label="$t('casterEditor.pronounInput')"
-            :formatter="pronounFormatter"
-            @focuschange="setFocused"
-        />
-        <ipl-input
-            v-model="internalCaster.imageUrl"
-            name="imageUrl"
-            :label="$t('casterEditor.imageUrlInput')"
-            @focuschange="setFocused"
-        />
-        <ipl-input
-            v-model="internalCaster.videoUrl"
-            name="videoUrl"
-            :label="$t('casterEditor.videoUrlInput')"
-            @focuschange="setFocused"
-        />
-        <div class="layout horizontal m-t-8">
-            <ipl-button
-                :label="updateButtonLabel"
-                :color="buttonColor"
-                :disabled="caster.uncommitted && disableCreation"
-                data-test="update-button"
-                :title="caster.uncommitted ? undefined : $t('common:button.rightClickUndoMessage')"
-                @click="updateCaster"
-                @right-click="undoChanges"
+        <form @submit.prevent>
+            <ipl-input
+                v-model="internalCaster.name"
+                name="name"
+                :label="$t('casterEditor.nameInput')"
+                @focuschange="setFocused"
             />
-            <ipl-button
-                icon="times"
-                class="m-l-6"
-                color="red"
-                data-test="remove-button"
-                @click="removeCaster"
+            <ipl-input
+                v-model="internalCaster.twitter"
+                name="twitter"
+                :label="$t('casterEditor.twitterInput')"
+                :formatter="twitterFormatter"
+                @focuschange="setFocused"
             />
-        </div>
+            <ipl-input
+                v-model="internalCaster.pronouns"
+                name="pronouns"
+                :label="$t('casterEditor.pronounInput')"
+                :formatter="pronounFormatter"
+                @focuschange="setFocused"
+            />
+            <ipl-input
+                v-model="internalCaster.imageUrl"
+                name="imageUrl"
+                :label="$t('casterEditor.imageUrlInput')"
+                @focuschange="setFocused"
+            />
+            <ipl-input
+                v-model="internalCaster.videoUrl"
+                name="videoUrl"
+                :label="$t('casterEditor.videoUrlInput')"
+                @focuschange="setFocused"
+            />
+            <div class="layout horizontal m-t-8">
+                <ipl-button
+                    :label="updateButtonLabel"
+                    :color="buttonColor"
+                    :disabled="caster.uncommitted && disableCreation"
+                    data-test="update-button"
+                    type="submit"
+                    :title="caster.uncommitted ? undefined : $t('common:button.rightClickUndoMessage')"
+                    @click="updateCaster"
+                    @right-click="undoChanges"
+                />
+                <ipl-button
+                    icon="times"
+                    class="m-l-6"
+                    color="red"
+                    data-test="remove-button"
+                    @click="removeCaster"
+                />
+            </div>
+        </form>
     </ipl-expanding-space>
 </template>
 
@@ -104,7 +107,6 @@ type CasterProp = Caster & { id: string, uncommitted: boolean };
 
 export default defineComponent({
     name: 'CasterEditor',
-    methods: { isBlank },
 
     components: { CasterSearch, IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
 
@@ -190,7 +192,8 @@ export default defineComponent({
                 };
             }
         };
-    }
+    },
+    methods: { isBlank }
 });
 </script>
 

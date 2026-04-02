@@ -11,34 +11,37 @@
                 @click="setActiveBreakScene('main')"
             />
         </template>
-        <ipl-input
-            v-model="mainFlavorText"
-            :label="$t('mainScene.flavorTextInput')"
-            name="break-main-flavor-text"
-            @focuschange="handleMainFlavorTextFocus"
-        />
-        <div class="layout vertical center-horizontal">
-            <div class="m-t-8">{{ $t('nextStageTimer.sectionTitle') }}</div>
-            <next-stage-time-input
-                v-model="nextRoundTime"
-                data-test="next-stage-time-input"
-                @focuschange="handleNextRoundTimeFocus"
+        <form @submit.prevent>
+            <ipl-input
+                v-model="mainFlavorText"
+                :label="$t('mainScene.flavorTextInput')"
+                name="break-main-flavor-text"
+                @focuschange="handleMainFlavorTextFocus"
             />
-            <ipl-checkbox
-                v-model="showNextRoundTime"
-                class="m-t-8"
-                :label="$t('nextStageTimer.showTimerCheckbox')"
-            />
-            <ipl-button
-                class="m-t-8"
-                :label="$t('common:button.update')"
-                data-test="update-main-scene-button"
-                :color="mainUpdateButtonColor"
-                :title="$t('common:button.rightClickUndoMessage')"
-                @click="updateMainScene"
-                @right-click="undoMainScene"
-            />
-        </div>
+            <div class="layout vertical center-horizontal">
+                <div class="m-t-8">{{ $t('nextStageTimer.sectionTitle') }}</div>
+                <next-stage-time-input
+                    v-model="nextRoundTime"
+                    data-test="next-stage-time-input"
+                    @focuschange="handleNextRoundTimeFocus"
+                />
+                <ipl-checkbox
+                    v-model="showNextRoundTime"
+                    class="m-t-8"
+                    :label="$t('nextStageTimer.showTimerCheckbox')"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    :label="$t('common:button.update')"
+                    data-test="update-main-scene-button"
+                    :color="mainUpdateButtonColor"
+                    :title="$t('common:button.rightClickUndoMessage')"
+                    type="submit"
+                    @click="updateMainScene"
+                    @right-click="undoMainScene"
+                />
+            </div>
+        </form>
     </ipl-expanding-space>
     <ipl-space class="layout horizontal center-vertical layout-break-scene m-t-8">
         <span>{{ $t('sceneName.teams') }}</span>
