@@ -14,141 +14,144 @@
                 </span>
             </template>
         </template>
-        <div
-            v-for="(game, index) in games"
-            :key="`set-editor-${index}`"
-            :data-test="`set-editor-${index}`"
-            class="layout horizontal center-vertical game-editor"
-            :class="{ 'is-next-game': index === nextGameIndex }"
-        >
-            <span class="set-number">{{ index + 1 }}</span>
-            <stage-select
-                v-show="!editColorsEnabled"
-                v-model="game.stage"
-                data-test="stage-select"
-                class="m-l-6 max-width"
-            />
-            <mode-select
-                v-show="!editColorsEnabled"
-                v-model="game.mode"
-                data-test="mode-select"
-                class="m-l-6 max-width"
-            />
-            <!-- eslint-disable max-len -->
-            <ipl-select
-                v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"
-                :model-value="`${game.color?.categoryKey ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
-                :option-groups="colors"
-                class="m-l-6 max-width"
-                :disabled="game.winner === GameWinner.NO_WINNER"
-                data-test="color-select"
-                @update:model-value="setGameColor(index, $event)"
-            />
-            <!-- eslint-enable max-len -->
+        <form @submit.prevent>
             <div
-                v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
-                class="layout horizontal max-width m-l-6"
+                v-for="(game, index) in games"
+                :key="`set-editor-${index}`"
+                :data-test="`set-editor-${index}`"
+                class="layout horizontal center-vertical game-editor"
+                :class="{ 'is-next-game': index === nextGameIndex }"
             >
-                <ipl-input
-                    :model-value="game.color?.clrA ?? activeColor.clrA"
-                    type="color"
-                    class="max-width custom-color-select"
-                    style="flex-grow: 1"
-                    name="team-a-color"
-                    :disabled="!game.color?.clrA"
-                    data-test="custom-color-select-a"
-                    @update:model-value="setCustomColor('a', index, $event)"
+                <span class="set-number">{{ index + 1 }}</span>
+                <stage-select
+                    v-show="!editColorsEnabled"
+                    v-model="game.stage"
+                    data-test="stage-select"
+                    class="m-l-6 max-width"
                 />
-                <ipl-input
-                    :model-value="game.color?.clrB ?? activeColor.clrB"
-                    type="color"
-                    class="m-l-8 max-width custom-color-select"
-                    style="flex-grow: 1"
-                    name="team-b-color"
-                    :disabled="!game.color?.clrB"
-                    data-test="custom-color-select-b"
-                    @update:model-value="setCustomColor('b', index, $event)"
+                <mode-select
+                    v-show="!editColorsEnabled"
+                    v-model="game.mode"
+                    data-test="mode-select"
+                    class="m-l-6 max-width"
                 />
+                <!-- eslint-disable max-len -->
+                <ipl-select
+                    v-show="editColorsEnabled && !(game.color?.isCustom ?? activeColor.isCustom)"
+                    :model-value="`${game.color?.categoryKey ?? activeColor.categoryKey}_${game.color?.colorKey ?? activeColor.colorKey}`"
+                    :option-groups="colors"
+                    class="m-l-6 max-width"
+                    :disabled="game.winner === GameWinner.NO_WINNER"
+                    data-test="color-select"
+                    @update:model-value="setGameColor(index, $event)"
+                />
+                <!-- eslint-enable max-len -->
+                <div
+                    v-show="editColorsEnabled && (game.color?.isCustom ?? activeColor.isCustom)"
+                    class="layout horizontal max-width m-l-6"
+                >
+                    <ipl-input
+                        :model-value="game.color?.clrA ?? activeColor.clrA"
+                        type="color"
+                        class="max-width custom-color-select"
+                        style="flex-grow: 1"
+                        name="team-a-color"
+                        :disabled="!game.color?.clrA"
+                        data-test="custom-color-select-a"
+                        @update:model-value="setCustomColor('a', index, $event)"
+                    />
+                    <ipl-input
+                        :model-value="game.color?.clrB ?? activeColor.clrB"
+                        type="color"
+                        class="m-l-8 max-width custom-color-select"
+                        style="flex-grow: 1"
+                        name="team-b-color"
+                        :disabled="!game.color?.clrB"
+                        data-test="custom-color-select-b"
+                        @update:model-value="setCustomColor('b', index, $event)"
+                    />
+                </div>
+                <div
+                    v-show="editColorsEnabled"
+                    class="color-editor-toggles layout horizontal"
+                >
+                    <ipl-checkbox
+                        :model-value="game.color?.isCustom ?? activeColor.isCustom"
+                        :disabled="!game.color"
+                        :label="$t('setEditor.customColorCheckbox')"
+                        small
+                        data-test="custom-color-toggle"
+                        @update:model-value="setIsCustomColor(index, $event)"
+                    />
+                    <ipl-checkbox
+                        :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
+                        :disabled="!game.color"
+                        :label="$t('setEditor.swapColorsCheckbox')"
+                        class="m-l-6"
+                        small
+                        data-test="swap-colors-toggle"
+                        @update:model-value="setColorsSwapped(index, $event)"
+                    />
+                </div>
+                <ipl-button
+                    icon="times"
+                    color="red"
+                    class="m-l-6 no-winner-button"
+                    :disabled="game.winner === GameWinner.NO_WINNER"
+                    data-test="set-winner-button-none"
+                    @click="setWinner(index, GameWinner.NO_WINNER)"
+                />
+                <div class="winner-selection m-l-6 layout horizontal">
+                    <ipl-button
+                        label="A"
+                        :color="getColorA(game)"
+                        :style="{
+                            borderColor: getColorA(game),
+                            borderWidth: `0 0 0 ${game.winner === GameWinner.ALPHA ? '8px' : '0px'}`
+                        }"
+                        :disabled="game.winner === GameWinner.ALPHA"
+                        data-test="set-winner-button-a"
+                        @click="setWinner(index, GameWinner.ALPHA)"
+                    />
+                    <ipl-button
+                        label="B"
+                        :color="getColorB(game)"
+                        :style="{
+                            borderColor: getColorB(game),
+                            borderWidth: `0 ${game.winner === GameWinner.BRAVO ? '8px' : '0px'} 0 0`
+                        }"
+                        :disabled="game.winner === GameWinner.BRAVO"
+                        data-test="set-winner-button-b"
+                        @click="setWinner(index, GameWinner.BRAVO)"
+                    />
+                </div>
             </div>
-            <div
-                v-show="editColorsEnabled"
-                class="color-editor-toggles layout horizontal"
-            >
-                <ipl-checkbox
-                    :model-value="game.color?.isCustom ?? activeColor.isCustom"
-                    :disabled="!game.color"
-                    :label="$t('setEditor.customColorCheckbox')"
-                    small
-                    data-test="custom-color-toggle"
-                    @update:model-value="setIsCustomColor(index, $event)"
+            <div class="layout horizontal m-t-8">
+                <ipl-button
+                    :label="$t('common:button.update')"
+                    :color="gamesChanged ? 'red' : 'blue'"
+                    data-test="update-button"
+                    :title="$t('common:button.rightClickUndoMessage')"
+                    type="submit"
+                    @click="handleUpdate"
+                    @right-click="undoChanges"
                 />
-                <ipl-checkbox
-                    :model-value="game.color?.colorsSwapped ?? swapColorsInternally"
-                    :disabled="!game.color"
-                    :label="$t('setEditor.swapColorsCheckbox')"
+                <iploc-button
+                    :label="$t('setEditor.resetButton')"
+                    color="red"
                     class="m-l-6"
-                    small
-                    data-test="swap-colors-toggle"
-                    @update:model-value="setColorsSwapped(index, $event)"
+                    requires-confirmation
+                    data-test="reset-button"
+                    @click="handleReset"
+                />
+                <ipl-toggle-button
+                    v-model="editColorsEnabled"
+                    :label="$t('setEditor.editColorsToggle')"
+                    class="m-l-6"
+                    data-test="edit-colors-toggle"
                 />
             </div>
-            <ipl-button
-                icon="times"
-                color="red"
-                class="m-l-6 no-winner-button"
-                :disabled="game.winner === GameWinner.NO_WINNER"
-                data-test="set-winner-button-none"
-                @click="setWinner(index, GameWinner.NO_WINNER)"
-            />
-            <div class="winner-selection m-l-6 layout horizontal">
-                <ipl-button
-                    label="A"
-                    :color="getColorA(game)"
-                    :style="{
-                        borderColor: getColorA(game),
-                        borderWidth: `0 0 0 ${game.winner === GameWinner.ALPHA ? '8px' : '0px'}`
-                    }"
-                    :disabled="game.winner === GameWinner.ALPHA"
-                    data-test="set-winner-button-a"
-                    @click="setWinner(index, GameWinner.ALPHA)"
-                />
-                <ipl-button
-                    label="B"
-                    :color="getColorB(game)"
-                    :style="{
-                        borderColor: getColorB(game),
-                        borderWidth: `0 ${game.winner === GameWinner.BRAVO ? '8px' : '0px'} 0 0`
-                    }"
-                    :disabled="game.winner === GameWinner.BRAVO"
-                    data-test="set-winner-button-b"
-                    @click="setWinner(index, GameWinner.BRAVO)"
-                />
-            </div>
-        </div>
-        <div class="layout horizontal m-t-8">
-            <ipl-button
-                :label="$t('common:button.update')"
-                :color="gamesChanged ? 'red' : 'blue'"
-                data-test="update-button"
-                :title="$t('common:button.rightClickUndoMessage')"
-                @click="handleUpdate"
-                @right-click="undoChanges"
-            />
-            <iploc-button
-                :label="$t('setEditor.resetButton')"
-                color="red"
-                class="m-l-6"
-                requires-confirmation
-                data-test="reset-button"
-                @click="handleReset"
-            />
-            <ipl-toggle-button
-                v-model="editColorsEnabled"
-                :label="$t('setEditor.editColorsToggle')"
-                class="m-l-6"
-                data-test="edit-colors-toggle"
-            />
-        </div>
+        </form>
     </ipl-expanding-space>
 </template>
 

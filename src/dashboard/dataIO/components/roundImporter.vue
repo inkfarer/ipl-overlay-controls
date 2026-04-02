@@ -1,36 +1,39 @@
 <template>
     <bordered-space :label="$t('roundImporter.sectionTitle')">
         <ipl-space>
-            <ipl-input
-                v-show="!useFileUpload"
-                v-model="dataUrl"
-                name="round-data-url"
-                :label="$t('roundImporter.roundDataUrlInput')"
-            />
-            <ipl-upload
-                v-show="useFileUpload"
-                v-model="roundFile"
-                data-test="round-file-upload"
-                :placeholder="$t('common:fileUploadPlaceholder')"
-            />
-            <div class="layout horizontal center-horizontal">
-                <ipl-checkbox
-                    v-model="useFileUpload"
-                    small
-                    class="m-t-8"
-                    :label="$t('roundImporter.uploadFileCheckbox')"
-                    data-test="use-file-upload-checkbox"
+            <form @submit.prevent>
+                <ipl-input
+                    v-show="!useFileUpload"
+                    v-model="dataUrl"
+                    name="round-data-url"
+                    :label="$t('roundImporter.roundDataUrlInput')"
                 />
-            </div>
-            <iploc-button
-                :label="$t('roundImporter.importButton')"
-                class="m-t-8"
-                async
-                :progress-message="$t('roundImporter.loadingImportButton')"
-                data-test="import-button"
-                :disabled="(!useFileUpload && !allValid) || (useFileUpload && !roundFile)"
-                @click="handleImport"
-            />
+                <ipl-upload
+                    v-show="useFileUpload"
+                    v-model="roundFile"
+                    data-test="round-file-upload"
+                    :placeholder="$t('common:fileUploadPlaceholder')"
+                />
+                <div class="layout horizontal center-horizontal">
+                    <ipl-checkbox
+                        v-model="useFileUpload"
+                        small
+                        class="m-t-8"
+                        :label="$t('roundImporter.uploadFileCheckbox')"
+                        data-test="use-file-upload-checkbox"
+                    />
+                </div>
+                <iploc-button
+                    :label="$t('roundImporter.importButton')"
+                    class="m-t-8"
+                    async
+                    type="submit"
+                    :progress-message="$t('roundImporter.loadingImportButton')"
+                    data-test="import-button"
+                    :disabled="(!useFileUpload && !allValid) || (useFileUpload && !roundFile)"
+                    @click="handleImport"
+                />
+            </form>
         </ipl-space>
     </bordered-space>
 </template>
@@ -71,7 +74,10 @@ export default defineComponent({
             allValid,
             async handleImport() {
                 if (useFileUpload.value) {
-                    await tournamentDataStore.uploadRoundData({ file: roundFile.value });
+                    await tournamentDataStore.uploadRoundData({ file: roundFile.value }).then((result) => {
+                        roundFile.value = null;
+                        return result;
+                    });
                 } else {
                     await tournamentDataStore.fetchRoundData({ url: dataUrl.value });
                 }

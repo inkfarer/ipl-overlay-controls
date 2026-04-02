@@ -5,28 +5,31 @@
             :label="$t('changeSongManually.enableCheckboxLabel')"
             data-test="enable-manual-input-checkbox"
         />
-        <ipl-input
-            v-model="manualNowPlaying.artist"
-            name="artist"
-            :label="$t('changeSongManually.artistInputLabel')"
-            class="m-t-6"
-            @focuschange="handleFocusEvent"
-        />
-        <ipl-input
-            v-model="manualNowPlaying.song"
-            name="song"
-            :label="$t('changeSongManually.songInputLabel')"
-            @focuschange="handleFocusEvent"
-        />
-        <ipl-button
-            :label="$t('common:button.update')"
-            :color="buttonColor"
-            class="m-t-8"
-            data-test="manual-song-update-button"
-            :title="$t('common:button.rightClickUndoMessage')"
-            @click="handleUpdate"
-            @right-click="undo"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="manualNowPlaying.artist"
+                name="artist"
+                :label="$t('changeSongManually.artistInputLabel')"
+                class="m-t-6"
+                @focuschange="handleFocusEvent"
+            />
+            <ipl-input
+                v-model="manualNowPlaying.song"
+                name="song"
+                :label="$t('changeSongManually.songInputLabel')"
+                @focuschange="handleFocusEvent"
+            />
+            <ipl-button
+                :label="$t('common:button.update')"
+                :color="buttonColor"
+                class="m-t-8"
+                type="submit"
+                data-test="manual-song-update-button"
+                :title="$t('common:button.rightClickUndoMessage')"
+                @click="handleUpdate"
+                @right-click="undo"
+            />
+        </form>
     </ipl-expanding-space>
 </template>
 

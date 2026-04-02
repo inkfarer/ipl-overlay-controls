@@ -1,19 +1,22 @@
 <template>
     <div>
-        <ipl-input
-            v-model="matchName"
-            name="matchName"
-            :label="$t('nextMatchStarter.matchNameInput')"
-        />
-        <iploc-button
-            :label="$t('nextMatchStarter.beginNextMatchButton')"
-            color="red"
-            class="m-t-8"
-            requires-confirmation
-            data-test="begin-next-match-button"
-            :disabled="!allValid"
-            @click="beginNextMatch"
-        />
+        <form @submit.prevent>
+            <ipl-input
+                v-model="matchName"
+                name="matchName"
+                :label="$t('nextMatchStarter.matchNameInput')"
+            />
+            <iploc-button
+                :label="$t('nextMatchStarter.beginNextMatchButton')"
+                color="red"
+                class="m-t-8"
+                type="submit"
+                requires-confirmation
+                data-test="begin-next-match-button"
+                :disabled="!allValid"
+                @click="beginNextMatch"
+            />
+        </form>
     </div>
 </template>
 

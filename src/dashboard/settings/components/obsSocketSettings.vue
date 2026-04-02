@@ -12,31 +12,34 @@
             v-if="socketEnabled"
             class="m-t-8"
         >
-            <ipl-input
-                v-model="socketUrl"
-                name="socketUrl"
-                :label="$t('obs.socketUrlInput')"
-            />
-            <ipl-input
-                v-model="socketPassword"
-                name="password"
-                :label="$t('obs.passwordInput')"
-                type="password"
-                class="m-t-4"
-            />
-            <iploc-button
-                :label="$t('obs.connectButton')"
-                class="m-t-8"
-                :color="isChanged ? 'red' : 'blue'"
-                :disabled="!allValid"
-                data-test="socket-connect-button"
-                async
-                :progress-message="$t('obs.loadingConnectButton')"
-                :success-message="$t('obs.connectButtonSuccess')"
-                :title="$t('common:button.rightClickUndoMessage')"
-                @click="connect"
-                @right-click="undoChanges"
-            />
+            <form @submit.prevent>
+                <ipl-input
+                    v-model="socketUrl"
+                    name="socketUrl"
+                    :label="$t('obs.socketUrlInput')"
+                />
+                <ipl-input
+                    v-model="socketPassword"
+                    name="password"
+                    :label="$t('obs.passwordInput')"
+                    type="password"
+                    class="m-t-4"
+                />
+                <iploc-button
+                    :label="$t('obs.connectButton')"
+                    class="m-t-8"
+                    :color="isChanged ? 'red' : 'blue'"
+                    :disabled="!allValid"
+                    data-test="socket-connect-button"
+                    async
+                    type="submit"
+                    :progress-message="$t('obs.loadingConnectButton')"
+                    :success-message="$t('obs.connectButtonSuccess')"
+                    :title="$t('common:button.rightClickUndoMessage')"
+                    @click="connect"
+                    @right-click="undoChanges"
+                />
+            </form>
             <ipl-space
                 class="text-center m-t-8 text-semibold rounded-inner"
                 :class="`obs-status_${status}`"

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BracketsPanel loaded bracket message displays bracket data 1`] = `
-"<div data-v-868771ad="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-50982c2d="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">translation:loadedBracketSection.title</div>
   <ipl-data-row-stub label="translation:loadedBracketSection.eventNameRow" copiable="false" value="Test Event"></ipl-data-row-stub>
   <ipl-data-row-stub label="translation:loadedBracketSection.bracketNameRow" copiable="false" value="Test Bracket"></ipl-data-row-stub>
@@ -11,7 +11,7 @@ exports[`BracketsPanel loaded bracket message displays bracket data 1`] = `
 `;
 
 exports[`BracketsPanel loaded bracket message displays bracket data when a round number is present 1`] = `
-"<div data-v-868771ad="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-50982c2d="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">translation:loadedBracketSection.title</div>
   <ipl-data-row-stub label="translation:loadedBracketSection.eventNameRow" copiable="false" value="Test Event"></ipl-data-row-stub>
   <ipl-data-row-stub label="translation:loadedBracketSection.bracketNameRow" copiable="false" value="Test Bracket"></ipl-data-row-stub>
@@ -21,7 +21,7 @@ exports[`BracketsPanel loaded bracket message displays bracket data when a round
 `;
 
 exports[`BracketsPanel loaded bracket message displays bracket data when more than one match group is loaded 1`] = `
-"<div data-v-868771ad="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-50982c2d="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">translation:loadedBracketSection.title</div>
   <ipl-data-row-stub label="translation:loadedBracketSection.eventNameRow" copiable="false" value="Test Event"></ipl-data-row-stub>
   <ipl-data-row-stub label="translation:loadedBracketSection.bracketNameRow" copiable="false" value="Test Bracket"></ipl-data-row-stub>
@@ -31,7 +31,7 @@ exports[`BracketsPanel loaded bracket message displays bracket data when more th
 `;
 
 exports[`BracketsPanel loaded bracket message shows the expected message when no bracket is loaded 1`] = `
-"<div data-v-868771ad="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
+"<div data-v-50982c2d="" class="ipl-space color-dark m-b-8" data-test="loaded-bracket-space">
   <div class="title">translation:loadedBracketSection.title</div>translation:loadedBracketSection.noDataMessage
 </div>"
 `;

@@ -6,55 +6,58 @@
         {{ $t('highlightedMatches.noMatchesLoadedMessage') }}
     </ipl-message>
     <ipl-space v-else>
-        <ipl-select
-            v-model="selectedMatch"
-            :label="$t('highlightedMatches.matchSelect')"
-            :options="matchOptions"
-            data-test="match-selector"
-        />
-        <ipl-input
-            v-model="nextMatchName"
-            class="m-t-4"
-            name="match-name"
-            :label="$t('highlightedMatches.matchNameInput')"
-        />
-        <ipl-data-row
-            :label="$t('highlightedMatches.teamADisplayLabel')"
-            :value="addDots(selectedMatchData?.teamA?.name)"
-            data-test="team-a-name-display"
-        />
-        <ipl-data-row
-            :label="$t('highlightedMatches.teamBDisplayLabel')"
-            :value="addDots(selectedMatchData?.teamB?.name)"
-            data-test="team-b-name-display"
-        />
-        <ipl-data-row
-            v-if="!!selectedMatchData?.meta.playType"
-            :label="$t('highlightedMatches.playTypeDisplayLabel')"
-            :value="$t(`common:playType.${selectedMatchData?.meta.playType}`, 
-                       { count: selectedRoundData?.roundData?.games.length })"
-            data-test="play-type-display"
-        />
-        <round-select
-            v-model="selectedRound"
-            class="m-t-4"
-            data-test="round-selector"
-            @update:round-data="onRoundDataUpdate"
-        />
-        <next-round-unknown-stage-select
-            v-if="selectedRoundData != null"
-            :round="selectedRoundData.roundData"
-            @update:mode="gameOverrides[$event.index].mode = $event.mode"
-            @update:stage="gameOverrides[$event.index].stage = $event.stage"
-        />
-        <ipl-button
-            class="m-t-8"
-            :label="$t('common:button.update')"
-            :color="isChanged ? 'red' : 'blue'"
-            :disabled="disableSetNextMatch"
-            data-test="set-next-match-button"
-            @click="handleSetNextMatch"
-        />
+        <form @submit.prevent>
+            <ipl-select
+                v-model="selectedMatch"
+                :label="$t('highlightedMatches.matchSelect')"
+                :options="matchOptions"
+                data-test="match-selector"
+            />
+            <ipl-input
+                v-model="nextMatchName"
+                class="m-t-4"
+                name="match-name"
+                :label="$t('highlightedMatches.matchNameInput')"
+            />
+            <ipl-data-row
+                :label="$t('highlightedMatches.teamADisplayLabel')"
+                :value="addDots(selectedMatchData?.teamA?.name)"
+                data-test="team-a-name-display"
+            />
+            <ipl-data-row
+                :label="$t('highlightedMatches.teamBDisplayLabel')"
+                :value="addDots(selectedMatchData?.teamB?.name)"
+                data-test="team-b-name-display"
+            />
+            <ipl-data-row
+                v-if="!!selectedMatchData?.meta.playType"
+                :label="$t('highlightedMatches.playTypeDisplayLabel')"
+                :value="$t(`common:playType.${selectedMatchData?.meta.playType}`,
+                           { count: selectedRoundData?.roundData?.games.length })"
+                data-test="play-type-display"
+            />
+            <round-select
+                v-model="selectedRound"
+                class="m-t-4"
+                data-test="round-selector"
+                @update:round-data="onRoundDataUpdate"
+            />
+            <next-round-unknown-stage-select
+                v-if="selectedRoundData != null"
+                :round="selectedRoundData.roundData"
+                @update:mode="gameOverrides[$event.index].mode = $event.mode"
+                @update:stage="gameOverrides[$event.index].stage = $event.stage"
+            />
+            <ipl-button
+                class="m-t-8"
+                :label="$t('common:button.update')"
+                :color="isChanged ? 'red' : 'blue'"
+                type="submit"
+                :disabled="disableSetNextMatch"
+                data-test="set-next-match-button"
+                @click="handleSetNextMatch"
+            />
+        </form>
     </ipl-space>
 </template>
 

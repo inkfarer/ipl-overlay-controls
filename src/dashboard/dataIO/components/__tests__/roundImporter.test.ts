@@ -17,7 +17,8 @@ describe('roundImporter', () => {
     beforeEach(() => {
         pinia = createTestingPinia();
 
-        useTournamentDataStore().$state = {
+        const store = useTournamentDataStore();
+        store.$state = {
             tournamentData: {
                 meta: {
                     id: '123123',
@@ -29,11 +30,12 @@ describe('roundImporter', () => {
             roundStore: {},
             matchStore: {}
         };
+        store.uploadRoundData = jest.fn().mockResolvedValue(undefined);
+        store.fetchRoundData = jest.fn().mockResolvedValue(undefined);
     });
 
     it('dispatches to store on URL import', async () => {
         const store = useTournamentDataStore();
-        store.fetchRoundData = jest.fn();
         const wrapper = mount(RoundImporter, {
             global: {
                 plugins: [pinia]
@@ -50,7 +52,6 @@ describe('roundImporter', () => {
 
     it('dispatches to store on file import', async () => {
         const store = useTournamentDataStore();
-        store.uploadRoundData = jest.fn();
         const wrapper = mount(RoundImporter, {
             global: {
                 plugins: [pinia]

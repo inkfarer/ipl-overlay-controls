@@ -2,70 +2,76 @@
     <bordered-space :label="$t('teamDataImporter.sectionTitle')">
         <ipl-space>
             <template v-if="smashggEvents.length > 1">
-                <ipl-select
-                    v-model="smashggEvent"
-                    :options="smashggEvents"
-                    data-test="smashgg-event-selector"
-                    :label="$t('teamDataImporter.startgg.eventSelect')"
-                />
-                <iploc-button
-                    class="m-t-8"
-                    :label="$t('teamDataImporter.startgg.importButton')"
-                    async
-                    :progress-message="$t('teamDataImporter.startgg.loadingImportButton')"
-                    data-test="smashgg-event-import-button"
-                    @click="handleSmashggEventImport"
-                />
-                <ipl-button
-                    class="m-t-8"
-                    :label="$t('teamDataImporter.startgg.cancelImportButton')"
-                    color="red"
-                    data-test="smashgg-event-import-cancel-button"
-                    @click="handleSmashggImportCancel"
-                />
+                <form @submit.prevent>
+                    <ipl-select
+                        v-model="smashggEvent"
+                        :options="smashggEvents"
+                        data-test="smashgg-event-selector"
+                        :label="$t('teamDataImporter.startgg.eventSelect')"
+                    />
+                    <iploc-button
+                        class="m-t-8"
+                        :label="$t('teamDataImporter.startgg.importButton')"
+                        async
+                        type="submit"
+                        :progress-message="$t('teamDataImporter.startgg.loadingImportButton')"
+                        data-test="smashgg-event-import-button"
+                        @click="handleSmashggEventImport"
+                    />
+                    <ipl-button
+                        class="m-t-8"
+                        :label="$t('teamDataImporter.startgg.cancelImportButton')"
+                        color="red"
+                        data-test="smashgg-event-import-cancel-button"
+                        @click="handleSmashggImportCancel"
+                    />
+                </form>
             </template>
             <template v-else>
-                <ipl-radio
-                    v-model="dataSource"
-                    :label="$t('teamDataImporter.dataSourceSelect')"
-                    data-test="source-selector"
-                    name="source-selector"
-                    class="data-source-selector"
-                    :options="dataSourceOptions"
-                />
-                <ipl-input
-                    v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
-                    v-model="tournamentId"
-                    :label="$t('teamDataImporter.tournamentIdInput', { context: dataSource })"
-                    name="tournament-id-input"
-                    class="m-t-4"
-                />
-                <ipl-upload
-                    v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
-                    v-model="teamDataFile"
-                    class="m-t-8"
-                    :placeholder="$t('common:fileUploadPlaceholder')"
-                    data-test="team-data-upload"
-                />
-                <div class="layout horizontal center-horizontal">
-                    <ipl-checkbox
-                        v-show="dataSource === TournamentDataSource.UPLOAD"
-                        v-model="useFileUpload"
-                        :label="$t('teamDataImporter.uploadFileCheckbox')"
-                        class="m-t-8"
-                        small
-                        data-test="use-file-upload-checkbox"
+                <form @submit.prevent>
+                    <ipl-radio
+                        v-model="dataSource"
+                        :label="$t('teamDataImporter.dataSourceSelect')"
+                        data-test="source-selector"
+                        name="source-selector"
+                        class="data-source-selector"
+                        :options="dataSourceOptions"
                     />
-                </div>
-                <iploc-button
-                    class="m-t-8"
-                    :label="$t('teamDataImporter.importButton')"
-                    :disabled="!allValid || refreshingTournamentData"
-                    async
-                    :progress-message="$t('teamDataImporter.loadingImportButton')"
-                    data-test="import-button"
-                    @click="handleImport"
-                />
+                    <ipl-input
+                        v-show="dataSource !== TournamentDataSource.UPLOAD || !useFileUpload"
+                        v-model="tournamentId"
+                        :label="$t('teamDataImporter.tournamentIdInput', { context: dataSource })"
+                        name="tournament-id-input"
+                        class="m-t-4"
+                    />
+                    <ipl-upload
+                        v-show="dataSource === TournamentDataSource.UPLOAD && useFileUpload"
+                        v-model="teamDataFile"
+                        class="m-t-8"
+                        :placeholder="$t('common:fileUploadPlaceholder')"
+                        data-test="team-data-upload"
+                    />
+                    <div class="layout horizontal center-horizontal">
+                        <ipl-checkbox
+                            v-show="dataSource === TournamentDataSource.UPLOAD"
+                            v-model="useFileUpload"
+                            :label="$t('teamDataImporter.uploadFileCheckbox')"
+                            class="m-t-8"
+                            small
+                            data-test="use-file-upload-checkbox"
+                        />
+                    </div>
+                    <iploc-button
+                        class="m-t-8"
+                        :label="$t('teamDataImporter.importButton')"
+                        :disabled="!allValid || refreshingTournamentData"
+                        async
+                        type="submit"
+                        :progress-message="$t('teamDataImporter.loadingImportButton')"
+                        data-test="import-button"
+                        @click="handleImport"
+                    />
+                </form>
             </template>
         </ipl-space>
         <ipl-space
@@ -110,21 +116,24 @@
             />
         </ipl-space>
         <ipl-space class="m-t-8">
-            <ipl-input
-                v-model="shortName"
-                :label="$t('teamDataImporter.shortTournamentNameInput')"
-                name="shortName"
-            />
-            <ipl-button
-                class="m-t-8"
-                :label="$t('common:button.update')"
-                data-test="update-short-name-button"
-                :color="shortNameChanged ? 'red' : 'blue'"
-                :disabled="!shortNameValid"
-                :title="$t('common:button.rightClickUndoMessage')"
-                @click="updateShortName"
-                @right-click="undoShortNameChanges"
-            />
+            <form @submit.prevent>
+                <ipl-input
+                    v-model="shortName"
+                    :label="$t('teamDataImporter.shortTournamentNameInput')"
+                    name="shortName"
+                />
+                <ipl-button
+                    class="m-t-8"
+                    :label="$t('common:button.update')"
+                    data-test="update-short-name-button"
+                    :color="shortNameChanged ? 'red' : 'blue'"
+                    :disabled="!shortNameValid"
+                    :title="$t('common:button.rightClickUndoMessage')"
+                    type="submit"
+                    @click="updateShortName"
+                    @right-click="undoShortNameChanges"
+                />
+            </form>
         </ipl-space>
     </bordered-space>
 </template>
@@ -225,7 +234,10 @@ export default defineComponent({
             dataSource,
             async handleImport() {
                 if (dataSource.value === TournamentDataSource.UPLOAD && useFileUpload.value) {
-                    return tournamentDataStore.uploadTeamData({ file: teamDataFile.value });
+                    return tournamentDataStore.uploadTeamData({ file: teamDataFile.value }).then((result) => {
+                        teamDataFile.value = null;
+                        return result;
+                    });
                 } else {
                     const id = normalizeTournamentId();
 

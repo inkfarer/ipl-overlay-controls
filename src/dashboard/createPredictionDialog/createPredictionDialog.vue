@@ -15,53 +15,56 @@
         v-else
         class="m-t-8"
     >
-        <div class="layout horizontal">
-            <ipl-input
-                v-model="title"
-                :label="$t('titleInput')"
-                name="title"
-                class="title-input"
-            />
-            <ipl-input
-                v-model="duration"
-                :label="$t('durationInputLabel')"
-                :extra="$t('durationInputUnit')"
-                name="duration"
-                type="number"
-                class="m-l-6 duration-input"
-            />
-        </div>
-        <div class="layout horizontal m-t-4">
-            <ipl-input
-                v-model="teamAName"
-                name="team-a-name"
-                class="max-width"
-                :label="$t('teamANameInput')"
-            />
-            <ipl-input
-                v-model="teamBName"
-                name="team-b-name"
-                class="max-width m-l-6"
-                :label="$t('teamBNameInput')"
-            />
-        </div>
-        <div class="layout horizontal m-t-8">
-            <iploc-button
-                :label="$t('createButton')"
-                :disabled="!allValid"
-                color="green"
-                async
-                data-test="create-prediction-button"
-                @click="createPrediction"
-            />
-            <iploc-button
-                :label="$t('resetButton')"
-                color="red"
-                class="m-l-8"
-                data-test="reset-inputs-button"
-                @click="resetInputs"
-            />
-        </div>
+        <form @submit.prevent>
+            <div class="layout horizontal">
+                <ipl-input
+                    v-model="title"
+                    :label="$t('titleInput')"
+                    name="title"
+                    class="title-input"
+                />
+                <ipl-input
+                    v-model="duration"
+                    :label="$t('durationInputLabel')"
+                    :extra="$t('durationInputUnit')"
+                    name="duration"
+                    type="number"
+                    class="m-l-6 duration-input"
+                />
+            </div>
+            <div class="layout horizontal m-t-4">
+                <ipl-input
+                    v-model="teamAName"
+                    name="team-a-name"
+                    class="max-width"
+                    :label="$t('teamANameInput')"
+                />
+                <ipl-input
+                    v-model="teamBName"
+                    name="team-b-name"
+                    class="max-width m-l-6"
+                    :label="$t('teamBNameInput')"
+                />
+            </div>
+            <div class="layout horizontal m-t-8">
+                <iploc-button
+                    :label="$t('createButton')"
+                    :disabled="!allValid"
+                    color="green"
+                    async
+                    type="submit"
+                    data-test="create-prediction-button"
+                    @click="createPrediction"
+                />
+                <iploc-button
+                    :label="$t('resetButton')"
+                    color="red"
+                    class="m-l-8"
+                    data-test="reset-inputs-button"
+                    @click="resetInputs"
+                />
+            </div>
+        </form>
     </ipl-space>
 </template>
 
