@@ -4,9 +4,9 @@
         color="light"
         class="text-center caster-search__header"
         v-bind="$attrs"
-        @click="searchOpen = !searchOpen"
+        @click="toggle"
     >
-        <font-awesome-icon icon="search" /> {{ $t('casterSearch.buttonLabel') }}
+        <font-awesome-icon icon="search" /> {{ $t('common:casterSearch.buttonLabel') }}
     </ipl-space>
     <ipl-space
         v-if="searchOpen"
@@ -15,7 +15,8 @@
     >
         <ipl-input
             v-model="searchQuery"
-            :label="$t('casterSearch.queryInput')"
+            :label="$t('common:casterSearch.queryInput')"
+            ref="queryInput"
             name="caster-search-query"
             :loading="searchLoading"
             class="m-b-4"
@@ -24,7 +25,7 @@
             v-if="Object.keys(searchResult).length <= 0"
             class="m-t-8 text-center"
         >
-            {{ $t('casterSearch.noResultsMessage') }}
+            {{ $t('common:casterSearch.noResultsMessage') }}
         </div>
         <template v-else>
             <ipl-space
@@ -42,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, nextTick, ref, watch } from 'vue';
 import { IplSpace, IplInput } from '@iplsplatoon/vue-components';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -66,6 +67,16 @@ export default defineComponent({
         const searchQuery = ref('');
         const searchResult = ref<Casters>({});
         const searchLoading = ref(false);
+        const queryInput = ref<InstanceType<typeof IplInput>>();
+
+        function toggle() {
+            searchOpen.value = !searchOpen.value;
+            if (searchOpen.value) {
+                nextTick(() => {
+                    queryInput.value?.focus();
+                });
+            }
+        }
 
         const runSearch = debounce(async () => {
             searchLoading.value = true;
@@ -82,8 +93,10 @@ export default defineComponent({
             minQueryLength,
             searchOpen,
             searchQuery,
+            queryInput,
             searchResult,
             searchLoading,
+            toggle,
             onSelect(caster: Caster) {
                 emit('select', caster);
                 searchOpen.value = false;
@@ -98,7 +111,6 @@ export default defineComponent({
 @import '../../styles/constants';
 
 .caster-search__header {
-    margin-top: 4px;
     z-index: 1000;
     position: relative;
 }
@@ -110,9 +122,9 @@ export default defineComponent({
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: calc(100% - 12px);
+    height: calc(100% - 16px);
     border-radius: $border-radius-inner;
-    top: 4px;
+    top: 8px;
     background-color: $background-secondary;
     z-index: 999;
     padding-top: 39px;

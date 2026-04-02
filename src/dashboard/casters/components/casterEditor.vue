@@ -12,7 +12,12 @@
         </template>
         <template #title>
             {{ internalCaster.name }}
-            <span class="badge badge-blue pronoun-badge">{{ internalCaster.pronouns }}</span>
+            <span
+                v-show="!isBlank(internalCaster.pronouns)"
+                class="badge badge-blue pronoun-badge"
+            >
+                {{ internalCaster.pronouns }}
+            </span>
             <span
                 v-if="caster.uncommitted"
                 class="badge badge-red uncommitted-badge"
@@ -91,6 +96,7 @@ import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import CasterSearch from './casterSearch.vue';
 import { useTranslation } from 'i18next-vue';
+import { isBlank } from '../../../helpers/stringHelper';
 
 library.add(faTimes, faGripVertical);
 
@@ -98,6 +104,7 @@ type CasterProp = Caster & { id: string, uncommitted: boolean };
 
 export default defineComponent({
     name: 'CasterEditor',
+    methods: { isBlank },
 
     components: { CasterSearch, IplExpandingSpace, IplButton, IplInput, FontAwesomeIcon },
 
