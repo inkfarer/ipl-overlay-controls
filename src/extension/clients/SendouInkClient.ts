@@ -30,6 +30,8 @@ type SendouInkGetTournamentTeamsResponse = Array<{
         avatarUrl: string | null
         captain: boolean
         joinedAt: string
+        pronouns: { subject: string; object: string } | null
+        inGameName: string | null | undefined
     }>;
 }>;
 
@@ -114,7 +116,9 @@ export class SendouInkClient {
                 showLogo: true,
                 logoUrl: team.logoUrl ?? undefined,
                 players: team.members.map(member => ({
-                    name: member.name
+                    name: member.name,
+                    pronouns: member.pronouns == null ? undefined : `${member.pronouns.subject}/${member.pronouns.object}`,
+                    inGameName: this.splitInGameName(member.inGameName)
                 }))
             }))
         };
@@ -128,6 +132,28 @@ export class SendouInkClient {
     async getMatch(matchId: number): Promise<SendouInkGetTournamentMatchResponse> {
         const response = await this.axios.get<SendouInkGetTournamentMatchResponse>(`/tournament-match/${matchId}`);
         return response.data;
+    }
+
+    private splitInGameName(inGameName: string | null | undefined):
+        { name: string; discriminator: string | null; raw: string } | undefined {
+        if (inGameName == null) {
+            return undefined;
+        }
+
+        const splitIndex = inGameName.lastIndexOf('#');
+        if (splitIndex === -1) {
+            return {
+                name: inGameName,
+                discriminator: null,
+                raw: inGameName
+            };
+        }
+
+        return {
+            name: inGameName.substring(0, splitIndex),
+            discriminator: inGameName.substring(splitIndex + 1),
+            raw: inGameName
+        };
     }
 }
 
